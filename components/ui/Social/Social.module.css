@@ -1,0 +1,7 @@
+.root {
+  @apply flex justify-center md:justify-start;
+}
+
+.social {
+  @apply px-3 md:px-0 md:mr-7;
+}

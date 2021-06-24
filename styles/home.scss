@@ -1,0 +1,15 @@
+.clickable {
+  @apply cursor-pointer font-medium;
+
+  &.active {
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-color: theme("colors.blue.600");
+    text-decoration-thickness: 2px;
+    text-underline-offset: 1px;
+  }
+}
+
+.imageContainer > div {
+  min-width: 100%;
+}
