@@ -77,6 +77,12 @@
         {
           "indexed": false,
           "internalType": "uint256",
+          "name": "quantity",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
           "name": "productPrice",
           "type": "uint256"
         }
