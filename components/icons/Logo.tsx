@@ -18,7 +18,7 @@ const Logo = ({ ...props }) => {
   //   logoColorsDark[Math.floor(Math.random() * logoColorsDark.length)]
   // const logoColor2 = logoColors[Math.floor(Math.random() * logoColors.length)]
   const size = props.size || "w-8 md:w-10"
-  const margin = props.margin || "mt-1.5 ml-1.5 md:mt-2 md:ml-2"
+  const margin = props.margin || "mt-1 ml-1.5"
 
   return (
     <div className={`relative ${size}`}>

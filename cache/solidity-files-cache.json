@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/jaco/Documents/dev/slice.so/contracts/slice.sol": {
-      "lastModificationDate": 1624578772799,
-      "contentHash": "37332e7e86185c773e7bb2a64560e237",
+      "lastModificationDate": 1624631190417,
+      "contentHash": "fff7d14fac3c6a7610d8eca8010ceeac",
       "sourceName": "contracts/slice.sol",
       "solcConfig": {
         "version": "0.8.6",
@@ -53,7 +53,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol": {
-      "lastModificationDate": 1624576184161,
+      "lastModificationDate": 1624632361943,
       "contentHash": "ff1de24b596f419da236d867da1c2c5b",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol",
       "solcConfig": {
@@ -89,7 +89,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC1155/ERC1155.sol": {
-      "lastModificationDate": 1624576184152,
+      "lastModificationDate": 1624632361891,
       "contentHash": "940bb9269223a34da904c64c50abdffd",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/ERC1155.sol",
       "solcConfig": {
@@ -130,7 +130,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol": {
-      "lastModificationDate": 1624576184185,
+      "lastModificationDate": 1624632362051,
       "contentHash": "715cc034a225c8fc445e2f4299111d75",
       "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
       "solcConfig": {
@@ -168,7 +168,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/utils/Address.sol": {
-      "lastModificationDate": 1624576184098,
+      "lastModificationDate": 1624632361706,
       "contentHash": "37103cdc416efc2601c6f6734044b559",
       "sourceName": "@openzeppelin/contracts/utils/Address.sol",
       "solcConfig": {
@@ -202,7 +202,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/utils/Context.sol": {
-      "lastModificationDate": 1624576184119,
+      "lastModificationDate": 1624632361762,
       "contentHash": "bc047f55d4e6dcc5a9c7ee096f530312",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
@@ -236,7 +236,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/utils/Counters.sol": {
-      "lastModificationDate": 1624576184121,
+      "lastModificationDate": 1624632361769,
       "contentHash": "86ddbfba30a7d811a86f54416c364be3",
       "sourceName": "@openzeppelin/contracts/utils/Counters.sol",
       "solcConfig": {
@@ -270,7 +270,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/utils/structs/EnumerableSet.sol": {
-      "lastModificationDate": 1624576184146,
+      "lastModificationDate": 1624632361865,
       "contentHash": "212c7600a5dc9486dc7c82a82144fb88",
       "sourceName": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol",
       "solcConfig": {
@@ -304,7 +304,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
-      "lastModificationDate": 1624576184321,
+      "lastModificationDate": 1624632362490,
       "contentHash": "17d9f40220b0ab370db2c77e7c92c4ef",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
@@ -340,7 +340,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/security/Pausable.sol": {
-      "lastModificationDate": 1624576184323,
+      "lastModificationDate": 1624632362503,
       "contentHash": "835673b68fdeaf41b38c84e966e8630b",
       "sourceName": "@openzeppelin/contracts/security/Pausable.sol",
       "solcConfig": {
@@ -376,7 +376,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol": {
-      "lastModificationDate": 1624576184331,
+      "lastModificationDate": 1624632362561,
       "contentHash": "1d45ab4bd9b10c657bd26a957be5bcd9",
       "sourceName": "@openzeppelin/contracts/security/ReentrancyGuard.sol",
       "solcConfig": {
@@ -410,7 +410,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol": {
-      "lastModificationDate": 1624578391301,
+      "lastModificationDate": 1624632375321,
       "contentHash": "b9be3f7aa79153708acdc3be6bd1cb35",
       "sourceName": "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
       "solcConfig": {
@@ -444,7 +444,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC1155/utils/ERC1155Receiver.sol": {
-      "lastModificationDate": 1624576184172,
+      "lastModificationDate": 1624632361981,
       "contentHash": "baa5a1c248a5f5bfae096368ccf4bc5c",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Receiver.sol",
       "solcConfig": {
@@ -481,7 +481,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol": {
-      "lastModificationDate": 1624576184277,
+      "lastModificationDate": 1624632362344,
       "contentHash": "4c2325989961abc760910c904c6cde62",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol",
       "solcConfig": {
@@ -517,7 +517,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol": {
-      "lastModificationDate": 1624576184173,
+      "lastModificationDate": 1624632361991,
       "contentHash": "a9a5319dff9088c6ffe757ea1c2a6729",
       "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
       "solcConfig": {
@@ -553,7 +553,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
-      "lastModificationDate": 1624576184282,
+      "lastModificationDate": 1624632362360,
       "contentHash": "9a04322bb8f6b8f2767d8358d1d2537b",
       "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
       "solcConfig": {
@@ -587,7 +587,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol": {
-      "lastModificationDate": 1624576184269,
+      "lastModificationDate": 1624632362336,
       "contentHash": "79f5ef33a7ed00ffb7dfdcd4339a946c",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
       "solcConfig": {
@@ -623,7 +623,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol": {
-      "lastModificationDate": 1624576184271,
+      "lastModificationDate": 1624632362341,
       "contentHash": "f67c3445291b9506fdff7d6527c9e552",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
       "solcConfig": {
@@ -659,7 +659,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1624576184287,
+      "lastModificationDate": 1624632362382,
       "contentHash": "c7492a9ab60ba083d345f893d5e0f33c",
       "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
@@ -693,7 +693,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
-      "lastModificationDate": 1624576184288,
+      "lastModificationDate": 1624632362385,
       "contentHash": "aa1be06992a99bb7393b26a6af3c4dfb",
       "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
       "solcConfig": {
