@@ -32,7 +32,7 @@ const Nightwind = ({ ...props }) => {
         className={`${props.moonColor || "text-blue-500"} 
           ${props.moonColorNight || "dark:text-yellow-300"} ${
           props.transition || ""
-        }`}
+        } transition-colors duration-150`}
       />
       <path
         fillRule="evenodd"
@@ -44,7 +44,7 @@ const Nightwind = ({ ...props }) => {
         } ${
           props.sunColorNight ||
           "dark:text-blue-500 dark:group-hover:text-yellow-500"
-        } ${props.transition || ""}`}
+        } ${props.transition || ""} transition-colors duration-150`}
       />
     </svg>
   )

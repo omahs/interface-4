@@ -7,9 +7,7 @@ const UnauthorizedBlock = () => {
     <>
       <div className={s.root}>
         <p className="mb-7 text-lg">You cannot access this page</p>
-        <Link href="/">
-          <Button label="Return to home" />
-        </Link>
+        <Button label="Return to home" href="/" />
       </div>
     </>
   )

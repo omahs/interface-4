@@ -43,7 +43,7 @@ const Social: FC<Props> = ({ wrapperClassName, accounts }, props) => {
             className={`${componentColor} ${size} ${s.social}`}
             href={accounts[key]}
             target="_blank"
-            rel="noopener"
+            rel="noreferrer"
           >
             <DynamicComponent />
           </a>

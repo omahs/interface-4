@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from "next/document"
+import Script from "next/script"
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -18,17 +19,7 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <script
-            async
-            defer
-            src="https://scripts.simpleanalyticscdn.com/latest.js"
-          ></script>
-          <noscript>
-            <img
-              src="https://queue.simpleanalyticscdn.com/noscript.gif"
-              alt=""
-            />
-          </noscript>
+          <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
         </body>
       </Html>
     )
