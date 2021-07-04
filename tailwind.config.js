@@ -27,6 +27,7 @@ module.exports = {
       colors: {
         gray: colors.trueGray,
         sky: colors.sky,
+        cyan: colors.cyan,
       },
       zIndex: {
         "-10": "-10",

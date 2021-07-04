@@ -1,17 +1,16 @@
 import { BigNumber, ethers } from "ethers"
-import { Button } from "@components/ui"
+import { Button, DoubleText } from "@components/ui"
 import { slc, sliceCore, slice, slicer } from "@lib/initProvider"
+import { initialize } from "@lib/useProvider"
 
 const getName = async () => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const signer = provider.getSigner()
-  const signerAddress = await signer.getAddress()
+  const { provider, signer, signerAddress } = await initialize()
 
   const slccontract = slc(signer)
   const sliceCorecontract = sliceCore(signer)
   const slicecontract = slice(signer)
-  // const slicerContract = await slicer(0, signer)
-  // const slicerAddress = await sliceCore(signer).slicers(0)
+  const slicerContract = await slicer(0, signer)
+  const slicerAddress = await sliceCorecontract.slicers(0)
 
   // ADD PRODUCT
   // const decimals = BigNumber.from(10).pow(18)
@@ -58,7 +57,17 @@ const getName = async () => {
 export default function Home() {
   return (
     <main className="py-12 md:py-16 text-center">
-      <h1>Welcome to Slice</h1>
+      <div className="pb-8 relative">
+        <DoubleText
+          inactive
+          logoText={`Slice`}
+          size="text-7xl sm:text-[5rem]"
+          position="block"
+        />
+      </div>
+      <p className="font-semibold leading-snug text-3xl">
+        Unlocking the true power of NFTs
+      </p>
       <Button label="Get name" onClick={() => getName()} />
     </main>
   )

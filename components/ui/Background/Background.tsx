@@ -13,7 +13,7 @@ const Background: FC<Props> = (props) => {
     s.root,
     {},
     className,
-    "bg-gradient-to-br from-blue-50 to-gray-100"
+    "bg-gradient-to-br from-sky-50 to-gray-100"
   )
 
   return (
