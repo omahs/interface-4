@@ -30,7 +30,7 @@ const Navbar = () => {
             <div>
               {!isConnected ? (
                 <Button
-                  className="rounded-full border-2 font-medium"
+                  className="h-[36px] font-medium rounded-full border-2"
                   color=" border-blue-700 bg-white text-black hover:bg-blue-100"
                   label="Connect"
                   loading={loading}

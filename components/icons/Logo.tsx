@@ -2,7 +2,15 @@ import Link from "next/link"
 import colors from "tailwindcss/colors"
 
 const Logo = ({ ...props }) => {
-  const logoColors = [colors.blue[400]]
+  const logoColors = [
+    colors.cyan[400],
+    colors.purple[400],
+    colors.indigo[400],
+    colors.yellow[400],
+    colors.red[400],
+    colors.pink[400],
+    colors.blue[400],
+  ]
   const logoColorsDark = [
     // colors.cyan[600],
     colors.gray[800],
@@ -16,7 +24,7 @@ const Logo = ({ ...props }) => {
 
   // const logoColor =
   //   logoColorsDark[Math.floor(Math.random() * logoColorsDark.length)]
-  // const logoColor2 = logoColors[Math.floor(Math.random() * logoColors.length)]
+  const logoColor2 = logoColors[Math.floor(Math.random() * logoColors.length)]
   const size = props.size || "w-8 md:w-10"
   const margin = props.margin || "mt-1 ml-1.5"
 
@@ -46,7 +54,7 @@ const Logo = ({ ...props }) => {
       >
         <path
           d="M14.2388 255.622L198.418 15.4524C199.598 13.9136 201.431 13.0406 203.367 13.1437C217.882 13.9162 281.868 18.3488 351.637 38.9721C421.415 59.5984 469.985 94.4921 480.745 102.657C482.189 103.752 482.996 105.456 482.996 107.268V311.806C482.996 314.405 481.323 316.708 478.851 317.512L20.8555 466.445C16.9785 467.706 13 464.816 13 460.74V259.274C13 257.953 13.4354 256.67 14.2388 255.622Z"
-          fill={logoColors[0]}
+          fill={logoColor2}
           stroke="white"
           strokeWidth="32"
         />

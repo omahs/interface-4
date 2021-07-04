@@ -7,10 +7,10 @@ const getName = async () => {
   const { provider, signer, signerAddress } = await initialize()
 
   const slccontract = slc(signer)
-  const sliceCorecontract = sliceCore(signer)
-  const slicecontract = slice(signer)
-  const slicerContract = await slicer(0, signer)
-  const slicerAddress = await sliceCorecontract.slicers(0)
+  // const sliceCorecontract = sliceCore(signer)
+  // const slicecontract = slice(signer)
+  // const slicerContract = await slicer(0, signer)
+  // const slicerAddress = await sliceCorecontract.slicers(0)
 
   // ADD PRODUCT
   // const decimals = BigNumber.from(10).pow(18)
@@ -68,7 +68,9 @@ export default function Home() {
       <p className="font-semibold leading-snug text-3xl">
         Unlocking the true power of NFTs
       </p>
-      <Button label="Get name" onClick={() => getName()} />
+      <div className="pt-4">
+        <Button label="Get name" requireConnection onClick={() => getName()} />
+      </div>
     </main>
   )
 }
