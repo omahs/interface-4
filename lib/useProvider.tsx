@@ -1,6 +1,13 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { ethers } from "ethers"
 
+export const initialize = async () => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const signer = provider.getSigner()
+  const signerAddress = await signer.getAddress()
+  return { provider, signer, signerAddress }
+}
+
 const useProvider = (setLoading: Dispatch<SetStateAction<boolean>>) => {
   const [isConnected, setIsConnected] = useState(false)
 
