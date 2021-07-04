@@ -10,8 +10,8 @@ const getName = async () => {
   const slccontract = slc(signer)
   const sliceCorecontract = sliceCore(signer)
   const slicecontract = slice(signer)
-  const slicerContract = await slicer(0, signer)
-  const slicerAddress = await sliceCore(signer).slicers(0)
+  // const slicerContract = await slicer(0, signer)
+  // const slicerAddress = await sliceCore(signer).slicers(0)
 
   // ADD PRODUCT
   // const decimals = BigNumber.from(10).pow(18)
@@ -49,7 +49,9 @@ const getName = async () => {
   //   }
   // )
 
-  const data = await slccontract.balanceOf(slicerAddress)
+  console.log(signerAddress)
+
+  const data = await slccontract.balanceOf(signerAddress)
   console.log(data)
 }
 

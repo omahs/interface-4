@@ -1,18 +1,21 @@
+import { useEffect, useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/router"
-// import { signIn, useSession } from "next-auth/client"
+import { ethers } from "ethers"
 import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
 import { Button, Container } from "@components/ui"
-import { ethers } from "ethers"
+import UserIcon from "@components/icons/UserIcon"
+import useProvider from "@lib/useProvider"
 
 const Navbar = () => {
-  // const [session, loading] = useSession()
-  // const router = useRouter()
+  const [loading, setLoading] = useState(true)
+  const isConnected = useProvider(setLoading)
 
   async function requestAccount() {
     await window.ethereum.request({ method: "eth_requestAccounts" })
   }
+
+  // Todo: trigger useProvider on connect/disconnect
 
   return (
     <header className="bg-gray-50 shadow-sm">
@@ -25,10 +28,24 @@ const Navbar = () => {
               </a>
             </Link>
           </div>
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-8">
             <Nightwind size="h-[26px]" />
             <div>
-              <Button label="Connect" onClick={() => requestAccount()} />
+              {!isConnected ? (
+                <Button
+                  className="rounded-full border-2 font-medium"
+                  color=" border-blue-700 bg-white text-black hover:bg-blue-100"
+                  label="Connect"
+                  loading={loading}
+                  onClick={() => requestAccount()}
+                />
+              ) : (
+                <Link href="/profile">
+                  <a>
+                    <UserIcon />
+                  </a>
+                </Link>
+              )}
             </div>
           </div>
         </nav>

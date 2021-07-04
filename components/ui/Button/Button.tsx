@@ -14,8 +14,8 @@ interface ButtonProps {
 
 const Button: FC<ButtonProps> = (props) => {
   const {
-    className = "rounded-sm",
-    color = "text-white font-medium bg-blue-500 hover:bg-blue-600 focus:bg-blue-600",
+    className = "rounded-sm font-medium",
+    color = "text-white bg-blue-500 hover:bg-blue-600 focus:bg-blue-600",
     type,
     label,
     href,
@@ -24,7 +24,7 @@ const Button: FC<ButtonProps> = (props) => {
     ...rest
   } = props
 
-  const rootClassName = `px-7 h-[38px] min-w-[150px] rounded-sm overflow-hidden focus:outline-none ${color} ${className}`
+  const rootClassName = `px-7 h-[36px] min-w-[150px] rounded-sm overflow-hidden focus:outline-none ${color} ${className}`
 
   return href ? (
     <Link href={href} passHref>

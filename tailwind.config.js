@@ -26,6 +26,7 @@ module.exports = {
       screens: {},
       colors: {
         gray: colors.trueGray,
+        sky: colors.sky,
       },
       zIndex: {
         "-10": "-10",
