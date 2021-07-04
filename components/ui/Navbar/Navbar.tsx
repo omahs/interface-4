@@ -5,17 +5,14 @@ import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
 import { Button, Container } from "@components/ui"
 import UserIcon from "@components/icons/UserIcon"
-import useProvider from "@lib/useProvider"
+import { useAppContext } from "@components/ui/context"
 
 const Navbar = () => {
-  const [loading, setLoading] = useState(true)
-  const isConnected = useProvider(setLoading)
+  const { isConnected, loading } = useAppContext()
 
-  async function requestAccount() {
+  const requestAccount = async () => {
     await window.ethereum.request({ method: "eth_requestAccounts" })
   }
-
-  // Todo: trigger useProvider on connect/disconnect
 
   return (
     <header className="bg-gray-50 shadow-sm">
