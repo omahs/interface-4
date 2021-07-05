@@ -53,7 +53,9 @@ const Button: FC<ButtonProps> = (props) => {
     <div className="relative inline-block group">
       {href ? (
         <Link href={href} passHref>
-          <button className={rootClassName}>{label}</button>
+          <button className={`${rootClassName} ${color}`}>
+            <div className="flex items-center justify-center">{innerText}</div>
+          </button>
         </Link>
       ) : (
         <button

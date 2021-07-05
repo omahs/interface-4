@@ -3,6 +3,9 @@ import { Container, Social } from "@components/ui"
 
 const accounts = {
   twitter: "https://twitter.com/slice__so",
+  reddit: "https://reddit.com/r/slice",
+  discord: "https://reddit.com/r/slice",
+  github: "https://reddit.com/r/slice",
 }
 
 const Footer = () => {

@@ -11,6 +11,7 @@ module.exports = {
     "./components/**/*.css",
     "./components/**/*.scss",
     "./styles/**/*.scss",
+    "./utils/**/*.ts",
   ],
 
   theme: {

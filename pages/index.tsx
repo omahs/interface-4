@@ -4,20 +4,19 @@ import { Button, DoubleText } from "@components/ui"
 export default function Home() {
   return (
     <main className="py-12 text-center md:py-16">
-      <div className="relative pb-8">
-        <DoubleText
-          inactive
-          logoText={`Slice`}
-          size="text-7xl sm:text-[5rem]"
-          position="block"
-        />
-      </div>
+      <DoubleText
+        inactive
+        logoText={`Slice a token`}
+        size="text-4xl sm:text-5xl"
+        position="block"
+      />
       <p className="text-3xl font-semibold leading-snug">
         Unlocking NFTs full potential
       </p>
-      <div className="pt-6">
-        <Button label="test is the way to gooo" requireConnection />
+      <div className="py-10 pb-8">
+        <Button label="Start slicing" href="/slice" requireConnection />
       </div>
+      <p>or keep scrolling to learn more</p>
     </main>
   )
 }

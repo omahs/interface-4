@@ -1,6 +1,6 @@
 import colors from "tailwindcss/colors"
 
-const colorList = [
+export const colorList = [
   [
     colors.cyan[300],
     "bg-cyan-300",
@@ -54,14 +54,58 @@ const colorList = [
   [colors.sky[300], "bg-sky-300", "text-sky-300", "from-sky-300", "to-sky-300"],
 ]
 
-// const colorListDark = [
-// colors.cyan[600],
-// colors.purple[600],
-// colors.indigo[600],
-// colors.yellow[600],
-// colors.red[600],
-// colors.pink[600],
-// colors.blue[600],
-// ]
+export const darkColorList = [
+  [
+    colors.cyan[600],
+    "bg-cyan-600",
+    "text-cyan-600",
+    "from-cyan-600",
+    "to-cyan-600",
+  ],
+  [
+    colors.green[600],
+    "bg-green-600",
+    "text-green-600",
+    "from-green-600",
+    "to-green-600",
+  ],
+  [
+    colors.purple[600],
+    "bg-purple-600",
+    "text-purple-600",
+    "from-purple-600",
+    "to-purple-600",
+  ],
+  [
+    colors.indigo[600],
+    "bg-indigo-600",
+    "text-indigo-600",
+    "from-indigo-600",
+    "to-indigo-600",
+  ],
+  [
+    colors.yellow[600],
+    "bg-yellow-600",
+    "text-yellow-600",
+    "from-yellow-600",
+    "to-yellow-600",
+  ],
+  [colors.red[600], "bg-red-600", "text-red-600", "from-red-600", "to-red-600"],
+  [
+    colors.pink[600],
+    "bg-pink-600",
+    "text-pink-600",
+    "from-pink-600",
+    "to-pink-600",
+  ],
+  [
+    colors.blue[600],
+    "bg-blue-600",
+    "text-blue-600",
+    "from-blue-600",
+    "to-blue-600",
+  ],
+  [colors.sky[600], "bg-sky-600", "text-sky-600", "from-sky-600", "to-sky-600"],
+]
 
 export default colorList

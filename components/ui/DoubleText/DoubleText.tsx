@@ -17,7 +17,7 @@ const Logo: FC<Props> = ({ size, position, inactive, logoText }) => {
 
   return (
     <div
-      className={`${inactive ? "" : "group "}${
+      className={`relative pb-8 ${inactive ? "" : "group "}${
         position ? position : "absolute top-0 left-0"
       }`}
     >

@@ -7,6 +7,8 @@ const AppContext = createContext({
   loading: true,
   color1: colorList[0],
   color2: colorList[1],
+  // darkColor1: darkColorList[0],
+  // darkColor2: darkColorList[1],
 })
 
 export function AppWrapper({ children }) {
@@ -15,8 +17,10 @@ export function AppWrapper({ children }) {
 
   const color1 = colorList[Math.floor(Math.random() * colorList.length)]
   const color2 = colorList[Math.floor(Math.random() * colorList.length)]
-  // const colorDark1 = colorListDark[Math.floor(Math.random() * colorListDark.length)]
-  // const colorDark2 = colorListDark[Math.floor(Math.random() * colorListDark.length)]
+  // const darkColor1 =
+  //   darkColorList[Math.floor(Math.random() * darkColorList.length)]
+  // const darkColor2 =
+  //   darkColorList[Math.floor(Math.random() * darkColorList.length)]
 
   return (
     <AppContext.Provider value={{ isConnected, loading, color1, color2 }}>
