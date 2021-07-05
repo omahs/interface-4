@@ -3,9 +3,6 @@ import SLCContract from "artifacts/contracts/slice.sol/SLC.json"
 import SliceCoreContract from "artifacts/contracts/slice.sol/SliceCore.json"
 import SliceContract from "artifacts/contracts/slice.sol/Slice.json"
 import SlicerContract from "artifacts/contracts/slice.sol/Slicer.json"
-// import fetcher from "@utils/fetcher"
-
-// const baseUrl = process.env.NEXTAUTH_URL
 
 export const slc = (signer: ethers.Signer | ethers.providers.Provider) =>
   new ethers.Contract(
