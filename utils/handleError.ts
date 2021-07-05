@@ -1,6 +1,9 @@
-// import { SetStateAction } from "react"
+import { Dispatch, SetStateAction } from "react"
 
-const handleError = (message: string, setMessage: any) => {
+const handleError = (
+  message: string,
+  setMessage: Dispatch<SetStateAction<string>>
+) => {
   setMessage(message)
   setTimeout(() => {
     setMessage("")

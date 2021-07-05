@@ -44,7 +44,7 @@ const Nightwind = ({ ...props }) => {
         } ${
           props.sunColorNight ||
           "dark:text-blue-500 dark:group-hover:text-yellow-500"
-        } ${props.transition || ""} transition-colors duration-150`}
+        } ${props.transition || ""}`}
       />
     </svg>
   )

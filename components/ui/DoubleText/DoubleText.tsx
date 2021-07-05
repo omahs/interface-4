@@ -1,6 +1,5 @@
 import { FC } from "react"
 import Link from "next/link"
-import s from "./DoubleText.module.css"
 
 interface Props {
   logoText?: string
