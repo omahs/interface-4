@@ -4,10 +4,7 @@ h1 {
 }
 
 h2 {
-  @apply text-2xl pb-2 font-medium;
-  @screen md {
-    @apply text-4xl;
-  }
+  @apply text-2xl font-semibold leading-snug sm:text-3xl;
 }
 
 h3 {

@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Button, DoubleText } from "@components/ui"
 
 export default function Home() {
@@ -6,13 +5,11 @@ export default function Home() {
     <main className="py-12 text-center md:py-16">
       <DoubleText
         inactive
-        logoText={`Slice a token`}
-        size="text-4xl sm:text-5xl"
+        logoText={`Slice`}
+        size="text-7xl sm:text-[5rem]"
         position="block"
       />
-      <p className="text-3xl font-semibold leading-snug">
-        Unlocking NFTs full potential
-      </p>
+      <h2>Unlocking NFTs full potential</h2>
       <div className="py-10 pb-8">
         <Button label="Start slicing" href="/slice" requireConnection />
       </div>
