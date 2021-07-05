@@ -29,6 +29,12 @@ const Head: FC = () => {
               height: 1000,
               alt: `${title} cover image`,
             },
+            {
+              url: `https://${domain}/og_image_default.jpg`,
+              width: 1000,
+              height: 1000,
+              alt: `${title} cover image`,
+            },
           ],
         }}
         twitter={{
