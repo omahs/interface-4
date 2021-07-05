@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { ethers } from "ethers"
 import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
 import { Button, Container } from "@components/ui"
@@ -15,10 +14,10 @@ const Navbar = () => {
   }
 
   return (
-    <header className="bg-gray-50 shadow-sm">
+    <header className="shadow-sm bg-gray-50">
       <Container>
         <nav className="px-6 h-[4.25rem] items-center mx-auto flex justify-between">
-          <div className="flex mb-1 items-center">
+          <div className="flex items-center mb-1">
             <Link href="/">
               <a>
                 <Logo size="w-[24px]" />
@@ -30,8 +29,9 @@ const Navbar = () => {
             <div>
               {!isConnected ? (
                 <Button
-                  className="h-[36px] font-medium rounded-full border-2"
-                  color=" border-blue-700 bg-white text-black hover:bg-blue-100"
+                  className="h-[36px] font-medium rounded-full border-2 shadow-button"
+                  color=" border-sky-700 bg-white text-black hover:bg-sky-100"
+                  double={false}
                   label="Connect"
                   loading={loading}
                   onClick={() => requestAccount()}

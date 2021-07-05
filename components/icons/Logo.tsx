@@ -1,30 +1,9 @@
-import Link from "next/link"
 import colors from "tailwindcss/colors"
+import { useAppContext } from "@components/ui/context"
 
 const Logo = ({ ...props }) => {
-  const logoColors = [
-    colors.cyan[400],
-    colors.purple[400],
-    colors.indigo[400],
-    colors.yellow[400],
-    colors.red[400],
-    colors.pink[400],
-    colors.blue[400],
-  ]
-  const logoColorsDark = [
-    // colors.cyan[600],
-    colors.gray[800],
-    // colors.purple[600],
-    // colors.indigo[600],
-    // colors.yellow[600],
-    // colors.red[600],
-    // colors.pink[600],
-    // colors.blue[600],
-  ]
+  const { color1 } = useAppContext()
 
-  // const logoColor =
-  //   logoColorsDark[Math.floor(Math.random() * logoColorsDark.length)]
-  const logoColor2 = logoColors[Math.floor(Math.random() * logoColors.length)]
   const size = props.size || "w-8 md:w-10"
   const margin = props.margin || "mt-1 ml-1.5"
 
@@ -32,7 +11,7 @@ const Logo = ({ ...props }) => {
     <div className={`relative ${size}`}>
       <svg
         viewBox="0 0 496 490"
-        fill={logoColorsDark[0]}
+        fill={colors.gray[800]}
         xmlns="http://www.w3.org/2000/svg"
         className="relative z-10"
       >
@@ -54,7 +33,7 @@ const Logo = ({ ...props }) => {
       >
         <path
           d="M14.2388 255.622L198.418 15.4524C199.598 13.9136 201.431 13.0406 203.367 13.1437C217.882 13.9162 281.868 18.3488 351.637 38.9721C421.415 59.5984 469.985 94.4921 480.745 102.657C482.189 103.752 482.996 105.456 482.996 107.268V311.806C482.996 314.405 481.323 316.708 478.851 317.512L20.8555 466.445C16.9785 467.706 13 464.816 13 460.74V259.274C13 257.953 13.4354 256.67 14.2388 255.622Z"
-          fill={logoColor2}
+          fill={color1[0]}
           stroke="white"
           strokeWidth="32"
         />
