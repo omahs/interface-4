@@ -18,8 +18,8 @@ interface ButtonProps {
 
 const Button: FC<ButtonProps> = (props) => {
   const {
-    className = "h-[40px] font-medium rounded-sm border-white border-[3px] nightwind-prevent shadow-button",
-    color = "text-white bg-blue-500 hover:bg-blue-600 focus:bg-blue-600",
+    className = "h-[40px] font-bold tracking-wide rounded-sm border-white border-[3px] nightwind-prevent shadow-button",
+    color = "text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700",
     type,
     label,
     href,
@@ -59,7 +59,7 @@ const Button: FC<ButtonProps> = (props) => {
         </Link>
       ) : (
         <button
-          className={`${rootClassName} ${color}`}
+          className={`peer ${rootClassName} ${color}`}
           type={type}
           onClick={requireConnection && !isConnected ? requestAccount : onClick}
         >
@@ -74,7 +74,7 @@ const Button: FC<ButtonProps> = (props) => {
       )}
       {double && (
         <div
-          className={`${rootClassName} absolute top-0 mt-[0.6rem] ml-[0.6rem] mr-[-0.6rem] bg-gradient-to-br ${color1[3]} ${color2[4]} text-transparent -z-10 group-hover:mt-0 group-hover:ml-0 group-hover:mr-0 transition-all duration-150`}
+          className={`${rootClassName} absolute top-0 mt-[0.6rem] ml-[0.6rem] mr-[-0.6rem] bg-gradient-to-br ${color1[3]} ${color2[4]} text-transparent -z-10 group-hover:mt-0 group-hover:ml-0 group-hover:mr-0 peer-focus:mt-0 peer-focus:ml-0 peer-focus:mr-0 transition-all duration-150`}
         >
           <div className="flex items-center justify-center">{innerText}</div>
         </div>

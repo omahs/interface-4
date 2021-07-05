@@ -29,14 +29,14 @@ const SliceForm = ({}: Props) => {
       <div className="flex pt-4">
         <Input
           type="string"
-          placeholder="Add an address"
+          placeholder="Address or ENS"
           className="mt-1.5"
           required
           onChange={setAddress}
         />
         <Input
           type="number"
-          placeholder="Add shares amount"
+          placeholder="Shares amount"
           className="mt-1.5"
           required
           onChange={setShares}
@@ -45,7 +45,7 @@ const SliceForm = ({}: Props) => {
       <div>
         <Input
           type="number"
-          placeholder="Add minimum shares amount"
+          placeholder="Minimum shares amount"
           className="mt-1.5"
           required
           onChange={setMinimumShares}
