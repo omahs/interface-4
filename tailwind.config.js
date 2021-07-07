@@ -24,7 +24,9 @@ module.exports = {
       },
     },
     extend: {
-      screens: {},
+      screens: {
+        xs: "560px",
+      },
       colors: {
         gray: colors.trueGray,
         sky: colors.sky,

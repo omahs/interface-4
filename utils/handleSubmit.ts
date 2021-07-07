@@ -14,7 +14,8 @@ const handleSubmit = async (
     await action
     handleMessage({ message: "Success!", messageStatus: "success" }, setMessage)
   } catch (err) {
-    const message = err.data.message.split("'")[1]
+    // todo: test this
+    const message = err.data.message.split("error message '")[1].slice(0, -1)
     handleMessage({ message, messageStatus: "error" }, setMessage)
   }
 

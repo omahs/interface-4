@@ -18,7 +18,7 @@ interface ButtonProps {
 
 const Button: FC<ButtonProps> = (props) => {
   const {
-    className = "h-[40px] font-bold tracking-wide rounded-sm border-white border-[3px] nightwind-prevent shadow-button",
+    className = "h-[40px] font-bold tracking-wide rounded-sm border-white border-[3px] nightwind-prevent shadow-light",
     color = "text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700",
     type,
     label,

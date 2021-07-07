@@ -9,7 +9,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
 const Input: React.FC<Props> = (props) => {
   const { className, children, onChange, ...rest } = props
 
-  const rootClassName = `bg-white rounded-sm py-2 px-6 w-full appearance-none transition duration-150 ease-in-out pr-4 border border-gray-400 text-black focus:outline-none ${className}`
+  const rootClassName = `focus:ring-2 shadow-medium ring-sky-300 bg-white rounded-sm py-2 px-6 w-full appearance-none transition duration-150 ease-in-out pr-3 border border-gray-200 text-black focus:outline-none ${className}`
 
   const handleOnChange = (e: any) => {
     if (onChange) {

@@ -7,7 +7,7 @@ export default function Home() {
         inactive
         logoText={`Slice`}
         size="text-7xl sm:text-[5rem]"
-        position="block"
+        position="pb-8"
       />
       <h2>Unlocking NFTs full potential</h2>
       <div className="py-10 pb-8">

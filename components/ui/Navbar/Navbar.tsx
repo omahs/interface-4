@@ -29,7 +29,7 @@ const Navbar = () => {
             <div>
               {!isConnected ? (
                 <Button
-                  className="h-[36px] font-medium rounded-full border-2 shadow-button"
+                  className="h-[36px] font-medium rounded-full border-2 shadow-light"
                   color=" border-sky-700 bg-white text-black hover:bg-sky-100"
                   double={false}
                   label="Connect"
