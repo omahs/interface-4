@@ -41,7 +41,7 @@ const SliceForm = ({}: Props) => {
           />
         </div>
         <div className="w-40">
-          <p className="text-left">Shares amount</p>
+          <p className="text-left">Shares</p>
           <Input
             type="number"
             placeholder="1000000"

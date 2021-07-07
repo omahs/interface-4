@@ -18,18 +18,21 @@ export default function Home() {
         <>
           <div className="space-y-4 max-w-screen-xs">
             <p>
-              Create a special, fractionable NFT called a{" "}
-              <DoubleText inactive logoText="Slicer" size="text-normal" /> which
-              can be shared among multiple accounts.
-            </p>
-            <p>
-              When slicers receive ETH, their owners can redeem an amount
-              proportional to the owned shares.
-            </p>
-            <p>
+              Slicers are a{" "}
               <Link href="/">
-                <a className="highlight">Learn why slicers are cool here ✨</a>
-              </Link>
+                <a className="font-extrabold highlight">
+                  special kind of fractionable NFTs
+                </a>
+              </Link>{" "}
+              which can be shared among multiple accounts.
+            </p>
+            <p>
+              When slicers receive ETH, owners can redeem an amount proportional
+              to the owned shares.
+            </p>
+            <p>
+              <b>Note</b>: minimum and total shares cannot be changed after
+              creation.
             </p>
           </div>
           <SliceForm />
