@@ -1,13 +1,16 @@
-import { useState } from "react"
-import { Button, Input } from "@components/ui"
+import { useEffect, useState } from "react"
+import { Button, Input, SliceFormInputBlock } from "@components/ui"
 import { Slice } from "@lib/handlers"
 import handleSubmit from "@utils/handleSubmit"
+import { initialize, useAddress } from "@lib/useProvider"
 
 type Props = {}
 
 const SliceForm = ({}: Props) => {
-  const [address, setAddress] = useState("")
-  const [shares, setShares] = useState(0)
+  const signerAddress = useAddress()
+  const [inputCount, setInputCount] = useState(3)
+  const [addresses, setAddresses] = useState([""])
+  const [shares, setShares] = useState([1000000])
   const [minimumShares, setMinimumShares] = useState(0)
   const [loading, setLoading] = useState(false)
   const [{ message, messageStatus }, setMessage] = useState({
@@ -15,51 +18,57 @@ const SliceForm = ({}: Props) => {
     messageStatus: "success",
   })
 
+  useEffect(() => {
+    setAddresses([signerAddress])
+  }, [signerAddress])
+
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
-    handleSubmit(
-      Slice([address], [shares], minimumShares),
-      e,
-      setMessage,
-      setLoading
-    )
+    e.preventDefault()
+    console.log(addresses, shares, minimumShares)
+    // handleSubmit(
+    //   Slice(addresses, shares, minimumShares),
+    //   e,
+    //   setMessage,
+    //   setLoading
+    // )
   }
 
   return (
     <form
-      className="mx-auto py-6 w-full max-w-[28rem] space-y-4"
+      className="w-full max-w-screen-sm py-6 mx-auto space-y-4"
       onSubmit={submit}
     >
-      <div className="flex gap-4 pt-4">
-        <div className="flex-grow">
-          <p className="text-left">Address</p>
-          <Input
-            type="string"
-            placeholder="0x… / vitalik.eth"
-            className="mt-1.5"
-            required
-            onChange={setAddress}
-          />
-        </div>
-        <div className="w-40">
-          <p className="text-left">Shares</p>
-          <Input
-            type="number"
-            placeholder="1000000"
-            className="mt-1.5"
-            required
-            onChange={setShares}
-          />
-        </div>
+      <div className="grid grid-cols-12 text-left gap-x-4 gap-y-2">
+        <p className="col-span-6 col-start-2 sm:col-span-7 sm:col-start-2">
+          Address
+        </p>
+        <p className="col-span-4 sm:col-span-3">Shares</p>
+        {[...Array(inputCount)].map((el, key) => {
+          console.log(key)
+          return (
+            <SliceFormInputBlock
+              key={key}
+              addresses={addresses}
+              setAddresses={setAddresses}
+              shares={shares}
+              setShares={setShares}
+            />
+          )
+        })}
       </div>
+
       <div>
         <Input
           type="number"
           placeholder="100000"
           className="mt-1.5"
-          required
+          // required
           onChange={setMinimumShares}
         />
       </div>
+      <p>
+        <b>Note</b>: minimum and total shares cannot be changed later.
+      </p>
       <div className="py-1">
         <Button label="Slice" type="submit" loading={loading} />
       </div>

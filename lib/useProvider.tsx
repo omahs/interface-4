@@ -1,6 +1,21 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { ethers } from "ethers"
 
+export const useAddress = () => {
+  const [signerAddress, setSignerAddress] = useState("")
+  const init = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const signer = provider.getSigner()
+    setSignerAddress(await signer.getAddress())
+  }
+
+  useEffect(() => {
+    init()
+  })
+
+  return signerAddress
+}
+
 export const initialize = async () => {
   const provider = new ethers.providers.Web3Provider(window.ethereum)
   const signer = provider.getSigner()

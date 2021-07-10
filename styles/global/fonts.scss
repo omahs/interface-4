@@ -15,7 +15,7 @@ h3 {
 }
 
 a {
-  @apply cursor-pointer font-medium hover:text-sky-600;
+  @apply cursor-pointer font-medium hover:text-blue-600;
   color: inherit;
   text-decoration: none;
 }
@@ -32,7 +32,8 @@ a {
   text-underline-offset: 1px;
 }
 .dark .highlight {
-  text-decoration-color: theme("colors.blue.300");
+  @apply hover:text-sky-300;
+  text-decoration-color: theme("colors.sky.300");
 }
 .dark a {
   @apply hover:text-blue-300;

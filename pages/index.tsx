@@ -2,7 +2,7 @@ import { Button, DoubleText } from "@components/ui"
 
 export default function Home() {
   return (
-    <main className="py-12 text-center md:py-16">
+    <main>
       <DoubleText
         inactive
         logoText={`Slice`}

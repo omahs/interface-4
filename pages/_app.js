@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }) {
         <AppWrapper>
           <Layout>
             <Background />
-            <Container>
+            <Container page={true}>
               <Component {...pageProps} />
             </Container>
           </Layout>

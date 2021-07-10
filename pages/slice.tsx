@@ -6,17 +6,16 @@ export default function Home() {
   const { isConnected } = useAppContext()
 
   return (
-    <main className="py-12 text-center md:py-16">
+    <main>
       <DoubleText
         inactive
         logoText={`Create a Slicer`}
         size="text-4xl sm:text-6xl"
         position="pb-8"
       />
-      <h2 className="pb-8">Just slice it</h2>
       {isConnected ? (
         <>
-          <div className="space-y-4 max-w-screen-xs">
+          <div className="py-4 mx-auto space-y-4 sm:text-lg max-w-screen-xs">
             <p>
               Slicers are a{" "}
               <Link href="/">
@@ -30,11 +29,8 @@ export default function Home() {
               When slicers receive ETH, owners can redeem an amount proportional
               to the owned shares.
             </p>
-            <p>
-              <b>Note</b>: minimum and total shares cannot be changed after
-              creation.
-            </p>
           </div>
+          <h2 className="pt-8">Just slice it</h2>
           <SliceForm />
         </>
       ) : (

@@ -16,7 +16,7 @@ module.exports = {
 
   theme: {
     nightwind: {
-      colorClasses: "gradient",
+      colorClasses: ["gradient", "placeholder"],
       typography: true,
       colors: {
         white: "#141618",
