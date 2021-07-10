@@ -1,8 +1,9 @@
-import { Dispatch, SetStateAction, useState } from "react"
+import { useEffect, Dispatch, SetStateAction, useState } from "react"
 import { Input } from "@components/ui"
 
 type Props = {
-  key: number
+  index: number
+  signerAddress: string
   addresses: string[]
   shares: number[]
   setAddresses: Dispatch<SetStateAction<string[]>>
@@ -10,7 +11,8 @@ type Props = {
 }
 
 const SliceFormInputBlock = ({
-  key,
+  index,
+  signerAddress,
   addresses,
   shares,
   setAddresses,
@@ -19,18 +21,30 @@ const SliceFormInputBlock = ({
   const [address, setAddress] = useState("")
   const [sharesAmount, setSharesAmount] = useState(null)
 
-  // Todo: This
   const handleChange = (
-    e: React.SyntheticEvent<EventTarget>,
-    setValue: Dispatch<SetStateAction<string | number>>,
+    value: string | number,
     currentState: string[] | number[],
     setState: Dispatch<SetStateAction<string[] | number[]>>
   ) => {
-    setValue(e)
     let items = currentState
-    items[key] = "newName"
+    items[index] = value
     setState(items)
   }
+
+  useEffect(() => {
+    if (index == 0 && signerAddress) {
+      setAddress(signerAddress)
+      setSharesAmount(1000000)
+    }
+  }, [signerAddress])
+
+  useEffect(() => {
+    handleChange(address, addresses, setAddresses)
+  }, [address])
+
+  useEffect(() => {
+    handleChange(Number(sharesAmount), shares, setShares)
+  }, [sharesAmount])
 
   return (
     <>
@@ -40,9 +54,7 @@ const SliceFormInputBlock = ({
           placeholder="0x… / vitalik.eth"
           className="mt-1.5"
           value={address}
-          onChange={(e: React.SyntheticEvent<EventTarget>) =>
-            handleChange(e, setAddress, addresses, setAddresses)
-          }
+          onChange={setAddress}
         />
       </div>
       <div className="col-span-4 sm:col-span-3">
@@ -51,9 +63,7 @@ const SliceFormInputBlock = ({
           placeholder="1000000"
           className="mt-1.5"
           value={sharesAmount}
-          onChange={(e: React.SyntheticEvent<EventTarget>) =>
-            handleChange(e, setSharesAmount, shares, setShares)
-          }
+          onChange={setSharesAmount}
         />
       </div>
     </>

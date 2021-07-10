@@ -19,18 +19,21 @@ const SliceForm = ({}: Props) => {
   })
 
   useEffect(() => {
-    setAddresses([signerAddress])
+    if (signerAddress) {
+      setAddresses([signerAddress])
+      console.log(addresses)
+    }
   }, [signerAddress])
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
-    console.log(addresses, shares, minimumShares)
-    // handleSubmit(
-    //   Slice(addresses, shares, minimumShares),
-    //   e,
-    //   setMessage,
-    //   setLoading
-    // )
+    // console.log(addresses, shares, minimumShares)
+    handleSubmit(
+      Slice(addresses, shares, minimumShares),
+      e,
+      setMessage,
+      setLoading
+    )
   }
 
   return (
@@ -44,10 +47,12 @@ const SliceForm = ({}: Props) => {
         </p>
         <p className="col-span-4 sm:col-span-3">Shares</p>
         {[...Array(inputCount)].map((el, key) => {
-          console.log(key)
+          const i = key
           return (
             <SliceFormInputBlock
               key={key}
+              index={i}
+              signerAddress={signerAddress}
               addresses={addresses}
               setAddresses={setAddresses}
               shares={shares}
