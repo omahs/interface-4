@@ -11,7 +11,7 @@ export default function Home() {
       />
       <h2>Unlocking NFTs full potential</h2>
       <div className="py-10 pb-8">
-        <Button label="Start slicing" href="/slice" requireConnection />
+        <Button label="Start slicing" href="/slice" />
       </div>
       <p>or keep scrolling to learn more</p>
     </main>

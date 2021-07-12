@@ -16,8 +16,9 @@ const handleSubmit = async (
   } catch (err) {
     // todo: solve Bignumber value error IN SLICEFORM
     // todo: test this
-    const message = err.data.message.split("error message '")[1].slice(0, -1)
-    handleMessage({ message, messageStatus: "error" }, setMessage)
+    console.log(err)
+    // const message = err.data.message.split("error message '")[1].slice(0, -1)
+    // handleMessage({ message, messageStatus: "error" }, setMessage)
   }
 
   setLoading(false)

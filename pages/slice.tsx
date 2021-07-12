@@ -30,7 +30,6 @@ export default function Home() {
               to the owned shares.
             </p>
           </div>
-          <h2 className="pt-8">Just slice it</h2>
           <SliceForm />
         </>
       ) : (
