@@ -2,10 +2,10 @@ import { FC } from "react"
 import NextHead from "next/head"
 import { DefaultSeo } from "next-seo"
 
-const title = "Slice Series"
+const title = "Slice"
 const description =
   "Easily turn your course, newsletter, book or manga into a digital serie. Subscribe now for early access."
-const domain = "series.slice.so"
+const domain = "slice.so"
 const accounts = { twitter: "@slice__so" }
 
 const Head: FC = () => {

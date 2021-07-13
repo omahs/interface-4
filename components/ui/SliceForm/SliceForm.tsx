@@ -38,16 +38,12 @@ const SliceForm = ({}: Props) => {
       cleanedShares.length == cleanedAddresses.length &&
       cleanedShares.length <= 30
     ) {
-      try {
-        handleSubmit(
-          Slice(cleanedAddresses, cleanedShares, minimumShares),
-          e,
-          setMessage,
-          setLoading
-        )
-      } catch (err) {
-        throw err
-      }
+      handleSubmit(
+        Slice(cleanedAddresses, cleanedShares, minimumShares),
+        e,
+        setMessage,
+        setLoading
+      )
     } else {
       handleMessage(
         {
@@ -64,11 +60,14 @@ const SliceForm = ({}: Props) => {
       className="w-full max-w-screen-sm py-6 mx-auto space-y-4"
       onSubmit={submit}
     >
-      <div className="grid items-center text-left xs:grid-cols-10 md:grid-cols-12 gap-x-4 gap-y-4">
-        <p className="xs:col-span-5 xs:col-start-2 md:col-span-7 md:col-start-2">
+      <div className="grid items-center grid-cols-8 text-left xs:grid-cols-10 md:grid-cols-12 gap-x-4 gap-y-4 xs:gap-y-6">
+        <p className="hidden xs:block xs:col-span-5 xs:col-start-2 md:col-span-7 md:col-start-2">
           Addresses <span className="text-sm">(Max. 30)</span>
         </p>
-        <p>Shares</p>
+        <p className="hidden xs:block">Shares</p>
+        <p className="col-span-8 pb-2 text-lg font-semibold text-center xs:hidden">
+          Add up to 30 addresses
+        </p>
         {[...Array(inputCount)].map((el, key) => {
           const i = key
           return (
@@ -93,11 +92,11 @@ const SliceForm = ({}: Props) => {
             <Add onClick={() => setInputCount(inputCount + 1)} />
           )}
         </div>
-        <p className="col-span-3 py-3 pr-2 text-right xs:col-end-7 md:col-end-9 md:col-span-3">
+        <p className="col-span-4 py-3 pr-2 text-right xs:col-span-3 xs:col-end-7 md:col-end-9 md:col-span-3">
           Total shares
         </p>
         <p className="col-span-3 pl-6">{totalShares}</p>
-        <div className="relative flex justify-end items-center col-span-5 col-end-7 pt-1.5">
+        <div className="relative flex justify-end items-center col-span-5 xs:col-end-7 pt-1.5">
           <p className="pr-1">Set minimum shares</p>
           <Question
             text={
@@ -114,7 +113,7 @@ const SliceForm = ({}: Props) => {
           />
         </div>
 
-        <div className="xs:col-span-3 xs:col-start-7 md:col-span-3 md:col-start-8">
+        <div className="col-span-3 xs:col-span-3 xs:col-start-7 md:col-span-3 md:col-start-8">
           <Input
             type="number"
             placeholder="100000"
@@ -136,7 +135,7 @@ const SliceForm = ({}: Props) => {
         </div>
       </div>
 
-      <p className="py-4">
+      <p className="pt-4 pb-6">
         <b>Note</b>: minimum and total shares cannot be changed later.
       </p>
       {message && (

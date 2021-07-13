@@ -79,13 +79,11 @@ const SliceFormInputBlock = ({
     visible && (
       <>
         <div className="col-span-1 col-start-1 mt-1.5 mx-auto">
-          {index != 0 && (
-            <>
-              <Delete onClick={handleRemove} />
-            </>
-          )}
+          <div className="">
+            {index != 0 && <Delete onClick={handleRemove} />}
+          </div>
         </div>
-        <div className="xs:col-span-5 md:col-span-7">
+        <div className="col-span-7 xs:col-span-5 md:col-span-7">
           <Input
             type="string"
             placeholder="0x… / vitalik.eth"
@@ -95,7 +93,8 @@ const SliceFormInputBlock = ({
             onChange={setAddress}
           />
         </div>
-        <div className="col-span-3">
+        <p className="col-span-2 pt-1.5 pr-2 text-right xs:hidden">Shares</p>
+        <div className="col-span-4 xs:col-span-3">
           <Input
             type="number"
             placeholder="1000000"
@@ -107,7 +106,7 @@ const SliceFormInputBlock = ({
         </div>
         <div className="mt-1.5">
           <p
-            className={`col-span-1 text-sm ${
+            className={`col-span-2 xs:col-span-1 text-sm ${
               minimumShares <= Number(sharesAmount) &&
               "text-green-600 font-bold"
             }`}
@@ -117,6 +116,7 @@ const SliceFormInputBlock = ({
                 "%"}
           </p>
         </div>
+        <hr className="col-span-8 mt-6 mb-4 border-gray-300 xs:hidden" />
       </>
     )
   )

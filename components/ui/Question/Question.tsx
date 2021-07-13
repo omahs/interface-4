@@ -17,7 +17,7 @@ export default function Question({ text }: Props) {
       <div
         className={`${
           !show && "hidden"
-        } absolute p-5 w-80 bg-gray-50 shadow-lg bottom-0 left-0 mb-9 rounded-md overflow-hidden`}
+        } absolute p-5 w-80 bg-gray-50 shadow-xl bottom-0 left-0 mb-9 rounded-md overflow-hidden`}
       >
         <p>{text}</p>
       </div>
