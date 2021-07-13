@@ -1,14 +1,18 @@
+import Link from "next/link"
 import { useEffect, useState } from "react"
-import { Button, Input, SliceFormInputBlock } from "@components/ui"
+import { Button, Input, SliceFormInputBlock, Question } from "@components/ui"
 import { Slice } from "@lib/handlers"
 import handleSubmit from "@utils/handleSubmit"
 import { initialize, useAddress } from "@lib/useProvider"
+import handleMessage from "@utils/handleMessage"
+import Add from "@components/icons/Add"
 
 type Props = {}
 
 const SliceForm = ({}: Props) => {
   const signerAddress = useAddress()
   const [inputCount, setInputCount] = useState(3)
+  const [removedCount, setRemovedCount] = useState(0)
   const [addresses, setAddresses] = useState([""])
   const [shares, setShares] = useState([1000000])
   const [minimumShares, setMinimumShares] = useState(0)
@@ -18,6 +22,8 @@ const SliceForm = ({}: Props) => {
     message: "",
     messageStatus: "success",
   })
+  const cleanedAddresses = addresses.filter(() => true)
+  const cleanedShares = shares.filter(() => true)
 
   useEffect(() => {
     if (signerAddress) {
@@ -28,14 +34,29 @@ const SliceForm = ({}: Props) => {
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
-    const cleanedAddresses = addresses.filter(() => true)
-    const cleanedShares = shares.filter(() => true)
-    handleSubmit(
-      Slice(cleanedAddresses, cleanedShares, minimumShares),
-      e,
-      setMessage,
-      setLoading
-    )
+    if (
+      cleanedShares.length == cleanedAddresses.length &&
+      cleanedShares.length <= 30
+    ) {
+      try {
+        handleSubmit(
+          Slice(cleanedAddresses, cleanedShares, minimumShares),
+          e,
+          setMessage,
+          setLoading
+        )
+      } catch (err) {
+        throw err
+      }
+    } else {
+      handleMessage(
+        {
+          message: "Inputs don't correspond, please try again",
+          messageStatus: "error",
+        },
+        setMessage
+      )
+    }
   }
 
   return (
@@ -43,11 +64,11 @@ const SliceForm = ({}: Props) => {
       className="w-full max-w-screen-sm py-6 mx-auto space-y-4"
       onSubmit={submit}
     >
-      <div className="grid grid-cols-12 text-left gap-x-4 gap-y-4">
-        <p className="col-span-6 col-start-2 md:col-span-7 md:col-start-2">
-          Address
+      <div className="grid items-center text-left xs:grid-cols-10 md:grid-cols-12 gap-x-4 gap-y-4">
+        <p className="xs:col-span-5 xs:col-start-2 md:col-span-7 md:col-start-2">
+          Addresses <span className="text-sm">(Max. 30)</span>
         </p>
-        <p className="col-span-4 md:col-span-3">Shares</p>
+        <p>Shares</p>
         {[...Array(inputCount)].map((el, key) => {
           const i = key
           return (
@@ -56,17 +77,44 @@ const SliceForm = ({}: Props) => {
               index={i}
               signerAddress={signerAddress}
               addresses={addresses}
-              setAddresses={setAddresses}
               shares={shares}
-              setShares={setShares}
               totalShares={totalShares}
-              setTotalShares={setTotalShares}
               minimumShares={minimumShares}
+              removedCount={removedCount}
+              setAddresses={setAddresses}
+              setShares={setShares}
+              setTotalShares={setTotalShares}
+              setRemovedCount={setRemovedCount}
             />
           )
         })}
-        <p className="col-start-9">{totalShares}</p>
-        <div className="col-span-3 col-start-9">
+        <div className="col-span-1 col-start-1 mx-auto">
+          {inputCount - removedCount < 30 && (
+            <Add onClick={() => setInputCount(inputCount + 1)} />
+          )}
+        </div>
+        <p className="col-span-3 py-3 pr-2 text-right xs:col-end-7 md:col-end-9 md:col-span-3">
+          Total shares
+        </p>
+        <p className="col-span-3 pl-6">{totalShares}</p>
+        <div className="relative flex justify-end items-center col-span-5 col-end-7 pt-1.5">
+          <p className="pr-1">Set minimum shares</p>
+          <Question
+            text={
+              <>
+                Whoever owns the chosen amount of shares holds{" "}
+                <Link href="/">
+                  <a className="font-extrabold highlight" target="blank">
+                    privileged access
+                  </a>
+                </Link>{" "}
+                to this slicer.
+              </>
+            }
+          />
+        </div>
+
+        <div className="xs:col-span-3 xs:col-start-7 md:col-span-3 md:col-start-8">
           <Input
             type="number"
             placeholder="100000"
@@ -75,20 +123,22 @@ const SliceForm = ({}: Props) => {
             onChange={setMinimumShares}
           />
         </div>
-        <div className="flex items-center mt-1.5">
-          <p className="col-span-1 text-sm font-bold">
+        <div className="col-span-1 flex items-center mt-1.5">
+          <p
+            className={`text-sm font-bold ${
+              minimumShares > totalShares && "text-red-500"
+            }`}
+          >
             {minimumShares != 0 &&
+              totalShares != 0 &&
               Math.floor((minimumShares / totalShares) * 10000) / 100 + "%"}
           </p>
         </div>
       </div>
 
-      <p>
+      <p className="py-4">
         <b>Note</b>: minimum and total shares cannot be changed later.
       </p>
-      <div className="py-1">
-        <Button label="Slice" type="submit" loading={loading} />
-      </div>
       {message && (
         <p
           className={
@@ -98,6 +148,9 @@ const SliceForm = ({}: Props) => {
           {message}
         </p>
       )}
+      <div className="py-1">
+        <Button label="Slice" type="submit" loading={loading} />
+      </div>
     </form>
   )
 }
