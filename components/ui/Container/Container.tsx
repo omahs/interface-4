@@ -8,7 +8,7 @@ const Container = ({ size = "", page = false, children }: Props) => {
   return (
     <div
       className={`${size ? size : "max-w-screen-lg"} mx-auto px-2 md:px-8 ${
-        page && "pt-20 pb-10 text-center sm:pt-32"
+        page && "py-16 pb-10 text-center sm:py-24"
       }`}
     >
       {children}

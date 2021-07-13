@@ -19,7 +19,7 @@ export default function Home() {
             <p>
               Slicers are a{" "}
               <Link href="/">
-                <a className="font-extrabold highlight">
+                <a className="font-extrabold highlight" target="blank">
                   special kind of fractionable NFTs
                 </a>
               </Link>{" "}
