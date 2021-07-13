@@ -5,6 +5,10 @@
 /.pnp
 .pnp.js
 
+# development
+hardhat.config.js
+/scripts
+
 # testing
 /coverage
 
