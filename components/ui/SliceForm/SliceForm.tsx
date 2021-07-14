@@ -61,10 +61,27 @@ const SliceForm = ({}: Props) => {
       onSubmit={submit}
     >
       <div className="grid items-center grid-cols-8 text-left xs:grid-cols-10 md:grid-cols-12 gap-x-4 gap-y-4 xs:gap-y-6">
-        <p className="hidden xs:block xs:col-span-5 xs:col-start-2 md:col-span-7 md:col-start-2">
+        <p className="mb-[-16px] hidden xs:block xs:col-span-5 xs:col-start-2 md:col-span-7 md:col-start-2">
           Addresses <span className="text-sm">(Max. 30)</span>
         </p>
-        <p className="hidden xs:block">Shares</p>
+        <div className="mb-[-16px] relative items-center hidden xs:flex">
+          <p className="pr-1">Shares</p>
+          <Question
+            text={
+              <>
+                <p className="pb-4">
+                  The percentage represents the relative amount of ETH earned by
+                  the account from all payments made to the slicer.
+                </p>
+                <p>
+                  If it&apos;s green, the account possess more than the minimum
+                  shares amount.
+                </p>
+              </>
+            }
+            position="top-[35px] right-[-35px]"
+          />
+        </div>
         <p className="col-span-8 pb-2 text-lg font-semibold text-center xs:hidden">
           Add up to 30 addresses
         </p>
@@ -97,17 +114,23 @@ const SliceForm = ({}: Props) => {
         </p>
         <p className="col-span-3 pl-6">{totalShares}</p>
         <div className="relative flex justify-end items-center col-span-5 xs:col-end-7 pt-1.5">
-          <p className="pr-1">Set minimum shares</p>
+          <p className="pr-1">Minimum shares</p>
           <Question
             text={
               <>
-                Whoever owns the chosen amount of shares holds{" "}
-                <Link href="/">
-                  <a className="font-extrabold highlight" target="blank">
-                    privileged access
-                  </a>
-                </Link>{" "}
-                to this slicer.
+                <p className="pb-4">
+                  Accounts with the chosen amount of shares have{" "}
+                  <Link href="/">
+                    <a className="font-extrabold highlight" target="blank">
+                      privileged access
+                    </a>
+                  </Link>{" "}
+                  to this slicer.
+                </p>
+                <p>
+                  <strong>Note</strong>: At least one account has to hold the
+                  minimum amount of shares.
+                </p>
               </>
             }
           />
@@ -122,7 +145,7 @@ const SliceForm = ({}: Props) => {
             onChange={setMinimumShares}
           />
         </div>
-        <div className="col-span-1 flex items-center mt-1.5">
+        <div className="col-start-6 pl-6 xs:pl-0 xs:col-span-1 flex items-center mt-1.5">
           <p
             className={`text-sm font-bold ${
               minimumShares > totalShares && "text-red-500"
@@ -135,9 +158,19 @@ const SliceForm = ({}: Props) => {
         </div>
       </div>
 
-      <p className="pt-4 pb-6">
-        <b>Note</b>: minimum and total shares cannot be changed later.
-      </p>
+      <div className="pt-4 pb-6">
+        <p>
+          <strong>Note</strong>: minimum and total shares cannot be changed
+          later.
+        </p>
+        {totalShares === 1 && (
+          <p className="pt-4">
+            <strong>Note</strong>: You are about to slice a non-fractionable
+            NFT. That means that there can only be a single owner at any given
+            time which gets all ETH earned by the slicer.
+          </p>
+        )}
+      </div>
       {message && (
         <p
           className={
