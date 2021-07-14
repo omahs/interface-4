@@ -18,6 +18,13 @@
   box-shadow: 0 0 10px 1px rgba(14, 165, 233, 0.5);
 }
 
+.shadow-light-focusable {
+  box-shadow: 0 0 8px 0.6px rgba(14, 165, 233, 0.5);
+  &:focus {
+    box-shadow: 0 2px 8px 1.8px rgba(14, 165, 233, 0.5);
+  }
+}
+
 .shadow-medium {
   box-shadow: 0 0 6px 2px rgba(14, 165, 233, 0.5);
 }

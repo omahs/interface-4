@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Button, ConnectBlock, DoubleText, SliceForm } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 
-export default function Home() {
+export default function Slice() {
   const { isConnected } = useAppContext()
 
   return (

@@ -38,7 +38,7 @@ module.exports = {
     },
   },
   variants: {
-    nightwind: ["group-hover"],
+    nightwind: ["group-hover", "focus"],
   },
 
   plugins: [require("@tailwindcss/typography"), require("nightwind")],

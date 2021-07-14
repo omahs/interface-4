@@ -112,7 +112,7 @@ const SliceForm = ({}: Props) => {
         <p className="col-span-4 py-3 pr-2 text-right xs:col-span-3 xs:col-end-7 md:col-end-9 md:col-span-3">
           Total shares
         </p>
-        <p className="col-span-3 pl-6">{totalShares}</p>
+        <p className="col-span-3 pl-5">{totalShares}</p>
         <div className="relative flex justify-end items-center col-span-5 xs:col-end-7 pt-1.5">
           <p className="pr-1">Minimum shares</p>
           <Question
@@ -145,7 +145,7 @@ const SliceForm = ({}: Props) => {
             onChange={setMinimumShares}
           />
         </div>
-        <div className="col-start-6 pl-6 xs:pl-0 xs:col-span-1 flex items-center mt-1.5">
+        <div className="col-start-6 pl-5 xs:pl-0 xs:col-span-1 flex items-center mt-1.5">
           <p
             className={`text-sm font-bold ${
               minimumShares > totalShares && "text-red-500"
