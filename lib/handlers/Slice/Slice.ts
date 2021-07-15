@@ -10,6 +10,21 @@ const Slice = async (
   const slicecontract = slice(signer)
 
   const data = await slicecontract.slice(accounts, shares, minimumShares)
+  // slicecontract.once(
+  //   "TokenSliced",
+  //   (
+  //     slicerAddress: string,
+  //     tokenId: number,
+  //     payees: string[],
+  //     shares: number[]
+  //   ) => {
+  //     let e = []
+  //     shares.forEach((el) => {
+  //       e.push(Number(el))
+  //     })
+  //     console.log(slicerAddress, tokenId, payees, e)
+  //   }
+  // )
 
   return data
 }

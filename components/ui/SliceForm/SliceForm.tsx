@@ -18,6 +18,7 @@ const SliceForm = ({}: Props) => {
   const [minimumShares, setMinimumShares] = useState(0)
   const [totalShares, setTotalShares] = useState(1000000)
   const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
   const [{ message, messageStatus }, setMessage] = useState({
     message: "",
     messageStatus: "success",
@@ -42,7 +43,9 @@ const SliceForm = ({}: Props) => {
         Slice(cleanedAddresses, cleanedShares, minimumShares),
         e,
         setMessage,
-        setLoading
+        setLoading,
+        setSuccess,
+        true
       )
     } else {
       handleMessage(
@@ -55,7 +58,7 @@ const SliceForm = ({}: Props) => {
     }
   }
 
-  return (
+  return !success ? (
     <form
       className="w-full max-w-screen-sm py-6 mx-auto space-y-4"
       onSubmit={submit}
@@ -184,6 +187,8 @@ const SliceForm = ({}: Props) => {
         <Button label="Slice" type="submit" loading={loading} />
       </div>
     </form>
+  ) : (
+    <p>You have successfully created a Slicer!</p>
   )
 }
 
