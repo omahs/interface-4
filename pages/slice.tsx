@@ -13,7 +13,7 @@ import { LogDescription } from "ethers/lib/utils"
 export default function Slice() {
   const { isConnected } = useAppContext()
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(true)
+  const [success, setSuccess] = useState(false)
   const [log, setLog] = useState<LogDescription>()
   const eventLog = log?.args
 

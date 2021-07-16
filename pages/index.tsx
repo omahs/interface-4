@@ -10,8 +10,7 @@ export default function Home() {
         position="pb-8"
       />
       <h2 className="leading-normal">
-        Decentralised payments infrastructure for real world applications and
-        services
+        Decentralised payments for real world applications and services
       </h2>
       <div className="py-10">
         <Button label="Start slicing" href="/slice" />
