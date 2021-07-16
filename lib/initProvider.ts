@@ -31,4 +31,4 @@ export const slicer = async (
   return new ethers.Contract(slicerAddress, SlicerContract.abi, signer)
 }
 
-export const gasPrice = { gasPrice: 1000000000 }
+// export const gasPrice = { gasPrice: 1000000000 }

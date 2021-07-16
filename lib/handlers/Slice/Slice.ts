@@ -1,5 +1,6 @@
-import { initialize } from "@lib/useProvider"
 import { slice } from "@lib/initProvider"
+import { initialize } from "@lib/useProvider"
+import handleLog from "@utils/handleLog"
 
 const Slice = async (
   accounts: string[],
@@ -9,24 +10,14 @@ const Slice = async (
   const { signer } = await initialize()
   const slicecontract = slice(signer)
 
-  const data = await slicecontract.slice(accounts, shares, minimumShares)
-  // slicecontract.once(
-  //   "TokenSliced",
-  //   (
-  //     slicerAddress: string,
-  //     tokenId: number,
-  //     payees: string[],
-  //     shares: number[]
-  //   ) => {
-  //     let e = []
-  //     shares.forEach((el) => {
-  //       e.push(Number(el))
-  //     })
-  //     console.log(slicerAddress, tokenId, payees, e)
-  //   }
-  // )
-
-  return data
+  try {
+    const call = await slicecontract.slice(accounts, shares, minimumShares)
+    const eventLog = await handleLog(slicecontract, call)
+    console.log(eventLog)
+    return eventLog
+  } catch (err) {
+    throw err
+  }
 }
 
 export default Slice

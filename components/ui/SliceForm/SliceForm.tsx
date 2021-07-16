@@ -174,6 +174,9 @@ const SliceForm = ({}: Props) => {
           </p>
         )}
       </div>
+      <div className="py-1">
+        <Button label="Slice" type="submit" loading={loading} />
+      </div>
       {message && (
         <p
           className={
@@ -183,9 +186,6 @@ const SliceForm = ({}: Props) => {
           {message}
         </p>
       )}
-      <div className="py-1">
-        <Button label="Slice" type="submit" loading={loading} />
-      </div>
     </form>
   ) : (
     <p>You have successfully created a Slicer!</p>
