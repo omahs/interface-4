@@ -1,15 +1,20 @@
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useState, Dispatch, SetStateAction } from "react"
 import { Button, Input, SliceFormInputBlock, Question } from "@components/ui"
 import { Slice } from "@lib/handlers"
 import handleSubmit from "@utils/handleSubmit"
-import { initialize, useAddress } from "@lib/useProvider"
+import { useAddress } from "@lib/useProvider"
 import handleMessage from "@utils/handleMessage"
 import Add from "@components/icons/Add"
+import { LogDescription } from "ethers/lib/utils"
 
-type Props = {}
+type Props = {
+  setLoading: Dispatch<SetStateAction<boolean>>
+  setSuccess: Dispatch<SetStateAction<boolean>>
+  setLog: Dispatch<SetStateAction<LogDescription>>
+}
 
-const SliceForm = ({}: Props) => {
+const SliceForm = ({ setLoading, setSuccess, setLog }: Props) => {
   const signerAddress = useAddress()
   const [inputCount, setInputCount] = useState(3)
   const [removedCount, setRemovedCount] = useState(0)
@@ -17,8 +22,6 @@ const SliceForm = ({}: Props) => {
   const [shares, setShares] = useState([1000000])
   const [minimumShares, setMinimumShares] = useState(0)
   const [totalShares, setTotalShares] = useState(1000000)
-  const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
   const [{ message, messageStatus }, setMessage] = useState({
     message: "",
     messageStatus: "success",
@@ -29,9 +32,17 @@ const SliceForm = ({}: Props) => {
   useEffect(() => {
     if (signerAddress) {
       setAddresses([signerAddress])
-      console.log(addresses)
     }
   }, [signerAddress])
+
+  const resetInputs = () => {
+    setInputCount(3)
+    setRemovedCount(0)
+    setAddresses([signerAddress])
+    setShares([1000000])
+    setMinimumShares(0)
+    setTotalShares(1000000)
+  }
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
@@ -39,7 +50,7 @@ const SliceForm = ({}: Props) => {
       cleanedShares.length == cleanedAddresses.length &&
       cleanedShares.length <= 30
     ) {
-      handleSubmit(
+      const eventLog = await handleSubmit(
         Slice(cleanedAddresses, cleanedShares, minimumShares),
         e,
         setMessage,
@@ -47,6 +58,8 @@ const SliceForm = ({}: Props) => {
         setSuccess,
         true
       )
+      resetInputs()
+      setLog(eventLog)
     } else {
       handleMessage(
         {
@@ -58,7 +71,7 @@ const SliceForm = ({}: Props) => {
     }
   }
 
-  return !success ? (
+  return (
     <form
       className="w-full max-w-screen-sm py-6 mx-auto space-y-4"
       onSubmit={submit}
@@ -124,7 +137,7 @@ const SliceForm = ({}: Props) => {
                 <p className="pb-4">
                   Accounts with the chosen amount of shares have{" "}
                   <Link href="/">
-                    <a className="font-extrabold highlight" target="blank">
+                    <a className="font-extrabold highlight">
                       privileged access
                     </a>
                   </Link>{" "}
@@ -175,7 +188,7 @@ const SliceForm = ({}: Props) => {
         )}
       </div>
       <div className="py-1">
-        <Button label="Slice" type="submit" loading={loading} />
+        <Button label="Slice" type="submit" />
       </div>
       {message && (
         <p
@@ -187,8 +200,6 @@ const SliceForm = ({}: Props) => {
         </p>
       )}
     </form>
-  ) : (
-    <p>You have successfully created a Slicer!</p>
   )
 }
 

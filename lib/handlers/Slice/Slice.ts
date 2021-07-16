@@ -1,6 +1,5 @@
 import { slice } from "@lib/initProvider"
 import { initialize } from "@lib/useProvider"
-import handleLog from "@utils/handleLog"
 
 const Slice = async (
   accounts: string[],
@@ -8,13 +7,11 @@ const Slice = async (
   minimumShares: number
 ) => {
   const { signer } = await initialize()
-  const slicecontract = slice(signer)
+  const sliceContract = slice(signer)
 
   try {
-    const call = await slicecontract.slice(accounts, shares, minimumShares)
-    const eventLog = await handleLog(slicecontract, call)
-    console.log(eventLog)
-    return eventLog
+    const call = await sliceContract.slice(accounts, shares, minimumShares)
+    return [sliceContract, call]
   } catch (err) {
     throw err
   }

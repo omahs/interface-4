@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react"
 import handleMessage, { Message } from "./handleMessage"
 import launchConfetti from "@utils/launchConfetti"
+import handleLog from "@utils/handleLog"
 
 const handleSubmit = async (
   action: Promise<any>,
@@ -11,23 +12,25 @@ const handleSubmit = async (
   confetti = false
 ) => {
   e.preventDefault()
-  setLoading(true)
   setMessage({ message: "", messageStatus: "success" })
   try {
-    await action
+    const [contract, call] = await action
+
+    setLoading(true)
+    const eventLog = await handleLog(contract, call)
+    setLoading(false)
+
     setSuccess(true)
     if (confetti) {
       launchConfetti()
     }
-    handleMessage({ message: "Success!", messageStatus: "success" }, setMessage)
+    return eventLog
   } catch (err) {
     const message = err.data?.message
       ?.split("reverted with reason string '")[1]
       ?.slice(0, -1)
     handleMessage({ message, messageStatus: "error" }, setMessage)
   }
-
-  setLoading(false)
 }
 
 export default handleSubmit
