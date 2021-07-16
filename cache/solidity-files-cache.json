@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/jaco/Documents/dev/slice.so/contracts/slice.sol": {
-      "lastModificationDate": 1625178438462,
-      "contentHash": "b52b7177d5bdb8d4d3bda1cda7b8bc9a",
+      "lastModificationDate": 1626396108878,
+      "contentHash": "578c1f4788e4ce0240b2d9d7589ac3eb",
       "sourceName": "contracts/slice.sol",
       "solcConfig": {
         "version": "0.8.6",
