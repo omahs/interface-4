@@ -11,8 +11,9 @@ generator client {
 }
 
 model Slicer {
-  id        Int      @default(autoincrement()) @id
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  address   String   @db.VarChar(255)
+  id          Int      @id
+  address     String
+  name        String?
+  description String?
+  image       String?
 }
