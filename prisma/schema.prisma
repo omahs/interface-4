@@ -12,8 +12,8 @@ generator client {
 
 model Slicer {
   id          Int      @id
-  address     String
   name        String?
   description String?
-  image       String?
+  address     String?
+  imageUrl    String?
 }
