@@ -1,19 +1,21 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { ethers } from "ethers"
+import { slicer } from "@lib/initProvider"
 
-export const useAddress = () => {
-  const [signerAddress, setSignerAddress] = useState("")
-  const init = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const signer = provider.getSigner()
-    setSignerAddress(await signer.getAddress())
+export const useAllowed = (slicerId: number) => {
+  const [isAllowed, setIsAllowed] = useState(false)
+  const getAllowed = async () => {
+    if (slicerId != null) {
+      const { signer, signerAddress } = await initialize()
+      const slicerContract = await slicer(slicerId, signer)
+      const allowed = await slicerContract.isPayeeAllowed(signerAddress)
+      setIsAllowed(allowed)
+    } else {
+      return null
+    }
   }
-
-  useEffect(() => {
-    init()
-  })
-
-  return signerAddress
+  getAllowed()
+  return isAllowed
 }
 
 export const initialize = async () => {

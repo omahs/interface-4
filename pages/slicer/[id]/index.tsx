@@ -6,8 +6,11 @@ import {
   ActionScreen,
 } from "@components/ui"
 import fetcher from "@utils/fetcher"
+import { useAllowed } from "@lib/useProvider"
 
 const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const isAllowed = useAllowed(slicerInfo?.id)
+
   return slicerInfo?.id !== null ? (
     <main className="max-w-screen-sm">
       <p className="pb-4 text-lg font-extrabold uppercase">Slicer</p>
@@ -15,11 +18,11 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
         inactive
         logoText={slicerInfo?.name}
         size="text-4xl sm:text-6xl"
-        position="pb-8"
+        position="pb-6"
       />
       <div className="pt-2 pb-10">
-        <p className="pb-5 text-xl font-semibold">{slicerInfo?.description}</p>
         <CopyAddress slicerAddress={slicerInfo?.address} />
+        <p className="pt-8 text-xl font-semibold">{slicerInfo?.description}</p>
       </div>
       <SlicerImage slicerInfo={slicerInfo} />
     </main>

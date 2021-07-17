@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { useEffect, useState, Dispatch, SetStateAction } from "react"
 import { Input, SliceFormInputBlock, Question } from "@components/ui"
-import { useAddress } from "@lib/useProvider"
+import { initialize } from "@lib/useProvider"
 import Add from "@components/icons/Add"
 
 type Props = {
@@ -27,15 +27,18 @@ const SliceFormBlockSplitter = ({
   setMinimumShares,
   setTotalShares,
 }: Props) => {
-  const signerAddress = useAddress()
+  const [initAddress, setInitAddress] = useState("")
   const [inputCount, setInputCount] = useState(3)
   const [removedCount, setRemovedCount] = useState(0)
 
   useEffect(() => {
-    if (signerAddress) {
+    const init = async () => {
+      const { signerAddress } = await initialize()
+      setInitAddress(signerAddress)
       setAddresses([signerAddress])
     }
-  }, [signerAddress])
+    init()
+  }, [])
 
   useEffect(() => {
     if (success) {
@@ -46,7 +49,7 @@ const SliceFormBlockSplitter = ({
   const resetInputs = () => {
     setInputCount(3)
     setRemovedCount(0)
-    setAddresses([signerAddress])
+    setAddresses([initAddress])
     setShares([1000000])
     setMinimumShares(0)
     setTotalShares(1000000)
@@ -84,7 +87,7 @@ const SliceFormBlockSplitter = ({
           <SliceFormInputBlock
             key={key}
             index={i}
-            signerAddress={signerAddress}
+            signerAddress={initAddress}
             addresses={addresses}
             shares={shares}
             totalShares={totalShares}
