@@ -1,14 +1,14 @@
-import Image from "next/image"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
-import { useState, Dispatch, SetStateAction, useEffect } from "react"
-import { Button, DoubleText, SliceFormBlockMetadata } from "@components/ui"
+import {
+  CopyAddress,
+  DoubleText,
+  SlicerImage,
+  ActionScreen,
+} from "@components/ui"
 import fetcher from "@utils/fetcher"
-import imageUrl from "public/og_image_default.jpg"
 
 const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const [name, setName] = useState("")
-  const [description, setDescription] = useState("")
-  return (
+  return slicerInfo?.id !== null ? (
     <main className="max-w-screen-sm">
       <p className="pb-4 text-lg font-extrabold uppercase">Slicer</p>
       <DoubleText
@@ -17,18 +17,18 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
         size="text-4xl sm:text-6xl"
         position="pb-8"
       />
-      <div className="flex justify-center">
-        <div className="flex max-w-sm overflow-hidden border-8 border-gray-800 rounded-xl">
-          <Image
-            src={imageUrl}
-            alt={`${slicerInfo?.name} image`}
-            placeholder="blur"
-          />
-        </div>
+      <div className="pt-2 pb-10">
+        <p className="pb-5 text-xl font-semibold">{slicerInfo?.description}</p>
+        <CopyAddress slicerAddress={slicerInfo?.address} />
       </div>
-      <SliceFormBlockMetadata
-        setName={setName}
-        setDescription={setDescription}
+      <SlicerImage slicerInfo={slicerInfo} />
+    </main>
+  ) : (
+    <main className="max-w-screen-sm">
+      <ActionScreen
+        text="This slicer doesn't exist (yet)"
+        href="/"
+        buttonLabel="Return to home"
       />
     </main>
   )
