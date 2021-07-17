@@ -5,13 +5,11 @@ import handleLog from "@utils/handleLog"
 
 const handleSubmit = async (
   action: Promise<any>,
-  e: React.SyntheticEvent<EventTarget>,
   setMessage: Dispatch<SetStateAction<Message>>,
   setLoading: Dispatch<SetStateAction<boolean>>,
   setSuccess: Dispatch<SetStateAction<boolean>>,
   confetti = false
 ) => {
-  e.preventDefault()
   setMessage({ message: "", messageStatus: "success" })
   try {
     const [contract, call] = await action
