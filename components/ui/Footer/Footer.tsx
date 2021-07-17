@@ -12,10 +12,7 @@ const Footer = () => {
   return (
     <footer className="my-5 text-center">
       <Container>
-        <Social
-          wrapperClassName="flex justify-center mb-3 md:pl-7"
-          accounts={accounts}
-        />
+        <Social wrapperClassName="flex justify-center" accounts={accounts} />
       </Container>
     </footer>
   )

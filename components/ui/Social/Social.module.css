@@ -3,5 +3,5 @@
 }
 
 .social {
-  @apply px-4 md:px-0 md:mr-7;
+  @apply px-4;
 }
