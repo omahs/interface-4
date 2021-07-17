@@ -25,6 +25,7 @@ a {
 }
 
 .highlight {
+  @apply hover:text-blue-600;
   text-decoration-line: underline;
   text-decoration-style: solid;
   text-decoration-color: theme("colors.blue.600");

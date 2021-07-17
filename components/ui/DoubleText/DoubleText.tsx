@@ -11,7 +11,7 @@ interface Props {
   inactive?: boolean
 }
 
-const Logo: FC<Props> = ({ size, position, inactive, logoText }) => {
+const DoubleText: FC<Props> = ({ size, position, inactive, logoText }) => {
   const { color1, color2 } = useAppContext()
   const text = logoText || "Slice"
 
@@ -58,4 +58,4 @@ const Logo: FC<Props> = ({ size, position, inactive, logoText }) => {
   )
 }
 
-export default Logo
+export default DoubleText
