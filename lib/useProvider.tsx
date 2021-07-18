@@ -1,22 +1,24 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { ethers } from "ethers"
 import { slicer } from "@lib/initProvider"
+import { useAppContext } from "@components/ui/context"
 
 export const useAllowed = (slicerId: number) => {
+  const { isConnected } = useAppContext()
   const [isAllowed, setIsAllowed] = useState(false)
   const getAllowed = async () => {
-    if (slicerId != null) {
+    if (slicerId != null && isConnected) {
       const { signer, signerAddress } = await initialize()
       const slicerContract = await slicer(slicerId, signer)
-      const allowed = await slicerContract.isPayeeAllowed(signerAddress)
-      setIsAllowed(allowed)
+      const isPayeeAllowed = await slicerContract.isPayeeAllowed(signerAddress)
+      setIsAllowed(isPayeeAllowed)
     } else {
-      return null
+      setIsAllowed(false)
     }
   }
   useEffect(() => {
     getAllowed()
-  }, [])
+  }, [isConnected])
   return isAllowed
 }
 
