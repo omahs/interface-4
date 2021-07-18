@@ -4,13 +4,13 @@ import { slicer } from "@lib/initProvider"
 import { useAppContext } from "@components/ui/context"
 
 export const useAllowed = (slicerId: number) => {
-  const { isConnected } = useAppContext()
+  const { account } = useAppContext()
   const [isAllowed, setIsAllowed] = useState(false)
   const getAllowed = async () => {
-    if (slicerId != null && isConnected) {
-      const { signer, signerAddress } = await initialize()
-      const slicerContract = await slicer(slicerId, signer)
-      const isPayeeAllowed = await slicerContract.isPayeeAllowed(signerAddress)
+    if (slicerId != null && account) {
+      const { provider } = await initialize()
+      const slicerContract = await slicer(slicerId, provider)
+      const isPayeeAllowed = await slicerContract.isPayeeAllowed(account)
       setIsAllowed(isPayeeAllowed)
     } else {
       setIsAllowed(false)
@@ -18,7 +18,7 @@ export const useAllowed = (slicerId: number) => {
   }
   useEffect(() => {
     getAllowed()
-  }, [isConnected])
+  }, [account])
   return isAllowed
 }
 
@@ -31,12 +31,14 @@ export const initialize = async () => {
 
 const useProvider = (setLoading: Dispatch<SetStateAction<boolean>>) => {
   const [isConnected, setIsConnected] = useState(false)
+  const [account, setAccount] = useState("")
 
   const getProvider = async () => {
     if (window.ethereum) {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
       const accounts = await provider.listAccounts()
       setIsConnected(accounts.length > 0)
+      setAccount(accounts[0])
     }
   }
 
@@ -53,7 +55,7 @@ const useProvider = (setLoading: Dispatch<SetStateAction<boolean>>) => {
     }
   }, [])
 
-  return isConnected
+  return { isConnected, account }
 }
 
 export default useProvider
