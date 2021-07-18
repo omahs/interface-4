@@ -93,7 +93,11 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
           editMode={editMode}
         />
       </div>
-      <SlicerImage name={slicer.name} imageUrl={slicer.imageUrl} />
+      <SlicerImage
+        name={slicer.name}
+        imageUrl={slicer.imageUrl}
+        editMode={editMode}
+      />
       {editMode && (
         <>
           <div className="pt-10 pb-8">
