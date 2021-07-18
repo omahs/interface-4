@@ -14,7 +14,9 @@ export const useAllowed = (slicerId: number) => {
       return null
     }
   }
-  getAllowed()
+  useEffect(() => {
+    getAllowed()
+  }, [])
   return isAllowed
 }
 
