@@ -4,6 +4,7 @@ import colorList from "@utils/colorList"
 
 const AppContext = createContext({
   isConnected: false,
+  account: "",
   loading: true,
   color1: colorList[0],
   color2: colorList[1],
@@ -13,7 +14,7 @@ const AppContext = createContext({
 
 export function AppWrapper({ children }) {
   const [loading, setLoading] = useState(true)
-  const isConnected = useProvider(setLoading)
+  const { isConnected, account } = useProvider(setLoading)
 
   const color1 = colorList[Math.floor(Math.random() * colorList.length)]
   const color2 = colorList[Math.floor(Math.random() * colorList.length)]
@@ -23,7 +24,9 @@ export function AppWrapper({ children }) {
   //   darkColorList[Math.floor(Math.random() * darkColorList.length)]
 
   return (
-    <AppContext.Provider value={{ isConnected, loading, color1, color2 }}>
+    <AppContext.Provider
+      value={{ isConnected, account, loading, color1, color2 }}
+    >
       {children}
     </AppContext.Provider>
   )
