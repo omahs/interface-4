@@ -1,6 +1,8 @@
 import { useEffect, Dispatch, SetStateAction, useState } from "react"
 import { Input } from "@components/ui"
 import Delete from "@components/icons/Delete"
+import UserIcon from "@components/icons/UserIcon"
+import { useAppContext } from "@components/ui/context"
 
 type Props = {
   index: number
@@ -29,6 +31,7 @@ const SliceFormInputBlock = ({
   removedCount,
   setRemovedCount,
 }: Props) => {
+  const { account } = useAppContext()
   const [visible, setVisible] = useState(true)
   const [address, setAddress] = useState("")
   const [sharesAmount, setSharesAmount] = useState("")
@@ -80,7 +83,13 @@ const SliceFormInputBlock = ({
       <>
         <div className="col-span-1 col-start-1 mt-1.5 mx-auto">
           <div className="">
-            {index != 0 && <Delete onClick={handleRemove} />}
+            {index === 0 ? (
+              account === address ? (
+                <UserIcon className="text-green-500" />
+              ) : null
+            ) : (
+              <Delete onClick={handleRemove} />
+            )}
           </div>
         </div>
         <div className="col-span-7 xs:col-span-5 md:col-span-7">
