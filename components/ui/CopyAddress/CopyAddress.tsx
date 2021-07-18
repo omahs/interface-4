@@ -28,7 +28,7 @@ const CopyAddress = ({ slicerAddress }: Props) => {
             "___"
           )}
         </p>
-        <div className="absolute right-[-35px] inline-block pl-10">
+        <div className="absolute right-[-38px] inline-block pl-10">
           <Copy />
         </div>
         <div

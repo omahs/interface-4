@@ -57,11 +57,11 @@ const SliceFormBlockSplitter = ({
 
   return (
     <div className="grid items-center grid-cols-8 text-left xs:grid-cols-10 md:grid-cols-12 gap-x-4 gap-y-4 xs:gap-y-6">
-      <p className="mb-[-16px] hidden xs:block xs:col-span-5 xs:col-start-2 md:col-span-7 md:col-start-2">
-        Addresses <span className="text-sm">(Max. 30)</span>
+      <p className="mb-[-25px] text-sm text-gray-700 font-semibold hidden xs:block xs:col-span-5 xs:col-start-2 md:col-span-7 md:col-start-2">
+        Addresses (Max. 30)
       </p>
-      <div className="mb-[-16px] relative items-center hidden xs:flex">
-        <p className="pr-1">Shares</p>
+      <div className="mb-[-25px] text-gray-700 relative items-center hidden xs:flex">
+        <p className="pr-1 text-sm font-semibold">Shares</p>
         <Question
           text={
             <>
