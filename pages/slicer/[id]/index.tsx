@@ -1,11 +1,12 @@
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
 import {
-  CopyAddress,
-  DoubleText,
-  SlicerImage,
   ActionScreen,
   Button,
+  CopyAddress,
+  DoubleText,
   SlicerDescription,
+  SlicerName,
+  SlicerImage,
 } from "@components/ui"
 import fetcher from "@utils/fetcher"
 import { useAllowed } from "@lib/useProvider"
@@ -44,7 +45,9 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   }
 
   const cancel = () => {
+    setNewName(slicer.name)
     setNewDescription(slicer.description)
+    setNewImageUrl(slicer.imageUrl)
     setEditMode(false)
   }
 
@@ -77,6 +80,12 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
       />
       <div className="pt-2 pb-10">
         <CopyAddress slicerAddress={slicerInfo?.address} />
+        <SlicerName
+          name={slicer.name}
+          newName={newName}
+          setNewName={setNewName}
+          editMode={editMode}
+        />
         <SlicerDescription
           description={slicer.description}
           newDescription={newDescription}
@@ -130,7 +139,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params.id
 
   try {
-    const { slicerInfo } = await fetcher(`${baseUrl}/api/slicer/${id}`)
+    const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${id}`)
     return {
       props: {
         slicerInfo,
