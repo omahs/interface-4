@@ -20,7 +20,7 @@ const ActionScreen: FC<ActionScreenProps> = ({
   onClick,
 }) => {
   return (
-    <>
+    <main className="max-w-screen-sm">
       {title && <NextSeo title={title} />}
       <div className="flex flex-col items-center text-center">
         <h3 className="font-semibold mb-7">{text}</h3>
@@ -32,7 +32,7 @@ const ActionScreen: FC<ActionScreenProps> = ({
             <Button label={buttonLabel} onClick={onClick} />
           ))}
       </div>
-    </>
+    </main>
   )
 }
 

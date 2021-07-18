@@ -90,23 +90,23 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
           <div className="pt-10 pb-8">
             <Button label="Save" onClick={() => save()} loading={loading} />
           </div>
-          <p
-            className="inline-block font-medium text-red-600 cursor-pointer hover:underline"
-            onClick={() => cancel()}
-          >
-            Cancel
-          </p>
+          {!loading && (
+            <p
+              className="inline-block font-medium text-red-600 cursor-pointer hover:underline"
+              onClick={() => cancel()}
+            >
+              Cancel
+            </p>
+          )}
         </>
       )}
     </main>
   ) : (
-    <main className="max-w-screen-sm">
-      <ActionScreen
-        text="This slicer doesn't exist (yet)"
-        href="/"
-        buttonLabel="Return to home"
-      />
-    </main>
+    <ActionScreen
+      text="This slicer doesn't exist (yet)"
+      href="/"
+      buttonLabel="Return to home"
+    />
   )
 }
 
