@@ -1,14 +1,14 @@
-import { Slicer } from "@prisma/client"
 import Image from "next/image"
-import imageUrl from "public/og_image_default.jpg"
+import defaultImageUrl from "public/og_image_default.jpg"
 
 type Props = {
-  slicerInfo: Slicer
+  name: string
+  imageUrl: string
   size?: string
   border?: string
 }
 
-const SlicerImage = ({ slicerInfo, size, border }: Props) => {
+const SlicerImage = ({ name, imageUrl, size, border }: Props) => {
   return (
     <div className="flex justify-center">
       <div
@@ -16,19 +16,19 @@ const SlicerImage = ({ slicerInfo, size, border }: Props) => {
           border || "border-8 border-gray-900 rounded-md"
         }`}
       >
-        {slicerInfo?.imageUrl ? (
+        {imageUrl ? (
           <Image
-            src={slicerInfo?.imageUrl}
+            src={imageUrl}
             width={400}
             height={400}
-            alt={`${slicerInfo?.name} image`}
+            alt={`${name} image`}
             // blurDataURL={}
             // placeholder="blur"
           />
         ) : (
           <Image
-            src={imageUrl}
-            alt={`${slicerInfo?.name} image`}
+            src={defaultImageUrl}
+            alt={`${name} image`}
             placeholder="blur"
           />
         )}
