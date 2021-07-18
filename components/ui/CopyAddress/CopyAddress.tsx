@@ -22,7 +22,7 @@ const CopyAddress = ({ slicerAddress }: Props) => {
         className="relative flex items-center justify-center cursor-pointer highlight"
         onClick={() => copy()}
       >
-        <p className="inline-block font-bold">
+        <p className="inline-block font-medium">
           {slicerAddress.replace(
             slicerAddress.substring(5, slicerAddress.length - 3),
             "___"
