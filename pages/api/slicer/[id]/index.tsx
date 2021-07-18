@@ -39,15 +39,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
       }
 
-      res.status(200).json({ slicerInfo })
+      res.status(200).json(slicerInfo)
     }
 
     if (req.method === "POST") {
-      const { description } = JSON.parse(req.body)
+      const { name, description, imageUrl } = JSON.parse(req.body)
 
       const query = await prisma.slicer.update({
         where: { id: Number(id) },
-        data: { description },
+        data: { name, description, imageUrl },
       })
       res.status(200).json({ query })
     }
