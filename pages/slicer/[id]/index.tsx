@@ -13,7 +13,7 @@ import fetcher from "@utils/fetcher"
 import { useAllowed } from "@lib/useProvider"
 import Edit from "@components/icons/Edit"
 import { useState } from "react"
-import { Message } from "@utils/handleMessage"
+import handleMessage, { Message } from "@utils/handleMessage"
 
 export type NewImage = { url: string; file: File }
 
@@ -56,42 +56,56 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
       name: newName,
       imageUrl: slicer.imageUrl,
     }
+    try {
+      if (newImage.url !== slicer.imageUrl) {
+        setTempImageUrl(newImage.url)
+        const fileExt = newImage.file.name.split(".").pop()
+        const reader = new FileReader()
 
-    if (newImage.url !== slicer.imageUrl) {
-      setTempImageUrl(newImage.url)
-      const fileExt = newImage.file.name.split(".").pop()
-      const reader = new FileReader()
-
-      reader.onload = async () => {
-        const buffer = reader.result
-        const body = {
-          method: slicerInfo.imageUrl ? "PUT" : "POST",
-          body: JSON.stringify({ buffer, fileExt }),
-        }
-        const { Key } = await fetcher(
-          `/api/slicer/${slicerInfo?.id}/upload_file`,
-          body
-        )
-        if (!slicerInfo.imageUrl) {
-          const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
-          newInfo = {
-            description: newDescription,
-            name: newName,
-            imageUrl: newFilePath,
+        reader.onload = async () => {
+          const buffer = reader.result
+          const body = {
+            method: slicerInfo.imageUrl ? "PUT" : "POST",
+            body: JSON.stringify({ buffer, fileExt }),
           }
-          await updateDb(newInfo)
-          setNewImage({ url: "", file: undefined })
-        } else {
-          await updateDb(newInfo)
+          const { Key, error } = await fetcher(
+            `/api/slicer/${slicerInfo?.id}/upload_file`,
+            body
+          )
+          if (error) {
+            throw Error(error)
+          }
+          if (!slicerInfo.imageUrl) {
+            const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
+            newInfo = {
+              description: newDescription,
+              name: newName,
+              imageUrl: newFilePath,
+            }
+            await updateDb(newInfo)
+            setNewImage({ url: "", file: undefined })
+          } else {
+            await updateDb(newInfo)
+          }
+
+          setEditMode(false)
+          setLoading(false)
         }
 
-        setEditMode(false)
-        setLoading(false)
+        reader.readAsBinaryString(newImage.file)
+      } else {
+        await updateDb(newInfo)
       }
-
-      reader.readAsBinaryString(newImage.file)
-    } else {
-      await updateDb(newInfo)
+    } catch (err) {
+      setLoading(false)
+      console.log(err)
+      handleMessage(
+        {
+          message: "Something has gone wrong, try again",
+          messageStatus: "error",
+        },
+        setMsg
+      )
     }
   }
 
@@ -103,45 +117,47 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   }
 
   return slicerInfo?.id !== null ? (
-    <main className="max-w-screen-sm">
+    <main className="w-full mx-auto max-w-screen-xs">
       <div>
         <div className="inline-block pb-4">
           <div className="relative flex items-center justify-center">
-            <p className="inline-block text-lg font-extrabold uppercase">
-              Slicer
-            </p>
+            <p className="inline-block text-lg font-bold uppercase">Slicer</p>
             {isAllowed && !editMode && (
               <div
-                className="cursor-pointer absolute right-[-38px] inline-block hover:text-yellow-500"
+                className="cursor-pointer absolute right-[-35px] inline-block hover:text-yellow-500"
                 onClick={() => {
                   setEditMode(true)
                 }}
               >
-                <Edit />
+                <Edit className="w-6 h-6" />
               </div>
             )}
           </div>
         </div>
+        <div className={`${isAllowed ? "pt-3 " : ""}pb-8`}>
+          <CopyAddress slicerAddress={slicerInfo?.address} />
+        </div>
       </div>
       <DoubleText
         inactive
-        logoText={slicer.name}
+        logoText={slicer.name || "Slicer"}
         size="text-4xl sm:text-6xl"
         position="pb-6"
       />
       <div className="pt-2 pb-10">
-        <CopyAddress slicerAddress={slicerInfo?.address} />
         <SlicerName
           name={slicer.name}
           newName={newName}
           setNewName={setNewName}
           editMode={editMode}
+          loading={loading}
         />
         <SlicerDescription
           description={slicer.description}
           newDescription={newDescription}
           setNewDescription={setNewDescription}
           editMode={editMode}
+          loading={loading}
         />
       </div>
       <SlicerImage
@@ -152,6 +168,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
         tempImageUrl={tempImageUrl}
         editMode={editMode}
         setMsg={setMsg}
+        loading={loading}
       />
       {editMode && (
         <>

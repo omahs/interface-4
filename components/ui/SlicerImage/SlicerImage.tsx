@@ -13,7 +13,7 @@ type Props = {
   setNewImage: Dispatch<SetStateAction<NewImage>>
   editMode: boolean
   setMsg: Dispatch<SetStateAction<Message>>
-  size?: string
+  loading: boolean
   border?: string
 }
 
@@ -25,19 +25,16 @@ const SlicerImage = ({
   setNewImage,
   editMode,
   setMsg,
-  size,
+  loading,
   border,
 }: Props) => {
-  const [uploading, setUploading] = useState(false)
-
   const updateImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUploading(true)
     try {
       const file = e.target.files[0]
       if (file) {
-        if (file.size > 3000000) {
+        if (file.size > 50000000) {
           handleMessage(
-            { message: "Max size 3MB", messageStatus: "error" },
+            { message: "Max size 5MB", messageStatus: "error" },
             setMsg
           )
         } else {
@@ -48,36 +45,37 @@ const SlicerImage = ({
     } catch (err) {
       null
     }
-    setUploading(false)
   }
 
   return (
-    <div className="flex justify-center nightwind-prevent-block">
-      <div
-        className={`shadow-2xl overflow-hidden ${size || "max-w-sm"} ${
-          border || "bg-black rounded-2xl"
-        }`}
-      >
-        <label htmlFor="single">
+    <div className="nightwind-prevent-block">
+      <div className={`overflow-hidden ${border || "rounded-2xl"}`}>
+        <label
+          htmlFor="single"
+          className={`relative flex items-center justify-center group ${
+            editMode && !loading ? "bg-gray-800 cursor-pointer" : ""
+          }`}
+        >
           <div
-            className={`relative flex items-center justify-center group ${
-              editMode && "cursor-pointer"
+            className={`transition-opacity flex flex-grow duration-300 ${
+              editMode && !loading ? "opacity-50 group-hover:opacity-20" : ""
             }`}
           >
-            <div
-              className={`flex transition-opacity duration-300 ${
-                editMode && "opacity-50 group-hover:opacity-20"
-              }`}
-            >
+            <div className="w-full max-h-[400px]" id="imageWrapper">
+              {/* Todo: Fix div size */}
               {newImage.url || tempImageUrl ? (
                 /* eslint-disable @next/next/no-img-element */
-                <img src={newImage.url || tempImageUrl} alt={`${name} image`} />
+                <img
+                  className="object-cover w-full h-full"
+                  src={newImage.url || tempImageUrl}
+                  alt={`${name} image`}
+                />
               ) : imageUrl ? (
                 /* eslint-enable @next/next/no-img-element */
                 <Image
                   src={imageUrl}
-                  width={400}
-                  height={400}
+                  layout="fill"
+                  objectFit="cover"
                   alt={`${name} image`}
                   // blurDataURL={}
                   // placeholder="blur"
@@ -85,29 +83,28 @@ const SlicerImage = ({
               ) : (
                 <Image
                   src={defaultImageUrl}
+                  layout="fill"
+                  objectFit="cover"
                   alt={`${name} image`}
                   placeholder="blur"
                 />
               )}
             </div>
-            <Camera
-              className={`transition-opacity duration-300 absolute w-20 h-20 ${
-                editMode ? "opacity-100" : "opacity-0"
-              } text-white group-hover:text-sky-300`}
-            />
           </div>
+          <Camera
+            className={`transition-opacity duration-300 absolute w-16 h-16 sm:w-20 sm:h-20 ${
+              editMode && !loading ? "opacity-100" : "opacity-0"
+            } text-white group-hover:text-sky-300`}
+          />
         </label>
         {editMode && (
           <input
-            style={{
-              visibility: "hidden",
-              position: "absolute",
-            }}
+            className="absolute hidden"
             type="file"
             id="single"
             accept="image/*"
             onChange={(e) => updateImage(e)}
-            disabled={uploading}
+            disabled={loading}
           />
         )}
       </div>

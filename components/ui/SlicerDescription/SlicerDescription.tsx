@@ -6,6 +6,7 @@ type Props = {
   newDescription: string
   setNewDescription: Dispatch<SetStateAction<string>>
   editMode: boolean
+  loading: boolean
 }
 
 const SlicerDescription = ({
@@ -13,18 +14,20 @@ const SlicerDescription = ({
   newDescription,
   setNewDescription,
   editMode,
+  loading,
 }: Props) => {
   return (
-    <div className="pt-8">
+    <div className="py-2">
       {editMode ? (
         <Input
           label="Description"
           type="text"
           value={newDescription}
           onChange={setNewDescription}
+          disabled={loading}
         />
       ) : (
-        <p className="text-xl font-semibold">{description}</p>
+        <p className="text-xl font-semibold sm:text-2xl">{description}</p>
       )}
     </div>
   )

@@ -22,14 +22,14 @@ const CopyAddress = ({ slicerAddress }: Props) => {
         className="relative flex items-center justify-center cursor-pointer highlight"
         onClick={() => copy()}
       >
-        <p className="inline-block font-medium">
+        <p className="inline-block text-sm font-medium">
           {slicerAddress.replace(
             slicerAddress.substring(5, slicerAddress.length - 3),
             "___"
           )}
         </p>
-        <div className="absolute right-[-38px] inline-block pl-10">
-          <Copy />
+        <div className="absolute right-[-30px] inline-block pl-10">
+          <Copy className="w-5 h-5" />
         </div>
         <div
           className={`w-40 absolute p-2 top-[40px] sm:top-[auto] sm:right-[-220px] shadow-md rounded-md overflow-hidden text-white bg-gray-800 transition-opacity duration-100 ${

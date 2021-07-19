@@ -23,7 +23,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         body: buf,
       }
-      const response = await fetcher(
+      const { Key, error } = await fetcher(
         `${supabaseUrl}/storage/v1/object/${supabaseStorage}/slicer_${id}_main`,
         body
       )
@@ -34,7 +34,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       //   throw uploadError
       // }
 
-      res.status(200).json(response)
+      res.status(200).json({ Key, error })
     }
   } catch (err) {
     throw err

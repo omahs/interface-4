@@ -2,7 +2,7 @@ import { Button, DoubleText } from "@components/ui"
 
 export default function Home() {
   return (
-    <main className="max-w-screen-sm">
+    <main className="max-w-screen-sm mx-auto">
       <DoubleText
         inactive
         logoText={`Slice`}
