@@ -3,13 +3,16 @@ import Camera from "@components/icons/Camera"
 import defaultImageUrl from "public/og_image_default.jpg"
 import { Dispatch, SetStateAction, useState } from "react"
 import { NewImage } from "pages/slicer/[id]"
+import handleMessage, { Message } from "@utils/handleMessage"
 
 type Props = {
   name: string
   imageUrl: string
+  tempImageUrl: string
   newImage: NewImage
   setNewImage: Dispatch<SetStateAction<NewImage>>
   editMode: boolean
+  setMsg: Dispatch<SetStateAction<Message>>
   size?: string
   border?: string
 }
@@ -17,9 +20,11 @@ type Props = {
 const SlicerImage = ({
   name,
   imageUrl,
+  tempImageUrl,
   newImage,
   setNewImage,
   editMode,
+  setMsg,
   size,
   border,
 }: Props) => {
@@ -27,8 +32,22 @@ const SlicerImage = ({
 
   const updateImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setUploading(true)
-    const file = e.target.files[0]
-    setNewImage({ url: URL.createObjectURL(file), file })
+    try {
+      const file = e.target.files[0]
+      if (file) {
+        if (file.size > 3000000) {
+          handleMessage(
+            { message: "Max size 3MB", messageStatus: "error" },
+            setMsg
+          )
+        } else {
+          const url = URL.createObjectURL(file)
+          setNewImage({ url, file })
+        }
+      }
+    } catch (err) {
+      null
+    }
     setUploading(false)
   }
 
@@ -50,9 +69,9 @@ const SlicerImage = ({
                 editMode && "opacity-50 group-hover:opacity-20"
               }`}
             >
-              {newImage.url ? (
+              {newImage.url || tempImageUrl ? (
                 /* eslint-disable @next/next/no-img-element */
-                <img src={newImage.url} alt={`${name} image`} />
+                <img src={newImage.url || tempImageUrl} alt={`${name} image`} />
               ) : imageUrl ? (
                 /* eslint-enable @next/next/no-img-element */
                 <Image

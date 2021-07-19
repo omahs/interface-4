@@ -7,11 +7,13 @@ import {
   SlicerDescription,
   SlicerName,
   SlicerImage,
+  MessageBlock,
 } from "@components/ui"
 import fetcher from "@utils/fetcher"
 import { useAllowed } from "@lib/useProvider"
 import Edit from "@components/icons/Edit"
 import { useState } from "react"
+import { Message } from "@utils/handleMessage"
 
 export type NewImage = { url: string; file: File }
 
@@ -20,6 +22,10 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const isAllowed = useAllowed(slicerInfo?.id)
   const [editMode, setEditMode] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [msg, setMsg] = useState<Message>({
+    message: "",
+    messageStatus: "success",
+  })
 
   const [slicer, setSlicer] = useState({
     name: slicerInfo?.name,
@@ -32,6 +38,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     url: "",
     file: undefined,
   })
+  const [tempImageUrl, setTempImageUrl] = useState("")
 
   const updateDb = async (newInfo) => {
     setSlicer(newInfo)
@@ -51,38 +58,47 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     }
 
     if (newImage.url !== slicer.imageUrl) {
-      const fr = new FileReader()
+      setTempImageUrl(newImage.url)
+      const fileExt = newImage.file.name.split(".").pop()
+      const reader = new FileReader()
 
-      fr.onload = async () => {
-        const buffer = fr.result
+      reader.onload = async () => {
+        const buffer = reader.result
         const body = {
-          method: "POST",
-          body: JSON.stringify({ buffer }),
+          method: slicerInfo.imageUrl ? "PUT" : "POST",
+          body: JSON.stringify({ buffer, fileExt }),
         }
-        const { Key } = await fetcher(`/api/slicer/upload_file`, body)
-        const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
-        newInfo = {
-          description: newDescription,
-          name: newName,
-          imageUrl: newFilePath,
+        const { Key } = await fetcher(
+          `/api/slicer/${slicerInfo?.id}/upload_file`,
+          body
+        )
+        if (!slicerInfo.imageUrl) {
+          const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
+          newInfo = {
+            description: newDescription,
+            name: newName,
+            imageUrl: newFilePath,
+          }
+          await updateDb(newInfo)
+          setNewImage({ url: "", file: undefined })
+        } else {
+          await updateDb(newInfo)
         }
-        await updateDb(newInfo)
+
+        setEditMode(false)
+        setLoading(false)
       }
 
-      fr.readAsBinaryString(newImage.file)
+      reader.readAsBinaryString(newImage.file)
     } else {
       await updateDb(newInfo)
     }
-
-    setNewImage({ url: "", file: undefined })
-    setEditMode(false)
-    setLoading(false)
   }
 
   const cancel = () => {
     setNewName(slicer.name)
     setNewDescription(slicer.description)
-    setNewImage(slicer.imageUrl)
+    setNewImage({ url: "", file: undefined })
     setEditMode(false)
   }
 
@@ -133,12 +149,14 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
         imageUrl={slicer.imageUrl}
         newImage={newImage}
         setNewImage={setNewImage}
+        tempImageUrl={tempImageUrl}
         editMode={editMode}
+        setMsg={setMsg}
       />
       {editMode && (
         <>
           <div className="pt-10 pb-8">
-            <Button label="Save" onClick={() => save()} loading={loading} />
+            <Button label="Save" loading={loading} onClick={() => save()} />
           </div>
           {!loading && (
             <p
@@ -148,6 +166,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
               Cancel
             </p>
           )}
+          <MessageBlock msg={msg} />
         </>
       )}
     </main>
