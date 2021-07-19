@@ -13,7 +13,10 @@ import { useAllowed } from "@lib/useProvider"
 import Edit from "@components/icons/Edit"
 import { useState } from "react"
 
+export type NewImage = { url: string; file: File }
+
 const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const isAllowed = useAllowed(slicerInfo?.id)
   const [editMode, setEditMode] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -25,21 +28,53 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   })
   const [newDescription, setNewDescription] = useState(slicer.description)
   const [newName, setNewName] = useState(slicer.name)
-  const [newImageUrl, setNewImageUrl] = useState(slicer.imageUrl)
+  const [newImage, setNewImage] = useState<NewImage>({
+    url: "",
+    file: undefined,
+  })
 
-  const save = async () => {
-    const newInfo = {
-      description: newDescription,
-      name: newName,
-      imageUrl: newImageUrl,
-    }
-    setLoading(true)
+  const updateDb = async (newInfo) => {
     setSlicer(newInfo)
     const body = {
       method: "POST",
       body: JSON.stringify(newInfo),
     }
     await fetcher(`/api/slicer/${slicerInfo?.id}`, body)
+  }
+
+  const save = async () => {
+    setLoading(true)
+    let newInfo = {
+      description: newDescription,
+      name: newName,
+      imageUrl: slicer.imageUrl,
+    }
+
+    if (newImage.url !== slicer.imageUrl) {
+      const fr = new FileReader()
+
+      fr.onload = async () => {
+        const buffer = fr.result
+        const body = {
+          method: "POST",
+          body: JSON.stringify({ buffer }),
+        }
+        const { Key } = await fetcher(`/api/slicer/upload_file`, body)
+        const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
+        newInfo = {
+          description: newDescription,
+          name: newName,
+          imageUrl: newFilePath,
+        }
+        await updateDb(newInfo)
+      }
+
+      fr.readAsBinaryString(newImage.file)
+    } else {
+      await updateDb(newInfo)
+    }
+
+    setNewImage({ url: "", file: undefined })
     setEditMode(false)
     setLoading(false)
   }
@@ -47,7 +82,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const cancel = () => {
     setNewName(slicer.name)
     setNewDescription(slicer.description)
-    setNewImageUrl(slicer.imageUrl)
+    setNewImage(slicer.imageUrl)
     setEditMode(false)
   }
 
@@ -96,6 +131,8 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
       <SlicerImage
         name={slicer.name}
         imageUrl={slicer.imageUrl}
+        newImage={newImage}
+        setNewImage={setNewImage}
         editMode={editMode}
       />
       {editMode && (
