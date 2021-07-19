@@ -3,6 +3,7 @@ import { sliceCore } from "@lib/initProvider"
 import { ethers } from "ethers"
 import { Slicer } from "@prisma/client"
 import prisma from "@lib/db"
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query
 
