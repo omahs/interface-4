@@ -1,5 +1,5 @@
 import useProvider from "@lib/useProvider"
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import colorList from "@utils/colorList"
 
 const AppContext = createContext({
@@ -16,8 +16,13 @@ export function AppWrapper({ children }) {
   const [loading, setLoading] = useState(true)
   const { isConnected, account } = useProvider(setLoading)
 
-  const color1 = colorList[Math.floor(Math.random() * colorList.length)]
-  const color2 = colorList[Math.floor(Math.random() * colorList.length)]
+  const [color1, setColor1] = useState([])
+  const [color2, setColor2] = useState([])
+
+  useEffect(() => {
+    setColor1(colorList[Math.floor(Math.random() * colorList.length)])
+    setColor2(colorList[Math.floor(Math.random() * colorList.length)])
+  }, [])
   // const darkColor1 =
   //   darkColorList[Math.floor(Math.random() * darkColorList.length)]
   // const darkColor2 =
