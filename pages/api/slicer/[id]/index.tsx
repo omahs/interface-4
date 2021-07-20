@@ -1,16 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import { sliceCore } from "@lib/initProvider"
-import { ethers } from "ethers"
 import { Slicer } from "@prisma/client"
 import prisma from "@lib/db"
+import { defaultProvider } from "lib/useProvider"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query
 
   try {
     if (req.method === "GET") {
-      const provider = ethers.getDefaultProvider(process.env.NETWORK_URL)
-      const slicerExists: boolean = await sliceCore(provider).exists(id)
+      const slicerExists: boolean = await sliceCore(defaultProvider).exists(id)
       let slicerInfo: Slicer
 
       if (slicerExists) {
@@ -18,7 +17,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           where: { id: Number(id) },
         })
         if (slicerInfo == null) {
-          const slicerAddress: string = await sliceCore(provider).slicers(id)
+          const slicerAddress: string = await sliceCore(
+            defaultProvider
+          ).slicers(id)
           slicerInfo = {
             id: Number(id),
             name: "Temporary name",

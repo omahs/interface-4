@@ -3,13 +3,23 @@ import { ethers } from "ethers"
 import { slicer } from "@lib/initProvider"
 import { useAppContext } from "@components/ui/context"
 
+export const defaultProvider = ethers.getDefaultProvider(
+  process.env.NEXT_PUBLIC_NETWORK_URL
+)
+
+export const initialize = async () => {
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+  const signer = provider.getSigner()
+  const signerAddress = await signer.getAddress()
+  return { provider, signer, signerAddress }
+}
+
 export const useAllowed = (slicerId: number) => {
   const { account } = useAppContext()
   const [isAllowed, setIsAllowed] = useState(false)
   const getAllowed = async () => {
     if (slicerId != null && account) {
-      const { provider } = await initialize()
-      const slicerContract = await slicer(slicerId, provider)
+      const slicerContract = await slicer(slicerId, defaultProvider)
       const isPayeeAllowed = await slicerContract.isPayeeAllowed(account)
       setIsAllowed(isPayeeAllowed)
     } else {
@@ -20,13 +30,6 @@ export const useAllowed = (slicerId: number) => {
     getAllowed()
   }, [account])
   return isAllowed
-}
-
-export const initialize = async () => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
-  const signer = provider.getSigner()
-  const signerAddress = await signer.getAddress()
-  return { provider, signer, signerAddress }
 }
 
 const useProvider = (setLoading: Dispatch<SetStateAction<boolean>>) => {
