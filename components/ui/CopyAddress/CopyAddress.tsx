@@ -33,7 +33,7 @@ const CopyAddress = ({ slicerAddress }: Props) => {
         </div>
         <div
           className={`w-40 absolute p-2 top-[40px] sm:top-[auto] sm:right-[-220px] shadow-md rounded-md overflow-hidden text-white bg-gray-800 transition-opacity duration-100 ${
-            showAlert ? "opacity-100 z-0" : "opacity-0 -z-10"
+            showAlert ? "opacity-100 z-20" : "opacity-0 -z-10"
           }`}
         >
           <p className="text-sm">Address copied! 🍰</p>
