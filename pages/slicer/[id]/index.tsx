@@ -118,7 +118,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return slicerInfo?.id !== null ? (
     <main className="w-full max-w-screen-sm mx-auto">
       <div>
-        <div className="inline-block pb-4">
+        <div className="inline-block pb-2">
           <div className="relative flex items-center justify-center">
             <p className="inline-block text-lg font-bold uppercase">Slicer</p>
             {isAllowed && !editMode && (
@@ -133,17 +133,17 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             )}
           </div>
         </div>
-        <div className={`${isAllowed ? "pt-3 " : ""}pb-8`}>
+        <div className={`${isAllowed ? "pt-5 " : ""}pb-8`}>
           <CopyAddress slicerAddress={slicerInfo?.address} />
         </div>
       </div>
       <DoubleText
         inactive
         logoText={slicer.name || "Slicer"}
-        size="text-4xl sm:text-6xl"
-        position="pb-6"
+        size="text-3xl sm:text-5xl"
+        position=""
       />
-      <div className="pt-2 pb-10">
+      <div className="pt-6 pb-6">
         <SlicerName
           name={slicer.name}
           newName={newName}

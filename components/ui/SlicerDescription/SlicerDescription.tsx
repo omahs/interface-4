@@ -27,7 +27,7 @@ const SlicerDescription = ({
           disabled={loading}
         />
       ) : (
-        <p className="text-xl font-semibold sm:text-2xl">{description}</p>
+        <p className="text-lg font-semibold sm:text-xl">{description}</p>
       )}
     </div>
   )
