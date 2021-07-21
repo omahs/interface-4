@@ -85,7 +85,11 @@ const SliceFormInputBlock = ({
           <div className="">
             {index === 0 ? (
               account === address ? (
-                <UserIcon className="text-green-500" />
+                <UserIcon
+                  className={
+                    minimumShares <= Number(sharesAmount) && "text-green-500"
+                  }
+                />
               ) : null
             ) : (
               <Delete onClick={handleRemove} />

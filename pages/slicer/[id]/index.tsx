@@ -57,7 +57,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
       imageUrl: slicer.imageUrl,
     }
     try {
-      if (newImage.url !== slicer.imageUrl) {
+      if (newImage.url) {
         setTempImageUrl(newImage.url)
         const fileExt = newImage.file.name.split(".").pop()
         const reader = new FileReader()
@@ -82,12 +82,9 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
               name: newName,
               imageUrl: newFilePath,
             }
-            await updateDb(newInfo)
-            setNewImage({ url: "", file: undefined })
-          } else {
-            await updateDb(newInfo)
           }
-
+          await updateDb(newInfo)
+          setNewImage({ url: "", file: undefined })
           setEditMode(false)
           setLoading(false)
         }
@@ -95,6 +92,8 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
         reader.readAsBinaryString(newImage.file)
       } else {
         await updateDb(newInfo)
+        setEditMode(false)
+        setLoading(false)
       }
     } catch (err) {
       setLoading(false)
@@ -117,7 +116,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   }
 
   return slicerInfo?.id !== null ? (
-    <main className="w-full mx-auto max-w-screen-xs">
+    <main className="w-full max-w-screen-sm mx-auto">
       <div>
         <div className="inline-block pb-4">
           <div className="relative flex items-center justify-center">

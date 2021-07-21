@@ -20,7 +20,7 @@ const ActionScreen: FC<ActionScreenProps> = ({
   onClick,
 }) => {
   return (
-    <main className="max-w-screen-sm">
+    <main className="w-full max-w-screen-sm mx-auto">
       {title && <NextSeo title={title} />}
       <div className="flex flex-col items-center text-center">
         <h3 className="font-semibold mb-7">{text}</h3>
