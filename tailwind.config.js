@@ -28,7 +28,7 @@ module.exports = {
         xs: "560px",
       },
       colors: {
-        gray: colors.trueGray,
+        gray: colors.coolGray,
         sky: colors.sky,
         cyan: colors.cyan,
       },

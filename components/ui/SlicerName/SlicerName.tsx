@@ -11,15 +11,13 @@ type Props = {
 
 const SlicerName = ({ newName, setNewName, editMode, loading }: Props) => {
   return editMode ? (
-    <div className="pt-3">
-      <Input
-        label="Name"
-        type="text"
-        value={newName}
-        onChange={setNewName}
-        disabled={loading}
-      />
-    </div>
+    <Input
+      label="Name"
+      type="text"
+      value={newName}
+      onChange={setNewName}
+      disabled={loading}
+    />
   ) : null
 }
 

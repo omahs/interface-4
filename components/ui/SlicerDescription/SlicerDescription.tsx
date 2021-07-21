@@ -16,20 +16,18 @@ const SlicerDescription = ({
   editMode,
   loading,
 }: Props) => {
-  return (
-    <div className="py-2">
-      {editMode ? (
-        <Input
-          label="Description"
-          type="text"
-          value={newDescription}
-          onChange={setNewDescription}
-          disabled={loading}
-        />
-      ) : (
-        <p className="text-lg font-semibold sm:text-xl">{description}</p>
-      )}
+  return editMode ? (
+    <div className="pt-4">
+      <Input
+        label="Description"
+        type="text"
+        value={newDescription}
+        onChange={setNewDescription}
+        disabled={loading}
+      />
     </div>
+  ) : (
+    <p className="text-lg font-semibold sm:text-xl">{description}</p>
   )
 }
 

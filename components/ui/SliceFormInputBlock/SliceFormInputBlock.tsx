@@ -96,22 +96,20 @@ const SliceFormInputBlock = ({
             )}
           </div>
         </div>
-        <div className="col-span-7 xs:col-span-5 md:col-span-7">
+        <div className="col-span-7 mt-1.5 xs:col-span-5 md:col-span-7">
           <Input
             type="string"
             placeholder="0x… / vitalik.eth"
-            className="mt-1.5"
             value={address}
             required={sharesAmount && true}
             onChange={setAddress}
           />
         </div>
         <p className="col-span-2 pt-1.5 pr-2 text-right xs:hidden">Shares</p>
-        <div className="col-span-4 xs:col-span-3">
+        <div className="col-span-4 mt-1.5 xs:col-span-3">
           <Input
             type="number"
             placeholder="1000000"
-            className="mt-1.5"
             value={sharesAmount}
             required={address && true}
             onChange={setSharesAmount}
