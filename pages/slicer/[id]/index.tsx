@@ -4,6 +4,7 @@ import {
   Button,
   CopyAddress,
   DoubleText,
+  PaySlicer,
   SlicerDescription,
   SlicerName,
   SlicerImage,
@@ -116,7 +117,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   }
 
   return slicerInfo?.id !== null ? (
-    <main className="w-full max-w-screen-sm mx-auto">
+    <main className="w-full max-w-screen-sm mx-auto space-y-8 sm:space-y-10">
       <div>
         <div className="inline-block pb-2">
           <div className="relative flex items-center justify-center">
@@ -136,14 +137,14 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
         <div className={`${isAllowed ? "pt-5 " : ""}pb-8`}>
           <CopyAddress slicerAddress={slicerInfo?.address} />
         </div>
+        <DoubleText
+          inactive
+          logoText={slicer.name || "Slicer"}
+          size="text-3xl sm:text-5xl"
+          position=""
+        />
       </div>
-      <DoubleText
-        inactive
-        logoText={slicer.name || "Slicer"}
-        size="text-3xl sm:text-5xl"
-        position=""
-      />
-      <div className="pt-6 pb-6">
+      <div>
         <SlicerName
           name={slicer.name}
           newName={newName}
@@ -169,9 +170,11 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
         setMsg={setMsg}
         loading={loading}
       />
-      {editMode && (
-        <>
-          <div className="pt-10 pb-8">
+      {!editMode ? (
+        <PaySlicer slicerAddress={slicerInfo?.address} />
+      ) : (
+        <div>
+          <div className="pb-8">
             <Button label="Save" loading={loading} onClick={() => save()} />
           </div>
           {!loading && (
@@ -183,7 +186,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             </p>
           )}
           <MessageBlock msg={msg} />
-        </>
+        </div>
       )}
     </main>
   ) : (
