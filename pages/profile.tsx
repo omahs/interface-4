@@ -1,4 +1,4 @@
-import { Button, ConnectBlock, DoubleText } from "@components/ui"
+import { Button, ConnectBlock, DoubleText, SlicersList } from "@components/ui"
 
 export default function Profile() {
   return (
@@ -7,14 +7,11 @@ export default function Profile() {
         <DoubleText
           inactive
           logoText={`Profile`}
-          size="text-4xl sm:text-6xl"
+          size="text-3xl sm:text-5xl"
           position="pb-8"
         />
-        <div className="text-left">
-          <h2 className="leading-normal">Slicers</h2>
-        </div>
-        <div className="py-10">
-          <Button label="Start slicing" href="/slice" />
+        <div className="space-y-4 text-left">
+          <SlicersList />
         </div>
       </main>
     </ConnectBlock>
