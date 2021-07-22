@@ -44,7 +44,7 @@ const Input: React.FC<Props> = (props) => {
         }`}
       >
         {prefix && (
-          <div className="flex items-center justify-center px-6 text-gray-600 bg-gray-200 dark:bg-gray-700 border-b-[3px] border-blue-300">
+          <div className="flex items-center text-sm justify-center px-5 text-gray-600 bg-gray-200 dark:bg-gray-700 border-b-[3px] border-blue-300">
             {prefix}
           </div>
         )}
