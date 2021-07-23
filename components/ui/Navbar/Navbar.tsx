@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react"
 import Link from "next/link"
 import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
@@ -24,7 +23,7 @@ const Navbar = () => {
               </a>
             </Link>
           </div>
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center space-x-6 sm:space-x-8">
             <Nightwind size="h-[26px]" />
             {!isConnected ? (
               <Button
@@ -37,12 +36,12 @@ const Navbar = () => {
               />
             ) : (
               <>
+                <SlcCounter />
                 <Link href="/profile">
                   <a>
                     <UserIcon />
                   </a>
                 </Link>
-                <SlcCounter />
               </>
             )}
           </div>
