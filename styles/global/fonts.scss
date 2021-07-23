@@ -15,8 +15,7 @@ h3 {
 }
 
 a {
-  @apply cursor-pointer font-medium hover:text-blue-600;
-  color: inherit;
+  @apply cursor-pointer font-medium text-black hover:text-blue-600;
   text-decoration: none;
 }
 
