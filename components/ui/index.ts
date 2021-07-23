@@ -1,6 +1,7 @@
 export { default as ActionScreen } from "./ActionScreen"
 export { default as Back } from "./Back"
 export { default as Background } from "./Background"
+export { default as BlockchainCall } from "./BlockchainCall"
 export { default as Button } from "./Button"
 export { default as ConnectBlock } from "./ConnectBlock"
 export { default as Container } from "./Container"
