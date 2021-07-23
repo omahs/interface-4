@@ -1,0 +1,79 @@
+import Link from "next/link"
+import { Button, Input, SlicerImage } from "@components/ui"
+import fetcher from "@utils/fetcher"
+import useSWR from "swr"
+import { useAllowed } from "@lib/useProvider"
+import SlicerCardImage from "../SlicerCardImage"
+import Chevron from "@components/icons/Chevron"
+
+type SlicerInfo = {
+  name: string
+  address: string
+  imageUrl: string
+}
+
+type Props = {
+  slicerId: number
+  shares: number
+  account: string
+}
+
+const SlicerCard = ({ slicerId, shares, account }: Props) => {
+  const isAllowed = useAllowed(slicerId)
+  const { data: slicerInfo } = useSWR(`/api/slicer/${slicerId}`, fetcher)
+  const { data: unreleasedData } = useSWR(
+    `/api/slicer/${slicerId}/account/${account}/unreleased`,
+    fetcher
+  )
+  const { name, address, imageUrl }: SlicerInfo = slicerInfo || {
+    name: null,
+    address: null,
+    imageUrl: null,
+  }
+  const { unreleased } = unreleasedData || { unreleased: null }
+  const unreleasedAmount = unreleased
+    ? Math.floor((Number(unreleased?.hex) / Math.pow(10, 18)) * 10000) / 10000
+    : null
+
+  return (
+    <div className="sm:flex">
+      <SlicerCardImage
+        href={`/slicer/${slicerId}`}
+        name={name}
+        slicerAddress={address}
+        imageUrl={imageUrl}
+        isAllowed={isAllowed}
+      />
+      <div className="py-3 sm:ml-6 md:ml-10">
+        <h3>
+          {name}
+          <span className="mb-1 ml-2 text-base font-normal">#{slicerId}</span>
+        </h3>
+        <div className="space-y-2 text-gray-700">
+          <div className="flex items-center">
+            <p className="text-sm">Shares owned: {shares}</p>
+            <Link href={`slicer/${slicerId}/transfer`}>
+              <a className="flex items-center ml-3 group">
+                <p className="text-sm ">Transfer</p>
+                <div className="w-6 h-6 transition-transform duration-150 rotate-180 group-hover:translate-x-1">
+                  <Chevron />
+                </div>
+              </a>
+            </Link>
+          </div>
+          <p className="text-sm">
+            Unreleased:{" "}
+            <span className="font-medium text-black">
+              {unreleasedAmount} ETH
+            </span>
+          </p>
+        </div>
+        <div className="mt-6">
+          <Button label={`Trigger release`} />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default SlicerCard
