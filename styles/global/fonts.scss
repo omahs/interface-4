@@ -38,3 +38,9 @@ a {
 .dark a {
   @apply hover:text-blue-300;
 }
+
+.nightwind-prevent.highlight,
+.nightwind-prevent-block .highlight {
+  @apply hover:text-blue-600;
+  text-decoration-color: theme("colors.blue.600");
+}

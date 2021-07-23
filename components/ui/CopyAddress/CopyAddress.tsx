@@ -3,9 +3,11 @@ import { useState } from "react"
 
 type Props = {
   slicerAddress: string
+  showIcon?: boolean
+  position?: string
 }
 
-const CopyAddress = ({ slicerAddress }: Props) => {
+const CopyAddress = ({ slicerAddress, showIcon = true, position }: Props) => {
   const [showAlert, setShowAlert] = useState(false)
 
   const copy = async () => {
@@ -17,8 +19,8 @@ const CopyAddress = ({ slicerAddress }: Props) => {
   }
 
   return slicerAddress ? (
-    <div className="inline-block">
-      <div className="relative flex items-center justify-center">
+    <div className={`inline-block`}>
+      <div className="relative flex items-center justify-center w-full">
         <div
           className="flex items-center justify-center cursor-pointer highlight"
           onClick={() => copy()}
@@ -29,12 +31,16 @@ const CopyAddress = ({ slicerAddress }: Props) => {
               "___"
             )}
           </p>
-          <div className="absolute right-[-30px] inline-block pl-10">
-            <Copy className="w-5 h-5" />
-          </div>
+          {showIcon && (
+            <div className="absolute right-[-30px] inline-block pl-10">
+              <Copy className="w-5 h-5" />
+            </div>
+          )}
         </div>
         <div
-          className={`w-40 absolute p-2 top-[40px] sm:top-[auto] sm:right-[-220px] shadow-md rounded-md overflow-hidden text-white bg-gray-800 transition-opacity duration-100 ${
+          className={`w-40 absolute p-2 ${
+            position ? position : "top-[40px] sm:top-[auto] sm:right-[-220px]"
+          } shadow-md rounded-md overflow-hidden flex justify-center items-center text-white bg-gray-800 transition-opacity duration-100 ${
             showAlert ? "opacity-100 z-20" : "opacity-0 -z-10"
           }`}
         >

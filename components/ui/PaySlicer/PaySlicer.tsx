@@ -21,10 +21,10 @@ const PaySlicer = ({ slicerAddress }: Props) => {
   const handleChange = (value) => {
     if (isEth) {
       setEthValue(value)
-      setUsdValue(value * Number(data.price))
+      setUsdValue(value * Number(data?.price))
     } else {
       setUsdValue(value)
-      setEthValue(value / Number(data.price))
+      setEthValue(value / Number(data?.price))
     }
   }
 
@@ -54,10 +54,10 @@ const PaySlicer = ({ slicerAddress }: Props) => {
   //     if (data) {
   //       let convertedValue
   //       if (startCurrency === "usd") {
-  //         convertedValue = val / Number(data.price)
+  //         convertedValue = val / Number(data?.price)
   //         decimals = 4
   //       } else if (startCurrency === "eth") {
-  //         convertedValue = val * Number(data.price)
+  //         convertedValue = val * Number(data?.price)
   //         decimals = 2
   //       }
   //       const roundedValue = decimals

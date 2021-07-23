@@ -7,7 +7,7 @@ import {
   PaySlicer,
   SlicerDescription,
   SlicerName,
-  SlicerImage,
+  SlicerImageBlock,
   MessageBlock,
 } from "@components/ui"
 import fetcher from "@utils/fetcher"
@@ -160,7 +160,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
           loading={loading}
         />
       </div>
-      <SlicerImage
+      <SlicerImageBlock
         name={slicer.name}
         imageUrl={slicer.imageUrl}
         newImage={newImage}
