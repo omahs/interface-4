@@ -12,19 +12,23 @@ const SlicersList = () => {
 
   return (
     <div>
-      <h1 className="pb-8">Your slicers</h1>
       {data &&
         [...Array(Number(data.totalOwned.hex))].map((el, key) => {
           const i = Number(key)
           const slicerId = Number(data.idsUint[i].hex)
           const slicerShares = Number(data.shares[i].hex)
           return (
-            <SlicerCard
-              key={key}
-              slicerId={slicerId}
-              shares={slicerShares}
-              account={account}
-            />
+            <>
+              <SlicerCard
+                key={key}
+                slicerId={slicerId}
+                shares={slicerShares}
+                account={account}
+              />
+              {i !== Number(data.totalOwned.hex) - 1 && (
+                <hr className="my-12 border-gray-300" />
+              )}
+            </>
           )
         })}
     </div>

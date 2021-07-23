@@ -12,6 +12,7 @@ const handleSubmit = async (
 ) => {
   setMessage({ message: "", messageStatus: "success" })
   try {
+    // Todo: there's a problem here, function gets stuck
     const [contract, call] = await action
 
     setLoading(true)

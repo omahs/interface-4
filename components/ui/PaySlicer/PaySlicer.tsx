@@ -40,6 +40,9 @@ const PaySlicer = ({ slicerAddress }: Props) => {
         method: "eth_sendTransaction",
         params: [transactionParameters],
       })
+
+      setEthValue(0)
+      setUsdValue(0)
     } catch (err) {
       null
     }

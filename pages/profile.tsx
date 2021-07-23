@@ -6,9 +6,9 @@ export default function Profile() {
       <main className="max-w-[420px] mx-auto sm:max-w-screen-md">
         <DoubleText
           inactive
-          logoText={`Profile`}
+          logoText="Your slicers"
           size="text-4xl sm:text-5xl"
-          position="pb-8"
+          position="pb-16"
         />
         <div className="space-y-4 text-left">
           <SlicersList />

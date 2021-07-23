@@ -1,10 +1,13 @@
 import Link from "next/link"
-import { Button, Input, SlicerImage } from "@components/ui"
 import fetcher from "@utils/fetcher"
 import useSWR from "swr"
 import { useAllowed } from "@lib/useProvider"
 import SlicerCardImage from "../SlicerCardImage"
 import Chevron from "@components/icons/Chevron"
+import { TriggerRelease } from "lib/handlers/chain"
+import BlockchainCall from "../BlockchainCall"
+import { useEffect, useState } from "react"
+import { LogDescription } from "ethers/lib/utils"
 
 type SlicerInfo = {
   name: string
@@ -34,21 +37,32 @@ const SlicerCard = ({ slicerId, shares, account }: Props) => {
   const unreleasedAmount = unreleased
     ? Math.floor((Number(unreleased?.hex) / Math.pow(10, 18)) * 10000) / 10000
     : null
+  const slicerLink = `/slicer/${slicerId}`
+
+  const [success, setSuccess] = useState(false)
+  const [log, setLog] = useState<LogDescription>()
+  const eventLog = log?.args
 
   return (
     <div className="sm:flex">
       <SlicerCardImage
-        href={`/slicer/${slicerId}`}
+        href={slicerLink}
         name={name}
         slicerAddress={address}
         imageUrl={imageUrl}
         isAllowed={isAllowed}
       />
-      <div className="py-3 sm:ml-6 md:ml-10">
-        <h3>
-          {name}
-          <span className="mb-1 ml-2 text-base font-normal">#{slicerId}</span>
-        </h3>
+      <div className="pt-5 sm:pt-4 sm:ml-6 md:ml-14">
+        <Link href={slicerLink}>
+          <a>
+            <h3 className="inline-block">
+              {name}
+              <span className="mb-1 ml-2 text-base font-normal">
+                #{slicerId}
+              </span>
+            </h3>
+          </a>
+        </Link>
         <div className="space-y-2 text-gray-700">
           <div className="flex items-center">
             <p className="text-sm">Shares owned: {shares}</p>
@@ -68,9 +82,18 @@ const SlicerCard = ({ slicerId, shares, account }: Props) => {
             </span>
           </p>
         </div>
-        <div className="mt-6">
-          <Button label={`Trigger release`} />
-        </div>
+        {unreleasedAmount ? (
+          <div className="mt-6">
+            <BlockchainCall
+              label="Trigger release"
+              action={() => TriggerRelease(account, [address], 0)}
+              success={success}
+              setSuccess={setSuccess}
+              setLog={setLog}
+              mutateUrl={`/api/slicer/${slicerId}/account/${account}/unreleased`}
+            />
+          </div>
+        ) : null}
       </div>
     </div>
   )
