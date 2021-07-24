@@ -19,16 +19,13 @@ const SlicerCardImage = ({
   href,
 }: Props) => {
   return (
-    <div
-      className="relative w-full overflow-hidden nightwind-prevent-block rounded-xl max-h-[250px] sm:w-80 sm:h-48"
-      id="imageWrapper"
-    >
+    <div className="relative w-full overflow-hidden nightwind-prevent-block rounded-xl sm:w-80 h-60 sm:h-52 ">
       <Link href={href}>
         <a>
           <SlicerImage name={name} imageUrl={imageUrl} />
         </a>
       </Link>
-      <span className="rounded-md absolute bottom-[10px] left-[12px] w-[150px] h-[32px] bg-white">
+      <span className="rounded-md absolute bottom-[10px] left-[12px] w-[150px] h-[32px] bg-white flex items-center">
         <div className="flex justify-center w-full text-black">
           <CopyAddress
             slicerAddress={slicerAddress}

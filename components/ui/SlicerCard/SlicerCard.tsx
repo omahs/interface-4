@@ -3,13 +3,13 @@ import fetcher from "@utils/fetcher"
 import useSWR from "swr"
 import { useAllowed } from "@lib/useProvider"
 import SlicerCardImage from "../SlicerCardImage"
-import Chevron from "@components/icons/Chevron"
 import { TriggerRelease } from "lib/handlers/chain"
 import BlockchainCall from "../BlockchainCall"
 import { useEffect, useState } from "react"
 import { LogDescription } from "ethers/lib/utils"
 import abbreviateNumber from "@utils/abbreviateNumber"
 import getLog from "@utils/getLog"
+import Arrow from "@components/icons/Arrow"
 
 type SlicerInfo = {
   name: string
@@ -85,8 +85,8 @@ const SlicerCard = ({ slicerId, shares, account }: Props) => {
             <Link href={`slicer/${slicerId}/transfer`}>
               <a className="flex items-center ml-3 group">
                 <p className="text-sm ">Transfer</p>
-                <div className="w-6 h-6 transition-transform duration-150 rotate-180 group-hover:translate-x-1">
-                  <Chevron />
+                <div className="w-5 h-5 ml-1 transition-transform duration-150 group-hover:translate-x-1">
+                  <Arrow />
                 </div>
               </a>
             </Link>

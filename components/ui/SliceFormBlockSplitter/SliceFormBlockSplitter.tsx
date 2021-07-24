@@ -75,7 +75,7 @@ const SliceFormBlockSplitter = ({
           position="top-[35px] right-[-35px]"
         />
       </div>
-      <p className="col-span-8 pb-2 text-lg font-semibold text-center xs:hidden">
+      <p className="col-span-8 pb-2 font-semibold text-center xs:hidden">
         Add up to 30 addresses
       </p>
       {[...Array(inputCount)].map((el, key) => {
