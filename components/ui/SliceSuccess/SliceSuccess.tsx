@@ -13,7 +13,7 @@ const SliceSuccess = ({ eventLog, setSuccess }: Props) => {
   const slicerId = Number(eventLog?.tokenId)
   return (
     <>
-      <h2 className="py-4">Slicer created 🍰</h2>
+      <h2 className="py-4">Slicer created! 🍰</h2>
       <div className="py-6 space-y-4">
         <p>Your Slicer address is: {slicerAddress}</p>
         <p>If you hold the minimum shares amount, you can now customize it</p>
