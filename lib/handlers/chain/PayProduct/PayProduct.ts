@@ -8,19 +8,17 @@ const PayProduct = async (
   quantity: number
 ) => {
   const { signer, signerAddress } = await initialize()
-  const slicerContract = await slicer(slicerId, signer)
-  const totalPrice = await GetProductPrice(slicerId, productId, quantity)
+  const contract = await slicer(slicerId, signer)
 
-  const data = await slicerContract.payProduct(
-    signerAddress,
-    productId,
-    quantity,
-    {
+  try {
+    const totalPrice = await GetProductPrice(slicerId, productId, quantity)
+    const call = await contract.payProduct(signerAddress, productId, quantity, {
       value: totalPrice,
-    }
-  )
-
-  return data
+    })
+    return [contract, call]
+  } catch (err) {
+    throw err
+  }
 }
 
 export default PayProduct

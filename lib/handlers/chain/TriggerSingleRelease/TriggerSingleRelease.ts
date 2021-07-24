@@ -3,11 +3,14 @@ import { slicer } from "@lib/initProvider"
 
 const TriggerSingleRelease = async (slicerId: number, account?: string) => {
   const { signer } = await initialize()
-  const slicerContract = await slicer(slicerId, signer)
+  const contract = await slicer(slicerId, signer)
 
-  const data = await slicerContract.release(account)
-
-  return data
+  try {
+    const call = await contract.release(account)
+    return [contract, call]
+  } catch (err) {
+    throw err
+  }
 }
 
 export default TriggerSingleRelease

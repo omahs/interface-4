@@ -7,15 +7,18 @@ const TriggerRelease = async (
   slicerPercentage: number
 ) => {
   const { signer } = await initialize()
-  const sliceContract = slice(signer)
+  const contract = slice(signer)
 
-  const data = await sliceContract.triggerRelease(
-    account,
-    slicerAddresses,
-    slicerPercentage
-  )
-
-  return data
+  try {
+    const call = await contract.triggerRelease(
+      account,
+      slicerAddresses,
+      slicerPercentage
+    )
+    return [contract, call]
+  } catch (err) {
+    throw err
+  }
 }
 
 export default TriggerRelease

@@ -3,11 +3,14 @@ import { slc } from "@lib/initProvider"
 
 const GetSlcBalance = async () => {
   const { signer, signerAddress } = await initialize()
-  const slccontract = slc(signer)
+  const contract = slc(signer)
 
-  const data = await slccontract.balanceOf(signerAddress)
-
-  return data
+  try {
+    const call = await contract.balanceOf(signerAddress)
+    return [contract, call]
+  } catch (err) {
+    throw err
+  }
 }
 
 export default GetSlcBalance

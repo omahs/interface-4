@@ -8,12 +8,15 @@ const GetProductPrice = async (
   quantity: number
 ) => {
   const { signer } = await initialize()
+  const contract = await slicer(slicerId, signer)
+  const price = await contract.productInfo(productId)
 
-  const slicerContract = await slicer(slicerId, signer)
-  const price = await slicerContract.productInfo(productId)
-  const totalPrice = BigNumber.from(price[1]).mul(quantity)
-
-  return totalPrice
+  try {
+    const call = BigNumber.from(price[1]).mul(quantity)
+    return [contract, call]
+  } catch (err) {
+    throw err
+  }
 }
 
 export default GetProductPrice

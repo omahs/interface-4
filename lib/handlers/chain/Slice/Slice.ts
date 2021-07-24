@@ -7,11 +7,11 @@ const Slice = async (
   minimumShares: number
 ) => {
   const { signer } = await initialize()
-  const sliceContract = slice(signer)
+  const contract = slice(signer)
 
   try {
-    const call = await sliceContract.slice(accounts, shares, minimumShares)
-    return [sliceContract, call]
+    const call = await contract.slice(accounts, shares, minimumShares)
+    return [contract, call]
   } catch (err) {
     throw err
   }

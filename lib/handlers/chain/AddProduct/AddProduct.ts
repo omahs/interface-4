@@ -13,21 +13,24 @@ const AddProduct = async (
   // bytes memory purchaseData
 ) => {
   const { signer } = await initialize()
-  const slicerContract = await slicer(slicerId, signer)
-
+  const contract = await slicer(slicerId, signer)
   const decimals = BigNumber.from(10).pow(18)
   const amountBN = BigNumber.from(priceInEth).mul(decimals)
-  const data = await slicerContract.addProduct(
-    categoryIndex,
-    amountBN,
-    isUSD,
-    isMultiple,
-    units,
-    [],
-    []
-  )
 
-  return data
+  try {
+    const call = await contract.addProduct(
+      categoryIndex,
+      amountBN,
+      isUSD,
+      isMultiple,
+      units,
+      [],
+      []
+    )
+    return [contract, call]
+  } catch (err) {
+    throw err
+  }
 }
 
 export default AddProduct

@@ -9,29 +9,35 @@ const PayProducts = async (
   quantities: number[]
 ) => {
   const { signer } = await initialize()
-  const slicecontract = slice(signer)
+  const contract = slice(signer)
   const sliceCorecontract = sliceCore(signer)
   let slicerAddresses: string[]
   let totalPrice: BigNumber
 
-  slicerIds.forEach(async (slicerId, i) => {
-    const slicerAddress = await sliceCorecontract.slicers(slicerId)
-    slicerAddresses.push(slicerAddress)
-    totalPrice.add(
-      await GetProductPrice(slicerId, productIds[i], quantities[i])
+  try {
+    slicerIds.forEach(async (slicerId, i) => {
+      const slicerAddress = await sliceCorecontract.slicers(slicerId)
+      slicerAddresses.push(slicerAddress)
+      const productPrice = await GetProductPrice(
+        slicerId,
+        productIds[i],
+        quantities[i]
+      )
+      totalPrice.add(Number(productPrice))
+    })
+
+    const call = await contract.payProducts(
+      slicerAddresses,
+      productIds,
+      quantities,
+      {
+        value: totalPrice,
+      }
     )
-  })
-
-  const data = await slicecontract.payProducts(
-    slicerAddresses,
-    productIds,
-    quantities,
-    {
-      value: totalPrice,
-    }
-  )
-
-  return data
+    return [contract, call]
+  } catch (err) {
+    throw err
+  }
 }
 
 export default PayProducts
