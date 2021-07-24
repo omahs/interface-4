@@ -131,6 +131,7 @@ const SliceFormBlockSplitter = ({
         <Input
           type="number"
           placeholder="100000"
+          error={minimumShares > totalShares}
           required
           onChange={setMinimumShares}
         />

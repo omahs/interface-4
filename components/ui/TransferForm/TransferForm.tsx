@@ -65,6 +65,7 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
                 placeholder={`Up to ${ownedShares} shares`}
                 required
                 value={shares}
+                error={shares > ownedShares}
                 onChange={setShares}
               />
             </div>

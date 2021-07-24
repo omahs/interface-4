@@ -5,6 +5,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
   prefix?: string
   after?: string
+  error?: boolean
   onChange?: (...args: any[]) => any
 }
 
@@ -16,12 +17,17 @@ const Input: React.FC<Props> = (props) => {
     prefix = "",
     after,
     children,
+    error = false,
     ...rest
   } = props
 
-  const rootClassName = `focus:border-sky-600 bg-white py-2 pl-5 w-full appearance-none transition duration-150 ${
-    !prefix ? "shadow-light-focusable" : ""
-  } ease-in-out pr-3 border-b-[3px] placeholder-gray-400 border-blue-300 text-black focus:outline-none disabled:text-gray-500 disabled:border-blue-100 disabled:bg-gray-50 ${className}`
+  const rootClassName = ` bg-white py-2 pl-5 w-full appearance-none transition duration-150 ${
+    !prefix && !error ? "shadow-light-focusable" : ""
+  } ease-in-out pr-3 border-b-[3px] placeholder-gray-400 focus:outline-none disabled:text-gray-500 disabled:border-blue-100 disabled:bg-gray-50 ${className} ${
+    error
+      ? "text-red-500 border-red-400 focus:border-red-400 shadow-error"
+      : "text-black border-blue-300 focus:border-sky-600"
+  }`
 
   const handleOnChange = (e: any) => {
     if (onChange) {
@@ -38,8 +44,8 @@ const Input: React.FC<Props> = (props) => {
         </p>
       )}
       <div
-        className={`flex rounded-t-sm ${
-          prefix ? "shadow-light-focusable overflow-hidden" : ""
+        className={`flex text-red-500 rounded-t-sm ${
+          prefix && !error ? "shadow-light-focusable overflow-hidden" : ""
         }`}
       >
         {prefix && (
