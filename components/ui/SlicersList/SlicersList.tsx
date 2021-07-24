@@ -2,6 +2,9 @@ import { SlicerCard } from "@components/ui"
 import fetcher from "@utils/fetcher"
 import useSWR from "swr"
 import { useAppContext } from "@components/ui/context"
+import ActionScreen from "../ActionScreen"
+import Button from "../Button"
+import { useState } from "react"
 
 const SlicersList = () => {
   const { account } = useAppContext()
@@ -9,29 +12,55 @@ const SlicersList = () => {
     account ? `/api/account/${account}/slicers` : null,
     fetcher
   )
+  const initItems = 4
+  const [items, setItems] = useState(initItems)
+
+  const handleIncrease = () => {
+    if (items + initItems <= Number(data.totalOwned.hex)) {
+      setItems(items + initItems)
+    } else {
+      setItems(Number(data.totalOwned.hex))
+    }
+  }
 
   return (
-    <div>
-      {data &&
-        [...Array(Number(data.totalOwned.hex))].map((el, key) => {
-          const i = Number(key)
-          const slicerId = Number(data.idsUint[i].hex)
-          const slicerShares = Number(data.shares[i].hex)
-          return (
-            <>
-              <SlicerCard
-                key={key}
-                slicerId={slicerId}
-                shares={slicerShares}
-                account={account}
-              />
-              {i !== Number(data.totalOwned.hex) - 1 && (
-                <hr className="my-12 border-gray-300" />
-              )}
-            </>
-          )
-        })}
-    </div>
+    <>
+      {data && Number(data.totalOwned.hex) ? (
+        <>
+          {[...Array(items)].map((el, key) => {
+            const i = Number(key)
+            const slicerId = Number(data.idsUint[i].hex)
+            const slicerShares = Number(data.shares[i].hex)
+            return (
+              <div className="mt-3" key={key}>
+                <SlicerCard
+                  slicerId={slicerId}
+                  shares={slicerShares}
+                  account={account}
+                />
+                {i !== items && <hr className="my-12 border-gray-300" />}
+              </div>
+            )
+          })}
+          <div className="py-6 space-y-8">
+            {items < Number(data.totalOwned.hex) && (
+              <p className="text-center">
+                <a onClick={() => handleIncrease()}>Load more</a>
+              </p>
+            )}
+            <div className="flex justify-center">
+              <Button label="Slice a new slicer" href="/slice" />
+            </div>
+          </div>
+        </>
+      ) : (
+        <ActionScreen
+          text="You have no slicers :("
+          buttonLabel="Start slicing"
+          href="/slice"
+        />
+      )}
+    </>
   )
 }
 

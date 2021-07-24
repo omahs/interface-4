@@ -8,6 +8,8 @@ import { TriggerRelease } from "lib/handlers/chain"
 import BlockchainCall from "../BlockchainCall"
 import { useEffect, useState } from "react"
 import { LogDescription } from "ethers/lib/utils"
+import abbreviateNumber from "@utils/abbreviateNumber"
+import getLog from "@utils/getLog"
 
 type SlicerInfo = {
   name: string
@@ -39,9 +41,23 @@ const SlicerCard = ({ slicerId, shares, account }: Props) => {
     : null
   const slicerLink = `/slicer/${slicerId}`
 
+  const [ethReleased, setEthReleased] = useState(0)
   const [success, setSuccess] = useState(false)
-  const [log, setLog] = useState<LogDescription>()
-  const eventLog = log?.args
+  const [logs, setLogs] = useState<LogDescription[]>()
+  const eventLog = getLog(logs, "MintTriggered")
+
+  const slcReleased =
+    eventLog &&
+    abbreviateNumber(
+      Math.floor((Number(eventLog.amount._hex) / Math.pow(10, 18)) * 100) / 100,
+      2
+    )
+
+  useEffect(() => {
+    if (success) {
+      setEthReleased(unreleasedAmount)
+    }
+  }, [success])
 
   return (
     <div className="sm:flex">
@@ -89,11 +105,17 @@ const SlicerCard = ({ slicerId, shares, account }: Props) => {
               action={() => TriggerRelease(account, [address], 0)}
               success={success}
               setSuccess={setSuccess}
-              setLog={setLog}
+              setLogs={setLogs}
               mutateUrl={`/api/slicer/${slicerId}/account/${account}/unreleased`}
             />
           </div>
         ) : null}
+        {slcReleased && (
+          <p className="pt-4 text-sm text-green-500">
+            You received <span className="font-medium">{ethReleased} ETH</span>{" "}
+            and <span className="font-medium">{slcReleased} SLC!</span> 🎉
+          </p>
+        )}
       </div>
     </div>
   )

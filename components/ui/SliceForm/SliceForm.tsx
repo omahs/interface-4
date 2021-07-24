@@ -9,10 +9,10 @@ type Props = {
   success: boolean
   setLoading: Dispatch<SetStateAction<boolean>>
   setSuccess: Dispatch<SetStateAction<boolean>>
-  setLog: Dispatch<SetStateAction<LogDescription>>
+  setLogs: Dispatch<SetStateAction<LogDescription[]>>
 }
 
-const SliceForm = ({ success, setLoading, setSuccess, setLog }: Props) => {
+const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   const [addresses, setAddresses] = useState([""])
   const [shares, setShares] = useState([1000000])
   const [minimumShares, setMinimumShares] = useState(0)
@@ -30,14 +30,14 @@ const SliceForm = ({ success, setLoading, setSuccess, setLog }: Props) => {
       cleanedShares.length == cleanedAddresses.length &&
       cleanedShares.length <= 30
     ) {
-      const eventLog = await handleSubmit(
+      const eventLogs = await handleSubmit(
         Slice(cleanedAddresses, cleanedShares, minimumShares),
         setMessage,
         setLoading,
         setSuccess,
         true
       )
-      setLog(eventLog)
+      setLogs(eventLogs)
     } else {
       handleMessage(
         {

@@ -9,7 +9,7 @@ type Props = {
   success: boolean
   action: () => Promise<any>
   setSuccess: Dispatch<SetStateAction<boolean>>
-  setLog: Dispatch<SetStateAction<LogDescription>>
+  setLogs: Dispatch<SetStateAction<LogDescription[]>>
   mutateUrl?: string
   confetti?: boolean
 }
@@ -19,7 +19,7 @@ const BlockchainCall = ({
   action,
   success,
   setSuccess,
-  setLog,
+  setLogs,
   mutateUrl,
   confetti = false,
 }: Props) => {
@@ -37,12 +37,11 @@ const BlockchainCall = ({
       setSuccess,
       confetti
     )
-    setLog(eventLog)
+    setLogs(eventLog)
   }
 
   useEffect(() => {
-    if (success) {
-      console.log("aha")
+    if (mutateUrl && success) {
       mutate(mutateUrl, { unreleased: 0 }, false)
       mutate(mutateUrl)
     }

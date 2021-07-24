@@ -87,7 +87,9 @@ const SliceFormInputBlock = ({
               account === address ? (
                 <UserIcon
                   className={
-                    minimumShares <= Number(sharesAmount) && "text-green-500"
+                    minimumShares <= Number(sharesAmount)
+                      ? "text-green-500"
+                      : ""
                   }
                 />
               ) : null

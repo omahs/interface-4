@@ -3,6 +3,7 @@ import useSWR from "swr"
 import { useAppContext } from "@components/ui/context"
 import Spinner from "@components/icons/Spinner"
 import { useEffect, useState } from "react"
+import abbreviateNumber from "@utils/abbreviateNumber"
 
 const SlcCounter = () => {
   const { account } = useAppContext()
@@ -12,16 +13,6 @@ const SlcCounter = () => {
   )
   const [slc, setSlc] = useState(0)
   const formattedSlc = abbreviateNumber(slc)
-
-  function abbreviateNumber(number: number) {
-    const SI_SYMBOL = ["", "k", "M", "G", "T", "P", "E"]
-    const tier = (Math.log10(Math.abs(number)) / 3) | 0
-    if (tier == 0) return number
-    const suffix = SI_SYMBOL[tier]
-    const scale = Math.pow(10, tier * 3)
-    const scaled = number / scale
-    return scaled.toFixed(1) + suffix
-  }
 
   useEffect(() => {
     if (data) {

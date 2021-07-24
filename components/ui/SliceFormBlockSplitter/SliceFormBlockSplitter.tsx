@@ -138,7 +138,7 @@ const SliceFormBlockSplitter = ({
       <div className="col-start-6 pl-5 xs:pl-0 xs:col-span-1 flex items-center mt-1.5">
         <p
           className={`text-sm font-bold ${
-            minimumShares > totalShares && "text-red-500"
+            minimumShares > totalShares ? "text-red-500" : ""
           }`}
         >
           {minimumShares != 0 &&

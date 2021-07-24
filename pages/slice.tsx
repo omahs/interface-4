@@ -8,12 +8,13 @@ import {
   SliceSuccess,
 } from "@components/ui"
 import { LogDescription } from "ethers/lib/utils"
+import getLog from "@utils/getLog"
 
 export default function Slice() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const [log, setLog] = useState<LogDescription>()
-  const eventLog = log?.args
+  const [logs, setLogs] = useState<LogDescription[]>()
+  const eventLog = getLog(logs, "TokenSliced")
 
   return (
     <ConnectBlock>
@@ -46,7 +47,7 @@ export default function Slice() {
                 success={success}
                 setLoading={setLoading}
                 setSuccess={setSuccess}
-                setLog={setLog}
+                setLogs={setLogs}
               />
             </>
           ) : (

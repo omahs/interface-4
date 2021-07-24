@@ -8,7 +8,7 @@ export default function Profile() {
           inactive
           logoText="Your slicers"
           size="text-4xl sm:text-5xl"
-          position="pb-16"
+          position="pb-12"
         />
         <div className="space-y-4 text-left">
           <SlicersList />
