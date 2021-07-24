@@ -2,8 +2,9 @@ import { useState, Dispatch, SetStateAction } from "react"
 import { Button, SliceFormBlockSplitter } from "@components/ui"
 import { Slice } from "@lib/handlers/chain"
 import handleSubmit from "@utils/handleSubmit"
-import handleMessage from "@utils/handleMessage"
+import handleMessage, { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
+import MessageBlock from "../MessageBlock"
 
 type Props = {
   success: boolean
@@ -17,10 +18,8 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   const [shares, setShares] = useState([1000000])
   const [minimumShares, setMinimumShares] = useState(0)
   const [totalShares, setTotalShares] = useState(1000000)
-  const [{ message, messageStatus }, setMessage] = useState({
-    message: "",
-    messageStatus: "success",
-  })
+  const [message, setMessage] = useState<Message>()
+
   const cleanedAddresses = addresses.filter(() => true)
   const cleanedShares = shares.filter(() => true)
 
@@ -82,15 +81,9 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
       <div className="py-1">
         <Button label="Slice" type="submit" />
       </div>
-      {message && (
-        <p
-          className={
-            messageStatus === "error" ? "text-red-500" : "text-green-600"
-          }
-        >
-          {message}
-        </p>
-      )}
+      <div>
+        <MessageBlock msg={message} />
+      </div>
     </form>
   )
 }

@@ -3,6 +3,8 @@ import handleSubmit from "@utils/handleSubmit"
 import { LogDescription } from "ethers/lib/utils"
 import { Dispatch, SetStateAction, useState, useEffect } from "react"
 import Button from "../Button"
+import MessageBlock from "../MessageBlock"
+import { Message } from "@utils/handleMessage"
 
 type Props = {
   label: string
@@ -26,10 +28,7 @@ const BlockchainCall = ({
   confetti = false,
 }: Props) => {
   const [loading, setLoading] = useState(false)
-  const [{ message, messageStatus }, setMessage] = useState({
-    message: "",
-    messageStatus: "success",
-  })
+  const [message, setMessage] = useState<Message>()
 
   const submit = async () => {
     const eventLog = await handleSubmit(
@@ -54,15 +53,9 @@ const BlockchainCall = ({
       <div className="py-1">
         <Button label={label} loading={loading} onClick={() => submit()} />
       </div>
-      {message && (
-        <p
-          className={
-            messageStatus === "error" ? "text-red-500" : "text-green-600"
-          }
-        >
-          {message}
-        </p>
-      )}
+      <div>
+        <MessageBlock msg={message} />
+      </div>
     </>
   )
 }
