@@ -1,4 +1,4 @@
-import { Button, ConnectBlock, DoubleText, SlicersList } from "@components/ui"
+import { ConnectBlock, DoubleText, SlicersList } from "@components/ui"
 
 export default function Profile() {
   return (

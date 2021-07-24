@@ -1,6 +1,6 @@
 import { SlicerCard } from "@components/ui"
 import fetcher from "@utils/fetcher"
-import useSWR from "swr"
+import useSWR, { mutate } from "swr"
 import { useAppContext } from "@components/ui/context"
 import ActionScreen from "../ActionScreen"
 import Button from "../Button"
@@ -24,6 +24,15 @@ const SlicersList = () => {
   }
 
   useEffect(() => {
+    if (window.ethereum) {
+      window.ethereum.on("accountsChanged", () => {
+        setItems(0)
+        mutate(`/api/account/${account}/slicers`)
+      })
+    }
+  }, [])
+
+  useEffect(() => {
     if (data) {
       setItems(
         Number(data.totalOwned.hex) < initItems
@@ -39,8 +48,8 @@ const SlicersList = () => {
         <>
           {[...Array(items)].map((el, key) => {
             const i = Number(key)
-            const slicerId = Number(data.idsUint[i].hex)
-            const slicerShares = Number(data.shares[i].hex)
+            const slicerId = Number(data?.idsUint[i].hex)
+            const slicerShares = Number(data?.shares[i].hex)
             return (
               <div className="mt-3" key={key}>
                 <SlicerCard

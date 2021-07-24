@@ -107,6 +107,7 @@ const SlicerCard = ({ slicerId, shares, account }: Props) => {
               setSuccess={setSuccess}
               setLogs={setLogs}
               mutateUrl={`/api/slicer/${slicerId}/account/${account}/unreleased`}
+              mutateObj={{ unreleased: 0 }}
             />
           </div>
         ) : null}

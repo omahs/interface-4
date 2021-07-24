@@ -6,11 +6,12 @@ import Button from "../Button"
 
 type Props = {
   label: string
-  success: boolean
   action: () => Promise<any>
   setSuccess: Dispatch<SetStateAction<boolean>>
   setLogs: Dispatch<SetStateAction<LogDescription[]>>
+  success?: boolean
   mutateUrl?: string
+  mutateObj?: object
   confetti?: boolean
 }
 
@@ -21,6 +22,7 @@ const BlockchainCall = ({
   setSuccess,
   setLogs,
   mutateUrl,
+  mutateObj,
   confetti = false,
 }: Props) => {
   const [loading, setLoading] = useState(false)
@@ -42,7 +44,7 @@ const BlockchainCall = ({
 
   useEffect(() => {
     if (mutateUrl && success) {
-      mutate(mutateUrl, { unreleased: 0 }, false)
+      mutate(mutateUrl, mutateObj, false)
       mutate(mutateUrl)
     }
   }, [success])
