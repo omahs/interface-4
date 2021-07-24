@@ -13,12 +13,13 @@ import Input from "../Input"
 
 type Props = {
   slicerId: number
+  ownedShares: number
 }
 
-const TransferForm = ({ slicerId }: Props) => {
+const TransferForm = ({ slicerId, ownedShares }: Props) => {
   const { account } = useAppContext()
   const [address, setAddress] = useState("")
-  const [shares, setShares] = useState(0)
+  const [shares, setShares] = useState<number>()
 
   const [success, setSuccess] = useState(false)
   const [logs, setLogs] = useState<LogDescription[]>()
@@ -30,16 +31,34 @@ const TransferForm = ({ slicerId }: Props) => {
   })
 
   return (
-    <div className="p-8 bg-white">
-      <Input type="string" value={address} onChange={setAddress} />
-      <Input type="number" value={shares} onChange={setShares} />
-      <BlockchainCall
-        label="Transfer slices"
-        action={() => TransferShares(account, address, slicerId, shares)}
-        success={success}
-        setSuccess={setSuccess}
-        setLogs={setLogs}
-      />
+    <div className="px-4 pt-10 pb-8 bg-white sm:px-8 rounded-2xl">
+      <div className="space-y-6">
+        <div>
+          <Input
+            type="string"
+            label="Receiver address"
+            placeholder="0x... / vitalik.eth"
+            value={address}
+            onChange={setAddress}
+          />
+        </div>
+        <div>
+          <Input
+            type="number"
+            label="Slices"
+            placeholder={`Up to ${ownedShares} shares`}
+            value={shares}
+            onChange={setShares}
+          />
+        </div>
+        <BlockchainCall
+          label="Transfer slices"
+          action={() => TransferShares(account, address, slicerId, shares)}
+          success={success}
+          setSuccess={setSuccess}
+          setLogs={setLogs}
+        />
+      </div>
     </div>
   )
 }

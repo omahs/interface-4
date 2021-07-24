@@ -4,15 +4,34 @@ import {
   DoubleText,
   TransferForm,
 } from "@components/ui"
+import { useAppContext } from "@components/ui/context"
 import fetcher from "@utils/fetcher"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
+import { useEffect, useState } from "react"
+import useSWR from "swr"
 
 const Transfer = ({
   slicerInfo,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const { account } = useAppContext()
+  const { data } = useSWR(
+    account ? `/api/account/${account}/slicers` : null,
+    fetcher
+  )
+  const [ownedShares, setOwnedShares] = useState<number>()
+
+  useEffect(() => {
+    if (data) {
+      const el = data.idsUint.filter((e) => Number(e.hex) === 5)
+      const index = data.idsUint.indexOf(el[0])
+      const sh = data.shares[index]
+      setOwnedShares(Number(sh.hex))
+    }
+  }, [data])
+
   return (
     <ConnectBlock>
-      <main className="max-w-[420px] mx-auto sm:max-w-screen-md">
+      <main className="max-w-[420px] mx-auto">
         <DoubleText
           inactive
           logoText="Transfer"
@@ -20,7 +39,7 @@ const Transfer = ({
           position="pb-12"
         />
         {slicerInfo?.id !== null ? (
-          <TransferForm slicerId={slicerInfo?.id} />
+          <TransferForm slicerId={slicerInfo?.id} ownedShares={ownedShares} />
         ) : (
           <ActionScreen
             text="This slicer doesn't exist (yet)"
