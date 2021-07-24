@@ -50,16 +50,16 @@ const Button: FC<ButtonProps> = (props) => {
   const rootClassName = `px-7 min-w-[150px] rounded-sm overflow-hidden focus:outline-none ${className}`
 
   return (
-    <div className="relative inline-block group">
+    <div className="relative inline-block">
       {href ? (
         <Link href={href} passHref>
-          <button className={`${rootClassName} ${color}`}>
+          <button className={`peer relative z-10 ${rootClassName} ${color}`}>
             <div className="flex items-center justify-center">{innerText}</div>
           </button>
         </Link>
       ) : (
         <button
-          className={`peer ${rootClassName} ${color}`}
+          className={`peer relative z-10 ${rootClassName} ${color}`}
           type={type}
           onClick={requireConnection && !isConnected ? requestAccount : onClick}
         >
@@ -74,7 +74,7 @@ const Button: FC<ButtonProps> = (props) => {
       )}
       {double && (
         <div
-          className={`${rootClassName} absolute top-0 mt-[0.6rem] ml-[0.6rem] mr-[-0.6rem] bg-gradient-to-br ${color1[3]} ${color2[4]} text-transparent -z-10 group-hover:mt-0 group-hover:ml-0 group-hover:mr-0 peer-focus:mt-0 peer-focus:ml-0 peer-focus:mr-0 transition-all duration-150`}
+          className={`${rootClassName} absolute top-0 mt-[0.6rem] ml-[0.6rem] mr-[-0.6rem] bg-gradient-to-br ${color1[3]} ${color2[4]} text-transparent peer-hover:mt-0 peer-hover:ml-0 peer-hover:mr-0 peer-focus:mt-0 peer-focus:ml-0 peer-focus:mr-0 transition-all duration-150`}
         >
           <div className="flex items-center justify-center">{innerText}</div>
         </div>
