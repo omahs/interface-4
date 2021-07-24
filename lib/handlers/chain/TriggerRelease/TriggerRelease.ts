@@ -1,5 +1,5 @@
 import { initialize } from "@lib/useProvider"
-import { slice } from "@lib/initProvider"
+import { slice, slc } from "@lib/initProvider"
 
 const TriggerRelease = async (
   account: string,
@@ -7,10 +7,11 @@ const TriggerRelease = async (
   slicerPercentage: number
 ) => {
   const { signer } = await initialize()
-  const contract = slice(signer)
+  const contract = slc(signer)
+  const sliceContract = slice(signer)
 
   try {
-    const call = await contract.triggerRelease(
+    const call = await sliceContract.triggerRelease(
       account,
       slicerAddresses,
       slicerPercentage
