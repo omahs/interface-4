@@ -21,8 +21,8 @@ const Transfer = ({
   const [ownedShares, setOwnedShares] = useState<number>()
 
   useEffect(() => {
-    if (data) {
-      const el = data.idsUint.filter((e) => Number(e.hex) === 5)
+    if (data && slicerInfo) {
+      const el = data.idsUint.filter((e) => Number(e.hex) === slicerInfo.id)
       const index = data.idsUint.indexOf(el[0])
       const sh = data.shares[index]
       setOwnedShares(Number(sh.hex))
@@ -39,7 +39,11 @@ const Transfer = ({
           position="pb-12"
         />
         {slicerInfo?.id !== null ? (
-          <TransferForm slicerId={slicerInfo?.id} ownedShares={ownedShares} />
+          <TransferForm
+            account={account}
+            slicerId={slicerInfo?.id}
+            ownedShares={ownedShares}
+          />
         ) : (
           <ActionScreen
             text="This slicer doesn't exist (yet)"
