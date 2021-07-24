@@ -4,7 +4,7 @@ import useSWR from "swr"
 import { useAppContext } from "@components/ui/context"
 import ActionScreen from "../ActionScreen"
 import Button from "../Button"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const SlicersList = () => {
   const { account } = useAppContext()
@@ -13,7 +13,7 @@ const SlicersList = () => {
     fetcher
   )
   const initItems = 4
-  const [items, setItems] = useState(initItems)
+  const [items, setItems] = useState(0)
 
   const handleIncrease = () => {
     if (items + initItems <= Number(data.totalOwned.hex)) {
@@ -22,6 +22,16 @@ const SlicersList = () => {
       setItems(Number(data.totalOwned.hex))
     }
   }
+
+  useEffect(() => {
+    if (data) {
+      setItems(
+        Number(data.totalOwned.hex) < initItems
+          ? Number(data.totalOwned.hex)
+          : initItems
+      )
+    }
+  }, [data])
 
   return (
     <>
@@ -38,11 +48,11 @@ const SlicersList = () => {
                   shares={slicerShares}
                   account={account}
                 />
-                {i !== items && <hr className="my-12 border-gray-300" />}
+                <hr className="my-12 border-gray-300" />
               </div>
             )
           })}
-          <div className="py-6 space-y-8">
+          <div className="py-4 space-y-8">
             {items < Number(data.totalOwned.hex) && (
               <p className="text-center">
                 <a onClick={() => handleIncrease()}>Load more</a>
@@ -65,3 +75,5 @@ const SlicersList = () => {
 }
 
 export default SlicersList
+
+// Todo: Add sorting by unreleased amount
