@@ -2,7 +2,7 @@ import colors from "tailwindcss/colors"
 import { useAppContext } from "@components/ui/context"
 
 const Logo = ({ ...props }) => {
-  const { color1 } = useAppContext()
+  const { color2 } = useAppContext()
 
   const size = props.size || "w-8 md:w-10"
   const margin = props.margin || "mt-1 ml-1.5"
@@ -33,7 +33,7 @@ const Logo = ({ ...props }) => {
       >
         <path
           d="M14.2388 255.622L198.418 15.4524C199.598 13.9136 201.431 13.0406 203.367 13.1437C217.882 13.9162 281.868 18.3488 351.637 38.9721C421.415 59.5984 469.985 94.4921 480.745 102.657C482.189 103.752 482.996 105.456 482.996 107.268V311.806C482.996 314.405 481.323 316.708 478.851 317.512L20.8555 466.445C16.9785 467.706 13 464.816 13 460.74V259.274C13 257.953 13.4354 256.67 14.2388 255.622Z"
-          fill={color1[0]}
+          fill={color2[0]}
           stroke="white"
           strokeWidth="32"
         />

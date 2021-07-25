@@ -1,4 +1,5 @@
 import fetcher from "@utils/fetcher"
+const sharp = require("sharp")
 import type { NextApiRequest, NextApiResponse } from "next"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -13,6 +14,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === "POST" || req.method === "PUT") {
       const buf = Buffer.from(buffer, "binary")
       const size = buf.length
+      const image = await sharp(buf).resize(320, 240).toFile()
+      console.log(image)
 
       const body = {
         method: req.method,

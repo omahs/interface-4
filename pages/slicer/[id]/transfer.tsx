@@ -58,7 +58,7 @@ const Transfer = ({
 
 export async function getStaticPaths() {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-  const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer`)
+  const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
   const paths = [...Array(totalSlicers).keys()].map((slicerId) => {
     const id = String(slicerId)
     return {

@@ -18,7 +18,7 @@ interface ButtonProps {
 
 const Button: FC<ButtonProps> = (props) => {
   const {
-    className = "h-[40px] font-bold tracking-wide rounded-sm border-white border-[3px] nightwind-prevent",
+    className = "h-[40px] font-bold tracking-wide rounded-sm overflow-hidden border-white border-[3px] nightwind-prevent",
     color = "text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700",
     type,
     label,
@@ -47,7 +47,7 @@ const Button: FC<ButtonProps> = (props) => {
     await window.ethereum.request({ method: "eth_requestAccounts" })
   }
 
-  const rootClassName = `px-7 min-w-[150px] rounded-sm overflow-hidden focus:outline-none ${className}`
+  const rootClassName = `px-7 min-w-[150px] focus:outline-none ${className}`
 
   return (
     <div className="relative inline-block">

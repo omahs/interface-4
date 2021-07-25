@@ -16,15 +16,20 @@ const Navbar = () => {
     <header className="shadow-sm bg-gray-50">
       <Container>
         <nav className="px-6 h-[4.25rem] items-center mx-auto flex justify-between">
-          <div className="flex items-center mb-1">
+          <div className="flex items-center space-x-7 sm:space-x-10">
             <Link href="/">
-              <a>
+              <a className="mb-1">
                 <Logo size="w-[24px]" />
               </a>
             </Link>
+            <Link href="/slicer">
+              <a>
+                <p className="text-sm font-normal">Explore</p>
+              </a>
+            </Link>
           </div>
-          <div className="flex items-center space-x-6 sm:space-x-8">
-            <Nightwind size="h-[26px]" />
+          <div className="flex items-center space-x-5 sm:space-x-8">
+            <Nightwind size="h-[24px]" />
             {!isConnected ? (
               <Button
                 className="h-[36px] font-medium rounded-full border-2 shadow-light"
