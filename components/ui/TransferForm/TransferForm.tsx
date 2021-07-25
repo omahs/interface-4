@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@components/ui"
 import handleSubmit from "@utils/handleSubmit"
 import { Message } from "@utils/handleMessage"
@@ -7,6 +7,8 @@ import TransferShares from "@lib/handlers/chain/TransferShares"
 import Input from "../Input"
 import MessageBlock from "../MessageBlock"
 import { mutate } from "swr"
+import useSWR from "swr"
+import fetcher from "@utils/fetcher"
 
 type Props = {
   account: string
@@ -15,6 +17,7 @@ type Props = {
 }
 
 const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
+  const { data } = useSWR(`/api/slicer/${slicerId}/minimum_shares`, fetcher)
   const [address, setAddress] = useState("")
   const [shares, setShares] = useState<number>(0)
 
@@ -24,6 +27,7 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
 
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message>()
+  const minimumShares = Number(data.hex)
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
@@ -43,8 +47,14 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
     setSuccess(false)
   }
 
+  useEffect(() => {
+    if (minimumShares) {
+      console.log(minimumShares)
+    }
+  }, [minimumShares])
+
   return (
-    <div className="relative px-4 py-10 bg-white shadow-xl sm:px-8 rounded-2xl">
+    <div className="relative px-4 py-10 bg-white shadow-xl sm:px-10 rounded-2xl">
       {!success ? (
         <form onSubmit={submit}>
           <div className="space-y-6">
@@ -54,7 +64,6 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
                 label="Receiver address"
                 placeholder="0x... / vitalik.eth"
                 required
-                value={address}
                 onChange={setAddress}
               />
             </div>
@@ -62,13 +71,20 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
               <Input
                 type="number"
                 label="Slices to transfer"
-                placeholder={`Up to ${ownedShares} shares`}
+                placeholder={`Up to ${ownedShares}`}
                 required
-                value={shares}
                 error={shares > ownedShares}
                 onChange={setShares}
               />
             </div>
+            {minimumShares && ownedShares - shares < minimumShares && (
+              <p className="pt-2 text-sm">
+                <span className="font-medium">Note:</span> You&apos;ll lose
+                privileged access to the slicer, as you will not hold the
+                minimum amount of slices (
+                <span className="font-medium">{minimumShares}</span>)
+              </p>
+            )}
             <div>
               <div className="pt-3">
                 <Button
