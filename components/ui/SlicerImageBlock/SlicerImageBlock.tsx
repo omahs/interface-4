@@ -1,6 +1,6 @@
 import Camera from "@components/icons/Camera"
 import { SlicerImage } from "@components/ui"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction } from "react"
 import { NewImage } from "pages/slicer/[id]"
 import handleMessage, { Message } from "@utils/handleMessage"
 
@@ -31,9 +31,9 @@ const SlicerImageBlock = ({
     try {
       const file = e.target.files[0]
       if (file) {
-        if (file.size > 50000000) {
+        if (file.size > 10000000) {
           handleMessage(
-            { message: "Max size 5MB", messageStatus: "error" },
+            { message: "Max size 10MB", messageStatus: "error" },
             setMsg
           )
         } else {

@@ -22,8 +22,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           ).slicers(id)
           slicerInfo = {
             id: Number(id),
-            name: "Temporary name",
-            description: "Temporary description for a nice slicer",
+            name: `Slicer #${id}`,
+            description: "",
             address: slicerAddress,
             imageUrl: "",
           }
