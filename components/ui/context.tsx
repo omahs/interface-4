@@ -20,8 +20,14 @@ export function AppWrapper({ children }) {
   const [color2, setColor2] = useState([])
 
   useEffect(() => {
-    setColor1(colorList[Math.floor(Math.random() * colorList.length)])
-    setColor2(colorList[Math.floor(Math.random() * colorList.length)])
+    const newColor1 = colorList[Math.floor(Math.random() * colorList.length)]
+    const newColor2 = colorList[Math.floor(Math.random() * colorList.length)]
+    setColor1(newColor1)
+    setColor2(newColor2)
+
+    let root = document.documentElement
+    root.style.setProperty("--color1", newColor1[0])
+    root.style.setProperty("--color2", newColor2[0])
   }, [])
   // const darkColor1 =
   //   darkColorList[Math.floor(Math.random() * darkColorList.length)]

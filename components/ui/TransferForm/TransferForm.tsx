@@ -27,7 +27,7 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
 
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message>()
-  const minimumShares = Number(data.hex)
+  const minimumShares = Number(data?.hex)
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
@@ -77,7 +77,7 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
                 onChange={setShares}
               />
             </div>
-            {minimumShares && ownedShares - shares < minimumShares && (
+            {data && minimumShares && ownedShares - shares < minimumShares && (
               <p className="pt-2 text-sm">
                 <span className="font-medium">Note:</span> You&apos;ll lose
                 privileged access to the slicer, as you will not hold the

@@ -21,7 +21,7 @@
 .shadow-light-focusable {
   box-shadow: 0 0 8px 0.6px rgba(14, 165, 233, 0.5);
   &:focus {
-    box-shadow: 0 2px 8px 1.8px rgba(14, 165, 233, 0.5);
+    box-shadow: 0 2px 8px 1.8px rgba(154, 187, 202, 0.5);
   }
 }
 
@@ -35,6 +35,14 @@
 
 .shadow-strong {
   box-shadow: 0 0 4px 8px rgba(14, 165, 233, 0.5);
+}
+
+.drop-shadow-random {
+  filter: drop-shadow(0 0 2.5px var(--color1));
+}
+
+.shadow-light-random {
+  box-shadow: 0 0 9px 0.3px var(--color1);
 }
 
 #imageWrapper div {

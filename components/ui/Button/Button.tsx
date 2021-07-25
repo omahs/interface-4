@@ -18,7 +18,7 @@ interface ButtonProps {
 
 const Button: FC<ButtonProps> = (props) => {
   const {
-    className = "h-[40px] font-bold tracking-wide rounded-sm border-white border-[3px] nightwind-prevent shadow-light",
+    className = "h-[40px] font-bold tracking-wide rounded-sm border-white border-[3px] nightwind-prevent",
     color = "text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700",
     type,
     label,
@@ -74,7 +74,7 @@ const Button: FC<ButtonProps> = (props) => {
       )}
       {double && (
         <div
-          className={`${rootClassName} absolute top-0 mt-[0.6rem] ml-[0.6rem] mr-[-0.6rem] bg-gradient-to-br ${color1[3]} ${color2[4]} text-transparent peer-hover:mt-0 peer-hover:ml-0 peer-hover:mr-0 peer-focus:mt-0 peer-focus:ml-0 peer-focus:mr-0 transition-all duration-150`}
+          className={`${rootClassName} shadow-light-random absolute top-0 mt-[0.6rem] ml-[0.6rem] mr-[-0.6rem] bg-gradient-to-br ${color1[3]} ${color2[4]} text-transparent peer-hover:mt-0 peer-hover:ml-0 peer-hover:mr-0 peer-focus:mt-0 peer-focus:ml-0 peer-focus:mr-0 transition-all duration-150`}
         >
           <div className="flex items-center justify-center">{innerText}</div>
         </div>

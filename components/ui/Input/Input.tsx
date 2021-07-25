@@ -21,7 +21,7 @@ const Input: React.FC<Props> = (props) => {
     ...rest
   } = props
 
-  const rootClassName = ` bg-white py-2 pl-5 w-full appearance-none transition duration-150 ${
+  const rootClassName = ` bg-white py-2 pl-5 w-full appearance-none transition duration-150 rounded-t-sm ${
     !prefix && !error ? "shadow-light-focusable" : ""
   } ease-in-out pr-3 border-b-[3px] placeholder-gray-400 focus:outline-none disabled:text-gray-500 disabled:border-blue-100 disabled:bg-gray-50 ${className} ${
     error
