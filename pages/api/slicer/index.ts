@@ -1,15 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import { slice } from "@lib/initProvider"
-import { defaultProvider } from "lib/useProvider"
+import { Slicer } from "@prisma/client"
+import prisma from "@lib/db"
 
-type Data = {
-  totalSlicers: number
-}
+type Data = Slicer[]
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  const { items } = req.query
   if (req.method === "GET") {
-    const totalSlicers = await slice(defaultProvider).totalTokens()
-    res.status(200).json({ totalSlicers: Number(totalSlicers) })
+    const SlicerList = await prisma.slicer.findMany({
+      orderBy: { id: "asc" },
+      take: Number(items),
+    })
+    res.status(200).json(SlicerList)
   }
 }
 
