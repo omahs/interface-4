@@ -45,6 +45,10 @@
   box-shadow: 0 0 9px 0.3px var(--color2);
 }
 
+.img-background {
+  background: linear-gradient(to bottom right, var(--color1), var(--color2));
+}
+
 #imageWrapper div {
   position: inherit !important;
   height: 100% !important;

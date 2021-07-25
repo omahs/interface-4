@@ -24,7 +24,7 @@ const SlicerCardImage = ({
   // const { color1, color2 } = useAppContext()
   return (
     <div
-      className={`relative w-full overflow-hidden rounded-xl nightwind-prevent-block ${size}`}
+      className={`relative w-full overflow-hidden rounded-xl nightwind-prevent-block img-background ${size}`}
     >
       <Link href={href}>
         <a className="peer">

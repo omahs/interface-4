@@ -60,7 +60,10 @@ const SlicerImageBlock = ({
               editMode && !loading ? "opacity-50 group-hover:opacity-20" : ""
             }`}
           >
-            <div className="w-full max-h-[400px]" id="imageWrapper">
+            <div
+              className="w-full max-h-[420px] img-background"
+              id="imageWrapper"
+            >
               {/* Todo: Fix div size */}
               {newImage.url || tempImageUrl ? (
                 /* eslint-disable @next/next/no-img-element */
