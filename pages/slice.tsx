@@ -40,7 +40,7 @@ export default function Slice() {
                 </p>
                 <p>
                   When slicers receive ETH, owners can redeem an amount
-                  proportional to the owned shares.
+                  proportional to the owned slices.
                 </p>
               </div>
               <SliceForm

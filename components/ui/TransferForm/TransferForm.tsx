@@ -47,12 +47,6 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
     setSuccess(false)
   }
 
-  useEffect(() => {
-    if (minimumShares) {
-      console.log(minimumShares)
-    }
-  }, [minimumShares])
-
   return (
     <div className="relative px-4 py-10 bg-white shadow-xl sm:px-10 rounded-2xl">
       {!success ? (

@@ -58,7 +58,7 @@ const SliceFormBlockSplitter = ({
         Addresses (Max. 30)
       </p>
       <div className="mb-[-25px] text-gray-700 relative items-center hidden xs:flex">
-        <p className="pr-1 text-sm font-semibold">Shares</p>
+        <p className="pr-1 text-sm font-semibold">Slices</p>
         <Question
           text={
             <>
@@ -67,8 +67,8 @@ const SliceFormBlockSplitter = ({
                 the account from all payments made to the slicer.
               </p>
               <p>
-                If it&apos;s green, the account possess more than the minimum
-                shares amount.
+                If it&apos;s green, the account holds more than the minimum
+                slices amount.
               </p>
             </>
           }
@@ -103,16 +103,16 @@ const SliceFormBlockSplitter = ({
         )}
       </div>
       <p className="col-span-4 py-3 pr-2 text-right xs:col-span-3 xs:col-end-7 md:col-end-9 md:col-span-3">
-        Total shares
+        Total slices
       </p>
       <p className="col-span-3 pl-5">{totalShares}</p>
       <div className="relative flex justify-end items-center col-span-5 xs:col-end-7 pt-1.5">
-        <p className="pr-1">Minimum shares</p>
+        <p className="pr-1">Minimum slices</p>
         <Question
           text={
             <>
               <p className="pb-4">
-                Accounts with the chosen amount of shares have{" "}
+                Accounts with the chosen amount of slices have{" "}
                 <Link href="/">
                   <a className="font-extrabold highlight">privileged access</a>
                 </Link>{" "}
@@ -120,7 +120,7 @@ const SliceFormBlockSplitter = ({
               </p>
               <p>
                 <strong>Note</strong>: At least one account has to hold the
-                minimum amount of shares.
+                minimum amount of slices.
               </p>
             </>
           }

@@ -16,7 +16,7 @@ const SliceSuccess = ({ eventLog, setSuccess }: Props) => {
       <h2 className="py-4">Slicer created! 🍰</h2>
       <div className="py-6 space-y-4">
         <p>Your Slicer address is: {slicerAddress}</p>
-        <p>If you hold the minimum shares amount, you can now customize it</p>
+        <p>If you hold the minimum slices, you can now customize it</p>
         <div className="pt-4 pb-10">
           <Button label="Go to Slicer" href={`${baseUrl}/slicer/${slicerId}`} />
         </div>

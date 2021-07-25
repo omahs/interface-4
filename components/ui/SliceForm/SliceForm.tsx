@@ -67,7 +67,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
 
       <div className="pt-4 pb-6">
         <p>
-          <strong>Note</strong>: minimum and total shares cannot be changed
+          <strong>Note</strong>: minimum and total slices cannot be changed
           later.
         </p>
         {totalShares === 1 && (

@@ -81,7 +81,7 @@ const SlicerCard = ({ slicerId, shares, account }: Props) => {
         </Link>
         <div className="space-y-2 text-gray-700">
           <div className="flex items-center">
-            <p className="text-sm">Shares owned: {shares}</p>
+            <p className="text-sm">Slices owned: {shares}</p>
             <Link href={`slicer/${slicerId}/transfer`}>
               <a className="flex items-center ml-3 group">
                 <p className="text-sm ">Transfer</p>

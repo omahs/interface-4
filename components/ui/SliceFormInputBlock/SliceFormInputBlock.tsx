@@ -107,7 +107,7 @@ const SliceFormInputBlock = ({
             onChange={setAddress}
           />
         </div>
-        <p className="col-span-2 pt-1.5 pr-2 text-right xs:hidden">Shares</p>
+        <p className="col-span-2 pt-1.5 pr-2 text-right xs:hidden">Slices</p>
         <div className="col-span-4 mt-1.5 xs:col-span-3">
           <Input
             type="number"
