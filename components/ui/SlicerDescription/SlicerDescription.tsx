@@ -21,6 +21,7 @@ const SlicerDescription = ({
       <Input
         label="Description"
         type="text"
+        placeholder="What is this slicer about?"
         value={newDescription}
         onChange={setNewDescription}
         disabled={loading}

@@ -24,7 +24,7 @@ const Navbar = () => {
             </Link>
             <Link href="/slicer">
               <a>
-                <p className="text-sm font-normal">Explore</p>
+                <p className="text-[0.925rem] font-normal">Explore</p>
               </a>
             </Link>
           </div>

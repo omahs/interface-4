@@ -5,6 +5,7 @@ import {
   CopyAddress,
   DoubleText,
   PaySlicer,
+  SlicerTags,
   SlicerDescription,
   SlicerName,
   SlicerImageBlock,
@@ -149,6 +150,13 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
           name={slicer.name}
           newName={newName}
           setNewName={setNewName}
+          editMode={editMode}
+          loading={loading}
+        />
+        <SlicerTags
+          description={slicer.description}
+          newDescription={newDescription}
+          setNewDescription={setNewDescription}
           editMode={editMode}
           loading={loading}
         />
