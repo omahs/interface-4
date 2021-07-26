@@ -1,6 +1,7 @@
 import {
   ActionScreen,
   ConnectBlock,
+  Container,
   DoubleText,
   TransferForm,
 } from "@components/ui"
@@ -30,37 +31,39 @@ const Transfer = ({
   }, [data])
 
   return (
-    <ConnectBlock>
-      <main className="max-w-[440px] mx-auto sm:pb-20">
-        <DoubleText
-          inactive
-          logoText="Transfer"
-          size="text-4xl sm:text-5xl"
-          position="pb-12"
-        />
-        {slicerInfo?.id !== null ? (
-          ownedShares ? (
-            <TransferForm
-              account={account}
-              slicerId={slicerInfo?.id}
-              ownedShares={ownedShares}
-            />
+    <Container page={true}>
+      <ConnectBlock>
+        <main className="max-w-[440px] mx-auto sm:pb-20">
+          <DoubleText
+            inactive
+            logoText="Transfer"
+            size="text-4xl sm:text-5xl"
+            position="pb-12"
+          />
+          {slicerInfo?.id !== null ? (
+            ownedShares ? (
+              <TransferForm
+                account={account}
+                slicerId={slicerInfo?.id}
+                ownedShares={ownedShares}
+              />
+            ) : (
+              <ActionScreen
+                text="You hold no slices of this slicer"
+                href="/"
+                buttonLabel="Return to home"
+              />
+            )
           ) : (
             <ActionScreen
-              text="You hold no slices of this slicer"
+              text="This slicer doesn't exist (yet)"
               href="/"
               buttonLabel="Return to home"
             />
-          )
-        ) : (
-          <ActionScreen
-            text="This slicer doesn't exist (yet)"
-            href="/"
-            buttonLabel="Return to home"
-          />
-        )}
-      </main>
-    </ConnectBlock>
+          )}
+        </main>
+      </ConnectBlock>
+    </Container>
   )
 }
 

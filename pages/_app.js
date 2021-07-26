@@ -1,6 +1,6 @@
 import { ThemeProvider } from "next-themes"
 import Head from "@components/common/Head"
-import { Background, Container, Layout } from "@components/ui"
+import { Background, Layout } from "@components/ui"
 import "../styles/global/styles.scss"
 import { AppWrapper } from "@components/ui/context"
 
@@ -16,9 +16,7 @@ function MyApp({ Component, pageProps }) {
         <AppWrapper>
           <Layout>
             <Background />
-            <Container page={true}>
-              <Component {...pageProps} />
-            </Container>
+            <Component {...pageProps} />
           </Layout>
         </AppWrapper>
       </ThemeProvider>

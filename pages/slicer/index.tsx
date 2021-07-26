@@ -1,4 +1,4 @@
-import { DoubleText, SlicersGrid } from "@components/ui"
+import { Container, DoubleText, SlicersGrid } from "@components/ui"
 import fetcher from "@utils/fetcher"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
 
@@ -6,15 +6,17 @@ const Slicer = ({
   totalSlicers,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
-    <main className="max-w-[420px] mx-auto sm:max-w-screen-lg">
-      <DoubleText
-        inactive
-        logoText="Slicers"
-        size="text-4xl sm:text-5xl"
-        position="pb-12"
-      />
-      <SlicersGrid totalSlicers={Number(totalSlicers)} />
-    </main>
+    <Container page={true}>
+      <main className="max-w-[420px] mx-auto sm:max-w-screen-lg">
+        <DoubleText
+          inactive
+          logoText="Slicers"
+          size="text-4xl sm:text-5xl"
+          position="pb-12"
+        />
+        <SlicersGrid totalSlicers={Number(totalSlicers)} />
+      </main>
+    </Container>
   )
 }
 

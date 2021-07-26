@@ -1,25 +1,23 @@
-import Link from "next/link"
-import { Button, DoubleText } from "@components/ui"
+import { Banner, Container, HomeHero, HomeSection } from "@components/ui"
+import { section1, section2, section3, section4 } from "@lib/text/home"
 
-export default function Home() {
+const Home = () => {
   return (
-    <main className="max-w-screen-lg mx-auto text-left">
-      <DoubleText
-        inactive
-        logoText={`Slice`}
-        size="text-6xl sm:text-7xl"
-        position="pb-8"
-      />
-      <h2 className="pb-1 font-extrabold leading-normal">
-        Decentralised payments
-      </h2>
-      <h3 className="font-normal">for real world applications and services</h3>
-      <div className="flex flex-row items-center justify-start py-8 space-x-12 space-y-0 sm:py-10">
-        <Button label="Start slicing" href="/slice" />
-        <Link href="/slicer">
-          <a>See Slicers</a>
-        </Link>
-      </div>
-    </main>
+    <>
+      <Container page={true}>
+        <main className="max-w-screen-lg pb-20 mx-auto text-left">
+          <HomeHero />
+          <div className=" space-y-36">
+            <HomeSection text={section1} />
+            <HomeSection text={section2} side="right" />
+            <HomeSection text={section3} />
+            <HomeSection text={section4} side="right" />
+          </div>
+        </main>
+      </Container>
+      <Banner />
+    </>
   )
 }
+
+export default Home

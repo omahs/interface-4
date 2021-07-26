@@ -10,6 +10,7 @@ import {
   SlicerName,
   SlicerImageBlock,
   MessageBlock,
+  Container,
 } from "@components/ui"
 import fetcher from "@utils/fetcher"
 import { useAllowed } from "@lib/useProvider"
@@ -117,92 +118,98 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     setEditMode(false)
   }
 
-  return slicerInfo?.id !== null ? (
-    <main className="w-full max-w-screen-sm mx-auto space-y-8 sm:space-y-10">
-      <div>
-        <div className="inline-block pb-2">
-          <div className="relative flex items-center justify-center">
-            <p className="inline-block text-lg font-bold uppercase">Slicer</p>
-            {isAllowed && !editMode && (
-              <div
-                className="cursor-pointer absolute right-[-35px] inline-block hover:text-yellow-500"
-                onClick={() => {
-                  setEditMode(true)
-                }}
-              >
-                <Edit className="w-6 h-6" />
+  return (
+    <Container page={true}>
+      {slicerInfo?.id !== null ? (
+        <main className="w-full max-w-screen-sm mx-auto space-y-8 sm:space-y-10">
+          <div>
+            <div className="inline-block pb-2">
+              <div className="relative flex items-center justify-center">
+                <p className="inline-block text-lg font-bold uppercase">
+                  Slicer
+                </p>
+                {isAllowed && !editMode && (
+                  <div
+                    className="cursor-pointer absolute right-[-35px] inline-block hover:text-yellow-500"
+                    onClick={() => {
+                      setEditMode(true)
+                    }}
+                  >
+                    <Edit className="w-6 h-6" />
+                  </div>
+                )}
               </div>
-            )}
+            </div>
+            <div className={`${isAllowed ? "pt-5 " : ""}pb-8`}>
+              <CopyAddress slicerAddress={slicerInfo?.address} />
+            </div>
+            <DoubleText
+              inactive
+              logoText={slicer.name || "Slicer"}
+              size="text-3xl sm:text-5xl"
+              position=""
+            />
           </div>
-        </div>
-        <div className={`${isAllowed ? "pt-5 " : ""}pb-8`}>
-          <CopyAddress slicerAddress={slicerInfo?.address} />
-        </div>
-        <DoubleText
-          inactive
-          logoText={slicer.name || "Slicer"}
-          size="text-3xl sm:text-5xl"
-          position=""
-        />
-      </div>
-      <div>
-        <SlicerName
-          name={slicer.name}
-          newName={newName}
-          setNewName={setNewName}
-          editMode={editMode}
-          loading={loading}
-        />
-        {/* <SlicerTags
+          <div>
+            <SlicerName
+              name={slicer.name}
+              newName={newName}
+              setNewName={setNewName}
+              editMode={editMode}
+              loading={loading}
+            />
+            {/* <SlicerTags
           description={slicer.description}
           newDescription={newDescription}
           setNewDescription={setNewDescription}
           editMode={editMode}
           loading={loading}
         /> */}
-        <SlicerDescription
-          description={slicer.description}
-          newDescription={newDescription}
-          setNewDescription={setNewDescription}
-          editMode={editMode}
-          loading={loading}
-        />
-      </div>
-      <SlicerImageBlock
-        name={slicer.name}
-        imageUrl={slicer.imageUrl}
-        newImage={newImage}
-        setNewImage={setNewImage}
-        tempImageUrl={tempImageUrl}
-        editMode={editMode}
-        setMsg={setMsg}
-        loading={loading}
-      />
-      {!editMode ? (
-        <PaySlicer slicerAddress={slicerInfo?.address} />
-      ) : (
-        <div>
-          <div className="pb-8">
-            <Button label="Save" loading={loading} onClick={() => save()} />
+            <SlicerDescription
+              description={slicer.description}
+              newDescription={newDescription}
+              setNewDescription={setNewDescription}
+              editMode={editMode}
+              loading={loading}
+            />
           </div>
-          {!loading && (
-            <p
-              className="inline-block font-medium text-red-600 cursor-pointer hover:underline"
-              onClick={() => cancel()}
-            >
-              Cancel
-            </p>
+          <SlicerImageBlock
+            name={slicer.name}
+            imageUrl={slicer.imageUrl}
+            newImage={newImage}
+            setNewImage={setNewImage}
+            tempImageUrl={tempImageUrl}
+            editMode={editMode}
+            setMsg={setMsg}
+            loading={loading}
+          />
+          {!editMode ? (
+            <PaySlicer slicerAddress={slicerInfo?.address} />
+          ) : (
+            <div>
+              <div className="pb-8">
+                <Button label="Save" loading={loading} onClick={() => save()} />
+              </div>
+              {!loading && (
+                <p
+                  className="inline-block font-medium text-red-600 cursor-pointer hover:underline"
+                  onClick={() => cancel()}
+                >
+                  Cancel
+                </p>
+              )}
+              <MessageBlock msg={msg} />
+            </div>
           )}
-          <MessageBlock msg={msg} />
-        </div>
+        </main>
+      ) : (
+        <ActionScreen
+          text="This slicer doesn't exist (yet)"
+          href="/"
+          buttonLabel="Return to home"
+        />
       )}
-    </main>
-  ) : (
-    <ActionScreen
-      text="This slicer doesn't exist (yet)"
-      href="/"
-      buttonLabel="Return to home"
-    />
+    </Container>
   )
 }
 
