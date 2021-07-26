@@ -153,13 +153,13 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
           editMode={editMode}
           loading={loading}
         />
-        <SlicerTags
+        {/* <SlicerTags
           description={slicer.description}
           newDescription={newDescription}
           setNewDescription={setNewDescription}
           editMode={editMode}
           loading={loading}
-        />
+        /> */}
         <SlicerDescription
           description={slicer.description}
           newDescription={newDescription}

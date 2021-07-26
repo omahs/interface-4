@@ -8,10 +8,7 @@ h2 {
 }
 
 h3 {
-  @apply text-xl pb-2 font-medium;
-  @screen md {
-    @apply text-2xl;
-  }
+  @apply text-xl pb-2 font-medium sm:text-2xl;
 }
 
 a {

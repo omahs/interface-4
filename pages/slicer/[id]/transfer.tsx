@@ -31,7 +31,7 @@ const Transfer = ({
 
   return (
     <ConnectBlock>
-      <main className="max-w-[440px] mx-auto">
+      <main className="max-w-[440px] mx-auto sm:pb-20">
         <DoubleText
           inactive
           logoText="Transfer"
