@@ -25,7 +25,7 @@ const Transfer = ({
       const el = data.idsUint.filter((e) => Number(e.hex) === slicerInfo.id)
       const index = data.idsUint.indexOf(el[0])
       const sh = data.shares[index]
-      setOwnedShares(Number(sh.hex))
+      setOwnedShares(Number(sh?.hex) || 0)
     }
   }, [data])
 
@@ -39,11 +39,19 @@ const Transfer = ({
           position="pb-12"
         />
         {slicerInfo?.id !== null ? (
-          <TransferForm
-            account={account}
-            slicerId={slicerInfo?.id}
-            ownedShares={ownedShares}
-          />
+          ownedShares ? (
+            <TransferForm
+              account={account}
+              slicerId={slicerInfo?.id}
+              ownedShares={ownedShares}
+            />
+          ) : (
+            <ActionScreen
+              text="You hold no slices of this slicer"
+              href="/"
+              buttonLabel="Return to home"
+            />
+          )
         ) : (
           <ActionScreen
             text="This slicer doesn't exist (yet)"

@@ -18,6 +18,15 @@ type Props = {
 
 const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
   const { data } = useSWR(`/api/slicer/${slicerId}/minimum_shares`, fetcher)
+  const { data: unreleasedData } = useSWR(
+    `/api/slicer/${slicerId}/account/${account}/unreleased`,
+    fetcher
+  )
+  const { unreleased } = unreleasedData || { unreleased: null }
+  const unreleasedAmount = unreleased
+    ? Math.floor((Number(unreleased?.hex) / Math.pow(10, 18)) * 10000) / 10000
+    : null
+
   const [address, setAddress] = useState("")
   const [shares, setShares] = useState<number>(0)
 
@@ -71,14 +80,24 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
                 onChange={setShares}
               />
             </div>
-            {data && minimumShares && ownedShares - shares < minimumShares && (
-              <p className="pt-2 text-sm">
-                <span className="font-medium">Note:</span> You&apos;ll lose
-                privileged access to the slicer, as you will not hold the
-                minimum amount of slices (
-                <span className="font-medium">{minimumShares}</span>)
-              </p>
-            )}
+            <div className="pt-2 space-y-4">
+              {data && minimumShares && ownedShares - shares < minimumShares && (
+                <p className="text-sm">
+                  <span className="font-medium">Note:</span> You&apos;ll lose
+                  privileged access to the slicer, as you will not hold the
+                  minimum amount of slices (
+                  <span className="font-medium">{minimumShares}</span>)
+                </p>
+              )}
+              {unreleased && Number(unreleased.hex) !== 0 && (
+                <p className="text-sm">
+                  <span className="font-medium">Note:</span> you have an
+                  unreleased amount of {unreleasedAmount} ETH which will be
+                  released during the transfer. Expect the transaction fee to be
+                  higher.
+                </p>
+              )}
+            </div>
             <div>
               <div className="pt-3">
                 <Button
