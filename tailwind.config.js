@@ -35,6 +35,21 @@ module.exports = {
       zIndex: {
         "-10": "-10",
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            color: theme("colors.black"),
+            h1: {
+              color: theme("colors.black"),
+              fontWeight: "900",
+            },
+            h2: {
+              color: theme("colors.black"),
+              fontWeight: "900",
+            },
+          },
+        },
+      }),
     },
   },
   variants: {

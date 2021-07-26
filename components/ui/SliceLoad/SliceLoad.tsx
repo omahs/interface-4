@@ -12,7 +12,7 @@ const SliceLoad = () => {
       <p className="pt-7">
         Or find it later in your{" "}
         <Link href="/profile">
-          <a className="font-extrabold highlight">profile</a>
+          <a className="font-black highlight">profile</a>
         </Link>{" "}
         section
       </p>

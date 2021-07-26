@@ -2,11 +2,28 @@ import Link from "next/link"
 import Image from "next/image"
 import isthis from "public/isthis.jpeg"
 import { Button, DoubleText } from "@components/ui"
+import { useEffect, useState } from "react"
+
+const textCarousel = ["applications", "services", "everything"]
 
 const HomeHero = () => {
+  const [text, setText] = useState("")
+
+  useEffect(() => {
+    setTimeout(() => {
+      setText(textCarousel[0])
+    }, 2000)
+    setTimeout(() => {
+      setText(textCarousel[1])
+    }, 4000)
+    setTimeout(() => {
+      setText(textCarousel[2])
+    }, 6000)
+  }, [])
+
   return (
     <div className="relative min-h-[440px] sm:min-h-[520px] flex flex-col justify-center pb-16 sm:pb-24">
-      <div className="pb-8 sm:pb-12">
+      <div className="pb-6 sm:pb-6">
         <DoubleText
           inactive
           logoText={`Slice`}
@@ -20,10 +37,11 @@ const HomeHero = () => {
           position="pl-4"
         />
       </div>
-      <h2 className="pb-1 font-extrabold leading-normal">
-        Decentralised payments
+      <h2 className="pb-1 font-black leading-normal">
+        Decentralised payments <br />
+        <span className="text-blue-600">for {text}</span>
       </h2>
-      <h3 className="font-normal">for real world applications and services</h3>
+
       <div className="flex flex-row items-center justify-start pt-8 space-x-12 space-y-0 sm:pt-10 sm:py-10">
         <Button label="Start slicing" href="/slice" />
         <Link href="/slicer">

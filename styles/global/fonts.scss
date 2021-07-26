@@ -1,5 +1,5 @@
 h1 {
-  @apply text-3xl pb-3 font-extrabold sm:text-4xl;
+  @apply text-3xl pb-3 font-black sm:text-4xl;
   letter-spacing: 0.005em;
 }
 
@@ -27,11 +27,20 @@ a {
   text-decoration-color: theme("colors.blue.600");
   text-decoration-thickness: 2px;
   text-underline-offset: 1px;
+  &-inverted {
+    @apply hover:text-blue-300;
+    text-decoration-color: theme("colors.blue.300");
+  }
 }
 .dark .highlight {
   @apply hover:text-sky-300;
   text-decoration-color: theme("colors.sky.300");
+  &-inverted {
+    @apply hover:text-blue-600;
+    text-decoration-color: theme("colors.blue.600");
+  }
 }
+
 .dark a {
   @apply hover:text-blue-300;
 }

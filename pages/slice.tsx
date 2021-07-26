@@ -34,7 +34,7 @@ export default function Slice() {
                   <p>
                     Slicers are a{" "}
                     <Link href="/">
-                      <a className="font-extrabold highlight">
+                      <a className="font-black highlight">
                         special kind of fractionable NFTs
                       </a>
                     </Link>{" "}

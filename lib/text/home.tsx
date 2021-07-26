@@ -39,8 +39,8 @@ export const section2 = (
         logoText="truly represent anything"
         size="text-normal"
       />
-      . Freely exchangeable slices, privileged access to restricted operations,
-      upgradeability and many more features to come.
+      . Freely exchangeable slices, access control, upgradeability and many more
+      features to come.
     </p>
   </>
 )
@@ -53,10 +53,14 @@ export const section3 = (
       and automatically split them between its owners.
     </p>
     <p>
-      But there is{" "}
-      <DoubleText inactive logoText="so much more" size="text-normal" /> coming
-      soon. Slicers will turn into an independent payment infrastructure for
-      your project, company, product, service or whatever.
+      But there is so much more coming soon. Slicers will turn into an
+      independent{" "}
+      <DoubleText
+        inactive
+        logoText="payments infrastructure"
+        size="text-normal"
+      />{" "}
+      for your project, company, product, service or whatever.
     </p>
   </>
 )
@@ -67,16 +71,14 @@ export const section4 = (
       Decentralized & <DoubleText inactive logoText="Free" size="text-normal" />
     </h1>
     <p>
-      Slicers are completely free to use, except for the blockchain transaction
-      fees. There is just a tiny 2.5% fee which is automatically withheld to any
-      payment made to the slicer, which will be used to improve our services
-      over time.
+      All slicers and our infrastructure are entirely free to use, except for
+      the blockchain transaction fees. We only take a 2.5% fee from payments to
+      slicers, which will be used to improve them over time.
     </p>
     <p>
-      As a reward for using slicers, you will receive{" "}
+      And when you release ETH from a slicer you will receive{" "}
       <DoubleText inactive logoText="SLC tokens" size="text-normal" /> (ERC20)
-      whenever you release ETH from a slicer, which can be used to unlock
-      services from Slice in the future.
+      which can be used to unlock services from Slice in the future.
     </p>
   </>
 )

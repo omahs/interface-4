@@ -114,7 +114,7 @@ const SliceFormBlockSplitter = ({
               <p className="pb-4">
                 Accounts with the chosen amount of slices have{" "}
                 <Link href="/">
-                  <a className="font-extrabold highlight">privileged access</a>
+                  <a className="font-black highlight">privileged access</a>
                 </Link>{" "}
                 to this slicer.
               </p>

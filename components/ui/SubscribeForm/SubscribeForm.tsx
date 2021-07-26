@@ -5,6 +5,7 @@ import fetcher from "@utils/fetcher"
 import sendSlack from "@utils/sendSlack"
 import MessageBlock from "../MessageBlock"
 import handleMessage, { Message } from "@utils/handleMessage"
+import { accounts } from "../Social/Social"
 
 const SubscribeForm = () => {
   const [email, setEmail] = useState("")
@@ -38,38 +39,59 @@ const SubscribeForm = () => {
   }
 
   return (
-    <form
-      className="mx-auto space-y-6 max-w-[520px]"
-      onSubmit={handleSubscribe}
-    >
-      <p>
-        Things are moving fast and we can&apos;t wait to show you what
-        unprecedented things are about to become possible with slicers.{" "}
-      </p>
-      <p>
-        If you don&apos;t want to lose any news surrounding Slice, you can sign
-        up to our newsletter.
-      </p>
-      <div className="max-w-[350px] mx-auto pt-4">
-        <Input
-          type="email"
-          placeholder="Your email"
-          onChange={setEmail}
-          error={message.message !== ""}
-          disabled={loading}
-          required
-          inverted
-        />
-      </div>
-      <div className="py-3">
-        <Button label="Subscribe" type="submit" loading={loading} />
-      </div>
-      <p className="text-sm text-gray-300">No spam. Ever.</p>
-      <MessageBlock msg={message} />
-    </form>
+    <div className="mx-auto space-y-6 max-w-[520px]">
+      {!success ? (
+        <form className="space-y-4" onSubmit={handleSubscribe}>
+          <p>
+            Sign up to our newsletter to keep up to date with the latest
+            features and get inspired on what sort of things become possible
+            with slicers.
+          </p>
+          <div className="max-w-[350px] mx-auto pt-4">
+            <Input
+              type="email"
+              placeholder="Your email"
+              onChange={setEmail}
+              error={message.message !== ""}
+              disabled={loading}
+              required
+              inverted
+            />
+          </div>
+          <div className="py-3">
+            <Button label="Subscribe" type="submit" loading={loading} />
+          </div>
+          <p className="text-sm text-gray-300">No spam. Ever.</p>
+          <MessageBlock msg={message} />
+        </form>
+      ) : (
+        <>
+          <p className="text-lg font-bold">You have successfully subscribed!</p>
+          <p>
+            Feel free to check out our socials, and if you&apos;re interested in
+            contributing please reach out on{" "}
+            <a
+              className="text-white highlight highlight-inverted"
+              href={accounts.discord}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Discord
+            </a>{" "}
+            or{" "}
+            <a
+              className="text-white highlight highlight-inverted"
+              href={accounts.twitter}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Twitter!
+            </a>{" "}
+          </p>
+        </>
+      )}
+    </div>
   )
 }
 
 export default SubscribeForm
-
-// Todo: handle after success
