@@ -21,7 +21,7 @@ const Input: React.FC<Props> = (props) => {
     ...rest
   } = props
 
-  const rootClassName = ` bg-white py-2 pl-5 w-full appearance-none transition duration-150 rounded-t-sm ${
+  const rootClassName = `peer bg-white py-2 pl-5 w-full appearance-none transition duration-150 rounded-t-sm ${
     !prefix && !error ? "shadow-light-focusable" : ""
   } ease-in-out pr-3 border-b-[3px] placeholder-gray-400 focus:outline-none disabled:text-gray-500 disabled:border-blue-100 disabled:bg-gray-50 ${className} ${
     error
@@ -44,15 +44,10 @@ const Input: React.FC<Props> = (props) => {
         </p>
       )}
       <div
-        className={`flex text-red-500 rounded-t-sm ${
+        className={`flex flex-row-reverse text-red-500 rounded-t-sm ${
           prefix && !error ? "shadow-light-focusable overflow-hidden" : ""
         }`}
       >
-        {prefix && (
-          <div className="flex items-center text-sm justify-center px-5 text-gray-600 bg-gray-200 dark:bg-gray-700 border-b-[3px] border-blue-300">
-            {prefix}
-          </div>
-        )}
         <input
           className={rootClassName}
           onChange={handleOnChange}
@@ -62,6 +57,17 @@ const Input: React.FC<Props> = (props) => {
           spellCheck="false"
           {...rest}
         ></input>
+        {prefix && (
+          <div
+            className={`flex transition duration-150 items-center text-sm justify-center px-5 text-gray-600 bg-gray-200 dark:bg-gray-700 border-b-[3px] ${
+              error
+                ? "border-red-400 peer-focus:border-red-400 dark:peer-focus:border-red-500 shadow-error"
+                : "text-black border-blue-300 peer-focus:border-sky-600 dark:peer-focus:border-sky-300"
+            }`}
+          >
+            {prefix}
+          </div>
+        )}
       </div>
     </label>
   )
