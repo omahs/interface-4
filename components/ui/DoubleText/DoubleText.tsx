@@ -6,13 +6,20 @@ interface Props {
   logoText?: string
   size?: string
   position?: string
+  inactive?: boolean
+  inverted?: boolean
   fromColor?: string
   toColor?: string
-  inactive?: boolean
 }
 
-const DoubleText: FC<Props> = ({ size, position, inactive, logoText }) => {
-  const { color1, color2 } = useAppContext()
+const DoubleText: FC<Props> = ({
+  logoText,
+  size,
+  position,
+  inactive,
+  inverted,
+}) => {
+  const { color1, color2, darkColor1, darkColor2 } = useAppContext()
   const text = logoText || "Slice"
 
   return (
@@ -23,7 +30,9 @@ const DoubleText: FC<Props> = ({ size, position, inactive, logoText }) => {
     >
       {inactive ? (
         <div
-          className={`text-black relative z-10 font-extrabold cursor-default ${
+          className={`${
+            inverted ? "text-white" : "text-black"
+          } relative z-10 !font-black cursor-default ${
             size ? size : "text-2xl md:text-3xl"
           }`}
         >
@@ -32,7 +41,9 @@ const DoubleText: FC<Props> = ({ size, position, inactive, logoText }) => {
       ) : (
         <Link href="/">
           <a
-            className={`text-black relative z-10 font-extrabold ${
+            className={`${
+              inverted ? "text-white" : "text-black"
+            } relative z-10 !font-black ${
               size ? size : "text-2xl md:text-3xl"
             }`}
           >
@@ -45,10 +56,10 @@ const DoubleText: FC<Props> = ({ size, position, inactive, logoText }) => {
         ${inactive ? "cursor-default" : ""}
         ${
           size ? size : "text-2xl md:text-3xl"
-        } text-transparent font-extrabold bg-gradient-to-br bg-clip-text ${
-          color1[3]
+        } text-transparent !font-black bg-gradient-to-br bg-clip-text ${
+          inverted ? darkColor1[3] : color1[3]
         } ${
-          color2[4]
+          inverted ? darkColor2[4] : color2[4]
         } mt-[0.1em] ml-[0.1em] group-hover:mt-0 group-hover:ml-0 duration-150`}
         style={{ marginTop: "0.1em", marginBottom: 0 }}
       >

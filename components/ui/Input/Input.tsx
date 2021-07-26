@@ -6,6 +6,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   prefix?: string
   after?: string
   error?: boolean
+  inverted?: boolean
   onChange?: (...args: any[]) => any
 }
 
@@ -17,16 +18,19 @@ const Input: React.FC<Props> = (props) => {
     prefix = "",
     after,
     children,
-    error = false,
+    error,
+    inverted,
     ...rest
   } = props
 
-  const rootClassName = `peer bg-white py-2 pl-5 w-full appearance-none transition duration-150 rounded-t-sm ${
+  const rootClassName = `peer py-2 pl-5 w-full appearance-none transition duration-150 rounded-t-sm ${
     !prefix && !error ? "shadow-light-focusable" : ""
-  } ease-in-out pr-3 border-b-[3px] placeholder-gray-400 focus:outline-none disabled:text-gray-500 disabled:border-blue-100 disabled:bg-gray-50 ${className} ${
+  } ease-in-out pr-3 border-b-[3px] focus:outline-none ${className} ${
     error
       ? "text-red-500 border-red-400 focus:border-red-400 shadow-error"
-      : "text-black border-blue-300 focus:border-sky-600"
+      : inverted
+      ? "bg-black text-white border-blue-600 focus:border-sky-300 placeholder-gray-500 disabled:text-gray-400 disabled:border-blue-800 disabled:bg-gray-900"
+      : "bg-white text-black border-blue-300 focus:border-sky-600 placeholder-gray-400 disabled:text-gray-500 disabled:border-blue-100 disabled:bg-gray-50"
   }`
 
   const handleOnChange = (e: any) => {
@@ -39,7 +43,11 @@ const Input: React.FC<Props> = (props) => {
   return (
     <label>
       {label && (
-        <p className="pb-1.5 text-sm font-semibold text-left text-gray-700">
+        <p
+          className={`pb-1.5 text-sm font-semibold text-left ${
+            inverted ? "text-gray-200" : "text-gray-700"
+          }`}
+        >
           {label}
         </p>
       )}
