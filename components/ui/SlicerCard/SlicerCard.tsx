@@ -26,25 +26,26 @@ type Props = {
 const SlicerCard = ({ slicerId, shares, account }: Props) => {
   const isAllowed = useAllowed(slicerId)
   const { data: slicerInfo } = useSWR(`/api/slicer/${slicerId}`, fetcher)
-  const { data: unreleasedData } = useSWR(
-    `/api/slicer/${slicerId}/account/${account}/unreleased`,
-    fetcher
-  )
   const { name, address, imageUrl }: SlicerInfo = slicerInfo || {
     name: null,
     address: null,
     imageUrl: null,
   }
+
+  const { data: unreleasedData } = useSWR(
+    `/api/slicer/${slicerId}/account/${account}/unreleased`,
+    fetcher
+  )
   const { unreleased } = unreleasedData || { unreleased: null }
   const unreleasedAmount = unreleased
     ? Math.floor((Number(unreleased?.hex) / Math.pow(10, 18)) * 10000) / 10000
     : null
-  const slicerLink = `/slicer/${slicerId}`
 
   const [ethReleased, setEthReleased] = useState(0)
   const [success, setSuccess] = useState(false)
   const [logs, setLogs] = useState<LogDescription[]>()
   const eventLog = getLog(logs, "MintTriggered")
+  const slicerLink = `/slicer/${slicerId}`
 
   const slcReleased =
     eventLog &&
