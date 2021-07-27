@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/jaco/Documents/dev/slice.so/contracts/slice.sol": {
-      "lastModificationDate": 1626396108878,
-      "contentHash": "578c1f4788e4ce0240b2d9d7589ac3eb",
+      "lastModificationDate": 1627299016236,
+      "contentHash": "f6d99bfbdb2af33fdf3dfc2929587385",
       "sourceName": "contracts/slice.sol",
       "solcConfig": {
         "version": "0.8.6",
@@ -410,7 +410,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol": {
-      "lastModificationDate": 1624632375321,
+      "lastModificationDate": 1626477069066,
       "contentHash": "b9be3f7aa79153708acdc3be6bd1cb35",
       "sourceName": "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
       "solcConfig": {
