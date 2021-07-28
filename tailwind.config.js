@@ -35,6 +35,9 @@ module.exports = {
       zIndex: {
         "-10": "-10",
       },
+      animation: {
+        "spin-slow": "spin 30s linear infinite",
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: {

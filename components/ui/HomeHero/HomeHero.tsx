@@ -4,6 +4,8 @@ import isthis from "public/isthis.jpeg"
 import { Button, DoubleText } from "@components/ui"
 import ReactRotatingText from "react-rotating-text"
 
+const items = ["applications", "services", "everything"]
+
 const HomeHero = () => {
   return (
     <div className="relative min-h-[440px] sm:min-h-[520px] flex flex-col justify-center pb-16 sm:pb-24">
@@ -22,12 +24,14 @@ const HomeHero = () => {
         />
       </div>
       <h2 className="pb-1 font-black leading-normal">
-        Decentralised payments <br />
+        Decentralized payments <br />
         <span className="text-blue-600">
           for{" "}
           <ReactRotatingText
             pause={2000}
-            items={["applications", "services", "everything"]}
+            emptyPause={750}
+            typingInterval={75}
+            items={items}
           />
         </span>
       </h2>

@@ -41,6 +41,10 @@
   filter: drop-shadow(0 0 2.5px var(--color2));
 }
 
+.drop-shadow-random-strong {
+  filter: drop-shadow(0 0 25px var(--color2));
+}
+
 .shadow-light-random {
   box-shadow: 0 0 9px 0.3px var(--color2);
 }
