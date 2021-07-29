@@ -1,14 +1,13 @@
-import Logo from "@components/icons/Logo"
-import Image from "next/image"
-import defaultImageUrl from "public/slicer_default.png"
+import { useAppContext } from "../context"
 
 type Props = {
   text: JSX.Element
-  image?: StaticImageData
+  image: JSX.Element
   side?: "left" | "right"
 }
 
 const HomeSection = ({ text, image, side = "left" }: Props) => {
+  const { shuffleColors } = useAppContext()
   return (
     <div className={`flex ${side === "right" ? "flex-row-reverse" : ""}`}>
       <div
@@ -20,9 +19,10 @@ const HomeSection = ({ text, image, side = "left" }: Props) => {
       </div>
       <div className="flex-1">
         <div className="flex items-center justify-center w-full h-full">
-          <Logo size="w-36" margin="mt-4 ml-6" spin />
+          <div className="cursor-pointer" onClick={() => shuffleColors()}>
+            {image}
+          </div>
         </div>
-        {/* <Image src={image || defaultImageUrl} alt="" /> */}
       </div>
     </div>
   )

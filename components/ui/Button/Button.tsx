@@ -36,7 +36,11 @@ const Button: FC<ButtonProps> = (props) => {
       <>
         <p>{label}</p>
         <div className="mb-1 ml-3">
-          <Logo size="w-[17px]" margin="mt-[3px] ml-[5px]" />
+          <Logo
+            size="w-[17px]"
+            margin="mt-[3px] ml-[5px]"
+            interactive={false}
+          />
         </div>
       </>
     ) : (
@@ -76,7 +80,9 @@ const Button: FC<ButtonProps> = (props) => {
         <div
           className={`${rootClassName} shadow-light-random absolute top-0 mt-[0.6rem] ml-[0.6rem] mr-[-0.6rem] bg-gradient-to-br ${color1[3]} ${color2[4]} text-transparent peer-hover:mt-0 peer-hover:ml-0 peer-hover:mr-0 peer-focus:mt-0 peer-focus:ml-0 peer-focus:mr-0 transition-all duration-150`}
         >
-          <div className="flex items-center justify-center">{innerText}</div>
+          <div className="relative flex items-center justify-center -z-10">
+            {innerText}
+          </div>
         </div>
       )}
     </div>
