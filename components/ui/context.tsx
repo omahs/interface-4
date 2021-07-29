@@ -10,6 +10,7 @@ const AppContext = createContext({
   color2: colorList[1],
   darkColor1: darkColorList[0],
   darkColor2: darkColorList[1],
+  shuffleColors: () => null,
 })
 
 export function AppWrapper({ children }) {
@@ -21,7 +22,7 @@ export function AppWrapper({ children }) {
   const [darkColor1, setDarkColor1] = useState([])
   const [darkColor2, setDarkColor2] = useState([])
 
-  useEffect(() => {
+  const shuffleColors = () => {
     const random1 = Math.floor(Math.random() * colorList.length)
     const random2 = Math.floor(Math.random() * colorList.length)
     setColor1(colorList[random1])
@@ -34,6 +35,10 @@ export function AppWrapper({ children }) {
     root.style.setProperty("--color2", colorList[random2][0])
     root.style.setProperty("--darkColor1", darkColorList[random1][0])
     root.style.setProperty("--darkColor2", darkColorList[random2][0])
+  }
+
+  useEffect(() => {
+    shuffleColors()
   }, [])
 
   return (
@@ -46,6 +51,7 @@ export function AppWrapper({ children }) {
         color2,
         darkColor1,
         darkColor2,
+        shuffleColors,
       }}
     >
       {children}
