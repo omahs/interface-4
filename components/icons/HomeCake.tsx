@@ -65,7 +65,7 @@ const HomeCake = ({ ...props }) => {
         stroke="white"
         strokeWidth="10"
         mask="url(#path-5-inside-5)"
-        className="text-gray-400 transition-colors duration-150 group-hover:text-blue-500"
+        className="text-gray-400 transition-colors duration-150 group-hover:text-blue-600"
       />
       <mask id="path-6-inside-6" fill="white">
         <path d="M566.401 160.545C591.128 205.2 603.364 255.414 601.879 306.141C600.395 356.868 585.242 406.32 557.943 449.527L305.5 297.895L566.401 160.545Z" />
@@ -76,7 +76,7 @@ const HomeCake = ({ ...props }) => {
         stroke="white"
         strokeWidth="10"
         mask="url(#path-6-inside-6)"
-        className="text-gray-300 transition-colors duration-150 group-hover:text-blue-400"
+        className="text-gray-300 transition-colors duration-150 group-hover:text-blue-500"
       />
       <path
         d="M584.5 297.895C584.5 447.48 460.007 569.494 305.5 569.494C150.993 569.494 26.5 447.48 26.5 297.895C26.5 148.309 150.993 26.295 305.5 26.295C460.007 26.295 584.5 148.309 584.5 297.895Z"
