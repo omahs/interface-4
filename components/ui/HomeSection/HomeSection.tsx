@@ -9,15 +9,19 @@ type Props = {
 const HomeSection = ({ text, image, side = "left" }: Props) => {
   const { shuffleColors } = useAppContext()
   return (
-    <div className={`flex ${side === "right" ? "flex-row-reverse" : ""}`}>
+    <div
+      className={`flex flex-col ${
+        side === "right" ? "md:flex-row-reverse" : "md:flex-row"
+      }`}
+    >
       <div
-        className={`prose flex-1 ${
-          side === "left" ? "text-left" : "text-right"
+        className={`prose flex-1 text-left ${
+          side === "right" ? "md:text-right" : ""
         }`}
       >
         {text}
       </div>
-      <div className="flex-1">
+      <div className="flex-1 pt-16 md:pt-0">
         <div className="flex items-center justify-center w-full h-full">
           <div className="cursor-pointer" onClick={() => shuffleColors()}>
             {image}

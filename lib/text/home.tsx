@@ -68,7 +68,7 @@ export const section3 = (
 export const section4 = (
   <>
     <h1 className="!mb-2">
-      Decentralized & <DoubleText inactive logoText="Free" size="text-normal" />
+      Truly <DoubleText inactive logoText="Decentralized" size="text-normal" />
     </h1>
     <p>
       All slicers and our infrastructure are entirely free to use, except for

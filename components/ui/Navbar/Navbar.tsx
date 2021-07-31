@@ -15,7 +15,7 @@ const Navbar = () => {
   return (
     <header className="shadow-sm bg-gray-50">
       <Container>
-        <nav className="px-6 h-[4.25rem] items-center mx-auto flex justify-between">
+        <nav className="px-3 sm:px-6 h-[4.25rem] items-center mx-auto flex justify-between">
           <div className="flex items-center space-x-7 sm:space-x-10">
             <Link href="/">
               <a className="mb-1">
