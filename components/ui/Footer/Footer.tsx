@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { Container, Social } from "@components/ui"
 import { accounts } from "../Social/Social"
 

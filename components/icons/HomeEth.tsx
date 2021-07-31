@@ -1,13 +1,13 @@
 import { darkColorList } from "@utils/colorList"
 import { useAppContext } from "@components/ui/context"
 
-const HomeCake = ({ ...props }) => {
+const HomeEth = ({ ...props }) => {
   const { color1, color2 } = useAppContext()
 
   return (
-    <div className="relative flex items-center justify-center w-72 h-72">
+    <div className="relative flex items-center justify-center w-72 h-72 group">
       <svg
-        className="absolute w-32 h-32 opacity-80 drop-shadow-random-strong animate-ping-slow"
+        className="absolute transition-opacity duration-200 opacity-0 w-28 h-28 group-hover:opacity-75"
         viewBox="0 0 798 1299"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -38,34 +38,65 @@ const HomeCake = ({ ...props }) => {
         />
       </svg>
       <svg
-        className="absolute w-32 h-32 drop-shadow-random-strong"
+        className="absolute w-24 h-24 opacity-80 drop-shadow-random-strong animate-ping-slow"
+        viewBox="0 0 798 1299"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M398.409 0L389.701 29.5797V887.837L398.409 896.525L796.795 661.036L398.409 0Z"
+          fill={color2[0]}
+        />
+        <path
+          d="M398.396 0L0 661.036L398.396 896.525V479.951V0Z"
+          fill={color2[0]}
+        />
+        <path
+          d="M398.412 971.988L393.504 977.973V1283.7L398.412 1298.03L797.041 736.621L398.412 971.988Z"
+          fill={color2[0]}
+        />
+        <path
+          d="M398.396 1298.03V971.988L0 736.621L398.396 1298.03Z"
+          fill={color2[0]}
+        />
+        <path
+          d="M398.416 896.511L796.802 661.022L398.416 479.937V896.511Z"
+          fill={color2[0]}
+        />
+        <path
+          d="M0 661.022L398.396 896.511V479.937L0 661.022Z"
+          fill={color2[0]}
+        />
+      </svg>
+      <svg
+        className="absolute w-24 h-24 drop-shadow-random-strong"
         viewBox="0 0 798 1299"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
           d="M398.914 0L390.206 29.5797V887.837L398.914 896.525L797.3 661.036L398.914 0Z"
-          fill="#64688D"
+          fill="#B8FAF6"
         />
         <path
           d="M398.901 0L0.505127 661.036L398.901 896.525V479.951V0Z"
-          fill="#8A91B3"
+          fill="#F0CDC2"
         />
         <path
           d="M398.917 971.989L394.009 977.974V1283.7L398.917 1298.03L797.546 736.621L398.917 971.989Z"
-          fill="#64688F"
+          fill="#C9B3F5"
         />
         <path
           d="M398.901 1298.03V971.989L0.505127 736.621L398.901 1298.03Z"
-          fill="#8B93AF"
+          fill="#F0CDC2"
         />
         <path
           d="M398.921 896.511L797.307 661.022L398.921 479.937V896.511Z"
-          fill="#464B71"
+          fill="#C9B3F5"
         />
         <path
           d="M0.505127 661.022L398.901 896.511V479.937L0.505127 661.022Z"
-          fill="#64688D"
+          fill="#88AAF1"
         />
       </svg>
 
@@ -318,4 +349,4 @@ const HomeCake = ({ ...props }) => {
   )
 }
 
-export default HomeCake
+export default HomeEth
