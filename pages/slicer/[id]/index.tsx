@@ -239,8 +239,8 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
 export async function getStaticPaths() {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-  // const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
-  const totalSlicers = 0
+  const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
+  // const totalSlicers = 0
   const paths = [...Array(totalSlicers).keys()].map((slicerId) => {
     const id = String(slicerId)
     return {

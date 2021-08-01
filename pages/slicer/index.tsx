@@ -46,8 +46,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
 
   try {
-    // const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
-    const totalSlicers = 0
+    const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
+    // const totalSlicers = 0
 
     return {
       props: {
