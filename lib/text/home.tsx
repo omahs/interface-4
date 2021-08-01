@@ -28,19 +28,20 @@ export const section2 = (
     </h1>
     <p>
       NFTs are cool because they are unique, so they can digitally represent any
-      real or virtual asset, service or product. However, they&apos;re used
-      mainly for collecting purposes as it&apos;s hard to make them useful in
-      real world applications.
+      real or virtual asset, service or product. However, they&apos;re still
+      mainly being used for collecting purposes as it&apos;s hard to make use of
+      their distinctive characteristics.
     </p>
     <p>
-      Slicers ownership is linked to their value so they are able to{" "}
+      Slicers ownership is linked to their value, making it possible to open a
+      new branch of applications and allow them to{" "}
       <DoubleText
         inactive
         logoText="truly represent anything"
         size="text-normal"
       />
-      . Freely exchangeable slices, access control, upgradeability and many more
-      features to come.
+      . Freely exchangeable slices, access control, upgradeability and many
+      exciting features to come.
     </p>
   </>
 )
@@ -49,11 +50,17 @@ export const section3 = (
   <>
     <h1 className="!mb-2">What are slicers for?</h1>
     <p>
-      For now slicers can be used to collect payments for a project or product,
-      and automatically split them between its owners.
+      For now slicers can be used to collect payments for yourself, a project or
+      product, and automatically split them between its owners. It&apos;s a{" "}
+      <DoubleText
+        inactive
+        logoText="transferable slice of ownership"
+        size="text-normal"
+      />{" "}
+      which also includes any revenue resulting from a slicer.
     </p>
     <p>
-      But there is so much more coming soon. Slicers will turn into an
+      But there is so much more coming. Slicers will soon turn into an
       independent{" "}
       <DoubleText
         inactive
@@ -71,14 +78,17 @@ export const section4 = (
       Truly <DoubleText inactive logoText="Decentralized" size="text-normal" />
     </h1>
     <p>
-      All slicers and our infrastructure are entirely free to use, except for
-      the blockchain transaction fees. We only take a 2.5% fee from payments to
-      slicers, which will be used to improve them over time.
+      Slicers live on the blockchain, so when you create one it&apos;s really
+      yours. Our infrastructure is also entirely{" "}
+      <DoubleText inactive logoText="free to use" size="text-normal" />,
+      allowing you to use all features for free (except blockchain fees). We
+      just take a 2.5% fee from payments to slicers, which will be used to
+      improve them over time.
     </p>
     <p>
-      And when you release ETH from a slicer you will receive{" "}
-      <DoubleText inactive logoText="SLC tokens" size="text-normal" /> (ERC20)
-      which can be used to unlock services from Slice in the future.
+      Most importantly, whenever you release ETH from a slicer you will always
+      receive <DoubleText inactive logoText="SLC tokens" size="text-normal" />{" "}
+      (ERC20) which can be used to unlock services from Slice in the future.
     </p>
   </>
 )
