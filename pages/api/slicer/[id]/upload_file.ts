@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.SUPABASE_KEY
-  const supabaseStorage = "dev"
+  const supabaseStorage = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_NAME
   const fileName = `slicer_${id}_main`
 
   const imageBody = (buf: Buffer | File) => ({
