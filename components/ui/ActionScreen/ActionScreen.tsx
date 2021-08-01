@@ -13,11 +13,11 @@ export interface ActionScreenProps {
 
 const ActionScreen: FC<ActionScreenProps> = ({
   text,
-  buttonLabel,
-  title,
-  helpText,
-  href,
-  onClick,
+  buttonLabel = "",
+  title = "",
+  helpText = "",
+  href = "",
+  onClick = () => null,
 }) => {
   return (
     <main className="w-full max-w-screen-sm mx-auto">

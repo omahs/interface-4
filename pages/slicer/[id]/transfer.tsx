@@ -29,7 +29,7 @@ const Transfer = ({
 
   useEffect(() => {
     if (data && slicerInfo) {
-      const el = data.idsUint.filter((e) => Number(e.hex) === slicerInfo.id)
+      const el = data.idsUint.filter((e) => Number(e.hex) === slicerInfo?.id)
       const index = data.idsUint.indexOf(el[0])
       const sh = data.shares[index]
       setOwnedShares(Number(sh?.hex) || 0)
@@ -49,7 +49,7 @@ const Transfer = ({
           {slicerInfo?.id !== null ? (
             <>
               <NextSeo
-                title={`Transfer slices | Slicer #${slicerInfo.id}`}
+                title={`Transfer slices | Slicer #${slicerInfo?.id}`}
                 openGraph={{
                   title: defaultTitle,
                   description: defaultDescription,

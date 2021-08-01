@@ -45,9 +45,9 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   })
   const [tempImageUrl, setTempImageUrl] = useState("")
   const pageTitle =
-    slicer.name === `Slicer #${slicerInfo.id}`
+    slicer.name === `Slicer #${slicerInfo?.id}`
       ? slicer.name
-      : `${slicer.name} | Slicer #${slicerInfo.id}`
+      : `${slicer.name} | Slicer #${slicerInfo?.id}`
 
   const updateDb = async (newInfo) => {
     setSlicer(newInfo)
@@ -133,7 +133,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             openGraph={{
               title: pageTitle,
               description: slicer.description,
-              url: `https://${domain}/slicer/${slicerInfo.id}`,
+              url: `https://${domain}/slicer/${slicerInfo?.id}`,
               images: [
                 {
                   url: slicer.imageUrl,
