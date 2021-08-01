@@ -4,6 +4,7 @@ import {
   Twitter,
   Facebook,
   Instagram,
+  Reddit,
   Linkedin,
   Mail,
   Github,
@@ -16,6 +17,13 @@ type Props = {
   wrapperClassName?: string
 }
 
+export const accounts = {
+  twitter: "https://twitter.com/slice__so",
+  // reddit: "https://reddit.com/r/slice",
+  discord: "https://discord.gg/qERmxeGXKw",
+  github: "https://github.com/jjranalli/slice.so",
+}
+
 const Social: FC<Props> = ({ wrapperClassName, accounts }, props) => {
   const { children, className, ...rest } = props
   const rootClassName = `${wrapperClassName} ${s.root}`
@@ -24,10 +32,11 @@ const Social: FC<Props> = ({ wrapperClassName, accounts }, props) => {
     twitter: { color: "hover:text-blue-500", element: Twitter },
     facebook: { color: "hover:text-blue-700", element: Facebook },
     instagram: { color: "hover:text-pink-500", element: Instagram },
+    reddit: { color: "hover:text-red-500", element: Reddit },
     linkedin: { color: "hover:text-blue-700", element: Linkedin },
     mail: { color: "hover:text-gray-500", element: Mail },
-    github: { color: "hover:text-gray-700", element: Github },
-    discord: { color: "hover:text-gray-700", element: Discord },
+    github: { color: "hover:text-yellow-500", element: Github },
+    discord: { color: "hover:text-indigo-500", element: Discord },
   }
 
   const size = "h-6"
@@ -43,7 +52,7 @@ const Social: FC<Props> = ({ wrapperClassName, accounts }, props) => {
             className={`${componentColor} ${size} ${s.social}`}
             href={accounts[key]}
             target="_blank"
-            rel="noopener"
+            rel="noreferrer"
           >
             <DynamicComponent />
           </a>

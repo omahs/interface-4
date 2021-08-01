@@ -32,7 +32,7 @@ const Nightwind = ({ ...props }) => {
         className={`${props.moonColor || "text-blue-500"} 
           ${props.moonColorNight || "dark:text-yellow-300"} ${
           props.transition || ""
-        }`}
+        } transition-colors duration-150`}
       />
       <path
         fillRule="evenodd"

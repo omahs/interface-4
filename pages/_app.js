@@ -1,7 +1,8 @@
 import { ThemeProvider } from "next-themes"
 import Head from "@components/common/Head"
-import { Background, Container, Layout } from "@components/ui"
+import { Background, Layout } from "@components/ui"
 import "../styles/global/styles.scss"
+import { AppWrapper } from "@components/ui/context"
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -12,12 +13,12 @@ function MyApp({ Component, pageProps }) {
         storageKey="nightwind-mode"
         defaultTheme="system"
       >
-        <Layout>
-          <Background />
-          <Container>
+        <AppWrapper>
+          <Layout>
+            <Background />
             <Component {...pageProps} />
-          </Container>
-        </Layout>
+          </Layout>
+        </AppWrapper>
       </ThemeProvider>
     </>
   )

@@ -1,15 +1,37 @@
-import s from "./Input.module.css"
 import React, { InputHTMLAttributes } from "react"
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   className?: string
+  label?: string
+  prefix?: string
+  after?: string
+  error?: boolean
+  inverted?: boolean
   onChange?: (...args: any[]) => any
 }
 
 const Input: React.FC<Props> = (props) => {
-  const { className, children, onChange, ...rest } = props
+  const {
+    className,
+    onChange,
+    label,
+    prefix = "",
+    after,
+    children,
+    error,
+    inverted,
+    ...rest
+  } = props
 
-  const rootClassName = `bg-white rounded-sm py-2 px-6 w-full appearance-none transition duration-150 ease-in-out pr-4 border border-gray-400 text-black focus:outline-none ${className}`
+  const rootClassName = `peer py-2 pl-5 w-full appearance-none transition duration-150 rounded-t-sm ${
+    !prefix && !error ? "shadow-light-focusable" : ""
+  } ease-in-out pr-3 border-b-[3px] focus:outline-none ${className} ${
+    error
+      ? "text-red-500 border-red-400 focus:border-red-400 shadow-error"
+      : inverted
+      ? "bg-black text-white border-blue-600 focus:border-sky-300 placeholder-gray-500 disabled:text-gray-400 disabled:border-blue-800 disabled:bg-gray-900"
+      : "bg-white text-black border-blue-300 focus:border-sky-600 placeholder-gray-400 disabled:text-gray-500 disabled:border-blue-100 disabled:bg-gray-50"
+  }`
 
   const handleOnChange = (e: any) => {
     if (onChange) {
@@ -20,15 +42,41 @@ const Input: React.FC<Props> = (props) => {
 
   return (
     <label>
-      <input
-        className={rootClassName}
-        onChange={handleOnChange}
-        autoComplete="off"
-        autoCorrect="off"
-        autoCapitalize="off"
-        spellCheck="false"
-        {...rest}
-      />
+      {label && (
+        <p
+          className={`pb-1.5 text-sm font-semibold text-left ${
+            inverted ? "text-gray-200" : "text-gray-700"
+          }`}
+        >
+          {label}
+        </p>
+      )}
+      <div
+        className={`flex flex-row-reverse rounded-t-sm ${
+          prefix && !error ? "shadow-light-focusable overflow-hidden" : ""
+        }`}
+      >
+        <input
+          className={rootClassName}
+          onChange={handleOnChange}
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
+          {...rest}
+        ></input>
+        {prefix && (
+          <div
+            className={`flex transition duration-150 items-center text-sm justify-center px-5 text-gray-600 bg-gray-200 dark:bg-gray-700 border-b-[3px] ${
+              error
+                ? "border-red-400 peer-focus:border-red-400 dark:peer-focus:border-red-500 shadow-error"
+                : "text-black border-blue-300 peer-focus:border-sky-600 dark:peer-focus:border-sky-300"
+            }`}
+          >
+            {prefix}
+          </div>
+        )}
+      </div>
     </label>
   )
 }

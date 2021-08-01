@@ -1,6 +1,5 @@
 import { FC } from "react"
 import cn from "classnames"
-import s from "./Background.module.css"
 // import Image from "next/image"
 
 export interface Props {
@@ -10,10 +9,9 @@ export interface Props {
 const Background: FC<Props> = (props) => {
   const { className, children, ...rest } = props
   const rootClassName = cn(
-    s.root,
     {},
     className,
-    "bg-gradient-to-br from-blue-50 to-gray-100"
+    "absolute w-full h-full -z-10 bg-gradient-to-br from-sky-50 to-gray-100"
   )
 
   return (
