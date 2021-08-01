@@ -149,12 +149,11 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
                   ],
                 }}
               />
-              <Head>
-                <meta
-                  name="twitter:image"
-                  content={`https://${domain}/slicer/${slicerInfo?.id}`}
-                />
-              </Head>
+              {slicer.imageUrl && (
+                <Head>
+                  <meta name="twitter:image" content={slicer.imageUrl} />
+                </Head>
+              )}
             </>
           )}
           <div>
