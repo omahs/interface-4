@@ -28,7 +28,7 @@ export default function Slice() {
       <NextSeo
         title="Create a new slicer"
         openGraph={{
-          title: defaultTitle,
+          title: `Create a new slicer | ${defaultTitle}`,
           description: defaultDescription,
           url: `https://${domain}`,
           images: [

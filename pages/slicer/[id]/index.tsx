@@ -1,3 +1,4 @@
+import Head from "next/head"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
 import {
   ActionScreen,
@@ -128,24 +129,34 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     <Container page={true}>
       {slicerInfo?.id !== null ? (
         <main className="w-full max-w-screen-sm mx-auto space-y-8 sm:space-y-10">
-          <NextSeo
-            title={pageTitle}
-            openGraph={{
-              title: pageTitle,
-              description: slicer.description,
-              url: `https://${domain}/slicer/${slicerInfo?.id}`,
-              images: [
-                {
-                  url: slicer.imageUrl,
-                  alt: `${slicer.name} cover image`,
-                },
-                {
-                  url: `https://slice.so/og_image.jpg`,
-                  alt: `${slicer.name} cover image`,
-                },
-              ],
-            }}
-          />
+          {slicer.name != undefined && (
+            <>
+              <NextSeo
+                title={pageTitle}
+                openGraph={{
+                  title: pageTitle,
+                  description: slicer.description,
+                  url: `https://${domain}/slicer/${slicerInfo?.id}`,
+                  images: [
+                    {
+                      url: slicer.imageUrl,
+                      alt: `${slicer.name} cover image`,
+                    },
+                    {
+                      url: `https://slice.so/og_image.jpg`,
+                      alt: `${slicer.name} cover image`,
+                    },
+                  ],
+                }}
+              />
+              <Head>
+                <meta
+                  name="twitter:image"
+                  content={`https://${domain}/slicer/${slicerInfo?.id}`}
+                />
+              </Head>
+            </>
+          )}
           <div>
             <div className="inline-block pb-2">
               <div className="relative flex items-center justify-center">

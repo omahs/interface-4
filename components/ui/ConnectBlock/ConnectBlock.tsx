@@ -8,7 +8,7 @@ const ConnectBlock = ({ children }) => {
   ) : (
     <>
       <div className="flex flex-col items-center max-w-screen-sm py-6 mx-auto">
-        <h3>Connect with your wallet to continue</h3>
+        <h3>Connect your wallet</h3>
         <p className="pt-8 pb-10">
           If you don&apos;t have a wallet, you can get a{" "}
           <a
