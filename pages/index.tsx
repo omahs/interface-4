@@ -4,10 +4,12 @@ import HomeEth from "@components/icons/HomeEth"
 import { Banner, Container, HomeHero, HomeSection } from "@components/ui"
 import { section1, section2, section3, section4 } from "@lib/text/home"
 import HomeDecentralized from "@components/icons/HomeDecentralized"
+import { NextSeo } from "next-seo"
 
 const Home = () => {
   return (
     <>
+      <NextSeo title="The decentralized slicing platform" />
       <Container page={true}>
         <main className="max-w-screen-lg pb-20 mx-auto text-center">
           <HomeHero />

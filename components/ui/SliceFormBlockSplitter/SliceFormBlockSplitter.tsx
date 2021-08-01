@@ -3,6 +3,7 @@ import { useEffect, useState, Dispatch, SetStateAction } from "react"
 import { Input, SliceFormInputBlock, Question } from "@components/ui"
 import Add from "@components/icons/Add"
 import { useAppContext } from "@components/ui/context"
+import DoubleText from "../DoubleText"
 
 type Props = {
   success: boolean
@@ -113,10 +114,19 @@ const SliceFormBlockSplitter = ({
             <>
               <p className="pb-4">
                 Accounts with the chosen amount of slices have{" "}
-                <Link href="/">
+                <DoubleText
+                  inactive
+                  logoText="privileged access"
+                  size="text-normal"
+                />{" "}
+                {/* <Link href="/">
                   <a className="font-black highlight">privileged access</a>
-                </Link>{" "}
+                </Link>{" "} */}
                 to this slicer.
+              </p>
+              <p className="pb-4">
+                They can edit the slicer page, access restricted information,
+                update data on the blockchain, and use other future features.
               </p>
               <p>
                 <strong>Note</strong>: At least one account has to hold the

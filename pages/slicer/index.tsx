@@ -1,12 +1,14 @@
 import { Container, DoubleText, SlicersGrid } from "@components/ui"
 import fetcher from "@utils/fetcher"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
+import { NextSeo } from "next-seo"
 
 const Slicer = ({
   totalSlicers,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Container page={true}>
+      <NextSeo title="Slicers" />
       <main className="max-w-[420px] mx-auto sm:max-w-screen-lg">
         <DoubleText
           inactive

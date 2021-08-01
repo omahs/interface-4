@@ -8,6 +8,7 @@ import {
 import { useAppContext } from "@components/ui/context"
 import fetcher from "@utils/fetcher"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
+import { NextSeo } from "next-seo"
 import { useEffect, useState } from "react"
 import useSWR from "swr"
 
@@ -41,19 +42,22 @@ const Transfer = ({
             position="pb-12"
           />
           {slicerInfo?.id !== null ? (
-            ownedShares ? (
-              <TransferForm
-                account={account}
-                slicerId={slicerInfo?.id}
-                ownedShares={ownedShares}
-              />
-            ) : (
-              <ActionScreen
-                text="You hold no slices of this slicer"
-                href="/"
-                buttonLabel="Return to home"
-              />
-            )
+            <>
+              <NextSeo title={`Transfer slices | Slicer #${slicerInfo.id}`} />
+              {ownedShares ? (
+                <TransferForm
+                  account={account}
+                  slicerId={slicerInfo?.id}
+                  ownedShares={ownedShares}
+                />
+              ) : (
+                <ActionScreen
+                  text="You hold no slices of this slicer"
+                  href="/"
+                  buttonLabel="Return to home"
+                />
+              )}
+            </>
           ) : (
             <ActionScreen
               text="This slicer doesn't exist (yet)"

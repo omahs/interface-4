@@ -17,6 +17,7 @@ import { useAllowed } from "@lib/useProvider"
 import Edit from "@components/icons/Edit"
 import { useState } from "react"
 import handleMessage, { Message } from "@utils/handleMessage"
+import { NextSeo } from "next-seo"
 
 export type NewImage = { url: string; file: File }
 
@@ -42,6 +43,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     file: undefined,
   })
   const [tempImageUrl, setTempImageUrl] = useState("")
+  const pageTitle = `${slicer.name} | Slicer #${slicerInfo.id}`
 
   const updateDb = async (newInfo) => {
     setSlicer(newInfo)
@@ -122,6 +124,25 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     <Container page={true}>
       {slicerInfo?.id !== null ? (
         <main className="w-full max-w-screen-sm mx-auto space-y-8 sm:space-y-10">
+          <NextSeo
+            title={pageTitle}
+            openGraph={{
+              title: pageTitle,
+              description: slicer.description,
+              type: `website`,
+              locale: `en_US`,
+              url: `https://slice.so/slicer/${slicerInfo.id}`,
+              site_name: "Slice",
+              images: [
+                {
+                  url: slicer.imageUrl,
+                  width: 1000,
+                  height: 1000,
+                  alt: `${slicer.name} cover image`,
+                },
+              ],
+            }}
+          />
           <div>
             <div className="inline-block pb-2">
               <div className="relative flex items-center justify-center">

@@ -67,16 +67,29 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
 
       <div className="pt-4 pb-6">
         <p>
-          <strong>Note</strong>: minimum and total slices cannot be changed
+          <strong>Note:</strong> minimum and total slices cannot be changed
           later.
         </p>
         {totalShares === 1 && (
           <p className="pt-4">
-            <strong>Note</strong>: You are about to create a non-fractionable
+            <strong>Note:</strong> You are about to create a non-fractionable
             Slicer. That means that there can only be a single owner at any
             given time which gets all ETH earned by the slicer.
           </p>
         )}
+        <p className="pt-4">
+          <strong>Note:</strong> This version of Slice runs on Rinkeby Testnet,
+          so it does not use real ETH. You can get some ETH on Rinkeby{" "}
+          <a
+            href="https://faucet.rinkeby.io"
+            target="_blank"
+            rel="noreferrer"
+            className="font-black highlight"
+          >
+            here
+          </a>
+          .
+        </p>
       </div>
       <div className="py-1">
         <Button label="Slice" type="submit" />

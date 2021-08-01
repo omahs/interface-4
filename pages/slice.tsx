@@ -10,6 +10,7 @@ import {
 } from "@components/ui"
 import { LogDescription } from "ethers/lib/utils"
 import getLog from "@utils/getLog"
+import { NextSeo } from "next-seo"
 
 export default function Slice() {
   const [loading, setLoading] = useState(false)
@@ -19,6 +20,7 @@ export default function Slice() {
 
   return (
     <Container page={true}>
+      <NextSeo title="Create a new slicer" />
       <ConnectBlock>
         <main>
           <DoubleText
@@ -33,11 +35,16 @@ export default function Slice() {
                 <div className="py-4 mx-auto space-y-4 sm:text-lg max-w-screen-xs">
                   <p>
                     Slicers are a{" "}
-                    <Link href="/">
+                    <DoubleText
+                      inactive
+                      logoText="special kind of fractionable NFTs"
+                      size="text-normal"
+                    />{" "}
+                    {/* <Link href="/">
                       <a className="font-black highlight">
                         special kind of fractionable NFTs
                       </a>
-                    </Link>{" "}
+                    </Link> */}
                     which can be shared among multiple accounts.
                   </p>
                   <p>
