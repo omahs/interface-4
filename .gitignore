@@ -7,6 +7,7 @@
 
 # development
 hardhat.config.js
+/contracts
 /scripts
 
 # testing
