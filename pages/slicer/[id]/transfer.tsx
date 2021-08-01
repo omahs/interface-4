@@ -8,9 +8,14 @@ import {
 import { useAppContext } from "@components/ui/context"
 import fetcher from "@utils/fetcher"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
-import { NextSeo } from "next-seo"
 import { useEffect, useState } from "react"
 import useSWR from "swr"
+import { NextSeo } from "next-seo"
+import {
+  defaultDescription,
+  defaultTitle,
+  domain,
+} from "@components/common/Head"
 
 const Transfer = ({
   slicerInfo,
@@ -43,7 +48,22 @@ const Transfer = ({
           />
           {slicerInfo?.id !== null ? (
             <>
-              <NextSeo title={`Transfer slices | Slicer #${slicerInfo.id}`} />
+              <NextSeo
+                title={`Transfer slices | Slicer #${slicerInfo.id}`}
+                openGraph={{
+                  title: defaultTitle,
+                  description: defaultDescription,
+                  url: `https://${domain}`,
+                  images: [
+                    {
+                      url: `https://${domain}/og_image.jpg`,
+                      width: 1000,
+                      height: 1000,
+                      alt: `${defaultTitle} cover image`,
+                    },
+                  ],
+                }}
+              />
               {ownedShares ? (
                 <TransferForm
                   account={account}

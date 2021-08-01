@@ -11,6 +11,11 @@ import {
 import { LogDescription } from "ethers/lib/utils"
 import getLog from "@utils/getLog"
 import { NextSeo } from "next-seo"
+import {
+  defaultDescription,
+  defaultTitle,
+  domain,
+} from "@components/common/Head"
 
 export default function Slice() {
   const [loading, setLoading] = useState(false)
@@ -20,7 +25,22 @@ export default function Slice() {
 
   return (
     <Container page={true}>
-      <NextSeo title="Create a new slicer" />
+      <NextSeo
+        title="Create a new slicer"
+        openGraph={{
+          title: defaultTitle,
+          description: defaultDescription,
+          url: `https://${domain}`,
+          images: [
+            {
+              url: `https://${domain}/og_image.jpg`,
+              width: 1000,
+              height: 1000,
+              alt: `${defaultTitle} cover image`,
+            },
+          ],
+        }}
+      />
       <ConnectBlock>
         <main>
           <DoubleText

@@ -5,11 +5,31 @@ import { Banner, Container, HomeHero, HomeSection } from "@components/ui"
 import { section1, section2, section3, section4 } from "@lib/text/home"
 import HomeDecentralized from "@components/icons/HomeDecentralized"
 import { NextSeo } from "next-seo"
+import {
+  defaultDescription,
+  defaultTitle,
+  domain,
+} from "@components/common/Head"
 
 const Home = () => {
   return (
     <>
-      <NextSeo title="The decentralized slicing platform" />
+      <NextSeo
+        title="The decentralized slicing platform"
+        openGraph={{
+          title: defaultTitle,
+          description: defaultDescription,
+          url: `https://${domain}`,
+          images: [
+            {
+              url: `https://${domain}/og_image.jpg`,
+              width: 1000,
+              height: 1000,
+              alt: `${defaultTitle} cover image`,
+            },
+          ],
+        }}
+      />
       <Container page={true}>
         <main className="max-w-screen-lg pb-20 mx-auto text-center">
           <HomeHero />

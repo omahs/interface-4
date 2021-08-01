@@ -3,40 +3,23 @@ import NextHead from "next/head"
 import { DefaultSeo } from "next-seo"
 import { accounts } from "@components/ui/Social/Social"
 
-const title = "Slice"
-const description =
+export const defaultTitle = "Slice"
+export const defaultDescription =
   "Decentralized payments infrastructure for real world applications, products and services."
-const domain = "slice.so"
+export const domain = "slice.so"
 const twitterAccount = accounts.twitter.split("twitter.com/").pop()
 
 const Head: FC = () => {
   return (
     <>
       <DefaultSeo
-        titleTemplate={`%s | ${title}`}
-        defaultTitle={title}
-        description={description}
+        titleTemplate={`%s | ${defaultTitle}`}
+        defaultTitle={defaultTitle}
+        description={defaultDescription}
         openGraph={{
-          title: title,
-          description: description,
+          site_name: defaultTitle,
           type: `website`,
           locale: `en_US`,
-          url: `https://${domain}`,
-          site_name: title,
-          images: [
-            {
-              url: `https://${domain}/og_image.jpg`,
-              width: 1000,
-              height: 1000,
-              alt: `${title} cover image`,
-            },
-            {
-              url: `https://${domain}/og_image_default.jpg`,
-              width: 1000,
-              height: 1000,
-              alt: `${title} cover image`,
-            },
-          ],
         }}
         twitter={{
           handle: twitterAccount,
