@@ -65,7 +65,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         setTotalShares={setTotalShares}
       />
 
-      <div className="pt-4 pb-6">
+      <div className="py-8">
         <p>
           <strong>Note:</strong> minimum and total slices cannot be changed
           later.

@@ -12,10 +12,9 @@ const ConnectBlock = ({ children }) => {
         <DoubleText
           inactive
           logoText="Connect your wallet"
-          size="text-3xl sm:text-4xl"
-          position="pb-10"
+          size="text-4xl sm:text-5xl"
         />
-        <p className="pb-8 text-lg">
+        <p className="py-10 text-lg">
           If you don&apos;t have one, you can get a{" "}
           <a
             href="https://metamask.io/"

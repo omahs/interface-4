@@ -46,13 +46,13 @@ export default function Slice() {
           <DoubleText
             inactive
             logoText={`Create a Slicer`}
-            size="text-4xl sm:text-6xl"
-            position="pb-4"
+            size="text-4xl sm:text-5xl"
+            position="pb-4 sm:pb-6"
           />
           {!success ? (
             !loading ? (
               <>
-                <div className="py-4 mx-auto space-y-4 sm:text-lg max-w-screen-xs">
+                <div className="py-6 mx-auto space-y-4 sm:py-8 sm:text-lg max-w-screen-xs">
                   <p>
                     Slicers are a{" "}
                     <DoubleText
