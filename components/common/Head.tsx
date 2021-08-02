@@ -50,6 +50,7 @@ const Head: FC = () => {
           sizes="16x16"
           href="/favicon/favicon-16x16.png"
         />
+        <link rel="shortcut icon" href="/favicon/apple-touch-icon.png" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
       </NextHead>
     </>
