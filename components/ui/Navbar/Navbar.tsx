@@ -4,6 +4,7 @@ import Nightwind from "@components/icons/Nightwind"
 import { Button, Container, SlcCounter } from "@components/ui"
 import UserIcon from "@components/icons/UserIcon"
 import { useAppContext } from "@components/ui/context"
+import Metamask from "@components/icons/Metamask"
 
 const Navbar = () => {
   const { isConnected, loading } = useAppContext()
@@ -35,7 +36,12 @@ const Navbar = () => {
                 className="h-[36px] font-medium rounded-full border-2 shadow-light"
                 color=" border-sky-700 bg-white text-black hover:bg-sky-100"
                 double={false}
-                label="Connect"
+                label={
+                  <span className="flex mr-[-10px]">
+                    Connect
+                    <Metamask className="w-[1.15rem] ml-2" />
+                  </span>
+                }
                 loading={loading}
                 onClick={() => requestAccount()}
               />

@@ -11,7 +11,7 @@ interface ButtonProps {
   className?: string
   color?: string
   type?: "button" | "submit" | "reset"
-  label?: string
+  label?: string | JSX.Element
   href?: string
   onClick?: any
 }
