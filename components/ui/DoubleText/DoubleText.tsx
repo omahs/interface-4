@@ -23,13 +23,13 @@ const DoubleText: FC<Props> = ({
   const text = logoText || "Slice"
 
   return (
-    <div
+    <span
       className={`inline-block relative ${inactive ? "" : "group "}${
         position ? position : "absolute top-0 left-0"
       }`}
     >
       {inactive ? (
-        <div
+        <span
           className={`${
             inverted ? "text-white" : "text-black"
           } relative z-10 !font-black cursor-default ${
@@ -37,7 +37,7 @@ const DoubleText: FC<Props> = ({
           }`}
         >
           {text}
-        </div>
+        </span>
       ) : (
         <Link href="/">
           <a
@@ -51,8 +51,8 @@ const DoubleText: FC<Props> = ({
           </a>
         </Link>
       )}
-      <p
-        className={`absolute top-0 w-full select-none
+      <span
+        className={`absolute top-0 left-0 w-full select-none
         ${inactive ? "cursor-default" : ""}
         ${
           size ? size : "text-2xl md:text-3xl"
@@ -64,8 +64,8 @@ const DoubleText: FC<Props> = ({
         style={{ marginTop: "0.1em", marginBottom: 0 }}
       >
         {text}
-      </p>
-    </div>
+      </span>
+    </span>
   )
 }
 

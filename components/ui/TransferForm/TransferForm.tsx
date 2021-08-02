@@ -70,7 +70,7 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
                 onChange={setAddress}
               />
             </div>
-            <div>
+            <div className="mb-2">
               <Input
                 type="number"
                 label="Slices to transfer"
@@ -80,7 +80,7 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
                 onChange={setShares}
               />
             </div>
-            <div className="pt-2 space-y-4">
+            <div className="space-y-4">
               {data && minimumShares && ownedShares - shares < minimumShares && (
                 <p className="text-sm">
                   <span className="font-medium">Note:</span> You&apos;ll lose
