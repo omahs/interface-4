@@ -1,5 +1,6 @@
 import { Button } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
+import DoubleText from "../DoubleText"
 
 const ConnectBlock = ({ children }) => {
   const { isConnected } = useAppContext()
@@ -7,10 +8,15 @@ const ConnectBlock = ({ children }) => {
     children
   ) : (
     <>
-      <div className="flex flex-col items-center max-w-screen-sm py-6 mx-auto">
-        <h3>Connect your wallet</h3>
-        <p className="pt-8 pb-10">
-          If you don&apos;t have a wallet, you can get a{" "}
+      <div className="flex flex-col items-center py-6 mx-auto max-w-screen-xs">
+        <DoubleText
+          inactive
+          logoText="Connect your wallet"
+          size="text-3xl sm:text-4xl"
+          position="pb-10"
+        />
+        <p className="pb-8 text-lg">
+          If you don&apos;t have one, you can get a{" "}
           <a
             href="https://metamask.io/"
             target="_blank"
