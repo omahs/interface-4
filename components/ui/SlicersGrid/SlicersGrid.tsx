@@ -1,28 +1,24 @@
 import Link from "next/link"
-import fetcher from "@utils/fetcher"
-import useSWR from "swr"
-import ActionScreen from "../ActionScreen"
 import Button from "../Button"
 import { useEffect, useState } from "react"
-import SlicerImage from "../SlicerImage"
 import SlicerCardImage from "../SlicerCardImage"
+import { Slicer } from "@prisma/client"
 
 type Props = {
+  data: Slicer[]
   totalSlicers: number
 }
 
-const SlicersGrid = ({ totalSlicers }: Props) => {
+const SlicersGrid = ({ data, totalSlicers }: Props) => {
   const initItems = 12
   const [items, setItems] = useState(initItems)
   const [iterator, setIterator] = useState(0)
-
-  const { data } = useSWR(`/api/slicer?items=${iterator || initItems}`, fetcher)
 
   useEffect(() => {
     setIterator(items < totalSlicers ? items : totalSlicers)
   }, [items])
 
-  return data ? (
+  return (
     <>
       <div className="grid items-center justify-center grid-cols-1 gap-2 sm:gap-4 lg:gap-5 sm:grid-cols-3">
         {[...Array(iterator)].map((el, key) => {
@@ -62,15 +58,7 @@ const SlicersGrid = ({ totalSlicers }: Props) => {
         </div>
       </div>
     </>
-  ) : (
-    <ActionScreen
-      text="There are no slicers"
-      buttonLabel="Start slicing"
-      href="/slice"
-    />
   )
 }
 
 export default SlicersGrid
-
-// Todo: Prevent flash on load more

@@ -7,8 +7,10 @@ import {
   defaultTitle,
   domain,
 } from "@components/common/Head"
+import { Slicer } from "@prisma/client"
 
-const Slicer = ({
+const SlicerGrid = ({
+  data,
   totalSlicers,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
@@ -36,7 +38,7 @@ const Slicer = ({
           size="text-4xl sm:text-5xl"
           position="pb-12"
         />
-        <SlicersGrid totalSlicers={Number(totalSlicers)} />
+        <SlicersGrid data={data} totalSlicers={Number(totalSlicers)} />
       </main>
     </Container>
   )
@@ -47,10 +49,14 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 
   try {
     const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
+    const data: Slicer[] = await fetcher(
+      `${baseUrl}/api/slicer?items=${totalSlicers}`
+    )
     // const totalSlicers = 0
 
     return {
       props: {
+        data,
         totalSlicers,
       },
       revalidate: 10,
@@ -60,4 +66,4 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   }
 }
 
-export default Slicer
+export default SlicerGrid
