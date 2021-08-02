@@ -1,21 +1,26 @@
 import useProvider from "@lib/useProvider"
 import { createContext, useContext, useEffect, useState } from "react"
 import { colorList, darkColorList } from "@utils/colorList"
+import { View } from "@lib/text/modals"
 
-const AppContext = createContext({
+const AppContext = createContext<any>({
   isConnected: false,
+  chainId: "",
   account: "",
   loading: true,
   color1: colorList[0],
   color2: colorList[1],
   darkColor1: darkColorList[0],
   darkColor2: darkColorList[1],
+  modalView: { name: "" },
+  setModalView: () => null,
   shuffleColors: () => null,
 })
 
 export function AppWrapper({ children }) {
   const [loading, setLoading] = useState(true)
-  const { isConnected, account } = useProvider(setLoading)
+  const [modalView, setModalView] = useState<View>({ name: "" })
+  const { isConnected, chainId, account } = useProvider(setLoading)
 
   const [color1, setColor1] = useState([])
   const [color2, setColor2] = useState([])
@@ -45,12 +50,15 @@ export function AppWrapper({ children }) {
     <AppContext.Provider
       value={{
         isConnected,
+        chainId,
         account,
         loading,
         color1,
         color2,
         darkColor1,
         darkColor2,
+        modalView,
+        setModalView,
         shuffleColors,
       }}
     >
