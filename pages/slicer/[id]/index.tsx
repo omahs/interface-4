@@ -16,10 +16,11 @@ import {
 import fetcher from "@utils/fetcher"
 import { useAllowed } from "@lib/useProvider"
 import Edit from "@components/icons/Edit"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import handleMessage, { Message } from "@utils/handleMessage"
 import { NextSeo } from "next-seo"
 import { domain } from "@components/common/Head"
+import useSWR, { mutate } from "swr"
 
 export type NewImage = { url: string; file: File }
 
@@ -50,6 +51,17 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     slicer.name === `Slicer #${slicerInfo?.id}`
       ? slicer.name
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
+
+  const { data: slicerInfoUpdated } = useSWR(
+    editMode ? `/api/slicer/${slicerInfo?.id}` : null,
+    fetcher
+  )
+
+  useEffect(() => {
+    if (!tempStorageUrl && slicerInfoUpdated?.imageUrl) {
+      setTempStorageUrl(slicerInfoUpdated?.imageUrl)
+    }
+  }, [slicerInfoUpdated])
 
   const updateDb = async (newInfo) => {
     setSlicer(newInfo)
@@ -98,6 +110,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             imageUrl: newFilePath,
           }
           await updateDb(newInfo)
+          mutate(`/api/slicer/${slicerInfo?.id}`)
           setNewImage({ url: "", file: undefined })
           setEditMode(false)
           setLoading(false)
