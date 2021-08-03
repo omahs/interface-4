@@ -45,6 +45,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     file: undefined,
   })
   const [tempImageUrl, setTempImageUrl] = useState("")
+  const [tempStorageUrl, setTempStorageUrl] = useState("")
   const pageTitle =
     slicer.name === `Slicer #${slicerInfo?.id}`
       ? slicer.name
@@ -75,8 +76,12 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
         reader.onload = async () => {
           const buffer = reader.result
           const body = {
-            method: slicerInfo.imageUrl ? "PUT" : "POST",
-            body: JSON.stringify({ buffer, fileExt }),
+            method: "POST",
+            body: JSON.stringify({
+              buffer,
+              fileExt,
+              currentUrl: tempStorageUrl || slicerInfo.imageUrl || null,
+            }),
           }
           const { Key, error } = await fetcher(
             `/api/slicer/${slicerInfo?.id}/upload_file`,
@@ -85,13 +90,12 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
           if (error) {
             throw Error(error)
           }
-          if (!slicerInfo.imageUrl) {
-            const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
-            newInfo = {
-              description: newDescription,
-              name: newName,
-              imageUrl: newFilePath,
-            }
+          const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
+          setTempStorageUrl(newFilePath)
+          newInfo = {
+            description: newDescription,
+            name: newName,
+            imageUrl: newFilePath,
           }
           await updateDb(newInfo)
           setNewImage({ url: "", file: undefined })
