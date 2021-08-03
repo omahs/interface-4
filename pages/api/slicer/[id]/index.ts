@@ -17,12 +17,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           where: { id: Number(id) },
         })
         if (slicerInfo == null) {
+          const slicerId = Number(id)
           const slicerAddress: string = await sliceCore(
             defaultProvider
           ).slicers(id)
           slicerInfo = {
-            id: Number(id),
-            name: `Slicer #${id}`,
+            id: slicerId,
+            name: `Slicer #${slicerId}`,
             description: "",
             address: slicerAddress,
             imageUrl: "",
