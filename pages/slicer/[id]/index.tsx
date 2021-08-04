@@ -37,7 +37,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [slicer, setSlicer] = useState({
     name: slicerInfo?.name,
     description: slicerInfo?.description,
-    imageUrl: slicerInfo?.imageUrl,
+    imageUrl: slicerInfo?.image,
   })
   const [newDescription, setNewDescription] = useState(slicer.description)
   const [newName, setNewName] = useState(slicer.name)
@@ -92,7 +92,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             body: JSON.stringify({
               buffer,
               fileExt,
-              currentUrl: tempStorageUrl || slicerInfo.imageUrl || null,
+              currentUrl: tempStorageUrl || slicerInfo.image || null,
             }),
           }
           const { Key, error } = await fetcher(

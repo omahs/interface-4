@@ -25,8 +25,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             id: slicerId,
             name: `Slicer #${slicerId}`,
             description: "",
+            external_url: `https://slice.so/slicer/${slicerId}`,
             address: slicerAddress,
-            imageUrl: "",
+            image: "https://slice.so/slicer_default.png",
+            attributes: [],
           }
           await prisma.slicer.create({
             data: slicerInfo,
@@ -37,8 +39,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           id: null,
           name: "",
           description: "",
+          external_url: "",
           address: "",
-          imageUrl: "",
+          image: "",
+          attributes: [],
         }
       }
 
@@ -50,7 +54,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const query = await prisma.slicer.update({
         where: { id: Number(id) },
-        data: { name, description, imageUrl },
+        data: { name, description, image: imageUrl },
       })
       res.status(200).json({ query })
     }

@@ -23,7 +23,7 @@ const SlicersGrid = ({ data, totalSlicers }: Props) => {
       <div className="grid items-center justify-center grid-cols-1 gap-2 sm:gap-4 lg:gap-5 sm:grid-cols-3">
         {[...Array(iterator)].map((el, key) => {
           const id = Number(key)
-          const { name, imageUrl } = data[id] || {
+          const { name, image } = data[id] || {
             name: `Slicer #${id}`,
             imageUrl: "",
           }
@@ -33,7 +33,7 @@ const SlicersGrid = ({ data, totalSlicers }: Props) => {
               <SlicerCardImage
                 href={slicerLink}
                 name={name}
-                imageUrl={imageUrl}
+                imageUrl={image}
                 size="w-full h-52 sm:h-32 md:h-40 lg:h-48"
               />
               <div className="w-full pt-5 pl-2 text-left sm:pt-4">
