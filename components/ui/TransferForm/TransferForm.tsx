@@ -9,6 +9,7 @@ import MessageBlock from "../MessageBlock"
 import { mutate } from "swr"
 import useSWR from "swr"
 import fetcher from "@utils/fetcher"
+import InputAddress from "../InputAddress"
 
 type Props = {
   account: string
@@ -62,12 +63,11 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
         <form onSubmit={submit}>
           <div className="space-y-6">
             <div>
-              <Input
-                type="string"
+              <InputAddress
                 label="Receiver address"
-                placeholder="0x... / vitalik.eth"
-                required
+                address={address}
                 onChange={setAddress}
+                required
               />
             </div>
             <div className="mb-2">

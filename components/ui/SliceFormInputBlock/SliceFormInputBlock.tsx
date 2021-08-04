@@ -3,6 +3,8 @@ import { Input } from "@components/ui"
 import Delete from "@components/icons/Delete"
 import UserIcon from "@components/icons/UserIcon"
 import { useAppContext } from "@components/ui/context"
+import InputAddress from "../InputAddress"
+import resolveEns from "@utils/resolveEns"
 
 type Props = {
   index: number
@@ -35,6 +37,7 @@ const SliceFormInputBlock = ({
   const [visible, setVisible] = useState(true)
   const [address, setAddress] = useState("")
   const [sharesAmount, setSharesAmount] = useState("")
+  const [resolvedSignerAddress, setResolvedSignerAddress] = useState("")
 
   const handleChange = (
     value: string | number,
@@ -61,6 +64,7 @@ const SliceFormInputBlock = ({
     if (index == 0 && signerAddress) {
       setAddress(signerAddress)
       setSharesAmount("1000000")
+      resolveEns(signerAddress, setResolvedSignerAddress)
     }
   }, [signerAddress])
 
@@ -81,10 +85,10 @@ const SliceFormInputBlock = ({
   return (
     visible && (
       <>
-        <div className="col-span-1 col-start-1 mt-1.5 mx-auto">
+        <div className="col-span-1 col-start-1 mx-auto mt-5">
           <div className="">
             {index === 0 ? (
-              account === address ? (
+              account === address || resolvedSignerAddress === address ? (
                 <UserIcon
                   className={
                     minimumShares <= Number(sharesAmount)
@@ -98,17 +102,15 @@ const SliceFormInputBlock = ({
             )}
           </div>
         </div>
-        <div className="col-span-7 mt-1.5 xs:col-span-5 md:col-span-7">
-          <Input
-            type="string"
-            placeholder="0x… / vitalik.eth"
-            value={address}
-            required={sharesAmount && true}
+        <div className="col-span-7 mt-5 xs:col-span-5 md:col-span-7">
+          <InputAddress
+            address={address}
             onChange={setAddress}
+            required={sharesAmount && true}
           />
         </div>
         <p className="col-span-2 pt-1.5 pr-2 text-right xs:hidden">Slices</p>
-        <div className="col-span-4 mt-1.5 xs:col-span-3">
+        <div className="col-span-4 mt-5 xs:col-span-3">
           <Input
             type="number"
             placeholder="1000000"
@@ -117,7 +119,7 @@ const SliceFormInputBlock = ({
             onChange={setSharesAmount}
           />
         </div>
-        <div className="mt-1.5">
+        <div className="mt-5">
           <p
             className={`col-span-2 xs:col-span-1 text-sm ${
               minimumShares <= Number(sharesAmount) &&
