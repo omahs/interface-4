@@ -52,7 +52,7 @@ const Input: React.FC<Props> = (props) => {
         </p>
       )}
       <div
-        className={`flex flex-row-reverse pb-3 rounded-t-sm ${
+        className={`flex flex-row-reverse mb-3 rounded-t-sm ${
           prefix && !error ? "shadow-light-focusable overflow-hidden" : ""
         }`}
       >
