@@ -22,7 +22,7 @@ const InputAddress: React.FC<Props> = (props) => {
 
     const timeout = setTimeout(
       () => resolveEns(address, setResolvedAddress),
-      200
+      150
     )
     return () => {
       clearTimeout(timeout)
@@ -31,11 +31,11 @@ const InputAddress: React.FC<Props> = (props) => {
   }, [address])
 
   return (
-    <div className={`relative ${label ? "pb-4" : ""}`}>
+    <div className={`relative`}>
       <Input
         type="string"
         value={address}
-        placeholder="0x… / vitalik.eth"
+        placeholder="0x… / slice.eth"
         label={label}
         required={required}
         error={resolvedAddress === "Invalid ENS name"}
@@ -47,8 +47,7 @@ const InputAddress: React.FC<Props> = (props) => {
             resolvedAddress === "Invalid ENS name"
               ? "text-red-500"
               : "text-blue-600 dark:text-sky-300"
-          } absolute text-xs opacity-80 font-black left-0 ${
-            label ? "bottom-[-10px]" : "top-[-24px]"
+          } absolute text-xs opacity-80 font-black left-0 bottom-[-12px]
           }`}
         >
           {resolvedAddress}

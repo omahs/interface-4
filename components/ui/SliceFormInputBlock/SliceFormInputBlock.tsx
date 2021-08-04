@@ -85,7 +85,7 @@ const SliceFormInputBlock = ({
   return (
     visible && (
       <>
-        <div className="col-span-1 col-start-1 mx-auto mt-5">
+        <div className="col-span-1 col-start-1 mx-auto mt-3 mb-3">
           <div className="">
             {index === 0 ? (
               account === address || resolvedSignerAddress === address ? (
@@ -102,7 +102,7 @@ const SliceFormInputBlock = ({
             )}
           </div>
         </div>
-        <div className="col-span-7 mt-5 xs:col-span-5 md:col-span-7">
+        <div className="col-span-7 mt-3 xs:col-span-5 md:col-span-7">
           <InputAddress
             address={address}
             onChange={setAddress}
@@ -110,7 +110,7 @@ const SliceFormInputBlock = ({
           />
         </div>
         <p className="col-span-2 pt-1.5 pr-2 text-right xs:hidden">Slices</p>
-        <div className="col-span-4 mt-5 xs:col-span-3">
+        <div className="col-span-4 mt-3 xs:col-span-3">
           <Input
             type="number"
             placeholder="1000000"
@@ -119,7 +119,7 @@ const SliceFormInputBlock = ({
             onChange={setSharesAmount}
           />
         </div>
-        <div className="mt-5">
+        <div className="mt-3 mb-3">
           <p
             className={`col-span-2 xs:col-span-1 text-sm ${
               minimumShares <= Number(sharesAmount) &&
@@ -131,7 +131,7 @@ const SliceFormInputBlock = ({
                 "%"}
           </p>
         </div>
-        <hr className="col-span-8 mt-6 mb-4 border-gray-300 xs:hidden" />
+        <hr className="col-span-8 my-4 border-gray-300 xs:hidden" />
       </>
     )
   )
