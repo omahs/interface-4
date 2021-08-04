@@ -238,6 +238,10 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             <PaySlicer slicerAddress={slicerInfo?.address} />
           ) : (
             <div>
+              <p className="pb-8 mx-auto max-w-screen-xs">
+                <strong>Note:</strong> Edits will appear after around 10
+                seconds. Refresh the page a couple of times to see them.
+              </p>
               <div className="pb-8">
                 <Button label="Save" loading={loading} onClick={() => save()} />
               </div>
