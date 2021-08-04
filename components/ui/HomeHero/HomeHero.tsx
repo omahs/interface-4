@@ -1,7 +1,5 @@
-import Link from "next/link"
 import { Button, DoubleText } from "@components/ui"
 import ReactRotatingText from "react-rotating-text"
-import Arrow from "@components/icons/Arrow"
 
 const items = [
   "applications 👩‍💻",
