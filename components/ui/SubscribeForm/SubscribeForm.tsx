@@ -41,7 +41,7 @@ const SubscribeForm = () => {
   return (
     <div className="mx-auto space-y-6 max-w-[520px]">
       {!success ? (
-        <form className="space-y-4" onSubmit={handleSubscribe}>
+        <form className="px-4 space-y-4" onSubmit={handleSubscribe}>
           <p>
             Sign up to our newsletter to keep up to date with the latest
             features and get inspired on what sort of things become possible
