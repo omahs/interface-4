@@ -14,7 +14,7 @@ import Arrow from "@components/icons/Arrow"
 type SlicerInfo = {
   name: string
   address: string
-  imageUrl: string
+  image: string
 }
 
 type Props = {
@@ -26,10 +26,10 @@ type Props = {
 const SlicerCard = ({ slicerId, shares, account }: Props) => {
   const isAllowed = useAllowed(slicerId)
   const { data: slicerInfo } = useSWR(`/api/slicer/${slicerId}`, fetcher)
-  const { name, address, imageUrl }: SlicerInfo = slicerInfo || {
+  const { name, address, image }: SlicerInfo = slicerInfo || {
     name: null,
     address: null,
-    imageUrl: null,
+    image: null,
   }
 
   const { data: unreleasedData } = useSWR(
@@ -66,7 +66,7 @@ const SlicerCard = ({ slicerId, shares, account }: Props) => {
         href={slicerLink}
         name={name}
         slicerAddress={address}
-        imageUrl={imageUrl}
+        imageUrl={image}
         isAllowed={isAllowed}
       />
       <div className="pt-5 sm:pt-4 sm:ml-6 md:ml-14">

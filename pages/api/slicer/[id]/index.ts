@@ -45,7 +45,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           attributes: [],
         }
       }
-
       res.status(200).json(slicerInfo)
     }
 
