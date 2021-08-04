@@ -31,17 +31,19 @@ const SlicerCardImage = ({
           <SlicerImage name={name} imageUrl={imageUrl} />
         </a>
       </Link>
-      {slicerAddress && (
-        <span className="rounded-md absolute bottom-[10px] left-[12px] w-[150px] h-[32px] bg-white flex items-center">
-          <div className="flex justify-center w-full text-black">
+      <span className="rounded-md absolute bottom-[10px] left-[12px] w-[150px] h-[32px] bg-white flex items-center">
+        <div className="flex justify-center w-full text-black">
+          {slicerAddress ? (
             <CopyAddress
               slicerAddress={slicerAddress}
               showIcon={false}
               position="bottom-[40px]"
             />
-          </div>
-        </span>
-      )}
+          ) : (
+            <div className="w-24 h-4 rounded-md bg-sky-300 animate-pulse" />
+          )}
+        </div>
+      </span>
       {isAllowed && (
         <span className="rounded-md absolute bottom-[10px] right-[12px] bg-white">
           <UserVerified className="py-[6px] text-green-500 w-[46px] h-[32px]" />
