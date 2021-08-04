@@ -127,7 +127,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
       console.log(err)
       handleMessage(
         {
-          message: "Something has gone wrong, try again",
+          message: "Something went wrong, try again",
           messageStatus: "error",
         },
         setMsg

@@ -29,8 +29,8 @@ export const section2 = (
     <p>
       NFTs are cool because they are unique, so they can digitally represent any
       real or virtual asset, service or product. However, they&apos;re still
-      mainly being used for collecting purposes as it&apos;s hard to make use of
-      their distinctive characteristics.
+      mainly used for collecting purposes as it&apos;s hard to leverage their
+      distinctive characteristics.
     </p>
     <p>
       Slicers ownership is linked to their value, making it possible to open a
@@ -50,14 +50,14 @@ export const section3 = (
   <>
     <h1 className="!mb-2">What are slicers for?</h1>
     <p>
-      For now slicers can be used to collect payments for yourself, a project or
+      Slicers can now be used to collect payments for yourself, a project or
       product, and automatically split them between its owners. It&apos;s a{" "}
       <DoubleText
         inactive
         logoText="transferable slice of ownership"
         size="text-normal"
       />{" "}
-      which also includes any revenue resulting from a slicer.
+      which also includes any revenue generated from a slicer.
     </p>
     <p>
       But there is so much more coming. Slicers will soon turn into an
@@ -80,15 +80,14 @@ export const section4 = (
     <p>
       Slicers live on the blockchain, so when you create one it&apos;s really
       yours. Our infrastructure is also entirely{" "}
-      <DoubleText inactive logoText="free to use" size="text-normal" />,
-      allowing you to use all features for free (except blockchain fees). We
-      just take a 2.5% fee from payments to slicers, which will be used to
-      improve them over time.
+      <DoubleText inactive logoText="free to use" size="text-normal" />, we just
+      take a 2.5% fee from payments to slicers, which will be used to improve
+      them over time.
     </p>
     <p>
-      Most importantly, whenever you release ETH from a slicer you will always
-      receive <DoubleText inactive logoText="SLC tokens" size="text-normal" />{" "}
-      (ERC20) which can be used to unlock services from Slice in the future.
+      Most importantly, when you release ETH from a slicer you receive{" "}
+      <DoubleText inactive logoText="SLC tokens" size="text-normal" /> (ERC20)
+      which can be used to unlock perks and services in the future.
     </p>
   </>
 )
