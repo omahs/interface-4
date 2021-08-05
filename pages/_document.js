@@ -1,5 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from "next/document"
 import Script from "next/script"
+import Image from "next/image"
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -19,7 +20,14 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
+          <script async defer src="https://sa.slice.so/latest.js"></script>
+          <noscript>
+            <img
+              src="https://sa.slice.so/noscript.gif"
+              alt=""
+              referrerpolicy="no-referrer-when-downgrade"
+            />
+          </noscript>
         </body>
       </Html>
     )
