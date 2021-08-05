@@ -37,9 +37,9 @@ const Navbar = () => {
                 color=" border-sky-700 bg-white text-black hover:bg-sky-100"
                 double={false}
                 label={
-                  <span className="flex mr-[-10px]">
+                  <span className="flex items-center mr-[-10px]">
                     Connect
-                    <Metamask className="w-[1.15rem] ml-2" />
+                    <Metamask className="w-[1.15rem] h-[1.15rem] ml-2 mb-0.5" />
                   </span>
                 }
                 loading={loading}

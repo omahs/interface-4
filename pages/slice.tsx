@@ -57,12 +57,12 @@ export default function Slice() {
                     Slicers are a{" "}
                     <DoubleText
                       inactive
-                      logoText="special kind of fractionable NFTs"
+                      logoText="special kind of fractional NFTs"
                       size="text-normal"
                     />{" "}
                     {/* <Link href="/">
                       <a className="font-black highlight">
-                        special kind of fractionable NFTs
+                        special kind of fractional NFTs
                       </a>
                     </Link> */}
                     which can be shared among multiple accounts.

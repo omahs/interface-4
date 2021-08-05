@@ -12,7 +12,7 @@ export const section1 = (
     </p>
     <p>
       Since it&apos;s a special kind of{" "}
-      <DoubleText inactive logoText="fractionable-NFT" size="text-normal" />,
+      <DoubleText inactive logoText="fractional-NFT" size="text-normal" />,
       you&apos;re free to transfer/sell your slices however you prefer (even on
       Opensea) and the slicer will always give you what you own.
     </p>
