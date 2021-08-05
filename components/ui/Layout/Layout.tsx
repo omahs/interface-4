@@ -1,6 +1,8 @@
 import { Footer, Modal, Navbar } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { useEffect } from "react"
+import { useRouter } from "next/dist/client/router"
+import ProductHuntBadge from "../ProductHuntBadge"
 
 export default function Layout({ children }) {
   const { isConnected, chainId, modalView, setModalView } = useAppContext()
@@ -22,6 +24,7 @@ export default function Layout({ children }) {
         {modalView.name && (
           <Modal modalView={modalView} setModalView={setModalView} />
         )}
+        <ProductHuntBadge />
       </div>
     </>
   )

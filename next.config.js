@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    domains: ["tjqdcmrertmapvramecf.supabase.co", ""],
+    domains: ["tjqdcmrertmapvramecf.supabase.co", "api.producthunt.com", ""],
   },
 }
