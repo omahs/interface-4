@@ -25,7 +25,10 @@ type Props = {
 
 const SlicerCard = ({ slicerId, shares, account }: Props) => {
   const isAllowed = useAllowed(slicerId)
-  const { data: slicerInfo } = useSWR(`/api/slicer/${slicerId}`, fetcher)
+  const { data: slicerInfo } = useSWR(
+    `/api/slicer/${slicerId}?stats=false`,
+    fetcher
+  )
   const { name, address, image }: SlicerInfo = slicerInfo || {
     name: null,
     address: null,

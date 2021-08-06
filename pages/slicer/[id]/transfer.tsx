@@ -113,7 +113,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params.id
 
   try {
-    const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${id}`)
+    const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${id}?stats=false`)
     return {
       props: {
         slicerInfo,

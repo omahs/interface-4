@@ -3,16 +3,22 @@ import { sliceCore } from "@lib/initProvider"
 import { Slicer } from "@prisma/client"
 import prisma from "@lib/db"
 import { defaultProvider } from "lib/useProvider"
+import { TotalReceived } from "@lib/handlers/chain"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.query
+  const { id, stats } = req.query
 
   try {
     if (req.method === "GET") {
       const slicerExists: boolean = await sliceCore(defaultProvider).exists(id)
+      let totalReceived: number
       let slicerInfo: Slicer
 
       if (slicerExists) {
+        if (stats !== "false") {
+          const query = await TotalReceived(Number(id))
+          totalReceived = Math.floor(Number(query[1]) / 0.975 / 10 ** 16) / 100
+        }
         slicerInfo = await prisma.slicer.findFirst({
           where: { id: Number(id) },
         })
@@ -44,6 +50,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           image: "",
           attributes: [],
         }
+      }
+      if (totalReceived) {
+        slicerInfo.attributes.push({
+          display_type: "number",
+          trait_type: "ETH Received",
+          value: totalReceived,
+        })
       }
       res.status(200).json(slicerInfo)
     }

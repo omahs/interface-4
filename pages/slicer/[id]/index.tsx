@@ -53,7 +53,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
 
   const { data: slicerInfoUpdated } = useSWR(
-    editMode ? `/api/slicer/${slicerInfo?.id}` : null,
+    editMode ? `/api/slicer/${slicerInfo?.id}?stats=false` : null,
     fetcher
   )
 
@@ -110,7 +110,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             imageUrl: newFilePath,
           }
           await updateDb(newInfo)
-          mutate(`/api/slicer/${slicerInfo?.id}`)
+          mutate(`/api/slicer/${slicerInfo?.id}?stats=false`)
           setNewImage({ url: "", file: undefined })
           setEditMode(false)
           setLoading(false)
@@ -289,7 +289,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params.id
 
   try {
-    const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${id}`)
+    const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${id}?stats=false`)
     return {
       props: {
         slicerInfo,
