@@ -8,6 +8,7 @@ import { NextSeo } from "next-seo"
 import {
   defaultDescription,
   defaultTitle,
+  longTitle,
   domain,
 } from "@components/common/Head"
 
@@ -17,7 +18,7 @@ export default function Profile() {
       <NextSeo
         title="Your slicers"
         openGraph={{
-          title: defaultTitle,
+          title: longTitle,
           description: defaultDescription,
           url: `https://${domain}`,
           images: [

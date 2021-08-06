@@ -5,6 +5,7 @@ import { NextSeo } from "next-seo"
 import {
   defaultDescription,
   defaultTitle,
+  longTitle,
   domain,
 } from "@components/common/Head"
 import { Slicer } from "@prisma/client"
@@ -18,7 +19,7 @@ const SlicerGrid = ({
       <NextSeo
         title="Slicers"
         openGraph={{
-          title: defaultTitle,
+          title: longTitle,
           description: defaultDescription,
           url: `https://${domain}`,
           images: [

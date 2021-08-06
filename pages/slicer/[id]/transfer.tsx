@@ -14,6 +14,7 @@ import { NextSeo } from "next-seo"
 import {
   defaultDescription,
   defaultTitle,
+  longTitle,
   domain,
 } from "@components/common/Head"
 
@@ -51,7 +52,7 @@ const Transfer = ({
               <NextSeo
                 title={`Transfer slices | Slicer #${slicerInfo?.id}`}
                 openGraph={{
-                  title: defaultTitle,
+                  title: longTitle,
                   description: defaultDescription,
                   url: `https://${domain}`,
                   images: [
