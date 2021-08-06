@@ -28,7 +28,7 @@ export default function Slice() {
       <NextSeo
         title="Create a new slicer"
         openGraph={{
-          title: defaultTitle,
+          title: `Create a new slicer | ${defaultTitle}`,
           description: defaultDescription,
           url: `https://${domain}`,
           images: [
@@ -46,23 +46,23 @@ export default function Slice() {
           <DoubleText
             inactive
             logoText={`Create a Slicer`}
-            size="text-4xl sm:text-6xl"
-            position="pb-4"
+            size="text-4xl sm:text-5xl"
+            position="pb-4 sm:pb-6"
           />
           {!success ? (
             !loading ? (
               <>
-                <div className="py-4 mx-auto space-y-4 sm:text-lg max-w-screen-xs">
+                <div className="py-6 mx-auto space-y-4 sm:py-8 sm:text-lg max-w-screen-xs">
                   <p>
                     Slicers are a{" "}
                     <DoubleText
                       inactive
-                      logoText="special kind of fractionable NFTs"
+                      logoText="special kind of fractional NFTs"
                       size="text-normal"
                     />{" "}
                     {/* <Link href="/">
                       <a className="font-black highlight">
-                        special kind of fractionable NFTs
+                        special kind of fractional NFTs
                       </a>
                     </Link> */}
                     which can be shared among multiple accounts.

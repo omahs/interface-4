@@ -13,12 +13,13 @@ export const config = {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query
-  const { buffer, fileExt } = JSON.parse(req.body)
+  const { buffer, fileExt, currentUrl } = JSON.parse(req.body)
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.SUPABASE_KEY
   const supabaseStorage = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_NAME
-  const fileName = `slicer_${id}_main`
+  const randomString = Math.random().toString(36).slice(4)
+  const fileName = `slicer_${id}_${randomString}`
 
   const imageBody = (buf: Buffer | File) => ({
     method: req.method,
@@ -30,23 +31,35 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   })
 
   try {
-    if (req.method === "POST" || req.method === "PUT") {
+    if (req.method === "POST") {
       const buf = Buffer.from(buffer, "latin1")
 
       if (fileExt === "gif") {
         await sharp(buf, { animated: true })
           // .resize({ width: 800, withoutEnlargement: true })
           // .gif({ pageHeight: 460 })
-          .toFile(`${fileName}.webp`)
+          .toFile(`/tmp/${fileName}.webp`)
       } else {
         await sharp(buf)
           .resize({ width: 800, withoutEnlargement: true })
-          .toFile(`${fileName}.webp`)
+          .toFile(`/tmp/${fileName}.webp`)
       }
-      await sharp(buf).resize(64).toFile(`${fileName}_blur.webp`)
+      await sharp(buf).resize(64).toFile(`/tmp/${fileName}_blur.webp`)
 
-      const file = fs.readFileSync(`${fileName}.webp`)
-      const fileBlur = fs.readFileSync(`${fileName}_blur.webp`)
+      const file = fs.readFileSync(`/tmp/${fileName}.webp`)
+      const fileBlur = fs.readFileSync(`/tmp/${fileName}_blur.webp`)
+
+      if (currentUrl) {
+        const imageName = currentUrl.split("slicer-images/").pop()
+        await fetcher(`${supabaseUrl}/storage/v1/object/${supabaseStorage}`, {
+          method: "DELETE",
+          headers: {
+            authorization: `Bearer ${supabaseKey}`,
+            "Content-Type": `application/json`,
+          },
+          body: JSON.stringify({ prefixes: [imageName, `${imageName}_blur`] }),
+        })
+      }
 
       const { Key } = await fetcher(
         `${supabaseUrl}/storage/v1/object/${supabaseStorage}/${fileName}`,
@@ -57,8 +70,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         imageBody(fileBlur)
       )
 
-      fs.unlinkSync(`${fileName}.webp`)
-      fs.unlinkSync(`${fileName}_blur.webp`)
+      fs.unlinkSync(`/tmp/${fileName}.webp`)
+      fs.unlinkSync(`/tmp/${fileName}_blur.webp`)
 
       // Log if error
       // const { error: uploadError } = await supabase.storage ...

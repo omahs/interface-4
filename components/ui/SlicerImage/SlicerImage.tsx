@@ -7,21 +7,21 @@ type Props = {
 }
 
 const SlicerImage = ({ name, imageUrl }: Props) => {
-  return imageUrl ? (
+  return !imageUrl || imageUrl === "https://slice.so/slicer_default.png" ? (
+    <Image
+      src={defaultImageUrl}
+      layout="fill"
+      objectFit="cover"
+      alt={`${name} image`}
+      placeholder="blur"
+    />
+  ) : (
     <Image
       src={imageUrl}
       layout="fill"
       objectFit="cover"
       alt={`${name} image`}
       blurDataURL={`${imageUrl}_blur`}
-      placeholder="blur"
-    />
-  ) : (
-    <Image
-      src={defaultImageUrl}
-      layout="fill"
-      objectFit="cover"
-      alt={`${name} image`}
       placeholder="blur"
     />
   )

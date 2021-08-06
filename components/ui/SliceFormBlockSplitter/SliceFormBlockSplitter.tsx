@@ -1,4 +1,3 @@
-import Link from "next/link"
 import { useEffect, useState, Dispatch, SetStateAction } from "react"
 import { Input, SliceFormInputBlock, Question } from "@components/ui"
 import Add from "@components/icons/Add"
@@ -107,7 +106,7 @@ const SliceFormBlockSplitter = ({
         Total slices
       </p>
       <p className="col-span-3 pl-5">{totalShares}</p>
-      <div className="relative flex justify-end items-center col-span-5 xs:col-end-7 pt-1.5">
+      <div className="relative flex items-center justify-end col-span-5 pb-3 xs:col-end-7">
         <p className="pr-1">Minimum slices</p>
         <Question
           text={
@@ -146,7 +145,7 @@ const SliceFormBlockSplitter = ({
           onChange={setMinimumShares}
         />
       </div>
-      <div className="col-start-6 pl-5 xs:pl-0 xs:col-span-1 flex items-center mt-1.5">
+      <div className="flex items-center col-start-6 pl-5 mb-3 xs:pl-0 xs:col-span-1">
         <p
           className={`text-sm font-bold ${
             minimumShares > totalShares ? "text-red-500" : ""

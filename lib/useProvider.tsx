@@ -34,6 +34,7 @@ export const useAllowed = (slicerId: number) => {
 
 const useProvider = (setLoading: Dispatch<SetStateAction<boolean>>) => {
   const [isConnected, setIsConnected] = useState(false)
+  const [chainId, setChainId] = useState("")
   const [account, setAccount] = useState("")
 
   const getProvider = async () => {
@@ -42,23 +43,34 @@ const useProvider = (setLoading: Dispatch<SetStateAction<boolean>>) => {
       const accounts = await provider.listAccounts()
       setIsConnected(accounts.length > 0)
       setAccount(accounts[0])
+
+      const chainIdRequest = await window.ethereum.request({
+        method: "eth_chainId",
+      })
+      setChainId(chainIdRequest)
     }
   }
 
   useEffect(() => {
     getProvider()
     setLoading(false)
-  })
+  }, [])
 
   useEffect(() => {
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", () => {
         getProvider()
       })
+      window.ethereum.on("disconnect", () => {
+        getProvider()
+      })
+      window.ethereum.on("chainChanged", (chainId: string) =>
+        setChainId(chainId)
+      )
     }
   }, [])
 
-  return { isConnected, account }
+  return { isConnected, chainId, account }
 }
 
 export default useProvider

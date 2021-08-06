@@ -14,6 +14,7 @@ import { NextSeo } from "next-seo"
 import {
   defaultDescription,
   defaultTitle,
+  longTitle,
   domain,
 } from "@components/common/Head"
 
@@ -29,7 +30,7 @@ const Transfer = ({
 
   useEffect(() => {
     if (data && slicerInfo) {
-      const el = data.idsUint.filter((e) => Number(e.hex) === slicerInfo.id)
+      const el = data.idsUint.filter((e) => Number(e.hex) === slicerInfo?.id)
       const index = data.idsUint.indexOf(el[0])
       const sh = data.shares[index]
       setOwnedShares(Number(sh?.hex) || 0)
@@ -49,9 +50,9 @@ const Transfer = ({
           {slicerInfo?.id !== null ? (
             <>
               <NextSeo
-                title={`Transfer slices | Slicer #${slicerInfo.id}`}
+                title={`Transfer slices | Slicer #${slicerInfo?.id}`}
                 openGraph={{
-                  title: defaultTitle,
+                  title: longTitle,
                   description: defaultDescription,
                   url: `https://${domain}`,
                   images: [
@@ -94,6 +95,7 @@ const Transfer = ({
 export async function getStaticPaths() {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
+  //  const totalSlicers = 0
   const paths = [...Array(totalSlicers).keys()].map((slicerId) => {
     const id = String(slicerId)
     return {
@@ -111,7 +113,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params.id
 
   try {
-    const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${id}`)
+    const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${id}?stats=false`)
     return {
       props: {
         slicerInfo,

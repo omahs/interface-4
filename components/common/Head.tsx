@@ -4,6 +4,7 @@ import { DefaultSeo } from "next-seo"
 import { accounts } from "@components/ui/Social/Social"
 
 export const defaultTitle = "Slice"
+export const longTitle = "Slice – The decentralized slicing platform"
 export const defaultDescription =
   "Decentralized payments infrastructure for real world applications, products and services."
 export const domain = "slice.so"
@@ -14,10 +15,10 @@ const Head: FC = () => {
     <>
       <DefaultSeo
         titleTemplate={`%s | ${defaultTitle}`}
-        defaultTitle={defaultTitle}
+        defaultTitle={longTitle}
         description={defaultDescription}
         openGraph={{
-          site_name: defaultTitle,
+          site_name: longTitle,
           type: `website`,
           locale: `en_US`,
         }}
@@ -50,6 +51,7 @@ const Head: FC = () => {
           sizes="16x16"
           href="/favicon/favicon-16x16.png"
         />
+        <link rel="shortcut icon" href="/favicon/apple-touch-icon.png" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
       </NextHead>
     </>

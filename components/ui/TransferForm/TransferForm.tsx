@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Button } from "@components/ui"
 import handleSubmit from "@utils/handleSubmit"
 import { Message } from "@utils/handleMessage"
@@ -9,6 +9,7 @@ import MessageBlock from "../MessageBlock"
 import { mutate } from "swr"
 import useSWR from "swr"
 import fetcher from "@utils/fetcher"
+import InputAddress from "../InputAddress"
 
 type Props = {
   account: string
@@ -61,16 +62,15 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
       {!success ? (
         <form onSubmit={submit}>
           <div className="space-y-6">
-            <div>
-              <Input
-                type="string"
+            <div className="pb-1">
+              <InputAddress
                 label="Receiver address"
-                placeholder="0x... / vitalik.eth"
-                required
+                address={address}
                 onChange={setAddress}
+                required
               />
             </div>
-            <div>
+            <div className="mb-2">
               <Input
                 type="number"
                 label="Slices to transfer"
@@ -80,7 +80,7 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
                 onChange={setShares}
               />
             </div>
-            <div className="pt-2 space-y-4">
+            <div className="space-y-4">
               {data && minimumShares && ownedShares - shares < minimumShares && (
                 <p className="text-sm">
                   <span className="font-medium">Note:</span> You&apos;ll lose

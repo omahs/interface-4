@@ -10,6 +10,7 @@ type Props = {
   href: string
   slicerAddress?: string
   isAllowed?: boolean
+  showAddress?: boolean
   size?: string
 }
 
@@ -19,6 +20,7 @@ const SlicerCardImage = ({
   href,
   slicerAddress = "",
   isAllowed = false,
+  showAddress = true,
   size = "sm:w-80 h-60 sm:h-52",
 }: Props) => {
   // const { color1, color2 } = useAppContext()
@@ -31,14 +33,18 @@ const SlicerCardImage = ({
           <SlicerImage name={name} imageUrl={imageUrl} />
         </a>
       </Link>
-      {slicerAddress && (
+      {showAddress && (
         <span className="rounded-md absolute bottom-[10px] left-[12px] w-[150px] h-[32px] bg-white flex items-center">
           <div className="flex justify-center w-full text-black">
-            <CopyAddress
-              slicerAddress={slicerAddress}
-              showIcon={false}
-              position="bottom-[40px]"
-            />
+            {slicerAddress ? (
+              <CopyAddress
+                slicerAddress={slicerAddress}
+                showIcon={false}
+                position="bottom-[40px]"
+              />
+            ) : (
+              <div className="w-24 h-4 rounded-md bg-sky-300 animate-pulse" />
+            )}
           </div>
         </span>
       )}

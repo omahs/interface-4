@@ -14,7 +14,7 @@ import Arrow from "@components/icons/Arrow"
 type SlicerInfo = {
   name: string
   address: string
-  imageUrl: string
+  image: string
 }
 
 type Props = {
@@ -25,15 +25,18 @@ type Props = {
 
 const SlicerCard = ({ slicerId, shares, account }: Props) => {
   const isAllowed = useAllowed(slicerId)
-  const { data: slicerInfo } = useSWR(`/api/slicer/${slicerId}`, fetcher)
-  const { name, address, imageUrl }: SlicerInfo = slicerInfo || {
+  const { data: slicerInfo } = useSWR(
+    `/api/slicer/${slicerId}?stats=false`,
+    fetcher
+  )
+  const { name, address, image }: SlicerInfo = slicerInfo || {
     name: null,
     address: null,
-    imageUrl: null,
+    image: null,
   }
 
   const { data: unreleasedData } = useSWR(
-    `/api/slicer/${slicerId}/account/${account}/unreleased`,
+    slicerInfo ? `/api/slicer/${slicerId}/account/${account}/unreleased` : null,
     fetcher
   )
   const { unreleased } = unreleasedData || { unreleased: null }
@@ -66,18 +69,20 @@ const SlicerCard = ({ slicerId, shares, account }: Props) => {
         href={slicerLink}
         name={name}
         slicerAddress={address}
-        imageUrl={imageUrl}
+        imageUrl={image}
         isAllowed={isAllowed}
       />
       <div className="pt-5 sm:pt-4 sm:ml-6 md:ml-14">
         <Link href={slicerLink}>
-          <a>
-            <h3 className="inline-block">
-              {name}
-              <span className="mb-1 ml-2 text-base font-normal">
-                #{slicerId}
-              </span>
-            </h3>
+          <a className="flex items-center">
+            {name ? (
+              <h3 className="inline-block">{name}</h3>
+            ) : (
+              <div className="w-32 h-6 mb-2 rounded-md bg-sky-300 animate-pulse" />
+            )}
+            <p className="h-full mb-1 ml-2 text-base font-normal">
+              #{slicerId}
+            </p>
           </a>
         </Link>
         <div className="space-y-2 text-gray-700">
@@ -92,15 +97,15 @@ const SlicerCard = ({ slicerId, shares, account }: Props) => {
               </a>
             </Link>
           </div>
-          <p className="text-sm">
-            Unreleased:{" "}
-            <span className="font-medium text-black">
-              {unreleasedAmount} ETH
-            </span>
-          </p>
         </div>
         {unreleasedAmount ? (
-          <div className="mt-6">
+          <div className="mt-2">
+            <p className="mb-6 text-sm">
+              Unreleased:{" "}
+              <span className="font-medium text-black">
+                {unreleasedAmount} ETH
+              </span>
+            </p>
             <BlockchainCall
               label="Trigger release"
               action={() => TriggerRelease(account, [address], 0)}

@@ -19,9 +19,9 @@ type Props = {
 
 export const accounts = {
   twitter: "https://twitter.com/slice__so",
-  // reddit: "https://reddit.com/r/slice",
-  discord: "https://discord.gg/qERmxeGXKw",
-  github: "https://github.com/jjranalli/slice.so",
+  reddit: "https://reddit.com/r/slice",
+  discord: "https://discord.gg/CdyHUzdZks",
+  // github: "https://github.com/jjranalli/slice.so",
 }
 
 const Social: FC<Props> = ({ wrapperClassName, accounts }, props) => {

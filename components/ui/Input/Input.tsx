@@ -27,7 +27,7 @@ const Input: React.FC<Props> = (props) => {
     !prefix && !error ? "shadow-light-focusable" : ""
   } ease-in-out pr-3 border-b-[3px] focus:outline-none ${className} ${
     error
-      ? "text-red-500 border-red-400 focus:border-red-400 shadow-error"
+      ? "text-red-500 border-red-400 bg-white focus:border-red-400 shadow-error"
       : inverted
       ? "bg-black text-white border-blue-600 focus:border-sky-300 placeholder-gray-500 disabled:text-gray-400 disabled:border-blue-800 disabled:bg-gray-900"
       : "bg-white text-black border-blue-300 focus:border-sky-600 placeholder-gray-400 disabled:text-gray-500 disabled:border-blue-100 disabled:bg-gray-50"
@@ -52,7 +52,7 @@ const Input: React.FC<Props> = (props) => {
         </p>
       )}
       <div
-        className={`flex flex-row-reverse rounded-t-sm ${
+        className={`flex flex-row-reverse mb-3 rounded-t-sm ${
           prefix && !error ? "shadow-light-focusable overflow-hidden" : ""
         }`}
       >

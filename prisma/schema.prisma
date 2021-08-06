@@ -11,9 +11,11 @@ generator client {
 }
 
 model Slicer {
-  id          Int      @id
-  name        String?
-  description String?
-  address     String?
-  imageUrl    String?
+  id           Int      @id
+  name         String?
+  description  String?
+  external_url String?
+  address      String?
+  image        String?
+  attributes   Json[]
 }

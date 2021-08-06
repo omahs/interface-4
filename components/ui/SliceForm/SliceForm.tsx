@@ -65,14 +65,14 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         setTotalShares={setTotalShares}
       />
 
-      <div className="pt-4 pb-6">
+      <div className="py-8">
         <p>
           <strong>Note:</strong> minimum and total slices cannot be changed
           later.
         </p>
         {totalShares === 1 && (
           <p className="pt-4">
-            <strong>Note:</strong> You are about to create a non-fractionable
+            <strong>Note:</strong> You are about to create a non-fractional
             Slicer. That means that there can only be a single owner at any
             given time which gets all ETH earned by the slicer.
           </p>

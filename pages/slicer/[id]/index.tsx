@@ -1,3 +1,4 @@
+import Head from "next/head"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
 import {
   ActionScreen,
@@ -15,10 +16,11 @@ import {
 import fetcher from "@utils/fetcher"
 import { useAllowed } from "@lib/useProvider"
 import Edit from "@components/icons/Edit"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import handleMessage, { Message } from "@utils/handleMessage"
 import { NextSeo } from "next-seo"
 import { domain } from "@components/common/Head"
+import useSWR, { mutate } from "swr"
 
 export type NewImage = { url: string; file: File }
 
@@ -35,7 +37,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [slicer, setSlicer] = useState({
     name: slicerInfo?.name,
     description: slicerInfo?.description,
-    imageUrl: slicerInfo?.imageUrl,
+    imageUrl: slicerInfo?.image,
   })
   const [newDescription, setNewDescription] = useState(slicer.description)
   const [newName, setNewName] = useState(slicer.name)
@@ -44,10 +46,22 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     file: undefined,
   })
   const [tempImageUrl, setTempImageUrl] = useState("")
+  const [tempStorageUrl, setTempStorageUrl] = useState("")
   const pageTitle =
-    slicer.name === `Slicer #${slicerInfo.id}`
+    slicer.name === `Slicer #${slicerInfo?.id}`
       ? slicer.name
-      : `${slicer.name} | Slicer #${slicerInfo.id}`
+      : `${slicer.name} | Slicer #${slicerInfo?.id}`
+
+  const { data: slicerInfoUpdated } = useSWR(
+    editMode ? `/api/slicer/${slicerInfo?.id}?stats=false` : null,
+    fetcher
+  )
+
+  useEffect(() => {
+    if (!tempStorageUrl && slicerInfoUpdated?.imageUrl) {
+      setTempStorageUrl(slicerInfoUpdated?.imageUrl)
+    }
+  }, [slicerInfoUpdated])
 
   const updateDb = async (newInfo) => {
     setSlicer(newInfo)
@@ -74,8 +88,12 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
         reader.onload = async () => {
           const buffer = reader.result
           const body = {
-            method: slicerInfo.imageUrl ? "PUT" : "POST",
-            body: JSON.stringify({ buffer, fileExt }),
+            method: "POST",
+            body: JSON.stringify({
+              buffer,
+              fileExt,
+              currentUrl: tempStorageUrl || slicerInfo.image || null,
+            }),
           }
           const { Key, error } = await fetcher(
             `/api/slicer/${slicerInfo?.id}/upload_file`,
@@ -84,15 +102,15 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
           if (error) {
             throw Error(error)
           }
-          if (!slicerInfo.imageUrl) {
-            const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
-            newInfo = {
-              description: newDescription,
-              name: newName,
-              imageUrl: newFilePath,
-            }
+          const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
+          setTempStorageUrl(newFilePath)
+          newInfo = {
+            description: newDescription,
+            name: newName,
+            imageUrl: newFilePath,
           }
           await updateDb(newInfo)
+          mutate(`/api/slicer/${slicerInfo?.id}?stats=false`)
           setNewImage({ url: "", file: undefined })
           setEditMode(false)
           setLoading(false)
@@ -109,7 +127,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
       console.log(err)
       handleMessage(
         {
-          message: "Something has gone wrong, try again",
+          message: "Something went wrong, try again",
           messageStatus: "error",
         },
         setMsg
@@ -128,24 +146,33 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     <Container page={true}>
       {slicerInfo?.id !== null ? (
         <main className="w-full max-w-screen-sm mx-auto space-y-8 sm:space-y-10">
-          <NextSeo
-            title={pageTitle}
-            openGraph={{
-              title: pageTitle,
-              description: slicer.description,
-              url: `https://${domain}/slicer/${slicerInfo.id}`,
-              images: [
-                {
-                  url: slicer.imageUrl,
-                  alt: `${slicer.name} cover image`,
-                },
-                {
-                  url: `https://slice.so/og_image.jpg`,
-                  alt: `${slicer.name} cover image`,
-                },
-              ],
-            }}
-          />
+          {slicer.name != undefined && (
+            <>
+              <NextSeo
+                title={pageTitle}
+                openGraph={{
+                  title: pageTitle,
+                  description: slicer.description,
+                  url: `https://${domain}/slicer/${slicerInfo?.id}`,
+                  images: [
+                    {
+                      url: slicer.imageUrl,
+                      alt: `${slicer.name} cover image`,
+                    },
+                    {
+                      url: `https://slice.so/og_image.jpg`,
+                      alt: `${slicer.name} cover image`,
+                    },
+                  ],
+                }}
+              />
+              {slicer.imageUrl && (
+                <Head>
+                  <meta name="twitter:image" content={slicer.imageUrl} />
+                </Head>
+              )}
+            </>
+          )}
           <div>
             <div className="inline-block pb-2">
               <div className="relative flex items-center justify-center">
@@ -211,6 +238,10 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             <PaySlicer slicerAddress={slicerInfo?.address} />
           ) : (
             <div>
+              <p className="pb-8 mx-auto max-w-screen-xs">
+                <strong>Note:</strong> Edits will appear after around 10
+                seconds. Refresh the page a couple of times to see them.
+              </p>
               <div className="pb-8">
                 <Button label="Save" loading={loading} onClick={() => save()} />
               </div>
@@ -240,6 +271,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
 export async function getStaticPaths() {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
+  // const totalSlicers = 0
   const paths = [...Array(totalSlicers).keys()].map((slicerId) => {
     const id = String(slicerId)
     return {
@@ -257,7 +289,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params.id
 
   try {
-    const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${id}`)
+    const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${id}?stats=false`)
     return {
       props: {
         slicerInfo,
