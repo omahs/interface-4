@@ -11,7 +11,7 @@ const Background: FC<Props> = (props) => {
   const rootClassName = cn(
     {},
     className,
-    "absolute w-full h-full -z-10 bg-gradient-to-br from-sky-50 to-gray-50"
+    "absolute w-full h-full -z-10 bg-gradient-to-br from-gray-50 to-sky-50"
   )
 
   return (

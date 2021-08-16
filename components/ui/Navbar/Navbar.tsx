@@ -58,7 +58,7 @@ const Navbar = () => {
           </div>
         </nav>
       </Container>
-      <hr className="w-full border-gray-200" />
+      <hr className="w-full border-gray-200 opacity-80" />
     </header>
   )
 }

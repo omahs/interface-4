@@ -25,7 +25,7 @@ export default function Layout({ children }) {
         {modalView.name && (
           <Modal modalView={modalView} setModalView={setModalView} />
         )}
-        <ProductHuntBadge />
+        {/* <ProductHuntBadge /> */}
       </div>
     </>
   )
