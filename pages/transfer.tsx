@@ -17,25 +17,31 @@ import {
   longTitle,
   domain,
 } from "@components/common/Head"
+import { useRouter } from "next/dist/client/router"
+import useQuery from "@utils/subgraphQuery"
 
-const Transfer = ({
-  slicerInfo,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Transfer = () => {
   const { account } = useAppContext()
-  const { data } = useSWR(
-    account ? `/api/account/${account}/slicers` : null,
-    fetcher
-  )
-  const [ownedShares, setOwnedShares] = useState<number>()
+  const router = useRouter()
+  const { id } = router.query
 
-  useEffect(() => {
-    if (data && slicerInfo) {
-      const el = data.idsUint.filter((e) => Number(e.hex) === slicerInfo?.id)
-      const index = data.idsUint.indexOf(el[0])
-      const sh = data.shares[index]
-      setOwnedShares(Number(sh?.hex) || 0)
-    }
-  }, [data])
+  const tokensQuery = /* GraphQL */ `
+      query {
+        payeeSlicer(id: "${id}-${account}") {
+          slices
+          slicer {
+            address
+            slices
+            minimumSlices
+          }
+        }
+      }
+    `
+  const subgraphData = useQuery(tokensQuery, [account])
+  const ownedSlices = subgraphData?.payeeSlicer?.slices
+  const slicer = subgraphData?.payeeSlicer?.slicer
+
+  // const { data } = useSWR(id ? `/api/slicer/${id}?stats=false` : null, fetcher)
 
   return (
     <Container page={true}>
@@ -47,10 +53,10 @@ const Transfer = ({
             size="text-4xl sm:text-5xl"
             position="pb-12"
           />
-          {slicerInfo?.id !== null ? (
+          {id !== null ? (
             <>
               <NextSeo
-                title={`Transfer slices | Slicer #${slicerInfo?.id}`}
+                title="Transfer slices"
                 openGraph={{
                   title: longTitle,
                   description: defaultDescription,
@@ -65,11 +71,13 @@ const Transfer = ({
                   ],
                 }}
               />
-              {ownedShares ? (
+              {ownedSlices ? (
                 <TransferForm
                   account={account}
-                  slicerId={slicerInfo?.id}
-                  ownedShares={ownedShares}
+                  slicerId={String(id)}
+                  ownedSlices={ownedSlices}
+                  totalSlices={slicer?.totalSlices}
+                  minimumSlices={slicer?.minimumSlices}
                 />
               ) : (
                 <ActionScreen
@@ -90,39 +98,6 @@ const Transfer = ({
       </ConnectBlock>
     </Container>
   )
-}
-
-export async function getStaticPaths() {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-  const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
-  //  const totalSlicers = 0
-  const paths = [...Array(totalSlicers).keys()].map((slicerId) => {
-    const id = String(slicerId)
-    return {
-      params: {
-        id,
-      },
-    }
-  })
-
-  return { paths, fallback: true }
-}
-
-export async function getStaticProps(context: GetStaticPropsContext) {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-  const id = context.params.id
-
-  try {
-    const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${id}?stats=false`)
-    return {
-      props: {
-        slicerInfo,
-      },
-      revalidate: 10,
-    }
-  } catch (err) {
-    throw err
-  }
 }
 
 export default Transfer
