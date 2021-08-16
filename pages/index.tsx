@@ -62,3 +62,10 @@ const Home = () => {
 }
 
 export default Home
+
+/** TODO
+ *  - Add usage for digital collectibles
+ *
+ * CONTRACTS
+ * - Set maximum batch values before deploying on mainnet (and removing not needed functions to set them)
+ */

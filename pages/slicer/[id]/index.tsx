@@ -23,6 +23,19 @@ import { domain } from "@components/common/Head"
 import useSWR, { mutate } from "swr"
 
 export type NewImage = { url: string; file: File }
+export type SlicerAttributes = {
+  Creator: string
+  "Minimum slices": number
+  "Sliced on": number
+  "Total slices": number
+}
+
+const initAttributes = {
+  Creator: "",
+  "Minimum slices": 0,
+  "Sliced on": 0,
+  "Total slices": 0,
+}
 
 const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -39,6 +52,9 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     description: slicerInfo?.description,
     imageUrl: slicerInfo?.image,
   })
+  const [slicerAttributes, setSlicerAttributes] =
+    useState<SlicerAttributes>(initAttributes)
+
   const [newDescription, setNewDescription] = useState(slicer.description)
   const [newName, setNewName] = useState(slicer.name)
   const [newImage, setNewImage] = useState<NewImage>({
@@ -62,6 +78,14 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
       setTempStorageUrl(slicerInfoUpdated?.imageUrl)
     }
   }, [slicerInfoUpdated])
+
+  useEffect(() => {
+    let attr = initAttributes
+    slicerInfo?.attributes.map((el) => {
+      attr[el.trait_type] = el.value
+    })
+    setSlicerAttributes(attr)
+  }, [slicerInfo])
 
   const updateDb = async (newInfo) => {
     setSlicer(newInfo)
@@ -288,16 +312,12 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const id = context.params.id
 
-  try {
-    const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${id}?stats=false`)
-    return {
-      props: {
-        slicerInfo,
-      },
-      revalidate: 10,
-    }
-  } catch (err) {
-    throw err
+  const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${id}?stats=false`)
+  return {
+    props: {
+      slicerInfo,
+    },
+    revalidate: 10,
   }
 }
 

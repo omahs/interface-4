@@ -1,64 +1,108 @@
 import { SlicerCard } from "@components/ui"
 import fetcher from "@utils/fetcher"
-import useSWR, { mutate } from "swr"
 import { useAppContext } from "@components/ui/context"
 import ActionScreen from "../ActionScreen"
 import Button from "../Button"
 import { useEffect, useState } from "react"
 import Spinner from "@components/icons/Spinner"
+import useQuery from "@utils/subgraphQuery"
+import { useMutation } from "@apollo/client"
 
 const SlicersList = () => {
   const { account } = useAppContext()
-  const { data } = useSWR(
-    account ? `/api/account/${account}/slicers` : null,
-    fetcher
-  )
+  const [unreleased, setUnreleased] = useState([])
+
+  const tokensQuery = /* GraphQL */ `
+      query {
+        payee(id: "${account}") {
+          slicers {
+            slices
+            slicer {
+              id
+              address
+              slices
+              minimumSlices
+            }
+          }
+        }
+      }
+    `
+  const subgraphData = useQuery(tokensQuery, [account])
+  const slicers = subgraphData?.payee?.slicers
+  const totalOwned = slicers?.length || 0
+  let slicerAddresses: string[]
+
   const initItems = 4
   const [items, setItems] = useState(initItems)
   const [iterator, setIterator] = useState(0)
+
+  const getUnreleasedData = async (data) => {
+    const unreleasedData = await fetcher(
+      `/api/account/${account}/unreleased`,
+      data
+    )
+    setUnreleased(unreleasedData)
+  }
+
+  // Todo: Write query when theGraph queries work
+  useEffect(() => {
+    if (account && slicers) {
+      slicers?.map((slicer) => {
+        slicerAddresses.push(slicer.slicer.address)
+      })
+      const body = {
+        method: "POST",
+        body: JSON.stringify({ slicerAddresses }),
+      }
+      getUnreleasedData(body)
+    }
+    return () => setUnreleased([])
+  }, [slicers, account])
 
   useEffect(() => {
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", () => {
         setItems(0)
-        mutate(`/api/account/${account}/slicers`)
+        // Todo: Handle mutation with apolloClient
       })
     }
   }, [])
 
+  // Todo: See if I can remove this iterator stuff
   useEffect(() => {
-    if (data) {
-      setIterator(
-        items < Number(data.totalOwned.hex)
-          ? items
-          : Number(data.totalOwned.hex)
-      )
+    if (totalOwned) {
+      setIterator(items < totalOwned ? items : totalOwned)
     }
-  }, [data, items])
+  }, [totalOwned, items])
 
-  return !data ? (
+  return !subgraphData ? (
     <div className="flex justify-center pb-20">
       <Spinner size="w-12 h-12" />
     </div>
-  ) : Number(data.totalOwned.hex) !== 0 ? (
+  ) : totalOwned !== 0 ? (
     <>
       {[...Array(iterator)].map((el, key) => {
         const i = Number(key)
-        const slicerId = Number(data?.idsUint[i].hex)
-        const slicerShares = Number(data?.shares[i].hex)
+        const slicerId = slicers[i].slicer.id
+        const slicerShares = slicers[i].slices
+        const unreleasedAmount = unreleased
+          ? Math.floor((Number(unreleased[i].hex) / Math.pow(10, 18)) * 10000) /
+            10000
+          : null
         return (
           <div className="mt-3" key={key}>
             <SlicerCard
               slicerId={slicerId}
-              shares={slicerShares}
               account={account}
+              shares={slicerShares}
+              unreleasedAmount={unreleasedAmount}
             />
             <hr className="my-12 border-gray-300" />
           </div>
         )
       })}
       <div className="py-4 space-y-8">
-        {items < Number(data.totalOwned.hex) && (
+        {items < totalOwned && (
           <p className="text-center">
             <a onClick={() => setItems(items + initItems)}>Load more</a>
           </p>

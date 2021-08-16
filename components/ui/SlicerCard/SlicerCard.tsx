@@ -21,9 +21,10 @@ type Props = {
   slicerId: number
   shares: number
   account: string
+  unreleasedAmount: number
 }
 
-const SlicerCard = ({ slicerId, shares, account }: Props) => {
+const SlicerCard = ({ slicerId, account, shares, unreleasedAmount }: Props) => {
   const isAllowed = useAllowed(slicerId)
   const { data: slicerInfo } = useSWR(
     `/api/slicer/${slicerId}?stats=false`,
@@ -34,15 +35,6 @@ const SlicerCard = ({ slicerId, shares, account }: Props) => {
     address: null,
     image: null,
   }
-
-  const { data: unreleasedData } = useSWR(
-    slicerInfo ? `/api/slicer/${slicerId}/account/${account}/unreleased` : null,
-    fetcher
-  )
-  const { unreleased } = unreleasedData || { unreleased: null }
-  const unreleasedAmount = unreleased
-    ? Math.floor((Number(unreleased?.hex) / Math.pow(10, 18)) * 10000) / 10000
-    : null
 
   const [ethReleased, setEthReleased] = useState(0)
   const [success, setSuccess] = useState(false)
@@ -88,7 +80,7 @@ const SlicerCard = ({ slicerId, shares, account }: Props) => {
         <div className="space-y-2 text-gray-700">
           <div className="flex items-center">
             <p className="text-sm">Slices owned: {shares}</p>
-            <Link href={`slicer/${slicerId}/transfer`}>
+            <Link href={`/transfer?id=${slicerId}`}>
               <a className="flex items-center ml-3 group">
                 <p className="text-sm ">Transfer</p>
                 <div className="w-5 h-5 ml-1 transition-transform duration-150 group-hover:translate-x-1">

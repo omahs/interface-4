@@ -9,7 +9,7 @@ type Props = {
 
 const SliceSuccess = ({ eventLog, setSuccess }: Props) => {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-  const slicerAddress = eventLog?.slicerAddress
+  const slicerAddress = eventLog && eventLog[0]
   const slicerId = Number(eventLog?.tokenId)
   return (
     <>
