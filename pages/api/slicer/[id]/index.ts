@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     if (req.method === "GET") {
       const slicerExists: boolean = await sliceCore(defaultProvider).exists(id)
-      let totalReceived: number
+      let totalReceived = 0
       let slicerInfo: Slicer
 
       if (slicerExists) {
@@ -77,14 +77,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
         if (stats !== "false") {
           const query = await TotalReceived(Number(id))
-          totalReceived = Math.floor(Number(query[1]) / 0.975 / 10 ** 16) / 100
-          if (totalReceived) {
-            slicerInfo.attributes.push({
-              display_type: "number",
-              trait_type: "ETH Received",
-              value: totalReceived,
-            })
+          if (Number(query[1]) != 0) {
+            totalReceived =
+              Math.floor(Number(query[1]) / 0.975 / 10 ** 16) / 100
           }
+          slicerInfo.attributes.push({
+            display_type: "number",
+            trait_type: "ETH Received",
+            value: totalReceived,
+          })
         }
       } else {
         slicerInfo = {
