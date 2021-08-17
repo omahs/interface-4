@@ -24,10 +24,11 @@ const Transfer = () => {
   const { account } = useAppContext()
   const router = useRouter()
   const { id } = router.query
+  const [ownedSlices, setOwnedSlices] = useState(0)
 
   const tokensQuery = /* GraphQL */ `
       query {
-        payeeSlicer(id: "${id}-${account}") {
+        payeeSlicer(id: "${id}-${account.toLowerCase()}") {
           slices
           slicer {
             address
@@ -38,8 +39,11 @@ const Transfer = () => {
       }
     `
   const subgraphData = useQuery(tokensQuery, [account])
-  const ownedSlices = subgraphData?.payeeSlicer?.slices
   const slicer = subgraphData?.payeeSlicer?.slicer
+
+  useEffect(() => {
+    setOwnedSlices(Number(subgraphData?.payeeSlicer?.slices))
+  }, [subgraphData])
 
   // const { data } = useSWR(id ? `/api/slicer/${id}?stats=false` : null, fetcher)
 
@@ -71,19 +75,29 @@ const Transfer = () => {
                   ],
                 }}
               />
-              {ownedSlices ? (
+              {subgraphData ? (
+                ownedSlices ? (
+                  <TransferForm
+                    account={account}
+                    slicerId={String(id)}
+                    ownedSlices={ownedSlices}
+                    totalSlices={slicer?.totalSlices}
+                    minimumSlices={slicer?.minimumSlices}
+                  />
+                ) : (
+                  <ActionScreen
+                    text="You hold no slices of this slicer"
+                    href="/"
+                    buttonLabel="Return to home"
+                  />
+                )
+              ) : (
                 <TransferForm
                   account={account}
                   slicerId={String(id)}
-                  ownedSlices={ownedSlices}
-                  totalSlices={slicer?.totalSlices}
-                  minimumSlices={slicer?.minimumSlices}
-                />
-              ) : (
-                <ActionScreen
-                  text="You hold no slices of this slicer"
-                  href="/"
-                  buttonLabel="Return to home"
+                  ownedSlices={0}
+                  totalSlices={0}
+                  minimumSlices={0}
                 />
               )}
             </>

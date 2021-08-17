@@ -82,14 +82,14 @@ const TransferForm = ({
               <Input
                 type="number"
                 label="Slices to transfer"
-                placeholder={`Up to ${ownedSlices}`}
+                placeholder={`Up to ${ownedSlices || "..."}`}
                 required
                 error={shares > ownedSlices}
                 onChange={setShares}
               />
             </div>
             <div className="space-y-4">
-              {minimumSlices && ownedSlices - shares < minimumSlices && (
+              {minimumSlices != 0 && ownedSlices - shares < minimumSlices && (
                 <p className="text-sm">
                   <span className="font-medium">Note:</span> You&apos;ll lose
                   privileged access to the slicer, as you will not hold the
