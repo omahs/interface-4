@@ -14,7 +14,7 @@ const SlicersList = () => {
 
   const tokensQuery = /* GraphQL */ `
       query {
-        payee(id: "${account}") {
+        payee(id: "${account.toLowerCase()}") {
           slicers {
             slices
             slicer {
@@ -29,8 +29,9 @@ const SlicersList = () => {
     `
   const subgraphData = useQuery(tokensQuery, [account])
   const slicers = subgraphData?.payee?.slicers
-  const totalOwned = slicers?.length || 0
-  let slicerAddresses: string[]
+  const totalOwned = slicers?.length
+
+  let slicerAddresses = []
 
   const initItems = 4
   const [items, setItems] = useState(initItems)
@@ -85,13 +86,15 @@ const SlicersList = () => {
         const i = Number(key)
         const slicerId = slicers[i].slicer.id
         const slicerShares = slicers[i].slices
-        const unreleasedAmount = unreleased
+        const slicerAddress = slicers[i].slicer.address
+        const unreleasedAmount = unreleased[i]
           ? Math.floor((Number(unreleased[i].hex) / Math.pow(10, 18)) * 10000) /
             10000
           : null
         return (
           <div className="mt-3" key={key}>
             <SlicerCard
+              slicerAddress={slicerAddress}
               slicerId={slicerId}
               account={account}
               shares={slicerShares}

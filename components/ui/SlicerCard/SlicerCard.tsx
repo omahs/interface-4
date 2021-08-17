@@ -19,24 +19,31 @@ type SlicerInfo = {
 
 type Props = {
   slicerId: number
+  slicerAddress: string
   shares: number
   account: string
   unreleasedAmount: number
 }
 
-const SlicerCard = ({ slicerId, account, shares, unreleasedAmount }: Props) => {
+const SlicerCard = ({
+  slicerId,
+  slicerAddress,
+  account,
+  shares,
+  unreleasedAmount,
+}: Props) => {
   const isAllowed = useAllowed(slicerId)
   const { data: slicerInfo } = useSWR(
     `/api/slicer/${slicerId}?stats=false`,
     fetcher
   )
-  const { name, address, image }: SlicerInfo = slicerInfo || {
+  const { name, image }: SlicerInfo = slicerInfo || {
     name: null,
-    address: null,
     image: null,
   }
 
   const [ethReleased, setEthReleased] = useState(0)
+  const [released, setReleased] = useState(false)
   const [success, setSuccess] = useState(false)
   const [logs, setLogs] = useState<LogDescription[]>()
   const eventLog = getLog(logs, "MintTriggered")
@@ -52,6 +59,7 @@ const SlicerCard = ({ slicerId, account, shares, unreleasedAmount }: Props) => {
   useEffect(() => {
     if (success) {
       setEthReleased(unreleasedAmount)
+      setReleased(true)
     }
   }, [success])
 
@@ -60,7 +68,7 @@ const SlicerCard = ({ slicerId, account, shares, unreleasedAmount }: Props) => {
       <SlicerCardImage
         href={slicerLink}
         name={name}
-        slicerAddress={address}
+        slicerAddress={slicerAddress}
         imageUrl={image}
         isAllowed={isAllowed}
       />
@@ -90,7 +98,7 @@ const SlicerCard = ({ slicerId, account, shares, unreleasedAmount }: Props) => {
             </Link>
           </div>
         </div>
-        {unreleasedAmount ? (
+        {!released && unreleasedAmount ? (
           <div className="mt-2">
             <p className="mb-6 text-sm">
               Unreleased:{" "}
@@ -100,7 +108,7 @@ const SlicerCard = ({ slicerId, account, shares, unreleasedAmount }: Props) => {
             </p>
             <BlockchainCall
               label="Trigger release"
-              action={() => TriggerRelease(account, [address], 0)}
+              action={() => TriggerRelease(account, [slicerAddress], 0)}
               success={success}
               setSuccess={setSuccess}
               setLogs={setLogs}
