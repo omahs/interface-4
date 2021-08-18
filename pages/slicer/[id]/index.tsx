@@ -209,32 +209,27 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             </>
           )}
           <div>
-            <div className="inline-block pb-2">
-              <div className="relative flex items-center justify-center">
-                <p className="inline-block text-lg font-bold uppercase">
-                  Slicer
-                </p>
-                {isAllowed && !editMode && (
-                  <div
-                    className="cursor-pointer absolute right-[-35px] inline-block hover:text-yellow-500"
-                    onClick={() => {
-                      setEditMode(true)
-                    }}
-                  >
-                    <Edit className="w-6 h-6" />
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className={`${isAllowed ? "pt-5 " : ""}pb-8`}>
+            <div className="pb-5">
               <CopyAddress slicerAddress={slicerInfo?.address} />
             </div>
-            <DoubleText
-              inactive
-              logoText={slicer.name || `Slicer #${slicerInfo?.id}`}
-              size="text-3xl sm:text-5xl"
-              position=""
-            />
+            <span className="relative">
+              <DoubleText
+                inactive
+                logoText={slicer.name || `Slicer #${slicerInfo?.id}`}
+                size="text-3xl sm:text-5xl"
+                position=""
+              />
+              {isAllowed && !editMode && (
+                <div
+                  className="cursor-pointer absolute bottom-0 pb-0.5 sm:pb-1.5 right-[-38px] sm:right-[-43px] inline-block hover:text-yellow-500"
+                  onClick={() => {
+                    setEditMode(true)
+                  }}
+                >
+                  <Edit className="w-6 h-6" />
+                </div>
+              )}
+            </span>
           </div>
           <div>
             <SlicerName

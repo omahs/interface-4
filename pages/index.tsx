@@ -68,7 +68,7 @@ export default Home
  * - add product with providers payment (safe needed)
  * - Add usage for digital collectibles
  * - wallet connect
- * - transfer page
+ * - transfer page (select box to choose slicer)
  *
  * CONTRACTS
  * - Set maximum batch values before deploying on mainnet (and removing not needed functions to set them)
