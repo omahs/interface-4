@@ -89,14 +89,16 @@ const TransferForm = ({
               />
             </div>
             <div className="space-y-4">
-              {minimumSlices != 0 && ownedSlices - shares < minimumSlices && (
-                <p className="text-sm">
-                  <span className="font-medium">Note:</span> You&apos;ll lose
-                  privileged access to the slicer, as you will not hold the
-                  minimum amount of slices (
-                  <span className="font-medium">{minimumSlices}</span>)
-                </p>
-              )}
+              {minimumSlices != 0 &&
+                ownedSlices > minimumSlices &&
+                ownedSlices - shares < minimumSlices && (
+                  <p className="text-sm">
+                    <span className="font-medium">Note:</span> You&apos;ll lose
+                    privileged access to the slicer, as you will not hold the
+                    minimum amount of slices (
+                    <span className="font-medium">{minimumSlices}</span>)
+                  </p>
+                )}
               {unreleased && Number(unreleased.hex) !== 0 && (
                 <p className="text-sm">
                   <span className="font-medium">Note:</span> you have an

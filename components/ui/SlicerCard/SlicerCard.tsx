@@ -49,6 +49,7 @@ const SlicerCard = ({
   const [logs, setLogs] = useState<LogDescription[]>()
   const eventLog = getLog(logs, "MintTriggered")
   const slicerLink = `/slicer/${slicerId}`
+  const slicerName = name || `Slicer #${slicerId}`
 
   const slcReleased =
     eventLog &&
@@ -68,7 +69,7 @@ const SlicerCard = ({
     <div className="sm:flex">
       <SlicerCardImage
         href={slicerLink}
-        name={name}
+        name={slicerName}
         slicerAddress={slicerAddress}
         imageUrl={image}
         isAllowed={isAllowed}
@@ -76,14 +77,16 @@ const SlicerCard = ({
       <div className="pt-5 sm:pt-4 sm:ml-6 md:ml-14">
         <Link href={slicerLink}>
           <a className="flex items-center">
-            {name ? (
-              <h3 className="inline-block">{name}</h3>
+            {slicerInfo ? (
+              <h3 className="inline-block">{slicerName}</h3>
             ) : (
               <div className="w-32 h-6 mb-2 rounded-md bg-sky-300 animate-pulse" />
             )}
-            <p className="h-full mb-1 ml-2 text-base font-normal">
-              #{slicerId}
-            </p>
+            {name && name != `Slicer #${slicerId}` && (
+              <p className="h-full mb-1 ml-2 text-base font-normal">
+                #{slicerId}
+              </p>
+            )}
           </a>
         </Link>
         <div className="space-y-2 text-gray-700">
