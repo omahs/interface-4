@@ -1,3 +1,4 @@
+import Arrow from "@components/icons/Arrow"
 import React, { InputHTMLAttributes } from "react"
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
@@ -7,23 +8,29 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   after?: string
   error?: boolean
   inverted?: boolean
+  onClickLabel?: string
+  prefixAction?: (...args: any[]) => any
+  onClick?: (...args: any[]) => any
   onChange?: (...args: any[]) => any
 }
 
 const Input: React.FC<Props> = (props) => {
   const {
     className,
-    onChange,
     label,
     prefix = "",
     after,
     children,
     error,
     inverted,
+    prefixAction,
+    onClick,
+    onClickLabel,
+    onChange,
     ...rest
   } = props
 
-  const rootClassName = `peer py-2 pl-5 w-full appearance-none transition duration-150 rounded-t-sm ${
+  const rootClassName = `peer py-2 pl-5 w-full appearance-none transition-all duration-150 rounded-t-sm ${
     !prefix && !error ? "shadow-light-focusable" : ""
   } ease-in-out pr-3 border-b-[3px] focus:outline-none ${className} ${
     error
@@ -56,6 +63,19 @@ const Input: React.FC<Props> = (props) => {
           prefix && !error ? "shadow-light-focusable overflow-hidden" : ""
         }`}
       >
+        {onClickLabel && onClick && (
+          <div
+            className={`cursor-pointer text-sm font-medium group flex items-center justify-center px-5 bg-blue-600 transition-colors duration-150 dark:bg-blue-600 hover:bg-blue-700 text-white nightwind-prevent ${
+              error ? "shadow-error" : ""
+            }`}
+            onClick={onClick}
+          >
+            <span className="">{onClickLabel}</span>{" "}
+            <div className="w-[1.2rem] h-[1.2rem] ml-1 text-white nightwind-prevent transition-transform duration-150 group-hover:translate-x-1">
+              <Arrow />
+            </div>
+          </div>
+        )}
         <input
           className={rootClassName}
           onChange={handleOnChange}
@@ -67,11 +87,16 @@ const Input: React.FC<Props> = (props) => {
         ></input>
         {prefix && (
           <div
-            className={`flex transition duration-150 items-center text-sm justify-center px-5 text-gray-600 bg-gray-200 dark:bg-gray-700 border-b-[3px] ${
+            className={`flex transition duration-150 items-center justify-center px-5 text-gray-600 bg-gray-200 dark:bg-gray-700 border-b-[3px] ${
               error
                 ? "border-red-400 peer-focus:border-red-400 dark:peer-focus:border-red-500 shadow-error"
                 : "text-black border-blue-300 peer-focus:border-sky-600 dark:peer-focus:border-sky-300"
+            } ${
+              prefixAction
+                ? "cursor-pointer hover:bg-gray-100 hover:text-blue-600"
+                : ""
             }`}
+            onClick={prefixAction ? () => prefixAction() : null}
           >
             {prefix}
           </div>
