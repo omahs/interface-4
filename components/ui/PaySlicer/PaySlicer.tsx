@@ -78,7 +78,7 @@ const PaySlicer = ({ slicerAddress }: Props) => {
           <div className="relative">
             <Input
               placeholder="0.01"
-              prefix="ETH"
+              prefix="Ξ"
               value={ethValue}
               onChange={handleChange}
             />
@@ -111,7 +111,7 @@ const PaySlicer = ({ slicerAddress }: Props) => {
               </a>
             </div>
           </div>
-          <p>ETH {Math.floor(ethValue * 10000) / 10000} </p>
+          <p>Ξ {Math.floor(ethValue * 10000) / 10000} </p>
         </>
       )}
       <Button

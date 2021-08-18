@@ -22,12 +22,13 @@ const SlicersGrid = ({ data, totalSlicers }: Props) => {
     <>
       <div className="grid items-center justify-center grid-cols-1 gap-2 sm:gap-4 lg:gap-5 sm:grid-cols-3">
         {[...Array(iterator)].map((el, key) => {
-          const id = Number(key)
-          const { name, image } = data[id] || {
-            name: `Slicer #${id}`,
+          const slicerId = Number(key)
+          const slicerData = data.find((el) => el.id === slicerId)
+          const { name, image } = slicerData || {
+            name: `Slicer #${slicerId}`,
             image: "",
           }
-          const slicerLink = `/slicer/${id}`
+          const slicerLink = `/slicer/${slicerId}`
           return (
             <div className="flex flex-col items-center my-6" key={key}>
               <SlicerCardImage

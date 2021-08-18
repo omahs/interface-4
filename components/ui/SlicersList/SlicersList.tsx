@@ -41,7 +41,6 @@ const SlicersList = () => {
     setUnreleased(unreleasedData)
   }
 
-  // Todo: Write query when theGraph queries work
   useEffect(() => {
     if (account && slicers) {
       slicers?.map((slicer) => {
@@ -59,13 +58,12 @@ const SlicersList = () => {
   useEffect(() => {
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", () => {
-        setItems(0)
-        // Todo: Handle mutation with apolloClient
+        setItems(initItems)
+        setIterator(items < totalOwned ? items : totalOwned)
       })
     }
   }, [])
 
-  // Todo: See if I can remove this iterator stuff
   useEffect(() => {
     if (totalOwned) {
       setIterator(items < totalOwned ? items : totalOwned)
@@ -83,6 +81,8 @@ const SlicersList = () => {
         const slicerId = slicers[i].slicer.id
         const slicerShares = slicers[i].slices
         const slicerAddress = slicers[i].slicer.address
+        const isAllowed =
+          Number(slicerShares) >= Number(slicers[i].slicer.minimumSlices)
         const unreleasedAmount = unreleased[i]
           ? Math.floor((Number(unreleased[i].hex) / Math.pow(10, 18)) * 10000) /
             10000
@@ -94,6 +94,7 @@ const SlicersList = () => {
               slicerId={slicerId}
               account={account}
               shares={slicerShares}
+              isAllowed={isAllowed}
               unreleasedAmount={unreleasedAmount}
             />
             <hr className="my-12 border-gray-300" />
