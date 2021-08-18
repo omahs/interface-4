@@ -91,7 +91,7 @@ const PaySlicer = ({ slicerAddress }: Props) => {
               </a>
             </div>
           </div>
-          <p>${Math.floor(usdValue * 100) / 100} </p>
+          <p>$ {Math.floor(usdValue * 100) / 100} </p>
         </>
       ) : (
         <>
