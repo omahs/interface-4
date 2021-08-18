@@ -7,8 +7,14 @@ const graphQuery = async (
   setData: Dispatch<SetStateAction<ApolloQueryResult<any>>>
 ) => {
   try {
-    const query = await client.query({ query: gql(tokensQuery) })
-    setData(query.data)
+    const { data } = await client.query({
+      query: gql`
+        query {
+          ${tokensQuery}
+        }
+      `,
+    })
+    setData(data)
   } catch (err) {
     console.log("Error fetching data: ", err)
   }

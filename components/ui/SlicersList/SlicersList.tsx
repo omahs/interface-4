@@ -6,31 +6,27 @@ import Button from "../Button"
 import { useEffect, useState } from "react"
 import Spinner from "@components/icons/Spinner"
 import useQuery from "@utils/subgraphQuery"
-import { useMutation } from "@apollo/client"
 
 const SlicersList = () => {
   const { account } = useAppContext()
   const [unreleased, setUnreleased] = useState([])
 
   const tokensQuery = /* GraphQL */ `
-      query {
-        payee(id: "${account.toLowerCase()}") {
-          slicers {
+      payee(id: "${account.toLowerCase()}") {
+        slicers {
+          slices
+          slicer {
+            id
+            address
             slices
-            slicer {
-              id
-              address
-              slices
-              minimumSlices
-            }
+            minimumSlices
           }
         }
       }
     `
-  const subgraphData = useQuery(tokensQuery, [account])
+  let subgraphData = useQuery(tokensQuery, [account])
   const slicers = subgraphData?.payee?.slicers
   const totalOwned = slicers?.length
-
   let slicerAddresses = []
 
   const initItems = 4

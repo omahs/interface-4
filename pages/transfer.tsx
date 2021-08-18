@@ -24,14 +24,12 @@ const Transfer = () => {
   const [ownedSlices, setOwnedSlices] = useState(0)
 
   const tokensQuery = /* GraphQL */ `
-      query {
-        payeeSlicer(id: "${id}-${account.toLowerCase()}") {
+      payeeSlicer(id: "${id}-${account.toLowerCase()}") {
+        slices
+        slicer {
+          address
           slices
-          slicer {
-            address
-            slices
-            minimumSlices
-          }
+          minimumSlices
         }
       }
     `
