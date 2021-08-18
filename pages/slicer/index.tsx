@@ -8,9 +8,7 @@ import {
   longTitle,
   domain,
 } from "@components/common/Head"
-import { Slicer } from "@prisma/client"
-import { gql } from "@apollo/client"
-import client from "@utils/apollo-client"
+import { SlicerReduced } from "@prisma/client"
 
 const SlicerGrid = ({
   data,
@@ -48,19 +46,9 @@ const SlicerGrid = ({
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-  // const { subgraphData } = await client.query({
-  //   query: gql`
-  //     query Slicers {
-  //       slicers {
-  //         slices
-  //       }
-  //     }
-  //   `,
-  // })
-
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
-  const data: Slicer[] = await fetcher(
+  const data: SlicerReduced[] = await fetcher(
     `${baseUrl}/api/slicer?items=${totalSlicers}`
   )
   // const totalSlicers = 0
@@ -69,7 +57,6 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     props: {
       data,
       totalSlicers,
-      // slicer: subgraphData.slicers
     },
     revalidate: 10,
   }

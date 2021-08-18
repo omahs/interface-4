@@ -2,10 +2,10 @@ import Link from "next/link"
 import Button from "../Button"
 import { useEffect, useState } from "react"
 import SlicerCardImage from "../SlicerCardImage"
-import { Slicer } from "@prisma/client"
+import { SlicerReduced } from "@prisma/client"
 
 type Props = {
-  data: Slicer[]
+  data: SlicerReduced[]
   totalSlicers: number
 }
 
@@ -25,7 +25,7 @@ const SlicersGrid = ({ data, totalSlicers }: Props) => {
           const id = Number(key)
           const { name, image } = data[id] || {
             name: `Slicer #${id}`,
-            imageUrl: "",
+            image: "",
           }
           const slicerLink = `/slicer/${id}`
           return (

@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import { Slicer } from "@prisma/client"
+import { SlicerReduced } from "@prisma/client"
 import prisma from "@lib/db"
 
-type Data = Slicer[]
+type Data = SlicerReduced[]
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { items } = req.query
@@ -10,6 +10,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const SlicerList = await prisma.slicer.findMany({
       orderBy: { id: "desc" },
       take: Number(items),
+      select: { id: true, name: true, image: true },
     })
     res.status(200).json(SlicerList)
   }
