@@ -6,10 +6,7 @@ import {
   TransferForm,
 } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
-import fetcher from "@utils/fetcher"
-import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
 import { useEffect, useState } from "react"
-import useSWR from "swr"
 import { NextSeo } from "next-seo"
 import {
   defaultDescription,
