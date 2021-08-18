@@ -47,7 +47,7 @@ const SlicerImageBlock = ({
   }
 
   return (
-    <div className="nightwind-prevent-block">
+    <div className="py-6 nightwind-prevent-block">
       <div className={`overflow-hidden ${border || "rounded-2xl"}`}>
         <label
           htmlFor="single"
