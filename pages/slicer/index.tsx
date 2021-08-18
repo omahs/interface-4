@@ -8,7 +8,12 @@ import {
   longTitle,
   domain,
 } from "@components/common/Head"
-import { SlicerReduced } from "@prisma/client"
+
+export type SlicerReduced = {
+  id: number
+  name: string | null
+  image: string | null
+}
 
 const SlicerGrid = ({
   data,

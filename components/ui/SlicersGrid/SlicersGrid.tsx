@@ -2,7 +2,7 @@ import Link from "next/link"
 import Button from "../Button"
 import { useEffect, useState } from "react"
 import SlicerCardImage from "../SlicerCardImage"
-import { SlicerReduced } from "@prisma/client"
+import { SlicerReduced } from "pages/slicer"
 
 type Props = {
   data: SlicerReduced[]
@@ -29,11 +29,13 @@ const SlicersGrid = ({ data, totalSlicers }: Props) => {
             image: "",
           }
           const slicerLink = `/slicer/${slicerId}`
+          const slicerName = name || `Slicer #${slicerId}`
+          console.log(name)
           return (
             <div className="flex flex-col items-center my-6" key={key}>
               <SlicerCardImage
                 href={slicerLink}
-                name={name}
+                name={slicerName}
                 imageUrl={image}
                 showAddress={false}
                 size="w-full h-52 sm:h-32 md:h-40 lg:h-48"
@@ -41,7 +43,7 @@ const SlicersGrid = ({ data, totalSlicers }: Props) => {
               <div className="w-full pt-5 pl-2 text-left sm:pt-4">
                 <Link href={slicerLink}>
                   <a>
-                    <p className="inline-block text-xl">{name}</p>
+                    <p className="inline-block text-xl">{slicerName}</p>
                   </a>
                 </Link>
               </div>

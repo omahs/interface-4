@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import { SlicerReduced } from "@prisma/client"
 import prisma from "@lib/db"
+import { SlicerReduced } from "pages/slicer"
 
 type Data = SlicerReduced[]
 

@@ -220,7 +220,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             </div>
             <DoubleText
               inactive
-              logoText={slicer.name || "Slicer"}
+              logoText={slicer.name || `Slicer #${slicerInfo?.id}`}
               size="text-3xl sm:text-5xl"
               position=""
             />
