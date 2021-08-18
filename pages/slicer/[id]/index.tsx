@@ -14,13 +14,16 @@ import {
   Container,
 } from "@components/ui"
 import fetcher from "@utils/fetcher"
-import { useAllowed } from "@lib/useProvider"
+import { defaultProvider, useAllowed } from "@lib/useProvider"
 import Edit from "@components/icons/Edit"
 import { useEffect, useState } from "react"
 import handleMessage, { Message } from "@utils/handleMessage"
 import { NextSeo } from "next-seo"
 import { domain } from "@components/common/Head"
 import useSWR, { mutate } from "swr"
+
+import { slicer as slicerContract } from "@lib/initProvider"
+import { useAppContext } from "@components/ui/context"
 
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
@@ -38,6 +41,7 @@ const initAttributes = {
 }
 
 const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const { account } = useAppContext()
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const isAllowed = useAllowed(slicerInfo?.id)
   const [editMode, setEditMode] = useState(false)
@@ -104,6 +108,11 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
       imageUrl: slicer.imageUrl,
     }
     try {
+      const contract = await slicerContract(slicerInfo?.id, defaultProvider)
+      const isPayeeAllowed = await contract.isPayeeAllowed(account)
+      if (!isPayeeAllowed) {
+        throw Error("Payee is not allowed")
+      }
       if (newImage.url) {
         setTempImageUrl(newImage.url)
         const fileExt = newImage.file.name.split(".").pop()
@@ -148,10 +157,12 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
       }
     } catch (err) {
       setLoading(false)
-      console.log(err)
       handleMessage(
         {
-          message: "Something went wrong, try again",
+          message:
+            err.message === "Payee is not allowed"
+              ? err.message
+              : "Something went wrong, try again",
           messageStatus: "error",
         },
         setMsg

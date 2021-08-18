@@ -64,7 +64,11 @@ const Home = () => {
 export default Home
 
 /** TODO
- *  - Add usage for digital collectibles
+ * - add product as digital products, without providers (no safe needed) - e.g. PDF
+ * - add product with providers payment (safe needed)
+ * - Add usage for digital collectibles
+ * - wallet connect
+ * - transfer page
  *
  * CONTRACTS
  * - Set maximum batch values before deploying on mainnet (and removing not needed functions to set them)
