@@ -104,7 +104,7 @@ const PaySlicer = ({ slicerAddress }: Props) => {
                 {/* <a
                   className="ml-1.5 text-gray-400"
                   onClick={() => setIsEth(true)}
-                >
+                  >
                   Switch to ETH
                 </a> */}
               </p>

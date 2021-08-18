@@ -8,6 +8,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   after?: string
   error?: boolean
   inverted?: boolean
+  submit?: boolean
   onClickLabel?: string
   prefixAction?: (...args: any[]) => any
   onClick?: (...args: any[]) => any
@@ -23,6 +24,7 @@ const Input: React.FC<Props> = (props) => {
     children,
     error,
     inverted,
+    submit,
     prefixAction,
     onClick,
     onClickLabel,
@@ -63,15 +65,15 @@ const Input: React.FC<Props> = (props) => {
           prefix && !error ? "shadow-light-focusable overflow-hidden" : ""
         }`}
       >
-        {onClickLabel && onClick && (
+        {onClick && (
           <div
             className={`cursor-pointer text-sm font-medium group flex items-center justify-center px-5 bg-blue-600 transition-colors duration-150 dark:bg-blue-600 hover:bg-blue-700 text-white nightwind-prevent ${
               error ? "shadow-error" : ""
             }`}
             onClick={onClick}
           >
-            <span className="">{onClickLabel}</span>{" "}
-            <div className="w-[1.2rem] h-[1.2rem] ml-1 text-white nightwind-prevent transition-transform duration-150 group-hover:translate-x-1">
+            {onClickLabel && <span className="mr-1">{onClickLabel}</span>}{" "}
+            <div className="w-[1.2rem] h-[1.2rem] text-white nightwind-prevent transition-transform duration-150 group-hover:translate-x-1">
               <Arrow />
             </div>
           </div>
