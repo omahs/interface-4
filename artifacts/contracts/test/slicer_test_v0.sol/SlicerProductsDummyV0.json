@@ -59,6 +59,18 @@
           "internalType": "bytes",
           "name": "data",
           "type": "bytes"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256[]",
+          "name": "subSlicersId",
+          "type": "uint256[]"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint32[]",
+          "name": "subProducts",
+          "type": "uint32[]"
         }
       ],
       "name": "ProductAdded",
@@ -191,19 +203,8 @@
           "type": "uint32"
         }
       ],
-      "name": "productPrice",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "price",
-          "type": "uint256"
-        },
-        {
-          "internalType": "bool",
-          "name": "isUSD",
-          "type": "bool"
-        }
-      ],
+      "name": "isProduct",
+      "outputs": [],
       "stateMutability": "view",
       "type": "function"
     }

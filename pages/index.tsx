@@ -64,12 +64,12 @@ const Home = () => {
 export default Home
 
 /** TODO
- * - add addProduct for digital products without providers (no safe needed) - e.g. PDF
- * - add product with providers payment (safe needed)
  * - Add usage for digital collectibles
  * - add tags in metadata && slicer page
  * - wallet connect
  * - transfer page (select box to choose slicer)
+ *
+ * - Figure out purchases metadata for normal products and those with subSlicers
  *
  * CONTRACTS
  * - Set maximum batch values before deploying on mainnet (and removing not needed functions to set them)

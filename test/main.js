@@ -95,9 +95,20 @@ describe("Slice", () => {
 
   describe("Products", () => {
     it("New product added", async () => {
-      await slicer0.addProduct(0, 10000000000, false, true, true, 2, [], [])
+      await slicer0.addProduct(
+        0,
+        10000000000,
+        false,
+        true,
+        true,
+        2,
+        [],
+        [],
+        [],
+        []
+      )
       const productPrice = await slicer0.productPrice(1)
-      expect(Number(productPrice[0])).to.be.equal(10000000000)
+      expect(Number(productPrice)).to.be.equal(10000000000)
     })
 
     // it("Product removed", async () => {
