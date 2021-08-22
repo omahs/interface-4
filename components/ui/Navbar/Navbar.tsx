@@ -34,14 +34,9 @@ const Navbar = () => {
             {!isConnected ? (
               <Button
                 className="h-[36px] font-medium rounded-full border-2 shadow-light"
-                color=" border-sky-700 bg-white text-black hover:bg-sky-100"
+                color="border-sky-700 bg-white text-black hover:bg-sky-100"
                 double={false}
-                label={
-                  <span className="flex items-center mr-[-10px]">
-                    Connect
-                    <Metamask className="w-[1.15rem] h-[1.15rem] ml-2 mb-0.5" />
-                  </span>
-                }
+                label="Connect"
                 loading={loading}
                 onClick={() => requestAccount()}
               />
