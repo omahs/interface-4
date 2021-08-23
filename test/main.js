@@ -50,9 +50,9 @@ describe("Slice", () => {
     a2 = addr2.address
     a3 = addr3.address
 
-    await slice.slice([a0, a1], [90, 10], 20)
+    await slice.slice([a0, a1], [90, 10], 20, false)
     s0 = await sliceCore.slicers(0)
-    await slice.slice([a0, s0], [90, 10], 10)
+    await slice.slice([a0, s0], [90, 10], 10, false)
     s1 = await sliceCore.slicers(1)
     slicer0 = await ethers.getContractAt("Slicer", s0)
     slicer1 = await ethers.getContractAt("Slicer", s1)

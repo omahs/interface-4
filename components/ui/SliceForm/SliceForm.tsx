@@ -25,26 +25,30 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
-    if (
-      cleanedShares.length == cleanedAddresses.length &&
-      cleanedShares.length <= 30
-    ) {
-      const eventLogs = await handleSubmit(
-        Slice(cleanedAddresses, cleanedShares, minimumShares),
-        setMessage,
-        setLoading,
-        setSuccess,
-        true
-      )
-      setLogs(eventLogs)
-    } else {
-      handleMessage(
-        {
-          message: "Inputs don't correspond, please try again",
-          messageStatus: "error",
-        },
-        setMessage
-      )
+    try {
+      if (
+        cleanedShares.length == cleanedAddresses.length &&
+        cleanedShares.length <= 30
+      ) {
+        const eventLogs = await handleSubmit(
+          Slice(cleanedAddresses, cleanedShares, minimumShares, false),
+          setMessage,
+          setLoading,
+          setSuccess,
+          true
+        )
+        setLogs(eventLogs)
+      } else {
+        handleMessage(
+          {
+            message: "Inputs don't correspond, please try again",
+            messageStatus: "error",
+          },
+          setMessage
+        )
+      }
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -102,3 +106,5 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
 }
 
 export default SliceForm
+
+// Todo: Add isCollectible in form
