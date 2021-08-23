@@ -20,7 +20,7 @@ const CopyAddress = ({ slicerAddress, showIcon = true, position }: Props) => {
 
   return slicerAddress ? (
     <div className="inline-block">
-      <div className="relative flex items-center justify-center w-full pl-2.5">
+      <div className="relative flex items-center justify-center w-full">
         <div
           className="flex items-center justify-center cursor-pointer highlight"
           onClick={() => copy()}

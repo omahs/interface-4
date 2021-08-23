@@ -209,7 +209,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             </>
           )}
           <div>
-            <div className="pb-5">
+            <div className="pl-2.5 pb-5">
               <CopyAddress slicerAddress={slicerInfo?.address} />
             </div>
             <span className="relative">

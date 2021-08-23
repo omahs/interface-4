@@ -34,7 +34,7 @@ const SlicerCardImage = ({
         </a>
       </Link>
       {showAddress && (
-        <span className="rounded-md absolute bottom-[10px] left-[12px] w-[150px] h-[32px] bg-white flex items-center">
+        <span className="rounded-md absolute bottom-[10px] left-[12px] w-[140px] h-[32px] bg-white flex items-center">
           <div className="flex justify-center w-full text-black">
             {slicerAddress ? (
               <CopyAddress
