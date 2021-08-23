@@ -1653,8 +1653,8 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/test/slicer_test_v1.sol": {
-      "lastModificationDate": 1629588937876,
-      "contentHash": "abefed621d21b2de4fd56b52adf3f4a2",
+      "lastModificationDate": 1629758021642,
+      "contentHash": "2c9bcfd472815d302071d5a4cfbddfeb",
       "sourceName": "contracts/test/slicer_test_v1.sol",
       "solcConfig": {
         "version": "0.8.7",
@@ -1699,8 +1699,8 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/test/slicer_test_v0.sol": {
-      "lastModificationDate": 1629588937876,
-      "contentHash": "d9578a2f356b137c06696614f4dae1bb",
+      "lastModificationDate": 1629757706034,
+      "contentHash": "3a3c33e7a560981ab473d073abc80633",
       "sourceName": "contracts/test/slicer_test_v0.sol",
       "solcConfig": {
         "version": "0.8.7",
@@ -1860,8 +1860,8 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/slice_v0.sol": {
-      "lastModificationDate": 1629584207955,
-      "contentHash": "b0f13b05a7f9f427421022dd6654672f",
+      "lastModificationDate": 1629757903166,
+      "contentHash": "66e050afdae0dd5d39c914660917a3dd",
       "sourceName": "contracts/slice_v0.sol",
       "solcConfig": {
         "version": "0.8.7",
@@ -1905,8 +1905,8 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/slicer_v0.sol": {
-      "lastModificationDate": 1629588937876,
-      "contentHash": "b08665d14481a8100f5ff8d8c539553e",
+      "lastModificationDate": 1629756329226,
+      "contentHash": "db217a0a7c5af1c82ee96fc35608f1a2",
       "sourceName": "contracts/slicer_v0.sol",
       "solcConfig": {
         "version": "0.8.7",
