@@ -28,6 +28,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                   address
                   slices
                   minimumSlices
+                  isCollectible
                   creator{
                     id
                   }
@@ -49,6 +50,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             external_url: `https://slice.so/slicer/${id}`,
             address: data.slicer.address,
             image: "https://slice.so/slicer_default.png",
+            isCollectible: data.slicer.isCollectible,
             attributes: [
               {
                 display_type: "number",
@@ -95,6 +97,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           external_url: "",
           address: "",
           image: "",
+          isCollectible: false,
           attributes: [],
         }
       }
