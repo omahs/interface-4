@@ -209,7 +209,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             </>
           )}
           <div>
-            <div className="pl-2.5 pb-5">
+            <div className="pb-5 pl-3">
               <CopyAddress slicerAddress={slicerInfo?.address} />
             </div>
             <span className="relative">
@@ -219,7 +219,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 size="text-3xl sm:text-5xl"
                 position=""
               />
-              {isAllowed && !editMode && (
+              {!slicerInfo?.isCollectible && isAllowed && !editMode && (
                 <div
                   className="cursor-pointer absolute bottom-0 pb-0.5 sm:pb-1.5 right-[-38px] sm:right-[-43px] inline-block hover:text-yellow-500"
                   onClick={() => {
@@ -328,3 +328,5 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 }
 
 export default Id
+
+// Todo: Add condition to make collectibles' metadata editable only if ...

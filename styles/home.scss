@@ -49,6 +49,14 @@
   box-shadow: 0 0 9px 0.3px var(--color2);
 }
 
+.shadow-medium-random {
+  box-shadow: 4px 4px 12px 0.8px var(--darkColor2);
+}
+
+.dark .shadow-medium-random {
+  box-shadow: 4px 4px 12px 0.8px var(--color2);
+}
+
 .img-background {
   background: linear-gradient(to bottom right, var(--color1), var(--color2));
 }

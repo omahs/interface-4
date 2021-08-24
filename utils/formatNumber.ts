@@ -1,4 +1,4 @@
-const abbreviateNumber = (number: number, decimals = 1) => {
+const formatNumber = (number: number, decimals = 1) => {
   const SI_SYMBOL = ["", "k", "M", "B", "T", "P", "E"]
   const tier = (Math.log10(Math.abs(number)) / 3) | 0
   if (tier == 0) return number
@@ -8,4 +8,4 @@ const abbreviateNumber = (number: number, decimals = 1) => {
   return scaled.toFixed(decimals) + suffix
 }
 
-export default abbreviateNumber
+export default formatNumber

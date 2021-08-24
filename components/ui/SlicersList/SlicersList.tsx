@@ -80,6 +80,7 @@ const SlicersList = () => {
         const i = Number(key)
         const slicerId = slicers[i].slicer.id
         const slicerShares = slicers[i].slices
+        const totalSlices = slicers[i].slicer.slices
         const slicerAddress = slicers[i].slicer.address
         const isAllowed =
           Number(slicerShares) >= Number(slicers[i].slicer.minimumSlices)
@@ -94,6 +95,7 @@ const SlicersList = () => {
               slicerId={slicerId}
               account={account}
               shares={slicerShares}
+              totalSlices={totalSlices}
               isAllowed={isAllowed}
               unreleasedAmount={unreleasedAmount}
             />

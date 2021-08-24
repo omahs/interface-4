@@ -34,6 +34,14 @@ module.exports = {
         gray: colors.coolGray,
         sky: colors.sky,
         cyan: colors.cyan,
+        random1: {
+          300: "var(--color1)",
+          600: "var(--darkColor1)",
+        },
+        random2: {
+          300: "var(--color2)",
+          600: "var(--darkColor2)",
+        },
       },
       zIndex: {
         "-10": "-10",

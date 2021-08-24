@@ -20,7 +20,7 @@ const SlicersGrid = ({ data, totalSlicers }: Props) => {
 
   return (
     <>
-      <div className="grid items-center justify-center grid-cols-1 gap-2 sm:gap-4 lg:gap-5 sm:grid-cols-3">
+      <div className="grid items-center justify-center grid-cols-1 gap-2 max-w-[400px] sm:gap-4 lg:gap-5 sm:max-w-[550px] mx-auto sm:grid-cols-2 md:max-w-none md:grid-cols-3">
         {[...Array(iterator)].map((el, key) => {
           const slicerId = Number(key)
           const slicerData = data.find((el) => el.id === slicerId)
@@ -30,23 +30,23 @@ const SlicersGrid = ({ data, totalSlicers }: Props) => {
           }
           const slicerLink = `/slicer/${slicerId}`
           const slicerName = name || `Slicer #${slicerId}`
-          console.log(name)
           return (
-            <div className="flex flex-col items-center my-6" key={key}>
-              <SlicerCardImage
-                href={slicerLink}
-                name={slicerName}
-                imageUrl={image}
-                showAddress={false}
-                size="w-full h-52 sm:h-32 md:h-40 lg:h-48"
-              />
-              <div className="w-full pt-5 pl-2 text-left sm:pt-4">
-                <Link href={slicerLink}>
-                  <a>
-                    <p className="inline-block text-xl">{slicerName}</p>
-                  </a>
-                </Link>
-              </div>
+            <div className="my-6" key={key}>
+              <Link href={slicerLink}>
+                <a>
+                  <div className="flex flex-col items-center px-2.5 py-5 transition-transform duration-1000 ease-out bg-white rounded-md shadow-medium-random hover:scale-105">
+                    <SlicerCardImage
+                      name={slicerName}
+                      imageUrl={image}
+                      showAddress={false}
+                      size="w-full h-52 sm:h-40 md:h-40 lg:h-48"
+                    />
+                    <div className="w-full pt-5 pl-2 text-left sm:pt-4">
+                      <p className="inline-block text-xl">{slicerName}</p>
+                    </div>
+                  </div>
+                </a>
+              </Link>
             </div>
           )
         })}

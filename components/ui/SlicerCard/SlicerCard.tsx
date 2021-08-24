@@ -7,7 +7,7 @@ import { TriggerRelease } from "lib/handlers/chain"
 import BlockchainCall from "../BlockchainCall"
 import { useEffect, useState } from "react"
 import { LogDescription } from "ethers/lib/utils"
-import abbreviateNumber from "@utils/abbreviateNumber"
+import formatNumber from "@utils/formatNumber"
 import getLog from "@utils/getLog"
 import Arrow from "@components/icons/Arrow"
 
@@ -21,6 +21,7 @@ type Props = {
   slicerId: number
   slicerAddress: string
   shares: number
+  totalSlices: number
   account: string
   isAllowed: boolean
   unreleasedAmount: number
@@ -31,6 +32,7 @@ const SlicerCard = ({
   slicerAddress,
   account,
   shares,
+  totalSlices,
   isAllowed,
   unreleasedAmount,
 }: Props) => {
@@ -50,10 +52,11 @@ const SlicerCard = ({
   const eventLog = getLog(logs, "MintTriggered")
   const slicerLink = `/slicer/${slicerId}`
   const slicerName = name || `Slicer #${slicerId}`
+  const slicePercentage = `${Math.floor((shares / totalSlices) * 10000) / 100}%`
 
   const slcReleased =
     eventLog &&
-    abbreviateNumber(
+    formatNumber(
       Math.floor((Number(eventLog.amount._hex) / Math.pow(10, 18)) * 100) / 100,
       2
     )
@@ -71,6 +74,7 @@ const SlicerCard = ({
         href={slicerLink}
         name={slicerName}
         slicerAddress={slicerAddress}
+        totalSlices={formatNumber(totalSlices)}
         imageUrl={image}
         isAllowed={isAllowed}
       />
@@ -91,7 +95,9 @@ const SlicerCard = ({
         </Link>
         <div className="space-y-2 text-gray-700">
           <div className="flex items-center">
-            <p className="text-sm">Slices owned: {shares}</p>
+            <p className="text-sm">
+              {formatNumber(shares)} slices owned ({slicePercentage})
+            </p>
             <Link href={`/transfer?id=${slicerId}`}>
               <a className="flex items-center ml-3 group">
                 <p className="text-sm ">Transfer</p>

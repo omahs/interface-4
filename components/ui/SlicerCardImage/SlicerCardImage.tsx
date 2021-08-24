@@ -7,8 +7,9 @@ import UserVerified from "@components/icons/UserVerified"
 type Props = {
   name: string
   imageUrl: string
-  href: string
+  href?: string
   slicerAddress?: string
+  totalSlices?: number | string
   isAllowed?: boolean
   showAddress?: boolean
   size?: string
@@ -19,22 +20,26 @@ const SlicerCardImage = ({
   imageUrl,
   href,
   slicerAddress = "",
+  totalSlices,
   isAllowed = false,
   showAddress = true,
   size = "sm:w-80 h-60 sm:h-52",
 }: Props) => {
-  // const { color1, color2 } = useAppContext()
   return (
     <div
       className={`relative w-full overflow-hidden rounded-xl nightwind-prevent-block img-background ${size}`}
     >
-      <Link href={href}>
-        <a className="peer">
-          <SlicerImage name={name} imageUrl={imageUrl} />
-        </a>
-      </Link>
+      {href ? (
+        <Link href={href}>
+          <a>
+            <SlicerImage name={name} imageUrl={imageUrl} />
+          </a>
+        </Link>
+      ) : (
+        <SlicerImage name={name} imageUrl={imageUrl} />
+      )}
       {showAddress && (
-        <span className="rounded-md absolute bottom-[10px] left-[12px] w-[140px] h-[32px] bg-white flex items-center">
+        <span className="rounded-md absolute bottom-[10px] left-[12px] px-5 h-[32px] bg-white flex items-center">
           <div className="flex justify-center w-full text-black">
             {slicerAddress ? (
               <CopyAddress
@@ -49,13 +54,15 @@ const SlicerCardImage = ({
         </span>
       )}
       {isAllowed && (
-        <span className="rounded-md absolute bottom-[10px] right-[12px] bg-white">
+        <span className="rounded-md absolute top-[10px] right-[12px] bg-white">
           <UserVerified className="py-[6px] text-green-500 w-[46px] h-[32px]" />
         </span>
       )}
-      {/* <div
-        className={`rounded-xl overflow-hidden shadow-light-random absolute top-0 mt-[0.6rem] ml-[0.6rem] mr-[-0.6rem] bg-gradient-to-br ${color1[3]} ${color2[4]} text-transparent peer-hover:mt-0 peer-hover:ml-0 peer-hover:mr-0 peer-focus:mt-0 peer-focus:ml-0 peer-focus:mr-0 transition-all duration-150 ${size}`}
-      ></div> */}
+      {totalSlices && (
+        <span className="flex items-center rounded-md absolute bottom-[10px] right-[12px] h-[32px] bg-white text-black text-sm font-medium px-4">
+          {totalSlices} 🍰
+        </span>
+      )}
     </div>
   )
 }

@@ -3,7 +3,7 @@ import useSWR from "swr"
 import { useAppContext } from "@components/ui/context"
 import Spinner from "@components/icons/Spinner"
 import { useEffect, useState } from "react"
-import abbreviateNumber from "@utils/abbreviateNumber"
+import formatNumber from "@utils/formatNumber"
 
 const SlcCounter = () => {
   const { account } = useAppContext()
@@ -12,7 +12,7 @@ const SlcCounter = () => {
     fetcher
   )
   const [slc, setSlc] = useState(0)
-  const formattedSlc = abbreviateNumber(slc)
+  const formattedSlc = formatNumber(slc)
 
   useEffect(() => {
     if (data) {

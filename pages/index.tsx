@@ -64,13 +64,47 @@ const Home = () => {
 export default Home
 
 /** TODO
- * - Add usage for digital collectibles
- * - add tags in metadata && slicer page
- * - wallet connect
- * - transfer page (select box to choose slicer)
+ * WEBSITE
  *
+ * - Add usage for creating collections from other assets (erc721/erc1155)
+ * - Add usage for digital collectibles (immutable metadata? Is that the only solution?)
+ *    - is it same use case?
+ *
+ * - add products to slicers -> demonstrate use case with digital collectibles
  * - Figure out purchases metadata for normal products and those with subSlicers
  *
- * CONTRACTS
- * - Set maximum batch values before deploying on mainnet (and removing not needed functions to set them)
+ * - add slicer tags in metadata & slicer page
+ *
+ * - wallet connect
+ *
+ * - (LP) transfer page (select box to choose slicer)
+ *
+ * USE CASES
+ * - Use it as a slicer
+ *      - IS NOT digital asset
+ *      - Editable metadata
+ *      - Can receive external NFTs
+ * - Create a new single or fractional NFT
+ *      - Slicer IS digital asset
+ *      - non editable metadata --> TODO
+ *      - CANNOT receive external NFTs or slicers
+ *
+ * NFT PRODUCTS IDEAS
+ * - special concert ticket
+ * - appear as gold/silver/.. sponsor to the slicer
+ * - something related to image copyright -> right to use image?
+ * - PDF with the NFT behind the scenes
+ * - Buy movie / music / game / game add-on
+ *
+ *
+ *
+ *
+ * FILE STORAGE
+ * - https://web3.storage
+ *
+ *
+ * SMART CONTRACTS
+ * - (LP) Set maximum batch values before deploying on mainnet (and removing not needed functions to set them)
+ * - Handle ERC20
+ * - DeGov logics
  */
