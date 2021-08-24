@@ -5,7 +5,10 @@ const formatNumber = (number: number, decimals = 1) => {
   const suffix = SI_SYMBOL[tier]
   const scale = Math.pow(10, tier * 3)
   const scaled = number / scale
-  return scaled.toFixed(decimals) + suffix
+
+  const roundFactor = Math.pow(10, decimals)
+  const formatted = Math.floor(scaled * roundFactor) / roundFactor
+  return String(formatted) + suffix
 }
 
 export default formatNumber

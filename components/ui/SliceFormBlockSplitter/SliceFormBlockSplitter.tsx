@@ -3,6 +3,7 @@ import { Input, SliceFormInputBlock, Question } from "@components/ui"
 import Add from "@components/icons/Add"
 import { useAppContext } from "@components/ui/context"
 import DoubleText from "../DoubleText"
+import formatNumber from "@utils/formatNumber"
 
 type Props = {
   success: boolean
@@ -105,7 +106,7 @@ const SliceFormBlockSplitter = ({
       <p className="col-span-4 py-3 pr-2 text-right xs:col-span-3 xs:col-end-7 md:col-end-9 md:col-span-3">
         Total slices
       </p>
-      <p className="col-span-3 pl-5">{totalShares}</p>
+      <p className="col-span-3 pl-5">{formatNumber(totalShares, 3)}</p>
       <div className="relative flex items-center justify-end col-span-5 pb-3 xs:col-end-7">
         <p className="pr-1">Minimum slices</p>
         <Question

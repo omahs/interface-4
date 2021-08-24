@@ -58,7 +58,7 @@ const SlicerCard = ({
     eventLog &&
     formatNumber(
       Math.floor((Number(eventLog.amount._hex) / Math.pow(10, 18)) * 100) / 100,
-      2
+      3
     )
 
   useEffect(() => {
@@ -96,7 +96,7 @@ const SlicerCard = ({
         <div className="space-y-2 text-gray-700">
           <div className="flex items-center">
             <p className="text-sm">
-              {formatNumber(shares)} slices owned ({slicePercentage})
+              {formatNumber(shares, 3)} slices owned ({slicePercentage})
             </p>
             <Link href={`/transfer?id=${slicerId}`}>
               <a className="flex items-center ml-3 group">
