@@ -24,6 +24,7 @@ type Props = {
   totalSlices: number
   account: string
   isAllowed: boolean
+  isCollectible: boolean
   unreleasedAmount: number
 }
 
@@ -34,6 +35,7 @@ const SlicerCard = ({
   shares,
   totalSlices,
   isAllowed,
+  isCollectible,
   unreleasedAmount,
 }: Props) => {
   const { data: slicerInfo } = useSWR(
@@ -77,6 +79,7 @@ const SlicerCard = ({
         totalSlices={formatNumber(totalSlices)}
         imageUrl={image}
         isAllowed={isAllowed}
+        isCollectible={isCollectible}
       />
       <div className="pt-5 sm:pt-4 sm:ml-6 md:ml-14">
         <Link href={slicerLink}>

@@ -2,6 +2,7 @@ import Link from "next/link"
 import { SlicerImage } from "@components/ui"
 import CopyAddress from "../CopyAddress"
 import UserVerified from "@components/icons/UserVerified"
+import Collectible from "@components/icons/Collectible"
 // import { useAppContext } from "../context"
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
   slicerAddress?: string
   totalSlices?: number | string
   isAllowed?: boolean
+  isCollectible?: boolean
   showAddress?: boolean
   size?: string
 }
@@ -22,6 +24,7 @@ const SlicerCardImage = ({
   slicerAddress = "",
   totalSlices,
   isAllowed = false,
+  isCollectible,
   showAddress = true,
   size = "sm:w-80 h-60 sm:h-52",
 }: Props) => {
@@ -61,6 +64,11 @@ const SlicerCardImage = ({
       {totalSlices && (
         <span className="flex items-center rounded-md absolute bottom-[10px] right-[12px] h-[32px] bg-white text-black text-sm font-medium px-4">
           {totalSlices} 🍰
+        </span>
+      )}
+      {isCollectible && (
+        <span className="rounded-md absolute top-[10px] left-[12px] bg-white">
+          <Collectible className="py-[6px] text-indigo-600 w-[46px] h-[32px]" />
         </span>
       )}
     </div>

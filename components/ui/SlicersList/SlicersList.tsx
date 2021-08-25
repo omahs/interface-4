@@ -20,6 +20,7 @@ const SlicersList = () => {
             address
             slices
             minimumSlices
+            isCollectible
           }
         }
       }
@@ -82,6 +83,7 @@ const SlicersList = () => {
         const slicerShares = slicers[i].slices
         const totalSlices = slicers[i].slicer.slices
         const slicerAddress = slicers[i].slicer.address
+        const isCollectible = slicers[i].slicer.isCollectible
         const isAllowed =
           Number(slicerShares) >= Number(slicers[i].slicer.minimumSlices)
         const unreleasedAmount = unreleased[i]
@@ -97,6 +99,7 @@ const SlicersList = () => {
               shares={slicerShares}
               totalSlices={totalSlices}
               isAllowed={isAllowed}
+              isCollectible={isCollectible}
               unreleasedAmount={unreleasedAmount}
             />
             <hr className="my-12 border-gray-300" />

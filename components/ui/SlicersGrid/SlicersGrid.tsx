@@ -24,9 +24,10 @@ const SlicersGrid = ({ data, totalSlicers }: Props) => {
         {[...Array(iterator)].map((el, key) => {
           const slicerId = Number(key)
           const slicerData = data.find((el) => el.id === slicerId)
-          const { name, image } = slicerData || {
+          const { name, image, isCollectible } = slicerData || {
             name: `Slicer #${slicerId}`,
             image: "",
+            isCollectible: false,
           }
           const slicerLink = `/slicer/${slicerId}`
           const slicerName = name || `Slicer #${slicerId}`
@@ -38,6 +39,7 @@ const SlicersGrid = ({ data, totalSlicers }: Props) => {
                     <SlicerCardImage
                       name={slicerName}
                       imageUrl={image}
+                      isCollectible={isCollectible}
                       showAddress={false}
                       size="w-full h-52 sm:h-40 md:h-40 lg:h-48"
                     />

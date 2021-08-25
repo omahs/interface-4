@@ -67,8 +67,8 @@ export default Home
  * WEBSITE
  *
  * - Add usage for creating collections from other assets (erc721/erc1155)
- * - Add usage for digital collectibles (immutable metadata? Is that the only solution?)
- *    - is it same use case?
+ * - Add usage for digital collectibles
+ *    - Create collectibles page
  *
  * - add products to slicers -> demonstrate use case with digital collectibles
  * - Figure out purchases metadata for normal products and those with subSlicers
@@ -86,7 +86,7 @@ export default Home
  *      - Can receive external NFTs
  * - Create a new single or fractional NFT
  *      - Slicer IS digital asset
- *      - non editable metadata --> TODO
+ *      - non editable metadata
  *      - CANNOT receive external NFTs or slicers
  *
  * NFT PRODUCTS IDEAS
@@ -97,11 +97,8 @@ export default Home
  * - Buy movie / music / game / game add-on
  *
  *
- *
- *
  * FILE STORAGE
  * - https://web3.storage
- *
  *
  * SMART CONTRACTS
  * - (LP) Set maximum batch values before deploying on mainnet (and removing not needed functions to set them)
