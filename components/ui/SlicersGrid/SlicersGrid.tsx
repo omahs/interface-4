@@ -34,7 +34,7 @@ const SlicersGrid = ({ data, totalSlicers }: Props) => {
             <div className="my-6" key={key}>
               <Link href={slicerLink}>
                 <a>
-                  <div className="flex flex-col items-center px-2.5 py-5 transition-transform duration-1000 ease-out bg-white rounded-md shadow-medium-random hover:scale-105">
+                  <div className="flex flex-col items-center px-2.5 py-5 transition-all duration-1000 ease-out bg-white rounded-md shadow-medium-random hover:scale-105">
                     <SlicerCardImage
                       name={slicerName}
                       imageUrl={image}

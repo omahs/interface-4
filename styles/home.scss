@@ -50,11 +50,17 @@
 }
 
 .shadow-medium-random {
-  box-shadow: 4px 4px 12px 0.8px var(--darkColor2);
+  box-shadow: 3px 3px 8px 0.6px var(--darkColor1);
+  &:hover {
+    box-shadow: 0px 0px 6px 1px var(--darkColor2);
+  }
 }
 
 .dark .shadow-medium-random {
-  box-shadow: 4px 4px 12px 0.8px var(--color2);
+  box-shadow: 3px 3px 8px 0.6px var(--color1);
+  &:hover {
+    box-shadow: 0px 0px 6px 1px var(--color2);
+  }
 }
 
 .img-background {
