@@ -41,7 +41,7 @@ const initAttributes = {
 }
 
 const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { account } = useAppContext()
+  const { account, modalView, setModalView } = useAppContext()
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const isAllowed = useAllowed(slicerInfo?.id)
   const [editMode, setEditMode] = useState(false)
@@ -67,13 +67,14 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   })
   const [tempImageUrl, setTempImageUrl] = useState("")
   const [tempStorageUrl, setTempStorageUrl] = useState("")
+  const [preventSubmit, setPreventSubmit] = useState(false)
   const pageTitle =
     slicer.name === `Slicer #${slicerInfo?.id}`
       ? slicer.name
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
   const editAllowed = !slicerInfo?.isCollectible
     ? isAllowed
-    : slicerAttributes?.Creator === account.toLowerCase() &&
+    : slicerAttributes?.Creator === account?.toLowerCase() &&
       newName === `Slicer #${slicerInfo?.id}` &&
       newDescription === "" &&
       newImage.url === "" &&
@@ -96,6 +97,12 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
       attr[el.trait_type] = el.value
     })
     setSlicerAttributes(attr)
+  }, [slicerInfo])
+
+  useEffect(() => {
+    if (slicerInfo?.isCollectible) {
+      setPreventSubmit(true)
+    }
   }, [slicerInfo])
 
   const updateDb = async (newInfo) => {
@@ -185,6 +192,11 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     setEditMode(false)
   }
 
+  const openPopup = () => {
+    setModalView({ name: "IRREVERSIBLE_VIEW" })
+    setPreventSubmit(false)
+  }
+
   return (
     <Container page={true}>
       {slicerInfo?.id !== null ? (
@@ -217,7 +229,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             </>
           )}
           <div>
-            <div className="pb-5 pl-3">
+            <div className="pb-5 pl-4">
               <CopyAddress slicerAddress={slicerInfo?.address} />
             </div>
             <span className="relative">
@@ -281,7 +293,11 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 seconds. Refresh the page a couple of times to see them.
               </p>
               <div className="pb-8">
-                <Button label="Save" loading={loading} onClick={() => save()} />
+                <Button
+                  label="Save"
+                  loading={loading}
+                  onClick={() => (preventSubmit ? openPopup() : save())}
+                />
               </div>
               {!loading && (
                 <p
@@ -339,3 +355,5 @@ export default Id
 
 // Todo: Finish immutable metadata
 // - alert before submit
+
+// - Clean stuff

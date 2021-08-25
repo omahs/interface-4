@@ -1,6 +1,6 @@
 import Cross from "@components/icons/Cross"
 import { Dispatch, SetStateAction } from "react"
-import { View, CONNECT_VIEW } from "lib/text/modals"
+import { View, CONNECT_VIEW, IRREVERSIBLE_VIEW } from "lib/text/modals"
 
 type Props = {
   modalView: View
@@ -14,6 +14,9 @@ const Modal = ({ modalView, setModalView }: Props) => {
   switch (name) {
     case "CONNECT_VIEW":
       content = CONNECT_VIEW
+      break
+    case "IRREVERSIBLE_VIEW":
+      content = IRREVERSIBLE_VIEW()
       break
   }
 
