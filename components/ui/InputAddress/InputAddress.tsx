@@ -22,7 +22,7 @@ const InputAddress: React.FC<Props> = (props) => {
 
     const timeout = setTimeout(
       () => resolveEns(address, setResolvedAddress),
-      150
+      200
     )
     return () => {
       clearTimeout(timeout)
