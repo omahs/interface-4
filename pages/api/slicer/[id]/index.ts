@@ -64,7 +64,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               },
               {
                 trait_type: "Creator",
-                value: creatorAddressFormatted,
+                value: creatorAddress,
+                // value: creatorAddressFormatted,
               },
               {
                 display_type: "date",
@@ -106,6 +107,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (req.method === "POST") {
       const { name, description, imageUrl } = JSON.parse(req.body)
+
+      const slicerInfo = await prisma.slicer.findFirst({
+        where: { id: Number(id) },
+        select: {
+          isCollectible: true,
+          id: true,
+          name: true,
+          description: true,
+          image: true,
+        },
+      })
+
+      if (
+        slicerInfo.isCollectible &&
+        (slicerInfo.name !== `Slicer #${id}` ||
+          slicerInfo.description !== "" ||
+          slicerInfo.image !== "https://slice.so/slicer_default.png")
+      ) {
+        throw Error("Collectible asset already set")
+      }
 
       const query = await prisma.slicer.update({
         where: { id: Number(id) },

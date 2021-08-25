@@ -71,6 +71,13 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     slicer.name === `Slicer #${slicerInfo?.id}`
       ? slicer.name
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
+  const editAllowed = !slicerInfo?.isCollectible
+    ? isAllowed
+    : slicerAttributes?.Creator === account.toLowerCase() &&
+      newName === `Slicer #${slicerInfo?.id}` &&
+      newDescription === "" &&
+      newImage.url === "" &&
+      slicer.imageUrl === "https://slice.so/slicer_default.png"
 
   const { data: slicerInfoUpdated } = useSWR(
     editMode ? `/api/slicer/${slicerInfo?.id}?stats=false` : null,
@@ -156,6 +163,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
         setLoading(false)
       }
     } catch (err) {
+      console.log(err.message)
       setLoading(false)
       handleMessage(
         {
@@ -219,7 +227,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 size="text-3xl sm:text-5xl"
                 position=""
               />
-              {!slicerInfo?.isCollectible && isAllowed && !editMode && (
+              {editAllowed && !editMode && (
                 <div
                   className="cursor-pointer absolute bottom-0 pb-0.5 sm:pb-1.5 right-[-38px] sm:right-[-43px] inline-block hover:text-yellow-500"
                   onClick={() => {
@@ -329,4 +337,5 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 
 export default Id
 
-// Todo: Add condition to make collectibles' metadata editable only if ...
+// Todo: Finish immutable metadata
+// - alert before submit
