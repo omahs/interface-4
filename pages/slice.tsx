@@ -43,15 +43,15 @@ export default function Slice() {
       />
       <ConnectBlock>
         <main>
-          <DoubleText
-            inactive
-            logoText={`Create a Slicer`}
-            size="text-4xl sm:text-5xl"
-            position="pb-4 sm:pb-6"
-          />
           {!success ? (
             !loading ? (
               <>
+                <DoubleText
+                  inactive
+                  logoText={`Create a Slicer`}
+                  size="text-4xl sm:text-5xl"
+                  position="pb-4 sm:pb-6"
+                />
                 <div className="py-6 mx-auto space-y-4 sm:py-8 sm:text-lg max-w-screen-xs">
                   <p>
                     Slicers are a{" "}
