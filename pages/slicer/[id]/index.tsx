@@ -173,7 +173,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             setMsg={setMsg}
             loading={loading}
           />
-          <SlicerProducts editMode={editMode} />
+          <SlicerProducts editMode={editMode} slicerId={slicerInfo?.id} />
           <SlicerSubmitBlock
             editMode={editMode}
             setEditMode={setEditMode}
