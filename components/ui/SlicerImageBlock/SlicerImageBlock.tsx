@@ -31,7 +31,7 @@ const SlicerImageBlock = ({
     try {
       const file = e.target.files[0]
       if (file) {
-        if (file.size > 10000000) {
+        if (file.size > 10485760) {
           handleMessage(
             { message: "Max size 10MB", messageStatus: "error" },
             setMsg

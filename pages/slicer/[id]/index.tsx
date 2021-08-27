@@ -2,27 +2,23 @@ import Head from "next/head"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
 import {
   ActionScreen,
-  Button,
   CopyAddress,
   DoubleText,
-  PaySlicer,
   SlicerTags,
   SlicerDescription,
   SlicerName,
   SlicerImageBlock,
-  MessageBlock,
   Container,
+  SlicerSubmitBlock,
 } from "@components/ui"
 import fetcher from "@utils/fetcher"
-import { defaultProvider, useAllowed } from "@lib/useProvider"
+import { useAllowed } from "@lib/useProvider"
 import Edit from "@components/icons/Edit"
 import { useEffect, useState } from "react"
-import handleMessage, { Message } from "@utils/handleMessage"
+import { Message } from "@utils/handleMessage"
 import { NextSeo } from "next-seo"
 import { domain } from "@components/common/Head"
-import useSWR, { mutate } from "swr"
 
-import { slicer as slicerContract } from "@lib/initProvider"
 import { useAppContext } from "@components/ui/context"
 
 export type NewImage = { url: string; file: File }
@@ -31,6 +27,11 @@ export type SlicerAttributes = {
   "Minimum slices": number
   "Sliced on": number
   "Total slices": number
+}
+export type SlicerData = {
+  name: any
+  description: any
+  imageUrl: any
 }
 
 const initAttributes = {
@@ -41,8 +42,7 @@ const initAttributes = {
 }
 
 const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { account, modalView, setModalView } = useAppContext()
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const { account } = useAppContext()
   const isAllowed = useAllowed(slicerInfo?.id)
   const [editMode, setEditMode] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -51,7 +51,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     messageStatus: "success",
   })
 
-  const [slicer, setSlicer] = useState({
+  const [slicer, setSlicer] = useState<SlicerData>({
     name: slicerInfo?.name,
     description: slicerInfo?.description,
     imageUrl: slicerInfo?.image,
@@ -66,8 +66,6 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     file: undefined,
   })
   const [tempImageUrl, setTempImageUrl] = useState("")
-  const [tempStorageUrl, setTempStorageUrl] = useState("")
-  const [preventSubmit, setPreventSubmit] = useState(false)
   const pageTitle =
     slicer.name === `Slicer #${slicerInfo?.id}`
       ? slicer.name
@@ -80,17 +78,6 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
       newImage.url === "" &&
       slicer.imageUrl === "https://slice.so/slicer_default.png"
 
-  const { data: slicerInfoUpdated } = useSWR(
-    editMode ? `/api/slicer/${slicerInfo?.id}?stats=false` : null,
-    fetcher
-  )
-
-  useEffect(() => {
-    if (!tempStorageUrl && slicerInfoUpdated?.imageUrl) {
-      setTempStorageUrl(slicerInfoUpdated?.imageUrl)
-    }
-  }, [slicerInfoUpdated])
-
   useEffect(() => {
     let attr = initAttributes
     slicerInfo?.attributes.map((el) => {
@@ -98,104 +85,6 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
     })
     setSlicerAttributes(attr)
   }, [slicerInfo])
-
-  useEffect(() => {
-    if (slicerInfo?.isCollectible) {
-      setPreventSubmit(true)
-    }
-  }, [slicerInfo])
-
-  const updateDb = async (newInfo) => {
-    setSlicer(newInfo)
-    const body = {
-      method: "POST",
-      body: JSON.stringify(newInfo),
-    }
-    await fetcher(`/api/slicer/${slicerInfo?.id}`, body)
-  }
-
-  const save = async () => {
-    setLoading(true)
-    let newInfo = {
-      description: newDescription,
-      name: newName,
-      imageUrl: slicer.imageUrl,
-    }
-    try {
-      const contract = await slicerContract(slicerInfo?.id, defaultProvider)
-      const isPayeeAllowed = await contract.isPayeeAllowed(account)
-      if (!isPayeeAllowed) {
-        throw Error("Payee is not allowed")
-      }
-      if (newImage.url) {
-        setTempImageUrl(newImage.url)
-        const fileExt = newImage.file.name.split(".").pop()
-        const reader = new FileReader()
-
-        reader.onload = async () => {
-          const buffer = reader.result
-          const body = {
-            method: "POST",
-            body: JSON.stringify({
-              buffer,
-              fileExt,
-              currentUrl: tempStorageUrl || slicerInfo.image || null,
-            }),
-          }
-          const { Key, error } = await fetcher(
-            `/api/slicer/${slicerInfo?.id}/upload_file`,
-            body
-          )
-          if (error) {
-            throw Error(error)
-          }
-          const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
-          setTempStorageUrl(newFilePath)
-          newInfo = {
-            description: newDescription,
-            name: newName,
-            imageUrl: newFilePath,
-          }
-          await updateDb(newInfo)
-          mutate(`/api/slicer/${slicerInfo?.id}?stats=false`)
-          setNewImage({ url: "", file: undefined })
-          setEditMode(false)
-          setLoading(false)
-        }
-
-        reader.readAsBinaryString(newImage.file)
-      } else {
-        await updateDb(newInfo)
-        setEditMode(false)
-        setLoading(false)
-      }
-    } catch (err) {
-      console.log(err.message)
-      setLoading(false)
-      handleMessage(
-        {
-          message:
-            err.message === "Payee is not allowed"
-              ? err.message
-              : "Something went wrong, try again",
-          messageStatus: "error",
-        },
-        setMsg
-      )
-    }
-  }
-
-  const cancel = () => {
-    setNewName(slicer.name)
-    setNewDescription(slicer.description)
-    setNewImage({ url: "", file: undefined })
-    setEditMode(false)
-  }
-
-  const openPopup = () => {
-    setModalView({ name: "IRREVERSIBLE_VIEW" })
-    setPreventSubmit(false)
-  }
 
   return (
     <Container page={true}>
@@ -284,32 +173,24 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             setMsg={setMsg}
             loading={loading}
           />
-          {!editMode ? (
-            <PaySlicer slicerAddress={slicerInfo?.address} />
-          ) : (
-            <div>
-              <p className="pb-8 mx-auto max-w-screen-xs">
-                <strong>Note:</strong> Edits will appear after around 10
-                seconds. Refresh the page a couple of times to see them.
-              </p>
-              <div className="pb-8">
-                <Button
-                  label="Save"
-                  loading={loading}
-                  onClick={() => (preventSubmit ? openPopup() : save())}
-                />
-              </div>
-              {!loading && (
-                <p
-                  className="inline-block font-medium text-red-600 cursor-pointer hover:underline"
-                  onClick={() => cancel()}
-                >
-                  Cancel
-                </p>
-              )}
-              <MessageBlock msg={msg} />
-            </div>
-          )}
+          <SlicerSubmitBlock
+            editMode={editMode}
+            setEditMode={setEditMode}
+            slicerInfo={slicerInfo}
+            slicer={slicer}
+            setSlicer={setSlicer}
+            loading={loading}
+            setLoading={setLoading}
+            newName={newName}
+            setNewName={setNewName}
+            newDescription={newDescription}
+            setNewDescription={setNewDescription}
+            newImage={newImage}
+            setNewImage={setNewImage}
+            setTempImageUrl={setTempImageUrl}
+            msg={msg}
+            setMsg={setMsg}
+          />
         </main>
       ) : (
         <ActionScreen

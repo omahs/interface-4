@@ -66,16 +66,12 @@ export default Home
 /** TODO
  * WEBSITE
  *
- * - Add usage for creating collections from other assets (erc721/erc1155)
- * - Add usage for digital collectibles
- *    - Create collectibles page
- *
  * - add products to slicers -> demonstrate use case with digital collectibles
  * - Figure out purchases metadata for normal products and those with subSlicers
  *
  * - add slicer tags in metadata & slicer page
- *
- * - wallet connect
+ * - add detailed section in slicer page (stats & stuff for payees only)
+ * - add wallet connect
  *
  * - (LP) transfer page (select box to choose slicer)
  *
@@ -96,11 +92,13 @@ export default Home
  * - PDF with the NFT behind the scenes
  * - Buy movie / music / game / game add-on
  *
- *
  * FILE STORAGE
  * - https://web3.storage
  *
- * SMART CONTRACTS
+ * BEFORE FINAL DEPLOY
+ * - Check if it's ok how metadata is handled for collectible slicers
+ *
+ * OTHER
  * - (LP) Set maximum batch values before deploying on mainnet (and removing not needed functions to set them)
  * - Handle ERC20
  * - DeGov logics
