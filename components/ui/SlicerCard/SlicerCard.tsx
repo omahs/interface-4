@@ -1,7 +1,6 @@
 import Link from "next/link"
 import fetcher from "@utils/fetcher"
 import useSWR from "swr"
-import { useAllowed } from "@lib/useProvider"
 import SlicerCardImage from "../SlicerCardImage"
 import { TriggerRelease } from "lib/handlers/chain"
 import BlockchainCall from "../BlockchainCall"
