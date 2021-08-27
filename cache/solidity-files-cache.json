@@ -80,78 +80,6 @@
         "ERC20"
       ]
     },
-    "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol": {
-      "lastModificationDate": 1624632362336,
-      "contentHash": "79f5ef33a7ed00ffb7dfdcd4339a946c",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
-      "solcConfig": {
-        "version": "0.8.6",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../../utils/introspection/IERC165.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC1155"
-      ]
-    },
-    "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol": {
-      "lastModificationDate": 1624632362341,
-      "contentHash": "f67c3445291b9506fdff7d6527c9e552",
-      "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
-      "solcConfig": {
-        "version": "0.8.6",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../IERC1155.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.0"
-      ],
-      "artifacts": [
-        "IERC1155MetadataURI"
-      ]
-    },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
       "lastModificationDate": 1624632362382,
       "contentHash": "c7492a9ab60ba083d345f893d5e0f33c",
@@ -1860,7 +1788,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/slice_v0.sol": {
-      "lastModificationDate": 1629757903166,
+      "lastModificationDate": 1629934257559,
       "contentHash": "66e050afdae0dd5d39c914660917a3dd",
       "sourceName": "contracts/slice_v0.sol",
       "solcConfig": {
@@ -1905,7 +1833,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/slicer_v0.sol": {
-      "lastModificationDate": 1629756329226,
+      "lastModificationDate": 1629934248142,
       "contentHash": "db217a0a7c5af1c82ee96fc35608f1a2",
       "sourceName": "contracts/slicer_v0.sol",
       "solcConfig": {
@@ -1951,7 +1879,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/test/slice_test_v1.sol": {
-      "lastModificationDate": 1629584207956,
+      "lastModificationDate": 1629931307954,
       "contentHash": "9823238fb7e774e720a7c342eb58ffd4",
       "sourceName": "contracts/test/slice_test_v1.sol",
       "solcConfig": {
@@ -1994,6 +1922,185 @@
       "artifacts": [
         "SliceDummy"
       ]
+    },
+    "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
+      "lastModificationDate": 1628294321163,
+      "contentHash": "75cedcb24edaec014d2071ed59a03ff3",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721Metadata"
+      ]
+    },
+    "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
+      "lastModificationDate": 1628294321159,
+      "contentHash": "93a5aa8a276e028a4f46f22b5d8f7bd3",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
+      "solcConfig": {
+        "version": "0.8.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../utils/introspection/IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721"
+      ]
+    },
+    "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol": {
+      "lastModificationDate": 1628294321126,
+      "contentHash": "79f5ef33a7ed00ffb7dfdcd4339a946c",
+      "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
+      "solcConfig": {
+        "version": "0.8.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../utils/introspection/IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC1155"
+      ]
+    },
+    "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol": {
+      "lastModificationDate": 1628294321131,
+      "contentHash": "f67c3445291b9506fdff7d6527c9e552",
+      "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
+      "solcConfig": {
+        "version": "0.8.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC1155.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC1155MetadataURI"
+      ]
+    },
+    "/Users/jaco/Documents/dev/slice.so/contracts/utils/metadata.sol": {
+      "lastModificationDate": 1629931369559,
+      "contentHash": "072f8dba477b4d322a8c4ce26cbfff42",
+      "sourceName": "contracts/utils/metadata.sol",
+      "solcConfig": {
+        "version": "0.8.7",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
+        "@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": []
     }
   }
 }
