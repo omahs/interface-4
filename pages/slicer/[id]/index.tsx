@@ -1,5 +1,13 @@
+import { useEffect, useState } from "react"
 import Head from "next/head"
+import { NextSeo } from "next-seo"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
+import fetcher from "@utils/fetcher"
+import { Message } from "@utils/handleMessage"
+import { useAllowed } from "@lib/useProvider"
+import { useAppContext } from "@components/ui/context"
+import { domain } from "@components/common/Head"
+import Edit from "@components/icons/Edit"
 import {
   ActionScreen,
   CopyAddress,
@@ -10,16 +18,8 @@ import {
   SlicerImageBlock,
   Container,
   SlicerSubmitBlock,
+  SlicerProducts,
 } from "@components/ui"
-import fetcher from "@utils/fetcher"
-import { useAllowed } from "@lib/useProvider"
-import Edit from "@components/icons/Edit"
-import { useEffect, useState } from "react"
-import { Message } from "@utils/handleMessage"
-import { NextSeo } from "next-seo"
-import { domain } from "@components/common/Head"
-
-import { useAppContext } from "@components/ui/context"
 
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
@@ -173,6 +173,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             setMsg={setMsg}
             loading={loading}
           />
+          <SlicerProducts editMode={editMode} />
           <SlicerSubmitBlock
             editMode={editMode}
             setEditMode={setEditMode}
@@ -233,8 +234,5 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 }
 
 export default Id
-
-// Todo: Finish immutable metadata
-// - alert before submit
 
 // - Clean stuff

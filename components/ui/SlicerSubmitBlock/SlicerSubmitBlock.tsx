@@ -1,12 +1,12 @@
-import useSWR, { mutate } from "swr"
-import { PaySlicer, Button, MessageBlock } from "@components/ui"
-import fetcher from "@utils/fetcher"
-import { NewImage, SlicerData } from "pages/slicer/[id]"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { useAppContext } from "../context"
+import useSWR, { mutate } from "swr"
+import { NewImage, SlicerData } from "pages/slicer/[id]"
+import fetcher from "@utils/fetcher"
+import handleMessage, { Message } from "@utils/handleMessage"
 import { defaultProvider } from "@lib/useProvider"
 import { slicer as slicerContract } from "@lib/initProvider"
-import handleMessage, { Message } from "@utils/handleMessage"
+import { useAppContext } from "../context"
+import { PaySlicer, Button, MessageBlock } from "@components/ui"
 
 type Props = {
   editMode: boolean
@@ -27,7 +27,7 @@ type Props = {
   setMsg: Dispatch<SetStateAction<Message>>
 }
 
-const SlicerImageBlock = ({
+const SlicerSubmitBlock = ({
   editMode,
   setEditMode,
   slicerInfo,
@@ -187,4 +187,4 @@ const SlicerImageBlock = ({
   )
 }
 
-export default SlicerImageBlock
+export default SlicerSubmitBlock
