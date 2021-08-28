@@ -1,4 +1,5 @@
 export { default as ActionScreen } from "./ActionScreen"
+export { default as AddProductForm } from "./AddProductForm"
 export { default as Back } from "./Back"
 export { default as Background } from "./Background"
 export { default as Banner } from "./Banner"

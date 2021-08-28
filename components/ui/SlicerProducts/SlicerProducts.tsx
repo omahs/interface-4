@@ -8,14 +8,16 @@ type Props = {
 }
 
 const SlicerProducts = ({ slicerId, editMode }: Props) => {
-  return !editMode ? (
-    <p>There are no products</p>
-  ) : (
-    <div>
-      <p className="pb-4 text-lg">There are no products</p>
-      <Button label="Add a product" href={`${slicerId}/products/new`} />
-      <hr className="mt-12" />
-    </div>
+  return (
+    <>
+      {/* <ProductGrid/> */}
+      {editMode && (
+        <div>
+          <Button label="Add a product" href={`${slicerId}/products/new`} />
+          <hr className="mt-12 border-gray-300" />
+        </div>
+      )}
+    </>
   )
 }
 
