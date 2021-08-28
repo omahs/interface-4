@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { useState } from "react"
 import {
+  ActionScreen,
   ConnectBlock,
   Container,
   DoubleText,
@@ -19,7 +20,7 @@ import {
 
 export default function Slice() {
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const [success, setSuccess] = useState(true)
   const [logs, setLogs] = useState<LogDescription[]>()
   const eventLog = getLog(logs, "TokenSliced")
 
@@ -80,13 +81,47 @@ export default function Slice() {
                 />
               </>
             ) : (
-              <SliceLoad />
+              <ActionScreen
+                text="Slicing in progress ..."
+                helpText={
+                  <p className="max-w-sm mx-auto pb-7">
+                    Please wait while the blockchain does its thing, or find the
+                    slicer later in your{" "}
+                    <Link href="/profile">
+                      <a className="font-black highlight">profile section</a>
+                    </Link>{" "}
+                  </p>
+                }
+                loading
+              />
+              // <SliceLoad />
             )
           ) : (
-            <SliceSuccess setSuccess={setSuccess} eventLog={eventLog} />
+            <ActionScreen
+              highlightTitle="Slicer created! 🍰"
+              helpText={
+                <div className="max-w-lg pb-6 mx-auto space-y-4">
+                  <p>
+                    Your slicer address is <b>{eventLog && eventLog[0]}</b>
+                  </p>
+                  <p>
+                    If you hold the minimum slices, you can now customize it by
+                    clicking on the edit icon near the slicer name
+                  </p>
+                </div>
+              }
+              buttonLabel="Go to slicer"
+              href={`/slicer/${Number(eventLog?.tokenId)}`}
+              buttonLabelSecondary="Create a new Slicer"
+              onClickSecondary={() => setSuccess(false)}
+            />
+            // <SliceSuccess setSuccess={setSuccess} eventLog={eventLog} />
           )}
         </main>
       </ConnectBlock>
     </Container>
   )
 }
+
+// Todo: Test new actionScreen logs
+// Todo: remove SliceLoad and SliceSuccess
