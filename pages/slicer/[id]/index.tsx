@@ -43,7 +43,7 @@ const initAttributes = {
 
 const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { account } = useAppContext()
-  const { state } = useAllowed(slicerInfo?.id)
+  const { isAllowed } = useAllowed(slicerInfo?.id)
   const [editMode, setEditMode] = useState(false)
   const [loading, setLoading] = useState(false)
   const [msg, setMsg] = useState<Message>({
@@ -71,7 +71,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
       ? slicer.name
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
   const editAllowed = !slicerInfo?.isCollectible
-    ? state
+    ? isAllowed
     : slicerAttributes?.Creator === account?.toLowerCase() &&
       newName === `Slicer #${slicerInfo?.id}` &&
       newDescription === "" &&
