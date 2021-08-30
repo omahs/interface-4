@@ -18,6 +18,9 @@ const PaySlicer = ({ slicerAddress }: Props) => {
   const [ethValue, setEthValue] = useState(0)
   const [loading, setLoading] = useState(false)
 
+  const currency = isEth ? "Ξ" : "$"
+  const destinationCurrency = isEth ? "$" : "Ξ"
+
   const handleChange = (value) => {
     if (isEth) {
       setEthValue(value)
@@ -59,59 +62,27 @@ const PaySlicer = ({ slicerAddress }: Props) => {
 
   return (
     <div className="w-full max-w-sm mx-auto space-y-6">
-      {isEth ? (
-        <>
-          <div className="relative">
-            <Input
-              type="number"
-              placeholder="0.01"
-              prefix="Ξ"
-              prefixAction={() => setIsEth(false)}
-              value={ethValue}
-              onChange={handleChange}
-              onClick={() => pay()}
-              onClickLabel={"Pay"}
-            />
-            <div className="absolute top-0 right-0 flex items-center h-full pb-0.5 mr-28 xs:mr-[7.6rem]">
-              <p className="text-sm text-gray-600">
-                $ {Math.floor(usdValue * 100) / 100}
-                {/* <a
-                  className="ml-1.5 text-gray-400"
-                  onClick={() => setIsEth(false)}
-                  >
-                  Switch to USD
-                </a> */}
-              </p>
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="relative">
-            <Input
-              type="number"
-              placeholder="100"
-              prefix="$"
-              prefixAction={() => setIsEth(true)}
-              value={usdValue}
-              onChange={handleChange}
-              onClick={() => pay()}
-              onClickLabel={"Pay"}
-            />
-            <div className="absolute top-0 right-0 flex items-center h-full pb-0.5 mr-28 xs:mr-[7.6rem]">
-              <p className="text-sm text-gray-600">
-                Ξ {Math.floor(ethValue * 10000) / 10000}
-                {/* <a
-                  className="ml-1.5 text-gray-400"
-                  onClick={() => setIsEth(true)}
-                  >
-                  Switch to ETH
-                </a> */}
-              </p>
-            </div>
-          </div>
-        </>
-      )}
+      <div className="relative">
+        <Input
+          type="number"
+          placeholder={isEth ? "0.01" : "100"}
+          prefix={currency}
+          prefixAction={() => setIsEth((isEth) => !isEth)}
+          value={isEth ? ethValue : usdValue}
+          onChange={handleChange}
+          onClick={() => pay()}
+          onClickLabel={"Pay"}
+          loading={loading}
+        />
+        <div className="absolute top-0 right-0 flex items-center h-full pb-0.5 mr-28 xs:mr-[7.6rem]">
+          <p className="text-sm text-gray-600">
+            {destinationCurrency}{" "}
+            {isEth
+              ? Math.floor(usdValue * 100) / 100
+              : Math.floor(ethValue * 10000) / 10000}
+          </p>
+        </div>
+      </div>
     </div>
   )
 }
