@@ -2,30 +2,51 @@ import { BigNumber } from "ethers"
 import { initialize } from "@lib/useProvider"
 import { slicer } from "@lib/initProvider"
 
-const AddProduct = async (
-  slicerId: number,
-  categoryIndex: number,
-  priceInEth: number,
-  isUSD: boolean,
-  isMultiple: boolean,
+type Props = {
+  slicerId: number
+  categoryIndex: number
+  price: number
+  isUSD: boolean
+  isMultiple: boolean
+  isInfinite: boolean
   units: number
-  // bytes memory data,
-  // bytes memory purchaseData
-) => {
+  data?: any
+  purchaseData?: any
+  subSlicersIds?: number[]
+  subProducts?: number[]
+}
+
+const AddProduct = async ({
+  slicerId,
+  categoryIndex,
+  price,
+  isUSD,
+  isMultiple,
+  isInfinite,
+  units,
+  data = [],
+  purchaseData = [],
+  subSlicersIds,
+  subProducts,
+}: Props) => {
   const { signer } = await initialize()
   const contract = await slicer(slicerId, signer)
   const decimals = BigNumber.from(10).pow(18)
-  const amountBN = BigNumber.from(priceInEth).mul(decimals)
+  const ethToWei = BigNumber.from(price).mul(decimals)
+  const productPrice = isUSD ? price : ethToWei
 
   try {
     const call = await contract.addProduct(
       categoryIndex,
-      amountBN,
+      productPrice,
       isUSD,
       isMultiple,
+      isInfinite,
       units,
-      [],
-      []
+      data,
+      purchaseData,
+      subSlicersIds,
+      subProducts
     )
     return [contract, call]
   } catch (err) {
