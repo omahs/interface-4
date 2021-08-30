@@ -59,7 +59,9 @@ export default function NewProduct() {
                   position="pb-12"
                 />
                 <AddProductForm
+                  slicerId={Number(id)}
                   success={success}
+                  loading={loadingForm}
                   setLoading={setLoadingForm}
                   setSuccess={setSuccess}
                   setLogs={setLogs}
