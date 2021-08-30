@@ -6,8 +6,6 @@ import {
   Container,
   DoubleText,
   SliceForm,
-  SliceLoad,
-  SliceSuccess,
 } from "@components/ui"
 import { LogDescription } from "ethers/lib/utils"
 import getLog from "@utils/getLog"
@@ -20,7 +18,7 @@ import {
 
 export default function Slice() {
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(true)
+  const [success, setSuccess] = useState(false)
   const [logs, setLogs] = useState<LogDescription[]>()
   const eventLog = getLog(logs, "TokenSliced")
 
@@ -94,7 +92,6 @@ export default function Slice() {
                 }
                 loading
               />
-              // <SliceLoad />
             )
           ) : (
             <ActionScreen
@@ -115,7 +112,6 @@ export default function Slice() {
               buttonLabelSecondary="Create a new Slicer"
               onClickSecondary={() => setSuccess(false)}
             />
-            // <SliceSuccess setSuccess={setSuccess} eventLog={eventLog} />
           )}
         </main>
       </ConnectBlock>
