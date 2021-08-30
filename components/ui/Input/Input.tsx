@@ -1,4 +1,5 @@
 import Arrow from "@components/icons/Arrow"
+import Spinner from "@components/icons/Spinner"
 import React, { InputHTMLAttributes } from "react"
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
@@ -7,6 +8,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   prefix?: string
   after?: string
   error?: boolean
+  loading?: boolean
   inverted?: boolean
   submit?: boolean
   onClickLabel?: string
@@ -23,6 +25,8 @@ const Input: React.FC<Props> = (props) => {
     after,
     children,
     error,
+    loading,
+    disabled,
     inverted,
     submit,
     prefixAction,
@@ -67,15 +71,34 @@ const Input: React.FC<Props> = (props) => {
       >
         {onClick && (
           <div
-            className={`cursor-pointer text-sm font-medium group flex items-center justify-center px-5 bg-blue-600 transition-colors duration-150 dark:bg-blue-600 hover:bg-blue-700 text-white nightwind-prevent ${
-              error ? "shadow-error" : ""
+            className={`relative text-sm font-medium group flex items-center justify-center px-5 transition-colors duration-150 text-white nightwind-prevent ${
+              error
+                ? "cursor-pointer shadow-error bg-red-500"
+                : `bg-blue-600 ${
+                    !disabled && !loading
+                      ? "cursor-pointer hover:bg-blue-700"
+                      : ""
+                  }`
             }`}
-            onClick={onClick}
+            onClick={!disabled && !loading ? onClick : null}
           >
-            {onClickLabel && <span className="mr-1">{onClickLabel}</span>}{" "}
-            <div className="w-[1.2rem] h-[1.2rem] text-white nightwind-prevent transition-transform duration-150 group-hover:translate-x-1">
+            {onClickLabel && (
+              <span className={`mr-1 ${loading ? "-z-10" : ""}`}>
+                {onClickLabel}
+              </span>
+            )}{" "}
+            <div
+              className={`w-[1.2rem] h-[1.2rem] text-white nightwind-prevent transition-transform duration-150 group-hover:translate-x-1 ${
+                loading ? "-z-10" : ""
+              }`}
+            >
               <Arrow />
             </div>
+            {loading && (
+              <div className="absolute flex items-center justify-center w-full h-full">
+                <Spinner />
+              </div>
+            )}
           </div>
         )}
         <input
@@ -85,20 +108,31 @@ const Input: React.FC<Props> = (props) => {
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
+          disabled={disabled || loading}
           {...rest}
         ></input>
         {prefix && (
           <div
-            className={`flex transition duration-150 items-center justify-center px-5 text-gray-600 bg-gray-200 dark:bg-gray-700 border-b-[3px] ${
+            className={`flex transition duration-150 items-center justify-center px-5 text-gray-600 bg-gray-200 dark:bg-gray-700 border-b-[3px]  ${
               error
                 ? "border-red-400 peer-focus:border-red-400 dark:peer-focus:border-red-500 shadow-error"
-                : "text-black border-blue-300 peer-focus:border-sky-600 dark:peer-focus:border-sky-300"
+                : !disabled && !loading
+                ? "border-blue-300 text-black peer-focus:border-sky-600 dark:peer-focus:border-sky-300"
+                : ""
             } ${
-              prefixAction
+              prefixAction && !disabled && !loading
                 ? "cursor-pointer hover:bg-gray-100 hover:text-blue-600"
                 : ""
+            } ${
+              disabled || loading
+                ? "text-gray-400 border-blue-100 bg-gray-100"
+                : ""
             }`}
-            onClick={prefixAction ? () => prefixAction() : null}
+            onClick={
+              prefixAction && !disabled && !loading
+                ? () => prefixAction()
+                : null
+            }
           >
             {prefix}
           </div>
