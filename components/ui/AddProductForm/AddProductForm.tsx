@@ -93,14 +93,17 @@ const AddProductForm = ({
           text={
             <>
               <p className="pb-4">
-                If enabled, the user will always pay in ETH the USD value set (
-                <b>${usdValue / 100}</b>). This protects against drastic changes
-                of the ETH currency.
+                If enabled, it&apos;s like setting the product price in USD. The
+                user will always pay in ETH the corresponding USD value set (
+                <b>${usdValue / 100}</b>). This can be useful to protect against
+                changes in the ETH value over time.
               </p>
               <p className="pb-4">
                 <b>Note:</b> Products with dynamic pricing have a higher
-                transaction fee for the buyer. You can also disable dynamic
-                pricing later.
+                transaction fee for the buyer.
+              </p>
+              <p className="pb-4">
+                <b>Note:</b> You can enable/disable dynamic pricing anytime.
               </p>
             </>
           }

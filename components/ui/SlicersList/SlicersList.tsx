@@ -102,14 +102,21 @@ const SlicersList = () => {
               isCollectible={isCollectible}
               unreleasedAmount={unreleasedAmount}
             />
-            <hr className="my-12 border-gray-300" />
+            {i + 1 != iterator && (
+              <hr className="w-20 mx-auto my-16 border-gray-300" />
+            )}
           </div>
         )
       })}
-      <div className="py-4 space-y-8">
+      <div className="pt-10 pb-6 space-y-8">
         {items < totalOwned && (
           <p className="text-center">
-            <a onClick={() => setItems(items + initItems)}>Load more</a>
+            <a
+              className="underline"
+              onClick={() => setItems(items + initItems)}
+            >
+              Load more
+            </a>
           </p>
         )}
         <div className="flex justify-center">

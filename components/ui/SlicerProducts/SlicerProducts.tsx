@@ -14,7 +14,7 @@ const SlicerProducts = ({ slicerId, editMode }: Props) => {
       {editMode && (
         <div>
           <Button label="Add a product" href={`${slicerId}/products/new`} />
-          <hr className="mt-12 border-gray-300" />
+          <hr className="w-16 mx-auto mt-16 border-gray-300" />
         </div>
       )}
     </>
