@@ -73,7 +73,7 @@ const SlicersList = () => {
 
   return !subgraphData ? (
     <div className="flex justify-center pb-20">
-      <Spinner size="w-12 h-12" />
+      <Spinner size="w-10 h-10" />
     </div>
   ) : totalOwned !== 0 ? (
     <>

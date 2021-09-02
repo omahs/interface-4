@@ -17,6 +17,7 @@ import { useRouter } from "next/dist/client/router"
 import { useState } from "react"
 import { LogDescription } from "ethers/lib/utils"
 import getLog from "@utils/getLog"
+import Spinner from "@components/icons/Spinner"
 
 export default function NewProduct() {
   const router = useRouter()
@@ -47,7 +48,17 @@ export default function NewProduct() {
       />
       <ConnectBlock>
         {loading ? (
-          <p className="text-lg">Loading...</p>
+          <main className="max-w-[420px] mx-auto sm:max-w-screen-md">
+            <DoubleText
+              inactive
+              logoText="Add a new product"
+              size="text-4xl sm:text-5xl"
+              position="pb-12"
+            />
+            <div className="flex justify-center pb-20">
+              <Spinner size="w-10 h-10" />
+            </div>
+          </main>
         ) : isAllowed ? (
           !success ? (
             !loadingForm ? (
