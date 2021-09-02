@@ -9,6 +9,7 @@ type Props = {
   setEthValue: Dispatch<SetStateAction<number>>
   setUsdValue: Dispatch<SetStateAction<number>>
   loading?: boolean
+  label?: string
   actionLabel?: string
   marginLabel?: string
   action?: () => any
@@ -20,6 +21,7 @@ const InputPrice = ({
   setEthValue,
   setUsdValue,
   loading,
+  label,
   actionLabel,
   marginLabel,
   action,
@@ -58,6 +60,7 @@ const InputPrice = ({
           <Input
             type="number"
             placeholder={isEth ? "0.01" : "100"}
+            label={label}
             prefix={currency}
             prefixAction={() => setIsEth((isEth) => !isEth)}
             value={isEth ? ethValue : usdValue}
@@ -70,6 +73,7 @@ const InputPrice = ({
           <Input
             type="number"
             placeholder={isEth ? "0.01" : "100"}
+            label={label}
             prefix={currency}
             prefixAction={() => setIsEth((isEth) => !isEth)}
             value={isEth ? ethValue : usdValue}
@@ -80,7 +84,8 @@ const InputPrice = ({
         <div
           className={`absolute top-0 right-0 flex items-center h-full pb-0.5 ${
             marginLabel || "mr-8"
-          }`}
+          }
+          ${label ? "pt-7" : ""}`}
         >
           <p className="text-sm text-gray-600">
             {destinationCurrency}{" "}

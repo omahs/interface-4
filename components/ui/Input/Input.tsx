@@ -57,7 +57,7 @@ const Input: React.FC<Props> = (props) => {
     <label>
       {label && (
         <p
-          className={`pb-1.5 text-sm font-semibold text-left ${
+          className={`pb-2 text-sm font-semibold text-left ${
             inverted ? "text-gray-200" : "text-gray-700"
           }`}
         >
