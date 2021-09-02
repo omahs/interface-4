@@ -7,6 +7,8 @@ import { defaultProvider } from "@lib/useProvider"
 import { slicer as slicerContract } from "@lib/initProvider"
 import { useAppContext } from "../context"
 import { PaySlicer, Button, MessageBlock } from "@components/ui"
+import supabase from "lib/supabase"
+const reduce = require("image-blob-reduce")()
 
 type Props = {
   editMode: boolean
@@ -85,40 +87,58 @@ const SlicerSubmitBlock = ({
       if (newImage.url) {
         setTempImageUrl(newImage.url)
         const fileExt = newImage.file.name.split(".").pop()
-        const reader = new FileReader()
+        const randomString = Math.random().toString(36).slice(4)
+        const fileName = `slicer_${slicerInfo?.id}_${randomString}`
+        const supabaseStorage = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_NAME
+        console.log(fileExt)
+        let mainImage
+        if (fileExt !== "gif") {
+          mainImage = await reduce.toBlob(newImage.file, { max: 1500 })
+        } else {
+          // Todo: Compress gif before upload
+          mainImage = newImage.file
+        }
+        const { data, error } = await supabase.storage
+          .from(supabaseStorage)
+          .upload(fileName, mainImage, {
+            cacheControl: "3600",
+            upsert: false,
+          })
+        if (error) {
+          throw Error(error.message)
+        }
 
-        reader.onload = async () => {
-          const buffer = reader.result
+        const blurredImage = await reduce.toBlob(newImage.file, { max: 4 })
+        await supabase.storage
+          .from(supabaseStorage)
+          .upload(`${fileName}_blur`, blurredImage, {
+            cacheControl: "3600",
+            upsert: false,
+          })
+
+        if (slicer.imageUrl !== "https://slice.so/slicer_default.png") {
+          const currentImageName = slicer.imageUrl.split("/").pop()
           const body = {
             method: "POST",
             body: JSON.stringify({
-              buffer,
-              fileExt,
-              currentUrl: tempStorageUrl || slicerInfo.image || null,
+              url: currentImageName,
             }),
           }
-          const { Key, error } = await fetcher(
-            `/api/slicer/${slicerInfo?.id}/upload_file`,
-            body
-          )
-          if (error) {
-            throw Error(error)
-          }
-          const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
-          setTempStorageUrl(newFilePath)
-          newInfo = {
-            description: newDescription,
-            name: newName,
-            imageUrl: newFilePath,
-          }
-          await updateDb(newInfo)
-          mutate(`/api/slicer/${slicerInfo?.id}?stats=false`)
-          setNewImage({ url: "", file: undefined })
-          setEditMode(false)
-          setLoading(false)
+          await fetcher(`/api/slicer/delete_file`, body)
         }
 
-        reader.readAsBinaryString(newImage.file)
+        const newFilePath = `${supabaseUrl}/storage/v1/object/public/${data.Key}`
+        setTempStorageUrl(newFilePath)
+        newInfo = {
+          description: newDescription,
+          name: newName,
+          imageUrl: newFilePath,
+        }
+        await updateDb(newInfo)
+        mutate(`/api/slicer/${slicerInfo?.id}?stats=false`)
+        setNewImage({ url: "", file: undefined })
+        setEditMode(false)
+        setLoading(false)
       } else {
         await updateDb(newInfo)
         setEditMode(false)
