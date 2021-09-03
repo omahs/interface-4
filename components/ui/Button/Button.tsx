@@ -75,7 +75,7 @@ const Button: FC<ButtonProps> = (props) => {
         >
           {loading ? (
             <div className="flex items-center justify-center w-full">
-              <Spinner />
+              <Spinner color="text-white nightwind-prevent" />
             </div>
           ) : (
             <div className="flex items-center justify-center">{innerText}</div>

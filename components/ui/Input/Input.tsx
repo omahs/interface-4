@@ -96,7 +96,7 @@ const Input: React.FC<Props> = (props) => {
             </div>
             {loading && (
               <div className="absolute flex items-center justify-center w-full h-full">
-                <Spinner />
+                <Spinner color="text-white nightwind-prevent" />
               </div>
             )}
           </div>
