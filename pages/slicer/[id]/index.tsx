@@ -169,7 +169,8 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
             newImage={newImage}
             setNewImage={setNewImage}
             tempImageUrl={tempImageUrl}
-            editMode={editMode}
+            upload={editMode}
+            msg={msg}
             setMsg={setMsg}
             loading={loading}
           />

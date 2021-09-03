@@ -6,25 +6,29 @@ import handleMessage, { Message } from "@utils/handleMessage"
 
 type Props = {
   name: string
-  imageUrl: string
-  tempImageUrl: string
+  upload: boolean
+  loading: boolean
+  msg: Message
   newImage: NewImage
   setNewImage: Dispatch<SetStateAction<NewImage>>
-  editMode: boolean
   setMsg: Dispatch<SetStateAction<Message>>
-  loading: boolean
+  imageUrl?: string
+  tempImageUrl?: string
+  label?: string
   border?: string
 }
 
 const SlicerImageBlock = ({
   name,
-  imageUrl,
   tempImageUrl,
   newImage,
   setNewImage,
-  editMode,
+  upload,
+  msg,
   setMsg,
   loading,
+  imageUrl,
+  label,
   border,
 }: Props) => {
   const updateImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,53 +51,64 @@ const SlicerImageBlock = ({
   }
 
   return (
-    <div className="py-6 nightwind-prevent-block">
-      <div className={`overflow-hidden ${border || "rounded-2xl"}`}>
-        <label
-          htmlFor="single"
-          className={`relative flex items-center justify-center group ${
-            editMode && !loading ? "bg-gray-800 cursor-pointer" : ""
+    <div className="py-6">
+      {label && (
+        <p className="pb-3 text-sm font-semibold text-left text-gray-700">
+          {label}
+        </p>
+      )}
+      <div className="nightwind-prevent-block">
+        <div
+          className={`overflow-hidden ${border || "rounded-2xl"} ${
+            msg.messageStatus === "error" ? "shadow-error-strong" : ""
           }`}
         >
-          <div
-            className={`transition-opacity flex flex-grow duration-300 ${
-              editMode && !loading ? "opacity-50 group-hover:opacity-20" : ""
+          <label
+            htmlFor="single"
+            className={`relative flex items-center justify-center group ${
+              upload && !loading ? "bg-gray-800 cursor-pointer" : ""
             }`}
           >
             <div
-              className="w-full max-h-[420px] img-background"
-              id="imageWrapper"
+              className={`transition-opacity flex flex-grow duration-300 ${
+                upload && !loading ? "opacity-50 group-hover:opacity-20" : ""
+              }`}
             >
-              {/* Todo: Fix div size */}
-              {newImage.url || tempImageUrl ? (
-                /* eslint-disable @next/next/no-img-element */
-                <img
-                  className="object-cover w-full h-full"
-                  src={newImage.url || tempImageUrl}
-                  alt={`${name} image`}
-                />
-              ) : (
-                /* eslint-enable @next/next/no-img-element */
-                <SlicerImage name={name} imageUrl={imageUrl} />
-              )}
+              <div
+                className="w-full max-h-[420px] img-background"
+                id="imageWrapper"
+              >
+                {/* Todo: Fix div size */}
+                {newImage.url || tempImageUrl ? (
+                  /* eslint-disable @next/next/no-img-element */
+                  <img
+                    className="object-cover w-full h-full"
+                    src={newImage.url || tempImageUrl}
+                    alt={`${name} image`}
+                  />
+                ) : (
+                  /* eslint-enable @next/next/no-img-element */
+                  <SlicerImage name={name} imageUrl={imageUrl} />
+                )}
+              </div>
             </div>
-          </div>
-          <Camera
-            className={`transition-opacity duration-300 absolute w-16 h-16 sm:w-20 sm:h-20 ${
-              editMode && !loading ? "opacity-100" : "opacity-0"
-            } text-white group-hover:text-sky-300`}
-          />
-        </label>
-        {editMode && (
-          <input
-            className="absolute hidden"
-            type="file"
-            id="single"
-            accept="image/*"
-            onChange={(e) => updateImage(e)}
-            disabled={loading}
-          />
-        )}
+            <Camera
+              className={`transition-opacity duration-300 absolute w-16 h-16 sm:w-20 sm:h-20 ${
+                upload && !loading ? "opacity-100" : "opacity-0"
+              } text-white group-hover:text-sky-300`}
+            />
+          </label>
+          {upload && (
+            <input
+              className="absolute hidden"
+              type="file"
+              id="single"
+              accept="image/*"
+              onChange={(e) => updateImage(e)}
+              disabled={loading}
+            />
+          )}
+        </div>
       </div>
     </div>
   )
