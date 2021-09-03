@@ -67,7 +67,7 @@ export default function NewProduct() {
                   inactive
                   logoText="Add a new product"
                   size="text-4xl sm:text-5xl"
-                  position="pb-12"
+                  position="pb-8 sm:pb-12"
                 />
                 <AddProductForm
                   slicerId={Number(id)}

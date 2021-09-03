@@ -1,13 +1,17 @@
 import { useState, Dispatch, SetStateAction } from "react"
-import { Button } from "@components/ui"
+import {
+  Button,
+  MessageBlock,
+  AddProductFormPrice,
+  AddProductFormGeneral,
+  AddProductFormPurchases,
+} from "@components/ui"
 import { AddProduct } from "@lib/handlers/chain"
 import handleSubmit from "@utils/handleSubmit"
 import handleMessage, { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
-import MessageBlock from "../MessageBlock"
-import InputPrice from "../InputPrice"
-import Question from "../Question"
-import MySwitch from "../MySwitch"
+import { NewImage } from "pages/slicer/[id]"
+import supabaseUpload from "@utils/supabaseUpload"
 
 type Props = {
   slicerId: number
@@ -28,15 +32,18 @@ const AddProductForm = ({
 }: Props) => {
   const [usdValue, setUsdValue] = useState(0)
   const [ethValue, setEthValue] = useState(0)
-
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [newImage, setNewImage] = useState<NewImage>({
+    url: "",
+    file: undefined,
+  })
   const [isUSD, setIsUSD] = useState(false)
-  const [isMultiple, setIsMultiple] = useState(false)
-  const [isInfinite, setIsInfinite] = useState(true)
+  const [isSingle, setIsSingle] = useState(false)
+  const [isLimited, setIsLimited] = useState(false)
   const [units, setUnits] = useState(0)
-  const [data, setData] = useState([])
   const [purchaseData, setPurchaseData] = useState([])
   const [message, setMessage] = useState<Message>()
-  const productPrice = isUSD ? Math.floor(usdValue * 100) : ethValue
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
@@ -48,8 +55,8 @@ const AddProductForm = ({
           0,
           productPrice,
           isUSD,
-          isMultiple,
-          isInfinite,
+          !isSingle,
+          !isLimited,
           units,
           data,
           purchaseData
@@ -75,43 +82,35 @@ const AddProductForm = ({
   }
 
   return (
-    <form
-      className="w-full max-w-screen-sm py-6 mx-auto space-y-4"
-      onSubmit={submit}
-    >
-      <InputPrice
-        ethValue={ethValue}
-        setEthValue={setEthValue}
-        usdValue={usdValue}
-        setUsdValue={setUsdValue}
+    <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>
+      <AddProductFormGeneral
+        newImage={newImage}
+        setNewImage={setNewImage}
+        name={name}
+        description={description}
         loading={loading}
+        setName={setName}
+        setDescription={setDescription}
       />
-      {/* Todo: isUSD toggle / dyn. pricing */}
-      <div className="relative flex items-center justify-end col-span-5 xs:col-end-7">
-        <p className="pr-1">Dynamic pricing</p>
-        <Question
-          text={
-            <>
-              <p className="pb-4">
-                If enabled, it&apos;s like setting the product price in USD. The
-                user will always pay in ETH the corresponding USD value set (
-                <b>${usdValue / 100}</b>). This can be useful to protect against
-                changes in the ETH value over time.
-              </p>
-              <p className="pb-4">
-                <b>Note:</b> Products with dynamic pricing have a higher
-                transaction fee for the buyer.
-              </p>
-              <p className="pb-4">
-                <b>Note:</b> You can enable/disable dynamic pricing anytime.
-              </p>
-            </>
-          }
-        />
-        <MySwitch enabled={isUSD} setEnabled={setIsUSD} />
-      </div>
-      <div className="py-1">
-        <Button label="Slice" type="submit" />
+      <AddProductFormPrice
+        isSingle={isSingle}
+        isLimited={isLimited}
+        units={units}
+        ethValue={ethValue}
+        usdValue={usdValue}
+        isUSD={isUSD}
+        loading={loading}
+        setIsSingle={setIsSingle}
+        setIsLimited={setIsLimited}
+        setUnits={setUnits}
+        setEthValue={setEthValue}
+        setUsdValue={setUsdValue}
+        setIsUSD={setIsUSD}
+      />
+      <AddProductFormPurchases setPurchaseData={setPurchaseData} />
+
+      <div className="pt-4 pb-1">
+        <Button label="Create product" type="submit" />
       </div>
       <div>
         <MessageBlock msg={message} />
