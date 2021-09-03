@@ -15,7 +15,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         .from(supabaseStorage)
         .remove([url, `${url}_blur`])
 
-      console.log(data)
       if (error) {
         throw Error(error.message)
       }

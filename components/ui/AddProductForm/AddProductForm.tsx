@@ -49,6 +49,19 @@ const AddProductForm = ({
     e.preventDefault()
     try {
       // if (...) {
+
+      // Todo: Blockchain query to retrieve current productId
+      const productId = 1
+
+      // Todo: Figure out how to conclude image upload flow
+      const { Key } = await supabaseUpload(
+        `slicer_${slicerId}_product_${productId}`,
+        newImage
+      )
+
+      const productPrice = isUSD ? Math.floor(usdValue * 100) : ethValue
+      const data = []
+
       const eventLogs = await handleSubmit(
         AddProduct(
           slicerId,
