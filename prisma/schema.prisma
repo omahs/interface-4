@@ -19,4 +19,19 @@ model Slicer {
   image         String?
   isCollectible Boolean?
   attributes    Json[]
+  products      Product[]
+}
+
+model Product {
+  id            Int      @default(autoincrement()) @id
+  productId     Int      @map(name: "product_id")
+  name          String
+  description   String
+  image         String?
+  slicer        Slicer   @relation(fields: [slicerId], references: [id])
+  slicerId      Int      @map(name: "slicer_id")
+  
+  @@index([productId], name:"productId")
+  @@index([slicerId], name:"slicerId")
+  @@unique([productId, slicerId], name: "productSlicer")
 }
