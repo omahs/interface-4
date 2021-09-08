@@ -27,7 +27,8 @@ const SlicersList = () => {
     `
   let subgraphData = useQuery(tokensQuery, [account])
   const slicers = subgraphData?.payee?.slicers
-  const totalOwned = slicers?.length
+  const slicersOwned = slicers?.filter((el) => el.slices != 0)
+  const totalOwned = slicersOwned?.length
   let slicerAddresses = []
 
   const initItems = 4
@@ -44,7 +45,7 @@ const SlicersList = () => {
 
   useEffect(() => {
     if (account && slicers) {
-      slicers?.map((slicer) => {
+      slicersOwned?.map((slicer) => {
         slicerAddresses.push(slicer.slicer.address)
       })
       const body = {
@@ -75,17 +76,19 @@ const SlicersList = () => {
     <div className="flex justify-center pb-20">
       <Spinner size="w-10 h-10" />
     </div>
-  ) : totalOwned !== 0 ? (
+  ) : totalOwned ? (
     <>
       {[...Array(iterator)].map((el, key) => {
         const i = Number(key)
-        const slicerId = slicers[i].slicer.id
-        const slicerShares = slicers[i].slices
-        const totalSlices = slicers[i].slicer.slices
-        const slicerAddress = slicers[i].slicer.address
-        const isCollectible = slicers[i].slicer.isCollectible
-        const isAllowed =
-          Number(slicerShares) >= Number(slicers[i].slicer.minimumSlices)
+        // Todo: Figure our how to fix 10 coming after 1 (comes from graphql query)
+        // const sortedId = totalOwned - 1 - i
+        const ownedShares = slicersOwned[i].slices
+        const slicer = slicersOwned[i].slicer
+        const slicerId = slicer.id
+        const totalSlices = slicer.slices
+        const slicerAddress = slicer.address
+        const isCollectible = slicer.isCollectible
+        const isAllowed = Number(ownedShares) >= Number(slicer.minimumSlices)
         const unreleasedAmount = unreleased[i]
           ? Math.floor((Number(unreleased[i].hex) / Math.pow(10, 18)) * 10000) /
             10000
@@ -96,7 +99,7 @@ const SlicersList = () => {
               slicerAddress={slicerAddress}
               slicerId={slicerId}
               account={account}
-              shares={slicerShares}
+              shares={ownedShares}
               totalSlices={totalSlices}
               isAllowed={isAllowed}
               isCollectible={isCollectible}
