@@ -12,6 +12,9 @@ import handleMessage, { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import { NewImage } from "pages/slicer/[id]"
 import supabaseUpload from "@utils/supabaseUpload"
+import useQuery from "@utils/subgraphQuery"
+import { CreateProduct } from "@lib/handlers/prisma"
+import fetcher from "@utils/fetcher"
 
 type Props = {
   slicerId: number
@@ -45,41 +48,69 @@ const AddProductForm = ({
   const [purchaseData, setPurchaseData] = useState([])
   const [message, setMessage] = useState<Message>()
 
+  // Todo: Handle productId update after product creation
+  const tokensQuery = /* GraphQL */ `
+    slicer(id: "${slicerId}") {
+      products {
+        id
+      }
+    }
+  `
+  let subgraphData = useQuery(tokensQuery)
+  const productId = subgraphData?.slicer?.products?.length + 1
+
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
+    setLoading(true)
     try {
+      if (!productId) {
+        throw Error("An unexpected error occurred. Try again")
+      }
       // if (...) {
 
-      // Todo: Blockchain query to retrieve current productId
-      const productId = 1
+      let image = ""
+      if (newImage.url) {
+        {
+          const { Key } = await supabaseUpload(
+            `slicer_${slicerId}_product_${productId}`,
+            newImage
+          )
+          image = Key
+        }
+      }
 
-      // Todo: Figure out how to conclude image upload flow
-      const { Key } = await supabaseUpload(
-        `slicer_${slicerId}_product_${productId}`,
-        newImage
-      )
+      const body = {
+        method: "POST",
+        body: JSON.stringify({
+          productId,
+          name,
+          description,
+          image,
+        }),
+      }
+      await fetcher(`/api/slicer/${slicerId}/createProduct`, body)
 
-      const productPrice = isUSD ? Math.floor(usdValue * 100) : ethValue
-      const data = []
+      // const productPrice = isUSD ? Math.floor(usdValue * 100) : ethValue
+      // const data = []
 
-      const eventLogs = await handleSubmit(
-        AddProduct(
-          slicerId,
-          0,
-          productPrice,
-          isUSD,
-          !isSingle,
-          !isLimited,
-          units,
-          data,
-          purchaseData
-        ),
-        setMessage,
-        setLoading,
-        setSuccess,
-        true
-      )
-      setLogs(eventLogs)
+      // const eventLogs = await handleSubmit(
+      //   AddProduct(
+      //     slicerId,
+      //     0,
+      //     productPrice,
+      //     isUSD,
+      //     !isSingle,
+      //     !isLimited,
+      //     units,
+      //     data,
+      //     purchaseData
+      //   ),
+      //   setMessage,
+      //   setLoading,
+      //   setSuccess,
+      //   true
+      // )
+      // setLogs(eventLogs)
       // } else {
       //   handleMessage(
       //     {
@@ -92,6 +123,7 @@ const AddProductForm = ({
     } catch (err) {
       console.log(err)
     }
+    setLoading(false)
   }
 
   return (
