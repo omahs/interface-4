@@ -16,6 +16,7 @@ type Props = {
   tempImageUrl?: string
   label?: string
   border?: string
+  maxHeight?: string
 }
 
 const SlicerImageBlock = ({
@@ -30,6 +31,7 @@ const SlicerImageBlock = ({
   imageUrl,
   label,
   border,
+  maxHeight,
 }: Props) => {
   const updateImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
@@ -51,7 +53,7 @@ const SlicerImageBlock = ({
   }
 
   return (
-    <div className="py-6">
+    <div>
       {label && (
         <p className="pb-3 text-sm font-semibold text-left text-gray-700">
           {label}
@@ -75,7 +77,9 @@ const SlicerImageBlock = ({
               }`}
             >
               <div
-                className="w-full max-h-[420px] img-background"
+                className={`w-full ${
+                  maxHeight ? maxHeight : "max-h-[420px]"
+                } img-background`}
                 id="imageWrapper"
               >
                 {/* Todo: Fix div size */}

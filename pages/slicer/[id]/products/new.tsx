@@ -31,7 +31,7 @@ export default function NewProduct() {
   return (
     <Container page={true}>
       <NextSeo
-        title="Add a new product"
+        title="Add product"
         openGraph={{
           title: longTitle,
           description: defaultDescription,
@@ -51,7 +51,7 @@ export default function NewProduct() {
           <main className="max-w-[420px] mx-auto sm:max-w-screen-md">
             <DoubleText
               inactive
-              logoText="Add a new product"
+              logoText="Add product"
               size="text-4xl sm:text-5xl"
               position="pb-12"
             />
@@ -65,7 +65,7 @@ export default function NewProduct() {
               <main className="max-w-[420px] mx-auto sm:max-w-screen-md">
                 <DoubleText
                   inactive
-                  logoText="Add a new product"
+                  logoText="Add product"
                   size="text-4xl sm:text-5xl"
                   position="pb-8 sm:pb-12"
                 />
@@ -96,7 +96,7 @@ export default function NewProduct() {
               }
               buttonLabel="Go to slicer"
               href={`/slicer/${id}`}
-              buttonLabelSecondary="Add a new product"
+              buttonLabelSecondary="Add product"
               onClickSecondary={() => setSuccess(false)}
             />
           )

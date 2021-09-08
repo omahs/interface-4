@@ -84,7 +84,7 @@ const AddProductFormPrice = ({
         usdValue={usdValue}
         setUsdValue={setUsdValue}
         loading={loading}
-        label="Price"
+        label="Price per unit"
       />
       <InputSwitch
         label="Dynamic pricing"

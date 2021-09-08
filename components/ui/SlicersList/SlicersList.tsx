@@ -79,9 +79,8 @@ const SlicersList = () => {
   ) : totalOwned ? (
     <>
       {[...Array(iterator)].map((el, key) => {
+        // Todo: Add sorting
         const i = Number(key)
-        // Todo: Figure our how to fix 10 coming after 1 (comes from graphql query)
-        // const sortedId = totalOwned - 1 - i
         const ownedShares = slicersOwned[i].slices
         const slicer = slicersOwned[i].slicer
         const slicerId = slicer.id

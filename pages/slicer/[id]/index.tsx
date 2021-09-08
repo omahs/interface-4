@@ -163,17 +163,19 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
               loading={loading}
             />
           </div>
-          <SlicerImageBlock
-            name={slicer.name}
-            imageUrl={slicer.imageUrl}
-            newImage={newImage}
-            setNewImage={setNewImage}
-            tempImageUrl={tempImageUrl}
-            upload={editMode}
-            msg={msg}
-            setMsg={setMsg}
-            loading={loading}
-          />
+          <div className="py-6">
+            <SlicerImageBlock
+              name={slicer.name}
+              imageUrl={slicer.imageUrl}
+              newImage={newImage}
+              setNewImage={setNewImage}
+              tempImageUrl={tempImageUrl}
+              upload={editMode}
+              msg={msg}
+              setMsg={setMsg}
+              loading={loading}
+            />
+          </div>
           <SlicerProducts editMode={editMode} slicerId={slicerInfo?.id} />
           <SlicerSubmitBlock
             editMode={editMode}

@@ -29,7 +29,6 @@ const AddProductFormGeneral = ({
 
   return (
     <>
-      <h2 className="pb-4 sm:pb-6">General</h2>
       <div>
         <Input label="Name" type="string" value={name} onChange={setName} />
       </div>
@@ -51,6 +50,7 @@ const AddProductFormGeneral = ({
         msg={msg}
         setMsg={setMsg}
         loading={loading}
+        maxHeight="max-h-[250px]"
       />
       <MessageBlock msg={msg} />
       {/* Todo: Add tags */}
