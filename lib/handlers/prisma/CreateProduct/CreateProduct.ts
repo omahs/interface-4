@@ -5,10 +5,11 @@ const CreateProduct = async (
   slicerId: number,
   name: string,
   description: string,
+  hash: string,
   image?: string
 ) => {
   const query = await prisma.product.create({
-    data: { productId, slicerId, name, description, image },
+    data: { productId, slicerId, name, description, image, hash },
   })
 
   return query
