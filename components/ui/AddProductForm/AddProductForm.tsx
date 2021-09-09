@@ -14,6 +14,7 @@ import { NewImage } from "pages/slicer/[id]"
 import supabaseUpload from "@utils/supabaseUpload"
 import useQuery from "@utils/subgraphQuery"
 import fetcher from "@utils/fetcher"
+import { Bytes32FromIpfsHash, IpfsHashFromBytes32 } from "@utils/convertBytes"
 
 type Props = {
   slicerId: number
@@ -32,8 +33,8 @@ const AddProductForm = ({
   setSuccess,
   setLogs,
 }: Props) => {
-  const [usdValue, setUsdValue] = useState(0)
-  const [ethValue, setEthValue] = useState(0)
+  const [usdValue, setUsdValue] = useState<number>()
+  const [ethValue, setEthValue] = useState<number>()
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [newImage, setNewImage] = useState<NewImage>({
@@ -71,25 +72,26 @@ const AddProductForm = ({
 
       // save image on supabase
       if (newImage.url) {
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
         {
           const { Key } = await supabaseUpload(
-            `slicer_${slicerId}_product_${productId}`,
+            `${slicerId}/product_${productId}`,
             newImage
           )
-          image = Key
+          image = `${supabaseUrl}/storage/v1/object/public/${Key}`
         }
       }
 
       // Pin metadata on pinata
       const metadata = { name, description, image }
       const pinBody = {
-        body: JSON.stringify({ metadata }),
+        body: JSON.stringify({ metadata, slicerId, productId }),
         method: "POST",
       }
       const { IpfsHash } = await fetcher("/api/pin_json", pinBody)
       hash = IpfsHash
 
-      // save hash & imageUrl on prisma
+      // save metadata, hash & imageUrl on prisma
       const body = {
         method: "POST",
         body: JSON.stringify({
@@ -104,6 +106,7 @@ const AddProductForm = ({
 
       // create product on smart contract
       const productPrice = isUSD ? Math.floor(usdValue * 100) : ethValue
+      const bytes32Hash = Bytes32FromIpfsHash(hash)
 
       const eventLogs = await handleSubmit(
         AddProduct(
@@ -114,7 +117,7 @@ const AddProductForm = ({
           !isSingle,
           !isLimited,
           units,
-          [hash],
+          bytes32Hash,
           purchaseData
         ),
         setMessage,
@@ -133,7 +136,7 @@ const AddProductForm = ({
       //   )
       // }
     } catch (err) {
-      // Todo: Test errors
+      // Todo: Test this
       // unpin
       if (hash) {
         const unpinBody = {

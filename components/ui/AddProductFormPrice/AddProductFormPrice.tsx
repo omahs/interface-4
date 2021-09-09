@@ -74,6 +74,7 @@ const AddProductFormPrice = ({
               type="number"
               value={units}
               onChange={setUnits}
+              required={isLimited}
             />
           </div>
         )}
@@ -85,6 +86,8 @@ const AddProductFormPrice = ({
         setUsdValue={setUsdValue}
         loading={loading}
         label="Price per unit"
+        error={ethValue === 0}
+        required
       />
       <InputSwitch
         label="Dynamic pricing"

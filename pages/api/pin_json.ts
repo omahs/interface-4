@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import fetcher from "@utils/fetcher"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { metadata } = JSON.parse(req.body)
+  const { metadata, slicerId, productId } = JSON.parse(req.body)
   const baseUrl = process.env.NEXT_PUBLIC_PINATA_URL
 
   try {
@@ -12,7 +12,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           Authorization: `Bearer ${process.env.PINATA_JWT}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ pinataContent: metadata }),
+        body: JSON.stringify({
+          pinataMetadata: {
+            name: metadata.name,
+            keyvalues: {
+              slicerId,
+              productId,
+            },
+          },
+          pinataContent: metadata,
+        }),
         method: "POST",
       }
       const { IpfsHash } = await fetcher(

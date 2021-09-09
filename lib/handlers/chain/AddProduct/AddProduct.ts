@@ -10,8 +10,8 @@ const AddProduct = async (
   isMultiple: boolean,
   isInfinite: boolean,
   units: number,
-  data = [],
-  purchaseData = [],
+  data: string | object = [],
+  purchaseData: string | object = [],
   subSlicersIds = [],
   subProducts = []
 ) => {
@@ -22,6 +22,7 @@ const AddProduct = async (
   const productPrice = isUSD ? price : ethToWei
 
   try {
+    console.log("trying")
     const call = await contract.addProduct(
       categoryIndex,
       productPrice,
@@ -36,6 +37,7 @@ const AddProduct = async (
     )
     return [contract, call]
   } catch (err) {
+    console.log(err)
     throw err
   }
 }

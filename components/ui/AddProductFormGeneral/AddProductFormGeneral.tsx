@@ -30,7 +30,13 @@ const AddProductFormGeneral = ({
   return (
     <>
       <div>
-        <Input label="Name" type="string" value={name} onChange={setName} />
+        <Input
+          label="Name"
+          type="string"
+          value={name}
+          onChange={setName}
+          required
+        />
       </div>
       <div>
         <Input
@@ -38,6 +44,7 @@ const AddProductFormGeneral = ({
           type="string"
           value={description}
           onChange={setDescription}
+          required
         />
       </div>
       {/* Todo: Add product image */}

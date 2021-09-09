@@ -89,7 +89,7 @@ const SlicerSubmitBlock = ({
         setTempImageUrl(newImage.url)
 
         const { Key } = await supabaseUpload(
-          `slicer_${slicerInfo?.id}`,
+          `${slicerInfo?.id}/main`,
           newImage,
           slicer.imageUrl,
           slicerInfo?.isCollectible
