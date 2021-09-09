@@ -11,10 +11,9 @@ import handleSubmit from "@utils/handleSubmit"
 import handleMessage, { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import { NewImage } from "pages/slicer/[id]"
-import supabaseUpload from "@utils/supabaseUpload"
 import useQuery from "@utils/subgraphQuery"
-import fetcher from "@utils/fetcher"
-import { Bytes32FromIpfsHash, IpfsHashFromBytes32 } from "@utils/convertBytes"
+import { bytes32FromIpfsHash, ipfsHashFromBytes32 } from "@utils/convertBytes"
+import { beforeCreate, handleReject } from "@lib/handleCreateProduct"
 
 type Props = {
   slicerId: number
@@ -61,52 +60,19 @@ const AddProductForm = ({
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
-    let image = ""
-    let hash = ""
     setLoading(true)
     try {
-      if (!productId) {
-        throw Error("An unexpected error occurred. Try again")
-      }
-      // if (...) {
+      const { hash, image, newProduct } = await beforeCreate(
+        productId,
+        slicerId,
+        name,
+        description,
+        newImage
+      )
 
-      // save image on supabase
-      if (newImage.url) {
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-        {
-          const { Key } = await supabaseUpload(
-            `${slicerId}/product_${productId}`,
-            newImage
-          )
-          image = `${supabaseUrl}/storage/v1/object/public/${Key}`
-        }
-      }
-
-      // Pin metadata on pinata
-      const metadata = { name, description, image }
-      const pinBody = {
-        body: JSON.stringify({ metadata, slicerId, productId }),
-        method: "POST",
-      }
-      const { IpfsHash } = await fetcher("/api/pin_json", pinBody)
-      hash = IpfsHash
-
-      // save metadata, hash & imageUrl on prisma
-      const body = {
-        method: "POST",
-        body: JSON.stringify({
-          productId,
-          name,
-          description,
-          image,
-          hash,
-        }),
-      }
-      await fetcher(`/api/slicer/${slicerId}/createProduct`, body)
-
-      // create product on smart contract
+      // Create product on smart contract
       const productPrice = isUSD ? Math.floor(usdValue * 100) : ethValue
-      const bytes32Hash = Bytes32FromIpfsHash(hash)
+      const bytes32Hash = bytes32FromIpfsHash(hash)
 
       const eventLogs = await handleSubmit(
         AddProduct(
@@ -126,36 +92,11 @@ const AddProductForm = ({
         true
       )
       setLogs(eventLogs)
-      // } else {
-      //   handleMessage(
-      //     {
-      //       message: "Inputs don't correspond, please try again",
-      //       messageStatus: "error",
-      //     },
-      //     setMessage
-      //   )
-      // }
+
+      if (!success) {
+        await handleReject(slicerId, image, hash, newProduct.id)
+      }
     } catch (err) {
-      // Todo: Test this
-      // unpin
-      if (hash) {
-        const unpinBody = {
-          body: JSON.stringify({ hash }),
-          method: "POST",
-        }
-        hash = await fetcher("/api/unpin", unpinBody)
-      }
-      // delete image from supabase
-      if (image) {
-        const currentImageName = image.split("/").pop()
-        const body = {
-          method: "POST",
-          body: JSON.stringify({
-            url: currentImageName,
-          }),
-        }
-        await fetcher(`/api/slicer/delete_file`, body)
-      }
       console.log(err)
     }
     setLoading(false)
@@ -201,4 +142,5 @@ const AddProductForm = ({
 
 export default AddProductForm
 
-// Todo: This page
+// Todo: Add dynamic loading states on submit (1. getting ready, 2. waiting for blockchain, 3. reverting)
+// Todo: What else to add to metadata?

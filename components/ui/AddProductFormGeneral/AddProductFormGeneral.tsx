@@ -1,7 +1,14 @@
 import { Dispatch, SetStateAction, useState } from "react"
-import { Input, SlicerImageBlock, MessageBlock } from "@components/ui"
+import {
+  Input,
+  SlicerImageBlock,
+  MessageBlock,
+  InputTags,
+} from "@components/ui"
 import { NewImage } from "pages/slicer/[id]"
 import { Message } from "@utils/handleMessage"
+
+// const tagsList = ["product", "service", "other"]
 
 type Props = {
   name: string
@@ -10,6 +17,7 @@ type Props = {
   loading: boolean
   setName: Dispatch<SetStateAction<string>>
   setDescription: Dispatch<SetStateAction<string>>
+  // setTags: Dispatch<SetStateAction<string[]>>
   setNewImage: Dispatch<SetStateAction<NewImage>>
 }
 
@@ -20,6 +28,7 @@ const AddProductFormGeneral = ({
   loading,
   setName,
   setDescription,
+  // setTags,
   setNewImage,
 }: Props) => {
   const [msg, setMsg] = useState<Message>({
@@ -31,7 +40,7 @@ const AddProductFormGeneral = ({
     <>
       <div>
         <Input
-          label="Name"
+          label="Name*"
           type="string"
           value={name}
           onChange={setName}
@@ -40,14 +49,15 @@ const AddProductFormGeneral = ({
       </div>
       <div>
         <Input
-          label="Description"
+          label="Description*"
           type="string"
           value={description}
           onChange={setDescription}
           required
         />
       </div>
-      {/* Todo: Add product image */}
+      {/* Todo: Add tags */}
+      {/* <InputTags tags={tagsList} setTags={setTags} /> */}
       <SlicerImageBlock
         name={name}
         newImage={newImage}
@@ -60,7 +70,6 @@ const AddProductFormGeneral = ({
         maxHeight="max-h-[250px]"
       />
       <MessageBlock msg={msg} />
-      {/* Todo: Add tags */}
       <div>
         <hr className="w-20 mx-auto border-gray-300 my-14" />
       </div>
