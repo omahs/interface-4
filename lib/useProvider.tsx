@@ -16,20 +16,23 @@ export const initialize = async () => {
 
 export const useAllowed = (slicerId: number) => {
   const { account } = useAppContext()
-  const [isAllowed, setIsAllowed] = useState(false)
+  const [access, setAccess] = useState({ isAllowed: false, loading: false })
   const getAllowed = async () => {
+    setAccess({ isAllowed: false, loading: true })
     if (slicerId != null && account) {
       const slicerContract = await slicer(slicerId, defaultProvider)
-      const isPayeeAllowed = await slicerContract.isPayeeAllowed(account)
-      setIsAllowed(isPayeeAllowed)
+      const isPayeeAllowed: boolean = await slicerContract.isPayeeAllowed(
+        account
+      )
+      setAccess({ isAllowed: isPayeeAllowed, loading: false })
     } else {
-      setIsAllowed(false)
+      setAccess({ isAllowed: false, loading: false })
     }
   }
   useEffect(() => {
     getAllowed()
   }, [account])
-  return isAllowed
+  return access
 }
 
 const useProvider = (setLoading: Dispatch<SetStateAction<boolean>>) => {

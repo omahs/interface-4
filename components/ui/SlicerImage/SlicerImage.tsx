@@ -3,7 +3,7 @@ import defaultImageUrl from "public/slicer_default.png"
 
 type Props = {
   name: string
-  imageUrl: string
+  imageUrl?: string
 }
 
 const SlicerImage = ({ name, imageUrl }: Props) => {

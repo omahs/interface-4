@@ -11,11 +11,28 @@ generator client {
 }
 
 model Slicer {
-  id           Int      @id
-  name         String?
-  description  String?
-  external_url String?
-  address      String?
-  image        String?
-  attributes   Json[]
+  id            Int      @id
+  name          String?
+  description   String?
+  external_url  String?
+  address       String?
+  image         String?
+  isCollectible Boolean?
+  attributes    Json[]
+  products      Product[]
+}
+
+model Product {
+  id            Int      @default(autoincrement()) @id
+  productId     Int      @map(name: "product_id")
+  name          String
+  description   String
+  image         String?
+  hash          String
+  slicer        Slicer   @relation(fields: [slicerId], references: [id])
+  slicerId      Int      @map(name: "slicer_id")
+  
+  @@index([productId], name:"productId")
+  @@index([slicerId], name:"slicerId")
+  @@unique([productId, slicerId], name: "productSlicer")
 }

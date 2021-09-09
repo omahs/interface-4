@@ -10,15 +10,24 @@ import { mutate } from "swr"
 import useSWR from "swr"
 import fetcher from "@utils/fetcher"
 import InputAddress from "../InputAddress"
+import getLog from "@utils/getLog"
+import useQuery from "@utils/subgraphQuery"
 
 type Props = {
   account: string
-  slicerId: number
-  ownedShares: number
+  slicerId: string
+  ownedSlices: number
+  totalSlices: number
+  minimumSlices: number
 }
 
-const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
-  const { data } = useSWR(`/api/slicer/${slicerId}/minimum_shares`, fetcher)
+const TransferForm = ({
+  account,
+  slicerId,
+  ownedSlices,
+  totalSlices,
+  minimumSlices,
+}: Props) => {
   const { data: unreleasedData } = useSWR(
     `/api/slicer/${slicerId}/account/${account}/unreleased`,
     fetcher
@@ -33,16 +42,15 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
 
   const [success, setSuccess] = useState(false)
   const [logs, setLogs] = useState<LogDescription[]>()
-  // const eventLog = getLog(logs, "")
+  const eventLog = getLog(logs, "TransferSingle")
 
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message>()
-  const minimumShares = Number(data?.hex)
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
     const eventLog = await handleSubmit(
-      TransferShares(account, address, slicerId, shares),
+      TransferShares(account, address, Number(slicerId), shares),
       setMessage,
       setLoading,
       setSuccess
@@ -74,21 +82,23 @@ const TransferForm = ({ account, slicerId, ownedShares }: Props) => {
               <Input
                 type="number"
                 label="Slices to transfer"
-                placeholder={`Up to ${ownedShares}`}
+                placeholder={`Up to ${ownedSlices || "..."}`}
                 required
-                error={shares > ownedShares}
+                error={shares > ownedSlices}
                 onChange={setShares}
               />
             </div>
             <div className="space-y-4">
-              {data && minimumShares && ownedShares - shares < minimumShares && (
-                <p className="text-sm">
-                  <span className="font-medium">Note:</span> You&apos;ll lose
-                  privileged access to the slicer, as you will not hold the
-                  minimum amount of slices (
-                  <span className="font-medium">{minimumShares}</span>)
-                </p>
-              )}
+              {minimumSlices != 0 &&
+                ownedSlices > minimumSlices &&
+                ownedSlices - shares < minimumSlices && (
+                  <p className="text-sm">
+                    <span className="font-medium">Note:</span> You&apos;ll lose
+                    privileged access to the slicer, as you will not hold the
+                    minimum amount of slices (
+                    <span className="font-medium">{minimumSlices}</span>)
+                  </p>
+                )}
               {unreleased && Number(unreleased.hex) !== 0 && (
                 <p className="text-sm">
                   <span className="font-medium">Note:</span> you have an

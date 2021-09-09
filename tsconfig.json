@@ -28,7 +28,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "javascript/themeContext.js"
+    "javascript/themeContext.js",
+    "test/main.js"
   ],
   "exclude": ["node_modules"]
 }

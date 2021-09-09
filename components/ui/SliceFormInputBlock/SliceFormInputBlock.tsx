@@ -131,7 +131,7 @@ const SliceFormInputBlock = ({
                 "%"}
           </p>
         </div>
-        <hr className="col-span-8 my-4 border-gray-300 xs:hidden" />
+        <hr className="w-20 col-span-8 mx-auto my-6 border-gray-300 xs:hidden" />
       </>
     )
   )

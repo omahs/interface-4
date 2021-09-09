@@ -8,7 +8,13 @@ import {
   longTitle,
   domain,
 } from "@components/common/Head"
-import { Slicer } from "@prisma/client"
+
+export type SlicerReduced = {
+  id: number
+  name: string | null
+  image: string | null
+  isCollectible: boolean | null
+}
 
 const SlicerGrid = ({
   data,
@@ -47,24 +53,21 @@ const SlicerGrid = ({
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
+  const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
+  const data: SlicerReduced[] = await fetcher(
+    `${baseUrl}/api/slicer?items=${totalSlicers}`
+  )
+  // const totalSlicers = 0
 
-  try {
-    const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
-    const data: Slicer[] = await fetcher(
-      `${baseUrl}/api/slicer?items=${totalSlicers}`
-    )
-    // const totalSlicers = 0
-
-    return {
-      props: {
-        data,
-        totalSlicers,
-      },
-      revalidate: 10,
-    }
-  } catch (err) {
-    throw err
+  return {
+    props: {
+      data,
+      totalSlicers,
+    },
+    revalidate: 10,
   }
 }
 
 export default SlicerGrid
+
+// Todo: Select to filter slicers/NFT

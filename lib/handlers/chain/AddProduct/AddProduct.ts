@@ -5,27 +5,34 @@ import { slicer } from "@lib/initProvider"
 const AddProduct = async (
   slicerId: number,
   categoryIndex: number,
-  priceInEth: number,
+  price: number,
   isUSD: boolean,
   isMultiple: boolean,
-  units: number
-  // bytes memory data,
-  // bytes memory purchaseData
+  isInfinite: boolean,
+  units: number,
+  data = [],
+  purchaseData = [],
+  subSlicersIds = [],
+  subProducts = []
 ) => {
   const { signer } = await initialize()
   const contract = await slicer(slicerId, signer)
   const decimals = BigNumber.from(10).pow(18)
-  const amountBN = BigNumber.from(priceInEth).mul(decimals)
+  const ethToWei = BigNumber.from(price).mul(decimals)
+  const productPrice = isUSD ? price : ethToWei
 
   try {
     const call = await contract.addProduct(
       categoryIndex,
-      amountBN,
+      productPrice,
       isUSD,
       isMultiple,
+      isInfinite,
       units,
-      [],
-      []
+      data,
+      purchaseData,
+      subSlicersIds,
+      subProducts
     )
     return [contract, call]
   } catch (err) {

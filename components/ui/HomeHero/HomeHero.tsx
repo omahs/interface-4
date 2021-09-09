@@ -24,7 +24,7 @@ const HomeHero = () => {
       </div>
       <h2 className="pb-1 font-black leading-normal">
         Decentralized payments <br />
-        <span className="text-blue-600">
+        <span className="text-random2-600">
           for{" "}
           <ReactRotatingText
             pause={2000}

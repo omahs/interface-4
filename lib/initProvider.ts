@@ -1,8 +1,8 @@
 import { ethers } from "ethers"
-import SLCContract from "artifacts/contracts/slice.sol/SLC.json"
-import SliceCoreContract from "artifacts/contracts/slice.sol/SliceCore.json"
-import SliceContract from "artifacts/contracts/slice.sol/Slice.json"
-import SlicerContract from "artifacts/contracts/slice.sol/Slicer.json"
+import SLCContract from "artifacts/contracts/slc_v0.sol/SLC.json"
+import SliceCoreContract from "artifacts/contracts/sliceCore_v0.sol/SliceCore.json"
+import SliceContract from "artifacts/contracts/slice_v0.sol/Slice.json"
+import SlicerContract from "artifacts/contracts/slicer_v0.sol/Slicer.json"
 
 export const slc = (signer: ethers.Signer | ethers.providers.Provider) =>
   new ethers.Contract(

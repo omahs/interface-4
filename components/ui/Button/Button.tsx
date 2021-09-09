@@ -65,11 +65,17 @@ const Button: FC<ButtonProps> = (props) => {
         <button
           className={`peer relative z-10 ${rootClassName} ${color}`}
           type={type}
-          onClick={requireConnection && !isConnected ? requestAccount : onClick}
+          onClick={
+            !loading
+              ? requireConnection && !isConnected
+                ? requestAccount
+                : onClick
+              : null
+          }
         >
           {loading ? (
             <div className="flex items-center justify-center w-full">
-              <Spinner />
+              <Spinner color="text-white nightwind-prevent" />
             </div>
           ) : (
             <div className="flex items-center justify-center">{innerText}</div>

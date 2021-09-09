@@ -9,6 +9,7 @@
 hardhat.config.js
 /contracts
 /scripts
+/contracts_old
 
 # testing
 /coverage

@@ -1,1 +1,1 @@
-export { default } from "./totalReceived"
+export { default } from "./TotalReceived"

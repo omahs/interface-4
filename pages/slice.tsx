@@ -1,12 +1,11 @@
 import Link from "next/link"
 import { useState } from "react"
 import {
+  ActionScreen,
   ConnectBlock,
   Container,
   DoubleText,
   SliceForm,
-  SliceLoad,
-  SliceSuccess,
 } from "@components/ui"
 import { LogDescription } from "ethers/lib/utils"
 import getLog from "@utils/getLog"
@@ -43,15 +42,15 @@ export default function Slice() {
       />
       <ConnectBlock>
         <main>
-          <DoubleText
-            inactive
-            logoText={`Create a Slicer`}
-            size="text-4xl sm:text-5xl"
-            position="pb-4 sm:pb-6"
-          />
           {!success ? (
             !loading ? (
               <>
+                <DoubleText
+                  inactive
+                  logoText={`Create a Slicer`}
+                  size="text-4xl sm:text-5xl"
+                  position="pb-4 sm:pb-6"
+                />
                 <div className="py-6 mx-auto space-y-4 sm:py-8 sm:text-lg max-w-screen-xs">
                   <p>
                     Slicers are a{" "}
@@ -80,13 +79,45 @@ export default function Slice() {
                 />
               </>
             ) : (
-              <SliceLoad />
+              <ActionScreen
+                text="Slicing in progress ..."
+                helpText={
+                  <p className="max-w-sm mx-auto pb-7">
+                    Please wait while the blockchain does its thing, or find the
+                    slicer later in your{" "}
+                    <Link href="/profile">
+                      <a className="font-black highlight">profile section</a>
+                    </Link>{" "}
+                  </p>
+                }
+                loading
+              />
             )
           ) : (
-            <SliceSuccess setSuccess={setSuccess} eventLog={eventLog} />
+            <ActionScreen
+              highlightTitle="Slicer created! 🍰"
+              helpText={
+                <div className="max-w-lg pb-6 mx-auto space-y-4">
+                  <p>
+                    Your slicer address is <b>{eventLog && eventLog[0]}</b>
+                  </p>
+                  <p>
+                    If you hold the minimum slices, you can now customize it by
+                    clicking on the edit icon near the slicer name
+                  </p>
+                </div>
+              }
+              buttonLabel="Go to slicer"
+              href={`/slicer/${Number(eventLog?.tokenId)}`}
+              buttonLabelSecondary="Create a new Slicer"
+              onClickSecondary={() => setSuccess(false)}
+            />
           )}
         </main>
       </ConnectBlock>
     </Container>
   )
 }
+
+// Todo: Test new actionScreen logs
+// Todo: remove SliceLoad and SliceSuccess

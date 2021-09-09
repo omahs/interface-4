@@ -62,3 +62,44 @@ const Home = () => {
 }
 
 export default Home
+
+/** TODO
+ * WEBSITE
+ *
+ * - add products to slicers -> demonstrate use case with digital collectibles
+ * - Figure out purchases metadata for normal products and those with subSlicers
+ *
+ * - add slicer tags in metadata & slicer page
+ * - add detailed section in slicer page (stats & stuff for payees only)
+ * - add wallet connect
+ *
+ * - (LP) transfer page (select box to choose slicer)
+ *
+ * USE CASES
+ * - Use it as a slicer
+ *      - IS NOT digital asset
+ *      - Editable metadata
+ *      - Can receive external NFTs
+ * - Create a new single or fractional NFT
+ *      - Slicer IS digital asset
+ *      - non editable metadata
+ *      - CANNOT receive external NFTs or slicers
+ *
+ * NFT PRODUCTS IDEAS
+ * - special concert ticket
+ * - appear as gold/silver/.. sponsor to the slicer
+ * - something related to image copyright -> right to use image?
+ * - PDF with the NFT behind the scenes
+ * - Buy movie / music / game / game add-on
+ *
+ * FILE STORAGE
+ * - https://web3.storage
+ *
+ * BEFORE FINAL DEPLOY
+ * - Check if it's ok how metadata is handled for collectible slicers
+ *
+ * OTHER
+ * - (LP) Set maximum batch values before deploying on mainnet (and removing not needed functions to set them)
+ * - Handle ERC20
+ * - DeGov logics
+ */

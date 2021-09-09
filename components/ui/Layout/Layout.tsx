@@ -1,17 +1,18 @@
 import { Footer, Modal, Navbar } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { useEffect } from "react"
-import { useRouter } from "next/dist/client/router"
 import ProductHuntBadge from "../ProductHuntBadge"
 
 export default function Layout({ children }) {
   const { isConnected, chainId, modalView, setModalView } = useAppContext()
 
   useEffect(() => {
-    if (isConnected && chainId && chainId !== "0x4") {
-      setModalView({ cross: false, name: "CONNECT_VIEW" })
-    } else {
-      setModalView({ name: "" })
+    if (process.env.NODE_ENV !== "development") {
+      if (isConnected && chainId && chainId !== "0x4") {
+        setModalView({ cross: false, name: "CONNECT_VIEW" })
+      } else {
+        setModalView({ name: "" })
+      }
     }
   }, [isConnected, chainId])
 
@@ -24,7 +25,7 @@ export default function Layout({ children }) {
         {modalView.name && (
           <Modal modalView={modalView} setModalView={setModalView} />
         )}
-        <ProductHuntBadge />
+        {/* <ProductHuntBadge /> */}
       </div>
     </>
   )
