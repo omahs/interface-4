@@ -13,7 +13,6 @@ import { LogDescription } from "ethers/lib/utils"
 import { NewImage } from "pages/slicer/[id]"
 import supabaseUpload from "@utils/supabaseUpload"
 import useQuery from "@utils/subgraphQuery"
-import { CreateProduct } from "@lib/handlers/prisma"
 import fetcher from "@utils/fetcher"
 
 type Props = {
@@ -61,6 +60,8 @@ const AddProductForm = ({
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
+    let image = ""
+    let hash = ""
     setLoading(true)
     try {
       if (!productId) {
@@ -68,7 +69,7 @@ const AddProductForm = ({
       }
       // if (...) {
 
-      let image = ""
+      // save image on supabase
       if (newImage.url) {
         {
           const { Key } = await supabaseUpload(
@@ -79,6 +80,16 @@ const AddProductForm = ({
         }
       }
 
+      // Pin metadata on pinata
+      const metadata = { name, description, image }
+      const pinBody = {
+        body: JSON.stringify({ metadata }),
+        method: "POST",
+      }
+      const { IpfsHash } = await fetcher("/api/pin_json", pinBody)
+      hash = IpfsHash
+
+      // save hash & imageUrl on prisma
       const body = {
         method: "POST",
         body: JSON.stringify({
@@ -86,31 +97,32 @@ const AddProductForm = ({
           name,
           description,
           image,
+          hash,
         }),
       }
       await fetcher(`/api/slicer/${slicerId}/createProduct`, body)
 
-      // const productPrice = isUSD ? Math.floor(usdValue * 100) : ethValue
-      // const data = []
+      // create product on smart contract
+      const productPrice = isUSD ? Math.floor(usdValue * 100) : ethValue
 
-      // const eventLogs = await handleSubmit(
-      //   AddProduct(
-      //     slicerId,
-      //     0,
-      //     productPrice,
-      //     isUSD,
-      //     !isSingle,
-      //     !isLimited,
-      //     units,
-      //     data,
-      //     purchaseData
-      //   ),
-      //   setMessage,
-      //   setLoading,
-      //   setSuccess,
-      //   true
-      // )
-      // setLogs(eventLogs)
+      const eventLogs = await handleSubmit(
+        AddProduct(
+          slicerId,
+          0,
+          productPrice,
+          isUSD,
+          !isSingle,
+          !isLimited,
+          units,
+          [hash],
+          purchaseData
+        ),
+        setMessage,
+        setLoading,
+        setSuccess,
+        true
+      )
+      setLogs(eventLogs)
       // } else {
       //   handleMessage(
       //     {
@@ -121,6 +133,26 @@ const AddProductForm = ({
       //   )
       // }
     } catch (err) {
+      // Todo: Test errors
+      // unpin
+      if (hash) {
+        const unpinBody = {
+          body: JSON.stringify({ hash }),
+          method: "POST",
+        }
+        hash = await fetcher("/api/unpin", unpinBody)
+      }
+      // delete image from supabase
+      if (image) {
+        const currentImageName = image.split("/").pop()
+        const body = {
+          method: "POST",
+          body: JSON.stringify({
+            url: currentImageName,
+          }),
+        }
+        await fetcher(`/api/slicer/delete_file`, body)
+      }
       console.log(err)
     }
     setLoading(false)

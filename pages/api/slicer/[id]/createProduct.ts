@@ -3,7 +3,7 @@ import { CreateProduct } from "@lib/handlers/prisma"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query
-  const { productId, name, description, image } = JSON.parse(req.body)
+  const { productId, name, description, image, hash } = JSON.parse(req.body)
 
   try {
     if (req.method === "POST") {
@@ -12,6 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         Number(id),
         name,
         description,
+        hash,
         image
       )
 
