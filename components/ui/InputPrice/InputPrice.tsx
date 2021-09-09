@@ -9,6 +9,8 @@ type Props = {
   setEthValue: Dispatch<SetStateAction<number>>
   setUsdValue: Dispatch<SetStateAction<number>>
   loading?: boolean
+  error?: boolean
+  required?: boolean
   label?: string
   actionLabel?: string
   marginLabel?: string
@@ -21,6 +23,8 @@ const InputPrice = ({
   setEthValue,
   setUsdValue,
   loading,
+  error,
+  required,
   label,
   actionLabel,
   marginLabel,
@@ -63,11 +67,13 @@ const InputPrice = ({
             label={label}
             prefix={currency}
             prefixAction={() => setIsEth((isEth) => !isEth)}
-            value={isEth ? ethValue : usdValue}
+            value={isEth ? ethValue || "" : usdValue || ""}
             onChange={handleChange}
             onClick={() => action()}
             onClickLabel={actionLabel}
             loading={loading}
+            error={error}
+            required={required}
           />
         ) : (
           <Input
@@ -76,9 +82,11 @@ const InputPrice = ({
             label={label}
             prefix={currency}
             prefixAction={() => setIsEth((isEth) => !isEth)}
-            value={isEth ? ethValue : usdValue}
+            value={isEth ? ethValue || "" : usdValue || ""}
             onChange={handleChange}
             disabled={loading}
+            error={error}
+            required={required}
           />
         )}
         <div
@@ -90,8 +98,12 @@ const InputPrice = ({
           <p className="text-sm text-gray-600">
             {destinationCurrency}{" "}
             {isEth
-              ? Math.floor(usdValue * 100) / 100
-              : Math.floor(ethValue * 10000) / 10000}
+              ? usdValue
+                ? Math.floor(usdValue * 100) / 100
+                : 0
+              : ethValue
+              ? Math.floor(ethValue * 10000) / 10000
+              : 0}
           </p>
         </div>
       </div>
