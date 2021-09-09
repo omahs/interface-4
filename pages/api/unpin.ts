@@ -14,12 +14,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         method: "DELETE",
       }
-      const { IpfsHash } = await fetcher(
-        `${baseUrl}/pinning/unpin/${hash}`,
-        body
-      )
+      await fetcher(`${baseUrl}/pinning/unpin/${hash}`, body)
 
-      res.status(200).json(IpfsHash)
+      res.status(200).json(res)
     }
   } catch (err) {
     res.status(500).json(err)

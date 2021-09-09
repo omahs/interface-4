@@ -6,7 +6,7 @@ import bs58 from "bs58"
 // E.g. "QmNSUYVKDSvPUnRLKmuxk9diJ6yS96r1TrAXzjTiBcCLAL" -->
 // "0x017dfd85d4f6cb4dcd715a88101f7b1f06cd1e009b2327a0809d01eb9c91f231"
 
-export const Bytes32FromIpfsHash = (ipfsListing: string) => {
+export const bytes32FromIpfsHash = (ipfsListing: string) => {
   return "0x" + bs58.decode(ipfsListing).slice(2).toString("hex")
 }
 
@@ -14,7 +14,7 @@ export const Bytes32FromIpfsHash = (ipfsListing: string) => {
 // E.g. "0x017dfd85d4f6cb4dcd715a88101f7b1f06cd1e009b2327a0809d01eb9c91f231"
 // --> "QmNSUYVKDSvPUnRLKmuxk9diJ6yS96r1TrAXzjTiBcCLAL"
 
-export const IpfsHashFromBytes32 = (bytes32Hex: string) => {
+export const ipfsHashFromBytes32 = (bytes32Hex: string) => {
   // Add our default ipfs values for first 2 bytes:
   // function:0x12=sha2, size:0x20=256 bits
   // and cut off leading "0x"

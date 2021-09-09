@@ -1,6 +1,6 @@
 import { NewImage } from "pages/slicer/[id]"
 import supabase from "lib/supabase"
-import fetcher from "./fetcher"
+import fetcher from "../utils/fetcher"
 const reduce = require("image-blob-reduce")()
 
 const supabaseUpload = async (
@@ -47,7 +47,7 @@ const supabaseUpload = async (
     currentImageUrl &&
     currentImageUrl !== "https://slice.so/slicer_default.png"
   ) {
-    const currentImageName = currentImageUrl.split("/").pop()
+    const currentImageName = currentImageUrl.split(`${supabaseStorage}/`).pop()
     const body = {
       method: "POST",
       body: JSON.stringify({

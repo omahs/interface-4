@@ -8,7 +8,7 @@ import { slicer as slicerContract } from "@lib/initProvider"
 import { useAppContext } from "../context"
 import { PaySlicer, Button, MessageBlock } from "@components/ui"
 import supabase from "lib/supabase"
-import supabaseUpload from "@utils/supabaseUpload"
+import supabaseUpload from "@lib/supabaseUpload"
 const reduce = require("image-blob-reduce")()
 
 type Props = {
