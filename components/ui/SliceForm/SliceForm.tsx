@@ -109,5 +109,3 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
 }
 
 export default SliceForm
-
-// Todo: Add isCollectible in form

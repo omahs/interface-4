@@ -82,7 +82,6 @@ const SlicerImageBlock = ({
                 } img-background`}
                 id="imageWrapper"
               >
-                {/* Todo: Fix div size */}
                 {newImage.url || tempImageUrl ? (
                   /* eslint-disable @next/next/no-img-element */
                   <img

@@ -118,6 +118,3 @@ export default function Slice() {
     </Container>
   )
 }
-
-// Todo: Test new actionScreen logs
-// Todo: remove SliceLoad and SliceSuccess

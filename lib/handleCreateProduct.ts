@@ -19,7 +19,7 @@ export const beforeCreate = async (
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     {
       const { Key } = await supabaseUpload(
-        `${slicerId}/product_${productId}`,
+        `${slicerId}/products/${productId}/main`,
         newImage
       )
       image = `${supabaseUrl}/storage/v1/object/public/${Key}`

@@ -12,7 +12,7 @@ import handleMessage, { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import { NewImage } from "pages/slicer/[id]"
 import useQuery from "@utils/subgraphQuery"
-import { bytes32FromIpfsHash, ipfsHashFromBytes32 } from "@utils/convertBytes"
+import { bytes32FromIpfsHash } from "@utils/convertBytes"
 import { beforeCreate, handleReject } from "@lib/handleCreateProduct"
 
 type Props = {
