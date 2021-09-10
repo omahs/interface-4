@@ -95,6 +95,8 @@ const SlicerSubmitBlock = ({
           slicerInfo?.isCollectible
         )
 
+        // Todo? If isCollectible store on web3Storage
+
         const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
         setTempStorageUrl(newFilePath)
         newInfo = {
