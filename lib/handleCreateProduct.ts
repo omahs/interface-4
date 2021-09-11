@@ -1,6 +1,7 @@
-import supabaseUpload from "@lib/supabaseUpload"
+import supabaseUpload from "@utils/supabaseUpload"
 import fetcher from "@utils/fetcher"
 import { NewImage } from "pages/slicer/[id]"
+import web3Storage from "./web3Storage"
 
 export const beforeCreate = async (
   productId: number,
@@ -49,6 +50,15 @@ export const beforeCreate = async (
     `/api/slicer/${slicerId}/products`,
     body
   )
+
+  // save purchaseData on web3Storage
+  // const { webStorageKey } = await fetcher("/api/webStorage")
+  // const rootCid = await web3Storage(webStorageKey).put([newImage.file], {
+  //   name: newImage.file.name,
+  //   maxRetries: 3,
+  // })
+
+  // console.log(rootCid)
 
   return { hash: IpfsHash, image, newProduct }
 }
