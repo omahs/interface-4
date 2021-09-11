@@ -14,7 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(200).json(unreleased)
     }
   } catch (err) {
-    throw err
+    res.status(500).send(err.message)
   }
 }
 

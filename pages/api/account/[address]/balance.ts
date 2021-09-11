@@ -8,9 +8,13 @@ type Data = {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { address } = req.query
-  if (req.method === "GET") {
-    const balance = await slc(defaultProvider).balanceOf(address)
-    res.status(200).json({ balance })
+  try {
+    if (req.method === "GET") {
+      const balance = await slc(defaultProvider).balanceOf(address)
+      res.status(200).json({ balance })
+    }
+  } catch (err) {
+    res.status(500).send(err.message)
   }
 }
 

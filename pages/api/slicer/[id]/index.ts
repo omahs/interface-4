@@ -135,7 +135,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(200).json({ query })
     }
   } catch (err) {
-    throw err
+    res.status(500).send(err.message)
   }
 }
 

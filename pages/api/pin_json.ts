@@ -1,10 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import fetcher from "@utils/fetcher"
+import corsMiddleware from "@utils/corsMiddleware"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  await corsMiddleware(req, res)
   const { metadata, slicerId, productId } = JSON.parse(req.body)
   const baseUrl = process.env.NEXT_PUBLIC_PINATA_URL
-
   try {
     if (req.method === "POST") {
       const body = {
@@ -32,7 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(200).json({ IpfsHash })
     }
   } catch (err) {
-    res.status(500).json(err)
+    res.status(500).json(err.message)
   }
 }
 

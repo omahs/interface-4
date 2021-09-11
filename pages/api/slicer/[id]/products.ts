@@ -1,8 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import { CreateProduct } from "@lib/handlers/prisma"
 import prisma from "@lib/db"
+import corsMiddleware from "@utils/corsMiddleware"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  await corsMiddleware(req, res)
   const { id, productId } = req.query
   let data: any
 
@@ -27,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).json({ data })
   } catch (err) {
-    throw err
+    res.status(500).send(err.message)
   }
 }
 
