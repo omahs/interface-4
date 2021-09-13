@@ -44,6 +44,7 @@ const AddProductForm = ({
   const [isSingle, setIsSingle] = useState(false)
   const [isLimited, setIsLimited] = useState(false)
   const [units, setUnits] = useState(0)
+  const [files, setFiles] = useState<File[]>([])
   const [purchaseData, setPurchaseData] = useState([])
   const [message, setMessage] = useState<Message>({
     message: "",
@@ -132,7 +133,11 @@ const AddProductForm = ({
         setUsdValue={setUsdValue}
         setIsUSD={setIsUSD}
       />
-      <AddProductFormPurchases setPurchaseData={setPurchaseData} />
+      <AddProductFormPurchases
+        setPurchaseData={setPurchaseData}
+        files={files}
+        setFiles={setFiles}
+      />
 
       <div className="pt-4 pb-1">
         <Button label="Create product" type="submit" />
