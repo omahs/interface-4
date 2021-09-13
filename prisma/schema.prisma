@@ -36,3 +36,10 @@ model Product {
   @@index([slicerId], name:"slicerId")
   @@unique([productId, slicerId], name: "productSlicer")
 }
+
+model Revert {
+  id            Int      @default(autoincrement()) @id
+  hash          String
+  service       String   @default("web3Storage")
+  isDeleted     Boolean  @default(false)
+}
