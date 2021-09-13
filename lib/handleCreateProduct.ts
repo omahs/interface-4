@@ -3,7 +3,6 @@ import supabaseUpload from "@utils/supabaseUpload"
 import fetcher from "@utils/fetcher"
 import { NewImage } from "pages/slicer/[id]"
 import web3Storage from "./web3Storage"
-import prisma from "@lib/db"
 
 export const beforeCreate = async (
   productId: number,

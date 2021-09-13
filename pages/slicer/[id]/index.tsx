@@ -72,6 +72,7 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
 
   // Todo: Check this isCollectible conditional edit thing
+  // Todo: For collectibles save image on web3Storage instead of supabase? + Allow indefinite size? Figure it out
   const editAllowed = !slicerInfo?.isCollectible
     ? isAllowed
     : slicerAttributes?.Creator === account?.toLowerCase() &&
