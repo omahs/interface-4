@@ -15,12 +15,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         method: "DELETE",
       }
-      await fetcher(`${baseUrl}/pinning/unpin/${hash}`, body)
+      const cid = await fetcher(`${baseUrl}/pinning/unpin/${hash}`, body)
 
-      res.status(200).json(res)
+      res.status(200).json({ cid })
     }
   } catch (err) {
-    res.status(500).json(err.message)
+    res.status(200).json({ status: "deleted" })
+    console.log(err)
   }
 }
 
