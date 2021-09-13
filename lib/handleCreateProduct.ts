@@ -1,7 +1,9 @@
+import { CID } from "multiformats/cid"
 import supabaseUpload from "@utils/supabaseUpload"
 import fetcher from "@utils/fetcher"
 import { NewImage } from "pages/slicer/[id]"
 import web3Storage from "./web3Storage"
+import prisma from "@lib/db"
 
 export const beforeCreate = async (
   productId: number,
@@ -52,21 +54,30 @@ export const beforeCreate = async (
   )
 
   // save purchaseData on web3Storage
-  // const { webStorageKey } = await fetcher("/api/webStorage")
-  // const rootCid = await web3Storage(webStorageKey).put([newImage.file], {
-  //   name: newImage.file.name,
-  //   maxRetries: 3,
-  // })
+  // Todo: send correct files from frontend
+  const { webStorageKey } = await fetcher("/api/webStorage")
+  const purchaseDataCID = await web3Storage(webStorageKey).put(
+    [newImage.file],
+    {
+      maxRetries: 3,
+    }
+  )
+  const purchaseDataHash = CID.parse(purchaseDataCID).bytes
 
-  // console.log(rootCid)
-
-  return { hash: IpfsHash, image, newProduct }
+  return {
+    image,
+    newProduct,
+    dataHash: IpfsHash,
+    purchaseDataCID,
+    purchaseDataHash,
+  }
 }
 
 export const handleReject = async (
   slicerId: number,
   image: string,
   hash: string,
+  purchaseDataCID: string,
   productId: string
 ) => {
   const supabaseStorage = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_NAME
@@ -76,8 +87,9 @@ export const handleReject = async (
       body: JSON.stringify({ hash }),
       method: "POST",
     }
-    hash = await fetcher("/api/unpin", unpinBody)
+    await fetcher("/api/unpin", unpinBody)
   }
+
   // delete image from supabase
   if (image) {
     const currentImageName = image.split(`${supabaseStorage}/`).pop()
@@ -89,9 +101,19 @@ export const handleReject = async (
     }
     await fetcher(`/api/slicer/delete_file`, body)
   }
+
   // delete from prisma
   const body = {
     method: "DELETE",
   }
   await fetcher(`/api/slicer/${slicerId}/products?productId=${productId}`, body)
+
+  // add web3Storage hash in Reject table on prisma
+  const prismaBody = {
+    method: "POST",
+    body: JSON.stringify({
+      purchaseDataCID,
+    }),
+  }
+  await fetcher(`/api/addRevert`, prismaBody)
 }

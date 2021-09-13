@@ -12,7 +12,7 @@ import handleMessage, { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import { NewImage } from "pages/slicer/[id]"
 import useQuery from "@utils/subgraphQuery"
-import { bytes32FromIpfsHash } from "@utils/convertBytes"
+import { bytes32FromIpfsHash, ipfsHashFromBytes32 } from "@utils/convertBytes"
 import { beforeCreate, handleReject } from "@lib/handleCreateProduct"
 
 type Props = {
@@ -45,7 +45,10 @@ const AddProductForm = ({
   const [isLimited, setIsLimited] = useState(false)
   const [units, setUnits] = useState(0)
   const [purchaseData, setPurchaseData] = useState([])
-  const [message, setMessage] = useState<Message>()
+  const [message, setMessage] = useState<Message>({
+    message: "",
+    messageStatus: "success",
+  })
 
   // Todo: Handle productId update after product creation
   const tokensQuery = /* GraphQL */ `
@@ -62,17 +65,12 @@ const AddProductForm = ({
     e.preventDefault()
     setLoading(true)
     try {
-      const { hash, image, newProduct } = await beforeCreate(
-        productId,
-        slicerId,
-        name,
-        description,
-        newImage
-      )
+      const { image, newProduct, dataHash, purchaseDataCID, purchaseDataHash } =
+        await beforeCreate(productId, slicerId, name, description, newImage)
 
       // Create product on smart contract
       const productPrice = isUSD ? Math.floor(usdValue * 100) : ethValue
-      const bytes32Hash = bytes32FromIpfsHash(hash)
+      const bytes32DataHash = bytes32FromIpfsHash(dataHash)
 
       const eventLogs = await handleSubmit(
         AddProduct(
@@ -83,8 +81,8 @@ const AddProductForm = ({
           !isSingle,
           !isLimited,
           units,
-          bytes32Hash,
-          purchaseData
+          bytes32DataHash,
+          purchaseDataHash
         ),
         setMessage,
         setLoading,
@@ -94,7 +92,13 @@ const AddProductForm = ({
       setLogs(eventLogs)
 
       if (!success) {
-        await handleReject(slicerId, image, hash, newProduct.id)
+        await handleReject(
+          slicerId,
+          image,
+          dataHash,
+          purchaseDataCID,
+          newProduct.id
+        )
       }
     } catch (err) {
       console.log(err)
