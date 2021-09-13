@@ -23,5 +23,3 @@ const sendSlack = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 export default sendSlack
-
-// Add cors to all closed endpoints (in dev branch)

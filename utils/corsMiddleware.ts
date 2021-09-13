@@ -6,7 +6,6 @@ const whitelist = [process.env.NEXT_PUBLIC_APP_URL]
 const corsMiddleware = initMiddleware(
   Cors({
     origin: function (origin, callback) {
-      console.log(origin)
       if (!origin || whitelist.indexOf(origin) !== -1) {
         callback(null, true)
       } else {

@@ -20,7 +20,10 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   const [minimumShares, setMinimumShares] = useState(0)
   const [totalShares, setTotalShares] = useState(1000000)
   const [isCollectible, setIsCollectible] = useState(false)
-  const [message, setMessage] = useState<Message>()
+  const [message, setMessage] = useState<Message>({
+    message: "",
+    messageStatus: "success",
+  })
 
   const cleanedAddresses = addresses.filter(() => true)
   const cleanedShares = shares.filter(() => true)

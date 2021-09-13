@@ -1,6 +1,6 @@
 import { NewImage } from "pages/slicer/[id]"
 import supabase from "lib/supabase"
-import fetcher from "../utils/fetcher"
+import fetcher from "./fetcher"
 const reduce = require("image-blob-reduce")()
 
 const supabaseUpload = async (

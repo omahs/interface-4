@@ -45,7 +45,10 @@ const TransferForm = ({
   const eventLog = getLog(logs, "TransferSingle")
 
   const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState<Message>()
+  const [message, setMessage] = useState<Message>({
+    message: "",
+    messageStatus: "success",
+  })
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()

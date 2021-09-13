@@ -28,7 +28,10 @@ const BlockchainCall = ({
   confetti = false,
 }: Props) => {
   const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState<Message>()
+  const [message, setMessage] = useState<Message>({
+    message: "",
+    messageStatus: "success",
+  })
 
   const submit = async () => {
     const eventLog = await handleSubmit(
