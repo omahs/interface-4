@@ -1,6 +1,12 @@
 import Cross from "@components/icons/Cross"
 import { Dispatch, SetStateAction } from "react"
-import { View, CONNECT_VIEW, IRREVERSIBLE_VIEW } from "lib/text/modals"
+import {
+  View,
+  CONNECT_VIEW,
+  IRREVERSIBLE_VIEW,
+  CREATE_PRODUCT_VIEW,
+  CREATE_PRODUCT_CONFIRM_VIEW,
+} from "lib/text/modals"
 
 type Props = {
   modalView: View
@@ -9,7 +15,7 @@ type Props = {
 
 const Modal = ({ modalView, setModalView }: Props) => {
   let content: JSX.Element
-  const { name, cross } = modalView
+  const { name, cross, params } = modalView
 
   switch (name) {
     case "CONNECT_VIEW":
@@ -17,6 +23,12 @@ const Modal = ({ modalView, setModalView }: Props) => {
       break
     case "IRREVERSIBLE_VIEW":
       content = IRREVERSIBLE_VIEW()
+      break
+    case "CREATE_PRODUCT_CONFIRM_VIEW":
+      content = CREATE_PRODUCT_CONFIRM_VIEW(params)
+      break
+    case "CREATE_PRODUCT_VIEW":
+      content = CREATE_PRODUCT_VIEW(params)
       break
   }
 
