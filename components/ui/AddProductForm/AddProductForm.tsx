@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from "react"
+import { useState, Dispatch, SetStateAction, useEffect, useRef } from "react"
 import {
   Button,
   MessageBlock,
@@ -18,9 +18,9 @@ type Props = {
   slicerId: number
   success: boolean
   loading: boolean
-  loadingState: boolean
+  uploadStep: number
   setLoading: Dispatch<SetStateAction<boolean>>
-  setLoadingState: Dispatch<SetStateAction<boolean>>
+  setUploadStep: Dispatch<SetStateAction<number>>
   setSuccess: Dispatch<SetStateAction<boolean>>
   setLogs: Dispatch<SetStateAction<LogDescription[]>>
 }
@@ -30,12 +30,12 @@ const AddProductForm = ({
   success,
   loading,
   setLoading,
-  loadingState,
-  setLoadingState,
+  uploadStep,
+  setUploadStep,
   setSuccess,
   setLogs,
 }: Props) => {
-  const { account } = useAppContext()
+  const { account, setModalView } = useAppContext()
   const [usdValue, setUsdValue] = useState<number>()
   const [ethValue, setEthValue] = useState<number>()
   const [name, setName] = useState("")
@@ -52,14 +52,15 @@ const AddProductForm = ({
   const [instructions, setInstructions] = useState("")
   const [notes, setNotes] = useState("")
   const [files, setFiles] = useState<File[]>([])
+  const [uploadPct, setUploadPct] = useState(0)
   const [message, setMessage] = useState<Message>({
     message: "",
     messageStatus: "success",
   })
+  const submitEl = useRef(null)
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
-    setLoading(true)
     try {
       const { image, newProduct, data, purchaseDataCID, purchaseData } =
         await beforeCreate(
@@ -71,7 +72,9 @@ const AddProductForm = ({
           files,
           thankMessage,
           instructions,
-          notes
+          notes,
+          setUploadStep,
+          setUploadPct
         )
 
       // Create product on smart contract
@@ -94,7 +97,6 @@ const AddProductForm = ({
         setSuccess,
         true
       )
-      setLogs(eventLogs)
 
       if (!success) {
         await handleReject(
@@ -102,8 +104,12 @@ const AddProductForm = ({
           image,
           data,
           purchaseDataCID,
-          newProduct.id
+          newProduct.id,
+          setUploadStep
         )
+      } else {
+        setUploadStep(9)
+        setLogs(eventLogs)
       }
     } catch (err) {
       // Todo: handleReject in case of errors
@@ -111,6 +117,20 @@ const AddProductForm = ({
     }
     setLoading(false)
   }
+
+  useEffect(() => {
+    console.log(uploadPct)
+  }, [uploadPct])
+
+  useEffect(() => {
+    if (uploadStep != 0) {
+      setModalView({
+        cross: false,
+        name: `CREATE_PRODUCT_VIEW`,
+        params: { loading, uploadStep },
+      })
+    }
+  }, [loading, uploadStep])
 
   return (
     <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>
@@ -150,7 +170,18 @@ const AddProductForm = ({
       />
 
       <div className="pt-4 pb-1">
-        <Button label="Create product" type="submit" />
+        <Button
+          label="Create product"
+          type="button"
+          onClick={() =>
+            setModalView({
+              cross: true,
+              name: "CREATE_PRODUCT_CONFIRM_VIEW",
+              params: { submitEl, uploadStep, setModalView },
+            })
+          }
+        />
+        <button className="hidden" ref={submitEl} type="submit" />
       </div>
       <div>
         <MessageBlock msg={message} />
@@ -161,8 +192,9 @@ const AddProductForm = ({
 
 export default AddProductForm
 
-// Todo: What else to add to metadata and purchaseData?
+// Todo: handle popup and dynamic loading states on submit (1. getting ready, 2. waiting for blockchain, 3. reverting)
 
 // Todo: Handle scenario where user doesn't reject and just leave. (timeout?)
 
-// Todo: Add dynamic loading states on submit (1. getting ready, 2. waiting for blockchain, 3. reverting)
+// Todo: textarea Input
+// Todo: filelist frontend

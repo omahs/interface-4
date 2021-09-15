@@ -83,7 +83,6 @@ const AddProductFormPurchases = ({
           required
         />
       </div>
-      {/* Todo: Add purchase data */}
       <FilesList files={files} setFiles={setFiles} />
       <div>
         <label ref={uploadEl} htmlFor="purchaseFiles">
@@ -109,14 +108,6 @@ const AddProductFormPurchases = ({
 
 export default AddProductFormPurchases
 
-// What can be bought
-// 1. One or more files
-//    - OK Upload files from frontend, like the image
-//    - OK upload files (encrypted with dynamic key) on web3Storage -> get ipfs hash
-//    - OK pin json with file hashes + encrypted metadata (name, descr, notes, etc)
-//    - OK send pinned Json hash as purchaseData bytes3d param
-//    - Fix encryption process
-
 // Other kinds of purchase data
 // - A link of some sort? Webhook? What else?
 // - dynamic data, id, etc
@@ -141,5 +132,4 @@ export default AddProductFormPurchases
 // - Product data -> pinata JSON (+ partially on supabase for more performant views)
 // - Product data image -> supabase (more performant views on website than storing on ipfs, kinda centralized but also not critical for it to be truly immutable)
 //
-// - Product Purchase files -> web3Storage (encrypted)
-// - Product Purchase data -> pinata JSON
+// - Product Purchase files and data -> web3Storage (encrypted)

@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react"
 import { CID } from "multiformats/cid"
 import supabaseUpload from "@utils/supabaseUpload"
 import fetcher from "@utils/fetcher"
@@ -14,10 +15,13 @@ export const beforeCreate = async (
   purchaseFiles: File[],
   thankMessage: string,
   instructions: string,
-  notes: string
+  notes: string,
+  setUploadStep: Dispatch<SetStateAction<number>>,
+  setUploadPct: Dispatch<SetStateAction<number>>
 ) => {
   let image = ""
 
+  setUploadStep(1)
   // Save image on supabase
   if (newImage.url) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -31,6 +35,7 @@ export const beforeCreate = async (
   }
 
   // Pin metadata on pinata
+  setUploadStep(2)
   const metadata = { name, description, image }
   const pinMetadataBody = {
     body: JSON.stringify({
@@ -43,6 +48,7 @@ export const beforeCreate = async (
   const data = CID.parse(IpfsHash).bytes
 
   // Save metadata, hash & imageUrl on prisma
+  setUploadStep(3)
   const body = {
     method: "POST",
     body: JSON.stringify({
@@ -57,8 +63,8 @@ export const beforeCreate = async (
     body
   )
 
-  // Todo: Add web3Storage completion percentage
-  // save purchaseFiles on web3Storage
+  // encrypt files
+  setUploadStep(4)
   const { webStorageKey } = await fetcher("/api/webStorage")
   const keyBody = {
     method: "POST",
@@ -69,20 +75,34 @@ export const beforeCreate = async (
     }),
   }
   const { password, salt, iv } = await fetcher("/api/keygen", keyBody)
+  const texts = [
+    { value: thankMessage, filename: "Thanks" },
+    { value: instructions, filename: "Instructions" },
+    { value: notes, filename: "Notes" },
+  ]
   const encryptedFiles = await encryptFiles(
     password,
     Buffer.from(salt),
     new Uint8Array(iv),
     purchaseFiles,
-    thankMessage,
-    instructions,
-    notes
+    texts
   )
+
+  // save purchaseFiles on web3Storage
+  setUploadStep(5)
+  const totalSize = encryptedFiles.map((f) => f.size).reduce((a, b) => a + b, 0)
+  let uploaded = 0
+  const onStoredChunk = (size: number) => {
+    uploaded += size
+    setUploadPct((uploaded * 100) / totalSize)
+  }
   const purchaseDataCID = await web3Storage(webStorageKey).put(encryptedFiles, {
     maxRetries: 3,
+    onStoredChunk,
   })
   const purchaseData = CID.parse(purchaseDataCID).bytes
 
+  setUploadStep(6)
   return {
     image,
     newProduct,
@@ -97,8 +117,10 @@ export const handleReject = async (
   image: string,
   dataHash: Uint8Array,
   purchaseDataCID: string,
-  productId: string
+  productId: string,
+  setUploadStep: Dispatch<SetStateAction<number>>
 ) => {
+  setUploadStep(7)
   const supabaseStorage = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_NAME
   // unpin
   if (dataHash) {
@@ -138,4 +160,5 @@ export const handleReject = async (
     }
     await fetcher(`/api/addRevert`, prismaBody)
   }
+  setUploadStep(8)
 }
