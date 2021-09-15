@@ -24,6 +24,7 @@ export default function NewProduct() {
   const { id } = router.query
   const { isAllowed, loading } = useAllowed(Number(id))
   const [loadingForm, setLoadingForm] = useState(false)
+  const [loadingState, setLoadingState] = useState(false)
   const [success, setSuccess] = useState(false)
   const [logs, setLogs] = useState<LogDescription[]>()
   const eventLog = getLog(logs, "ProductAdded")
@@ -74,6 +75,8 @@ export default function NewProduct() {
                   success={success}
                   loading={loadingForm}
                   setLoading={setLoadingForm}
+                  loadingState={loadingState}
+                  setLoadingState={setLoadingState}
                   setSuccess={setSuccess}
                   setLogs={setLogs}
                 />

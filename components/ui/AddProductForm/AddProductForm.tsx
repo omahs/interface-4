@@ -18,7 +18,9 @@ type Props = {
   slicerId: number
   success: boolean
   loading: boolean
+  loadingState: boolean
   setLoading: Dispatch<SetStateAction<boolean>>
+  setLoadingState: Dispatch<SetStateAction<boolean>>
   setSuccess: Dispatch<SetStateAction<boolean>>
   setLogs: Dispatch<SetStateAction<LogDescription[]>>
 }
@@ -28,6 +30,8 @@ const AddProductForm = ({
   success,
   loading,
   setLoading,
+  loadingState,
+  setLoadingState,
   setSuccess,
   setLogs,
 }: Props) => {
@@ -44,6 +48,9 @@ const AddProductForm = ({
   const [isSingle, setIsSingle] = useState(false)
   const [isLimited, setIsLimited] = useState(false)
   const [units, setUnits] = useState(0)
+  const [thankMessage, setThankMessage] = useState("")
+  const [instructions, setInstructions] = useState("")
+  const [notes, setNotes] = useState("")
   const [files, setFiles] = useState<File[]>([])
   const [message, setMessage] = useState<Message>({
     message: "",
@@ -54,14 +61,17 @@ const AddProductForm = ({
     e.preventDefault()
     setLoading(true)
     try {
-      const { image, newProduct, dataHash, purchaseDataCID, purchaseDataHash } =
+      const { image, newProduct, data, purchaseDataCID, purchaseData } =
         await beforeCreate(
           account,
           slicerId,
           name,
           description,
           newImage,
-          files
+          files,
+          thankMessage,
+          instructions,
+          notes
         )
 
       // Create product on smart contract
@@ -76,8 +86,8 @@ const AddProductForm = ({
           !isSingle,
           !isLimited,
           units,
-          dataHash,
-          purchaseDataHash
+          data,
+          purchaseData
         ),
         setMessage,
         setLoading,
@@ -90,8 +100,7 @@ const AddProductForm = ({
         await handleReject(
           slicerId,
           image,
-          dataHash,
-          purchaseDataHash,
+          data,
           purchaseDataCID,
           newProduct.id
         )
@@ -129,7 +138,16 @@ const AddProductForm = ({
         setUsdValue={setUsdValue}
         setIsUSD={setIsUSD}
       />
-      <AddProductFormPurchases files={files} setFiles={setFiles} />
+      <AddProductFormPurchases
+        thankMessage={thankMessage}
+        setThankMessage={setThankMessage}
+        instructions={instructions}
+        setInstructions={setInstructions}
+        notes={notes}
+        setNotes={setNotes}
+        files={files}
+        setFiles={setFiles}
+      />
 
       <div className="pt-4 pb-1">
         <Button label="Create product" type="submit" />
@@ -145,6 +163,6 @@ export default AddProductForm
 
 // Todo: What else to add to metadata and purchaseData?
 
-// Todo: Add dynamic loading states on submit (1. getting ready, 2. waiting for blockchain, 3. reverting)
-
 // Todo: Handle scenario where user doesn't reject and just leave. (timeout?)
+
+// Todo: Add dynamic loading states on submit (1. getting ready, 2. waiting for blockchain, 3. reverting)

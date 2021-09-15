@@ -14,6 +14,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          pinataOptions: { cidVersion: "1" },
           pinataMetadata: {
             name: metadata.name,
             keyvalues: { slicerId },

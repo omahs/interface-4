@@ -1,8 +1,8 @@
+import { CID } from "multiformats/cid"
 import supabaseUpload from "@utils/supabaseUpload"
 import fetcher from "@utils/fetcher"
 import { NewImage } from "pages/slicer/[id]"
 import web3Storage from "./web3Storage"
-import { bytes32FromIpfsHash, ipfsHashFromBytes32 } from "@utils/convertBytes"
 import { encryptFiles } from "@utils/crypto"
 
 export const beforeCreate = async (
@@ -11,10 +11,12 @@ export const beforeCreate = async (
   name: string,
   description: string,
   newImage: NewImage,
-  purchaseFiles: File[]
+  purchaseFiles: File[],
+  thankMessage: string,
+  instructions: string,
+  notes: string
 ) => {
   let image = ""
-  let purchaseDataCID = ""
 
   // Save image on supabase
   if (newImage.url) {
@@ -38,7 +40,7 @@ export const beforeCreate = async (
     method: "POST",
   }
   const { IpfsHash } = await fetcher("/api/pin_json", pinMetadataBody)
-  const bytes32MetadataHash = bytes32FromIpfsHash(IpfsHash)
+  const data = CID.parse(IpfsHash).bytes
 
   // Save metadata, hash & imageUrl on prisma
   const body = {
@@ -55,70 +57,52 @@ export const beforeCreate = async (
     body
   )
 
+  // Todo: Add web3Storage completion percentage
   // save purchaseFiles on web3Storage
-  if (purchaseFiles.length != 0) {
-    const { webStorageKey } = await fetcher("/api/webStorage")
-    const keyBody = {
-      method: "POST",
-      body: JSON.stringify({
-        slicerId,
-        name,
-        author,
-      }),
-    }
-    const { password, salt, iv } = await fetcher("/api/keygen", keyBody)
-    const encryptedFiles = await encryptFiles(
-      password,
-      Buffer.from(salt),
-      new Uint8Array(iv),
-      purchaseFiles
-    )
-    purchaseDataCID = await web3Storage(webStorageKey).put(encryptedFiles, {
-      maxRetries: 3,
-    })
-  }
-
-  // save purchaseDataCID on a pinata Json
-  const purchaseMetadata = { files: purchaseDataCID }
-  const pinPurchaseMetadataBody = {
-    body: JSON.stringify({ metadata: purchaseMetadata }),
+  const { webStorageKey } = await fetcher("/api/webStorage")
+  const keyBody = {
     method: "POST",
+    body: JSON.stringify({
+      slicerId,
+      name,
+      author,
+    }),
   }
-  const { IpfsHash: metadataHash } = await fetcher(
-    "/api/pin_json",
-    pinPurchaseMetadataBody
+  const { password, salt, iv } = await fetcher("/api/keygen", keyBody)
+  const encryptedFiles = await encryptFiles(
+    password,
+    Buffer.from(salt),
+    new Uint8Array(iv),
+    purchaseFiles,
+    thankMessage,
+    instructions,
+    notes
   )
-  const bytes32PurchaseMetadataHash = bytes32FromIpfsHash(metadataHash)
+  const purchaseDataCID = await web3Storage(webStorageKey).put(encryptedFiles, {
+    maxRetries: 3,
+  })
+  const purchaseData = CID.parse(purchaseDataCID).bytes
 
   return {
     image,
     newProduct,
-    dataHash: bytes32MetadataHash,
+    data,
+    purchaseData,
     purchaseDataCID,
-    purchaseDataHash: bytes32PurchaseMetadataHash,
   }
 }
 
 export const handleReject = async (
   slicerId: number,
   image: string,
-  dataHash: string,
-  purchaseDataHash: string,
+  dataHash: Uint8Array,
   purchaseDataCID: string,
   productId: string
 ) => {
   const supabaseStorage = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_NAME
   // unpin
   if (dataHash) {
-    const hash = ipfsHashFromBytes32(dataHash)
-    const unpinBody = {
-      body: JSON.stringify({ hash }),
-      method: "POST",
-    }
-    await fetcher("/api/unpin", unpinBody)
-  }
-  if (purchaseDataHash) {
-    const hash = ipfsHashFromBytes32(purchaseDataHash)
+    const hash = CID.decode(dataHash).toString()
     const unpinBody = {
       body: JSON.stringify({ hash }),
       method: "POST",

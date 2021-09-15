@@ -1,18 +1,27 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react"
-import { Button, FilesList } from ".."
+import React, { Dispatch, SetStateAction, useRef, useState } from "react"
+import { Button, FilesList, Input } from ".."
 
 type Props = {
+  thankMessage: string
+  setThankMessage: Dispatch<SetStateAction<string>>
+  instructions: string
+  setInstructions: Dispatch<SetStateAction<string>>
+  notes: string
+  setNotes: Dispatch<SetStateAction<string>>
   files: File[]
   setFiles: Dispatch<SetStateAction<File[]>>
 }
 
-const AddProductFormPurchases = ({ files, setFiles }: Props) => {
+const AddProductFormPurchases = ({
+  thankMessage,
+  setThankMessage,
+  instructions,
+  setInstructions,
+  notes,
+  setNotes,
+  files,
+  setFiles,
+}: Props) => {
   const [loading, setLoading] = useState(false)
   const uploadEl = useRef(null)
 
@@ -47,6 +56,34 @@ const AddProductFormPurchases = ({ files, setFiles }: Props) => {
         Files are saved immutably on IPFS, and encrypted so that only those who
         buy them can see their content. Learn more about this in our FAQs.
       </p>
+      <div>
+        <Input
+          label="Message to buyers"
+          type="string"
+          value={thankMessage}
+          onChange={setThankMessage}
+          required
+        />
+      </div>
+      <div>
+        <Input
+          label="Instructions"
+          type="string"
+          value={instructions}
+          onChange={setInstructions}
+          required
+        />
+      </div>
+      <div>
+        <Input
+          label="Notes"
+          type="string"
+          value={notes}
+          onChange={setNotes}
+          required
+        />
+      </div>
+      {/* Todo: Add purchase data */}
       <FilesList files={files} setFiles={setFiles} />
       <div>
         <label ref={uploadEl} htmlFor="purchaseFiles">
@@ -66,7 +103,6 @@ const AddProductFormPurchases = ({ files, setFiles }: Props) => {
           multiple
         />
       </div>
-      {/* Todo: Add purchase data */}
     </>
   )
 }
@@ -76,9 +112,10 @@ export default AddProductFormPurchases
 // What can be bought
 // 1. One or more files
 //    - OK Upload files from frontend, like the image
-//    - upload files (encrypted with dynamic key) on web3Storage -> get ipfs hash
-//    - pin json with file hashes + encrypted metadata (name, descr, notes, etc)
-//    - send pinned Json hash as purchaseData bytes3d param
+//    - OK upload files (encrypted with dynamic key) on web3Storage -> get ipfs hash
+//    - OK pin json with file hashes + encrypted metadata (name, descr, notes, etc)
+//    - OK send pinned Json hash as purchaseData bytes3d param
+//    - Fix encryption process
 
 // Other kinds of purchase data
 // - A link of some sort? Webhook? What else?
