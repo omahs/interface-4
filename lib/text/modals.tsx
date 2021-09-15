@@ -16,7 +16,7 @@ type ViewNames =
 export const CONNECT_VIEW = (
   <>
     <div className="pb-6 text-center">
-      <DoubleText logoText="Pick the right chain" />
+      <DoubleText inactive logoText="Pick the right chain" />
     </div>
     <p className="text-lg">
       Connect to the <span className="font-black">Rinkeby</span> Network to
@@ -30,7 +30,7 @@ export const IRREVERSIBLE_VIEW = () => {
   return (
     <>
       <div className="pb-6 text-center">
-        <DoubleText logoText="Be careful" />
+        <DoubleText inactive logoText="Be careful" />
       </div>
       <div className="text-lg text-center">
         <p className="pb-4">
@@ -59,7 +59,7 @@ export const CREATE_PRODUCT_CONFIRM_VIEW = (params: any) => {
   return (
     <>
       <div className="pb-6 text-center">
-        <DoubleText logoText="Gnaaa" />
+        <DoubleText inactive logoText="Gnaaa" />
       </div>
       <Button label="Create product" onClick={() => handleClick()} />
     </>
@@ -96,7 +96,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
   return (
     <>
       <div className="pb-6 text-center">
-        <DoubleText logoText={uploadState} />
+        <DoubleText inactive logoText={uploadState} />
       </div>
       <p className="text-lg text-center">Some text</p>
     </>
