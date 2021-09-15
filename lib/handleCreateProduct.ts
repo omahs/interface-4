@@ -2,8 +2,8 @@ import supabaseUpload from "@utils/supabaseUpload"
 import fetcher from "@utils/fetcher"
 import { NewImage } from "pages/slicer/[id]"
 import web3Storage from "./web3Storage"
-import encryptFiles from "@utils/encryptFiles"
 import { bytes32FromIpfsHash, ipfsHashFromBytes32 } from "@utils/convertBytes"
+import { encryptFiles } from "@utils/crypto"
 
 export const beforeCreate = async (
   productId: number,
