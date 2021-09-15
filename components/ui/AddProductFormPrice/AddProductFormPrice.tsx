@@ -3,14 +3,14 @@ import Input from "../Input"
 import { InputPrice, InputSwitch } from "@components/ui"
 
 type Props = {
-  isSingle: boolean
+  isMultiple: boolean
   isLimited: boolean
   units: number
   ethValue: number
   usdValue: number
   isUSD: boolean
   loading: boolean
-  setIsSingle: Dispatch<SetStateAction<boolean>>
+  setIsMultiple: Dispatch<SetStateAction<boolean>>
   setIsLimited: Dispatch<SetStateAction<boolean>>
   setUnits: Dispatch<SetStateAction<number>>
   setEthValue: Dispatch<SetStateAction<number>>
@@ -19,14 +19,14 @@ type Props = {
 }
 
 const AddProductFormPrice = ({
-  isSingle,
+  isMultiple,
   isLimited,
   units,
   ethValue,
   usdValue,
   isUSD,
   loading,
-  setIsSingle,
+  setIsMultiple,
   setIsLimited,
   setUnits,
   setEthValue,
@@ -38,17 +38,17 @@ const AddProductFormPrice = ({
       <h2 className="pb-6">Price and details</h2>
       <div>
         <InputSwitch
-          label="Single purchase"
+          label="Multiple purchases"
           questionText={
             <>
               <p>
-                If enabled, each user will be able to buy this product only
-                once.
+                If enabled, users will be able to buy this product multiple
+                times.
               </p>
             </>
           }
-          enabled={isSingle}
-          setEnabled={setIsSingle}
+          enabled={isMultiple}
+          setEnabled={setIsMultiple}
         />
         <InputSwitch
           label="Limited availability"

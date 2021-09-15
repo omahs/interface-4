@@ -45,7 +45,7 @@ const AddProductForm = ({
     file: undefined,
   })
   const [isUSD, setIsUSD] = useState(false)
-  const [isSingle, setIsSingle] = useState(false)
+  const [isMultiple, setIsMultiple] = useState(false)
   const [isLimited, setIsLimited] = useState(false)
   const [units, setUnits] = useState(0)
   const [thankMessage, setThankMessage] = useState("")
@@ -83,7 +83,7 @@ const AddProductForm = ({
           0,
           productPrice,
           isUSD,
-          !isSingle,
+          isMultiple,
           !isLimited,
           units,
           data,
@@ -124,14 +124,14 @@ const AddProductForm = ({
         setDescription={setDescription}
       />
       <AddProductFormPrice
-        isSingle={isSingle}
+        isMultiple={isMultiple}
         isLimited={isLimited}
         units={units}
         ethValue={ethValue}
         usdValue={usdValue}
         isUSD={isUSD}
         loading={loading}
-        setIsSingle={setIsSingle}
+        setIsMultiple={setIsMultiple}
         setIsLimited={setIsLimited}
         setUnits={setUnits}
         setEthValue={setEthValue}
