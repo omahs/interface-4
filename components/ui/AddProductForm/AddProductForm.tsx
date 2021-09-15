@@ -89,6 +89,7 @@ const AddProductForm = ({
           dataHash,
           purchaseDataHash
         ),
+        message,
         setMessage,
         setLoading,
         setSuccess,
@@ -101,11 +102,13 @@ const AddProductForm = ({
           slicerId,
           image,
           dataHash,
+          purchaseDataHash,
           purchaseDataCID,
           newProduct.id
         )
       }
     } catch (err) {
+      // Todo: handleReject in case of errors
       console.log(err)
     }
     setLoading(false)
@@ -155,3 +158,4 @@ export default AddProductForm
 // Todo: What else to add to metadata?
 
 // Todo: Handle scenario where user doesn't reject and just leave. (timeout?)
+// Todo: Handle loading states during creation/rejection

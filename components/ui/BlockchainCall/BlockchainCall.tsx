@@ -36,6 +36,7 @@ const BlockchainCall = ({
   const submit = async () => {
     const eventLog = await handleSubmit(
       action(),
+      message,
       setMessage,
       setLoading,
       setSuccess,
