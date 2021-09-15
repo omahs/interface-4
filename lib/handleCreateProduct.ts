@@ -1,4 +1,3 @@
-import { CID } from "multiformats/cid"
 import supabaseUpload from "@utils/supabaseUpload"
 import fetcher from "@utils/fetcher"
 import { NewImage } from "pages/slicer/[id]"
@@ -33,12 +32,12 @@ export const beforeCreate = async (
 
   // Pin metadata on pinata
   const metadata = { name, description, image }
-  const pinBody = {
+  const pinMetadataBody = {
     body: JSON.stringify({ metadata, slicerId, productId }),
     method: "POST",
   }
-  const { IpfsHash } = await fetcher("/api/pin_json", pinBody)
-  const bytes32DataHash = bytes32FromIpfsHash(IpfsHash)
+  const { IpfsHash } = await fetcher("/api/pin_json", pinMetadataBody)
+  const bytes32MetadataHash = bytes32FromIpfsHash(IpfsHash)
 
   // Save metadata, hash & imageUrl on prisma
   const body = {
@@ -56,7 +55,7 @@ export const beforeCreate = async (
     body
   )
 
-  // save purchaseData on web3Storage
+  // save purchaseFiles on web3Storage
   const { webStorageKey } = await fetcher("/api/webStorage")
   const encryptedFiles = await encryptFiles(
     `${productId}${slicerId}`,
@@ -66,31 +65,49 @@ export const beforeCreate = async (
     maxRetries: 3,
   })
 
-  // Todo: Save purchaseDataHash on a pinata Json
-  const purchaseDataHash = CID.parse(purchaseDataCID).bytes
+  // Todo: Save purchaseDataCID on a pinata Json
+  const purchaseMetadata = { files: purchaseDataCID }
+  const pinPurchaseMetadataBody = {
+    body: JSON.stringify({ metadata: purchaseMetadata }),
+    method: "POST",
+  }
+  const { IpfsHash: metadataHash } = await fetcher(
+    "/api/pin_json",
+    pinPurchaseMetadataBody
+  )
+  const bytes32PurchaseMetadataHash = bytes32FromIpfsHash(metadataHash)
 
   return {
     image,
     newProduct,
-    dataHash: bytes32DataHash,
+    dataHash: bytes32MetadataHash,
     purchaseDataCID,
-    purchaseDataHash,
+    purchaseDataHash: bytes32PurchaseMetadataHash,
   }
 }
 
 export const handleReject = async (
   slicerId: number,
   image: string,
-  hash: string,
+  dataHash: string,
+  purchaseDataHash: string,
   purchaseDataCID: string,
   productId: string
 ) => {
   const supabaseStorage = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_NAME
   // unpin
-  if (hash) {
-    const ipfsHash = ipfsHashFromBytes32(hash)
+  if (dataHash) {
+    const hash = ipfsHashFromBytes32(dataHash)
     const unpinBody = {
-      body: JSON.stringify({ ipfsHash }),
+      body: JSON.stringify({ hash }),
+      method: "POST",
+    }
+    await fetcher("/api/unpin", unpinBody)
+  }
+  if (purchaseDataHash) {
+    const hash = ipfsHashFromBytes32(purchaseDataHash)
+    const unpinBody = {
+      body: JSON.stringify({ hash }),
       method: "POST",
     }
     await fetcher("/api/unpin", unpinBody)
