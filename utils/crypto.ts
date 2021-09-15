@@ -30,9 +30,10 @@ export const encryptFiles = async (
   salt: Buffer,
   iv: Uint8Array,
   files: File[],
-  thankMessage: string,
-  instructions: string,
-  notes: string
+  texts: {
+    value: string
+    filename: string
+  }[]
 ) => {
   const encryptedFiles: File[] = []
 
@@ -55,25 +56,11 @@ export const encryptFiles = async (
     encryptedFiles.push(encryptedFile)
   }
 
-  const encryptedThankMessage = await encryptText(
-    key,
-    iv,
-    thankMessage,
-    "Thanks"
-  )
-  const encryptedInstructions = await encryptText(
-    key,
-    iv,
-    instructions,
-    "Instructions"
-  )
-  const encryptedNotes = await encryptText(key, iv, notes, "Notes")
-
-  encryptedFiles.push(
-    encryptedThankMessage,
-    encryptedInstructions,
-    encryptedNotes
-  )
+  for (let i = 0; i < texts.length; i++) {
+    const text = texts[i]
+    const encryptedText = await encryptText(key, iv, text.value, text.filename)
+    encryptedFiles.push(encryptedText)
+  }
 
   return encryptedFiles
 }
