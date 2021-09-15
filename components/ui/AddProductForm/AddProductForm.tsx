@@ -12,7 +12,6 @@ import handleMessage, { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import { NewImage } from "pages/slicer/[id]"
 import useQuery from "@utils/subgraphQuery"
-import { bytes32FromIpfsHash, ipfsHashFromBytes32 } from "@utils/convertBytes"
 import { beforeCreate, handleReject } from "@lib/handleCreateProduct"
 
 type Props = {
@@ -45,7 +44,6 @@ const AddProductForm = ({
   const [isLimited, setIsLimited] = useState(false)
   const [units, setUnits] = useState(0)
   const [files, setFiles] = useState<File[]>([])
-  const [purchaseData, setPurchaseData] = useState([])
   const [message, setMessage] = useState<Message>({
     message: "",
     messageStatus: "success",
@@ -67,11 +65,17 @@ const AddProductForm = ({
     setLoading(true)
     try {
       const { image, newProduct, dataHash, purchaseDataCID, purchaseDataHash } =
-        await beforeCreate(productId, slicerId, name, description, newImage)
+        await beforeCreate(
+          productId,
+          slicerId,
+          name,
+          description,
+          newImage,
+          files
+        )
 
       // Create product on smart contract
       const productPrice = isUSD ? Math.floor(usdValue * 100) : ethValue
-      const bytes32DataHash = bytes32FromIpfsHash(dataHash)
 
       const eventLogs = await handleSubmit(
         AddProduct(
@@ -82,7 +86,7 @@ const AddProductForm = ({
           !isSingle,
           !isLimited,
           units,
-          bytes32DataHash,
+          dataHash,
           purchaseDataHash
         ),
         setMessage,
@@ -133,11 +137,7 @@ const AddProductForm = ({
         setUsdValue={setUsdValue}
         setIsUSD={setIsUSD}
       />
-      <AddProductFormPurchases
-        setPurchaseData={setPurchaseData}
-        files={files}
-        setFiles={setFiles}
-      />
+      <AddProductFormPurchases files={files} setFiles={setFiles} />
 
       <div className="pt-4 pb-1">
         <Button label="Create product" type="submit" />
@@ -153,3 +153,5 @@ export default AddProductForm
 
 // Todo: Add dynamic loading states on submit (1. getting ready, 2. waiting for blockchain, 3. reverting)
 // Todo: What else to add to metadata?
+
+// Todo: Handle scenario where user doesn't reject and just leave. (timeout?)

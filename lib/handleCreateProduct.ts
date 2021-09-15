@@ -3,13 +3,16 @@ import supabaseUpload from "@utils/supabaseUpload"
 import fetcher from "@utils/fetcher"
 import { NewImage } from "pages/slicer/[id]"
 import web3Storage from "./web3Storage"
+import encryptFiles from "@utils/encryptFiles"
+import { bytes32FromIpfsHash, ipfsHashFromBytes32 } from "@utils/convertBytes"
 
 export const beforeCreate = async (
   productId: number,
   slicerId: number,
   name: string,
   description: string,
-  newImage: NewImage
+  newImage: NewImage,
+  purchaseFiles: File[]
 ) => {
   let image = ""
   if (!productId) {
@@ -35,6 +38,7 @@ export const beforeCreate = async (
     method: "POST",
   }
   const { IpfsHash } = await fetcher("/api/pin_json", pinBody)
+  const bytes32DataHash = bytes32FromIpfsHash(IpfsHash)
 
   // Save metadata, hash & imageUrl on prisma
   const body = {
@@ -53,20 +57,22 @@ export const beforeCreate = async (
   )
 
   // save purchaseData on web3Storage
-  // Todo: send correct files from frontend
   const { webStorageKey } = await fetcher("/api/webStorage")
-  const purchaseDataCID = await web3Storage(webStorageKey).put(
-    [newImage.file],
-    {
-      maxRetries: 3,
-    }
+  const encryptedFiles = await encryptFiles(
+    `${productId}${slicerId}`,
+    purchaseFiles
   )
+  const purchaseDataCID = await web3Storage(webStorageKey).put(encryptedFiles, {
+    maxRetries: 3,
+  })
+
+  // Todo: Save purchaseDataHash on a pinata Json
   const purchaseDataHash = CID.parse(purchaseDataCID).bytes
 
   return {
     image,
     newProduct,
-    dataHash: IpfsHash,
+    dataHash: bytes32DataHash,
     purchaseDataCID,
     purchaseDataHash,
   }
@@ -82,8 +88,9 @@ export const handleReject = async (
   const supabaseStorage = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_NAME
   // unpin
   if (hash) {
+    const ipfsHash = ipfsHashFromBytes32(hash)
     const unpinBody = {
-      body: JSON.stringify({ hash }),
+      body: JSON.stringify({ ipfsHash }),
       method: "POST",
     }
     await fetcher("/api/unpin", unpinBody)

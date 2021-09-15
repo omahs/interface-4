@@ -10,14 +10,9 @@ import { Button, FilesList } from ".."
 type Props = {
   files: File[]
   setFiles: Dispatch<SetStateAction<File[]>>
-  setPurchaseData: Dispatch<SetStateAction<[]>>
 }
 
-const AddProductFormPurchases = ({
-  files,
-  setFiles,
-  setPurchaseData,
-}: Props) => {
+const AddProductFormPurchases = ({ files, setFiles }: Props) => {
   const [loading, setLoading] = useState(false)
   const uploadEl = useRef(null)
 
@@ -80,7 +75,7 @@ export default AddProductFormPurchases
 
 // What can be bought
 // 1. One or more files
-//    - Upload files from frontend, like the image
+//    - OK Upload files from frontend, like the image
 //    - upload files (encrypted with dynamic key) on web3Storage -> get ipfs hash
 //    - pin json with file hashes + encrypted metadata (name, descr, notes, etc)
 //    - send pinned Json hash as purchaseData bytes3d param
