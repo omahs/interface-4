@@ -37,7 +37,6 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
       ) {
         const eventLogs = await handleSubmit(
           Slice(cleanedAddresses, cleanedShares, minimumShares, isCollectible),
-          message,
           setMessage,
           setLoading,
           setSuccess,

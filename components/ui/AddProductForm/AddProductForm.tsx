@@ -89,7 +89,6 @@ const AddProductForm = ({
           dataHash,
           purchaseDataHash
         ),
-        message,
         setMessage,
         setLoading,
         setSuccess,

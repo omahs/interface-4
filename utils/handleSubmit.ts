@@ -5,15 +5,12 @@ import handleLog from "@utils/handleLog"
 
 const handleSubmit = async (
   action: Promise<any>,
-  message: Message,
   setMessage: Dispatch<SetStateAction<Message>>,
   setLoading: Dispatch<SetStateAction<boolean>>,
   setSuccess: Dispatch<SetStateAction<boolean>>,
   confetti = false
 ) => {
-  if (message) {
-    setMessage({ message: "", messageStatus: "success" })
-  }
+  setMessage({ message: "", messageStatus: "success" })
   try {
     const [contract, call] = await action
 

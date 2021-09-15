@@ -54,7 +54,6 @@ const TransferForm = ({
     e.preventDefault()
     const eventLog = await handleSubmit(
       TransferShares(account, address, Number(slicerId), shares),
-      message,
       setMessage,
       setLoading,
       setSuccess
