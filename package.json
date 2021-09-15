@@ -30,7 +30,6 @@
     "ethers": "^5.3.1",
     "graphql": "^15.5.1",
     "image-blob-reduce": "^3.0.1",
-    "multiformats": "^9.4.7",
     "next": "^11.1.0",
     "next-seo": "^4.26.0",
     "next-themes": "^0.0.15",
