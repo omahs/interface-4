@@ -4,7 +4,7 @@ import corsMiddleware from "@utils/corsMiddleware"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res)
-  const { metadata, slicerId, productId } = JSON.parse(req.body)
+  const { metadata, slicerId } = JSON.parse(req.body)
   const baseUrl = process.env.NEXT_PUBLIC_PINATA_URL
   try {
     if (req.method === "POST") {
@@ -16,10 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         body: JSON.stringify({
           pinataMetadata: {
             name: metadata.name,
-            keyvalues: {
-              slicerId,
-              productId,
-            },
+            keyvalues: { slicerId },
           },
           pinataContent: metadata,
         }),

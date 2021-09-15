@@ -10,15 +10,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     if (req.method === "POST") {
-      const { productId, name, description, image, hash } = JSON.parse(req.body)
-      data = await CreateProduct(
-        productId,
-        Number(id),
-        name,
-        description,
-        hash,
-        image
-      )
+      const { name, description, image, hash } = JSON.parse(req.body)
+      data = await CreateProduct(Number(id), name, description, hash, image)
     }
 
     if (req.method === "DELETE") {

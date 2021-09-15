@@ -6,7 +6,7 @@ import { bytes32FromIpfsHash, ipfsHashFromBytes32 } from "@utils/convertBytes"
 import { encryptFiles } from "@utils/crypto"
 
 export const beforeCreate = async (
-  productId: number,
+  author: string,
   slicerId: number,
   name: string,
   description: string,
@@ -14,16 +14,14 @@ export const beforeCreate = async (
   purchaseFiles: File[]
 ) => {
   let image = ""
-  if (!productId) {
-    throw Error("An unexpected error occurred. Try again")
-  }
+  let purchaseDataCID = ""
 
   // Save image on supabase
   if (newImage.url) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     {
       const { Key } = await supabaseUpload(
-        `${slicerId}/products/${productId}/main`,
+        `${slicerId}/products/${name}`,
         newImage
       )
       image = `${supabaseUrl}/storage/v1/object/public/${Key}`
@@ -33,7 +31,10 @@ export const beforeCreate = async (
   // Pin metadata on pinata
   const metadata = { name, description, image }
   const pinMetadataBody = {
-    body: JSON.stringify({ metadata, slicerId, productId }),
+    body: JSON.stringify({
+      metadata,
+      slicerId,
+    }),
     method: "POST",
   }
   const { IpfsHash } = await fetcher("/api/pin_json", pinMetadataBody)
@@ -43,7 +44,6 @@ export const beforeCreate = async (
   const body = {
     method: "POST",
     body: JSON.stringify({
-      productId,
       name: metadata.name,
       description: metadata.description,
       image,
@@ -56,16 +56,29 @@ export const beforeCreate = async (
   )
 
   // save purchaseFiles on web3Storage
-  const { webStorageKey } = await fetcher("/api/webStorage")
-  const encryptedFiles = await encryptFiles(
-    `${productId}${slicerId}`,
-    purchaseFiles
-  )
-  const purchaseDataCID = await web3Storage(webStorageKey).put(encryptedFiles, {
-    maxRetries: 3,
-  })
+  if (purchaseFiles.length != 0) {
+    const { webStorageKey } = await fetcher("/api/webStorage")
+    const keyBody = {
+      method: "POST",
+      body: JSON.stringify({
+        slicerId,
+        name,
+        author,
+      }),
+    }
+    const { password, salt, iv } = await fetcher("/api/keygen", keyBody)
+    const encryptedFiles = await encryptFiles(
+      password,
+      Buffer.from(salt),
+      new Uint8Array(iv),
+      purchaseFiles
+    )
+    purchaseDataCID = await web3Storage(webStorageKey).put(encryptedFiles, {
+      maxRetries: 3,
+    })
+  }
 
-  // Todo: Save purchaseDataCID on a pinata Json
+  // save purchaseDataCID on a pinata Json
   const purchaseMetadata = { files: purchaseDataCID }
   const pinPurchaseMetadataBody = {
     body: JSON.stringify({ metadata: purchaseMetadata }),
@@ -132,11 +145,13 @@ export const handleReject = async (
   await fetcher(`/api/slicer/${slicerId}/products?productId=${productId}`, body)
 
   // add web3Storage hash in Reject table on prisma
-  const prismaBody = {
-    method: "POST",
-    body: JSON.stringify({
-      purchaseDataCID,
-    }),
+  if (purchaseDataCID) {
+    const prismaBody = {
+      method: "POST",
+      body: JSON.stringify({
+        purchaseDataCID,
+      }),
+    }
+    await fetcher(`/api/addRevert`, prismaBody)
   }
-  await fetcher(`/api/addRevert`, prismaBody)
 }

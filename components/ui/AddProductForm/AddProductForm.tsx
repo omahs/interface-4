@@ -11,8 +11,8 @@ import handleSubmit from "@utils/handleSubmit"
 import handleMessage, { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import { NewImage } from "pages/slicer/[id]"
-import useQuery from "@utils/subgraphQuery"
 import { beforeCreate, handleReject } from "@lib/handleCreateProduct"
+import { useAppContext } from "../context"
 
 type Props = {
   slicerId: number
@@ -31,6 +31,7 @@ const AddProductForm = ({
   setSuccess,
   setLogs,
 }: Props) => {
+  const { account } = useAppContext()
   const [usdValue, setUsdValue] = useState<number>()
   const [ethValue, setEthValue] = useState<number>()
   const [name, setName] = useState("")
@@ -49,24 +50,13 @@ const AddProductForm = ({
     messageStatus: "success",
   })
 
-  // Todo: Handle productId update after product creation
-  const tokensQuery = /* GraphQL */ `
-    slicer(id: "${slicerId}") {
-      products {
-        id
-      }
-    }
-  `
-  let subgraphData = useQuery(tokensQuery)
-  const productId = subgraphData?.slicer?.products?.length + 1
-
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
     setLoading(true)
     try {
       const { image, newProduct, dataHash, purchaseDataCID, purchaseDataHash } =
         await beforeCreate(
-          productId,
+          account,
           slicerId,
           name,
           description,
@@ -153,8 +143,8 @@ const AddProductForm = ({
 
 export default AddProductForm
 
+// Todo: What else to add to metadata and purchaseData?
+
 // Todo: Add dynamic loading states on submit (1. getting ready, 2. waiting for blockchain, 3. reverting)
-// Todo: What else to add to metadata?
 
 // Todo: Handle scenario where user doesn't reject and just leave. (timeout?)
-// Todo: Handle loading states during creation/rejection
