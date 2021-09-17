@@ -4,7 +4,7 @@ import supabaseUpload from "@utils/supabaseUpload"
 import fetcher from "@utils/fetcher"
 import { NewImage } from "pages/slicer/[id]"
 import web3Storage from "./web3Storage"
-import { encryptFiles } from "@utils/crypto"
+import { encryptFiles, importKey } from "@utils/crypto"
 
 export const beforeCreate = async (
   author: string,
@@ -65,8 +65,12 @@ export const beforeCreate = async (
 
   // encrypt files
   setUploadStep(4)
-  const { webStorageKey } = await fetcher("/api/webStorage")
-  const keyBody = {
+  const texts = [
+    { value: thankMessage, filename: "Thanks" },
+    { value: instructions, filename: "Instructions" },
+    { value: notes, filename: "Notes" },
+  ]
+  const keygenBody = {
     method: "POST",
     body: JSON.stringify({
       slicerId,
@@ -74,15 +78,10 @@ export const beforeCreate = async (
       author,
     }),
   }
-  const { password, salt, iv } = await fetcher("/api/keygen", keyBody)
-  const texts = [
-    { value: thankMessage, filename: "Thanks" },
-    { value: instructions, filename: "Instructions" },
-    { value: notes, filename: "Notes" },
-  ]
+  const { exportedKey, iv } = await fetcher("/api/keygen", keygenBody)
+  const key = await importKey(exportedKey)
   const encryptedFiles = await encryptFiles(
-    password,
-    Buffer.from(salt),
+    key,
     new Uint8Array(iv),
     purchaseFiles,
     texts
@@ -90,6 +89,7 @@ export const beforeCreate = async (
 
   // save purchaseFiles on web3Storage
   setUploadStep(5)
+  const { webStorageKey } = await fetcher("/api/webStorage")
   const totalSize = encryptedFiles.map((f) => f.size).reduce((a, b) => a + b, 0)
   let uploaded = 0
   const onStoredChunk = (size: number) => {

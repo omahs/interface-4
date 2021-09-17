@@ -1,7 +1,10 @@
+import { Crypto } from "@peculiar/webcrypto"
+
 export const generateKey = async (password: string, salt: Buffer) => {
+  const crypto: Crypto = new Crypto()
   let enc = new TextEncoder()
 
-  const keyMaterial = await window.crypto.subtle.importKey(
+  const keyMaterial = await crypto.subtle.importKey(
     "raw",
     enc.encode(password),
     "PBKDF2",
@@ -9,7 +12,7 @@ export const generateKey = async (password: string, salt: Buffer) => {
     ["deriveKey"]
   )
 
-  const key = await window.crypto.subtle.deriveKey(
+  const key = await crypto.subtle.deriveKey(
     {
       name: "PBKDF2",
       salt,
@@ -18,16 +21,24 @@ export const generateKey = async (password: string, salt: Buffer) => {
     },
     keyMaterial,
     { name: "AES-GCM", length: 256 },
-    false,
+    true,
     ["encrypt", "decrypt"]
   )
 
   return key
 }
 
+export const importKey = async (key: object) =>
+  await window.crypto.subtle.importKey(
+    "jwk",
+    key,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["decrypt", "encrypt"]
+  )
+
 export const encryptFiles = async (
-  password: string,
-  salt: Buffer,
+  key: CryptoKey,
   iv: Uint8Array,
   files: File[],
   texts: {
@@ -36,8 +47,6 @@ export const encryptFiles = async (
   }[]
 ) => {
   const encryptedFiles: File[] = []
-
-  const key = await generateKey(password, salt)
 
   for (let i = 0; i < files.length; i++) {
     const fileExt = files[i].name.split(".").pop()
@@ -82,7 +91,6 @@ export const decryptFiles = async (
       key,
       buf
     )
-    console.log(decryptedBuf)
     const decryptedFile = new File([decryptedBuf], files[i].name, {
       type: files[i].type,
     })
@@ -92,7 +100,7 @@ export const decryptFiles = async (
   return decryptedFiles
 }
 
-const encryptText = async (
+export const encryptText = async (
   key: CryptoKey,
   iv: Uint8Array,
   text: string,
