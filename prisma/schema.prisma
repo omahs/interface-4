@@ -28,6 +28,7 @@ model Product {
   name          String
   description   String
   image         String?
+  author        String
   hash          String
   slicer        Slicer   @relation(fields: [slicerId], references: [id])
   slicerId      Int      @map(name: "slicer_id")
