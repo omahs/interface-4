@@ -5,6 +5,16 @@ import { useEffect, useState } from "react"
 import useSWR from "swr"
 import Button from "../Button"
 
+type Product = {
+  id: number
+  productId: number
+  name: string
+  description: string
+  creator: string
+  hash: string
+  image: string
+}
+
 type Props = {
   slicerId: string
   editMode: boolean
@@ -12,8 +22,8 @@ type Props = {
 
 const SlicerProducts = ({ slicerId, editMode }: Props) => {
   const [loading, setLoading] = useState(false)
-  const [showProducts, setShowProducts] = useState([])
-  const [pendingProducts, setPendingProducts] = useState([])
+  const [showProducts, setShowProducts] = useState<Product[]>([])
+  const [pendingProducts, setPendingProducts] = useState<Product[]>([])
   const { data: products } = useSWR(`/api/slicer/${slicerId}/products`, fetcher)
 
   const tokensQuery = /* GraphQL */ `
@@ -22,7 +32,7 @@ const SlicerProducts = ({ slicerId, editMode }: Props) => {
     data
   }
 `
-  const subgraphData = useQuery(tokensQuery)
+  const subgraphData = useQuery(tokensQuery, [editMode])
   const blockchainProducts = subgraphData?.products
 
   useEffect(() => {
@@ -30,11 +40,9 @@ const SlicerProducts = ({ slicerId, editMode }: Props) => {
     setPendingProducts(products?.data?.filter((p) => p.productId == null))
   }, [products])
 
-  console.log(showProducts)
-
   return (
     <>
-      {/* <ProductGrid/> */}
+      {/* <ProductGrid product={showProducts} /> */}
       {editMode && (
         <div>
           <Button label="Add a new product" href={`${slicerId}/products/new`} />
