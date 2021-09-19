@@ -23,24 +23,26 @@ model Slicer {
 }
 
 model Product {
-  id            Int      @default(autoincrement()) @id
-  // productId     Int      @map(name: "product_id")
-  name          String
-  description   String
-  image         String?
-  author        String
-  hash          String
-  slicer        Slicer   @relation(fields: [slicerId], references: [id])
-  slicerId      Int      @map(name: "slicer_id")
+  id              Int      @default(autoincrement()) @id
+  productId       Int?     @map(name: "product_id")
+  createdAt       DateTime @default(now()) @map(name: "created_at")
+  name            String
+  description     String
+  creator         String
+  uid             String
+  hash            String
+  image           String?
+  tempProductHash String?
+  slicer          Slicer   @relation(fields: [slicerId], references: [id])
+  slicerId        Int      @map(name: "slicer_id")
   
-  // @@index([productId], name:"productId")
+  @@index([productId], name:"productId")
   @@index([slicerId], name:"slicerId")
-  // @@unique([productId, slicerId], name: "productSlicer")
+  // @@unique([slicerId, name, version], name: "slicerNameVersion")
 }
 
 model Revert {
   id            Int      @default(autoincrement()) @id
   hash          String
   service       String   @default("web3Storage")
-  isDeleted     Boolean  @default(false)
 }
