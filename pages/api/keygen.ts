@@ -6,17 +6,28 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res)
   try {
     if (req.method === "POST") {
-      const { slicerId, name, author } = JSON.parse(req.body)
+      const { slicerId, name, creator, uid } = JSON.parse(req.body)
+      const enKey = process.env.ENCRYPT_KEY
 
-      // const enKey = process.env.ENCRYPT_KEY // TBD
-      const password = `${slicerId}${name}`
-      const salt = Buffer.from(author)
-      const iv = [1, 0, 1]
+      const password = `s${slicerId}-nm${name.substring(3)}k${enKey}`
+      const salt = `${creator.substring(3)}__${uid}`
+      const iv = [
+        5,
+        254,
+        31,
+        Number(slicerId),
+        63,
+        77,
+        Number(uid),
+        175,
+        153,
+        129,
+        222,
+        47,
+      ]
 
-      const key = await generateKey(password, salt)
-      const exportedKey = await crypto.subtle.exportKey("jwk", key)
+      const exportedKey = await generateKey(password, salt)
 
-      // choosing a unique initialization vector for every encryption performed with the same key
       res.status(200).json({ exportedKey, iv })
     }
   } catch (err) {
@@ -26,5 +37,3 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 export default handler
-
-// Todo: Figure out pass values
