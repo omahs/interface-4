@@ -1,6 +1,6 @@
 import { Crypto } from "@peculiar/webcrypto"
 
-export const generateKey = async (password: string, salt: Buffer) => {
+export const generateKey = async (password: string, salt: string) => {
   const crypto: Crypto = new Crypto()
   let enc = new TextEncoder()
 
@@ -15,7 +15,7 @@ export const generateKey = async (password: string, salt: Buffer) => {
   const key = await crypto.subtle.deriveKey(
     {
       name: "PBKDF2",
-      salt,
+      salt: Buffer.from(salt),
       iterations: 100000,
       hash: "SHA-256",
     },
@@ -25,7 +25,9 @@ export const generateKey = async (password: string, salt: Buffer) => {
     ["encrypt", "decrypt"]
   )
 
-  return key
+  const exportedKey = await crypto.subtle.exportKey("jwk", key)
+
+  return exportedKey
 }
 
 export const importKey = async (key: object) =>

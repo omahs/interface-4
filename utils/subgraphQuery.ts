@@ -2,7 +2,7 @@ import { gql, ApolloQueryResult } from "@apollo/client"
 import client from "./apollo-client"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 
-const graphQuery = async (
+export const graphQuery = async (
   tokensQuery: string,
   setData: Dispatch<SetStateAction<ApolloQueryResult<any>>>
 ) => {
