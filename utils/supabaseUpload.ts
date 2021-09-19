@@ -18,7 +18,7 @@ const supabaseUpload = async (
   let mainImage: File
   if (fileExt !== "gif") {
     if (highQuality) {
-      mainImage = await reduce.toBlob(newImage.file, { max: 1980 })
+      mainImage = await reduce.toBlob(newImage.file, { max: 2560 })
     } else {
       mainImage = await reduce.toBlob(newImage.file, { max: 1280 })
     }
