@@ -36,8 +36,10 @@ const SlicerProducts = ({ slicerId, editMode }: Props) => {
   const blockchainProducts = subgraphData?.products
 
   useEffect(() => {
-    setShowProducts(products?.data?.filter((p) => p.productId != null))
-    setPendingProducts(products?.data?.filter((p) => p.productId == null))
+    setShowProducts(products?.data?.filter((p: Product) => p.productId != null))
+    setPendingProducts(
+      products?.data?.filter((p: Product) => p.productId == null)
+    )
   }, [products])
 
   return (
