@@ -10,6 +10,7 @@ import getLog from "@utils/getLog"
 import { base16 } from "multiformats/bases/base16"
 import client from "@utils/apollo-client"
 import { gql } from "@apollo/client"
+import { mutate } from "swr"
 
 export const beforeCreate = async (
   creator: string,
@@ -106,6 +107,7 @@ export const beforeCreate = async (
       uid,
       hash: IpfsHash,
       tempProductHash: purchaseDataCID,
+      productId: null,
     }),
   }
   const { data: newProduct } = await fetcher(
@@ -195,7 +197,12 @@ export const handleReject = async (
   }
 }
 
-export const handleCleanup = async (slicerId: number) => {
+export const handleCleanup = async (
+  slicerId: number,
+  setLoading: Dispatch<SetStateAction<boolean>>
+) => {
+  setLoading(true)
+
   // Get all pending products and loop through them
   const { data: products } = await fetcher(
     `/api/slicer/${slicerId}/products?pending=true`
@@ -204,7 +211,7 @@ export const handleCleanup = async (slicerId: number) => {
   for (let i = 0; i < products.length; i++) {
     const product = products[i]
     const dataHash =
-      "0x" + CID.parse(product.hash).toString(base16).substring(1)
+      "0x" + CID.parse(product.hash)?.toString(base16).substring(1)
 
     // // Distinguish between minted / not minted product
     const tokensQuery = /* GraphQL */ `
@@ -214,7 +221,6 @@ export const handleCleanup = async (slicerId: number) => {
         data: "${dataHash}"
       }) {
         id
-        price
       }
     `
     const { data } = await client.query({
@@ -232,7 +238,7 @@ export const handleCleanup = async (slicerId: number) => {
         method: "PUT",
         body: JSON.stringify({
           id: product.id,
-          productId: Number(productId),
+          productId: productId,
           tempProductHash: null,
         }),
       }
@@ -247,4 +253,64 @@ export const handleCleanup = async (slicerId: number) => {
       )
     }
   }
+
+  await reload(slicerId, setLoading)
+}
+
+export const reload = async (
+  slicerId: number,
+  setLoading: Dispatch<SetStateAction<boolean>>
+) => {
+  setLoading(true)
+
+  // Get all missing minted products on prisma
+  const { data: products } = await fetcher(`/api/slicer/${slicerId}/products`)
+
+  const tokensQuery = /* GraphQL */ `
+  products (where: {slicer: "${slicerId}"}) {
+    id
+    data
+  }
+`
+  const { data } = await client.query({
+    query: gql`
+      query {
+        ${tokensQuery}
+      }
+    `,
+  })
+  const blockchainProducts = data.products
+
+  const productIds = Array.from(
+    { length: blockchainProducts.length },
+    (_, i) => i + 1
+  )
+
+  for (let i = 0; i < productIds.length; i++) {
+    const productId = productIds[i]
+
+    if (products.filter((p) => p.productId === productId).length == 0) {
+      const hash = "f" + blockchainProducts[i].data.substring(2)
+      const dataHash = CID.parse(hash, base16.decoder).toV1().toString()
+      const { name, description, creator, image, uid } = await fetcher(
+        `https://gateway.pinata.cloud/ipfs/${dataHash}`
+      )
+      const body = {
+        method: "POST",
+        body: JSON.stringify({
+          name,
+          productId,
+          description,
+          image,
+          creator,
+          uid: uid || "",
+          tempProductHash: null,
+          hash: dataHash,
+        }),
+      }
+      await fetcher(`/api/slicer/${slicerId}/products`, body)
+    }
+  }
+  mutate(`/api/slicer/${slicerId}/products`)
+  setLoading(false)
 }

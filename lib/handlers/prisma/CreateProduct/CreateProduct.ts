@@ -9,21 +9,28 @@ const CreateProduct = async (
   hash: string,
   tempProductHash: string,
   // version: number,
-  image?: string
+  image?: string,
+  productId?: number
 ) => {
-  const query = await prisma.product.create({
-    data: {
-      slicerId,
-      name,
-      description,
-      image,
-      creator,
-      uid,
-      tempProductHash,
-      hash,
-      // version
-    },
-  })
+  let query
+  try {
+    query = await prisma.product.create({
+      data: {
+        slicerId,
+        name,
+        description,
+        image,
+        creator,
+        uid,
+        tempProductHash,
+        hash,
+        productId,
+        // version
+      },
+    })
+  } catch (err) {
+    console.log(err)
+  }
 
   return query
 }

@@ -5,30 +5,44 @@ import corsMiddleware from "@utils/corsMiddleware"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await corsMiddleware(req, res)
-  const { id, productId, name, pending } = req.query
+  const { id, productId, pending } = req.query
   let data: any
 
   try {
     if (req.method === "GET") {
-      if (pending == "true") {
-        data = await prisma.product.findMany({
-          where: {
-            AND: [
-              {
-                slicerId: { equals: Number(id) },
-              },
-              {
-                productId: { equals: null },
-              },
-              {
-                createdAt: {
-                  lte: new Date(Date.now() - 1000 * 60 * 60),
+      const getProductsBody =
+        pending == "true"
+          ? {
+              AND: [
+                {
+                  slicerId: { equals: Number(id) },
                 },
-              },
-            ],
-          },
-        })
-      }
+                {
+                  productId: { equals: null },
+                },
+                {
+                  createdAt: {
+                    lte: new Date(Date.now() - 1000 * 60 * 60),
+                  },
+                },
+              ],
+            }
+          : {
+              slicerId: { equals: Number(id) },
+            }
+
+      data = await prisma.product.findMany({
+        where: getProductsBody,
+        select: {
+          id: true,
+          productId: true,
+          name: true,
+          description: true,
+          creator: true,
+          hash: true,
+          image: true,
+        },
+      })
       // else {
       //   data = await prisma.product.count({
       //     where: {
@@ -46,8 +60,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (req.method === "POST") {
-      const { name, description, image, creator, uid, hash, tempProductHash } =
-        JSON.parse(req.body)
+      const {
+        name,
+        productId,
+        description,
+        image,
+        creator,
+        uid,
+        hash,
+        tempProductHash,
+      } = JSON.parse(req.body)
       data = await CreateProduct(
         Number(id),
         name,
@@ -56,7 +78,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         uid,
         hash,
         tempProductHash,
-        image
+        image,
+        Number(productId)
       )
     }
 

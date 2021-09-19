@@ -15,7 +15,6 @@ import {
   beforeCreate,
   handleReject,
   handleSuccess,
-  handleCleanup,
 } from "@lib/handleCreateProduct"
 import { useAppContext } from "../context"
 
@@ -103,7 +102,7 @@ const AddProductForm = ({
         true
       )
 
-      if (eventLogs) {
+      if (success) {
         setLogs(eventLogs)
         setUploadStep(9)
         await handleSuccess(slicerId, newProduct.id, eventLogs)
@@ -141,12 +140,6 @@ const AddProductForm = ({
 
   return (
     <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>
-      <Button
-        label="test cleanup"
-        type="button"
-        onClick={() => handleCleanup(slicerId)}
-      />
-
       <AddProductFormGeneral
         slicerId={slicerId}
         newImage={newImage}

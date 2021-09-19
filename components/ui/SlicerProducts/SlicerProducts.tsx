@@ -1,6 +1,9 @@
-import { Dispatch, SetStateAction, useState } from "react"
+import { handleCleanup, reload } from "@lib/handleCreateProduct"
+import fetcher from "@utils/fetcher"
+import useQuery from "@utils/subgraphQuery"
+import { useEffect, useState } from "react"
+import useSWR from "swr"
 import Button from "../Button"
-import Input from "../Input"
 
 type Props = {
   slicerId: string
@@ -8,12 +11,52 @@ type Props = {
 }
 
 const SlicerProducts = ({ slicerId, editMode }: Props) => {
+  const [loading, setLoading] = useState(false)
+  const [showProducts, setShowProducts] = useState([])
+  const [pendingProducts, setPendingProducts] = useState([])
+  const { data: products } = useSWR(`/api/slicer/${slicerId}/products`, fetcher)
+
+  const tokensQuery = /* GraphQL */ `
+  products (where: {slicer: "${slicerId}"}) {
+    id
+    data
+  }
+`
+  const subgraphData = useQuery(tokensQuery)
+  const blockchainProducts = subgraphData?.products
+
+  useEffect(() => {
+    setShowProducts(products?.data?.filter((p) => p.productId != null))
+    setPendingProducts(products?.data?.filter((p) => p.productId == null))
+  }, [products])
+
+  console.log(showProducts)
+
   return (
     <>
       {/* <ProductGrid/> */}
       {editMode && (
         <div>
-          <Button label="Add a product" href={`${slicerId}/products/new`} />
+          <Button label="Add a new product" href={`${slicerId}/products/new`} />
+          {(pendingProducts?.length != 0 ||
+            blockchainProducts?.length > products?.data?.length) && (
+            <div className="pt-12">
+              <p className="pb-4">
+                There are pending products for your slicer. <br />
+                Click the button below to reload them.
+              </p>
+              <Button
+                label="Reload products"
+                type="button"
+                loading={loading}
+                onClick={() =>
+                  pendingProducts?.length != 0
+                    ? handleCleanup(Number(slicerId), setLoading)
+                    : reload(Number(slicerId), setLoading)
+                }
+              />
+            </div>
+          )}
           <hr className="w-20 mx-auto mt-16 border-gray-300" />
         </div>
       )}
