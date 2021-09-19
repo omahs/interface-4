@@ -11,7 +11,12 @@ import handleSubmit from "@utils/handleSubmit"
 import handleMessage, { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import { NewImage } from "pages/slicer/[id]"
-import { beforeCreate, handleReject } from "@lib/handleCreateProduct"
+import {
+  beforeCreate,
+  handleReject,
+  handleSuccess,
+  handleCleanup,
+} from "@lib/handleCreateProduct"
 import { useAppContext } from "../context"
 
 type Props = {
@@ -98,21 +103,23 @@ const AddProductForm = ({
         true
       )
 
-      if (!success) {
+      if (eventLogs) {
+        setLogs(eventLogs)
+        setUploadStep(9)
+        await handleSuccess(slicerId, newProduct.id, eventLogs)
+        setUploadStep(10)
+      } else {
+        setUploadStep(7)
         await handleReject(
           slicerId,
           image,
           data,
           purchaseDataCID,
-          newProduct.id,
-          setUploadStep
+          newProduct.id
         )
-      } else {
-        setUploadStep(9)
-        setLogs(eventLogs)
+        setUploadStep(8)
       }
     } catch (err) {
-      // Todo: handleReject in case of errors
       console.log(err)
     }
     setLoading(false)
@@ -134,7 +141,14 @@ const AddProductForm = ({
 
   return (
     <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>
+      <Button
+        label="test cleanup"
+        type="button"
+        onClick={() => handleCleanup(slicerId)}
+      />
+
       <AddProductFormGeneral
+        slicerId={slicerId}
         newImage={newImage}
         setNewImage={setNewImage}
         name={name}
@@ -168,7 +182,6 @@ const AddProductForm = ({
         files={files}
         setFiles={setFiles}
       />
-
       <div className="pt-4 pb-1">
         <Button
           label="Create product"
@@ -194,7 +207,9 @@ export default AddProductForm
 
 // Todo: handle popup and dynamic loading states on submit (1. getting ready, 2. waiting for blockchain, 3. reverting)
 
-// Todo: Handle scenario where user doesn't reject and just leave. (timeout?)
-
 // Todo: textarea Input
 // Todo: filelist frontend
+
+// Todo: What else to add to data and purchaseData (on pinata and web3storage)
+
+// Todo: Use Uploadpct

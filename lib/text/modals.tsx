@@ -72,13 +72,19 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
 
   switch (uploadStep) {
     case 1:
+      uploadState = "Uploading image"
+      break
     case 2:
+      uploadState = "Pinning metadata"
+      break
     case 3:
-      uploadState = "Getting ready"
+      uploadState = "Encrypting files"
       break
     case 4:
-    case 5:
       uploadState = "Uploading files"
+      break
+    case 5:
+      uploadState = "Uploading on prisma"
       break
     case 6:
       uploadState = "Waiting from blockchain"
@@ -90,6 +96,9 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
       uploadState = "Done, reverted"
       break
     case 9:
+      uploadState = "Finalizing"
+      break
+    case 10:
       uploadState = "Done, success"
       break
   }

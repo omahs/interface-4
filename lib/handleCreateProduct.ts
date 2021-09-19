@@ -5,9 +5,14 @@ import fetcher from "@utils/fetcher"
 import { NewImage } from "pages/slicer/[id]"
 import web3Storage from "./web3Storage"
 import { encryptFiles, importKey } from "@utils/crypto"
+import { LogDescription } from "@ethersproject/abi"
+import getLog from "@utils/getLog"
+import { base16 } from "multiformats/bases/base16"
+import client from "@utils/apollo-client"
+import { gql } from "@apollo/client"
 
 export const beforeCreate = async (
-  author: string,
+  creator: string,
   slicerId: number,
   name: string,
   description: string,
@@ -19,10 +24,12 @@ export const beforeCreate = async (
   setUploadStep: Dispatch<SetStateAction<number>>,
   setUploadPct: Dispatch<SetStateAction<number>>
 ) => {
+  const uid = Math.random().toString().substring(2)
+  const metadata = { name, description, creator, uid }
   let image = ""
 
-  setUploadStep(1)
   // Save image on supabase
+  setUploadStep(1)
   if (newImage.url) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     {
@@ -31,12 +38,12 @@ export const beforeCreate = async (
         newImage
       )
       image = `${supabaseUrl}/storage/v1/object/public/${Key}`
+      metadata["image"] = image
     }
   }
 
   // Pin metadata on pinata
   setUploadStep(2)
-  const metadata = { name, description, image }
   const pinMetadataBody = {
     body: JSON.stringify({
       metadata,
@@ -47,24 +54,8 @@ export const beforeCreate = async (
   const { IpfsHash } = await fetcher("/api/pin_json", pinMetadataBody)
   const data = CID.parse(IpfsHash).bytes
 
-  // Save metadata, hash & imageUrl on prisma
-  setUploadStep(3)
-  const body = {
-    method: "POST",
-    body: JSON.stringify({
-      name: metadata.name,
-      description: metadata.description,
-      image,
-      hash: IpfsHash,
-    }),
-  }
-  const { data: newProduct } = await fetcher(
-    `/api/slicer/${slicerId}/products`,
-    body
-  )
-
   // encrypt files
-  setUploadStep(4)
+  setUploadStep(3)
   const texts = [
     { value: thankMessage, filename: "Thanks" },
     { value: instructions, filename: "Instructions" },
@@ -75,7 +66,8 @@ export const beforeCreate = async (
     body: JSON.stringify({
       slicerId,
       name,
-      author,
+      creator,
+      uid,
     }),
   }
   const { exportedKey, iv } = await fetcher("/api/keygen", keygenBody)
@@ -88,7 +80,7 @@ export const beforeCreate = async (
   )
 
   // save purchaseFiles on web3Storage
-  setUploadStep(5)
+  setUploadStep(4)
   const { webStorageKey } = await fetcher("/api/webStorage")
   const totalSize = encryptedFiles.map((f) => f.size).reduce((a, b) => a + b, 0)
   let uploaded = 0
@@ -102,6 +94,25 @@ export const beforeCreate = async (
   })
   const purchaseData = CID.parse(purchaseDataCID).bytes
 
+  // Save metadata, hashes & imageUrl on prisma
+  setUploadStep(5)
+  const body = {
+    method: "POST",
+    body: JSON.stringify({
+      name: metadata.name,
+      description: metadata.description,
+      image,
+      creator,
+      uid,
+      hash: IpfsHash,
+      tempProductHash: purchaseDataCID,
+    }),
+  }
+  const { data: newProduct } = await fetcher(
+    `/api/slicer/${slicerId}/products`,
+    body
+  )
+
   setUploadStep(6)
   return {
     image,
@@ -112,19 +123,41 @@ export const beforeCreate = async (
   }
 }
 
+export const handleSuccess = async (
+  slicerId: number,
+  id: string,
+  eventLogs: LogDescription[]
+) => {
+  const eventLog = getLog(eventLogs, "ProductAdded")
+  // const eventLogs = [4, 0, BigNumber, false, false, true, 0, '0xAe009d532328FF09e09E5d506aB5BBeC3c25c0FF', '0x01551220aecc2b6190c7c7183a7bbcccf89f9ca60e8a2def4fbc11abb813f95e2fbbdf45', Array(0), Array(0)]
+  const productId = eventLog[0]
+
+  // Update product in prisma, adding productId and removing productHash
+  const putBody = {
+    method: "PUT",
+    body: JSON.stringify({
+      id,
+      productId,
+      tempProductHash: null,
+    }),
+  }
+  await fetcher(`/api/slicer/${slicerId}/products`, putBody)
+}
+
 export const handleReject = async (
   slicerId: number,
   image: string,
-  dataHash: Uint8Array,
+  dataHash: Uint8Array | string,
   purchaseDataCID: string,
-  productId: string,
-  setUploadStep: Dispatch<SetStateAction<number>>
+  productId: string
 ) => {
-  setUploadStep(7)
   const supabaseStorage = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_NAME
   // unpin
   if (dataHash) {
-    const hash = CID.decode(dataHash).toString()
+    let hash = dataHash
+    if (typeof dataHash != "string") {
+      hash = CID.decode(dataHash).toString()
+    }
     const unpinBody = {
       body: JSON.stringify({ hash }),
       method: "POST",
@@ -152,13 +185,66 @@ export const handleReject = async (
 
   // add web3Storage hash in Reject table on prisma
   if (purchaseDataCID) {
-    const prismaBody = {
+    const revertBody = {
       method: "POST",
       body: JSON.stringify({
         purchaseDataCID,
       }),
     }
-    await fetcher(`/api/addRevert`, prismaBody)
+    await fetcher(`/api/addRevert`, revertBody)
   }
-  setUploadStep(8)
+}
+
+export const handleCleanup = async (slicerId: number) => {
+  // Get all pending products and loop through them
+  const { data: products } = await fetcher(
+    `/api/slicer/${slicerId}/products?pending=true`
+  )
+
+  for (let i = 0; i < products.length; i++) {
+    const product = products[i]
+    const dataHash =
+      "0x" + CID.parse(product.hash).toString(base16).substring(1)
+
+    // // Distinguish between minted / not minted product
+    const tokensQuery = /* GraphQL */ `
+      products(where: {
+        slicer: "${slicerId}",
+        creator: "${product.creator.toLowerCase()}",
+        data: "${dataHash}"
+      }) {
+        id
+        price
+      }
+    `
+    const { data } = await client.query({
+      query: gql`
+      query {
+        ${tokensQuery}
+      }
+    `,
+    })
+
+    if (data.products.length != 0 /* minted */) {
+      // Update productId and remove hash
+      const productId = data.products[0].id.split("-").pop()
+      const putBody = {
+        method: "PUT",
+        body: JSON.stringify({
+          id: product.id,
+          productId: Number(productId),
+          tempProductHash: null,
+        }),
+      }
+      await fetcher(`/api/slicer/${slicerId}/products`, putBody)
+    } /* not minted */ else {
+      await handleReject(
+        slicerId,
+        product.image,
+        product.hash,
+        product.tempProductHash,
+        product.id
+      )
+    }
+  }
 }

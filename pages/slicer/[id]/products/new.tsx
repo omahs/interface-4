@@ -61,49 +61,49 @@ export default function NewProduct() {
             </div>
           </main>
         ) : isAllowed ? (
-          !success ? (
-            !loadingForm ? (
-              <main className="max-w-[420px] mx-auto sm:max-w-screen-md">
-                <DoubleText
-                  inactive
-                  logoText="Add product"
-                  size="text-4xl sm:text-5xl"
-                  position="pb-8 sm:pb-12"
-                />
-                <AddProductForm
-                  slicerId={Number(id)}
-                  success={success}
-                  loading={loadingForm}
-                  setLoading={setLoadingForm}
-                  uploadStep={uploadStep}
-                  setUploadStep={setUploadStep}
-                  setSuccess={setSuccess}
-                  setLogs={setLogs}
-                />
-              </main>
-            ) : (
-              <ActionScreen
-                text="Adding product ..."
-                helpText="Please wait while the blockchain does its thing"
-                loading
-              />
-            )
-          ) : (
-            <ActionScreen
-              highlightTitle="Product added! 🍰"
-              helpText={
-                <p className="pb-6">
-                  You can find the new product with id{" "}
-                  <b>{eventLog && eventLog[0]}</b> in the slicer page.
-                </p>
-              }
-              buttonLabel="Go to slicer"
-              href={`/slicer/${id}`}
-              buttonLabelSecondary="Add product"
-              onClickSecondary={() => setSuccess(false)}
+          // !success ? (
+          //   !loadingForm ? (
+          <main className="max-w-[420px] mx-auto sm:max-w-screen-md">
+            <DoubleText
+              inactive
+              logoText="Add product"
+              size="text-4xl sm:text-5xl"
+              position="pb-8 sm:pb-12"
             />
-          )
+            <AddProductForm
+              slicerId={Number(id)}
+              success={success}
+              loading={loadingForm}
+              setLoading={setLoadingForm}
+              uploadStep={uploadStep}
+              setUploadStep={setUploadStep}
+              setSuccess={setSuccess}
+              setLogs={setLogs}
+            />
+          </main>
         ) : (
+          // ) : (
+          //   <ActionScreen
+          //     text="Adding product ..."
+          //     helpText="Please wait while the blockchain does its thing"
+          //     loading
+          //   />
+          // )
+          // ) : (
+          //   <ActionScreen
+          //     highlightTitle="Product added! 🍰"
+          //     helpText={
+          //       <p className="pb-6">
+          //         You can find the new product with id{" "}
+          //         <b>{eventLog && eventLog[0]}</b> in the slicer page.
+          //       </p>
+          //     }
+          //     buttonLabel="Go to slicer"
+          //     href={`/slicer/${id}`}
+          //     buttonLabelSecondary="Add product"
+          //     onClickSecondary={() => setSuccess(false)}
+          //   />
+          // )
           <ActionScreen
             text="You are not allowed to access this page"
             href="/"
