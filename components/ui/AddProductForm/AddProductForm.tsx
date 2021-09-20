@@ -138,6 +138,11 @@ const AddProductForm = ({
     }
   }, [loading, uploadStep])
 
+  useEffect(() => {
+    setUploadStep(5)
+    setModalView("CREATE_PRODUCT_VIEW")
+  }, [])
+
   return (
     <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>
       <AddProductFormGeneral
@@ -198,10 +203,7 @@ const AddProductForm = ({
 
 export default AddProductForm
 
-// Todo: handle popup and dynamic loading states on submit (1. getting ready, 2. waiting for blockchain, 3. reverting)
-
 // Todo: textarea Input
-// Todo: filelist frontend
 
 // Todo: What else to add to data and purchaseData (on pinata and web3storage)
 

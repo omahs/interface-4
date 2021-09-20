@@ -38,7 +38,7 @@ const Modal = ({ modalView, setModalView }: Props) => {
         {cross && (
           <div className="absolute top-[20px] right-[20px]">
             <Cross
-              className="text-right cursor-pointer hover:text-blue-600"
+              className="text-right cursor-pointer hover:text-red-500"
               onClick={() => setModalView({ name: "" })}
             />
           </div>

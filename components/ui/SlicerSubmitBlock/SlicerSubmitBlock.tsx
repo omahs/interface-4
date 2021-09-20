@@ -164,7 +164,7 @@ const SlicerSubmitBlock = ({
       </div>
       {!loading && (
         <p
-          className="inline-block font-medium text-red-600 cursor-pointer hover:underline"
+          className="inline-block font-medium text-red-500 cursor-pointer hover:underline"
           onClick={() => cancel()}
         >
           Cancel

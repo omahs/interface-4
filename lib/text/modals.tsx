@@ -1,5 +1,8 @@
-import { Button, DoubleText } from "@components/ui"
+import Check from "@components/icons/Check"
+import Spinner from "@components/icons/Spinner"
+import { Button, DoubleText, LoadingStep } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
+import { useRouter } from "next/dist/client/router"
 
 export type View = {
   name: ViewNames
@@ -59,15 +62,32 @@ export const CREATE_PRODUCT_CONFIRM_VIEW = (params: any) => {
   return (
     <>
       <div className="pb-6 text-center">
-        <DoubleText inactive logoText="Gnaaa" />
+        <DoubleText inactive logoText="Ready to mint?" />
+        <p className="pt-8">
+          Make sure the information you added are correct, you won&apos;t be
+          able to change some of them later.
+        </p>
       </div>
-      <Button label="Create product" onClick={() => handleClick()} />
+
+      <div className="text-center">
+        <Button label="Go ahead!" onClick={() => handleClick()} />
+      </div>
+      <div className="flex justify-center pt-8">
+        <p
+          className="font-medium text-red-500 cursor-pointer hover:underline"
+          onClick={() => setModalView("")}
+        >
+          Go back
+        </p>
+      </div>
     </>
   )
 }
 
 export const CREATE_PRODUCT_VIEW = (params: any) => {
   const { loading, uploadStep } = params
+  const processing = uploadStep !== 8 && uploadStep !== 10
+  const router = useRouter()
   let uploadState: string
 
   switch (uploadStep) {
@@ -75,7 +95,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
       uploadState = "Uploading image"
       break
     case 2:
-      uploadState = "Pinning metadata"
+      uploadState = "Saving metadata"
       break
     case 3:
       uploadState = "Encrypting files"
@@ -84,7 +104,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
       uploadState = "Uploading files"
       break
     case 5:
-      uploadState = "Uploading on prisma"
+      uploadState = "Finishing setting up"
       break
     case 6:
       uploadState = "Waiting from blockchain"
@@ -93,21 +113,62 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
       uploadState = "Reverting"
       break
     case 8:
-      uploadState = "Done, reverted"
+      uploadState = "Done, reverted!"
       break
     case 9:
       uploadState = "Finalizing"
       break
     case 10:
-      uploadState = "Done, success"
+      uploadState = "Done, success!"
       break
   }
   return (
-    <>
+    <div className="text-center">
       <div className="pb-6 text-center">
-        <DoubleText inactive logoText={uploadState} />
+        <DoubleText inactive logoText="Minting in progress" />
       </div>
-      <p className="text-lg text-center">Some text</p>
-    </>
+      <p className="pb-8">Please wait until the process is completed</p>
+      <div className="grid items-center grid-cols-6 px-6 gap-y-3">
+        <LoadingStep
+          initCondition={uploadStep < 3}
+          uploadState={uploadState}
+          endState="Done"
+        />
+        <LoadingStep
+          nullCondition={uploadStep < 3}
+          initCondition={uploadStep < 6}
+          uploadState={uploadState}
+          waitingState="File upload"
+          endState="Done"
+        />
+        <LoadingStep
+          nullCondition={uploadStep < 6}
+          initCondition={processing}
+          uploadState={uploadState}
+          waitingState="Blockchain interaction"
+        />
+      </div>
+      <p className="max-w-sm py-6 text-sm">
+        To make the product immediately appear on the website{" "}
+        <b>do not leave this page until the process has completed</b>
+      </p>
+      <Button
+        label={uploadStep === 8 ? "Create a new product" : "Go to product page"}
+        loading={processing}
+        onClick={() => (uploadStep === 8 ? router.reload() : router.push("/"))}
+      />
+      {uploadStep === 10 && (
+        <div className="flex justify-center pt-8">
+          <p
+            className="font-medium text-blue-600 cursor-pointer hover:underline"
+            onClick={() => router.reload()}
+          >
+            Create a new product
+          </p>
+        </div>
+      )}
+    </div>
   )
 }
+
+// Todo: add product page href on complete Button
