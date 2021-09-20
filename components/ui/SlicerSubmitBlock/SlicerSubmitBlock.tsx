@@ -7,9 +7,7 @@ import { defaultProvider } from "@lib/useProvider"
 import { slicer as slicerContract } from "@lib/initProvider"
 import { useAppContext } from "../context"
 import { PaySlicer, Button, MessageBlock } from "@components/ui"
-import supabase from "lib/supabase"
 import supabaseUpload from "@utils/supabaseUpload"
-const reduce = require("image-blob-reduce")()
 
 type Props = {
   editMode: boolean
