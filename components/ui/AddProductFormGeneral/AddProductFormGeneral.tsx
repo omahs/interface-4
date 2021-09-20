@@ -4,6 +4,7 @@ import {
   SlicerImageBlock,
   MessageBlock,
   InputTags,
+  Textarea,
 } from "@components/ui"
 import { NewImage } from "pages/slicer/[id]"
 import { Message } from "@utils/handleMessage"
@@ -70,9 +71,9 @@ const AddProductFormGeneral = ({
         )} */}
       </div>
       <div>
-        <Input
+        <Textarea
           label="Description*"
-          type="string"
+          placeholder="Describe this product for prospecting customers. What will they get for buying it?"
           value={description}
           onChange={setDescription}
           required

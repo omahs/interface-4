@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from "react"
-import { FilesList, Input } from ".."
+import { FilesList, Textarea } from ".."
 
 type Props = {
   thankMessage: string
@@ -31,29 +31,26 @@ const AddProductFormPurchases = ({
         product.
       </p>
       <div>
-        <Input
+        <Textarea
           label="Message to buyers"
           placeholder="Thank you for buying our product! ❤️"
-          type="string"
           value={thankMessage}
           onChange={setThankMessage}
         />
       </div>
       <div>
-        <Input
+        <Textarea
           label="Instructions"
-          placeholder="How can buyers redeem / use the product?"
-          type="string"
+          placeholder="How can buyers redeem or use the product?"
           value={instructions}
           onChange={setInstructions}
           required={files.length == 0}
         />
       </div>
       <div>
-        <Input
+        <Textarea
           label="Notes"
           placeholder="Additional notes"
-          type="string"
           value={notes}
           onChange={setNotes}
         />
@@ -75,20 +72,3 @@ export default AddProductFormPurchases
 
 // To consider?
 //  - stream of money (the guy who contacted me)
-
-// ---------------------------------------
-
-// Storage options
-// - supabase (storage and centralised db)
-// - pinata (JSON ipfs metadata)
-// - web3Storage (files on ipfs)
-//
-
-// STORING FILES
-// - slicer images -> supabase (mutable)
-// - slicer images (Collectible) -> Immutable (think of improvements)
-//
-// - Product data -> pinata JSON (+ partially on supabase for more performant views)
-// - Product data image -> supabase (more performant views on website than storing on ipfs, kinda centralized but also not critical for it to be truly immutable)
-//
-// - Product Purchase files and data -> web3Storage (encrypted)

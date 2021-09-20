@@ -1,5 +1,3 @@
-import Check from "@components/icons/Check"
-import Spinner from "@components/icons/Spinner"
 import { Button, DoubleText, LoadingStep } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { useRouter } from "next/dist/client/router"
@@ -85,11 +83,15 @@ export const CREATE_PRODUCT_CONFIRM_VIEW = (params: any) => {
 }
 
 export const CREATE_PRODUCT_VIEW = (params: any) => {
-  const { loading, uploadStep } = params
-  const processing = uploadStep !== 8 && uploadStep !== 10
   const router = useRouter()
-  let uploadState: string
+  const { slicerId, uploadStep, uploadPct, setModalView } = params
+  const processing = uploadStep !== 8 && uploadStep !== 10
+  const toSlicer = () => {
+    setModalView("")
+    router.push(`/slicer/${slicerId}`)
+  }
 
+  let uploadState: string
   switch (uploadStep) {
     case 1:
       uploadState = "Uploading image"
@@ -101,7 +103,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
       uploadState = "Encrypting files"
       break
     case 4:
-      uploadState = "Uploading files"
+      uploadState = `Uploading files: ${uploadPct < 100 ? uploadPct : 100}%`
       break
     case 5:
       uploadState = "Finishing setting up"
@@ -128,7 +130,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
         <DoubleText inactive logoText="Minting in progress" />
       </div>
       <p className="pb-8">Please wait until the process is completed</p>
-      <div className="grid items-center grid-cols-6 px-6 gap-y-3">
+      <div className="grid items-center grid-cols-6 gap-2 px-4">
         <LoadingStep
           initCondition={uploadStep < 3}
           uploadState={uploadState}
@@ -153,9 +155,9 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
         <b>do not leave this page until the process has completed</b>
       </p>
       <Button
-        label={uploadStep === 8 ? "Create a new product" : "Go to product page"}
+        label={uploadStep === 8 ? "Create a new product" : "Go to slicer"}
         loading={processing}
-        onClick={() => (uploadStep === 8 ? router.reload() : router.push("/"))}
+        onClick={() => (uploadStep === 8 ? router.reload() : toSlicer())}
       />
       {uploadStep === 10 && (
         <div className="flex justify-center pt-8">
@@ -170,5 +172,3 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
     </div>
   )
 }
-
-// Todo: add product page href on complete Button

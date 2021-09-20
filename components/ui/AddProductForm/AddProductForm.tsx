@@ -125,23 +125,14 @@ const AddProductForm = ({
   }
 
   useEffect(() => {
-    console.log(uploadPct)
-  }, [uploadPct])
-
-  useEffect(() => {
     if (uploadStep != 0) {
       setModalView({
         cross: false,
         name: `CREATE_PRODUCT_VIEW`,
-        params: { loading, uploadStep },
+        params: { slicerId, uploadStep, uploadPct, setModalView },
       })
     }
   }, [loading, uploadStep])
-
-  useEffect(() => {
-    setUploadStep(5)
-    setModalView("CREATE_PRODUCT_VIEW")
-  }, [])
 
   return (
     <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>
@@ -203,8 +194,7 @@ const AddProductForm = ({
 
 export default AddProductForm
 
-// Todo: textarea Input
+// Todo (after making product page): Add full preview
 
 // Todo: What else to add to data and purchaseData (on pinata and web3storage)
-
-// Todo: Use Uploadpct
+// tags?

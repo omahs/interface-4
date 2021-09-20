@@ -35,12 +35,11 @@ const AddProductFormPrice = ({
 }: Props) => {
   return (
     <>
-      <h2 className="pb-6">Price and details</h2>
+      <h2 className="pb-6">Price and availability</h2>
 
       <p className="pb-3">
-        Everything related to price and availability of your product. Besides
-        the <i>multiple purchase</i> option, you can change these details
-        afterwards by paying the relative blockchain transaction fee.
+        Apart from the <i>multiple purchases</i> option, you can change these
+        details afterwards by paying the relative blockchain transaction fee.
       </p>
       <div>
         <InputSwitch
