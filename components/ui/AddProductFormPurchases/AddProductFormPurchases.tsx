@@ -26,35 +26,39 @@ const AddProductFormPurchases = ({
   return (
     <>
       <h2 className="pb-6">Purchases</h2>
-      <p>More features will be available in the future</p>
+      <p className="pb-3">
+        This section describes what buyers will receive after buying this
+        product.
+      </p>
       <div>
         <Input
           label="Message to buyers"
+          placeholder="Thank you for buying our product! ❤️"
           type="string"
           value={thankMessage}
           onChange={setThankMessage}
-          required
         />
       </div>
       <div>
         <Input
           label="Instructions"
+          placeholder="How can buyers redeem / use the product?"
           type="string"
           value={instructions}
           onChange={setInstructions}
-          required
+          required={files.length == 0}
         />
       </div>
       <div>
         <Input
           label="Notes"
+          placeholder="Additional notes"
           type="string"
           value={notes}
           onChange={setNotes}
-          required
         />
       </div>
-      <div className="pt-4">
+      <div className="py-6">
         <FilesList files={files} loading={loading} setFiles={setFiles} />
       </div>
     </>

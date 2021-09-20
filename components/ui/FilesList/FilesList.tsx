@@ -32,7 +32,7 @@ const FilesList = ({ files, setFiles, loading }: Props) => {
   }
 
   return (
-    <div className="p-2 bg-white rounded-lg shadow-lg sm:p-6">
+    <div className="px-2 py-6 bg-white rounded-lg shadow-lg sm:px-6">
       <h3 className="pt-2 pb-8 font-bold">Upload files</h3>
       {files.length != 0 ? (
         <>
@@ -47,9 +47,6 @@ const FilesList = ({ files, setFiles, loading }: Props) => {
                   files={files}
                   setFiles={setFiles}
                 />
-                {/* {i + 1 != files.length && (
-                  <hr className="w-20 mx-auto my-16 border-gray-300" />
-                )} */}
               </div>
             )
           })}
@@ -77,7 +74,8 @@ const FilesList = ({ files, setFiles, loading }: Props) => {
         </label>
         <p className="pt-8 text-sm">
           Files are saved immutably on IPFS, and encrypted so that only those
-          who buy them can see their content. Learn more in our FAQs.
+          who buy them can see their content.{" "}
+          <a className="highlight">Learn more</a> in our FAQs.
         </p>
         <input
           className="absolute hidden"

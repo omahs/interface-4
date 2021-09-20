@@ -175,7 +175,7 @@ const AddProductForm = ({
         files={files}
         setFiles={setFiles}
       />
-      <div className="pt-4 pb-1">
+      <div className="pb-1">
         <Button
           label="Create product"
           type="button"

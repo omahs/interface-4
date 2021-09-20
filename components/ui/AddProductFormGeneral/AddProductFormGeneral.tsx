@@ -91,6 +91,10 @@ const AddProductFormGeneral = ({
         loading={loading}
         maxHeight="max-h-[250px]"
       />
+      <p className="pt-3">
+        <b>Note:</b> You cannot change the name, description and image later.
+      </p>
+
       <MessageBlock msg={msg} />
       <div>
         <hr className="w-20 mx-auto border-gray-300 my-14" />

@@ -36,14 +36,23 @@ const AddProductFormPrice = ({
   return (
     <>
       <h2 className="pb-6">Price and details</h2>
+
+      <p className="pb-3">
+        Everything related to price and availability of your product. Besides
+        the <i>multiple purchase</i> option, you can change these details
+        afterwards by paying the relative blockchain transaction fee.
+      </p>
       <div>
         <InputSwitch
           label="Multiple purchases"
           questionText={
             <>
-              <p>
+              <p className="pb-4">
                 If enabled, users will be able to buy this product multiple
                 times.
+              </p>
+              <p>
+                <b>Note:</b> You cannot change this later.
               </p>
             </>
           }
@@ -112,6 +121,9 @@ const AddProductFormPrice = ({
         enabled={isUSD}
         setEnabled={setIsUSD}
       />
+      <p className="pt-3">
+        <b>Note:</b> You can edit the price later, but only to reduce it.
+      </p>
       <div>
         <hr className="w-20 mx-auto border-gray-300 my-14" />
       </div>

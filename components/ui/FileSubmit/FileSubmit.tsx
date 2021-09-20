@@ -20,7 +20,7 @@ const FileSubmit = ({ index, file, files, setFiles }: Props) => {
   }
 
   return (
-    <div className="grid items-center grid-cols-6 mb-6 border border-gray-100 shadow-base rounded-xl h-14">
+    <div className="grid items-center h-16 grid-cols-6 mb-6 border border-gray-100 shadow-base rounded-xl">
       <div className="flex justify-center" title={filetype}>
         {filetype === "image" ? (
           <FileImage />
