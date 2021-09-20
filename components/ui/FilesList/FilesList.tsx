@@ -1,6 +1,7 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from "react"
-import { Button, FileSubmit } from "@components/ui"
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
+import { Button, FileSubmit, MessageBlock } from "@components/ui"
 import FilePlus from "@components/icons/FilePlus"
+import handleMessage, { Message } from "@utils/handleMessage"
 
 type Props = {
   files: File[]
@@ -9,25 +10,45 @@ type Props = {
 }
 
 const FilesList = ({ files, setFiles, loading }: Props) => {
+  const [message, setMessage] = useState<Message>({
+    message: "",
+    messageStatus: "success",
+  })
   const uploadEl = useRef(null)
 
   const uploadFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let execute = true
     const uploadedFiles = [...e.target.files]
-    if (files.length !== 0) {
-      setFiles([
-        ...files,
-        ...uploadedFiles.filter((file) => {
-          let included: boolean
-          files.forEach((el) => {
-            if (file.name == el.name && file.size == el.size) {
-              included = true
-            }
-          })
-          return !included
-        }),
-      ])
-    } else {
-      setFiles([...e.target.files])
+    uploadedFiles.map((file) => {
+      if (file.size > 134217728 /* 128MB */) {
+        execute = false
+        handleMessage(
+          {
+            message: "File too big (max 128 MB)",
+            messageStatus: "error",
+          },
+          setMessage
+        )
+        setFiles([])
+      }
+    })
+    if (execute) {
+      if (files.length !== 0) {
+        setFiles([
+          ...files,
+          ...uploadedFiles.filter((file) => {
+            let included: boolean
+            files.forEach((el) => {
+              if (file.name == el.name && file.size == el.size) {
+                included = true
+              }
+            })
+            return !included
+          }),
+        ])
+      } else {
+        setFiles([...e.target.files])
+      }
     }
   }
 
@@ -72,6 +93,7 @@ const FilesList = ({ files, setFiles, loading }: Props) => {
             onClick={() => uploadEl.current.click()}
           />
         </label>
+        <MessageBlock msg={message} className="pt-6" />
         <p className="pt-8 text-sm">
           Files are saved immutably on IPFS, and encrypted so that only those
           who buy them can see their content.{" "}

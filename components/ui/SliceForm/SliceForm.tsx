@@ -5,7 +5,6 @@ import handleSubmit from "@utils/handleSubmit"
 import handleMessage, { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import MessageBlock from "../MessageBlock"
-import Input from "../Input"
 
 type Props = {
   success: boolean
