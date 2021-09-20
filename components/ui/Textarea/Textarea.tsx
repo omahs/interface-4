@@ -10,6 +10,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   inverted?: boolean
   required?: boolean
   rows?: number
+  previewBox?: string
   onChange?: (...args: any[]) => any
 }
 
@@ -23,6 +24,7 @@ const Textarea: React.FC<Props> = (props) => {
     inverted,
     required,
     rows = 3,
+    previewBox,
     onChange,
   } = props
   const [showPreview, setShowPreview] = useState(false)
@@ -79,7 +81,11 @@ const Textarea: React.FC<Props> = (props) => {
         </div>
       ) : (
         <div
-          className="px-3 py-6 prose text-left bg-white rounded-xl"
+          className={
+            previewBox
+              ? previewBox
+              : "px-3 py-6 prose text-left bg-white rounded-sm shadow-light-focusable"
+          }
           dangerouslySetInnerHTML={{ __html: htmlContent }}
         />
       )}
