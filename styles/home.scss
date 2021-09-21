@@ -76,6 +76,16 @@
   background: linear-gradient(to bottom right, var(--color1), var(--color2));
 }
 
+.background-modal {
+  background-image: radial-gradient(rgba(0, 0, 0, 0) 1px, white 1px);
+  background-size: 4px 4px;
+  backdrop-filter: brightness(100%) blur(3px);
+}
+
+.dark .background-modal {
+  background-image: radial-gradient(rgba(0, 0, 0, 0) 1px, black 1px);
+}
+
 #imageWrapper div {
   position: inherit !important;
   height: 100% !important;
