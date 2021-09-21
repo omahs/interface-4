@@ -1,8 +1,6 @@
 import Link from "next/link"
-import Button from "../Button"
 import { useEffect, useState } from "react"
 import SlicerCardImage from "../SlicerCardImage"
-import { SlicerReduced } from "pages/slicer"
 import { Product } from "../SlicerProducts/SlicerProducts"
 
 type Props = {
