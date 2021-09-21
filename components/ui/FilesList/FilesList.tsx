@@ -97,7 +97,15 @@ const FilesList = ({ files, setFiles, loading }: Props) => {
         <p className="pt-8 text-sm">
           Files are saved immutably on IPFS, and encrypted so that only those
           who buy them can see their content.{" "}
-          <a className="highlight">Learn more</a> in our FAQs.
+          <a
+            className="highlight"
+            href="/faqs"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Learn more
+          </a>{" "}
+          in our FAQs.
         </p>
         <input
           className="absolute hidden"

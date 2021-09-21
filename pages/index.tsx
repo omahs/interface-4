@@ -64,16 +64,37 @@ const Home = () => {
 export default Home
 
 /** TODO
- * WEBSITE
  *
- * - add products to slicers -> demonstrate use case with digital collectibles
- * - Figure out purchases metadata for normal products and those with subSlicers
+ * *Critical Priority*
+ *    - add products to slicers -> demonstrate use case with digital collectibles
+ *      - show products on slicer page
+ *      - edit products
+ *      - purchase products
+ *      - redeem purchase
  *
- * - add slicer tags in metadata & slicer page
- * - add detailed section in slicer page (stats & stuff for payees only)
- * - add wallet connect
+ * *High Priority*
+ *    - add wallet connect
+ *    - FAQs page (see below)
+ *    - Fix slicer smart contract receive/reject ERC721
  *
- * - (LP) transfer page (select box to choose slicer)
+ * *Low Priority*
+ *    - add slicer tags in metadata & slicer page
+ *    - add products "explore" page
+ *    - add detailed section in slicer page (stats & stuff for payees only)
+ *    - transfer page (select box to choose slicer)
+ *
+ *
+ *
+ *
+ *
+ * FAQS
+ * - How file encryption works
+ *
+ *
+ *
+ *
+ *
+ *
  *
  * USE CASES
  * - Use it as a slicer
