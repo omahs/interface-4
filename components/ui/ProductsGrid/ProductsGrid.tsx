@@ -35,7 +35,6 @@ const ProductsGrid = ({ products, editMode }: Props) => {
                     <SlicerCardImage
                       name={name}
                       imageUrl={image}
-                      showAddress={false}
                       size="w-full h-52 sm:h-40 md:h-40 lg:h-48"
                     />
                     <div className="w-full pt-5 pl-2 text-left sm:pt-4">

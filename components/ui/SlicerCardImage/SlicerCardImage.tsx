@@ -13,7 +13,6 @@ type Props = {
   totalSlices?: number | string
   isAllowed?: boolean
   isCollectible?: boolean
-  showAddress?: boolean
   size?: string
 }
 
@@ -25,7 +24,6 @@ const SlicerCardImage = ({
   totalSlices,
   isAllowed = false,
   isCollectible,
-  showAddress = true,
   size = "sm:w-80 h-60 sm:h-52",
 }: Props) => {
   return (
@@ -41,7 +39,7 @@ const SlicerCardImage = ({
       ) : (
         <SlicerImage name={name} imageUrl={imageUrl} />
       )}
-      {showAddress && (
+      {slicerAddress && (
         <span className="rounded-md absolute bottom-[10px] left-[12px] px-5 h-[32px] bg-white flex items-center">
           <div className="flex justify-center w-full text-black">
             {slicerAddress ? (
