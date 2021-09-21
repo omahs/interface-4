@@ -12,6 +12,7 @@ generator client {
 
 model Slicer {
   id            Int      @id
+  // createdAt     DateTime @default(now()) @map(name: "created_at")
   name          String?
   description   String?
   external_url  String?

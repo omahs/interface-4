@@ -73,9 +73,9 @@ export default Home
  *      - redeem purchase
  *
  * *High Priority*
+ *    - Fix slicer smart contract receive/reject ERC721
  *    - add wallet connect
  *    - FAQs page (see below)
- *    - Fix slicer smart contract receive/reject ERC721
  *
  * *Low Priority*
  *    - add slicer tags in metadata & slicer page

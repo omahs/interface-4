@@ -3,9 +3,10 @@ import fetcher from "@utils/fetcher"
 import useQuery from "@utils/subgraphQuery"
 import { useEffect, useState } from "react"
 import useSWR from "swr"
+import { ProductsGrid } from ".."
 import Button from "../Button"
 
-type Product = {
+export type Product = {
   id: number
   productId: number
   name: string
@@ -44,7 +45,7 @@ const SlicerProducts = ({ slicerId, editMode }: Props) => {
 
   return (
     <>
-      {/* <ProductGrid product={showProducts} /> */}
+      <ProductsGrid products={showProducts} editMode={editMode} />
       {editMode && (
         <div>
           <Button label="Add a new product" href={`${slicerId}/products/new`} />
