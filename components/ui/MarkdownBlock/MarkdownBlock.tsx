@@ -7,7 +7,11 @@ type Props = {
   className?: string
 }
 
-const MarkdownBlock = ({ content, deps = [], className }: Props) => {
+const MarkdownBlock = ({
+  content,
+  deps = [],
+  className = "prose text-left",
+}: Props) => {
   const [htmlContent, setHtmlContent] = useState("")
 
   const handleFormatContent = async () => {
@@ -20,7 +24,7 @@ const MarkdownBlock = ({ content, deps = [], className }: Props) => {
 
   return (
     <div
-      className={className ? className : "prose text-left"}
+      className={className}
       dangerouslySetInnerHTML={{ __html: htmlContent }}
     />
   )
