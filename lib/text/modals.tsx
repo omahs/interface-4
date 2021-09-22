@@ -43,7 +43,7 @@ export const IRREVERSIBLE_VIEW = () => {
         </p>
       </div>
       <div className="flex justify-center pt-8">
-        <Button label="Continue" onClick={() => setModalView("")} />
+        <Button label="Continue" onClick={() => setModalView({ name: "" })} />
       </div>
     </>
   )
@@ -54,7 +54,7 @@ export const CREATE_PRODUCT_CONFIRM_VIEW = (params: any) => {
   const handleClick = () => {
     submitEl.current.click()
     if (uploadStep == 0) {
-      setModalView("")
+      setModalView({ name: "" })
     }
   }
   return (
@@ -62,8 +62,8 @@ export const CREATE_PRODUCT_CONFIRM_VIEW = (params: any) => {
       <div className="pb-6 text-center">
         <DoubleText inactive logoText="Ready to mint?" />
         <p className="pt-8">
-          Make sure the information you added are correct, you won&apos;t be
-          able to change some of them later.
+          Make sure the information you added is correct, you won&apos;t be able
+          to change all details later.
         </p>
       </div>
 
@@ -73,7 +73,7 @@ export const CREATE_PRODUCT_CONFIRM_VIEW = (params: any) => {
       <div className="flex justify-center pt-8">
         <p
           className="font-medium text-red-500 cursor-pointer hover:underline"
-          onClick={() => setModalView("")}
+          onClick={() => setModalView({ name: "" })}
         >
           Go back
         </p>
@@ -87,7 +87,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
   const { slicerId, uploadStep, uploadPct, setModalView } = params
   const processing = uploadStep !== 8 && uploadStep !== 10
   const toSlicer = () => {
-    setModalView("")
+    setModalView({ name: "" })
     router.push(`/slicer/${slicerId}`)
   }
 

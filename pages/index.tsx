@@ -76,9 +76,10 @@ export default Home
  * *High Priority*
  *    - Fix slicer smart contract receive/reject ERC721
  *    - add wallet connect
- *    - FAQs page (see below)
+ *    - FAQs page (see below) + add link where already referenced
  *
  * *Low Priority*
+ *    - make product defaultImage on figma + add on CardImage component
  *    - add slicer tags in metadata & slicer page
  *    - add products "explore" page
  *    - add detailed section in slicer page (stats & stuff for payees only)
