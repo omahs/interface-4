@@ -34,6 +34,10 @@ const Modal = ({ modalView, setModalView }: Props) => {
 
   return (
     <div className="fixed top-0 z-10 flex items-center justify-center w-screen h-screen background-modal">
+      <div
+        className="absolute w-full h-full"
+        onClick={() => (cross ? setModalView({ name: "" }) : null)}
+      />
       <div className="relative px-4 py-8 mx-4 bg-white shadow-xl xs:py-12 xs:px-8 rounded-xl max-w-screen-xs">
         {cross && (
           <div className="absolute top-[20px] right-[20px]">
