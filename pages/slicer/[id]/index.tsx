@@ -41,7 +41,10 @@ const initAttributes = {
   "Total slices": 0,
 }
 
-const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Id = ({
+  slicerInfo,
+  products,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { account } = useAppContext()
   const { isAllowed } = useAllowed(slicerInfo?.id)
   const [editMode, setEditMode] = useState(false)
@@ -179,7 +182,11 @@ const Id = ({ slicerInfo }: InferGetStaticPropsType<typeof getStaticProps>) => {
               loading={loading}
             />
           </div>
-          <SlicerProducts editMode={editMode} slicerId={slicerInfo?.id} />
+          <SlicerProducts
+            editMode={editMode}
+            slicerId={slicerInfo?.id}
+            products={products}
+          />
           <SlicerSubmitBlock
             editMode={editMode}
             setEditMode={setEditMode}
@@ -231,9 +238,12 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params.id
 
   const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${id}?stats=false`)
+  const products = await fetcher(`${baseUrl}/api/slicer/${id}/products`)
+
   return {
     props: {
       slicerInfo,
+      products,
     },
     revalidate: 10,
   }

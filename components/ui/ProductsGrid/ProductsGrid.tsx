@@ -1,4 +1,4 @@
-import useQuery from "@utils/subgraphQuery"
+import Spinner from "@components/icons/Spinner"
 import { useEffect, useState } from "react"
 import { ProductCard } from ".."
 import { Product } from "../SlicerProducts/SlicerProducts"
@@ -18,35 +18,42 @@ const ProductsGrid = ({ products, editMode, blockchainProducts }: Props) => {
     setIterator(items < products?.length ? items : products?.length)
   }, [items, products])
 
-  return products && blockchainProducts ? (
-    <>
-      <h2>Products</h2>
-      <div className="grid items-center justify-center grid-cols-1 gap-4 max-w-[400px] sm:gap-8  sm:max-w-[550px] mx-auto md:max-w-none md:grid-cols-2">
-        {[...Array(iterator)].map((i, key) => {
-          const product = products.find((p) => p.productId == Number(key) + 1)
-          const chainInfo = blockchainProducts.find(
-            (p) => p.id.split("-").pop() == product.productId
-          )
+  return products ? (
+    blockchainProducts ? (
+      <>
+        <h2>Products</h2>
+        <div className="grid items-center justify-center grid-cols-1 gap-4 max-w-[400px] sm:gap-8  sm:max-w-[550px] mx-auto md:max-w-none md:grid-cols-2">
+          {[...Array(iterator)].map((i, key) => {
+            const product = products.find((p) => p.productId == Number(key) + 1)
+            const chainInfo = blockchainProducts.find(
+              (p) => p.id.split("-").pop() == product.productId
+            )
 
-          return (
-            <ProductCard
-              product={product}
-              chainInfo={chainInfo}
-              editMode={editMode}
-              key={key}
-            />
-          )
-        })}
+            return (
+              <ProductCard
+                product={product}
+                chainInfo={chainInfo}
+                editMode={editMode}
+                key={key}
+              />
+            )
+          })}
+        </div>
+        {items < products?.length && (
+          <p className="pb-6 text-center">
+            <a onClick={() => setItems(items + initItems)}>Load more</a>
+          </p>
+        )}
+      </>
+    ) : (
+      <div className="text-center">
+        <h2>Products</h2>
+        <div className="flex justify-center py-14">
+          <Spinner size="h-10 w-10" />
+        </div>
       </div>
-      {items < products?.length && (
-        <p className="pb-6 text-center">
-          <a onClick={() => setItems(items + initItems)}>Load more</a>
-        </p>
-      )}
-    </>
-  ) : (
-    <p>No products</p>
-  )
+    )
+  ) : null
 }
 
 export default ProductsGrid

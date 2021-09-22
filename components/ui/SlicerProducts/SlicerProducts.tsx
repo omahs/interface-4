@@ -1,8 +1,6 @@
 import { handleCleanup, reload } from "@lib/handleCreateProduct"
-import fetcher from "@utils/fetcher"
 import useQuery from "@utils/subgraphQuery"
 import { useEffect, useState } from "react"
-import useSWR from "swr"
 import { ProductsGrid } from ".."
 import Button from "../Button"
 
@@ -18,14 +16,14 @@ export type Product = {
 
 type Props = {
   slicerId: string
+  products: any
   editMode: boolean
 }
 
-const SlicerProducts = ({ slicerId, editMode }: Props) => {
+const SlicerProducts = ({ slicerId, products, editMode }: Props) => {
   const [loading, setLoading] = useState(false)
   const [showProducts, setShowProducts] = useState<Product[]>([])
   const [pendingProducts, setPendingProducts] = useState<Product[]>([])
-  const { data: products } = useSWR(`/api/slicer/${slicerId}/products`, fetcher)
 
   const tokensQuery = /* GraphQL */ `
   products (where: {slicer: "${slicerId}"}) {
