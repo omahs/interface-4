@@ -12,6 +12,7 @@ module.exports = {
     "./components/**/*.scss",
     "./styles/**/*.scss",
     "./utils/**/*.ts",
+    "./styles/jit-hack.txt",
   ],
 
   theme: {
