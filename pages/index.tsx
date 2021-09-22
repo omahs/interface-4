@@ -70,14 +70,15 @@ export default Home
  *      - show products on slicer page -> OK
  *      - onClick modal with product details
  *      - purchase products flow
- *      - redeem purchase
- *      - edit products
- *    - checkout bag (context)
+ *        - checkout bag (context)
+ *        - redeem purchase
  *
  * *High Priority*
  *    - Fix slicer smart contract receive/reject ERC721
  *    - add wallet connect
  *    - FAQs page (see below) + add link where already referenced
+ *    - product features
+ *      - edit/delete products
  *
  * *Low Priority*
  *    - make product defaultImage on figma + add on CardImage component
@@ -85,6 +86,7 @@ export default Home
  *    - add products "explore" page
  *    - add detailed section in slicer page (stats & stuff for payees only)
  *    - transfer page (select box to choose slicer)
+ *    - product likes
  *
  *
  *

@@ -34,6 +34,7 @@ const SlicerProducts = ({ slicerId, products, editMode }: Props) => {
     isMultiple
     availableUnits
     totalPurchases
+    createdAtTimestamp
   }
 `
   const subgraphData = useQuery(tokensQuery)

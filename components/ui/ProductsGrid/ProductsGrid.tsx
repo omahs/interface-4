@@ -1,5 +1,7 @@
 import Spinner from "@components/icons/Spinner"
+import fetcher from "@utils/fetcher"
 import { useEffect, useState } from "react"
+import useSWR from "swr"
 import { ProductCard } from ".."
 import { Product } from "../SlicerProducts/SlicerProducts"
 
@@ -13,6 +15,11 @@ const ProductsGrid = ({ products, editMode, blockchainProducts }: Props) => {
   const initItems = 4
   const [items, setItems] = useState(initItems)
   const [iterator, setIterator] = useState(0)
+
+  const { data: ethUsd } = useSWR(
+    "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT",
+    fetcher
+  )
 
   useEffect(() => {
     setIterator(items < products?.length ? items : products?.length)
@@ -31,10 +38,11 @@ const ProductsGrid = ({ products, editMode, blockchainProducts }: Props) => {
 
             return (
               <ProductCard
+                key={key}
                 product={product}
                 chainInfo={chainInfo}
                 editMode={editMode}
-                key={key}
+                ethUsd={ethUsd}
               />
             )
           })}

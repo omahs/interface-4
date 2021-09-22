@@ -1,4 +1,6 @@
 import Cart from "@components/icons/Cart"
+import ShoppingBag from "@components/icons/ShoppingBag"
+import Units from "@components/icons/Units"
 import {
   Button,
   CardImage,
@@ -7,6 +9,7 @@ import {
   MarkdownBlock,
 } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
+import formatNumber from "@utils/formatNumber"
 import { useRouter } from "next/dist/client/router"
 
 export type View = {
@@ -195,23 +198,71 @@ export const PRODUCT_VIEW = (params: any) => {
     totalPurchases,
   } = params
 
+  const availabilityColor =
+    availableUnits < 10
+      ? availableUnits == 0
+        ? "text-red-500"
+        : "text-yellow-600"
+      : "text-black"
+
   return (
     <>
       <div className="pb-10 text-center">
         <DoubleText inactive logoText={name} />
       </div>
       <div>
-        <CardImage name={name} imageUrl={image} size="h-52 sm:h-72" />
+        <CardImage
+          name={name}
+          imageUrl={image}
+          size="h-52 xs:h-72"
+          bottomRight={
+            !isInfinite && {
+              title: "Purchases",
+              content: (
+                <>
+                  <p className={`mr-2 ${availabilityColor}`}>
+                    {formatNumber(availableUnits)}
+                  </p>
+                  <Units className={`w-5 h-5 ${availabilityColor}`} />
+                </>
+              ),
+            }
+          }
+          topLeft={{
+            title: "Purchases",
+            content: (
+              <>
+                <p className="mr-2 text-indigo-600">
+                  {formatNumber(totalPurchases)}
+                </p>
+                <ShoppingBag className="w-5 h-5 text-indigo-600" />
+              </>
+            ),
+          }}
+          topRight={{
+            title: "Product price",
+            content: (
+              <p className="text-sm font-medium text-black">
+                {productPrice.usd}
+              </p>
+            ),
+          }}
+        />
         <div className="py-8">
           <div>
             <MarkdownBlock content={description} />
           </div>
         </div>
-        <div className="flex items-center justify-center w-[150px] py-2 text-center text-white transition-colors duration-150 bg-green-500 rounded-md nightwind-prevent group hover:bg-green-600">
-          <p className="mr-2 text-sm font-medium sm:text-base">
-            Get it for {productPrice}
-          </p>
-          <Cart className="w-5 h-5 mt-0.5 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
+        <div className="mx-auto overflow-hidden text-center transition-colors duration-150 rounded-md w-52 ">
+          <div
+            className="flex items-center justify-center py-2 text-white bg-green-500 nightwind-prevent group hover:bg-green-600"
+            onClick={() => null}
+          >
+            <p className="mr-2 text-sm font-medium sm:text-base">
+              Get it for {productPrice.eth}
+            </p>
+            <Cart className="w-5 h-5 mt-0.5 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
+          </div>
         </div>
       </div>
     </>

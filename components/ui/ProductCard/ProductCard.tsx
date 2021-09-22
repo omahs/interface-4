@@ -1,15 +1,22 @@
 import Cart from "@components/icons/Cart"
+import ShoppingBag from "@components/icons/ShoppingBag"
+import formatNumber from "@utils/formatNumber"
+import { useEffect, useState } from "react"
 import { Card } from ".."
 import { useAppContext } from "../context"
 import { Product } from "../SlicerProducts/SlicerProducts"
 
 type Props = {
   product: Product
-  editMode: boolean
   chainInfo: any
+  ethUsd: {
+    symbol: string
+    price: string
+  }
+  editMode: boolean
 }
 
-const ProductCard = ({ product, chainInfo, editMode }: Props) => {
+const ProductCard = ({ product, chainInfo, ethUsd, editMode }: Props) => {
   const { setModalView } = useAppContext()
   const { productId, name, description, hash, image } = product
   const {
@@ -19,10 +26,29 @@ const ProductCard = ({ product, chainInfo, editMode }: Props) => {
     isMultiple,
     availableUnits,
     totalPurchases,
+    createdAtTimestamp,
   } = chainInfo
-  const productPrice = isUSD
-    ? `$ ${Number(price) / 100}`
-    : `Ξ ${Number(price) / 10 ** 18}`
+
+  const [convertedEthUsd, setConvertedEthUsd] = useState(0)
+
+  const productPrice = {
+    eth: `Ξ ${isUSD ? convertedEthUsd : Math.floor(price / 10 ** 14) / 10000}`,
+    usd: `$ ${isUSD ? formatNumber(price / 100) : convertedEthUsd}`,
+  }
+
+  useEffect(() => {
+    if (price && ethUsd) {
+      if (isUSD) {
+        const convertedPrice =
+          Math.floor((price * 10) / Number(ethUsd?.price)) / 1000
+        setConvertedEthUsd(convertedPrice)
+      } else {
+        const convertedPrice =
+          Math.floor((price / 10 ** 16) * Number(ethUsd?.price)) / 100
+        setConvertedEthUsd(convertedPrice)
+      }
+    }
+  }, [price, ethUsd])
 
   return (
     <Card
@@ -31,10 +57,21 @@ const ProductCard = ({ product, chainInfo, editMode }: Props) => {
       className="rounded-none"
       size="h-44"
       product={true}
+      topLeft={{
+        title: "Purchases",
+        content: (
+          <>
+            <p className="mr-2 text-indigo-600">
+              {formatNumber(totalPurchases)}
+            </p>
+            <ShoppingBag className="w-[18px] h-[18px] text-indigo-600" />
+          </>
+        ),
+      }}
       topRight={{
         title: "Product price",
         content: (
-          <p className="text-sm font-medium text-black">{productPrice}</p>
+          <p className="text-sm font-medium text-black">{productPrice.eth}</p>
         ),
       }}
       onClick={() =>
