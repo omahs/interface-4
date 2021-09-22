@@ -1,14 +1,15 @@
-import Link from "next/link"
+import useQuery from "@utils/subgraphQuery"
 import { useEffect, useState } from "react"
-import SlicerCardImage from "../SlicerCardImage"
+import { ProductCard } from ".."
 import { Product } from "../SlicerProducts/SlicerProducts"
 
 type Props = {
   products: Product[]
   editMode: boolean
+  blockchainProducts: any
 }
 
-const ProductsGrid = ({ products, editMode }: Props) => {
+const ProductsGrid = ({ products, editMode, blockchainProducts }: Props) => {
   const initItems = 4
   const [items, setItems] = useState(initItems)
   const [iterator, setIterator] = useState(0)
@@ -17,31 +18,23 @@ const ProductsGrid = ({ products, editMode }: Props) => {
     setIterator(items < products?.length ? items : products?.length)
   }, [items, products])
 
-  return products ? (
+  return products && blockchainProducts ? (
     <>
       <h2>Products</h2>
-      <div className="grid items-center justify-center grid-cols-1 gap-2 max-w-[400px] sm:gap-4 lg:gap-5 sm:max-w-[550px] mx-auto md:max-w-none md:grid-cols-2">
+      <div className="grid items-center justify-center grid-cols-1 gap-4 max-w-[400px] sm:gap-8  sm:max-w-[550px] mx-auto md:max-w-none md:grid-cols-2">
         {[...Array(iterator)].map((i, key) => {
-          const { productId, name, description, hash, image } = products[key]
+          const product = products.find((p) => p.productId == Number(key) + 1)
+          const chainInfo = blockchainProducts.find(
+            (p) => p.id.split("-").pop() == product.productId
+          )
 
-          console.log(image)
           return (
-            <div className="my-6" key={key}>
-              <Link href={`/`}>
-                <a>
-                  <div className="flex flex-col items-center px-2.5 py-5 transition-all duration-1000 ease-out bg-white rounded-md shadow-medium-random hover:scale-105">
-                    <SlicerCardImage
-                      name={name}
-                      imageUrl={image}
-                      size="w-full h-52 sm:h-40 md:h-40 lg:h-48"
-                    />
-                    <div className="w-full pt-5 pl-2 text-left sm:pt-4">
-                      <p className="inline-block text-xl">{name}</p>
-                    </div>
-                  </div>
-                </a>
-              </Link>
-            </div>
+            <ProductCard
+              product={product}
+              chainInfo={chainInfo}
+              editMode={editMode}
+              key={key}
+            />
           )
         })}
       </div>
@@ -57,3 +50,14 @@ const ProductsGrid = ({ products, editMode }: Props) => {
 }
 
 export default ProductsGrid
+
+/**
+ * What's on the product card
+ * - name
+ * - product id
+ * - image
+ * - price -> Subgraph
+ * - quick add to bag
+ * - n. of times purchased -> Subgraph?
+ *
+ */

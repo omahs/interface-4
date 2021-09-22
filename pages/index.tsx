@@ -71,6 +71,7 @@ export default Home
  *      - edit products
  *      - purchase products
  *      - redeem purchase
+ *    - checkout bag (context)
  *
  * *High Priority*
  *    - Fix slicer smart contract receive/reject ERC721

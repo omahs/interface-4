@@ -30,10 +30,15 @@ const SlicerProducts = ({ slicerId, editMode }: Props) => {
   const tokensQuery = /* GraphQL */ `
   products (where: {slicer: "${slicerId}"}) {
     id
-    data
+    price
+    isUSD
+    isInfinite
+    isMultiple
+    availableUnits
+    totalPurchases
   }
 `
-  const subgraphData = useQuery(tokensQuery, [editMode])
+  const subgraphData = useQuery(tokensQuery)
   const blockchainProducts = subgraphData?.products
 
   useEffect(() => {
@@ -45,7 +50,11 @@ const SlicerProducts = ({ slicerId, editMode }: Props) => {
 
   return (
     <>
-      <ProductsGrid products={showProducts} editMode={editMode} />
+      <ProductsGrid
+        blockchainProducts={blockchainProducts}
+        products={showProducts}
+        editMode={editMode}
+      />
       {editMode && (
         <div>
           <Button label="Add a new product" href={`${slicerId}/products/new`} />
