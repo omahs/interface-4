@@ -1,8 +1,8 @@
-import Link from "next/link"
 import Button from "../Button"
 import { useEffect, useState } from "react"
-import SlicerCardImage from "../SlicerCardImage"
 import { SlicerReduced } from "pages/slicer"
+import { Card } from ".."
+import Collectible from "@components/icons/Collectible"
 
 type Props = {
   data: SlicerReduced[]
@@ -32,23 +32,25 @@ const SlicersGrid = ({ data, totalSlicers }: Props) => {
           const slicerLink = `/slicer/${slicerId}`
           const slicerName = name || `Slicer #${slicerId}`
           return (
-            <div className="my-6" key={key}>
-              <Link href={slicerLink}>
-                <a>
-                  <div className="flex flex-col items-center px-2.5 py-5 transition-all duration-1000 ease-out bg-white rounded-md shadow-medium-random hover:scale-105">
-                    <SlicerCardImage
-                      name={slicerName}
-                      imageUrl={image}
-                      isCollectible={isCollectible}
-                      size="w-full h-52 sm:h-40 md:h-40 lg:h-48"
-                    />
-                    <div className="w-full pt-5 pl-2 text-left sm:pt-4">
-                      <p className="inline-block text-xl">{slicerName}</p>
-                    </div>
-                  </div>
-                </a>
-              </Link>
-            </div>
+            <Card
+              key={key}
+              name={slicerName}
+              image={image}
+              href={slicerLink}
+              className="rounded-none"
+              size="h-44"
+              topLeft={
+                isCollectible && {
+                  title: "Collectible asset",
+                  content: (
+                    <Collectible className="py-2 text-indigo-600 w-[38px] h-[38px]" />
+                  ),
+                  padding: "px-4",
+                }
+              }
+            >
+              <p className="mr-2 text-lg font-medium">{slicerName}</p>
+            </Card>
           )
         })}
       </div>

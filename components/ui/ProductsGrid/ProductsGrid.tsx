@@ -22,7 +22,7 @@ const ProductsGrid = ({ products, editMode, blockchainProducts }: Props) => {
     blockchainProducts ? (
       <>
         <h2>Products</h2>
-        <div className="grid items-center justify-center grid-cols-1 gap-4 max-w-[400px] sm:gap-8  sm:max-w-[550px] mx-auto md:max-w-none md:grid-cols-2">
+        <div className="grid items-center justify-center grid-cols-1 gap-4 max-w-[400px] sm:gap-8 mx-auto sm:max-w-none sm:grid-cols-2">
           {[...Array(iterator)].map((i, key) => {
             const product = products.find((p) => p.productId == Number(key) + 1)
             const chainInfo = blockchainProducts.find(

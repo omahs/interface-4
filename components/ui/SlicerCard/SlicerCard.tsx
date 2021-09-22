@@ -1,7 +1,6 @@
 import Link from "next/link"
 import fetcher from "@utils/fetcher"
 import useSWR from "swr"
-import SlicerCardImage from "../SlicerCardImage"
 import { TriggerRelease } from "lib/handlers/chain"
 import BlockchainCall from "../BlockchainCall"
 import { useEffect, useState } from "react"
@@ -9,6 +8,9 @@ import { LogDescription } from "ethers/lib/utils"
 import formatNumber from "@utils/formatNumber"
 import getLog from "@utils/getLog"
 import Arrow from "@components/icons/Arrow"
+import { CardImage, CopyAddress } from ".."
+import UserVerified from "@components/icons/UserVerified"
+import Collectible from "@components/icons/Collectible"
 
 type SlicerInfo = {
   name: string
@@ -71,14 +73,45 @@ const SlicerCard = ({
 
   return (
     <div className="sm:flex">
-      <SlicerCardImage
+      <CardImage
         href={slicerLink}
         name={slicerName}
-        slicerAddress={slicerAddress}
-        totalSlices={formatNumber(totalSlices)}
+        topLeft={
+          isCollectible && {
+            title: "Collectible asset",
+            content: (
+              <Collectible className="py-2 text-indigo-600 w-[38px] h-[38px]" />
+            ),
+            padding: "px-4",
+          }
+        }
+        topRight={
+          isAllowed && {
+            title: "Super user",
+            content: (
+              <UserVerified className="text-green-500 py-2 w-[38px] h-[38px]" />
+            ),
+            padding: "px-4",
+          }
+        }
+        bottomLeft={{
+          className: "text-black",
+          content: slicerAddress ? (
+            <CopyAddress
+              slicerAddress={slicerAddress}
+              showIcon={false}
+              position="bottom-[40px]"
+            />
+          ) : (
+            <div className="w-24 h-4 rounded-md bg-sky-300 animate-pulse" />
+          ),
+        }}
+        bottomRight={{
+          title: "Total slices",
+          content: `${formatNumber(totalSlices)} 🍰`,
+          className: "text-black text-sm font-medium",
+        }}
         imageUrl={image}
-        isAllowed={isAllowed}
-        isCollectible={isCollectible}
       />
       <div className="pt-5 sm:pt-4 sm:ml-6 md:ml-14">
         <Link href={slicerLink}>
