@@ -1,5 +1,6 @@
 import Cart from "@components/icons/Cart"
 import { Card } from ".."
+import { useAppContext } from "../context"
 import { Product } from "../SlicerProducts/SlicerProducts"
 
 type Props = {
@@ -9,6 +10,7 @@ type Props = {
 }
 
 const ProductCard = ({ product, chainInfo, editMode }: Props) => {
+  const { setModalView } = useAppContext()
   const { productId, name, description, hash, image } = product
   const {
     price,
@@ -18,6 +20,9 @@ const ProductCard = ({ product, chainInfo, editMode }: Props) => {
     availableUnits,
     totalPurchases,
   } = chainInfo
+  const productPrice = isUSD
+    ? `$ ${Number(price) / 100}`
+    : `Ξ ${Number(price) / 10 ** 18}`
 
   return (
     <Card
@@ -29,12 +34,27 @@ const ProductCard = ({ product, chainInfo, editMode }: Props) => {
       topRight={{
         title: "Product price",
         content: (
-          <p className="text-sm font-medium text-black">
-            {isUSD ? "$ " : "Ξ "}
-            {isUSD ? Number(price) / 100 : Number(price) / 10 ** 18}
-          </p>
+          <p className="text-sm font-medium text-black">{productPrice}</p>
         ),
       }}
+      onClick={() =>
+        setModalView({
+          name: "PRODUCT_VIEW",
+          cross: true,
+          params: {
+            productId,
+            name,
+            description,
+            image,
+            productPrice,
+            isUSD,
+            isInfinite,
+            isMultiple,
+            availableUnits,
+            totalPurchases,
+          },
+        })
+      }
     >
       <div className="flex items-center justify-between">
         <div className="flex flex-wrap items-center">

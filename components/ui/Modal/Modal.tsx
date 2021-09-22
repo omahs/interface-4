@@ -6,6 +6,7 @@ import {
   IRREVERSIBLE_VIEW,
   CREATE_PRODUCT_VIEW,
   CREATE_PRODUCT_CONFIRM_VIEW,
+  PRODUCT_VIEW,
 } from "lib/text/modals"
 
 type Props = {
@@ -30,6 +31,9 @@ const Modal = ({ modalView, setModalView }: Props) => {
     case "CREATE_PRODUCT_VIEW":
       content = CREATE_PRODUCT_VIEW(params)
       break
+    case "PRODUCT_VIEW":
+      content = PRODUCT_VIEW(params)
+      break
   }
 
   return (
@@ -38,9 +42,9 @@ const Modal = ({ modalView, setModalView }: Props) => {
         className="absolute w-full h-full"
         onClick={() => (cross ? setModalView({ name: "" }) : null)}
       />
-      <div className="relative px-4 py-8 mx-4 bg-white shadow-xl xs:py-12 xs:px-8 rounded-xl max-w-screen-xs">
+      <div className="relative w-full px-4 py-8 mx-4 bg-white shadow-xl xs:py-12 xs:px-8 rounded-xl max-w-screen-xs">
         {cross && (
-          <div className="absolute top-[20px] right-[20px]">
+          <div className="absolute top-[24px] right-[24px]">
             <Cross
               className="text-right cursor-pointer hover:text-red-500"
               onClick={() => setModalView({ name: "" })}

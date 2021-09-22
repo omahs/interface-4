@@ -1,4 +1,11 @@
-import { Button, DoubleText, LoadingStep } from "@components/ui"
+import Cart from "@components/icons/Cart"
+import {
+  Button,
+  CardImage,
+  DoubleText,
+  LoadingStep,
+  MarkdownBlock,
+} from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { useRouter } from "next/dist/client/router"
 
@@ -13,6 +20,7 @@ type ViewNames =
   | "IRREVERSIBLE_VIEW"
   | "CREATE_PRODUCT_VIEW"
   | "CREATE_PRODUCT_CONFIRM_VIEW"
+  | "PRODUCT_VIEW"
 
 export const CONNECT_VIEW = (
   <>
@@ -170,5 +178,42 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
         </div>
       )}
     </div>
+  )
+}
+
+export const PRODUCT_VIEW = (params: any) => {
+  const {
+    productId,
+    name,
+    description,
+    image,
+    productPrice,
+    isUSD,
+    isInfinite,
+    isMultiple,
+    availableUnits,
+    totalPurchases,
+  } = params
+
+  return (
+    <>
+      <div className="pb-10 text-center">
+        <DoubleText inactive logoText={name} />
+      </div>
+      <div>
+        <CardImage name={name} imageUrl={image} size="h-52 sm:h-72" />
+        <div className="py-8">
+          <div>
+            <MarkdownBlock content={description} />
+          </div>
+        </div>
+        <div className="flex items-center justify-center w-[150px] py-2 text-center text-white transition-colors duration-150 bg-green-500 rounded-md nightwind-prevent group hover:bg-green-600">
+          <p className="mr-2 text-sm font-medium sm:text-base">
+            Get it for {productPrice}
+          </p>
+          <Cart className="w-5 h-5 mt-0.5 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
+        </div>
+      </div>
+    </>
   )
 }

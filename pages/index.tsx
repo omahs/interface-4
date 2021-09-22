@@ -67,10 +67,11 @@ export default Home
  *
  * *Critical Priority*
  *    - add products to slicers -> demonstrate use case with digital collectibles
- *      - show products on slicer page
- *      - edit products
- *      - purchase products
+ *      - show products on slicer page -> OK
+ *      - onClick modal with product details
+ *      - purchase products flow
  *      - redeem purchase
+ *      - edit products
  *    - checkout bag (context)
  *
  * *High Priority*
