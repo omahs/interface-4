@@ -1,9 +1,9 @@
-import Cart from "@components/icons/Cart"
 import ShoppingBag from "@components/icons/ShoppingBag"
-import { PayProducts } from "@lib/handlers/chain"
+import { ProductCart } from "@lib/handleUpdateCart"
 import formatNumber from "@utils/formatNumber"
 import { useEffect, useState } from "react"
-import { Card } from ".."
+import { useCookies } from "react-cookie"
+import { Card, CartButton } from ".."
 import { useAppContext } from "../context"
 import { Product } from "../SlicerProducts/SlicerProducts"
 
@@ -27,6 +27,7 @@ const ProductCard = ({
   ethUsd,
   editMode,
 }: Props) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["cart"])
   const { setModalView } = useAppContext()
   const { productId, name, description, hash, image, purchaseInfo } = product
   const {
@@ -45,6 +46,11 @@ const ProductCard = ({
     eth: `Ξ ${isUSD ? convertedEthUsd : Math.floor(price / 10 ** 14) / 10000}`,
     usd: `$ ${isUSD ? formatNumber(price / 100) : convertedEthUsd}`,
   }
+  const cookieCart: ProductCart[] = cookies?.cart
+  const productCart: ProductCart = cookieCart?.find(
+    (product) =>
+      product.slicerAddress == slicerAddress && product.productId == productId
+  )
 
   const handleOnClick = () => {
     setModalView({
@@ -80,18 +86,6 @@ const ProductCard = ({
     }
   }, [price, ethUsd])
 
-  const testBuy = async () => {
-    await PayProducts([
-      {
-        slicerAddress,
-        productId,
-        quantity: 1,
-        price,
-        isUSD,
-      },
-    ])
-  }
-
   return (
     <Card
       name={name}
@@ -122,7 +116,7 @@ const ProductCard = ({
         <div className="flex items-center justify-between">
           <div className="flex flex-wrap items-center mr-24">
             <p className="mr-2 font-medium">{name}</p>
-            <p className="h-full mt-0.5 text-gray-500 text-xs font-normal">
+            <p className="h-5 mt-0.5 text-gray-500 text-xs font-normal">
               #{productId}
             </p>
           </div>
@@ -132,13 +126,16 @@ const ProductCard = ({
             className="absolute w-full h-full"
             onClick={() => handleOnClick()}
           />
-
-          <div
-            className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-green-500 rounded-md nightwind-prevent group hover:bg-green-600"
-            onClick={async () => await testBuy()}
-          >
-            <Cart className="w-5 h-5 mr-1 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
-          </div>
+          <CartButton
+            productCart={productCart}
+            slicerAddress={slicerAddress}
+            productId={productId}
+            price={price}
+            cookies={cookies}
+            setCookie={setCookie}
+            isUSD={isUSD}
+            isMultiple={isMultiple}
+          />
         </div>
       </>
     </Card>
