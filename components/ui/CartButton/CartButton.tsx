@@ -3,18 +3,13 @@ import Minus from "@components/icons/Minus"
 import Plus from "@components/icons/Plus"
 import Trash from "@components/icons/Trash"
 import handleUpdateCart, { ProductCart } from "@lib/handleUpdateCart"
-import { Product } from "../SlicerProducts/SlicerProducts"
-import { CookieSetOptions } from "universal-cookie"
+import { useCookies } from "react-cookie"
 
 type Props = {
   productCart: ProductCart
   slicerAddress: string
   productId: number
   price: number
-  cookies: {
-    cart?: any
-  }
-  setCookie: (name: "cart", value: any, options?: CookieSetOptions) => void
   isUSD: boolean
   isMultiple: boolean
 }
@@ -24,11 +19,11 @@ const CartButton = ({
   slicerAddress,
   productId,
   price,
-  cookies,
-  setCookie,
   isUSD,
   isMultiple,
 }: Props) => {
+  const [cookies, setCookie] = useCookies(["cart"])
+
   return !productCart ? (
     <div
       className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-green-500 rounded-md nightwind-prevent group hover:bg-green-600"

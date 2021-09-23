@@ -27,7 +27,7 @@ const ProductCard = ({
   ethUsd,
   editMode,
 }: Props) => {
-  const [cookies, setCookie, removeCookie] = useCookies(["cart"])
+  const [cookies] = useCookies(["cart"])
   const { setModalView } = useAppContext()
   const { productId, name, description, hash, image, purchaseInfo } = product
   const {
@@ -132,8 +132,6 @@ const ProductCard = ({
               slicerAddress={slicerAddress}
               productId={productId}
               price={price}
-              cookies={cookies}
-              setCookie={setCookie}
               isUSD={isUSD}
               isMultiple={isMultiple}
             />
