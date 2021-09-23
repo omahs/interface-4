@@ -81,13 +81,15 @@ const ProductCard = ({
   }, [price, ethUsd])
 
   const testBuy = async () => {
-    await PayProducts(
-      [slicerId],
-      [slicerAddress],
-      [String(productId)],
-      [1],
-      price
-    )
+    await PayProducts([
+      {
+        slicerAddress,
+        productId,
+        quantity: 1,
+        price,
+        isUSD,
+      },
+    ])
   }
 
   return (

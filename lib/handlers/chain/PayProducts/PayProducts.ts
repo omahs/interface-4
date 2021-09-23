@@ -1,29 +1,39 @@
 import { BigNumber } from "ethers"
 import { initialize } from "@lib/useProvider"
-import { slice, sliceCore } from "@lib/initProvider"
-import { GetProductPrice } from ".."
+import { slice, chainlink } from "@lib/initProvider"
 
-const PayProducts = async (
-  slicerIds: number[],
-  productIds: number[],
-  quantities: number[]
-) => {
+export type PayProductData = {
+  slicerAddress: string
+  productId: number
+  quantity: number
+  price: number
+  isUSD: boolean
+}
+
+const PayProducts = async (productData: PayProductData[]) => {
   const { signer } = await initialize()
   const contract = slice(signer)
-  const sliceCorecontract = sliceCore(signer)
-  let slicerAddresses: string[]
+  const priceFeed = await chainlink(signer).latestRoundData()
+
+  const ethUsd = Number(priceFeed[1])
+  let slicerAddresses: string[] = []
+  let productIds: number[] = []
+  let quantities: number[] = []
   let totalPrice: BigNumber
 
   try {
-    slicerIds.forEach(async (slicerId, i) => {
-      const slicerAddress = await sliceCorecontract.slicers(slicerId)
+    productData.forEach((product) => {
+      const { slicerAddress, productId, quantity, price, isUSD } = product
+      const currentPrice = totalPrice || 0
       slicerAddresses.push(slicerAddress)
-      const productPrice = await GetProductPrice(
-        slicerId,
-        productIds[i],
-        quantities[i]
-      )
-      totalPrice.add(Number(productPrice))
+      productIds.push(productId)
+      quantities.push(quantity)
+
+      const productPrice = isUSD
+        ? BigNumber.from(price).mul(BigNumber.from(10).pow(24)).div(ethUsd)
+        : BigNumber.from(price)
+
+      totalPrice = BigNumber.from(currentPrice).add(productPrice)
     })
 
     const call = await contract.payProducts(
@@ -41,3 +51,5 @@ const PayProducts = async (
 }
 
 export default PayProducts
+
+// todo: calculate price here when price edits are possible
