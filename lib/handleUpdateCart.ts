@@ -23,7 +23,9 @@ const handleUpdateCart = async (
   const newCookies = cookies?.cart || []
   if (newCookies.length != 0 && productCart) {
     const quantity = productCart.quantity + newQuantity
-    const index = newCookies.indexOf(productCart)
+    const index = newCookies.findIndex(
+      (p: ProductCart) => p.productId == productId
+    )
     if (quantity > 0) {
       newCookies[index] = {
         slicerAddress,
