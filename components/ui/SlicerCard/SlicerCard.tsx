@@ -105,6 +105,7 @@ const SlicerCard = ({
           ) : (
             <div className="w-24 h-4 rounded-md bg-sky-300 animate-pulse" />
           ),
+          clickable: false,
         }}
         bottomRight={{
           title: "Total slices",

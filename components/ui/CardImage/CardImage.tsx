@@ -6,6 +6,7 @@ export type CardInfo = {
   title?: string
   className?: string
   padding?: string
+  clickable?: boolean
 }
 
 type Props = {
@@ -19,6 +20,7 @@ type Props = {
   className?: string
   size?: string
   product?: boolean
+  onClick?: (...args: any[]) => any
 }
 
 const CardImage = ({
@@ -32,6 +34,7 @@ const CardImage = ({
   className = "shadow-md rounded-xl",
   size = "sm:w-80 h-60 sm:h-52",
   product,
+  onClick,
 }: Props) => {
   return (
     <div
@@ -53,6 +56,9 @@ const CardImage = ({
             topLeft.padding ? topLeft.padding : "px-6"
           }`}
           content={topLeft.content}
+          href={href}
+          onClick={onClick}
+          clickable={topLeft.clickable}
         />
       )}
       {topRight && (
@@ -62,6 +68,9 @@ const CardImage = ({
             topRight.padding ? topRight.padding : "px-6"
           }`}
           content={topRight.content}
+          href={href}
+          onClick={onClick}
+          clickable={topRight.clickable}
         />
       )}
       {bottomLeft && (
@@ -71,6 +80,9 @@ const CardImage = ({
             bottomLeft.className
           } ${bottomLeft.padding ? bottomLeft.padding : "px-6"}`}
           content={bottomLeft.content}
+          href={href}
+          onClick={onClick}
+          clickable={bottomLeft.clickable}
         />
       )}
       {bottomRight && (
@@ -80,8 +92,12 @@ const CardImage = ({
             bottomRight.padding ? bottomRight.padding : "px-6"
           }`}
           content={bottomRight.content}
+          href={href}
+          onClick={onClick}
+          clickable={bottomRight.clickable}
         />
       )}
+      {onClick && <div className="absolute w-full h-full" onClick={onClick} />}
     </div>
   )
 }

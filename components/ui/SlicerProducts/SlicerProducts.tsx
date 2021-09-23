@@ -21,11 +21,17 @@ export type Product = {
 
 type Props = {
   slicerId: string
+  slicerAddress: string
   products: any
   editMode: boolean
 }
 
-const SlicerProducts = ({ slicerId, products, editMode }: Props) => {
+const SlicerProducts = ({
+  slicerId,
+  slicerAddress,
+  products,
+  editMode,
+}: Props) => {
   const [loading, setLoading] = useState(false)
   const [showProducts, setShowProducts] = useState<Product[]>([])
   const [pendingProducts, setPendingProducts] = useState<Product[]>([])
@@ -55,6 +61,8 @@ const SlicerProducts = ({ slicerId, products, editMode }: Props) => {
   return (
     <>
       <ProductsGrid
+        slicerId={Number(slicerId)}
+        slicerAddress={slicerAddress}
         blockchainProducts={blockchainProducts}
         products={showProducts}
         editMode={editMode}

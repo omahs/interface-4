@@ -185,6 +185,7 @@ const Id = ({
           <SlicerProducts
             editMode={editMode}
             slicerId={slicerInfo?.id}
+            slicerAddress={slicerInfo?.address}
             products={products}
           />
           <SlicerSubmitBlock

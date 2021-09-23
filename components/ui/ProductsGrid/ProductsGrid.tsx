@@ -6,12 +6,20 @@ import { ProductCard } from ".."
 import { Product } from "../SlicerProducts/SlicerProducts"
 
 type Props = {
+  slicerId: number
+  slicerAddress: string
   products: Product[]
   editMode: boolean
   blockchainProducts: any
 }
 
-const ProductsGrid = ({ products, editMode, blockchainProducts }: Props) => {
+const ProductsGrid = ({
+  slicerId,
+  slicerAddress,
+  products,
+  editMode,
+  blockchainProducts,
+}: Props) => {
   const initItems = 4
   const [items, setItems] = useState(initItems)
   const [iterator, setIterator] = useState(0)
@@ -38,6 +46,8 @@ const ProductsGrid = ({ products, editMode, blockchainProducts }: Props) => {
 
             return (
               <ProductCard
+                slicerId={slicerId}
+                slicerAddress={slicerAddress}
                 key={key}
                 product={product}
                 chainInfo={chainInfo}
