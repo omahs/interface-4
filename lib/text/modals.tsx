@@ -203,6 +203,7 @@ export const PRODUCT_VIEW = (params: any) => {
     purchaseInfo,
     slicerAddress,
     price,
+    editMode,
   } = params
 
   const cookieCart: ProductCart[] = cookies?.cart
@@ -270,19 +271,21 @@ export const PRODUCT_VIEW = (params: any) => {
             <MarkdownBlock content={description} />
           </div>
         </div>
-        <div className="mx-auto cursor-pointer w-60">
-          <CartButton
-            productCart={productCart}
-            slicerAddress={slicerAddress}
-            productId={productId}
-            price={price}
-            isUSD={isUSD}
-            isMultiple={isMultiple}
-            labelAdd={`Get it for ${productPrice.eth}`}
-            labelRemove={productPrice.eth}
-          />
-        </div>
-        {isMultiple && productCart?.quantity && (
+        {!editMode && (
+          <div className="mx-auto cursor-pointer w-60">
+            <CartButton
+              productCart={productCart}
+              slicerAddress={slicerAddress}
+              productId={productId}
+              price={price}
+              isUSD={isUSD}
+              isMultiple={isMultiple}
+              labelAdd={`Get it for ${productPrice.eth}`}
+              labelRemove={productPrice.eth}
+            />
+          </div>
+        )}
+        {!editMode && isMultiple && productCart?.quantity && (
           <p className="pt-4 text-sm text-center ">{`Ξ ${
             Math.floor(
               Number(productPrice.eth.substring(1)) *

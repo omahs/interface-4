@@ -114,3 +114,9 @@ const CartButton = ({
 }
 
 export default CartButton
+
+/**
+ * Todo
+ * - Need to be logged to add a product to cart
+ * - Nest productCart cookie under account address
+ * */

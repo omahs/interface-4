@@ -70,6 +70,7 @@ const ProductCard = ({
         purchaseInfo,
         slicerAddress,
         price,
+        editMode,
       },
     })
   }

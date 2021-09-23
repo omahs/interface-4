@@ -75,14 +75,3 @@ const ProductsGrid = ({
 }
 
 export default ProductsGrid
-
-/**
- * What's on the product card
- * - name
- * - product id
- * - image
- * - price -> Subgraph
- * - quick add to bag
- * - n. of times purchased -> Subgraph?
- *
- */
