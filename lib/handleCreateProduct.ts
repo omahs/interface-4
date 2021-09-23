@@ -96,6 +96,11 @@ export const beforeCreate = async (
   const purchaseData = CID.parse(purchaseDataCID).bytes
 
   // Save metadata, hashes & imageUrl on prisma
+  const purchaseInfo = {
+    instructions: instructions.length != 0,
+    notes: notes.length != 0,
+    files: purchaseFiles.length != 0,
+  }
   setUploadStep(5)
   const body = {
     method: "POST",
@@ -108,6 +113,7 @@ export const beforeCreate = async (
       hash: IpfsHash,
       tempProductHash: purchaseDataCID,
       productId: null,
+      purchaseInfo,
     }),
   }
   const { data: newProduct } = await fetcher(

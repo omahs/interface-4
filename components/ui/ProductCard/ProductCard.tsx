@@ -18,7 +18,7 @@ type Props = {
 
 const ProductCard = ({ product, chainInfo, ethUsd, editMode }: Props) => {
   const { setModalView } = useAppContext()
-  const { productId, name, description, hash, image } = product
+  const { productId, name, description, hash, image, purchaseInfo } = product
   const {
     price,
     isUSD,
@@ -89,6 +89,7 @@ const ProductCard = ({ product, chainInfo, ethUsd, editMode }: Props) => {
             isMultiple,
             availableUnits,
             totalPurchases,
+            purchaseInfo,
           },
         })
       }

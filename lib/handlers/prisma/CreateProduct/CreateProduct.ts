@@ -8,9 +8,9 @@ const CreateProduct = async (
   uid: string,
   hash: string,
   tempProductHash: string,
-  // version: number,
   image?: string,
-  productId?: number
+  productId?: number,
+  purchaseInfo?: object
 ) => {
   let query
   try {
@@ -25,6 +25,7 @@ const CreateProduct = async (
         tempProductHash,
         hash,
         productId,
+        purchaseInfo,
         // version
       },
     })

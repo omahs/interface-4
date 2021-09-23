@@ -12,6 +12,11 @@ export type Product = {
   creator: string
   hash: string
   image: string
+  purchaseInfo: {
+    files: boolean
+    instructions: boolean
+    notes: boolean
+  }
 }
 
 type Props = {

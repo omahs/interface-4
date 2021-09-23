@@ -161,7 +161,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
           waitingState="Blockchain interaction"
         />
       </div>
-      <p className="max-w-sm py-6 text-sm">
+      <p className="max-w-sm py-6 mx-auto text-sm">
         To make the product immediately appear on the website{" "}
         <b>do not leave this page until the process has completed</b>
       </p>
@@ -196,7 +196,13 @@ export const PRODUCT_VIEW = (params: any) => {
     isMultiple,
     availableUnits,
     totalPurchases,
+    purchaseInfo,
   } = params
+
+  const purchaseElArray = Object.keys(purchaseInfo).filter(
+    (el) => purchaseInfo[el] == true
+  )
+  const purchaseEl = purchaseElArray.join(", ")
 
   const availabilityColor =
     availableUnits < 10
@@ -264,6 +270,9 @@ export const PRODUCT_VIEW = (params: any) => {
             <Cart className="w-5 h-5 mt-0.5 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
           </div>
         </div>
+        <p className="pt-6 text-sm text-center mx-auto max-w-[340px]">
+          This product contains <b>{purchaseEl}</b>
+        </p>
       </div>
     </>
   )
