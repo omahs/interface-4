@@ -20,10 +20,10 @@ module.exports = {
       colorClasses: ["gradient", "placeholder"],
       typography: true,
       colors: {
-        white: "#141618",
+        white: "#0F1115",
         black: "gray.50",
         sky: {
-          50: "#012338",
+          50: "#001928",
         },
       },
     },

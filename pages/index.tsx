@@ -68,7 +68,7 @@ export default Home
  * *Critical Priority*
  *    - add products to slicers -> demonstrate use case with digital collectibles
  *      - show products on slicer page -> OK
- *      - onClick modal with product details
+ *      - onClick modal with product details -> OK
  *      - purchase products flow
  *        - checkout bag (context)
  *        - redeem purchase
@@ -86,7 +86,9 @@ export default Home
  *    - add products "explore" page
  *    - add detailed section in slicer page (stats & stuff for payees only)
  *    - transfer page (select box to choose slicer)
- *    - product likes
+ *    - Products
+ *      - product likes
+ *      - sort products by productId / createdAt / totalPurchases / likes
  *
  *
  *

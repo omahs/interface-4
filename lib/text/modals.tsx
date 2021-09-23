@@ -209,7 +209,7 @@ export const PRODUCT_VIEW = (params: any) => {
       ? availableUnits == 0
         ? "text-red-500"
         : "text-yellow-600"
-      : "text-black"
+      : "text-green-600"
 
   return (
     <>
