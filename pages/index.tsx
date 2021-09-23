@@ -70,25 +70,36 @@ export default Home
  *      - show products on slicer page -> OK
  *      - onClick modal with product details -> OK
  *      - purchase products flow
- *        - checkout bag (context)
+ *        - checkout bag
+ *        - your purchases page
  *        - redeem purchase
+ *    - Receive ERC721-1155
+ *      - Fix slicer smart contract receive/reject ERC721
+ *      - NFT section
+ *    - sponsorships
+ *      - section in slicer page
+ *      - allow sponsor to edit link
+ *      - allow creator to hide links
  *
  * *High Priority*
- *    - Fix slicer smart contract receive/reject ERC721
  *    - add wallet connect
  *    - FAQs page (see below) + add link where already referenced
  *    - product features
  *      - edit/delete products
  *
  * *Low Priority*
+ *    - (prisma) add {isVisible} boolean field in Slicer model to toggle visibility in Explore page
  *    - make product defaultImage on figma + add on CardImage component
  *    - add slicer tags in metadata & slicer page
  *    - add products "explore" page
  *    - add detailed section in slicer page (stats & stuff for payees only)
  *    - transfer page (select box to choose slicer)
  *    - Products
+ *      - add short description (text input) in productCard small and full (under title)
  *      - product likes
  *      - sort products by productId / createdAt / totalPurchases / likes
+ *    - signal when markdown can be used in textareas
+ *    - cart persists with user (save data on db & make user sign transaction ?)
  *
  *
  *
