@@ -68,6 +68,8 @@ const ProductCard = ({
         availableUnits,
         totalPurchases,
         purchaseInfo,
+        slicerAddress,
+        price,
       },
     })
   }

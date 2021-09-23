@@ -4,13 +4,16 @@ import Units from "@components/icons/Units"
 import {
   Button,
   CardImage,
+  CartButton,
   DoubleText,
   LoadingStep,
   MarkdownBlock,
 } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
+import { ProductCart } from "@lib/handleUpdateCart"
 import formatNumber from "@utils/formatNumber"
 import { useRouter } from "next/dist/client/router"
+import { useCookies } from "react-cookie"
 
 export type View = {
   name: ViewNames
@@ -185,6 +188,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
 }
 
 export const PRODUCT_VIEW = (params: any) => {
+  const [cookies] = useCookies(["cart"])
   const {
     productId,
     name,
@@ -197,8 +201,15 @@ export const PRODUCT_VIEW = (params: any) => {
     availableUnits,
     totalPurchases,
     purchaseInfo,
+    slicerAddress,
+    price,
   } = params
 
+  const cookieCart: ProductCart[] = cookies?.cart
+  const productCart: ProductCart = cookieCart?.find(
+    (product) =>
+      product.slicerAddress == slicerAddress && product.productId == productId
+  )
   const purchaseElArray = Object.keys(purchaseInfo).filter(
     (el) => purchaseInfo[el] == true
   )
@@ -259,17 +270,27 @@ export const PRODUCT_VIEW = (params: any) => {
             <MarkdownBlock content={description} />
           </div>
         </div>
-        <div className="mx-auto overflow-hidden text-center transition-colors duration-150 rounded-md w-52 ">
-          <div
-            className="flex items-center justify-center py-2 text-white bg-green-500 nightwind-prevent group hover:bg-green-600"
-            onClick={() => null}
-          >
-            <p className="mr-2 text-sm font-medium sm:text-base">
-              Get it for {productPrice.eth}
-            </p>
-            <Cart className="w-5 h-5 mt-0.5 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
-          </div>
+        <div className="mx-auto cursor-pointer w-60">
+          <CartButton
+            productCart={productCart}
+            slicerAddress={slicerAddress}
+            productId={productId}
+            price={price}
+            isUSD={isUSD}
+            isMultiple={isMultiple}
+            labelAdd={`Get it for ${productPrice.eth}`}
+            labelRemove={productPrice.eth}
+          />
         </div>
+        {isMultiple && productCart?.quantity && (
+          <p className="pt-4 text-sm text-center ">{`Ξ ${
+            Math.floor(
+              Number(productPrice.eth.substring(1)) *
+                productCart?.quantity *
+                1000
+            ) / 1000
+          }`}</p>
+        )}
         <p className="pt-6 text-sm text-center mx-auto max-w-[340px]">
           This product contains <b>{purchaseEl}</b>
         </p>

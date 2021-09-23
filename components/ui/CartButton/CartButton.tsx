@@ -12,6 +12,8 @@ type Props = {
   price: number
   isUSD: boolean
   isMultiple: boolean
+  labelAdd?: string
+  labelRemove?: string
 }
 
 const CartButton = ({
@@ -21,6 +23,8 @@ const CartButton = ({
   price,
   isUSD,
   isMultiple,
+  labelAdd,
+  labelRemove,
 }: Props) => {
   const [cookies, setCookie] = useCookies(["cart"])
 
@@ -40,12 +44,15 @@ const CartButton = ({
         )
       }
     >
+      {labelAdd && (
+        <p className="mr-2 text-sm font-medium sm:text-base">{labelAdd}</p>
+      )}
       <Cart className="w-5 h-5 mr-1 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
     </div>
   ) : isMultiple ? (
-    <div className="relative z-10 flex items-center justify-center w-full overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md">
+    <div className="relative z-10 grid items-center justify-center w-full grid-cols-3 overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md">
       <div
-        className="flex items-center justify-center flex-1 h-8 transition-colors duration-150 hover:bg-red-500 hover:text-white"
+        className="flex items-center justify-center h-8 text-red-500 transition-colors duration-150 hover:bg-red-500 hover:text-white"
         onClick={async () =>
           await handleUpdateCart(
             cookies,
@@ -61,13 +68,11 @@ const CartButton = ({
       >
         <Minus className="w-[17px] h-[17px]" />
       </div>
-      <div className="h-8 border border-gray-200" />
-      <div className="w-8 h-5 text-sm text-black cursor-default ">
-        {productCart.quantity}
+      <div className="flex items-center justify-center h-8 text-sm text-black border-l border-r border-gray-200 cursor-default">
+        <p>{productCart.quantity}</p>
       </div>
-      <div className="h-8 border border-gray-200" />
       <div
-        className="flex items-center justify-center flex-1 h-8 transition-colors duration-150 hover:bg-green-500 hover:text-white"
+        className="flex items-center justify-center h-8 text-green-500 transition-colors duration-150 hover:bg-green-500 hover:text-white"
         onClick={async () =>
           await handleUpdateCart(
             cookies,
@@ -100,6 +105,9 @@ const CartButton = ({
         )
       }
     >
+      {labelRemove && (
+        <p className="mr-2 text-sm font-medium sm:text-base">{labelRemove}</p>
+      )}
       <Trash className="w-5 h-5 mr-1 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
     </div>
   )
