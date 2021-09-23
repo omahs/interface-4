@@ -47,7 +47,10 @@ const Card = ({
       />
       <div className="relative w-full px-5 py-4 text-left">
         {onClick && (
-          <div className="absolute w-full h-full" onClick={onClick} />
+          <div
+            className="absolute w-full h-full mt-[-1rem] ml-[-1.25rem]"
+            onClick={onClick}
+          />
         )}
         {children}
       </div>

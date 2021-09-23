@@ -116,7 +116,7 @@ const ProductCard = ({
         <div className="flex items-center justify-between">
           <div className="flex flex-wrap items-center mr-24">
             <p className="mr-2 font-medium">{name}</p>
-            <p className="h-5 mt-0.5 text-gray-500 text-xs font-normal">
+            <p className="h-5 mt-1 text-xs font-normal text-gray-500">
               #{productId}
             </p>
           </div>
@@ -126,16 +126,18 @@ const ProductCard = ({
             className="absolute w-full h-full"
             onClick={() => handleOnClick()}
           />
-          <CartButton
-            productCart={productCart}
-            slicerAddress={slicerAddress}
-            productId={productId}
-            price={price}
-            cookies={cookies}
-            setCookie={setCookie}
-            isUSD={isUSD}
-            isMultiple={isMultiple}
-          />
+          {!editMode && (
+            <CartButton
+              productCart={productCart}
+              slicerAddress={slicerAddress}
+              productId={productId}
+              price={price}
+              cookies={cookies}
+              setCookie={setCookie}
+              isUSD={isUSD}
+              isMultiple={isMultiple}
+            />
+          )}
         </div>
       </>
     </Card>
