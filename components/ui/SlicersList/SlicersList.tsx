@@ -138,3 +138,4 @@ const SlicersList = () => {
 export default SlicersList
 
 // Todo: Add sorting by unreleased amount
+// Todo: Unrelease batch

@@ -15,7 +15,7 @@ const FloatingCart = ({}: Props) => {
     fetcher
   )
 
-  const reducer = (previousValue, currentValue) => {
+  const reducer = (previousValue: number, currentValue: ProductCart) => {
     const { quantity, price, isUSD } = currentValue
     const productPrice = isUSD
       ? Math.floor((price * 10) / Number(ethUsd?.price)) / 1000
