@@ -1,11 +1,13 @@
 import { CookieSetOptions } from "universal-cookie"
 
 export type ProductCart = {
+  slicerId: string
   slicerAddress: string
   productId: number
   quantity: number
   price: number
   isUSD: boolean
+  name: string
 }
 
 const handleUpdateCart = async (
@@ -14,10 +16,12 @@ const handleUpdateCart = async (
   },
   setCookie: (name: "cart", value: any, options?: CookieSetOptions) => void,
   productCart: ProductCart,
+  slicerId: number,
   slicerAddress: string,
   productId: number,
   price: number,
   isUSD: boolean,
+  name: string,
   newQuantity: number
 ) => {
   const newCookies = cookies?.cart || []
@@ -28,11 +32,13 @@ const handleUpdateCart = async (
     )
     if (quantity > 0) {
       newCookies[index] = {
+        slicerId,
         slicerAddress,
         productId,
         quantity,
         price,
         isUSD,
+        name,
       }
     } else {
       newCookies.splice(index, 1)
@@ -40,11 +46,13 @@ const handleUpdateCart = async (
   } else if (newQuantity > 0) {
     const quantity = newQuantity
     newCookies.push({
+      slicerId,
       slicerAddress,
       productId,
       quantity,
       price,
       isUSD,
+      name,
     })
   }
   setCookie("cart", newCookies)

@@ -57,6 +57,7 @@ const ProductCard = ({
       name: "PRODUCT_VIEW",
       cross: true,
       params: {
+        slicerId,
         productId,
         name,
         description,
@@ -131,11 +132,13 @@ const ProductCard = ({
           />
           {!editMode && (
             <CartButton
+              slicerId={slicerId}
               productCart={productCart}
               slicerAddress={slicerAddress}
               productId={productId}
               price={price}
               isUSD={isUSD}
+              name={name}
               isMultiple={isMultiple}
             />
           )}

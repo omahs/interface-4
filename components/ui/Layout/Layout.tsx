@@ -1,4 +1,4 @@
-import { Footer, Modal, Navbar } from "@components/ui"
+import { FloatingCart, Footer, Modal, Navbar } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { useEffect } from "react"
 import ProductHuntBadge from "../ProductHuntBadge"
@@ -25,6 +25,7 @@ export default function Layout({ children }) {
         {modalView.name && (
           <Modal modalView={modalView} setModalView={setModalView} />
         )}
+        <FloatingCart />
         {/* <ProductHuntBadge /> */}
       </div>
     </>

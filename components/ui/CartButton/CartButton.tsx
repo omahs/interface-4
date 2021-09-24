@@ -7,21 +7,25 @@ import { useCookies } from "react-cookie"
 
 type Props = {
   productCart: ProductCart
+  slicerId: number
   slicerAddress: string
   productId: number
   price: number
   isUSD: boolean
+  name: string
   isMultiple: boolean
   labelAdd?: string
   labelRemove?: string
 }
 
 const CartButton = ({
+  slicerId,
   productCart,
   slicerAddress,
   productId,
   price,
   isUSD,
+  name,
   isMultiple,
   labelAdd,
   labelRemove,
@@ -36,10 +40,12 @@ const CartButton = ({
           cookies,
           setCookie,
           productCart,
+          slicerId,
           slicerAddress,
           productId,
           price,
           isUSD,
+          name,
           1
         )
       }
@@ -58,10 +64,12 @@ const CartButton = ({
             cookies,
             setCookie,
             productCart,
+            slicerId,
             slicerAddress,
             productId,
             price,
             isUSD,
+            name,
             -1
           )
         }
@@ -78,10 +86,12 @@ const CartButton = ({
             cookies,
             setCookie,
             productCart,
+            slicerId,
             slicerAddress,
             productId,
             price,
             isUSD,
+            name,
             1
           )
         }
@@ -97,10 +107,12 @@ const CartButton = ({
           cookies,
           setCookie,
           productCart,
+          slicerId,
           slicerAddress,
           productId,
           price,
           isUSD,
+          name,
           -1
         )
       }
@@ -114,9 +126,3 @@ const CartButton = ({
 }
 
 export default CartButton
-
-/**
- * Todo
- * - Need to be logged to add a product to cart
- * - Nest productCart cookie under account address
- * */

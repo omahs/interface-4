@@ -190,6 +190,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
 export const PRODUCT_VIEW = (params: any) => {
   const [cookies] = useCookies(["cart"])
   const {
+    slicerId,
     productId,
     name,
     description,
@@ -274,11 +275,13 @@ export const PRODUCT_VIEW = (params: any) => {
         {!editMode && (
           <div className="mx-auto cursor-pointer w-60">
             <CartButton
+              slicerId={slicerId}
               productCart={productCart}
               slicerAddress={slicerAddress}
               productId={productId}
               price={price}
               isUSD={isUSD}
+              name={name}
               isMultiple={isMultiple}
               labelAdd={`Get it for ${productPrice.eth}`}
               labelRemove={productPrice.eth}
