@@ -5,13 +5,10 @@ import { Button, Container, SlcCounter } from "@components/ui"
 import UserIcon from "@components/icons/UserIcon"
 import { useAppContext } from "@components/ui/context"
 import Metamask from "@components/icons/Metamask"
+import handleConnect from "@lib/handleConnect"
 
 const Navbar = () => {
   const { isConnected, loading } = useAppContext()
-
-  const requestAccount = async () => {
-    await window.ethereum.request({ method: "eth_requestAccounts" })
-  }
 
   return (
     <header className="shadow-sm bg-gray-50">
@@ -38,7 +35,7 @@ const Navbar = () => {
                 double={false}
                 label="Connect"
                 loading={loading}
-                onClick={() => requestAccount()}
+                onClick={() => handleConnect()}
               />
             ) : (
               <>

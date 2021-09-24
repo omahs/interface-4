@@ -3,6 +3,7 @@ import Spinner from "@components/icons/Spinner"
 import Link from "next/link"
 import { useAppContext } from "@components/ui/context"
 import Logo from "@components/icons/Logo"
+import handleConnect from "@lib/handleConnect"
 
 interface ButtonProps {
   loading?: boolean
@@ -47,10 +48,6 @@ const Button: FC<ButtonProps> = (props) => {
       <p>{label}</p>
     )
 
-  const requestAccount = async () => {
-    await window.ethereum.request({ method: "eth_requestAccounts" })
-  }
-
   const rootClassName = `px-7 min-w-[150px] focus:outline-none ${className}`
 
   return (
@@ -68,7 +65,7 @@ const Button: FC<ButtonProps> = (props) => {
           onClick={
             !loading
               ? requireConnection && !isConnected
-                ? requestAccount
+                ? handleConnect
                 : onClick
               : null
           }
