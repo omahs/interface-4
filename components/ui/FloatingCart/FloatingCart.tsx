@@ -15,7 +15,7 @@ type Props = {}
 
 const FloatingCart = ({}: Props) => {
   const { isConnected } = useAppContext()
-  const [cookies] = useCookies(["cart"])
+  const [cookies, setCookie] = useCookies(["cart"])
   const [showCart, setShowCart] = useState(false)
   const [showCartList, setShowCartList] = useState(false)
   const cookieCart: ProductCart[] = cookies?.cart
@@ -41,6 +41,7 @@ const FloatingCart = ({}: Props) => {
       setShowCart(true)
     } else {
       setShowCart(false)
+      setShowCartList(false)
     }
   }, [cookieCart])
 
@@ -51,14 +52,18 @@ const FloatingCart = ({}: Props) => {
   return (
     <>
       <div
-        className={`fixed bottom-0 mb-[80px] right-[20px] nightwind-prevent-block transition-opacity duration-200 ${
-          showCartList ? "z-20 opacity-100" : "-z-10 opacity-0"
+        className={`fixed bottom-0 mb-[80px] sm:mb-[92px] right-[20px] sm:right-[32px]transition-opacity duration-200 ${
+          showCart && showCartList ? "z-20 opacity-100" : "-z-10 opacity-0"
         }`}
       >
-        <CartList cookieCart={cookieCart} ethUsd={ethUsd} />
+        <CartList
+          cookieCart={cookieCart}
+          ethUsd={ethUsd}
+          setCookie={setCookie}
+        />
       </div>
       <div
-        className={`fixed bottom-0 mb-[20px] right-[20px] nightwind-prevent-block transition-opacity duration-200 ${
+        className={`fixed bottom-0 mb-[20px] sm:mb-[32px] right-[20px] sm:right-[32px] nightwind-prevent-block transition-opacity duration-200 ${
           showCart ? "z-20 opacity-100" : "-z-10 opacity-0"
         }`}
       >
