@@ -20,6 +20,7 @@ export type Product = {
 }
 
 type Props = {
+  account: string
   slicerId: string
   slicerAddress: string
   products: any
@@ -27,6 +28,7 @@ type Props = {
 }
 
 const SlicerProducts = ({
+  account,
   slicerId,
   slicerAddress,
   products,
@@ -46,10 +48,17 @@ const SlicerProducts = ({
     availableUnits
     totalPurchases
     createdAtTimestamp
+    purchases (where: {buyer: "${account}"}) {
+      id
+      product
+      quantity
+    }
   }
 `
   const subgraphData = useQuery(tokensQuery)
   const blockchainProducts = subgraphData?.products
+
+  console.log(subgraphData)
 
   useEffect(() => {
     setShowProducts(products?.data?.filter((p: Product) => p.productId != null))
