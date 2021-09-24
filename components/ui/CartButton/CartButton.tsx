@@ -126,3 +126,5 @@ const CartButton = ({
 }
 
 export default CartButton
+
+// todo: if (!isMultiple && hasPurchased) { already bought option -> redirects to relative purchase }

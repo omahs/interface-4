@@ -22,17 +22,19 @@ const FloatingCart = ({}: Props) => {
       : Math.floor(price / 10 ** 14) / 10000
     return previousValue + productPrice * quantity
   }
-  const totalPrice = cookieCart?.reduce(reducer, 0)
+  const totalPrice: number = cookieCart?.reduce(reducer, 0) || 0
 
   return (
-    cookieCart?.length != 0 && (
-      <div className="fixed z-20 bottom-0 mb-[20px] right-[20px]">
-        <div className="p-8 bg-blue-600 rounded-md">
-          {/* <CartList cookieCart={cookieCart} ethUsd={ethUsd} /> */}
-          <p>{Math.round(totalPrice * 1000) / 1000}</p>
-        </div>
+    <div
+      className={`fixed bottom-0 mb-[20px] right-[20px] transition-opacity duration-200 ${
+        cookieCart?.length != 0 ? "z-20 opacity-100" : "-z-10 opacity-0"
+      }`}
+    >
+      <div className="px-16 py-4 bg-blue-600 rounded-full">
+        {/* <CartList cookieCart={cookieCart} ethUsd={ethUsd} /> */}
+        {totalPrice != 0 && <p>{Math.round(totalPrice * 1000) / 1000}</p>}
       </div>
-    )
+    </div>
   )
 }
 
