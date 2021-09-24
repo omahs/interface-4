@@ -1,10 +1,13 @@
-import Arrow from "@components/icons/Arrow"
+import Link from "next/link"
 import Chevron from "@components/icons/Chevron"
 import ShoppingBag from "@components/icons/ShoppingBag"
+import Spinner from "@components/icons/Spinner"
 import handleConnect from "@lib/handleConnect"
 import { PayProducts } from "@lib/handlers/chain"
 import { ProductCart } from "@lib/handleUpdateCart"
 import fetcher from "@utils/fetcher"
+import { Message } from "@utils/handleMessage"
+import handleSubmit from "@utils/handleSubmit"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import useSWR from "swr"
@@ -15,10 +18,18 @@ type Props = {}
 
 const FloatingCart = ({}: Props) => {
   const { isConnected } = useAppContext()
-  const [cookies, setCookie] = useCookies(["cart"])
+  const [cookies, setCookie, removeCookie] = useCookies(["cart"])
   const [showCart, setShowCart] = useState(false)
   const [showCartList, setShowCartList] = useState(false)
   const cookieCart: ProductCart[] = cookies?.cart
+
+  // const [tempCart, setTempCart] = useState<ProductCart[]>([])
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [message, setMessage] = useState<Message>({
+    message: "",
+    messageStatus: "success",
+  })
 
   const { data: ethUsd } = useSWR(
     "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT",
@@ -34,10 +45,11 @@ const FloatingCart = ({}: Props) => {
   }
   const totalPrice: number = cookieCart?.reduce(reducer, 0) || 0
 
-  console.log(cookieCart)
-
   useEffect(() => {
     if (cookieCart && cookieCart?.length != 0) {
+      if (success) {
+        setSuccess(false)
+      }
       setShowCart(true)
     } else {
       setShowCart(false)
@@ -46,13 +58,26 @@ const FloatingCart = ({}: Props) => {
   }, [cookieCart])
 
   const handleCheckout = async () => {
-    await PayProducts(cookieCart)
+    try {
+      await handleSubmit(
+        PayProducts(cookieCart),
+        setMessage,
+        setLoading,
+        setSuccess,
+        true
+      )
+      if (success) {
+        removeCookie("cart")
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
     <>
       <div
-        className={`fixed bottom-0 mb-[80px] sm:mb-[92px] right-[20px] sm:right-[32px]transition-opacity duration-200 ${
+        className={`fixed bottom-0 mb-[80px] sm:mb-[100px] right-[20px] sm:right-[32px]transition-opacity duration-200 ${
           showCart && showCartList ? "z-20 opacity-100" : "-z-10 opacity-0"
         }`}
       >
@@ -64,35 +89,67 @@ const FloatingCart = ({}: Props) => {
       </div>
       <div
         className={`fixed bottom-0 mb-[20px] sm:mb-[32px] right-[20px] sm:right-[32px] nightwind-prevent-block transition-opacity duration-200 ${
-          showCart ? "z-20 opacity-100" : "-z-10 opacity-0"
+          showCart || loading || success
+            ? "z-20 opacity-100"
+            : "-z-10 opacity-0"
         }`}
       >
         <div className="flex h-12 pl-3 overflow-hidden font-medium text-black bg-white border-2 border-transparent rounded-full shadow-base">
           <div
             className="flex items-center pl-2 pr-4 min-w-[100px] cursor-pointer group"
-            onClick={() => setShowCartList((showCartList) => !showCartList)}
+            onClick={() =>
+              success
+                ? setSuccess(false)
+                : setShowCartList((showCartList) => !showCartList)
+            }
           >
-            {totalPrice != 0 && (
-              <>
-                <Chevron
-                  className={`h-5 transition-transform duration-200 ${
-                    showCartList ? "rotate-90" : ""
-                  } w-7`}
-                />
-                <p className="w-full ml-2 text-center">
-                  Ξ {Math.round(totalPrice * 1000) / 1000}
-                </p>
-              </>
+            {success ? (
+              <p className="px-2 text-sm">Keep buying</p>
+            ) : (
+              totalPrice != 0 && (
+                <>
+                  <Chevron
+                    className={`h-5 transition-transform duration-200 ${
+                      showCartList ? "rotate-90" : ""
+                    } w-7`}
+                  />
+                  <p className="w-full ml-2 text-center">
+                    Ξ {Math.round(totalPrice * 1000) / 1000}
+                  </p>
+                </>
+              )
             )}
           </div>
           <div
-            className="flex items-center h-full px-4 text-sm text-white transition-colors duration-150 bg-blue-600 cursor-pointer hover:bg-green-500 nightwind-prevent"
-            onClick={() => (isConnected ? handleCheckout() : handleConnect())}
+            className={`flex items-center h-full px-4 text-sm text-white transition-colors duration-150 bg-blue-600 ${
+              !loading ? "cursor-pointer hover:bg-green-500" : ""
+            } nightwind-prevent`}
+            onClick={() =>
+              isConnected
+                ? !loading
+                  ? handleCheckout()
+                  : null
+                : handleConnect()
+            }
           >
-            <p className="pr-2 text-sm ">
-              {isConnected ? "Checkout" : "Connect"}
-            </p>
-            <ShoppingBag className="w-[18px] h-[18px]" />
+            {success ? (
+              <Link href="/purchases">
+                <a className="px-2 text-white hover:text-white">
+                  Go to purchases
+                </a>
+              </Link>
+            ) : loading ? (
+              <div className="px-4">
+                <Spinner color="text-white" />
+              </div>
+            ) : (
+              <>
+                <p className="pr-2 text-sm ">
+                  {isConnected ? "Checkout" : "Connect"}
+                </p>
+                <ShoppingBag className="w-[18px] h-[18px]" />{" "}
+              </>
+            )}
           </div>
         </div>
       </div>
