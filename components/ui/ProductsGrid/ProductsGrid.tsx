@@ -33,7 +33,7 @@ const ProductsGrid = ({
     setIterator(items < products?.length ? items : products?.length)
   }, [items, products])
 
-  return products ? (
+  return products && products.length != 0 ? (
     blockchainProducts ? (
       <>
         <h2>Products</h2>
