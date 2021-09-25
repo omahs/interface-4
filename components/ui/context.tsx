@@ -62,14 +62,6 @@ export function AppWrapper({ children }) {
     }
   }, [account])
 
-  // Todo:
-
-  // useEffect(() => {
-  //   if (purchases && cookies) {
-  //     // Remove from cart products which have already been purchased & are not multiple
-  //   }
-  // }, [purchases, cookies])
-
   return (
     <AppContext.Provider
       value={{

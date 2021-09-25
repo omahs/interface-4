@@ -1,4 +1,3 @@
-import Cart from "@components/icons/Cart"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import Units from "@components/icons/Units"
 import {

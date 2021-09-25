@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react"
 import client from "@utils/apollo-client"
 import { gql } from "@apollo/client"
 import { Purchase } from "@components/ui/context"
+import { ProductCart } from "@lib/handleUpdateCart"
 
 export const getPurchases = async (
   buyer: string,
@@ -31,4 +32,16 @@ export const getPurchases = async (
     purchasesList.push({ slicerId, productId, quantity: p.quantity })
   })
   setPurchases(purchasesList)
+}
+
+export const productsToPurchases = (products: ProductCart[]) => {
+  let purchasesList: Purchase[] = []
+  products.map((p) => {
+    purchasesList.push({
+      slicerId: String(p.slicerId),
+      productId: String(p.productId),
+      quantity: String(p.quantity),
+    })
+  })
+  return purchasesList
 }

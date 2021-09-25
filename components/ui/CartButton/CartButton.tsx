@@ -52,11 +52,10 @@ const CartButton = ({
             </p>
           )
         )}
-        <ShoppingBag className="w-5 h-5 mr-1 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
+        <ShoppingBag className="w-5 h-5 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
       </a>
     </Link>
   ) : !productCart ? (
-    // not in cart, buy single
     <div
       className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-green-500 rounded-md nightwind-prevent group hover:bg-green-600"
       onClick={async () =>
@@ -80,7 +79,6 @@ const CartButton = ({
       <Cart className="w-5 h-5 mr-1 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
     </div>
   ) : isMultiple ? (
-    // In cart, buy/remove multiple
     <div className="relative z-10 grid items-center justify-center w-full grid-cols-3 overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md">
       <div
         className="flex items-center justify-center h-8 text-red-500 transition-colors duration-150 hover:bg-red-500 hover:text-white"
@@ -125,7 +123,6 @@ const CartButton = ({
       </div>
     </div>
   ) : (
-    // In cart, remove single
     <div
       className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-red-500 rounded-md nightwind-prevent group hover:bg-red-600"
       onClick={async () =>
@@ -152,7 +149,5 @@ const CartButton = ({
 }
 
 export default CartButton
-
-// todo: if (!isMultiple && hasPurchased) { already bought option -> redirects to relative purchase }
 
 // Todo? Handle purchasedQuantity for isMultiple products?

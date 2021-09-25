@@ -12,12 +12,13 @@ import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import useSWR from "swr"
 import { CartList } from ".."
-import { useAppContext } from "../context"
+import { Purchase, useAppContext } from "../context"
+import { productsToPurchases } from "@utils/getPurchases"
 
 type Props = {}
 
 const FloatingCart = ({}: Props) => {
-  const { isConnected } = useAppContext()
+  const { isConnected, account, setPurchases, purchases } = useAppContext()
   const [cookies, setCookie, removeCookie] = useCookies(["cart"])
   const [showCart, setShowCart] = useState(false)
   const [showCartList, setShowCartList] = useState(false)
@@ -57,6 +58,14 @@ const FloatingCart = ({}: Props) => {
     }
   }, [cookieCart])
 
+  useEffect(() => {
+    if (success) {
+      const newPurchases: Purchase[] = productsToPurchases(cookieCart)
+      setPurchases([...purchases, ...newPurchases])
+      removeCookie("cart")
+    }
+  }, [success])
+
   const handleCheckout = async () => {
     try {
       await handleSubmit(
@@ -66,10 +75,6 @@ const FloatingCart = ({}: Props) => {
         setSuccess,
         true
       )
-      if (success) {
-        // todo fix this
-        removeCookie("cart")
-      }
     } catch (err) {
       console.log(err)
     }
@@ -159,5 +164,3 @@ const FloatingCart = ({}: Props) => {
 }
 
 export default FloatingCart
-
-// After checkout -> fetch products again with getProducts
