@@ -11,7 +11,7 @@ type Props = {
 function DropwdownMenu({ showDropdown, setShowDropdown }: Props) {
   return (
     <div
-      className={`absolute top-0 right-0 w-56 p-1.5 mt-20 space-y-1 bg-white rounded-xl shadow-base transition-opacity duration-200 ${
+      className={`absolute top-0 right-0 w-56 p-1.5 mt-20 space-y-1 bg-white rounded-xl shadow-base transition-opacity duration-200 nightwind-prevent-block ${
         showDropdown ? "z-10 opacity-100" : "-z-10 opacity-0"
       }`}
     >
