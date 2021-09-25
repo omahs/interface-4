@@ -100,7 +100,7 @@ const SlicerCard = ({
             <CopyAddress
               slicerAddress={slicerAddress}
               showIcon={false}
-              position="bottom-[40px]"
+              position="left-0 bottom-[40px]"
             />
           ) : (
             <div className="w-24 h-4 rounded-md bg-sky-300 animate-pulse" />
