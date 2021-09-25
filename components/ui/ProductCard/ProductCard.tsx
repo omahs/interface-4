@@ -174,6 +174,7 @@ const ProductCard = ({
               isUSD={isUSD}
               name={name}
               isMultiple={isMultiple}
+              availableUnits={isInfinite ? -1 : availableUnits}
               purchasedQuantity={purchasedQuantity}
             />
           )}

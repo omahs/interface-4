@@ -6,6 +6,7 @@ import Trash from "@components/icons/Trash"
 import handleUpdateCart, { ProductCart } from "@lib/handleUpdateCart"
 import { useCookies } from "react-cookie"
 import ShoppingBag from "@components/icons/ShoppingBag"
+import { useEffect, useState } from "react"
 
 type Props = {
   productCart: ProductCart
@@ -16,6 +17,7 @@ type Props = {
   isUSD: boolean
   name: string
   isMultiple: boolean
+  availableUnits: number
   purchasedQuantity: number
   labelAdd?: string
   labelRemove?: string
@@ -30,11 +32,14 @@ const CartButton = ({
   isUSD,
   name,
   isMultiple,
+  availableUnits,
   purchasedQuantity,
   labelAdd,
   labelRemove,
 }: Props) => {
   const [cookies, setCookie] = useCookies(["cart"])
+
+  const adjustedAvailability = availableUnits - productCart?.quantity
 
   return purchasedQuantity != 0 ? (
     <Link href="/purchases">
@@ -57,9 +62,14 @@ const CartButton = ({
     </Link>
   ) : !productCart ? (
     <div
-      className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-green-500 rounded-md nightwind-prevent group hover:bg-green-600"
+      className={`relative z-10 flex items-center justify-center w-full py-2 text-center text-white rounded-md nightwind-prevent ${
+        availableUnits != 0
+          ? "group bg-green-500 hover:bg-green-600 transition-colors duration-150"
+          : "bg-gray-400"
+      }`}
       onClick={async () =>
-        await handleUpdateCart(
+        availableUnits != 0 &&
+        (await handleUpdateCart(
           cookies,
           setCookie,
           productCart,
@@ -70,7 +80,7 @@ const CartButton = ({
           isUSD,
           name,
           1
-        )
+        ))
       }
     >
       {labelAdd && (
@@ -103,9 +113,14 @@ const CartButton = ({
         <p>{productCart.quantity}</p>
       </div>
       <div
-        className="flex items-center justify-center h-8 text-green-500 transition-colors duration-150 hover:bg-green-500 hover:text-white"
+        className={`flex items-center justify-center h-8 transition-colors duration-150 ${
+          adjustedAvailability != 0
+            ? "text-green-500 hover:bg-green-500 hover:text-white"
+            : "text-white bg-gray-400"
+        }`}
         onClick={async () =>
-          await handleUpdateCart(
+          adjustedAvailability != 0 &&
+          (await handleUpdateCart(
             cookies,
             setCookie,
             productCart,
@@ -116,7 +131,7 @@ const CartButton = ({
             isUSD,
             name,
             1
-          )
+          ))
         }
       >
         <Plus className="w-[17px] h-[17px]" />

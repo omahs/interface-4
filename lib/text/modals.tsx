@@ -277,6 +277,7 @@ export const PRODUCT_VIEW = (params: any) => {
               isUSD={isUSD}
               name={name}
               isMultiple={isMultiple}
+              availableUnits={isInfinite ? -1 : availableUnits}
               purchasedQuantity={purchasedQuantity}
               labelAdd={`Get it for ${productPrice.eth}`}
               labelRemove={productPrice.eth}
