@@ -1,4 +1,5 @@
 import ShoppingBag from "@components/icons/ShoppingBag"
+import Units from "@components/icons/Units"
 import { ProductCart } from "@lib/handleUpdateCart"
 import formatNumber from "@utils/formatNumber"
 import { useEffect, useState } from "react"
@@ -52,6 +53,12 @@ const ProductCard = ({
     (product) =>
       product.slicerAddress == slicerAddress && product.productId == productId
   )
+  const availabilityColor =
+    availableUnits < 10
+      ? availableUnits == 0
+        ? "text-red-500"
+        : "text-yellow-600"
+      : "text-green-600"
 
   useEffect(() => {
     purchases.map((p: Purchase) => {
@@ -87,6 +94,7 @@ const ProductCard = ({
         price,
         editMode,
         purchasedQuantity,
+        availabilityColor,
       },
     })
   }
@@ -129,6 +137,19 @@ const ProductCard = ({
           <p className="text-sm font-medium text-black">{productPrice.eth}</p>
         ),
       }}
+      bottomLeft={
+        !isInfinite && {
+          title: "Purchases",
+          content: (
+            <>
+              <p className={`mr-2 ${availabilityColor}`}>
+                {formatNumber(availableUnits)}
+              </p>
+              <Units className={`w-[18px] h-[18px] ${availabilityColor}`} />
+            </>
+          ),
+        }
+      }
       onClick={() => handleOnClick()}
     >
       <>

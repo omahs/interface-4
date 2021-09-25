@@ -206,6 +206,7 @@ export const PRODUCT_VIEW = (params: any) => {
     price,
     editMode,
     purchasedQuantity,
+    availabilityColor,
   } = params
 
   const cookieCart: ProductCart[] = cookies?.cart
@@ -218,13 +219,6 @@ export const PRODUCT_VIEW = (params: any) => {
   )
   const purchaseEl = purchaseElArray.join(", ")
 
-  const availabilityColor =
-    availableUnits < 10
-      ? availableUnits == 0
-        ? "text-red-500"
-        : "text-yellow-600"
-      : "text-green-600"
-
   return (
     <>
       <div className="pb-10 text-center">
@@ -235,19 +229,6 @@ export const PRODUCT_VIEW = (params: any) => {
           name={name}
           imageUrl={image}
           size="h-52 xs:h-72"
-          bottomRight={
-            !isInfinite && {
-              title: "Purchases",
-              content: (
-                <>
-                  <p className={`mr-2 ${availabilityColor}`}>
-                    {formatNumber(availableUnits)}
-                  </p>
-                  <Units className={`w-5 h-5 ${availabilityColor}`} />
-                </>
-              ),
-            }
-          }
           topLeft={{
             title: "Purchases",
             content: (
@@ -255,7 +236,7 @@ export const PRODUCT_VIEW = (params: any) => {
                 <p className="mr-2 text-indigo-600">
                   {formatNumber(totalPurchases)}
                 </p>
-                <ShoppingBag className="w-5 h-5 text-indigo-600" />
+                <ShoppingBag className="w-[18px] h-[18px] text-indigo-600" />
               </>
             ),
           }}
@@ -267,6 +248,19 @@ export const PRODUCT_VIEW = (params: any) => {
               </p>
             ),
           }}
+          bottomLeft={
+            !isInfinite && {
+              title: "Purchases",
+              content: (
+                <>
+                  <p className={`mr-2 ${availabilityColor}`}>
+                    {formatNumber(availableUnits)}
+                  </p>
+                  <Units className={`w-[18px] h-[18px] ${availabilityColor}`} />
+                </>
+              ),
+            }
+          }
         />
         <div className="py-8">
           <div>
