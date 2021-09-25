@@ -2,8 +2,7 @@ import useProvider from "@lib/useProvider"
 import { createContext, useContext, useEffect, useState } from "react"
 import { colorList, darkColorList } from "@utils/colorList"
 import { View } from "@lib/text/modals"
-import client from "@utils/apollo-client"
-import { gql } from "@apollo/client"
+import { getPurchases } from "@utils/getPurchases"
 
 export type Purchase = {
   slicerId: string
@@ -22,6 +21,7 @@ const AppContext = createContext<any>({
   darkColor2: darkColorList[1],
   modalView: { name: "" },
   setModalView: () => null,
+  setPurchases: () => null,
   shuffleColors: () => null,
   purchases: [],
 })
@@ -52,40 +52,13 @@ export function AppWrapper({ children }) {
     root.style.setProperty("--darkColor2", darkColorList[random2][0])
   }
 
-  const getPurchases = async (buyer: string) => {
-    const tokensQuery = /* GraphQL */ `
-        payee (id: "${buyer.toLowerCase()}") {
-        purchases {
-          id
-          quantity
-        }
-      }`
-
-    const { data } = await client.query({
-      query: gql`
-        query {
-          ${tokensQuery}
-        }
-      `,
-    })
-    const payeePurchases = data?.payee?.purchases
-    let purchasesList: Purchase[] = []
-    payeePurchases.map((p) => {
-      const id = p.id.split("-")
-      const slicerId = id[0]
-      const productId = id[1]
-      purchasesList.push({ slicerId, productId, quantity: p.quantity })
-    })
-    setPurchases(purchasesList)
-  }
-
   useEffect(() => {
     shuffleColors()
   }, [])
 
   useEffect(() => {
     if (account) {
-      getPurchases(account)
+      getPurchases(account, setPurchases)
     }
   }, [account])
 
@@ -112,6 +85,7 @@ export function AppWrapper({ children }) {
         setModalView,
         shuffleColors,
         purchases,
+        setPurchases,
       }}
     >
       {children}
