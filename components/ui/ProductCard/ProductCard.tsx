@@ -61,7 +61,7 @@ const ProductCard = ({
       : "text-green-600"
 
   useEffect(() => {
-    purchases.map((p: Purchase) => {
+    purchases?.map((p: Purchase) => {
       if (
         p.slicerId === String(slicerId) &&
         p.productId === String(productId)

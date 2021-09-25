@@ -35,7 +35,7 @@ export function AppWrapper({ children }) {
   const [color2, setColor2] = useState([])
   const [darkColor1, setDarkColor1] = useState([])
   const [darkColor2, setDarkColor2] = useState([])
-  const [purchases, setPurchases] = useState<Purchase[]>([])
+  const [purchases, setPurchases] = useState<Purchase[]>(null)
 
   const shuffleColors = () => {
     const random1 = Math.floor(Math.random() * colorList.length)
@@ -58,6 +58,7 @@ export function AppWrapper({ children }) {
 
   useEffect(() => {
     if (account) {
+      setPurchases(null)
       getPurchases(account, setPurchases)
     }
   }, [account])
