@@ -249,7 +249,7 @@ export const PRODUCT_VIEW = (params: any) => {
           }}
           bottomLeft={
             !isInfinite && {
-              title: "Purchases",
+              title: "Available units",
               content: (
                 <>
                   <p className={`mr-2 ${availabilityColor}`}>

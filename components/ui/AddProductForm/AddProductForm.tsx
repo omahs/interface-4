@@ -101,8 +101,7 @@ const AddProductForm = ({
         setSuccess,
         true
       )
-
-      if (success) {
+      if (eventLogs) {
         setLogs(eventLogs)
         setUploadStep(9)
         await handleSuccess(slicerId, newProduct.id, eventLogs)

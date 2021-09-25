@@ -82,6 +82,8 @@ const FloatingCart = ({}: Props) => {
 
   return (
     <>
+      {/* Todo: fix errors in console without breaking opacity transition */}
+      {/* {showCart && showCartList && ( */}
       <div
         className={`fixed bottom-0 mb-[80px] sm:mb-[100px] right-[20px] sm:right-[32px]transition-opacity duration-200 ${
           showCart && showCartList ? "z-20 opacity-100" : "-z-10 opacity-0"
@@ -93,6 +95,8 @@ const FloatingCart = ({}: Props) => {
           setCookie={setCookie}
         />
       </div>
+      {/* } */}
+      {/* {(showCart || loading || success) && ( */}
       <div
         className={`fixed bottom-0 mb-[20px] sm:mb-[32px] right-[20px] sm:right-[32px] nightwind-prevent-block transition-opacity duration-200 ${
           showCart || loading || success
@@ -159,6 +163,7 @@ const FloatingCart = ({}: Props) => {
           </div>
         </div>
       </div>
+      {/* } */}
     </>
   )
 }

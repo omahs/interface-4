@@ -9,7 +9,7 @@ const CreateProduct = async (
   hash: string,
   tempProductHash: string,
   image?: string,
-  productId?: number,
+  productId?: number | null,
   purchaseInfo?: object
 ) => {
   let query

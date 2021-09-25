@@ -22,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 },
                 {
                   createdAt: {
-                    lte: new Date(Date.now() - 1000 * 60 * 60),
+                    lte: new Date(Date.now() - 1000 * 60 * 15),
                   },
                 },
               ],
@@ -72,6 +72,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         tempProductHash,
         purchaseInfo,
       } = JSON.parse(req.body)
+      const pid = productId ? Number(productId) : null
       data = await CreateProduct(
         Number(id),
         name,
@@ -81,7 +82,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         hash,
         tempProductHash,
         image,
-        Number(productId),
+        pid,
         purchaseInfo
       )
     }

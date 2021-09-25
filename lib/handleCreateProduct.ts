@@ -26,7 +26,12 @@ export const beforeCreate = async (
   setUploadPct: Dispatch<SetStateAction<number>>
 ) => {
   const uid = Math.random().toString().substring(2)
-  const metadata = { name, description, creator, uid }
+  const purchaseInfo = {
+    instructions: instructions.length != 0,
+    notes: notes.length != 0,
+    files: purchaseFiles.length != 0,
+  }
+  const metadata = { name, description, creator, uid, purchaseInfo }
   let image = ""
 
   // Save image on supabase
@@ -96,11 +101,6 @@ export const beforeCreate = async (
   const purchaseData = CID.parse(purchaseDataCID).bytes
 
   // Save metadata, hashes & imageUrl on prisma
-  const purchaseInfo = {
-    instructions: instructions.length != 0,
-    notes: notes.length != 0,
-    files: purchaseFiles.length != 0,
-  }
   setUploadStep(5)
   const body = {
     method: "POST",
@@ -112,7 +112,6 @@ export const beforeCreate = async (
       uid,
       hash: IpfsHash,
       tempProductHash: purchaseDataCID,
-      productId: null,
       purchaseInfo,
     }),
   }
@@ -276,6 +275,7 @@ export const reload = async (
   products (where: {slicer: "${slicerId}"}) {
     id
     data
+    createdAtTimestamp
   }
 `
   const { data } = await client.query({
@@ -287,6 +287,10 @@ export const reload = async (
   })
   const blockchainProducts = data.products
 
+  const timeHasElapsed = (timestamp: string) => {
+    return Number(timestamp) < Math.floor(Date.now() / 1000) - 60 * 15
+  }
+
   const productIds = Array.from(
     { length: blockchainProducts.length },
     (_, i) => i + 1
@@ -296,27 +300,29 @@ export const reload = async (
     const productId = productIds[i]
 
     if (products.filter((p) => p.productId === productId).length == 0) {
-      const hash = "f" + blockchainProducts[i].data.substring(2)
-      const dataHash = CID.parse(hash, base16.decoder).toV1().toString()
-      const { name, description, creator, image, uid } = await fetcher(
-        `https://gateway.pinata.cloud/ipfs/${dataHash}`
-      )
-      const body = {
-        method: "POST",
-        body: JSON.stringify({
-          name,
-          productId,
-          description,
-          image,
-          creator,
-          uid: uid || "",
-          tempProductHash: null,
-          hash: dataHash,
-        }),
+      if (timeHasElapsed(blockchainProducts[i].createdAtTimestamp)) {
+        const hash = "f" + blockchainProducts[i].data.substring(2)
+        const dataHash = CID.parse(hash, base16.decoder).toV1().toString()
+        const { name, description, creator, image, uid, purchaseInfo } =
+          await fetcher(`https://gateway.pinata.cloud/ipfs/${dataHash}`)
+        const body = {
+          method: "POST",
+          body: JSON.stringify({
+            name,
+            productId,
+            description,
+            image,
+            creator,
+            uid: uid || "",
+            tempProductHash: null,
+            hash: dataHash,
+            purchaseInfo,
+          }),
+        }
+        await fetcher(`/api/slicer/${slicerId}/products`, body)
       }
-      await fetcher(`/api/slicer/${slicerId}/products`, body)
     }
   }
-  mutate(`/api/slicer/${slicerId}/products`)
+  // mutate(`/api/slicer/${slicerId}/products`)
   setLoading(false)
 }

@@ -1,5 +1,6 @@
 import { handleCleanup, reload } from "@lib/handleCreateProduct"
 import useQuery from "@utils/subgraphQuery"
+import { useRouter } from "next/dist/client/router"
 import { useEffect, useState } from "react"
 import { ProductsGrid } from ".."
 import Button from "../Button"
@@ -37,6 +38,7 @@ const SlicerProducts = ({
   const [loading, setLoading] = useState(false)
   const [showProducts, setShowProducts] = useState<Product[]>([])
   const [pendingProducts, setPendingProducts] = useState<Product[]>([])
+  const router = useRouter()
 
   const tokensQuery = /* GraphQL */ `
   products (where: {slicer: "${slicerId}"}) {
@@ -52,11 +54,18 @@ const SlicerProducts = ({
   const subgraphData = useQuery(tokensQuery)
   const blockchainProducts = subgraphData?.products
 
+  const handleReload = () => {
+    if (pendingProducts?.length != 0) {
+      handleCleanup(Number(slicerId), setLoading)
+    } else {
+      reload(Number(slicerId), setLoading)
+    }
+    router.reload()
+  }
+
   useEffect(() => {
     setShowProducts(products?.data?.filter((p: Product) => p.productId != null))
-    setPendingProducts(
-      products?.data?.filter((p: Product) => p.productId == null)
-    )
+    setPendingProducts(products?.data?.filter((p: Product) => !p.productId))
   }, [products])
 
   return (
@@ -82,11 +91,7 @@ const SlicerProducts = ({
                 label="Reload products"
                 type="button"
                 loading={loading}
-                onClick={() =>
-                  pendingProducts?.length != 0
-                    ? handleCleanup(Number(slicerId), setLoading)
-                    : reload(Number(slicerId), setLoading)
-                }
+                onClick={() => handleReload()}
               />
             </div>
           )}
@@ -98,3 +103,5 @@ const SlicerProducts = ({
 }
 
 export default SlicerProducts
+
+// Todo: Make pendingSlicer section appear only if 15 minutes have elapsed

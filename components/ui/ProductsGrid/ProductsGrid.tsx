@@ -41,19 +41,21 @@ const ProductsGrid = ({
           {[...Array(iterator)].map((i, key) => {
             const product = products.find((p) => p.productId == Number(key) + 1)
             const chainInfo = blockchainProducts.find(
-              (p) => p.id.split("-").pop() == product.productId
+              (p) => p.id.split("-").pop() == product?.productId
             )
 
             return (
-              <ProductCard
-                slicerId={slicerId}
-                slicerAddress={slicerAddress}
-                key={key}
-                product={product}
-                chainInfo={chainInfo}
-                editMode={editMode}
-                ethUsd={ethUsd}
-              />
+              chainInfo && (
+                <ProductCard
+                  slicerId={slicerId}
+                  slicerAddress={slicerAddress}
+                  key={key}
+                  product={product}
+                  chainInfo={chainInfo}
+                  editMode={editMode}
+                  ethUsd={ethUsd}
+                />
+              )
             )
           })}
         </div>

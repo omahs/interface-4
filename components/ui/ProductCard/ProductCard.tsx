@@ -71,8 +71,6 @@ const ProductCard = ({
     })
   }, [purchases])
 
-  console.log(purchasedQuantity)
-
   const handleOnClick = () => {
     setModalView({
       name: "PRODUCT_VIEW",
@@ -139,7 +137,7 @@ const ProductCard = ({
       }}
       bottomLeft={
         !isInfinite && {
-          title: "Purchases",
+          title: "Available units",
           content: (
             <>
               <p className={`mr-2 ${availabilityColor}`}>
