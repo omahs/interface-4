@@ -67,6 +67,7 @@ const FloatingCart = ({}: Props) => {
         true
       )
       if (success) {
+        // todo fix this
         removeCookie("cart")
       }
     } catch (err) {

@@ -48,17 +48,9 @@ const SlicerProducts = ({
     availableUnits
     totalPurchases
     createdAtTimestamp
-    purchases (where: {buyer: "${account}"}) {
-      id
-      product
-      quantity
-    }
-  }
-`
+  }`
   const subgraphData = useQuery(tokensQuery)
   const blockchainProducts = subgraphData?.products
-
-  console.log(subgraphData)
 
   useEffect(() => {
     setShowProducts(products?.data?.filter((p: Product) => p.productId != null))

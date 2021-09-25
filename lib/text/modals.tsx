@@ -205,6 +205,7 @@ export const PRODUCT_VIEW = (params: any) => {
     slicerAddress,
     price,
     editMode,
+    purchasedQuantity,
   } = params
 
   const cookieCart: ProductCart[] = cookies?.cart
@@ -283,6 +284,7 @@ export const PRODUCT_VIEW = (params: any) => {
               isUSD={isUSD}
               name={name}
               isMultiple={isMultiple}
+              purchasedQuantity={purchasedQuantity}
               labelAdd={`Get it for ${productPrice.eth}`}
               labelRemove={productPrice.eth}
             />

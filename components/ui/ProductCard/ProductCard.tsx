@@ -4,7 +4,7 @@ import formatNumber from "@utils/formatNumber"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import { Card, CartButton } from ".."
-import { useAppContext } from "../context"
+import { Purchase, useAppContext } from "../context"
 import { Product } from "../SlicerProducts/SlicerProducts"
 
 type Props = {
@@ -28,7 +28,7 @@ const ProductCard = ({
   editMode,
 }: Props) => {
   const [cookies] = useCookies(["cart"])
-  const { setModalView } = useAppContext()
+  const { setModalView, purchases } = useAppContext()
   const { productId, name, description, hash, image, purchaseInfo } = product
   const {
     price,
@@ -41,6 +41,7 @@ const ProductCard = ({
   } = chainInfo
 
   const [convertedEthUsd, setConvertedEthUsd] = useState(0)
+  const [purchasedQuantity, setPurchasedQuantity] = useState(0)
 
   const productPrice = {
     eth: `Ξ ${isUSD ? convertedEthUsd : Math.floor(price / 10 ** 14) / 10000}`,
@@ -51,6 +52,19 @@ const ProductCard = ({
     (product) =>
       product.slicerAddress == slicerAddress && product.productId == productId
   )
+
+  useEffect(() => {
+    purchases.map((p: Purchase) => {
+      if (
+        p.slicerId === String(slicerId) &&
+        p.productId === String(productId)
+      ) {
+        setPurchasedQuantity(Number(p.quantity))
+      }
+    })
+  }, [purchases])
+
+  console.log(purchasedQuantity)
 
   const handleOnClick = () => {
     setModalView({
@@ -72,6 +86,7 @@ const ProductCard = ({
         slicerAddress,
         price,
         editMode,
+        purchasedQuantity,
       },
     })
   }
@@ -140,6 +155,7 @@ const ProductCard = ({
               isUSD={isUSD}
               name={name}
               isMultiple={isMultiple}
+              purchasedQuantity={purchasedQuantity}
             />
           )}
         </div>
