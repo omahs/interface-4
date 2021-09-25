@@ -39,10 +39,18 @@ const CartButton = ({
   return purchasedQuantity != 0 ? (
     <Link href="/purchases">
       <a className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-blue-500 rounded-md hover:text-white nightwind-prevent group hover:bg-blue-600">
-        {labelAdd && (
+        {labelAdd ? (
           <p className="mr-2 text-sm font-medium sm:text-base">
-            Go to purchases
+            {`Go to purchases${
+              purchasedQuantity != 1 ? ` (${purchasedQuantity})` : ""
+            }`}
           </p>
+        ) : (
+          purchasedQuantity != 1 && (
+            <p className="mr-2 text-sm font-medium sm:text-base">
+              {purchasedQuantity}
+            </p>
+          )
         )}
         <ShoppingBag className="w-5 h-5 mr-1 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
       </a>
@@ -147,14 +155,4 @@ export default CartButton
 
 // todo: if (!isMultiple && hasPurchased) { already bought option -> redirects to relative purchase }
 
-// isMultiple
-// purchasedQuantity
-// productCart
-
-// Is it purchased ?
-//
-
-// CART
-// GO TO PURCHASE
-// TRASH
-// + -
+// Todo? Handle purchasedQuantity for isMultiple products?

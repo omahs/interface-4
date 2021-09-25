@@ -159,3 +159,5 @@ const FloatingCart = ({}: Props) => {
 }
 
 export default FloatingCart
+
+// After checkout -> fetch products again with getProducts
