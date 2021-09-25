@@ -41,7 +41,9 @@ const Home = () => {
             />
             <HomeSection
               text={section2}
-              image={<Logo size="w-32 sm:w-36" margin="mt-4 ml-6" spin />}
+              image={
+                <Logo interactive size="w-32 sm:w-36" margin="mt-4 ml-6" spin />
+              }
               side="right"
             />
             <HomeSection
@@ -70,7 +72,7 @@ export default Home
  *      - show products on slicer page -> OK
  *      - onClick modal with product details -> OK
  *      - purchase products flow
- *        - checkout bag
+ *        - checkout bag -> OK
  *        - your purchases page
  *        - redeem purchase
  *    - Receive ERC721-1155
