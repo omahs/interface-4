@@ -5,6 +5,7 @@ import { View } from "@lib/text/modals"
 type Props = {
   slicerId: number
   name: string
+  shortDescription: string
   description: string
   newImage: NewImage
   isMultiple: boolean
@@ -23,6 +24,7 @@ type Props = {
 const AddProductFormPreview = ({
   slicerId,
   name,
+  shortDescription,
   description,
   newImage,
   isMultiple,
@@ -53,6 +55,7 @@ const AddProductFormPreview = ({
                 slicerId,
                 productId: 0,
                 name: name || "A nice product",
+                shortDescription,
                 description,
                 image: newImage.url,
                 productPrice: {

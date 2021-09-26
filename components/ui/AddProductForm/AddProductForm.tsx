@@ -44,6 +44,7 @@ const AddProductForm = ({
   const [usdValue, setUsdValue] = useState<number>()
   const [ethValue, setEthValue] = useState<number>()
   const [name, setName] = useState("")
+  const [shortDescription, setShortDescription] = useState("")
   const [description, setDescription] = useState("")
   const [newImage, setNewImage] = useState<NewImage>({
     url: "",
@@ -72,6 +73,7 @@ const AddProductForm = ({
           account,
           slicerId,
           name,
+          shortDescription,
           description,
           newImage,
           files,
@@ -141,10 +143,12 @@ const AddProductForm = ({
         newImage={newImage}
         setNewImage={setNewImage}
         name={name}
+        shortDescription={shortDescription}
         description={description}
         loading={loading}
         setName={setName}
         setDescription={setDescription}
+        setShortDescription={setShortDescription}
       />
       <AddProductFormPrice
         isMultiple={isMultiple}
@@ -174,6 +178,7 @@ const AddProductForm = ({
       <AddProductFormPreview
         slicerId={slicerId}
         name={name}
+        shortDescription={shortDescription}
         description={description}
         newImage={newImage}
         isMultiple={isMultiple}

@@ -33,6 +33,7 @@ const ProductCard = ({
   const {
     productId,
     name,
+    shortDescription,
     description,
     hash,
     image,
@@ -88,6 +89,7 @@ const ProductCard = ({
         slicerId,
         productId,
         name,
+        shortDescription,
         description,
         image,
         uid,
@@ -123,79 +125,92 @@ const ProductCard = ({
   }, [price, ethUsd])
 
   return (
-    <Card
-      name={name}
-      image={image}
-      className="rounded-none"
-      size="h-44"
-      product={true}
-      topLeft={{
-        title: "Purchases",
-        content: (
-          <>
-            <p className="mr-2 text-indigo-600">
-              {formatNumber(totalPurchases)}
-            </p>
-            <ShoppingBag className="w-[18px] h-[18px] text-indigo-600" />
-          </>
-        ),
-      }}
-      topRight={{
-        title: "Product price",
-        content: (
-          <p className="text-sm font-medium text-black">{productPrice.eth}</p>
-        ),
-      }}
-      bottomLeft={
-        !isInfinite && {
-          title: "Available units",
+    <div className="h-full">
+      <Card
+        containerClassName="h-full cursor-pointer"
+        cardClassName="h-full overflow-hidden transition-all duration-1000 ease-out bg-white rounded-xl shadow-medium-random hover:scale-105"
+        name={name}
+        image={image}
+        className="rounded-none"
+        size="h-44"
+        product={true}
+        topLeft={{
+          title: "Purchases",
           content: (
             <>
-              <p className={`mr-2 ${availabilityColor}`}>
-                {formatNumber(availableUnits)}
+              <p className="mr-2 text-indigo-600">
+                {formatNumber(totalPurchases)}
               </p>
-              <Units className={`w-[18px] h-[18px] ${availabilityColor}`} />
+              <ShoppingBag className="w-[18px] h-[18px] text-indigo-600" />
             </>
           ),
+        }}
+        topRight={{
+          title: "Product price",
+          content: (
+            <p className="text-sm font-medium text-black">{productPrice.eth}</p>
+          ),
+        }}
+        bottomLeft={
+          !isInfinite && {
+            title: "Available units",
+            content: (
+              <>
+                <p className={`mr-2 ${availabilityColor}`}>
+                  {formatNumber(availableUnits)}
+                </p>
+                <Units className={`w-[18px] h-[18px] ${availabilityColor}`} />
+              </>
+            ),
+          }
         }
-      }
-      onClick={() => handleOnClick()}
-    >
-      <>
-        <div className="flex items-center justify-between">
-          <div className="flex flex-wrap items-center mr-24">
-            <p className="mr-2 font-medium">{name}</p>
-            <p className="h-5 mt-1 text-xs font-normal text-gray-500">
-              #{productId}
-            </p>
+        onClick={() => handleOnClick()}
+      >
+        <div>
+          <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center mr-24">
+              <p className="mr-2 font-medium">{name}</p>
+              <p className="h-5 mt-1 text-xs font-normal text-gray-500">
+                #{productId}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="absolute top-0 right-0 flex items-center justify-center w-24 h-full my-auto mr-5">
-          <div
-            className="absolute w-full h-full"
-            onClick={() => handleOnClick()}
-          />
-          {!editMode && (
-            <CartButton
-              slicerId={slicerId}
-              productCart={productCart}
-              slicerAddress={slicerAddress}
-              productId={productId}
-              price={price}
-              isUSD={isUSD}
-              image={image}
-              name={name}
-              isMultiple={isMultiple}
-              availableUnits={isInfinite ? -1 : availableUnits}
-              purchasedQuantity={purchasedQuantity}
-              uid={uid}
-              creator={creator}
+          <div className="absolute top-0 right-0 flex items-center justify-center w-24 h-[56px] my-auto mr-5">
+            <div
+              className="absolute w-full h-full"
+              onClick={() => handleOnClick()}
             />
+            {!editMode && (
+              <CartButton
+                slicerId={slicerId}
+                productCart={productCart}
+                slicerAddress={slicerAddress}
+                productId={productId}
+                price={price}
+                isUSD={isUSD}
+                image={image}
+                name={name}
+                isMultiple={isMultiple}
+                availableUnits={isInfinite ? -1 : availableUnits}
+                purchasedQuantity={purchasedQuantity}
+                uid={uid}
+                creator={creator}
+              />
+            )}
+          </div>
+          {shortDescription && (
+            <div>
+              <p className="pt-6 overflow-hidden text-gray-500 overflow-ellipsis">
+                {shortDescription}
+              </p>
+            </div>
           )}
         </div>
-      </>
-    </Card>
+      </Card>
+    </div>
   )
 }
 
 export default ProductCard
+
+// Todo: solve absolute element not covering the whole card when content doesn't reach the end

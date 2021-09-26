@@ -37,6 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           id: true,
           productId: true,
           name: true,
+          shortDescription: true,
           description: true,
           creator: true,
           uid: true,
@@ -65,6 +66,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const {
         name,
         productId,
+        shortDescription,
         description,
         image,
         creator,
@@ -77,6 +79,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       data = await CreateProduct(
         Number(id),
         name,
+        shortDescription,
         description,
         creator,
         uid,

@@ -3,6 +3,7 @@ import prisma from "@lib/db"
 const CreateProduct = async (
   slicerId: number,
   name: string,
+  shortDescription: string,
   description: string,
   creator: string,
   uid: string,
@@ -18,6 +19,7 @@ const CreateProduct = async (
       data: {
         slicerId,
         name,
+        shortDescription,
         description,
         image,
         creator,

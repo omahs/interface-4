@@ -15,10 +15,12 @@ type Props = {
   slicerId: number
   name: string
   description: string
+  shortDescription: string
   newImage: NewImage
   loading: boolean
   setName: Dispatch<SetStateAction<string>>
   setDescription: Dispatch<SetStateAction<string>>
+  setShortDescription: Dispatch<SetStateAction<string>>
   // setTags: Dispatch<SetStateAction<string[]>>
   setNewImage: Dispatch<SetStateAction<NewImage>>
 }
@@ -26,10 +28,12 @@ type Props = {
 const AddProductFormGeneral = ({
   slicerId,
   name,
+  shortDescription,
   description,
   newImage,
   loading,
   setName,
+  setShortDescription,
   setDescription,
   // setTags,
   setNewImage,
@@ -69,6 +73,15 @@ const AddProductFormGeneral = ({
             <p className="text-sm text-blue-600">v{version}</p>
           </div>
         )} */}
+      </div>
+      <div>
+        <Input
+          label="Short description (max 70 char)"
+          maxLength={70}
+          type="string"
+          value={shortDescription}
+          onChange={setShortDescription}
+        />
       </div>
       <div>
         <Textarea

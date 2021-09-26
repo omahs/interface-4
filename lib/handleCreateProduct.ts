@@ -16,6 +16,7 @@ export const beforeCreate = async (
   creator: string,
   slicerId: number,
   name: string,
+  shortDescription: string,
   description: string,
   newImage: NewImage,
   purchaseFiles: File[],
@@ -31,7 +32,14 @@ export const beforeCreate = async (
     notes: notes.length != 0,
     files: purchaseFiles.length != 0,
   }
-  const metadata = { name, description, creator, uid, purchaseInfo }
+  const metadata = {
+    name,
+    shortDescription,
+    description,
+    creator,
+    uid,
+    purchaseInfo,
+  }
   let image = ""
 
   // Save image on supabase
@@ -105,8 +113,9 @@ export const beforeCreate = async (
   const body = {
     method: "POST",
     body: JSON.stringify({
-      name: metadata.name,
-      description: metadata.description,
+      name,
+      shortDescription,
+      description,
       image,
       creator,
       uid,
@@ -302,13 +311,21 @@ export const reload = async (
       if (timeHasElapsed(blockchainProducts[i].createdAtTimestamp)) {
         const hash = "f" + blockchainProducts[i].data.substring(2)
         const dataHash = CID.parse(hash, base16.decoder).toV1().toString()
-        const { name, description, creator, image, uid, purchaseInfo } =
-          await fetcher(`https://gateway.pinata.cloud/ipfs/${dataHash}`)
+        const {
+          name,
+          shortDescription,
+          description,
+          creator,
+          image,
+          uid,
+          purchaseInfo,
+        } = await fetcher(`https://gateway.pinata.cloud/ipfs/${dataHash}`)
         const body = {
           method: "POST",
           body: JSON.stringify({
             name,
             productId,
+            shortDescription,
             description,
             image,
             creator,

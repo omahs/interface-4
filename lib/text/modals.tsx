@@ -194,6 +194,7 @@ export const PRODUCT_VIEW = (params: any) => {
     slicerId,
     productId,
     name,
+    shortDescription,
     description,
     image,
     productPrice,
@@ -227,6 +228,11 @@ export const PRODUCT_VIEW = (params: any) => {
     <>
       <div className="pt-4 pb-12 text-center sm:pb-16">
         <DoubleText inactive logoText={name} size="text-3xl sm:text-4xl" />
+        {shortDescription && (
+          <p className="max-w-sm pt-6 mx-auto text-gray-500">
+            {shortDescription}
+          </p>
+        )}
       </div>
       <div>
         <CardImage

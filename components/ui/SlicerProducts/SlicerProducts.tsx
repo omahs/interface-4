@@ -9,6 +9,7 @@ export type Product = {
   id: number
   productId: number
   name: string
+  shortDescription: string
   description: string
   creator: string
   hash: string
@@ -105,4 +106,4 @@ const SlicerProducts = ({
 
 export default SlicerProducts
 
-// Todo: Make pendingSlicer section appear only if 15 minutes have elapsed
+// Todo?: Make pendingSlicer section appear only if 15 minutes have elapsed
