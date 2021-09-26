@@ -123,7 +123,7 @@ const SlicerCard = ({
               <div className="w-32 h-6 mb-2 rounded-md bg-sky-300 animate-pulse" />
             )}
             {name && name != `Slicer #${slicerId}` && (
-              <p className="h-full mb-1 ml-2 text-base font-normal">
+              <p className="h-full ml-3 text-sm font-normal text-gray-500">
                 #{slicerId}
               </p>
             )}

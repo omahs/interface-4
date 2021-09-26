@@ -47,7 +47,7 @@ const ListLayout = ({
       <Spinner size="w-10 h-10" />
     </div>
   ) : elementsArray.length != 0 ? (
-    <>
+    <div className="pt-4 sm:pt-8">
       {children}
       <div className="pt-10 pb-6 space-y-8">
         {items < elementsArray.length && (
@@ -60,11 +60,11 @@ const ListLayout = ({
             </a>
           </p>
         )}
-        <div className="flex justify-center">
+        <div className="flex justify-center pt-4 sm:pt-8">
           <Button label={endpageButtonLabel} href={endpageHref} />
         </div>
       </div>
-    </>
+    </div>
   ) : (
     <ActionScreen
       text={actionScreenText}
