@@ -73,7 +73,7 @@ export default Home
  *      - onClick modal with product details -> OK
  *      - purchase products flow
  *        - checkout bag -> OK
- *        - your purchases page
+ *        - your purchases page -> OK
  *        - redeem purchase
  *    - Receive ERC721-1155
  *      - Fix slicer smart contract receive/reject ERC721
