@@ -26,6 +26,7 @@ type Props = {
   purchasedQuantity: number
   labelAdd?: string
   labelRemove?: string
+  preview?: boolean
 }
 
 const CartButton = ({
@@ -44,6 +45,7 @@ const CartButton = ({
   purchasedQuantity,
   labelAdd,
   labelRemove,
+  preview,
 }: Props) => {
   const { setModalView } = useAppContext()
   const [loading, setLoading] = useState(false)
@@ -92,6 +94,7 @@ const CartButton = ({
           : "bg-gray-400"
       }`}
       onClick={async () =>
+        !preview &&
         availableUnits != 0 &&
         (await handleUpdateCart(
           cookies,

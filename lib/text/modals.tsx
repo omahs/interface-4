@@ -210,6 +210,7 @@ export const PRODUCT_VIEW = (params: any) => {
     editMode,
     purchasedQuantity,
     availabilityColor,
+    preview,
   } = params
 
   const cookieCart: ProductCart[] = cookies?.cart
@@ -224,8 +225,8 @@ export const PRODUCT_VIEW = (params: any) => {
 
   return (
     <>
-      <div className="pb-10 text-center">
-        <DoubleText inactive logoText={name} />
+      <div className="pt-4 pb-12 text-center sm:pb-16">
+        <DoubleText inactive logoText={name} size="text-3xl sm:text-4xl" />
       </div>
       <div>
         <CardImage
@@ -288,6 +289,7 @@ export const PRODUCT_VIEW = (params: any) => {
               creator={creator}
               labelAdd={`Get it for ${productPrice.eth}`}
               labelRemove={productPrice.eth}
+              preview
             />
           </div>
         )}
@@ -323,8 +325,8 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
 
   return (
     <>
-      <div className="pb-10 text-center">
-        <DoubleText inactive logoText={name} />
+      <div className="pt-4 pb-12 text-center sm:pb-16">
+        <DoubleText inactive logoText={name} size="text-3xl sm:text-4xl" />
       </div>
       <div>
         <CardImage name={name} imageUrl={image} size="h-52 xs:h-72" />

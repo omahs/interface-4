@@ -5,6 +5,7 @@ import {
   AddProductFormPrice,
   AddProductFormGeneral,
   AddProductFormPurchases,
+  AddProductFormPreview,
 } from "@components/ui"
 import { AddProduct } from "@lib/handlers/chain"
 import handleSubmit from "@utils/handleSubmit"
@@ -170,6 +171,23 @@ const AddProductForm = ({
         files={files}
         setFiles={setFiles}
       />
+      <AddProductFormPreview
+        slicerId={slicerId}
+        name={name}
+        description={description}
+        newImage={newImage}
+        isMultiple={isMultiple}
+        isLimited={isLimited}
+        units={units}
+        ethValue={ethValue}
+        usdValue={usdValue}
+        isUSD={isUSD}
+        thankMessage={thankMessage}
+        instructions={instructions}
+        notes={notes}
+        files={files}
+        setModalView={setModalView}
+      />
       <div className="pb-1">
         <Button
           label="Create product"
@@ -192,8 +210,6 @@ const AddProductForm = ({
 }
 
 export default AddProductForm
-
-// Todo (after making product page): Add full preview
 
 // Todo: What else to add to data and purchaseData (on pinata and web3storage)
 // tags?
