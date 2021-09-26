@@ -1,10 +1,7 @@
-import { CID } from "multiformats/cid"
-import { base16 } from "multiformats/bases/base16"
-import redeemProduct from "@lib/handlers/chain/redeemProduct"
 import { useState } from "react"
 import { Button, CardImage } from ".."
 import { useAppContext } from "../context"
-import handleDecryptData from "@lib/handleDecryptData"
+import handleRedeemProduct from "@utils/handleRedeemProduct"
 
 export type RedeemData = {
   quantity: number
@@ -34,40 +31,6 @@ const ProductPurchaseCard = ({
 }: Props) => {
   const { setModalView } = useAppContext()
   const [loading, setLoading] = useState(false)
-  const [redeemData, setRedeemData] = useState<RedeemData>(null)
-
-  const handleRedeemProduct = async () => {
-    setLoading(true)
-    const redeemed = await redeemProduct(slicerId, productId)
-    const purchaseHash = CID.parse(
-      "f" + redeemed[1].substring(2),
-      base16.decoder
-    )
-      .toV1()
-      .toString()
-    const { decryptedFiles, decryptedTexts } = await handleDecryptData(
-      slicerId,
-      name,
-      creator,
-      uid,
-      purchaseHash
-    )
-
-    setModalView({
-      name: "REDEEM_PRODUCT_VIEW",
-      cross: true,
-      params: {
-        slicerId,
-        productId,
-        name,
-        image,
-        purchasedQuantity: Number(redeemed[0]),
-        decryptedFiles,
-        decryptedTexts,
-      },
-    })
-    setLoading(false)
-  }
 
   return (
     <div className="sm:flex">
@@ -99,17 +62,20 @@ const ProductPurchaseCard = ({
           <Button
             label="Redeem"
             loading={loading}
-            onClick={() => handleRedeemProduct()}
+            onClick={() =>
+              handleRedeemProduct(
+                slicerId,
+                productId,
+                name,
+                image,
+                uid,
+                creator,
+                setLoading,
+                setModalView
+              )
+            }
           />
         </div>
-        {redeemData && (
-          <p className="pt-4 text-sm text-green-500">
-            You bought{" "}
-            <span className="font-medium">{redeemData.quantity} products</span>,
-            the hash is{" "}
-            <span className="font-medium">{redeemData.purchaseHash}!</span> 🎉
-          </p>
-        )}
       </div>
     </div>
   )
