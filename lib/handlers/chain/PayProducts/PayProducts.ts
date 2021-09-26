@@ -30,8 +30,11 @@ const PayProducts = async (productData: PayProductData[]) => {
       quantities.push(quantity)
 
       const productPrice = isUSD
-        ? BigNumber.from(price).mul(BigNumber.from(10).pow(24)).div(ethUsd)
-        : BigNumber.from(price)
+        ? BigNumber.from(price)
+            .mul(BigNumber.from(10).pow(24))
+            .div(ethUsd)
+            .mul(quantity)
+        : BigNumber.from(price).mul(quantity)
 
       totalPrice = BigNumber.from(currentPrice).add(productPrice)
     })
