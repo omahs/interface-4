@@ -7,6 +7,7 @@ import {
   CREATE_PRODUCT_VIEW,
   CREATE_PRODUCT_CONFIRM_VIEW,
   PRODUCT_VIEW,
+  REDEEM_PRODUCT_VIEW,
 } from "lib/text/modals"
 
 type Props = {
@@ -34,6 +35,9 @@ const Modal = ({ modalView, setModalView }: Props) => {
     case "PRODUCT_VIEW":
       content = PRODUCT_VIEW(params)
       break
+    case "REDEEM_PRODUCT_VIEW":
+      content = REDEEM_PRODUCT_VIEW(params)
+      break
   }
 
   return (
@@ -60,3 +64,5 @@ const Modal = ({ modalView, setModalView }: Props) => {
 }
 
 export default Modal
+
+// Todo: Fix central height + scrollable -> use createProduct confirmation screen to test

@@ -5,6 +5,7 @@ import {
   CardImage,
   CartButton,
   DoubleText,
+  FilesList,
   LoadingStep,
   MarkdownBlock,
 } from "@components/ui"
@@ -26,6 +27,7 @@ type ViewNames =
   | "CREATE_PRODUCT_VIEW"
   | "CREATE_PRODUCT_CONFIRM_VIEW"
   | "PRODUCT_VIEW"
+  | "REDEEM_PRODUCT_VIEW"
 
 export const CONNECT_VIEW = (
   <>
@@ -198,6 +200,8 @@ export const PRODUCT_VIEW = (params: any) => {
     isUSD,
     isInfinite,
     isMultiple,
+    uid,
+    creator,
     availableUnits,
     totalPurchases,
     purchaseInfo,
@@ -279,6 +283,8 @@ export const PRODUCT_VIEW = (params: any) => {
               isMultiple={isMultiple}
               availableUnits={isInfinite ? -1 : availableUnits}
               purchasedQuantity={purchasedQuantity}
+              uid={uid}
+              creator={creator}
               labelAdd={`Get it for ${productPrice.eth}`}
               labelRemove={productPrice.eth}
             />
@@ -300,3 +306,70 @@ export const PRODUCT_VIEW = (params: any) => {
     </>
   )
 }
+
+export const REDEEM_PRODUCT_VIEW = (params: any) => {
+  const {
+    slicerId,
+    productId,
+    name,
+    image,
+    purchasedQuantity,
+    decryptedFiles,
+    decryptedTexts,
+  } = params
+
+  const { thanks, notes, instructions } = decryptedTexts
+
+  return (
+    <>
+      <div className="pb-10 text-center">
+        <DoubleText inactive logoText={name} />
+      </div>
+      <div>
+        <CardImage name={name} imageUrl={image} size="h-52 xs:h-72" />
+        {purchasedQuantity != 1 && (
+          <p className="pt-6 text-sm text-center text-gray-500">
+            You bought this product {purchasedQuantity} times
+          </p>
+        )}
+        <div className="pb-6 pt-14">
+          <div>
+            <MarkdownBlock
+              className="prose text-center"
+              content={thanks || "Thank you for buying our product! ❤️"}
+            />
+          </div>
+        </div>
+        {instructions && (
+          <div className="py-8">
+            <h2 className="pb-4">Instructions</h2>
+            <div>
+              <MarkdownBlock content={instructions} />
+            </div>
+          </div>
+        )}
+        {notes && (
+          <div className="py-8">
+            <h3>Notes</h3>
+            <div>
+              <MarkdownBlock content={notes} />
+            </div>
+          </div>
+        )}
+        {decryptedFiles.length != 0 && (
+          <div className="max-w-sm py-6 mx-auto text-center">
+            <FilesList
+              title="Download files"
+              files={decryptedFiles}
+              uploadable={false}
+              backgroundColor="bg-sky-100"
+              downloadable={true}
+            />
+          </div>
+        )}
+      </div>
+    </>
+  )
+}
+
+// Todo: Add 'download all' button
