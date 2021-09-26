@@ -1,4 +1,5 @@
 import { Crypto } from "@peculiar/webcrypto"
+import mime from "mime-types"
 
 export const generateKey = async (password: string, salt: string) => {
   const crypto: Crypto = new Crypto()
@@ -81,25 +82,32 @@ export const decryptFiles = async (
   iv: Uint8Array,
   files: File[]
 ) => {
-  const decryptedFiles: File[] = []
+  try {
+    const decryptedFiles: File[] = []
 
-  for (let i = 0; i < files.length; i++) {
-    const buf = await files[i].arrayBuffer()
-    const decryptedBuf: ArrayBuffer = await window.crypto.subtle.decrypt(
-      {
-        name: "AES-GCM",
-        iv: iv,
-      },
-      key,
-      buf
-    )
-    const decryptedFile = new File([decryptedBuf], files[i].name, {
-      type: files[i].type,
-    })
-    decryptedFiles.push(decryptedFile)
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i]
+      const filename = file.name
+      const fileExt = filename.split(".").pop()
+      const type: string = mime.lookup(fileExt)
+      const buf = await file.arrayBuffer()
+      const decryptedBuf: ArrayBuffer = await window.crypto.subtle.decrypt(
+        {
+          name: "AES-GCM",
+          iv: iv,
+        },
+        key,
+        buf
+      )
+      const decryptedFile = new File([decryptedBuf], filename, {
+        type: type,
+      })
+      decryptedFiles.push(decryptedFile)
+    }
+    return decryptedFiles
+  } catch (err) {
+    console.log(err)
   }
-
-  return decryptedFiles
 }
 
 export const encryptText = async (
@@ -127,23 +135,29 @@ export const encryptText = async (
   return encryptedFile
 }
 
-export const decryptText = async (
+export const decryptTexts = async (
   key: CryptoKey,
   iv: Uint8Array,
-  encoded: File
+  encoded: File[]
 ) => {
-  const dec = new TextDecoder()
-  const buf = await encoded.arrayBuffer()
+  const decryptedTexts = {}
 
-  const decryptedBuf: ArrayBuffer = await window.crypto.subtle.decrypt(
-    {
-      name: "AES-GCM",
-      iv: iv,
-    },
-    key,
-    buf
-  )
-  const decryptedText = dec.decode(decryptedBuf)
+  for (let i = 0; i < encoded.length; i++) {
+    const dec = new TextDecoder()
+    const filename = encoded[i].name.toLowerCase()
+    const buf = await encoded[i].arrayBuffer()
 
-  return decryptedText
+    const decryptedBuf: ArrayBuffer = await window.crypto.subtle.decrypt(
+      {
+        name: "AES-GCM",
+        iv: iv,
+      },
+      key,
+      buf
+    )
+    const decryptedText = dec.decode(decryptedBuf)
+    decryptedTexts[filename] = decryptedText
+  }
+
+  return decryptedTexts
 }
