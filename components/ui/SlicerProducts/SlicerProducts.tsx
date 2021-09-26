@@ -56,11 +56,15 @@ const SlicerProducts = ({
   const subgraphData = useQuery(tokensQuery)
   const blockchainProducts = subgraphData?.products
 
-  const handleReload = () => {
-    if (pendingProducts?.length != 0) {
-      handleCleanup(Number(slicerId), setLoading)
-    } else {
-      reload(Number(slicerId), setLoading)
+  const handleReload = async () => {
+    try {
+      if (pendingProducts?.length != 0) {
+        await handleCleanup(Number(slicerId), setLoading)
+      } else {
+        await reload(Number(slicerId), setLoading)
+      }
+    } catch (err) {
+      console.log(err)
     }
     router.reload()
   }
@@ -93,7 +97,7 @@ const SlicerProducts = ({
                 label="Reload products"
                 type="button"
                 loading={loading}
-                onClick={() => handleReload()}
+                onClick={async () => await handleReload()}
               />
             </div>
           )}
