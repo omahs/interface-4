@@ -11,6 +11,8 @@ type Props = {
   topRight?: CardInfo
   bottomLeft?: CardInfo
   bottomRight?: CardInfo
+  cardClassName?: string
+  containerClassName?: string
   className?: string
   size?: string
   product?: boolean
@@ -26,13 +28,15 @@ const Card = ({
   topRight,
   bottomLeft,
   bottomRight,
+  containerClassName = "my-6 cursor-pointer",
+  cardClassName = "overflow-hidden transition-all duration-1000 ease-out bg-white rounded-xl shadow-medium-random hover:scale-105",
   className,
   size,
   product,
   onClick,
 }: Props) => {
   const content = (
-    <div className="overflow-hidden transition-all duration-1000 ease-out bg-white rounded-xl shadow-medium-random hover:scale-105">
+    <div className={cardClassName}>
       <CardImage
         name={name}
         imageUrl={image}
@@ -58,7 +62,7 @@ const Card = ({
   )
 
   return (
-    <div className="my-6 cursor-pointer">
+    <div className={containerClassName}>
       {href ? (
         <Link href={href}>
           <a>{content}</a>

@@ -37,7 +37,7 @@ const ProductsGrid = ({
     blockchainProducts ? (
       <>
         <h2>Products</h2>
-        <div className="grid items-center justify-center grid-cols-1 gap-4 max-w-[400px] sm:gap-8 mx-auto sm:max-w-none sm:grid-cols-2">
+        <div className="grid items-center justify-center grid-cols-1 gap-8 max-w-[400px] mx-auto sm:max-w-none sm:grid-cols-2">
           {[...Array(iterator)].map((i, key) => {
             const product = products.find((p) => p.productId == Number(key) + 1)
             const chainInfo = blockchainProducts.find(
@@ -60,7 +60,7 @@ const ProductsGrid = ({
           })}
         </div>
         {items < products?.length && (
-          <p className="pb-6 text-center">
+          <p className="py-6 text-center">
             <a onClick={() => setItems(items + initItems)}>Load more</a>
           </p>
         )}

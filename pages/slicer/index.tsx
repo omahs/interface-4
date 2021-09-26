@@ -70,4 +70,4 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 
 export default SlicerGrid
 
-// Todo: Select to filter slicers/NFT
+// Todo: Add sorting / filtering for slicers/NFT

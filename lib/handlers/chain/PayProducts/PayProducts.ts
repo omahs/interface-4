@@ -52,4 +52,4 @@ const PayProducts = async (productData: PayProductData[]) => {
 
 export default PayProducts
 
-// todo: calculate price here when price edits are possible
+// todo?: calculate price here when price edits are possible

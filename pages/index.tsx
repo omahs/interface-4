@@ -68,7 +68,6 @@ export default Home
 /** TODO
  *
  * *Critical Priority*
- *    - fix bugs and problems and todo
  *    - Receive ERC721-1155
  *      - Fix slicer smart contract receive/reject ERC721
  *      - NFT section
@@ -77,14 +76,10 @@ export default Home
  *      - allow sponsor to edit link
  *      - allow creator to hide links
  *
- * *tests*
- *    - test markdown styling in redeem product modal
- *
  * *High Priority*
  *    - add wallet connect
  *    - FAQs page (see below) + add link where already referenced
- *    - product features
- *      - edit/delete products
+ *    - Improve homepage content
  *
  * *Low Priority*
  *    - add products to slicers -> demonstrate use case with digital collectibles
@@ -101,6 +96,8 @@ export default Home
  *    - signal when markdown can be used in textareas
  *    - cart persists with user (save data on db & make user sign transaction ?)
  *
+ *    - product features
+ *      - edit/delete products
  *
  *
  *
