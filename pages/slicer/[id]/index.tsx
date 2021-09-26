@@ -92,6 +92,14 @@ const Id = ({
     setSlicerAttributes(attr)
   }, [slicerInfo])
 
+  useEffect(() => {
+    setSlicer({
+      name: slicerInfo?.name,
+      description: slicerInfo?.description,
+      imageUrl: slicerInfo?.image,
+    })
+  }, [slicerInfo])
+
   return (
     <Container page={true}>
       {slicerInfo?.id !== null ? (
