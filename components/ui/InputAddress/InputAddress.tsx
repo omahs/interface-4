@@ -14,12 +14,6 @@ const InputAddress: React.FC<Props> = (props) => {
   const [resolvedAddress, setResolvedAddress] = useState("")
 
   useEffect(() => {
-    // throttleFunction(
-    //   resolveEns(address, setResolvedAddress),
-    //   setResolvedAddress(""),
-    //   200
-    // )
-
     const timeout = setTimeout(
       () => resolveEns(address, setResolvedAddress),
       200

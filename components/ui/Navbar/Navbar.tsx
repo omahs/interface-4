@@ -1,22 +1,21 @@
 import Link from "next/link"
 import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
-import { Button, Container, SlcCounter } from "@components/ui"
+import { Button, Container, DropwdownMenu, SlcCounter } from "@components/ui"
 import UserIcon from "@components/icons/UserIcon"
 import { useAppContext } from "@components/ui/context"
 import Metamask from "@components/icons/Metamask"
+import handleConnect from "@lib/handleConnect"
+import { useState } from "react"
 
 const Navbar = () => {
   const { isConnected, loading } = useAppContext()
-
-  const requestAccount = async () => {
-    await window.ethereum.request({ method: "eth_requestAccounts" })
-  }
+  const [showDropdown, setShowDropdown] = useState(false)
 
   return (
     <header className="shadow-sm bg-gray-50">
       <Container>
-        <nav className="px-3 sm:px-6 h-[4.25rem] items-center mx-auto flex justify-between">
+        <nav className="relative px-3 sm:px-6 h-[4.25rem] items-center mx-auto flex justify-between">
           <div className="flex items-center space-x-7 sm:space-x-10">
             <Link href="/">
               <a className="mb-1">
@@ -38,19 +37,25 @@ const Navbar = () => {
                 double={false}
                 label="Connect"
                 loading={loading}
-                onClick={() => requestAccount()}
+                onClick={() => handleConnect()}
               />
             ) : (
               <>
                 <SlcCounter />
-                <Link href="/profile">
-                  <a>
-                    <UserIcon />
-                  </a>
-                </Link>
+                <a
+                  onClick={() =>
+                    setShowDropdown((showDropdown) => !showDropdown)
+                  }
+                >
+                  <UserIcon />
+                </a>
               </>
             )}
           </div>
+          <DropwdownMenu
+            showDropdown={showDropdown}
+            setShowDropdown={setShowDropdown}
+          />
         </nav>
       </Container>
       <hr className="w-full border-gray-200 opacity-80" />

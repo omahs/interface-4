@@ -7,9 +7,7 @@ import { defaultProvider } from "@lib/useProvider"
 import { slicer as slicerContract } from "@lib/initProvider"
 import { useAppContext } from "../context"
 import { PaySlicer, Button, MessageBlock } from "@components/ui"
-import supabase from "lib/supabase"
 import supabaseUpload from "@utils/supabaseUpload"
-const reduce = require("image-blob-reduce")()
 
 type Props = {
   editMode: boolean
@@ -89,11 +87,13 @@ const SlicerSubmitBlock = ({
         setTempImageUrl(newImage.url)
 
         const { Key } = await supabaseUpload(
-          `slicer_${slicerInfo?.id}`,
+          `${slicerInfo?.id}/main`,
           newImage,
           slicer.imageUrl,
           slicerInfo?.isCollectible
         )
+
+        // Todo? If isCollectible store on web3Storage
 
         const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
         setTempStorageUrl(newFilePath)
@@ -164,7 +164,7 @@ const SlicerSubmitBlock = ({
       </div>
       {!loading && (
         <p
-          className="inline-block font-medium text-red-600 cursor-pointer hover:underline"
+          className="inline-block font-medium text-red-500 cursor-pointer hover:underline"
           onClick={() => cancel()}
         >
           Cancel

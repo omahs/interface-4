@@ -5,7 +5,6 @@ import handleSubmit from "@utils/handleSubmit"
 import handleMessage, { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import MessageBlock from "../MessageBlock"
-import Input from "../Input"
 
 type Props = {
   success: boolean
@@ -20,7 +19,10 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   const [minimumShares, setMinimumShares] = useState(0)
   const [totalShares, setTotalShares] = useState(1000000)
   const [isCollectible, setIsCollectible] = useState(false)
-  const [message, setMessage] = useState<Message>()
+  const [message, setMessage] = useState<Message>({
+    message: "",
+    messageStatus: "success",
+  })
 
   const cleanedAddresses = addresses.filter(() => true)
   const cleanedShares = shares.filter(() => true)
@@ -109,5 +111,3 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
 }
 
 export default SliceForm
-
-// Todo: Add isCollectible in form

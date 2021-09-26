@@ -1,25 +1,31 @@
-import { useState, Dispatch, SetStateAction } from "react"
+import { useState, Dispatch, SetStateAction, useEffect, useRef } from "react"
 import {
   Button,
   MessageBlock,
   AddProductFormPrice,
   AddProductFormGeneral,
   AddProductFormPurchases,
+  AddProductFormPreview,
 } from "@components/ui"
 import { AddProduct } from "@lib/handlers/chain"
 import handleSubmit from "@utils/handleSubmit"
 import handleMessage, { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import { NewImage } from "pages/slicer/[id]"
-import supabaseUpload from "@utils/supabaseUpload"
-import useQuery from "@utils/subgraphQuery"
-import fetcher from "@utils/fetcher"
+import {
+  beforeCreate,
+  handleReject,
+  handleSuccess,
+} from "@lib/handleCreateProduct"
+import { useAppContext } from "../context"
 
 type Props = {
   slicerId: number
   success: boolean
   loading: boolean
+  uploadStep: number
   setLoading: Dispatch<SetStateAction<boolean>>
+  setUploadStep: Dispatch<SetStateAction<number>>
   setSuccess: Dispatch<SetStateAction<boolean>>
   setLogs: Dispatch<SetStateAction<LogDescription[]>>
 }
@@ -29,80 +35,56 @@ const AddProductForm = ({
   success,
   loading,
   setLoading,
+  uploadStep,
+  setUploadStep,
   setSuccess,
   setLogs,
 }: Props) => {
-  const [usdValue, setUsdValue] = useState(0)
-  const [ethValue, setEthValue] = useState(0)
+  const { account, setModalView } = useAppContext()
+  const [usdValue, setUsdValue] = useState<number>()
+  const [ethValue, setEthValue] = useState<number>()
   const [name, setName] = useState("")
+  const [shortDescription, setShortDescription] = useState("")
   const [description, setDescription] = useState("")
   const [newImage, setNewImage] = useState<NewImage>({
     url: "",
     file: undefined,
   })
   const [isUSD, setIsUSD] = useState(false)
-  const [isSingle, setIsSingle] = useState(false)
+  const [isMultiple, setIsMultiple] = useState(false)
   const [isLimited, setIsLimited] = useState(false)
   const [units, setUnits] = useState(0)
-  const [purchaseData, setPurchaseData] = useState([])
-  const [message, setMessage] = useState<Message>()
-
-  // Todo: Handle productId update after product creation
-  const tokensQuery = /* GraphQL */ `
-    slicer(id: "${slicerId}") {
-      products {
-        id
-      }
-    }
-  `
-  let subgraphData = useQuery(tokensQuery)
-  const productId = subgraphData?.slicer?.products?.length + 1
+  const [thankMessage, setThankMessage] = useState("")
+  const [instructions, setInstructions] = useState("")
+  const [notes, setNotes] = useState("")
+  const [files, setFiles] = useState<File[]>([])
+  const [uploadPct, setUploadPct] = useState(0)
+  const [message, setMessage] = useState<Message>({
+    message: "",
+    messageStatus: "success",
+  })
+  const submitEl = useRef(null)
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
-    let image = ""
-    let hash = ""
-    setLoading(true)
     try {
-      if (!productId) {
-        throw Error("An unexpected error occurred. Try again")
-      }
-      // if (...) {
-
-      // save image on supabase
-      if (newImage.url) {
-        {
-          const { Key } = await supabaseUpload(
-            `slicer_${slicerId}_product_${productId}`,
-            newImage
-          )
-          image = Key
-        }
-      }
-
-      // Pin metadata on pinata
-      const metadata = { name, description, image }
-      const pinBody = {
-        body: JSON.stringify({ metadata }),
-        method: "POST",
-      }
-      const { IpfsHash } = await fetcher("/api/pin_json", pinBody)
-      hash = IpfsHash
-
-      // save hash & imageUrl on prisma
-      const body = {
-        method: "POST",
-        body: JSON.stringify({
-          productId,
+      const { image, newProduct, data, purchaseDataCID, purchaseData } =
+        await beforeCreate(
+          account,
+          slicerId,
           name,
+          shortDescription,
           description,
-          image,
-          hash,
-        }),
-      }
-      await fetcher(`/api/slicer/${slicerId}/createProduct`, body)
+          newImage,
+          files,
+          thankMessage,
+          instructions,
+          notes,
+          setUploadStep,
+          setUploadPct
+        )
 
-      // create product on smart contract
+      // Create product on smart contract
       const productPrice = isUSD ? Math.floor(usdValue * 100) : ethValue
 
       const eventLogs = await handleSubmit(
@@ -111,10 +93,10 @@ const AddProductForm = ({
           0,
           productPrice,
           isUSD,
-          !isSingle,
+          isMultiple,
           !isLimited,
           units,
-          [hash],
+          data,
           purchaseData
         ),
         setMessage,
@@ -122,72 +104,108 @@ const AddProductForm = ({
         setSuccess,
         true
       )
-      setLogs(eventLogs)
-      // } else {
-      //   handleMessage(
-      //     {
-      //       message: "Inputs don't correspond, please try again",
-      //       messageStatus: "error",
-      //     },
-      //     setMessage
-      //   )
-      // }
+      if (eventLogs) {
+        setLogs(eventLogs)
+        setUploadStep(9)
+        await handleSuccess(slicerId, newProduct.id, eventLogs)
+        setUploadStep(10)
+      } else {
+        setUploadStep(7)
+        await handleReject(
+          slicerId,
+          image,
+          data,
+          purchaseDataCID,
+          newProduct.id
+        )
+        setUploadStep(8)
+      }
     } catch (err) {
-      // Todo: Test errors
-      // unpin
-      if (hash) {
-        const unpinBody = {
-          body: JSON.stringify({ hash }),
-          method: "POST",
-        }
-        hash = await fetcher("/api/unpin", unpinBody)
-      }
-      // delete image from supabase
-      if (image) {
-        const currentImageName = image.split("/").pop()
-        const body = {
-          method: "POST",
-          body: JSON.stringify({
-            url: currentImageName,
-          }),
-        }
-        await fetcher(`/api/slicer/delete_file`, body)
-      }
       console.log(err)
     }
     setLoading(false)
   }
 
+  useEffect(() => {
+    if (uploadStep != 0) {
+      setModalView({
+        cross: false,
+        name: `CREATE_PRODUCT_VIEW`,
+        params: { slicerId, uploadStep, uploadPct, setModalView },
+      })
+    }
+  }, [loading, uploadStep])
+
   return (
     <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>
       <AddProductFormGeneral
+        slicerId={slicerId}
         newImage={newImage}
         setNewImage={setNewImage}
         name={name}
+        shortDescription={shortDescription}
         description={description}
         loading={loading}
         setName={setName}
         setDescription={setDescription}
+        setShortDescription={setShortDescription}
       />
       <AddProductFormPrice
-        isSingle={isSingle}
+        isMultiple={isMultiple}
         isLimited={isLimited}
         units={units}
         ethValue={ethValue}
         usdValue={usdValue}
         isUSD={isUSD}
         loading={loading}
-        setIsSingle={setIsSingle}
+        setIsMultiple={setIsMultiple}
         setIsLimited={setIsLimited}
         setUnits={setUnits}
         setEthValue={setEthValue}
         setUsdValue={setUsdValue}
         setIsUSD={setIsUSD}
       />
-      <AddProductFormPurchases setPurchaseData={setPurchaseData} />
-
-      <div className="pt-4 pb-1">
-        <Button label="Create product" type="submit" />
+      <AddProductFormPurchases
+        thankMessage={thankMessage}
+        setThankMessage={setThankMessage}
+        instructions={instructions}
+        setInstructions={setInstructions}
+        notes={notes}
+        setNotes={setNotes}
+        files={files}
+        setFiles={setFiles}
+      />
+      <AddProductFormPreview
+        slicerId={slicerId}
+        name={name}
+        shortDescription={shortDescription}
+        description={description}
+        newImage={newImage}
+        isMultiple={isMultiple}
+        isLimited={isLimited}
+        units={units}
+        ethValue={ethValue}
+        usdValue={usdValue}
+        isUSD={isUSD}
+        thankMessage={thankMessage}
+        instructions={instructions}
+        notes={notes}
+        files={files}
+        setModalView={setModalView}
+      />
+      <div className="pb-1">
+        <Button
+          label="Create product"
+          type="button"
+          onClick={() =>
+            setModalView({
+              cross: true,
+              name: "CREATE_PRODUCT_CONFIRM_VIEW",
+              params: { submitEl, uploadStep, setModalView },
+            })
+          }
+        />
+        <button className="hidden" ref={submitEl} type="submit" />
       </div>
       <div>
         <MessageBlock msg={message} />
@@ -198,4 +216,5 @@ const AddProductForm = ({
 
 export default AddProductForm
 
-// Todo: This page
+// Todo: What else to add to data and purchaseData (on pinata and web3storage)
+// tags?

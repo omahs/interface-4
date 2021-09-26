@@ -41,7 +41,9 @@ const Home = () => {
             />
             <HomeSection
               text={section2}
-              image={<Logo size="w-32 sm:w-36" margin="mt-4 ml-6" spin />}
+              image={
+                <Logo interactive size="w-32 sm:w-36" margin="mt-4 ml-6" spin />
+              }
               side="right"
             />
             <HomeSection
@@ -64,16 +66,50 @@ const Home = () => {
 export default Home
 
 /** TODO
- * WEBSITE
  *
- * - add products to slicers -> demonstrate use case with digital collectibles
- * - Figure out purchases metadata for normal products and those with subSlicers
+ * *Critical Priority*
+ *    - Receive ERC721-1155
+ *      - Fix slicer smart contract receive/reject ERC721
+ *      - NFT section
+ *    - sponsorships
+ *      - section in slicer page
+ *      - allow sponsor to edit link
+ *      - allow creator to hide links
  *
- * - add slicer tags in metadata & slicer page
- * - add detailed section in slicer page (stats & stuff for payees only)
- * - add wallet connect
+ * *High Priority*
+ *    - add wallet connect
+ *    - FAQs page (see below) + add link where already referenced
+ *    - Improve homepage content
  *
- * - (LP) transfer page (select box to choose slicer)
+ * *Low Priority*
+ *    - add products to slicers -> demonstrate use case with digital collectibles
+ *    - (prisma) add {isVisible} boolean field in Slicer model to toggle visibility in Explore page
+ *    - make product defaultImage on figma + add on CardImage component
+ *    - add slicer tags in metadata & slicer page
+ *    - add products "explore" page
+ *    - add detailed section in slicer page (stats & stuff for payees only)
+ *    - transfer page (select box to choose slicer)
+ *    - Products
+ *      - add short description (text input) in productCard small and full (under title)
+ *      - product likes
+ *      - sort products by productId / createdAt / totalPurchases / likes
+ *    - signal when markdown can be used in textareas
+ *    - cart persists with user (save data on db & make user sign transaction ?)
+ *
+ *    - product features
+ *      - edit/delete products
+ *
+ *
+ *
+ *
+ * FAQS
+ * - How file encryption works
+ *
+ *
+ *
+ *
+ *
+ *
  *
  * USE CASES
  * - Use it as a slicer

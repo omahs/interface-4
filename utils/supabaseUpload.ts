@@ -10,14 +10,15 @@ const supabaseUpload = async (
   highQuality = false
 ) => {
   const supabaseStorage = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_NAME
+  const { supabaseKey } = await fetcher("/api/supabase")
   const fileExt = newImage.file.name.split(".").pop()
   const randomString = Math.random().toString(36).slice(4)
   filename += `_${randomString}`
 
-  let mainImage
+  let mainImage: File
   if (fileExt !== "gif") {
     if (highQuality) {
-      mainImage = await reduce.toBlob(newImage.file, { max: 1980 })
+      mainImage = await reduce.toBlob(newImage.file, { max: 2560 })
     } else {
       mainImage = await reduce.toBlob(newImage.file, { max: 1280 })
     }
@@ -25,8 +26,8 @@ const supabaseUpload = async (
     // Todo: Compress gif before upload
     mainImage = newImage.file
   }
-  const { data, error } = await supabase.storage
-    .from(supabaseStorage)
+  const { data, error } = await supabase(supabaseKey)
+    .storage.from(supabaseStorage)
     .upload(filename, mainImage, {
       cacheControl: "3600",
       upsert: false,
@@ -36,8 +37,8 @@ const supabaseUpload = async (
   }
 
   const blurredImage = await reduce.toBlob(newImage.file, { max: 4 })
-  await supabase.storage
-    .from(supabaseStorage)
+  await supabase(supabaseKey)
+    .storage.from(supabaseStorage)
     .upload(`${filename}_blur`, blurredImage, {
       cacheControl: "3600",
       upsert: false,
@@ -47,7 +48,7 @@ const supabaseUpload = async (
     currentImageUrl &&
     currentImageUrl !== "https://slice.so/slicer_default.png"
   ) {
-    const currentImageName = currentImageUrl.split("/").pop()
+    const currentImageName = currentImageUrl.split(`${supabaseStorage}/`).pop()
     const body = {
       method: "POST",
       body: JSON.stringify({

@@ -2,6 +2,13 @@ import useProvider from "@lib/useProvider"
 import { createContext, useContext, useEffect, useState } from "react"
 import { colorList, darkColorList } from "@utils/colorList"
 import { View } from "@lib/text/modals"
+import { getPurchases } from "@utils/getPurchases"
+
+export type Purchase = {
+  slicerId: string
+  productId: string
+  quantity: string
+}
 
 const AppContext = createContext<any>({
   isConnected: false,
@@ -14,7 +21,9 @@ const AppContext = createContext<any>({
   darkColor2: darkColorList[1],
   modalView: { name: "" },
   setModalView: () => null,
+  setPurchases: () => null,
   shuffleColors: () => null,
+  purchases: [],
 })
 
 export function AppWrapper({ children }) {
@@ -26,6 +35,7 @@ export function AppWrapper({ children }) {
   const [color2, setColor2] = useState([])
   const [darkColor1, setDarkColor1] = useState([])
   const [darkColor2, setDarkColor2] = useState([])
+  const [purchases, setPurchases] = useState<Purchase[]>(null)
 
   const shuffleColors = () => {
     const random1 = Math.floor(Math.random() * colorList.length)
@@ -46,6 +56,13 @@ export function AppWrapper({ children }) {
     shuffleColors()
   }, [])
 
+  useEffect(() => {
+    if (account) {
+      setPurchases(null)
+      getPurchases(account, setPurchases)
+    }
+  }, [account])
+
   return (
     <AppContext.Provider
       value={{
@@ -60,6 +77,8 @@ export function AppWrapper({ children }) {
         modalView,
         setModalView,
         shuffleColors,
+        purchases,
+        setPurchases,
       }}
     >
       {children}

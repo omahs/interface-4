@@ -1,16 +1,39 @@
 import prisma from "@lib/db"
 
 const CreateProduct = async (
-  productId: number,
   slicerId: number,
   name: string,
+  shortDescription: string,
   description: string,
+  creator: string,
+  uid: string,
   hash: string,
-  image?: string
+  tempProductHash: string,
+  image?: string,
+  productId?: number | null,
+  purchaseInfo?: object
 ) => {
-  const query = await prisma.product.create({
-    data: { productId, slicerId, name, description, image, hash },
-  })
+  let query
+  try {
+    query = await prisma.product.create({
+      data: {
+        slicerId,
+        name,
+        shortDescription,
+        description,
+        image,
+        creator,
+        uid,
+        tempProductHash,
+        hash,
+        productId,
+        purchaseInfo,
+        // version
+      },
+    })
+  } catch (err) {
+    console.log(err)
+  }
 
   return query
 }

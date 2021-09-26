@@ -7,9 +7,13 @@ type Data = {
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  if (req.method === "GET") {
-    const totalSlicers = await slice(defaultProvider).totalTokens()
-    res.status(200).json({ totalSlicers: Number(totalSlicers) })
+  try {
+    if (req.method === "GET") {
+      const totalSlicers = await slice(defaultProvider).totalTokens()
+      res.status(200).json({ totalSlicers: Number(totalSlicers) })
+    }
+  } catch (err) {
+    res.status(500).send(err.message)
   }
 }
 

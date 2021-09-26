@@ -10,15 +10,15 @@ const AddProduct = async (
   isMultiple: boolean,
   isInfinite: boolean,
   units: number,
-  data = [],
-  purchaseData = [],
+  data: string | object = [],
+  purchaseData: string | object = [],
   subSlicersIds = [],
   subProducts = []
 ) => {
   const { signer } = await initialize()
   const contract = await slicer(slicerId, signer)
-  const decimals = BigNumber.from(10).pow(18)
-  const ethToWei = BigNumber.from(price).mul(decimals)
+  const decimals = BigNumber.from(10).pow(13)
+  const ethToWei = BigNumber.from(price * 10 ** 5).mul(decimals)
   const productPrice = isUSD ? price : ethToWei
 
   try {

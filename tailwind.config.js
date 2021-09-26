@@ -12,6 +12,7 @@ module.exports = {
     "./components/**/*.scss",
     "./styles/**/*.scss",
     "./utils/**/*.ts",
+    "./styles/jit-hack.txt",
   ],
 
   theme: {
@@ -19,10 +20,10 @@ module.exports = {
       colorClasses: ["gradient", "placeholder"],
       typography: true,
       colors: {
-        white: "#141618",
+        white: "#0F1115",
         black: "gray.50",
         sky: {
-          50: "#012338",
+          50: "#001928",
         },
       },
     },
@@ -63,6 +64,14 @@ module.exports = {
               color: theme("colors.black"),
               fontWeight: "900",
             },
+            h3: {
+              color: theme("colors.black"),
+            },
+            blockquote: {
+              borderLeftColor: theme("colors.random2.600"),
+            },
+            "blockquote p:first-of-type::before": false,
+            "blockquote p:last-of-type::after": false,
           },
         },
       }),

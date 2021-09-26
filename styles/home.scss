@@ -41,6 +41,11 @@
   box-shadow: 0 0 4px 8px rgba(14, 165, 233, 0.5);
 }
 
+.shadow-base {
+  box-shadow: 1px 4px 6px -1px rgba(0, 0, 0, 0.13),
+    0.5px 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
 .drop-shadow-random {
   filter: drop-shadow(0 0 2.5px var(--color2));
 }
@@ -69,6 +74,16 @@
 
 .img-background {
   background: linear-gradient(to bottom right, var(--color1), var(--color2));
+}
+
+.background-modal {
+  background-image: radial-gradient(rgba(0, 0, 0, 0) 1px, white 1px);
+  background-size: 4px 4px;
+  backdrop-filter: brightness(100%) blur(3px);
+}
+
+.dark .background-modal {
+  background-image: radial-gradient(rgba(0, 0, 0, 0) 1px, black 1px);
 }
 
 #imageWrapper div {
