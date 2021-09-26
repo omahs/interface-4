@@ -6,7 +6,6 @@ import Trash from "@components/icons/Trash"
 import handleUpdateCart, { ProductCart } from "@lib/handleUpdateCart"
 import { useCookies } from "react-cookie"
 import ShoppingBag from "@components/icons/ShoppingBag"
-import { useEffect, useState } from "react"
 
 type Props = {
   productCart: ProductCart
@@ -17,6 +16,8 @@ type Props = {
   isUSD: boolean
   name: string
   isMultiple: boolean
+  uid: string
+  creator: string
   availableUnits: number
   purchasedQuantity: number
   labelAdd?: string
@@ -32,6 +33,8 @@ const CartButton = ({
   isUSD,
   name,
   isMultiple,
+  uid,
+  creator,
   availableUnits,
   purchasedQuantity,
   labelAdd,
@@ -165,4 +168,5 @@ const CartButton = ({
 
 export default CartButton
 
+// Todo: handle redeem product
 // Todo? Handle purchasedQuantity for isMultiple products?

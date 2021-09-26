@@ -30,7 +30,16 @@ const ProductCard = ({
 }: Props) => {
   const [cookies] = useCookies(["cart"])
   const { setModalView, purchases } = useAppContext()
-  const { productId, name, description, hash, image, purchaseInfo } = product
+  const {
+    productId,
+    name,
+    description,
+    hash,
+    image,
+    purchaseInfo,
+    uid,
+    creator,
+  } = product
   const {
     price,
     isUSD,
@@ -81,6 +90,8 @@ const ProductCard = ({
         name,
         description,
         image,
+        uid,
+        creator,
         productPrice,
         isUSD,
         isInfinite,
@@ -176,6 +187,8 @@ const ProductCard = ({
               isMultiple={isMultiple}
               availableUnits={isInfinite ? -1 : availableUnits}
               purchasedQuantity={purchasedQuantity}
+              uid={uid}
+              creator={creator}
             />
           )}
         </div>

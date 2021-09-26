@@ -13,6 +13,7 @@ export type Product = {
   creator: string
   hash: string
   image: string
+  uid: string
   purchaseInfo: {
     files: boolean
     instructions: boolean

@@ -18,13 +18,12 @@ import { productsToPurchases } from "@utils/getPurchases"
 type Props = {}
 
 const FloatingCart = ({}: Props) => {
-  const { isConnected, account, setPurchases, purchases } = useAppContext()
+  const { isConnected, setPurchases, purchases } = useAppContext()
   const [cookies, setCookie, removeCookie] = useCookies(["cart"])
   const [showCart, setShowCart] = useState(false)
   const [showCartList, setShowCartList] = useState(false)
   const cookieCart: ProductCart[] = cookies?.cart
 
-  // const [tempCart, setTempCart] = useState<ProductCart[]>([])
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [message, setMessage] = useState<Message>({
@@ -61,7 +60,7 @@ const FloatingCart = ({}: Props) => {
   useEffect(() => {
     if (success) {
       const newPurchases: Purchase[] = productsToPurchases(cookieCart)
-      setPurchases([...purchases, ...newPurchases])
+      setPurchases([...newPurchases, ...purchases])
       removeCookie("cart")
     }
   }, [success])

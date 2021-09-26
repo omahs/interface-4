@@ -56,7 +56,12 @@ const AddProductFormPurchases = ({
         />
       </div>
       <div className="py-6">
-        <FilesList files={files} loading={loading} setFiles={setFiles} />
+        <FilesList
+          title="Upload files"
+          files={files}
+          loading={loading}
+          setFiles={setFiles}
+        />
       </div>
     </>
   )

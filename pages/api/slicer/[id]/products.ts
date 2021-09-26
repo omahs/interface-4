@@ -39,6 +39,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           name: true,
           description: true,
           creator: true,
+          uid: true,
           hash: true,
           image: true,
           purchaseInfo: true,

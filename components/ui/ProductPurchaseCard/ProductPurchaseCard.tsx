@@ -3,6 +3,8 @@ import { base16 } from "multiformats/bases/base16"
 import redeemProduct from "@lib/handlers/chain/redeemProduct"
 import { useState } from "react"
 import { Button, CardImage } from ".."
+import { useAppContext } from "../context"
+import handleDecryptData from "@lib/handleDecryptData"
 
 export type RedeemData = {
   quantity: number
@@ -30,19 +32,40 @@ const ProductPurchaseCard = ({
   creator,
   purchaseInfo,
 }: Props) => {
+  const { setModalView } = useAppContext()
   const [loading, setLoading] = useState(false)
   const [redeemData, setRedeemData] = useState<RedeemData>(null)
 
-  const handleRedeem = async () => {
+  const handleRedeemProduct = async () => {
     setLoading(true)
     const redeemed = await redeemProduct(slicerId, productId)
     const purchaseHash = CID.parse(
-      "f" + String(redeemed[1]).substring(2),
+      "f" + redeemed[1].substring(2),
       base16.decoder
     )
       .toV1()
       .toString()
-    setRedeemData({ quantity: Number(redeemed[0]), purchaseHash })
+    const { decryptedFiles, decryptedTexts } = await handleDecryptData(
+      slicerId,
+      name,
+      creator,
+      uid,
+      purchaseHash
+    )
+
+    setModalView({
+      name: "REDEEM_PRODUCT_VIEW",
+      cross: true,
+      params: {
+        slicerId,
+        productId,
+        name,
+        image,
+        purchasedQuantity: Number(redeemed[0]),
+        decryptedFiles,
+        decryptedTexts,
+      },
+    })
     setLoading(false)
   }
 
@@ -69,14 +92,14 @@ const ProductPurchaseCard = ({
         </div>
         <div className="text-gray-700">
           <p className="text-sm">
-            contains <b>{purchaseInfo || "..."}</b>
+            Contains <b>{purchaseInfo || "..."}</b>
           </p>
         </div>
         <div className="mt-4">
           <Button
-            label="Redeem purchase"
+            label="Redeem"
             loading={loading}
-            onClick={() => handleRedeem()}
+            onClick={() => handleRedeemProduct()}
           />
         </div>
         {redeemData && (
@@ -93,5 +116,3 @@ const ProductPurchaseCard = ({
 }
 
 export default ProductPurchaseCard
-
-// Todo: complete this

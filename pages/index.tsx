@@ -68,13 +68,7 @@ export default Home
 /** TODO
  *
  * *Critical Priority*
- *    - add products to slicers -> demonstrate use case with digital collectibles
- *      - show products on slicer page -> OK
- *      - onClick modal with product details -> OK
- *      - purchase products flow
- *        - checkout bag -> OK
- *        - your purchases page -> OK
- *        - redeem purchase
+ *    - fix bugs and problems and todos
  *    - Receive ERC721-1155
  *      - Fix slicer smart contract receive/reject ERC721
  *      - NFT section
@@ -83,6 +77,9 @@ export default Home
  *      - allow sponsor to edit link
  *      - allow creator to hide links
  *
+ * *tests*
+ *    - test markdown styling in redeem product modal
+ *
  * *High Priority*
  *    - add wallet connect
  *    - FAQs page (see below) + add link where already referenced
@@ -90,6 +87,7 @@ export default Home
  *      - edit/delete products
  *
  * *Low Priority*
+ *    - add products to slicers -> demonstrate use case with digital collectibles
  *    - (prisma) add {isVisible} boolean field in Slicer model to toggle visibility in Explore page
  *    - make product defaultImage on figma + add on CardImage component
  *    - add slicer tags in metadata & slicer page
