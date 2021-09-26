@@ -15,6 +15,8 @@ type Props = {
   name: string
   hash: string
   image: string
+  uid: string
+  creator: string
   purchaseInfo: string
 }
 
@@ -24,6 +26,8 @@ const ProductPurchaseCard = ({
   name,
   hash,
   image,
+  uid,
+  creator,
   purchaseInfo,
 }: Props) => {
   const [loading, setLoading] = useState(false)

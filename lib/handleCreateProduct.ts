@@ -136,7 +136,6 @@ export const handleSuccess = async (
   eventLogs: LogDescription[]
 ) => {
   const eventLog = getLog(eventLogs, "ProductAdded")
-  // const eventLogs = [4, 0, BigNumber, false, false, true, 0, '0xAe009d532328FF09e09E5d506aB5BBeC3c25c0FF', '0x01551220aecc2b6190c7c7183a7bbcccf89f9ca60e8a2def4fbc11abb813f95e2fbbdf45', Array(0), Array(0)]
   const productId = eventLog[0]
 
   // Update product in prisma, adding productId and removing productHash

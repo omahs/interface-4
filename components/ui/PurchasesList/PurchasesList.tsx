@@ -48,6 +48,8 @@ const PurchasesList = () => {
           const name = purchaseData && purchaseData[index].name
           const hash = purchaseData && purchaseData[index].hash
           const image = purchaseData && purchaseData[index].image
+          const uid = purchaseData && purchaseData[index].uid
+          const creator = purchaseData && purchaseData[index].creator
           const purchaseElArray =
             purchaseData &&
             Object.keys(purchaseData[index].purchaseInfo).filter(
@@ -63,6 +65,8 @@ const PurchasesList = () => {
                 name={name}
                 hash={hash}
                 image={image}
+                uid={uid}
+                creator={creator}
                 purchaseInfo={purchaseInfo}
               />
               {i + 1 != iterator && (
