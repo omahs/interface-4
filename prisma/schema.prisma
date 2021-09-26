@@ -24,19 +24,20 @@ model Slicer {
 }
 
 model Product {
-  id              Int      @default(autoincrement()) @id
-  productId       Int?     @map(name: "product_id")
-  createdAt       DateTime @default(now()) @map(name: "created_at")
-  name            String
-  description     String
-  creator         String
-  uid             String
-  hash            String
-  image           String?
-  purchaseInfo    Json     @default("{}")
-  tempProductHash String?
-  slicer          Slicer   @relation(fields: [slicerId], references: [id])
-  slicerId        Int      @map(name: "slicer_id")
+  id               Int      @default(autoincrement()) @id
+  productId        Int?     @map(name: "product_id")
+  createdAt        DateTime @default(now()) @map(name: "created_at")
+  name             String
+  shortDescription String?
+  description      String
+  creator          String
+  uid              String
+  hash             String
+  image            String?
+  purchaseInfo     Json     @default("{}")
+  tempProductHash  String?
+  slicer           Slicer   @relation(fields: [slicerId], references: [id])
+  slicerId         Int      @map(name: "slicer_id")
   
   @@index([productId], name:"productId")
   @@index([slicerId], name:"slicerId")
