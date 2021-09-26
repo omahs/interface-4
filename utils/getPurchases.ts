@@ -9,8 +9,8 @@ export const getPurchases = async (
   setPurchases: Dispatch<SetStateAction<Purchase[]>>
 ) => {
   const tokensQuery = /* GraphQL */ `
-      payee (id: "${buyer.toLowerCase()}") {
-      purchases {
+    payee (id: "${buyer.toLowerCase()}") {
+      purchases (orderBy: "lastPurchasedAtTimestamp", orderDirection: "desc") {
         id
         quantity
       }
