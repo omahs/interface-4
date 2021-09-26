@@ -183,6 +183,7 @@ const ProductCard = ({
               productId={productId}
               price={price}
               isUSD={isUSD}
+              image={image}
               name={name}
               isMultiple={isMultiple}
               availableUnits={isInfinite ? -1 : availableUnits}

@@ -1,4 +1,3 @@
-import Link from "next/link"
 import Cart from "@components/icons/Cart"
 import Minus from "@components/icons/Minus"
 import Plus from "@components/icons/Plus"
@@ -6,6 +5,10 @@ import Trash from "@components/icons/Trash"
 import handleUpdateCart, { ProductCart } from "@lib/handleUpdateCart"
 import { useCookies } from "react-cookie"
 import ShoppingBag from "@components/icons/ShoppingBag"
+import { useAppContext } from "../context"
+import { useState } from "react"
+import handleRedeemProduct from "@utils/handleRedeemProduct"
+import Spinner from "@components/icons/Spinner"
 
 type Props = {
   productCart: ProductCart
@@ -15,6 +18,7 @@ type Props = {
   price: number
   isUSD: boolean
   name: string
+  image: string
   isMultiple: boolean
   uid: string
   creator: string
@@ -33,6 +37,7 @@ const CartButton = ({
   isUSD,
   name,
   isMultiple,
+  image,
   uid,
   creator,
   availableUnits,
@@ -40,29 +45,45 @@ const CartButton = ({
   labelAdd,
   labelRemove,
 }: Props) => {
+  const { setModalView } = useAppContext()
+  const [loading, setLoading] = useState(false)
   const [cookies, setCookie] = useCookies(["cart"])
 
   const adjustedAvailability = availableUnits - productCart?.quantity
 
   return purchasedQuantity != 0 ? (
-    <Link href="/purchases">
-      <a className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-blue-500 rounded-md hover:text-white nightwind-prevent group hover:bg-blue-600">
-        {labelAdd ? (
+    <div
+      className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-blue-500 rounded-md hover:text-white nightwind-prevent group hover:bg-blue-600"
+      onClick={() =>
+        handleRedeemProduct(
+          slicerId,
+          productId,
+          name,
+          image,
+          uid,
+          creator,
+          setLoading,
+          setModalView
+        )
+      }
+    >
+      {labelAdd ? (
+        <p className="mr-2 text-sm font-medium sm:text-base">
+          {`Redeem${purchasedQuantity != 1 ? ` (${purchasedQuantity})` : ""}`}
+        </p>
+      ) : (
+        purchasedQuantity != 1 && (
           <p className="mr-2 text-sm font-medium sm:text-base">
-            {`Go to purchases${
-              purchasedQuantity != 1 ? ` (${purchasedQuantity})` : ""
-            }`}
+            {purchasedQuantity}
           </p>
-        ) : (
-          purchasedQuantity != 1 && (
-            <p className="mr-2 text-sm font-medium sm:text-base">
-              {purchasedQuantity}
-            </p>
-          )
-        )}
+        )
+      )}
+      {loading ? (
+        <Spinner color="text-white nightwind-prevent" />
+      ) : (
         <ShoppingBag className="w-5 h-5 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
-      </a>
-    </Link>
+      )}
+    </div>
   ) : !productCart ? (
     <div
       className={`relative z-10 flex items-center justify-center w-full py-2 text-center text-white rounded-md nightwind-prevent ${
@@ -168,5 +189,4 @@ const CartButton = ({
 
 export default CartButton
 
-// Todo: handle redeem product
 // Todo? Handle purchasedQuantity for isMultiple products?

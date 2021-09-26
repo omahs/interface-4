@@ -280,6 +280,7 @@ export const PRODUCT_VIEW = (params: any) => {
               price={price}
               isUSD={isUSD}
               name={name}
+              image={image}
               isMultiple={isMultiple}
               availableUnits={isInfinite ? -1 : availableUnits}
               purchasedQuantity={purchasedQuantity}
@@ -342,7 +343,7 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
         </div>
         {instructions && (
           <div className="py-8">
-            <h2 className="pb-4">Instructions</h2>
+            <h3 className="pb-4">Instructions</h3>
             <div>
               <MarkdownBlock content={instructions} />
             </div>

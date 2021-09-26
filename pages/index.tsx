@@ -68,7 +68,7 @@ export default Home
 /** TODO
  *
  * *Critical Priority*
- *    - fix bugs and problems and todos
+ *    - fix bugs and problems and todo
  *    - Receive ERC721-1155
  *      - Fix slicer smart contract receive/reject ERC721
  *      - NFT section
