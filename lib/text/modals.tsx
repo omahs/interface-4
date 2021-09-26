@@ -34,7 +34,7 @@ export const CONNECT_VIEW = (
     <div className="pb-6 text-center">
       <DoubleText inactive logoText="Pick the right chain" />
     </div>
-    <p className="text-lg">
+    <p className="text-lg text-center">
       Connect to the <span className="font-black">Rinkeby</span> Network to
       access Slice
     </p>
