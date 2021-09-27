@@ -1,5 +1,5 @@
 import { initialize } from "@lib/useProvider"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 
 const resolveEns = async (
   address: string,
@@ -23,6 +23,14 @@ const resolveEns = async (
       }
     }
   }
+}
+
+export const useEns = (address: string) => {
+  const [resolvedAddress, setResolvedAddress] = useState("")
+  useEffect(() => {
+    resolveEns(address, setResolvedAddress)
+  }, [])
+  return resolvedAddress
 }
 
 export default resolveEns
