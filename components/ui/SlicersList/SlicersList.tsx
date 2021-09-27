@@ -62,13 +62,14 @@ const SlicersList = () => {
       <>
         {[...Array(iterator)].map((el, key) => {
           const i = Number(key)
-          const ownedShares = slicersOwned[i].slices
-          const slicer = slicersOwned[i].slicer
-          const slicerId = slicer.id
-          const totalSlices = slicer.slices
-          const slicerAddress = slicer.address
-          const isCollectible = slicer.isCollectible
-          const isAllowed = Number(ownedShares) >= Number(slicer.minimumSlices)
+          const slicerOwned = slicersOwned && slicersOwned[i]
+          const ownedShares = slicerOwned?.slices
+          const slicer = slicerOwned?.slicer
+          const slicerId = slicer?.id
+          const totalSlices = slicer?.slices
+          const slicerAddress = slicer?.address
+          const isCollectible = slicer?.isCollectible
+          const isAllowed = Number(ownedShares) >= Number(slicer?.minimumSlices)
           const unreleasedAmount = unreleased[i]
             ? Math.floor(
                 (Number(unreleased[i].hex) / Math.pow(10, 18)) * 10000
