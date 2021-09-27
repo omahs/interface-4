@@ -1,5 +1,6 @@
 import { BigNumber } from "ethers"
 import { useState } from "react"
+import { useAppContext } from "../context"
 import InputPrice from "../InputPrice"
 
 type Props = {
@@ -7,6 +8,7 @@ type Props = {
 }
 
 const PaySlicer = ({ slicerAddress }: Props) => {
+  const { account } = useAppContext()
   const [usdValue, setUsdValue] = useState(0)
   const [ethValue, setEthValue] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -16,7 +18,7 @@ const PaySlicer = ({ slicerAddress }: Props) => {
     try {
       const transactionParameters = {
         to: slicerAddress,
-        from: window.ethereum.selectedAddress,
+        from: account,
         value: BigNumber.from(Math.floor(ethValue * 100000)).mul(
           BigNumber.from(10).pow(13)
         )._hex,
