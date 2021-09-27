@@ -92,15 +92,16 @@ const Id = ({
       attr[el.trait_type] = el.value
     })
     setSlicerAttributes(attr)
-  }, [slicerInfo])
-
-  useEffect(() => {
     setSlicer({
       name: slicerInfo?.name,
       description: slicerInfo?.description,
       imageUrl: slicerInfo?.image,
     })
   }, [slicerInfo])
+
+  useEffect(() => {
+    setEditMode(false)
+  }, [account])
 
   return (
     <Container page={true}>
