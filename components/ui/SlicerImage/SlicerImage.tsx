@@ -1,5 +1,6 @@
 import Image from "next/image"
 import slicerDefault from "public/slicer_default.png"
+import productDefault from "public/product_default.png"
 
 type Props = {
   name: string
@@ -11,7 +12,7 @@ const SlicerImage = ({ name, imageUrl, product }: Props) => {
   return !imageUrl || imageUrl === "https://slice.so/slicer_default.png" ? (
     product ? (
       <Image
-        src={slicerDefault}
+        src={productDefault}
         layout="fill"
         objectFit="cover"
         alt={`${name} product image`}

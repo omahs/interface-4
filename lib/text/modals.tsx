@@ -239,6 +239,7 @@ export const PRODUCT_VIEW = (params: any) => {
           name={name}
           imageUrl={image}
           size="h-52 xs:h-72"
+          product
           topLeft={{
             title: "Purchases",
             content: (
@@ -335,7 +336,7 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
         <DoubleText inactive logoText={name} size="text-3xl sm:text-4xl" />
       </div>
       <div>
-        <CardImage name={name} imageUrl={image} size="h-52 xs:h-72" />
+        <CardImage name={name} imageUrl={image} size="h-52 xs:h-72" product />
         {purchasedQuantity != 1 && (
           <p className="pt-6 text-sm text-center text-gray-500">
             You bought this product {purchasedQuantity} times

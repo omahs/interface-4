@@ -17,6 +17,7 @@ type Props = {
   label?: string
   border?: string
   maxHeight?: string
+  product?: boolean
 }
 
 const SlicerImageBlock = ({
@@ -32,6 +33,7 @@ const SlicerImageBlock = ({
   label,
   border,
   maxHeight,
+  product,
 }: Props) => {
   const updateImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     try {
@@ -91,7 +93,11 @@ const SlicerImageBlock = ({
                   />
                 ) : (
                   /* eslint-enable @next/next/no-img-element */
-                  <SlicerImage name={name} imageUrl={imageUrl} />
+                  <SlicerImage
+                    name={name}
+                    imageUrl={imageUrl}
+                    product={product}
+                  />
                 )}
               </div>
             </div>

@@ -104,6 +104,7 @@ const AddProductFormGeneral = ({
         setMsg={setMsg}
         loading={loading}
         maxHeight="max-h-[250px]"
+        product
       />
       <p className="pt-3">
         <b>Note:</b> You cannot change the name, description and image later.
