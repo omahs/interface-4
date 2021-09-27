@@ -4,12 +4,10 @@ import Nightwind from "@components/icons/Nightwind"
 import { Button, Container, DropwdownMenu, SlcCounter } from "@components/ui"
 import UserIcon from "@components/icons/UserIcon"
 import { useAppContext } from "@components/ui/context"
-import Metamask from "@components/icons/Metamask"
-import handleConnect from "@lib/handleConnect"
 import { useState } from "react"
 
 const Navbar = () => {
-  const { isConnected, loading } = useAppContext()
+  const { isConnected, loading, setModalView } = useAppContext()
   const [showDropdown, setShowDropdown] = useState(false)
 
   return (
@@ -37,7 +35,9 @@ const Navbar = () => {
                 double={false}
                 label="Connect"
                 loading={loading}
-                onClick={() => handleConnect()}
+                onClick={() =>
+                  setModalView({ name: "CONNECT_VIEW", cross: true })
+                }
               />
             ) : (
               <>

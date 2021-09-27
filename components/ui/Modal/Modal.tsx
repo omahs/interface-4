@@ -2,6 +2,7 @@ import Cross from "@components/icons/Cross"
 import { Dispatch, SetStateAction } from "react"
 import {
   View,
+  NETWORK_VIEW,
   CONNECT_VIEW,
   IRREVERSIBLE_VIEW,
   CREATE_PRODUCT_VIEW,
@@ -20,6 +21,9 @@ const Modal = ({ modalView, setModalView }: Props) => {
   const { name, cross, params } = modalView
 
   switch (name) {
+    case "NETWORK_VIEW":
+      content = NETWORK_VIEW
+      break
     case "CONNECT_VIEW":
       content = CONNECT_VIEW
       break
@@ -50,7 +54,7 @@ const Modal = ({ modalView, setModalView }: Props) => {
         className="flex items-center justify-center"
         style={{ minHeight: "100%" }}
       >
-        <div className="relative w-full px-4 py-8 mx-4 bg-white shadow-xl xs:py-12 xs:px-8 rounded-xl max-w-screen-xs">
+        <div className="relative w-full px-4 py-16 mx-4 bg-white shadow-xl xs:py-20 xs:px-8 rounded-xl max-w-screen-xs">
           {cross && (
             <div className="absolute top-[24px] right-[24px]">
               <Cross

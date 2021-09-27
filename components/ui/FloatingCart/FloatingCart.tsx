@@ -2,7 +2,6 @@ import Link from "next/link"
 import Chevron from "@components/icons/Chevron"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import Spinner from "@components/icons/Spinner"
-import handleConnect from "@lib/handleConnect"
 import { PayProducts } from "@lib/handlers/chain"
 import { ProductCart } from "@lib/handleUpdateCart"
 import fetcher from "@utils/fetcher"
@@ -18,7 +17,7 @@ import { productsToPurchases } from "@utils/getPurchases"
 type Props = {}
 
 const FloatingCart = ({}: Props) => {
-  const { isConnected, setPurchases, purchases } = useAppContext()
+  const { isConnected, setPurchases, purchases, setModalView } = useAppContext()
   const [cookies, setCookie, removeCookie] = useCookies(["cart"])
   const [showCart, setShowCart] = useState(false)
   const [showCartList, setShowCartList] = useState(false)
@@ -138,7 +137,7 @@ const FloatingCart = ({}: Props) => {
                 ? !loading
                   ? handleCheckout()
                   : null
-                : handleConnect()
+                : () => setModalView({ name: "CONNECT_VIEW", cross: true })
             }
           >
             {success ? (

@@ -1,3 +1,5 @@
+import Arrow from "@components/icons/Arrow"
+import Metamask from "@components/icons/Metamask"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import Units from "@components/icons/Units"
 import {
@@ -14,6 +16,8 @@ import { ProductCart } from "@lib/handleUpdateCart"
 import formatNumber from "@utils/formatNumber"
 import { useRouter } from "next/dist/client/router"
 import { useCookies } from "react-cookie"
+import handleConnect from "@lib/handleConnect"
+import WalletConnect from "@components/icons/WalletConnect"
 
 export type View = {
   name: ViewNames
@@ -22,6 +26,7 @@ export type View = {
 }
 type ViewNames =
   | ""
+  | "NETWORK_VIEW"
   | "CONNECT_VIEW"
   | "IRREVERSIBLE_VIEW"
   | "CREATE_PRODUCT_VIEW"
@@ -29,7 +34,7 @@ type ViewNames =
   | "PRODUCT_VIEW"
   | "REDEEM_PRODUCT_VIEW"
 
-export const CONNECT_VIEW = (
+export const NETWORK_VIEW = (
   <>
     <div className="pb-6 text-center">
       <DoubleText inactive logoText="Pick the right chain" />
@@ -38,6 +43,40 @@ export const CONNECT_VIEW = (
       Connect to the <span className="font-black">Rinkeby</span> Network to
       access Slice
     </p>
+  </>
+)
+
+export const CONNECT_VIEW = (
+  <>
+    <div className="pb-12 text-center">
+      <DoubleText inactive logoText="Connect wallet" />
+    </div>
+    <div className="space-y-6">
+      <div
+        className="flex items-center justify-between max-w-sm p-6 mx-auto transition-all duration-300 ease-out border-2 border-yellow-100 cursor-pointer flex-between hover:scale-105 shadow-base hover:border-yellow-500 rounded-xl group"
+        onClick={() => handleConnect()}
+      >
+        <div className="flex items-center">
+          <Metamask className="w-6 h-6" />
+          <p className="ml-6 font-semibold">Metamask</p>
+        </div>
+        <div>
+          <Arrow className="transition-colors duration-300 ease-out group-hover:text-yellow-500" />
+        </div>
+      </div>
+      <div
+        className="flex items-center justify-between max-w-sm p-6 mx-auto transition-all duration-300 ease-out border-2 border-blue-100 cursor-pointer flex-between hover:scale-105 shadow-base hover:border-blue-600 rounded-xl group"
+        onClick={() => handleConnect()}
+      >
+        <div className="flex items-center">
+          <WalletConnect className="w-6 h-6" />
+          <p className="ml-6 font-semibold">WalletConnect</p>
+        </div>
+        <div>
+          <Arrow className="transition-colors duration-300 ease-out group-hover:text-blue-600" />
+        </div>
+      </div>
+    </div>
   </>
 )
 

@@ -9,7 +9,7 @@ export default function Layout({ children }) {
   useEffect(() => {
     if (process.env.NODE_ENV !== "development") {
       if (isConnected && chainId && chainId !== "0x4") {
-        setModalView({ cross: false, name: "CONNECT_VIEW" })
+        setModalView({ cross: false, name: "NETWORK_VIEW" })
       } else {
         setModalView({ name: "" })
       }
