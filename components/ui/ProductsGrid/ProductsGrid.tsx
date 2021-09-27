@@ -36,7 +36,7 @@ const ProductsGrid = ({
   return products && products.length != 0 ? (
     blockchainProducts ? (
       <>
-        <h2>Products</h2>
+        <h2 className="pb-6">Products</h2>
         <div className="grid items-center justify-center grid-cols-1 gap-8 max-w-[400px] mx-auto sm:max-w-none sm:grid-cols-2">
           {[...Array(iterator)].map((i, key) => {
             const product = products.find((p) => p.productId == Number(key) + 1)
