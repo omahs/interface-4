@@ -13,6 +13,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   inverted?: boolean
   submit?: boolean
   question?: JSX.Element
+  questionPosition?: string
   onClickLabel?: string
   prefixAction?: (...args: any[]) => any
   onClick?: (...args: any[]) => any
@@ -32,6 +33,7 @@ const Input: React.FC<Props> = (props) => {
     inverted,
     submit,
     question,
+    questionPosition = "bottom-[20px] left-[-40px] xs:left-0",
     prefixAction,
     onClick,
     onClickLabel,
@@ -69,10 +71,7 @@ const Input: React.FC<Props> = (props) => {
               {label}
             </p>
             {question && (
-              <Question
-                position="bottom-[20px] left-[-40px] xs:left-0"
-                text={question}
-              />
+              <Question position={questionPosition} text={question} />
             )}
           </div>
         </>
