@@ -1,9 +1,8 @@
 import Spinner from "@components/icons/Spinner"
-import { PaySlicer } from "@components/ui"
-import resolveEns from "@utils/resolveEns"
+import { PaySlicer, SponsorListItem } from "@components/ui"
 import useQuery from "@utils/subgraphQuery"
 import { BigNumber } from "ethers"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 type Sponsor = {
   address: string
@@ -55,22 +54,13 @@ const SlicerSponsors = ({ slicerId, slicerAddress, editMode }: Props) => {
     <div className="max-w-sm py-8 mx-auto text-center">
       <h2 className="pb-12">Sponsors</h2>
       {loading ? (
-        <Spinner />
+        <div className="flex justify-center py-2">
+          <Spinner size="h-10 w-10" />
+        </div>
       ) : sponsors.length != 0 ? (
-        <ol className="space-y-3">
+        <ol className="space-y-3 list-decimal list-item">
           {sponsors.map((sponsor, key) => {
-            const address = sponsor.address
-            return (
-              <li className="flex justify-between" key={key}>
-                <span>
-                  {address.replace(
-                    address.substring(5, address.length - 3),
-                    `\xa0\xa0\xa0\xa0\xa0\xa0`
-                  )}
-                </span>
-                <span>Ξ {sponsor.amount / 1000}</span>
-              </li>
-            )
+            return <SponsorListItem sponsor={sponsor} key={key} />
           })}
         </ol>
       ) : (
