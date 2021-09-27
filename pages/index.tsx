@@ -71,10 +71,6 @@ export default Home
  *    - Receive ERC721-1155
  *      - Fix slicer smart contract receive/reject ERC721
  *      - NFT section
- *    - sponsorships
- *      - section in slicer page
- *      - allow sponsor to edit link
- *      - allow creator to hide links
  *
  * *High Priority*
  *    - add wallet connect
@@ -82,23 +78,22 @@ export default Home
  *    - Improve homepage content
  *
  * *Low Priority*
+ *    - Products
+ *      - product likes
+ *      - sort products by productId / createdAt / totalPurchases / likes
+ *    - sponsorships
+ *      - allow creator to hide links
+ *    - product features
+ *      - edit/delete products
+ *
  *    - add products to slicers -> demonstrate use case with digital collectibles
  *    - (prisma) add {isVisible} boolean field in Slicer model to toggle visibility in Explore page
- *    - make product defaultImage on figma + add on CardImage component
  *    - add slicer tags in metadata & slicer page
  *    - add products "explore" page
  *    - add detailed section in slicer page (stats & stuff for payees only)
  *    - transfer page (select box to choose slicer)
- *    - Products
- *      - add short description (text input) in productCard small and full (under title)
- *      - product likes
- *      - sort products by productId / createdAt / totalPurchases / likes
- *    - signal when markdown can be used in textareas
- *    - cart persists with user (save data on db & make user sign transaction ?)
  *    - optimize subgraph queries (products + payeeslicer) in slicer/[id], if possible
  *
- *    - product features
- *      - edit/delete products
  *
  *
  *
@@ -129,8 +124,6 @@ export default Home
  * - PDF with the NFT behind the scenes
  * - Buy movie / music / game / game add-on
  *
- * FILE STORAGE
- * - https://web3.storage
  *
  * BEFORE FINAL DEPLOY
  * - Check if it's ok how metadata is handled for collectible slicers

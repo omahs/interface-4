@@ -191,5 +191,3 @@ const CartButton = ({
 }
 
 export default CartButton
-
-// Todo? Handle purchasedQuantity for isMultiple products?

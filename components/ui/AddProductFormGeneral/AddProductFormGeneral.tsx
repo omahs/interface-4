@@ -92,7 +92,6 @@ const AddProductFormGeneral = ({
           required
         />
       </div>
-      {/* Todo: Add tags */}
       {/* <InputTags tags={tagsList} setTags={setTags} /> */}
       <SlicerImageBlock
         name={name}

@@ -95,10 +95,9 @@ const SponsorListItem = ({ slicerId, sponsor, sponsorLink }: Props) => {
                     href={link || sponsorLink}
                     target="_blank"
                     rel="noreferrer"
+                    className="higlight"
                   >
-                    <span className="font-bold underline">
-                      {resolvedAddress || addressReduced}
-                    </span>
+                    {resolvedAddress || addressReduced}
                   </a>
                 ) : (
                   <>{resolvedAddress || addressReduced}</>

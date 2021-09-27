@@ -51,4 +51,4 @@ const SlicerDescription = ({
 
 export default SlicerDescription
 
-// Todo: Complete this
+// Todo: Add Slicer tags

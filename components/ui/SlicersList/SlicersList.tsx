@@ -61,7 +61,6 @@ const SlicersList = () => {
     >
       <>
         {[...Array(iterator)].map((el, key) => {
-          // Todo: Add sorting
           const i = Number(key)
           const ownedShares = slicersOwned[i].slices
           const slicer = slicersOwned[i].slicer
@@ -100,5 +99,5 @@ const SlicersList = () => {
 
 export default SlicersList
 
-// Todo: Add sorting by unreleased amount
+// Todo: Add sorting options, if possible also by unreleased amount
 // Todo: Unrelease batch
