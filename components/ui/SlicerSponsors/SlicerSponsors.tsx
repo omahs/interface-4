@@ -64,7 +64,7 @@ const SlicerSponsors = ({ slicerId, slicerAddress, editMode }: Props) => {
           })}
         </ol>
       ) : (
-        <p>There are no sponsors yet</p>
+        <p className="text-gray-500">Become the first sponsor!</p>
       )}
       {!editMode && (
         <>
@@ -81,4 +81,3 @@ const SlicerSponsors = ({ slicerId, slicerAddress, editMode }: Props) => {
 export default SlicerSponsors
 
 // Todo: finish styling
-// Todo: Add ENS address
