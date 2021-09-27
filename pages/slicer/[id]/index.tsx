@@ -203,6 +203,7 @@ const Id = ({
           <SlicerSponsors
             slicerId={slicerInfo?.id}
             slicerAddress={slicerInfo?.address}
+            sponsorData={slicerInfo?.sponsors}
             editMode={editMode}
           />
           {editMode && (

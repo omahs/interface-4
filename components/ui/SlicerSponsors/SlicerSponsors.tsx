@@ -12,10 +12,16 @@ type Sponsor = {
 type Props = {
   slicerId: string
   slicerAddress: string
+  sponsorData: object
   editMode: boolean
 }
 
-const SlicerSponsors = ({ slicerId, slicerAddress, editMode }: Props) => {
+const SlicerSponsors = ({
+  slicerId,
+  slicerAddress,
+  sponsorData,
+  editMode,
+}: Props) => {
   const [sponsors, setSponsors] = useState<Sponsor[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -24,7 +30,7 @@ const SlicerSponsors = ({ slicerId, slicerAddress, editMode }: Props) => {
     first: 11, 
     where: {slicer: "${slicerId}"}, 
     orderBy: "totalPaid", 
-    orderDirection: "asc"
+    orderDirection: "desc"
   ) {
     id
     totalPaid
@@ -50,16 +56,23 @@ const SlicerSponsors = ({ slicerId, slicerAddress, editMode }: Props) => {
   }, [subgraphData])
 
   return (
-    <div className="max-w-sm py-8 mx-auto text-center">
+    <div className="max-w-sm py-4 mx-auto text-center">
       <h2 className="pb-12">Sponsors</h2>
       {loading ? (
         <div className="flex justify-center py-2">
           <Spinner size="h-10 w-10" />
         </div>
       ) : sponsors.length != 0 ? (
-        <ol className="space-y-3 list-decimal list-item">
+        <ol className="space-y-5">
           {sponsors.map((sponsor, key) => {
-            return <SponsorListItem sponsor={sponsor} key={key} />
+            return (
+              <SponsorListItem
+                slicerId={slicerId}
+                sponsor={sponsor}
+                key={key}
+                sponsorLink={sponsorData[sponsor.address]}
+              />
+            )
           })}
         </ol>
       ) : (
@@ -79,4 +92,6 @@ const SlicerSponsors = ({ slicerId, slicerAddress, editMode }: Props) => {
 
 export default SlicerSponsors
 
-// Todo: finish styling
+// Todo?:
+//  - allow superusers to hide sponsorLinks in editMode
+//  - make first sponsors bigger or more highlighted
