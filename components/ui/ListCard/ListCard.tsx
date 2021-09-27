@@ -25,7 +25,6 @@ const ListCard = ({ label, sideLabel, subLabel, href, remove }: Props) => {
   return (
     <div>
       {href ? (
-        // todo: Test if this link breaks the page in production
         <Link href={href}>
           <a>{content}</a>
         </Link>

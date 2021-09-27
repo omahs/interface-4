@@ -19,6 +19,8 @@ import {
   Container,
   SlicerSubmitBlock,
   SlicerProducts,
+  PaySlicer,
+  SlicerSponsors,
 } from "@components/ui"
 
 export type NewImage = { url: string; file: File }
@@ -197,24 +199,31 @@ const Id = ({
             slicerAddress={slicerInfo?.address}
             products={products}
           />
-          <SlicerSubmitBlock
+          <SlicerSponsors
+            slicerId={slicerInfo?.id}
+            slicerAddress={slicerInfo?.address}
             editMode={editMode}
-            setEditMode={setEditMode}
-            slicerInfo={slicerInfo}
-            slicer={slicer}
-            setSlicer={setSlicer}
-            loading={loading}
-            setLoading={setLoading}
-            newName={newName}
-            setNewName={setNewName}
-            newDescription={newDescription}
-            setNewDescription={setNewDescription}
-            newImage={newImage}
-            setNewImage={setNewImage}
-            setTempImageUrl={setTempImageUrl}
-            msg={msg}
-            setMsg={setMsg}
           />
+          {editMode && (
+            <SlicerSubmitBlock
+              editMode={editMode}
+              setEditMode={setEditMode}
+              slicerInfo={slicerInfo}
+              slicer={slicer}
+              setSlicer={setSlicer}
+              loading={loading}
+              setLoading={setLoading}
+              newName={newName}
+              setNewName={setNewName}
+              newDescription={newDescription}
+              setNewDescription={setNewDescription}
+              newImage={newImage}
+              setNewImage={setNewImage}
+              setTempImageUrl={setTempImageUrl}
+              msg={msg}
+              setMsg={setMsg}
+            />
+          )}
         </main>
       ) : (
         <ActionScreen

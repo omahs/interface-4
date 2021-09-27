@@ -95,6 +95,7 @@ export default Home
  *      - sort products by productId / createdAt / totalPurchases / likes
  *    - signal when markdown can be used in textareas
  *    - cart persists with user (save data on db & make user sign transaction ?)
+ *    - optimize subgraph queries (products + payeeslicer) in slicer/[id], if possible
  *
  *    - product features
  *      - edit/delete products

@@ -6,7 +6,7 @@ import handleMessage, { Message } from "@utils/handleMessage"
 import { defaultProvider } from "@lib/useProvider"
 import { slicer as slicerContract } from "@lib/initProvider"
 import { useAppContext } from "../context"
-import { PaySlicer, Button, MessageBlock } from "@components/ui"
+import { Button, MessageBlock } from "@components/ui"
 import supabaseUpload from "@utils/supabaseUpload"
 
 type Props = {
@@ -147,9 +147,7 @@ const SlicerSubmitBlock = ({
     }
   }, [slicerInfoUpdated])
 
-  return !editMode ? (
-    <PaySlicer slicerAddress={slicerInfo?.address} />
-  ) : (
+  return (
     <div>
       <p className="pb-8 mx-auto max-w-screen-xs">
         <strong>Note:</strong> Edits will appear after around 10 seconds.
