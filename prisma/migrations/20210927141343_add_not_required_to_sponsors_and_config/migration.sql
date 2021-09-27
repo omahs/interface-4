@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Slicer" ALTER COLUMN "config" DROP NOT NULL,
+ALTER COLUMN "sponsors" DROP NOT NULL;
