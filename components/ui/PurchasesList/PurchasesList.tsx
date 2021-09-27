@@ -38,22 +38,25 @@ const PurchasesList = () => {
       <>
         {[...Array(iterator)].map((el, key) => {
           const i = Number(key)
+          const purchase = purchases && purchases[i]
           const index = purchaseData?.findIndex(
             (p: Product) =>
-              p.slicerId == purchases[i].slicerId &&
-              p.productId == purchases[i].productId
+              p.slicerId == purchase?.slicerId &&
+              p.productId == purchase?.productId
           )
-          const slicerId = purchases[i].slicerId
-          const productId = purchases[i].productId
-          const name = purchaseData && purchaseData[index].name
-          const hash = purchaseData && purchaseData[index].hash
-          const image = purchaseData && purchaseData[index].image
-          const uid = purchaseData && purchaseData[index].uid
-          const creator = purchaseData && purchaseData[index].creator
+          const purchaseDataEl = purchaseData && purchaseData[index]
+
+          const slicerId = purchase?.slicerId
+          const productId = purchase?.productId
+          const name = purchaseDataEl?.name
+          const hash = purchaseDataEl?.hash
+          const image = purchaseDataEl?.image
+          const uid = purchaseDataEl?.uid
+          const creator = purchaseDataEl?.creator
           const purchaseElArray =
-            purchaseData &&
-            Object.keys(purchaseData[index].purchaseInfo).filter(
-              (el) => purchaseData[index].purchaseInfo[el] == true
+            purchaseDataEl &&
+            Object.keys(purchaseDataEl?.purchaseInfo).filter(
+              (el) => purchaseDataEl?.purchaseInfo[el] == true
             )
           const purchaseInfo = purchaseElArray?.join(", ") || ""
 

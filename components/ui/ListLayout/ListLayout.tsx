@@ -31,14 +31,16 @@ const ListLayout = ({
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", () => {
         setItems(initItems)
-        setIterator(items < elementsArray.length ? items : elementsArray.length)
+        setIterator(
+          items < elementsArray?.length ? items : elementsArray?.length
+        )
       })
     }
   }, [])
 
   useEffect(() => {
     if (elementsArray) {
-      setIterator(items < elementsArray.length ? items : elementsArray.length)
+      setIterator(items < elementsArray?.length ? items : elementsArray?.length)
     }
   }, [elementsArray, items])
 
@@ -46,11 +48,11 @@ const ListLayout = ({
     <div className="flex justify-center pb-20">
       <Spinner size="w-10 h-10" />
     </div>
-  ) : elementsArray.length != 0 ? (
+  ) : elementsArray?.length != 0 ? (
     <div className="pt-4 sm:pt-8">
       {children}
       <div className="pt-10 pb-6 space-y-8">
-        {items < elementsArray.length && (
+        {items < elementsArray?.length && (
           <p className="text-center">
             <a
               className="underline"
