@@ -43,8 +43,8 @@ const PaySlicer = ({ slicerAddress }: Props) => {
       usdValue={usdValue}
       setUsdValue={setUsdValue}
       loading={loading}
-      actionLabel="Pay"
-      marginLabel="mr-28 xs:mr-[7.6rem]"
+      actionLabel="Send"
+      marginLabel="mr-32"
       action={pay}
     />
   )

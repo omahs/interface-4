@@ -36,3 +36,5 @@ const ListCard = ({ label, sideLabel, subLabel, href, remove }: Props) => {
 }
 
 export default ListCard
+
+// todo: fix link bubble up conflicting with remove()
