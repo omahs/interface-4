@@ -1,5 +1,6 @@
 import markdownToHtml from "@lib/markdownToHtml"
 import React, { InputHTMLAttributes, useState } from "react"
+import { Question } from ".."
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   value: string
@@ -11,6 +12,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   required?: boolean
   rows?: number
   previewBox?: string
+  question?: JSX.Element
   onChange?: (...args: any[]) => any
 }
 
@@ -25,6 +27,7 @@ const Textarea: React.FC<Props> = (props) => {
     required,
     rows = 3,
     previewBox,
+    question,
     onChange,
   } = props
   const [showPreview, setShowPreview] = useState(false)
@@ -48,15 +51,36 @@ const Textarea: React.FC<Props> = (props) => {
   return (
     <label>
       {label && (
-        <div className="relative">
+        <div className="relative flex items-center pb-2">
           <p
-            className={`pb-2 text-sm font-semibold text-left ${
+            className={`text-sm pr-1 font-semibold text-left ${
               inverted ? "text-gray-200" : "text-gray-700"
             }`}
           >
             {label}
           </p>
 
+          {!showPreview && (
+            <Question
+              text={
+                <>
+                  {question}
+                  <p>
+                    <b>Note:</b> You can use{" "}
+                    <a
+                      className="highlight"
+                      href="https://www.markdownguide.org/cheat-sheet/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      markdown syntax
+                    </a>{" "}
+                    to add elements such as headings, links or lists.{" "}
+                  </p>
+                </>
+              }
+            />
+          )}
           {value && (
             <a
               className="absolute top-0 right-0 flex items-center h-full pb-2 mr-1 text-sm text-blue-600"

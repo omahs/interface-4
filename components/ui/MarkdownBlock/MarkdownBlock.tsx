@@ -31,5 +31,3 @@ const MarkdownBlock = ({
 }
 
 export default MarkdownBlock
-
-// Todo: Add <Question /> to alert users that they can write using md
