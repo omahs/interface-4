@@ -29,7 +29,7 @@ export const useEns = (address: string) => {
   const [resolvedAddress, setResolvedAddress] = useState("")
   useEffect(() => {
     resolveEns(address, setResolvedAddress)
-  }, [])
+  }, [address])
   return resolvedAddress
 }
 
