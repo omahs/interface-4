@@ -19,6 +19,7 @@ model Slicer {
   address       String?
   image         String?
   isCollectible Boolean?
+  config        Json        @default("{\"sponsors\": true}")
   attributes    Json[]
   products      Product[]
 }
