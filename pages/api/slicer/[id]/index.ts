@@ -73,8 +73,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 value: data.slicer.createdAtTimestamp,
               },
             ],
-            // config: { sponsors: true },
-            // sponsors: {},
+            config: { sponsors: true },
+            sponsors: {},
           }
           await prisma.slicer.create({
             data: slicerInfo,
@@ -102,8 +102,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           image: "",
           isCollectible: false,
           attributes: [],
-          // config: { sponsors: true },
-          // sponsors: {},
+          config: { sponsors: true },
+          sponsors: {},
         }
       }
       res.status(200).json(slicerInfo)
