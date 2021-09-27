@@ -29,13 +29,12 @@ const SlicerSponsors = ({ slicerId, slicerAddress, editMode }: Props) => {
     id
     totalPaid
   }`
-  const subgraphData = useQuery(tokensQuery)
-  const payeeSlicers = subgraphData?.payeeSlicers
+  const subgraphData = useQuery(tokensQuery, [slicerAddress])
 
   useEffect(() => {
-    if (payeeSlicers) {
+    if (subgraphData) {
       let sponsorList: Sponsor[] = []
-      payeeSlicers.forEach((el) => {
+      subgraphData.payeeSlicers.forEach((el) => {
         const address = el.id.split("-")[1]
         const totalPaid = el.totalPaid
         if (address != slicerAddress && totalPaid) {
@@ -48,7 +47,7 @@ const SlicerSponsors = ({ slicerId, slicerAddress, editMode }: Props) => {
       setSponsors(sponsorList)
       setLoading(false)
     }
-  }, [payeeSlicers])
+  }, [subgraphData])
 
   return (
     <div className="max-w-sm py-8 mx-auto text-center">
