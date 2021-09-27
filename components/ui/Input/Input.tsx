@@ -1,6 +1,7 @@
 import Arrow from "@components/icons/Arrow"
 import Spinner from "@components/icons/Spinner"
 import React, { InputHTMLAttributes } from "react"
+import { Question } from ".."
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   className?: string
@@ -11,6 +12,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   loading?: boolean
   inverted?: boolean
   submit?: boolean
+  question?: JSX.Element
   onClickLabel?: string
   prefixAction?: (...args: any[]) => any
   onClick?: (...args: any[]) => any
@@ -29,6 +31,7 @@ const Input: React.FC<Props> = (props) => {
     disabled,
     inverted,
     submit,
+    question,
     prefixAction,
     onClick,
     onClickLabel,
@@ -56,13 +59,23 @@ const Input: React.FC<Props> = (props) => {
   return (
     <label>
       {label && (
-        <p
-          className={`pb-2 text-sm font-semibold text-left ${
-            inverted ? "text-gray-200" : "text-gray-700"
-          }`}
-        >
-          {label}
-        </p>
+        <>
+          <div className="relative flex items-center pb-2">
+            <p
+              className={`text-sm font-semibold text-left pr-1 ${
+                inverted ? "text-gray-200" : "text-gray-700"
+              }`}
+            >
+              {label}
+            </p>
+            {question && (
+              <Question
+                position="bottom-[20px] left-[-40px] xs:left-0"
+                text={question}
+              />
+            )}
+          </div>
+        </>
       )}
       <div
         className={`flex flex-row-reverse mb-3 rounded-t-sm ${
