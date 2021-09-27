@@ -70,7 +70,9 @@ const ProductCard = ({
         : "text-yellow-600"
       : "text-green-600"
 
+  //todo: optimize
   useEffect(() => {
+    setPurchasedQuantity(0)
     purchases?.map((p: Purchase) => {
       if (
         p.slicerId === String(slicerId) &&
