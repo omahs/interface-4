@@ -1,3 +1,4 @@
+import handleSendTransaction from "@utils/handleSendTransaction"
 import { BigNumber } from "ethers"
 import { useState } from "react"
 import { useAppContext } from "../context"
@@ -8,7 +9,7 @@ type Props = {
 }
 
 const PaySlicer = ({ slicerAddress }: Props) => {
-  const { account } = useAppContext()
+  const { account, connector } = useAppContext()
   const [usdValue, setUsdValue] = useState(0)
   const [ethValue, setEthValue] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -16,17 +17,15 @@ const PaySlicer = ({ slicerAddress }: Props) => {
   const pay = async () => {
     setLoading(true)
     try {
-      const transactionParameters = {
-        to: slicerAddress,
-        from: account,
-        value: BigNumber.from(Math.floor(ethValue * 100000)).mul(
-          BigNumber.from(10).pow(13)
-        )._hex,
-      }
-      await window.ethereum.request({
-        method: "eth_sendTransaction",
-        params: [transactionParameters],
-      })
+      const value = BigNumber.from(Math.floor(ethValue * 100000)).mul(
+        BigNumber.from(10).pow(13)
+      )._hex
+      const transactionInfo = await handleSendTransaction(
+        account,
+        slicerAddress,
+        value,
+        connector
+      )
 
       setEthValue(0)
       setUsdValue(0)
