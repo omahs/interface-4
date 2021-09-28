@@ -11,6 +11,7 @@ export type Purchase = {
 }
 
 const AppContext = createContext<any>({
+  connector: null,
   isConnected: false,
   chainId: "",
   account: "",
@@ -29,7 +30,7 @@ const AppContext = createContext<any>({
 export function AppWrapper({ children }) {
   const [loading, setLoading] = useState(true)
   const [modalView, setModalView] = useState<View>({ name: "" })
-  const { isConnected, chainId, account } = useProvider(setLoading)
+  const { connector, isConnected, chainId, account } = useProvider(setLoading)
 
   const [color1, setColor1] = useState([])
   const [color2, setColor2] = useState([])
@@ -66,6 +67,7 @@ export function AppWrapper({ children }) {
   return (
     <AppContext.Provider
       value={{
+        connector,
         isConnected,
         chainId,
         account,

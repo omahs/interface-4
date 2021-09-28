@@ -25,7 +25,7 @@ export const getPurchases = async (
   })
   const payeePurchases = data?.payee?.purchases
   let purchasesList: Purchase[] = []
-  payeePurchases.map((p) => {
+  payeePurchases?.map((p) => {
     const id = p.id.split("-")
     const slicerId = id[0]
     const productId = id[1]

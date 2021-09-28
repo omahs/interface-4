@@ -25,7 +25,7 @@ const Modal = ({ modalView, setModalView }: Props) => {
       content = NETWORK_VIEW
       break
     case "CONNECT_VIEW":
-      content = CONNECT_VIEW
+      content = CONNECT_VIEW()
       break
     case "IRREVERSIBLE_VIEW":
       content = IRREVERSIBLE_VIEW()
