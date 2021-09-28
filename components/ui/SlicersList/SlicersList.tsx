@@ -10,8 +10,8 @@ const SlicersList = () => {
   const [unreleased, setUnreleased] = useState([])
 
   const tokensQuery = /* GraphQL */ `
-      payee(id: "${account.toLowerCase()}") {
-        slicers {
+      payee(id: "${account?.toLowerCase()}") {
+        slicers (where: {slices_gt: "0"}){
           slices
           slicer {
             id
@@ -24,8 +24,8 @@ const SlicersList = () => {
       }
     `
   let subgraphData = useQuery(tokensQuery, [account])
-  const slicers = subgraphData?.payee?.slicers
-  const slicersOwned = slicers?.filter((el) => el.slices != 0)
+  const payeeData = subgraphData?.payee
+  const slicers = payeeData?.slicers
   let slicerAddresses = []
 
   const getUnreleasedData = async (data) => {
@@ -38,7 +38,7 @@ const SlicersList = () => {
 
   useEffect(() => {
     if (account && slicers) {
-      slicersOwned?.map((slicer) => {
+      slicers?.map((slicer) => {
         slicerAddresses.push(slicer.slicer.address)
       })
       const body = {
@@ -52,7 +52,7 @@ const SlicersList = () => {
 
   return (
     <ListLayout
-      elementsArray={slicersOwned}
+      elementsArray={subgraphData && (slicers || [])}
       setIterator={setIterator}
       actionScreenText="You have no slicers :("
       actionScreenHref="/slice"
@@ -62,7 +62,7 @@ const SlicersList = () => {
       <>
         {[...Array(iterator)].map((el, key) => {
           const i = Number(key)
-          const slicerOwned = slicersOwned && slicersOwned[i]
+          const slicerOwned = slicers && slicers[i]
           const ownedShares = slicerOwned?.slices
           const slicer = slicerOwned?.slicer
           const slicerId = slicer?.id
