@@ -82,6 +82,4886 @@
               "contract": "ERC1967UpgradeUpgradeable",
               "label": "__gap",
               "type": "t_array(t_uint256)50_storage",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)50_storage": {
+              "label": "uint256[50]"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "IBeaconUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/beacon/IBeaconUpgradeable.sol:8",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "implementation()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "Initializable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:17",
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "UUPSUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:20",
+        "inherit": [
+          "ERC1967UpgradeUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "upgradeTo(address)",
+          "upgradeToAndCall(address,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "UUPSUpgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)50_storage",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:64"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)50_storage": {
+              "label": "uint256[50]"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "PausableUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol:17",
+        "inherit": [
+          "ContextUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "paused()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol:28"
+            },
+            {
+              "contract": "PausableUpgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)49_storage",
+              "src": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol:96"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "ReentrancyGuardUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:22",
+        "inherit": [
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:37"
+            },
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)49_storage",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:67"
+            }
+          ],
+          "types": {
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC1155Upgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol:20",
+        "version": {
+          "withMetadata": "0ce13d1750298dd799712aae4eb31431238a6966a2ad147762a36f343c3147ff",
+          "withoutMetadata": "3dae8241d2b563884f74d3baaab04062e6750fdac719c69548a50b4bcafa8b59",
+          "linkedWithoutMetadata": "3dae8241d2b563884f74d3baaab04062e6750fdac719c69548a50b4bcafa8b59"
+        },
+        "inherit": [
+          "IERC1155MetadataURIUpgradeable",
+          "IERC1155Upgradeable",
+          "ERC165Upgradeable",
+          "IERC165Upgradeable",
+          "ContextUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [
+          "AddressUpgradeable"
+        ],
+        "methods": [
+          "supportsInterface(bytes4)",
+          "uri(uint256)",
+          "balanceOf(address,uint256)",
+          "balanceOfBatch(address[],uint256[])",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,uint256,bytes)",
+          "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "ERC1155Upgradeable",
+              "label": "_balances",
+              "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol:24"
+            },
+            {
+              "contract": "ERC1155Upgradeable",
+              "label": "_operatorApprovals",
+              "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol:27"
+            },
+            {
+              "contract": "ERC1155Upgradeable",
+              "label": "_uri",
+              "type": "t_string_storage",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol:30"
+            },
+            {
+              "contract": "ERC1155Upgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)47_storage",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol:458"
+            }
+          ],
+          "types": {
+            "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+              "label": "mapping(uint256 => mapping(address => uint256))"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+              "label": "mapping(address => mapping(address => bool))"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)"
+            },
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_string_storage": {
+              "label": "string"
+            },
+            "t_array(t_uint256)47_storage": {
+              "label": "uint256[47]"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC1155ReceiverUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155ReceiverUpgradeable.sol:10",
+        "inherit": [
+          "IERC165Upgradeable"
+        ],
+        "libraries": [],
+        "methods": [
+          "onERC1155Received(address,address,uint256,uint256,bytes)",
+          "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC1155Upgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155Upgradeable.sol:13",
+        "inherit": [
+          "IERC165Upgradeable"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address,uint256)",
+          "balanceOfBatch(address[],uint256[])",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,uint256,bytes)",
+          "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC1155MetadataURIUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/extensions/IERC1155MetadataURIUpgradeable.sol:13",
+        "inherit": [
+          "IERC1155Upgradeable",
+          "IERC165Upgradeable"
+        ],
+        "libraries": [],
+        "methods": [
+          "uri(uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC20Upgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:35",
+        "version": {
+          "withMetadata": "620213837814c6a87ff48df8ade477374c523c1293baa766fdf01270893dce4b",
+          "withoutMetadata": "1faaefc5061a6caf779a8150fe4682c8c4465c3e1ce728c5402943a4d7d0bed7",
+          "linkedWithoutMetadata": "1faaefc5061a6caf779a8150fe4682c8c4465c3e1ce728c5402943a4d7d0bed7"
+        },
+        "inherit": [
+          "IERC20MetadataUpgradeable",
+          "IERC20Upgradeable",
+          "ContextUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "name()",
+          "symbol()",
+          "decimals()",
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "increaseAllowance(address,uint256)",
+          "decreaseAllowance(address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "ERC20Upgradeable",
+              "label": "_balances",
+              "type": "t_mapping(t_address,t_uint256)",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:36"
+            },
+            {
+              "contract": "ERC20Upgradeable",
+              "label": "_allowances",
+              "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:38"
+            },
+            {
+              "contract": "ERC20Upgradeable",
+              "label": "_totalSupply",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:40"
+            },
+            {
+              "contract": "ERC20Upgradeable",
+              "label": "_name",
+              "type": "t_string_storage",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:42"
+            },
+            {
+              "contract": "ERC20Upgradeable",
+              "label": "_symbol",
+              "type": "t_string_storage",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:43"
+            },
+            {
+              "contract": "ERC20Upgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)45_storage",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:361"
+            }
+          ],
+          "types": {
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+              "label": "mapping(address => mapping(address => uint256))"
+            },
+            "t_string_storage": {
+              "label": "string"
+            },
+            "t_array(t_uint256)45_storage": {
+              "label": "uint256[45]"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC20Upgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol:8",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC20MetadataUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/IERC20MetadataUpgradeable.sol:12",
+        "inherit": [
+          "IERC20Upgradeable"
+        ],
+        "libraries": [],
+        "methods": [
+          "name()",
+          "symbol()",
+          "decimals()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "AddressUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:8",
+        "version": {
+          "withMetadata": "7a5e925e523824e30fd093b0caef1426159005a438f9c538a4d6701dd1ebc8e7",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ContextUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:16",
+        "inherit": [
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "ContextUpgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)50_storage",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)50_storage": {
+              "label": "uint256[50]"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "CountersUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol:13",
+        "version": {
+          "withMetadata": "c3c3e84b3c716ec37e0dbc4957c0549a0b890e6ef2a57ab269fc4f53b4382389",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "StorageSlotUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/StorageSlotUpgradeable.sol:31",
+        "version": {
+          "withMetadata": "f30c2dc67a193bfaea3db65e71392daef81d0598cc3725637b123d677e89a7c9",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC165Upgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:22",
+        "inherit": [
+          "IERC165Upgradeable",
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "ERC165Upgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)50_storage",
+              "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:35"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)50_storage": {
+              "label": "uint256[50]"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC165Upgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/introspection/IERC165Upgradeable.sol:14",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "Ownable": {
+        "src": "@openzeppelin/contracts/access/Ownable.sol:19",
+        "inherit": [
+          "Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "owner()",
+          "renounceOwnership()",
+          "transferOwnership(address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Ownable",
+            "src": "@openzeppelin/contracts/access/Ownable.sol:27"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "contract": "Ownable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts/access/Ownable.sol:20"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC1967Upgrade": {
+        "src": "@openzeppelin/contracts/proxy/ERC1967/ERC1967Upgrade.sol:17",
+        "inherit": [],
+        "libraries": [
+          "StorageSlot",
+          "Address"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "Proxy": {
+        "src": "@openzeppelin/contracts/proxy/Proxy.sol:15",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "()",
+          "()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "BeaconProxy": {
+        "src": "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol:17",
+        "version": {
+          "withMetadata": "f6e3c2d89f705fa59b309f399d56ee024f3a186b0e71082b574178ee12c069aa",
+          "withoutMetadata": "f6e3c2d89f705fa59b309f399d56ee024f3a186b0e71082b574178ee12c069aa",
+          "linkedWithoutMetadata": "f6e3c2d89f705fa59b309f399d56ee024f3a186b0e71082b574178ee12c069aa"
+        },
+        "inherit": [
+          "ERC1967Upgrade",
+          "Proxy"
+        ],
+        "libraries": [],
+        "methods": [
+          "(address,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "BeaconProxy",
+            "src": "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol:29"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IBeacon": {
+        "src": "@openzeppelin/contracts/proxy/beacon/IBeacon.sol:8",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "implementation()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "UpgradeableBeacon": {
+        "src": "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol:15",
+        "version": {
+          "withMetadata": "2fa8416ba0fb98d2413a868218d7e41441d0c5cffea7496eae3f3d3af69c6915",
+          "withoutMetadata": "d5005445b0cabafebf8a672ec0e27f28f73015951181bb49d9109831936a650c",
+          "linkedWithoutMetadata": "d5005445b0cabafebf8a672ec0e27f28f73015951181bb49d9109831936a650c"
+        },
+        "inherit": [
+          "Ownable",
+          "Context",
+          "IBeacon"
+        ],
+        "libraries": [
+          "Address"
+        ],
+        "methods": [
+          "(address)",
+          "implementation()",
+          "upgradeTo(address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "UpgradeableBeacon",
+            "src": "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol:27"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "contract": "UpgradeableBeacon",
+              "label": "_implementation",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol:16"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "Pausable": {
+        "src": "@openzeppelin/contracts/security/Pausable.sol:16",
+        "inherit": [
+          "Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "paused()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Pausable",
+            "src": "@openzeppelin/contracts/security/Pausable.sol:32"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "contract": "Pausable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts/security/Pausable.sol:27"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "ReentrancyGuard": {
+        "src": "@openzeppelin/contracts/security/ReentrancyGuard.sol:21",
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "ReentrancyGuard",
+            "src": "@openzeppelin/contracts/security/ReentrancyGuard.sol:38"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "contract": "ReentrancyGuard",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts/security/ReentrancyGuard.sol:36"
+            }
+          ],
+          "types": {
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC1155": {
+        "src": "@openzeppelin/contracts/token/ERC1155/IERC1155.sol:13",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address,uint256)",
+          "balanceOfBatch(address[],uint256[])",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,uint256,bytes)",
+          "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC1155Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol:10",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "onERC1155Received(address,address,uint256,uint256,bytes)",
+          "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC1155MetadataURI": {
+        "src": "@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol:13",
+        "inherit": [
+          "IERC1155",
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "uri(uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC1155Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Receiver.sol:11",
+        "inherit": [
+          "IERC1155Receiver",
+          "ERC165",
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721.sol:10",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address)",
+          "ownerOf(uint256)",
+          "safeTransferFrom(address,address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "approve(address,uint256)",
+          "getApproved(uint256)",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol:10",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721Metadata": {
+        "src": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol:11",
+        "inherit": [
+          "IERC721",
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "name()",
+          "symbol()",
+          "tokenURI(uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "Address": {
+        "src": "@openzeppelin/contracts/utils/Address.sol:8",
+        "version": {
+          "withMetadata": "e92d5e140c0238f9c77dc8c950324dbabe215cdd23b5ac3ad1f5787431cb778d",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts/utils/Address.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "Context": {
+        "src": "@openzeppelin/contracts/utils/Context.sol:15",
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "Counters": {
+        "src": "@openzeppelin/contracts/utils/Counters.sol:13",
+        "version": {
+          "withMetadata": "d0ac6cc96c328ffb5ef79b68e252e8cee1e9e65ba70a6c0f7955f605a23149fc",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "StorageSlot": {
+        "src": "@openzeppelin/contracts/utils/StorageSlot.sol:31",
+        "version": {
+          "withMetadata": "daf7dcb4feb791dbb08d047c7a685ab4a497f927b95219d3b5ab44a07608b455",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC165": {
+        "src": "@openzeppelin/contracts/utils/introspection/ERC165.sol:21",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC165": {
+        "src": "@openzeppelin/contracts/utils/introspection/IERC165.sol:14",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "EnumerableSet": {
+        "src": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol:29",
+        "version": {
+          "withMetadata": "6d6c6ac662c099946b73f745775a0014eef9127f942fda97d1d13d8a0a93a454",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "SLC": {
+        "src": "contracts/slc_v0.sol:15",
+        "version": {
+          "withMetadata": "05998ec3aab8063e2b9d35da136d7bf87fb985612d3ac380c75f0298693fd434",
+          "withoutMetadata": "d7bb031f628e4381aa66cf5f098e851957dc1850f90dfe48f416c4ab01cb0bcb",
+          "linkedWithoutMetadata": "d7bb031f628e4381aa66cf5f098e851957dc1850f90dfe48f416c4ab01cb0bcb"
+        },
+        "inherit": [
+          "OwnableSlice",
+          "UUPSUpgradeable",
+          "ERC1967UpgradeUpgradeable",
+          "ERC20Upgradeable",
+          "IERC20MetadataUpgradeable",
+          "IERC20Upgradeable",
+          "ContextUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "_mintSLC(address,uint256,uint32)",
+          "_triggerMint(address,uint256,address,uint8)",
+          "getServicePrice(uint32)",
+          "_setServicePrice(uint32,uint256)",
+          "initialize(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SLC",
+              "label": "_sliceCoreAddress",
+              "type": "t_address",
+              "src": "contracts/slc_v0.sol:24"
+            },
+            {
+              "contract": "SLC",
+              "label": "_servicePrices",
+              "type": "t_mapping(t_uint32,t_uint256)",
+              "src": "contracts/slc_v0.sol:26"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            },
+            "t_mapping(t_uint32,t_uint256)": {
+              "label": "mapping(uint32 => uint256)"
+            },
+            "t_uint32": {
+              "label": "uint32"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "SliceCore": {
+        "src": "contracts/sliceCore_v0.sol:21",
+        "version": {
+          "withMetadata": "2036b1ee1d936e2b18bb9f997b3008c0700bce3e298fa62cf3022092644398ab",
+          "withoutMetadata": "0435da29931225bdcda20c672c19f492191227a80573595532eed1611473fa33",
+          "linkedWithoutMetadata": "0435da29931225bdcda20c672c19f492191227a80573595532eed1611473fa33"
+        },
+        "inherit": [
+          "ReentrancyGuardUpgradeable",
+          "PausableUpgradeable",
+          "OwnableSlice",
+          "UUPSUpgradeable",
+          "ERC1967UpgradeUpgradeable",
+          "ERC1155Upgradeable",
+          "IERC1155MetadataURIUpgradeable",
+          "IERC1155Upgradeable",
+          "ERC165Upgradeable",
+          "IERC165Upgradeable",
+          "ContextUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [
+          "CountersUpgradeable"
+        ],
+        "methods": [
+          "_mintSlice(address,uint256,uint256,address)",
+          "safeTransferFrom(address,address,uint256,uint256,bytes)",
+          "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
+          "slicerBatchTransfer(address,address[],uint256,uint256[])",
+          "slicers(uint256)",
+          "categoryAddress(uint32)",
+          "_addCategory(address)",
+          "_changeCategoryAddress(uint32,address)",
+          "_setMaximumTransferBatch(uint16)",
+          "_setBasePath(string)",
+          "_togglePause()",
+          "totalSupply(uint256)",
+          "exists(uint256)",
+          "initialize()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SliceCore",
+              "label": "_maximumTransferBatch",
+              "type": "t_uint16",
+              "src": "contracts/sliceCore_v0.sol:30"
+            },
+            {
+              "contract": "SliceCore",
+              "label": "_basePath",
+              "type": "t_string_storage",
+              "src": "contracts/sliceCore_v0.sol:31"
+            },
+            {
+              "contract": "SliceCore",
+              "label": "_totalSupply",
+              "type": "t_mapping(t_uint256,t_uint256)",
+              "src": "contracts/sliceCore_v0.sol:32"
+            },
+            {
+              "contract": "SliceCore",
+              "label": "_slicers",
+              "type": "t_mapping(t_uint256,t_address)",
+              "src": "contracts/sliceCore_v0.sol:33"
+            },
+            {
+              "contract": "SliceCore",
+              "label": "_categoryIndex",
+              "type": "t_struct(Counter)3129_storage",
+              "src": "contracts/sliceCore_v0.sol:34"
+            },
+            {
+              "contract": "SliceCore",
+              "label": "_categoryAddresses",
+              "type": "t_mapping(t_uint32,t_address)",
+              "src": "contracts/sliceCore_v0.sol:35"
+            }
+          ],
+          "types": {
+            "t_uint16": {
+              "label": "uint16"
+            },
+            "t_string_storage": {
+              "label": "string"
+            },
+            "t_mapping(t_uint256,t_uint256)": {
+              "label": "mapping(uint256 => uint256)"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_mapping(t_uint256,t_address)": {
+              "label": "mapping(uint256 => address)"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_struct(Counter)3129_storage": {
+              "label": "struct CountersUpgradeable.Counter",
+              "members": [
+                {
+                  "label": "_value",
+                  "type": "t_uint256"
+                }
+              ]
+            },
+            "t_mapping(t_uint32,t_address)": {
+              "label": "mapping(uint32 => address)"
+            },
+            "t_uint32": {
+              "label": "uint32"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "Slice": {
+        "src": "contracts/slice_v0.sol:22",
+        "version": {
+          "withMetadata": "1d631e0dac3c0b3d84cea6d77e80d8e02072d37e195988265155bab7b34aa1fc",
+          "withoutMetadata": "7e5d187db96a895efd8c084073ef345b1616bc5aa4a3bacf0bf9e6587463c0f3",
+          "linkedWithoutMetadata": "7e5d187db96a895efd8c084073ef345b1616bc5aa4a3bacf0bf9e6587463c0f3"
+        },
+        "inherit": [
+          "ReentrancyGuardUpgradeable",
+          "PausableUpgradeable",
+          "OwnableUpgradeable",
+          "ContextUpgradeable",
+          "UUPSUpgradeable",
+          "ERC1967UpgradeUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [
+          "CountersUpgradeable",
+          "AddressUpgradeable"
+        ],
+        "methods": [
+          "slice(address[],uint256[],uint256,bool)",
+          "triggerRelease(address,address[],uint8)",
+          "payProducts(address payable[],uint32[],uint16[])",
+          "unreleasedBatch(address,address[])",
+          "getEthUsd()",
+          "slicers(uint256)",
+          "totalTokens()",
+          "_createSlicer(uint256,uint256,bool)",
+          "_beforeTransfer(address,address,address[],uint256[])",
+          "_setMaximumBatch(uint16,uint16)",
+          "_addToSliceCategory(uint32)",
+          "_upgradeSlicers(address)",
+          "_implementation()",
+          "_togglePause()",
+          "initialize(address,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "Slice",
+              "label": "upgradeableBeacon",
+              "type": "t_contract(UpgradeableBeacon)3987",
+              "src": "contracts/slice_v0.sol:49"
+            },
+            {
+              "contract": "Slice",
+              "label": "_SLCAddress",
+              "type": "t_address",
+              "src": "contracts/slice_v0.sol:51"
+            },
+            {
+              "contract": "Slice",
+              "label": "_sliceCoreAddress",
+              "type": "t_address",
+              "src": "contracts/slice_v0.sol:52"
+            },
+            {
+              "contract": "Slice",
+              "label": "priceFeed",
+              "type": "t_contract(AggregatorV3Interface)45",
+              "src": "contracts/slice_v0.sol:53"
+            },
+            {
+              "contract": "Slice",
+              "label": "_tokenIds",
+              "type": "t_struct(Counter)3129_storage",
+              "src": "contracts/slice_v0.sol:54"
+            },
+            {
+              "contract": "Slice",
+              "label": "_maximumSliceBatch",
+              "type": "t_uint16",
+              "src": "contracts/slice_v0.sol:55"
+            },
+            {
+              "contract": "Slice",
+              "label": "_maximumReleaseBatch",
+              "type": "t_uint16",
+              "src": "contracts/slice_v0.sol:56"
+            }
+          ],
+          "types": {
+            "t_contract(UpgradeableBeacon)3987": {
+              "label": "contract UpgradeableBeacon"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_contract(AggregatorV3Interface)45": {
+              "label": "contract AggregatorV3Interface"
+            },
+            "t_struct(Counter)3129_storage": {
+              "label": "struct CountersUpgradeable.Counter",
+              "members": [
+                {
+                  "label": "_value",
+                  "type": "t_uint256"
+                }
+              ]
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_uint16": {
+              "label": "uint16"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "Slicer": {
+        "src": "contracts/slicer_v0.sol:105",
+        "version": {
+          "withMetadata": "88765358c044c3be9cb8cd23c4308cbf09887fab4fe25362d5a99168b0d72a8e",
+          "withoutMetadata": "63c993786b135c9df904035b9632c3f5df993f393272e072640db00eb9a4e714",
+          "linkedWithoutMetadata": "63c993786b135c9df904035b9632c3f5df993f393272e072640db00eb9a4e714"
+        },
+        "inherit": [
+          "ReentrancyGuard",
+          "Pausable",
+          "Context",
+          "IERC721Receiver",
+          "ERC1155Receiver",
+          "IERC1155Receiver",
+          "ERC165",
+          "IERC165",
+          "SlicerProducts"
+        ],
+        "libraries": [
+          "Counters",
+          "EnumerableSet",
+          "Address"
+        ],
+        "methods": [
+          "_initialize(uint256,address,uint256,bool)",
+          "_addPayees(address[],uint256[])",
+          "_updatePayees(address,address,uint256)",
+          "_addChildrenSlicer(uint256)",
+          "release(address payable)",
+          "addProduct(uint32,uint256,bool,bool,bool,uint32,bytes,bytes,uint256[],uint32[])",
+          "setProductCategory(uint32,uint32)",
+          "setProductInfo(uint32,bool,uint32,uint256)",
+          "toggleUSDPrice(uint32,bool)",
+          "removeProduct(uint32)",
+          "_payProductFromSlice(address,uint32,uint16)",
+          "_payProductFromSlicer(uint256,address,uint32,uint16)",
+          "validatePurchase(uint32)",
+          "paySLC(uint32[],uint16[])",
+          "()",
+          "productPrice(uint32)",
+          "released(address)",
+          "unreleased(address)",
+          "slicerInfo()",
+          "totalReceived()",
+          "isPayeeAllowed(address)",
+          "onERC1155Received(address,address,uint256,uint256,bytes)",
+          "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "Slicer",
+              "label": "_slicerCreator",
+              "type": "t_address",
+              "src": "contracts/slicer_v0.sol:139"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_isCollectible",
+              "type": "t_bool",
+              "src": "contracts/slicer_v0.sol:140"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_tokenId",
+              "type": "t_uint256",
+              "src": "contracts/slicer_v0.sol:141"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_minimumShares",
+              "type": "t_uint256",
+              "src": "contracts/slicer_v0.sol:142"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_totalShares",
+              "type": "t_uint256",
+              "src": "contracts/slicer_v0.sol:143"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_totalReleased",
+              "type": "t_uint256",
+              "src": "contracts/slicer_v0.sol:144"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_shares",
+              "type": "t_mapping(t_address,t_uint256)",
+              "src": "contracts/slicer_v0.sol:145"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_released",
+              "type": "t_mapping(t_address,t_array(t_uint256)2_storage)",
+              "src": "contracts/slicer_v0.sol:146"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_childrenSlicers",
+              "type": "t_struct(UintSet)5450_storage",
+              "src": "contracts/slicer_v0.sol:147"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_productIds",
+              "type": "t_struct(Counter)4817_storage",
+              "src": "contracts/slicer_v0.sol:148"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            },
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)"
+            },
+            "t_mapping(t_address,t_array(t_uint256)2_storage)": {
+              "label": "mapping(address => uint256[2])"
+            },
+            "t_array(t_uint256)2_storage": {
+              "label": "uint256[2]"
+            },
+            "t_struct(UintSet)5450_storage": {
+              "label": "struct EnumerableSet.UintSet",
+              "members": [
+                {
+                  "label": "_inner",
+                  "type": "t_struct(Set)4992_storage"
+                }
+              ]
+            },
+            "t_struct(Set)4992_storage": {
+              "label": "struct EnumerableSet.Set",
+              "members": [
+                {
+                  "label": "_values",
+                  "type": "t_array(t_bytes32)dyn_storage"
+                },
+                {
+                  "label": "_indexes",
+                  "type": "t_mapping(t_bytes32,t_uint256)"
+                }
+              ]
+            },
+            "t_array(t_bytes32)dyn_storage": {
+              "label": "bytes32[]"
+            },
+            "t_bytes32": {
+              "label": "bytes32"
+            },
+            "t_mapping(t_bytes32,t_uint256)": {
+              "label": "mapping(bytes32 => uint256)"
+            },
+            "t_struct(Counter)4817_storage": {
+              "label": "struct Counters.Counter",
+              "members": [
+                {
+                  "label": "_value",
+                  "type": "t_uint256"
+                }
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "SlicerProducts": {
+        "src": "contracts/slicer_v0.sol:19",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "isProduct(uint32)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SlicerProducts",
+              "label": "_products",
+              "type": "t_mapping(t_uint32,t_struct(Product)7426_storage)",
+              "src": "contracts/slicer_v0.sol:63"
+            }
+          ],
+          "types": {
+            "t_mapping(t_uint32,t_struct(Product)7426_storage)": {
+              "label": "mapping(uint32 => struct SlicerProducts.Product)"
+            },
+            "t_uint32": {
+              "label": "uint32"
+            },
+            "t_struct(Product)7426_storage": {
+              "label": "struct SlicerProducts.Product",
+              "members": [
+                {
+                  "label": "categoryIndex",
+                  "type": "t_uint32"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "isUSD",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "isMultiple",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "isInfinite",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "availableUnits",
+                  "type": "t_uint32"
+                },
+                {
+                  "label": "creator",
+                  "type": "t_address"
+                },
+                {
+                  "label": "data",
+                  "type": "t_bytes_storage"
+                },
+                {
+                  "label": "purchaseData",
+                  "type": "t_bytes_storage"
+                },
+                {
+                  "label": "purchases",
+                  "type": "t_mapping(t_address,t_uint32)"
+                },
+                {
+                  "label": "subSlicers",
+                  "type": "t_array(t_address)dyn_storage"
+                },
+                {
+                  "label": "subProducts",
+                  "type": "t_mapping(t_address,t_array(t_uint32)dyn_storage)"
+                }
+              ]
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_bytes_storage": {
+              "label": "bytes"
+            },
+            "t_mapping(t_address,t_uint32)": {
+              "label": "mapping(address => uint32)"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]"
+            },
+            "t_mapping(t_address,t_array(t_uint32)dyn_storage)": {
+              "label": "mapping(address => uint32[])"
+            },
+            "t_array(t_uint32)dyn_storage": {
+              "label": "uint32[]"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "SliceDummy": {
+        "src": "contracts/test/slice_test_v1.sol:22",
+        "version": {
+          "withMetadata": "7bd0d09fe68ba541de3f26726d013561793461d45bdc6eb8f8ffe84ff4921a45",
+          "withoutMetadata": "aca6488258c474e6cd4fcb5ebb7b52141b49c25109516ccdf90e14c76b3c3b0a",
+          "linkedWithoutMetadata": "aca6488258c474e6cd4fcb5ebb7b52141b49c25109516ccdf90e14c76b3c3b0a"
+        },
+        "inherit": [
+          "ReentrancyGuardUpgradeable",
+          "PausableUpgradeable",
+          "OwnableUpgradeable",
+          "ContextUpgradeable",
+          "UUPSUpgradeable",
+          "ERC1967UpgradeUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [
+          "CountersUpgradeable",
+          "AddressUpgradeable"
+        ],
+        "methods": [
+          "testDummy()",
+          "slice(address[],uint256[],uint256)",
+          "triggerRelease(address,address[],uint8)",
+          "payProducts(address payable[],uint32[],uint16[])",
+          "unreleasedBatch(address,address[])",
+          "getEthUsd()",
+          "slicers(uint256)",
+          "totalTokens()",
+          "_createSlicer(uint256,uint256)",
+          "_beforeTransfer(address,address,address[],uint256[])",
+          "_setMaximumBatch(uint16,uint16)",
+          "_addToSliceCategory(uint32)",
+          "_upgradeSlicers(address)",
+          "_implementation()",
+          "_togglePause()",
+          "initialize(address,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SliceDummy",
+              "label": "upgradeableBeacon",
+              "type": "t_contract(UpgradeableBeacon)3987",
+              "src": "contracts/test/slice_test_v1.sol:48"
+            },
+            {
+              "contract": "SliceDummy",
+              "label": "_SLCAddress",
+              "type": "t_address",
+              "src": "contracts/test/slice_test_v1.sol:50"
+            },
+            {
+              "contract": "SliceDummy",
+              "label": "_sliceCoreAddress",
+              "type": "t_address",
+              "src": "contracts/test/slice_test_v1.sol:51"
+            },
+            {
+              "contract": "SliceDummy",
+              "label": "priceFeed",
+              "type": "t_contract(AggregatorV3Interface)45",
+              "src": "contracts/test/slice_test_v1.sol:52"
+            },
+            {
+              "contract": "SliceDummy",
+              "label": "_tokenIds",
+              "type": "t_struct(Counter)3129_storage",
+              "src": "contracts/test/slice_test_v1.sol:53"
+            },
+            {
+              "contract": "SliceDummy",
+              "label": "_maximumSliceBatch",
+              "type": "t_uint16",
+              "src": "contracts/test/slice_test_v1.sol:54"
+            },
+            {
+              "contract": "SliceDummy",
+              "label": "_maximumReleaseBatch",
+              "type": "t_uint16",
+              "src": "contracts/test/slice_test_v1.sol:55"
+            }
+          ],
+          "types": {
+            "t_contract(UpgradeableBeacon)3987": {
+              "label": "contract UpgradeableBeacon"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_contract(AggregatorV3Interface)45": {
+              "label": "contract AggregatorV3Interface"
+            },
+            "t_struct(Counter)3129_storage": {
+              "label": "struct CountersUpgradeable.Counter",
+              "members": [
+                {
+                  "label": "_value",
+                  "type": "t_uint256"
+                }
+              ]
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_uint16": {
+              "label": "uint16"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "SlicerDummyV0": {
+        "src": "contracts/test/slicer_test_v0.sol:105",
+        "version": {
+          "withMetadata": "64e15f009f07fa780cc22a420d402bf076ed5a6742e011aa697b628034fe8f85",
+          "withoutMetadata": "bc66f8889d82b6782d34ef1301c0c71ca8d74864f11e300a01530bb8429bac8c",
+          "linkedWithoutMetadata": "bc66f8889d82b6782d34ef1301c0c71ca8d74864f11e300a01530bb8429bac8c"
+        },
+        "inherit": [
+          "ReentrancyGuard",
+          "Pausable",
+          "Context",
+          "IERC721Receiver",
+          "ERC1155Receiver",
+          "IERC1155Receiver",
+          "ERC165",
+          "IERC165",
+          "SlicerProducts"
+        ],
+        "libraries": [
+          "Counters",
+          "EnumerableSet",
+          "Address"
+        ],
+        "methods": [
+          "_initialize(uint256,address,uint256,bool)",
+          "_addPayees(address[],uint256[])",
+          "_updatePayees(address,address,uint256)",
+          "_addChildrenSlicer(uint256)",
+          "release(address payable)",
+          "addProduct(uint32,uint256,bool,bool,bool,uint32,bytes,bytes,uint256[],uint32[])",
+          "setProductCategory(uint32,uint32)",
+          "setProductInfo(uint32,bool,uint32,uint256)",
+          "toggleUSDPrice(uint32,bool)",
+          "removeProduct(uint32)",
+          "_payProductFromSlice(address,uint32,uint16)",
+          "_payProductFromSlicer(uint256,address,uint32,uint16)",
+          "validatePurchase(uint32)",
+          "paySLC(uint32[],uint16[])",
+          "()",
+          "productPrice(uint32)",
+          "released(address)",
+          "unreleased(address)",
+          "slicerInfo()",
+          "totalReceived()",
+          "isPayeeAllowed(address)",
+          "onERC1155Received(address,address,uint256,uint256,bytes)",
+          "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_slicerCreator",
+              "type": "t_address",
+              "src": "contracts/test/slicer_test_v0.sol:139"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_isCollectible",
+              "type": "t_bool",
+              "src": "contracts/test/slicer_test_v0.sol:140"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_tokenId",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v0.sol:141"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_minimumShares",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v0.sol:142"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_totalShares",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v0.sol:143"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_totalReleased",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v0.sol:144"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_shares",
+              "type": "t_mapping(t_address,t_uint256)",
+              "src": "contracts/test/slicer_test_v0.sol:145"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_released",
+              "type": "t_mapping(t_address,t_array(t_uint256)2_storage)",
+              "src": "contracts/test/slicer_test_v0.sol:146"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_childrenSlicers",
+              "type": "t_struct(UintSet)5450_storage",
+              "src": "contracts/test/slicer_test_v0.sol:147"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_productIds",
+              "type": "t_struct(Counter)4817_storage",
+              "src": "contracts/test/slicer_test_v0.sol:148"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            },
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)"
+            },
+            "t_mapping(t_address,t_array(t_uint256)2_storage)": {
+              "label": "mapping(address => uint256[2])"
+            },
+            "t_array(t_uint256)2_storage": {
+              "label": "uint256[2]"
+            },
+            "t_struct(UintSet)5450_storage": {
+              "label": "struct EnumerableSet.UintSet",
+              "members": [
+                {
+                  "label": "_inner",
+                  "type": "t_struct(Set)4992_storage"
+                }
+              ]
+            },
+            "t_struct(Set)4992_storage": {
+              "label": "struct EnumerableSet.Set",
+              "members": [
+                {
+                  "label": "_values",
+                  "type": "t_array(t_bytes32)dyn_storage"
+                },
+                {
+                  "label": "_indexes",
+                  "type": "t_mapping(t_bytes32,t_uint256)"
+                }
+              ]
+            },
+            "t_array(t_bytes32)dyn_storage": {
+              "label": "bytes32[]"
+            },
+            "t_bytes32": {
+              "label": "bytes32"
+            },
+            "t_mapping(t_bytes32,t_uint256)": {
+              "label": "mapping(bytes32 => uint256)"
+            },
+            "t_struct(Counter)4817_storage": {
+              "label": "struct Counters.Counter",
+              "members": [
+                {
+                  "label": "_value",
+                  "type": "t_uint256"
+                }
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "SlicerProductsDummyV0": {
+        "src": "contracts/test/slicer_test_v0.sol:19",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "isProduct(uint32)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SlicerProductsDummyV0",
+              "label": "_products",
+              "type": "t_mapping(t_uint32,t_struct(Product)10249_storage)",
+              "src": "contracts/test/slicer_test_v0.sol:63"
+            }
+          ],
+          "types": {
+            "t_mapping(t_uint32,t_struct(Product)10249_storage)": {
+              "label": "mapping(uint32 => struct SlicerProductsDummyV0.Product)"
+            },
+            "t_uint32": {
+              "label": "uint32"
+            },
+            "t_struct(Product)10249_storage": {
+              "label": "struct SlicerProductsDummyV0.Product",
+              "members": [
+                {
+                  "label": "categoryIndex",
+                  "type": "t_uint32"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "isUSD",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "isMultiple",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "isInfinite",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "availableUnits",
+                  "type": "t_uint32"
+                },
+                {
+                  "label": "creator",
+                  "type": "t_address"
+                },
+                {
+                  "label": "data",
+                  "type": "t_bytes_storage"
+                },
+                {
+                  "label": "purchaseData",
+                  "type": "t_bytes_storage"
+                },
+                {
+                  "label": "purchases",
+                  "type": "t_mapping(t_address,t_uint32)"
+                },
+                {
+                  "label": "subSlicers",
+                  "type": "t_array(t_address)dyn_storage"
+                },
+                {
+                  "label": "subProducts",
+                  "type": "t_mapping(t_address,t_array(t_uint32)dyn_storage)"
+                }
+              ]
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_bytes_storage": {
+              "label": "bytes"
+            },
+            "t_mapping(t_address,t_uint32)": {
+              "label": "mapping(address => uint32)"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]"
+            },
+            "t_mapping(t_address,t_array(t_uint32)dyn_storage)": {
+              "label": "mapping(address => uint32[])"
+            },
+            "t_array(t_uint32)dyn_storage": {
+              "label": "uint32[]"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "SlicerDummyV1": {
+        "src": "contracts/test/slicer_test_v1.sol:105",
+        "version": {
+          "withMetadata": "143c37a2eaad6b910f82f6af544d970a2b8021988bb296d2e8228c2b93eee392",
+          "withoutMetadata": "a2277b2bf0eae63465b0182a9bdfd549fc8cfb3f37f88f834f01a8e8d80de758",
+          "linkedWithoutMetadata": "a2277b2bf0eae63465b0182a9bdfd549fc8cfb3f37f88f834f01a8e8d80de758"
+        },
+        "inherit": [
+          "ReentrancyGuard",
+          "Pausable",
+          "Context",
+          "IERC721Receiver",
+          "ERC1155Receiver",
+          "IERC1155Receiver",
+          "ERC165",
+          "IERC165",
+          "SlicerProducts"
+        ],
+        "libraries": [
+          "Counters",
+          "EnumerableSet",
+          "Address"
+        ],
+        "methods": [
+          "_initialize(uint256,address,uint256,bool)",
+          "testDummy()",
+          "_addPayees(address[],uint256[])",
+          "_updatePayees(address,address,uint256)",
+          "_addChildrenSlicer(uint256)",
+          "release(address payable)",
+          "addProduct(uint32,uint256,bool,bool,bool,uint32,bytes,bytes,uint256[],uint32[])",
+          "setProductCategory(uint32,uint32)",
+          "setProductInfo(uint32,bool,uint32,uint256)",
+          "toggleUSDPrice(uint32,bool)",
+          "removeProduct(uint32)",
+          "_payProductFromSlice(address,uint32,uint16)",
+          "_payProductFromSlicer(uint256,address,uint32,uint16)",
+          "validatePurchase(uint32)",
+          "paySLC(uint32[],uint16[])",
+          "()",
+          "productPrice(uint32)",
+          "released(address)",
+          "unreleased(address)",
+          "slicerInfo()",
+          "totalReceived()",
+          "isPayeeAllowed(address)",
+          "onERC1155Received(address,address,uint256,uint256,bytes)",
+          "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_slicerCreator",
+              "type": "t_address",
+              "src": "contracts/test/slicer_test_v1.sol:139"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_isCollectible",
+              "type": "t_bool",
+              "src": "contracts/test/slicer_test_v1.sol:140"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_tokenId",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v1.sol:141"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_minimumShares",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v1.sol:142"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_totalShares",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v1.sol:143"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_totalReleased",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v1.sol:144"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_shares",
+              "type": "t_mapping(t_address,t_uint256)",
+              "src": "contracts/test/slicer_test_v1.sol:145"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_released",
+              "type": "t_mapping(t_address,t_array(t_uint256)2_storage)",
+              "src": "contracts/test/slicer_test_v1.sol:146"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_childrenSlicers",
+              "type": "t_struct(UintSet)5450_storage",
+              "src": "contracts/test/slicer_test_v1.sol:147"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_productIds",
+              "type": "t_struct(Counter)4817_storage",
+              "src": "contracts/test/slicer_test_v1.sol:148"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            },
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)"
+            },
+            "t_mapping(t_address,t_array(t_uint256)2_storage)": {
+              "label": "mapping(address => uint256[2])"
+            },
+            "t_array(t_uint256)2_storage": {
+              "label": "uint256[2]"
+            },
+            "t_struct(UintSet)5450_storage": {
+              "label": "struct EnumerableSet.UintSet",
+              "members": [
+                {
+                  "label": "_inner",
+                  "type": "t_struct(Set)4992_storage"
+                }
+              ]
+            },
+            "t_struct(Set)4992_storage": {
+              "label": "struct EnumerableSet.Set",
+              "members": [
+                {
+                  "label": "_values",
+                  "type": "t_array(t_bytes32)dyn_storage"
+                },
+                {
+                  "label": "_indexes",
+                  "type": "t_mapping(t_bytes32,t_uint256)"
+                }
+              ]
+            },
+            "t_array(t_bytes32)dyn_storage": {
+              "label": "bytes32[]"
+            },
+            "t_bytes32": {
+              "label": "bytes32"
+            },
+            "t_mapping(t_bytes32,t_uint256)": {
+              "label": "mapping(bytes32 => uint256)"
+            },
+            "t_struct(Counter)4817_storage": {
+              "label": "struct Counters.Counter",
+              "members": [
+                {
+                  "label": "_value",
+                  "type": "t_uint256"
+                }
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "SlicerProductsDummyV1": {
+        "src": "contracts/test/slicer_test_v1.sol:19",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "isProduct(uint32)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SlicerProductsDummyV1",
+              "label": "_products",
+              "type": "t_mapping(t_uint32,t_struct(Product)12178_storage)",
+              "src": "contracts/test/slicer_test_v1.sol:63"
+            }
+          ],
+          "types": {
+            "t_mapping(t_uint32,t_struct(Product)12178_storage)": {
+              "label": "mapping(uint32 => struct SlicerProductsDummyV1.Product)"
+            },
+            "t_uint32": {
+              "label": "uint32"
+            },
+            "t_struct(Product)12178_storage": {
+              "label": "struct SlicerProductsDummyV1.Product",
+              "members": [
+                {
+                  "label": "categoryIndex",
+                  "type": "t_uint32"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "isUSD",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "isMultiple",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "isInfinite",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "availableUnits",
+                  "type": "t_uint32"
+                },
+                {
+                  "label": "creator",
+                  "type": "t_address"
+                },
+                {
+                  "label": "data",
+                  "type": "t_bytes_storage"
+                },
+                {
+                  "label": "purchaseData",
+                  "type": "t_bytes_storage"
+                },
+                {
+                  "label": "purchases",
+                  "type": "t_mapping(t_address,t_uint32)"
+                },
+                {
+                  "label": "subSlicers",
+                  "type": "t_array(t_address)dyn_storage"
+                },
+                {
+                  "label": "subProducts",
+                  "type": "t_mapping(t_address,t_array(t_uint32)dyn_storage)"
+                }
+              ]
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_bytes_storage": {
+              "label": "bytes"
+            },
+            "t_mapping(t_address,t_uint32)": {
+              "label": "mapping(address => uint32)"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]"
+            },
+            "t_mapping(t_address,t_array(t_uint32)dyn_storage)": {
+              "label": "mapping(address => uint32[])"
+            },
+            "t_array(t_uint32)dyn_storage": {
+              "label": "uint32[]"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "OwnableSlice": {
+        "src": "contracts/utils/ownableSlice.sol:7",
+        "inherit": [
+          "ContextUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "owner()",
+          "transferOwnership(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "OwnableSlice",
+              "label": "_slice",
+              "type": "t_address",
+              "src": "contracts/utils/ownableSlice.sol:8"
+            },
+            {
+              "contract": "OwnableSlice",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "contracts/utils/ownableSlice.sol:9"
+            },
+            {
+              "contract": "OwnableSlice",
+              "label": "__gap",
+              "type": "t_array(t_uint256)49_storage",
+              "src": "contracts/utils/ownableSlice.sol:58"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      }
+    },
+    {
+      "AggregatorV3Interface": {
+        "src": "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "decimals()",
+          "description()",
+          "version()",
+          "getRoundData(uint80)",
+          "latestRoundData()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "OwnableUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:20",
+        "inherit": [
+          "ContextUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "owner()",
+          "renounceOwnership()",
+          "transferOwnership(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+            },
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)49_storage",
+              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC1967UpgradeUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:18",
+        "inherit": [
+          "Initializable"
+        ],
+        "libraries": [
+          "StorageSlotUpgradeable",
+          "AddressUpgradeable"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "ERC1967UpgradeUpgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)50_storage",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:214"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)50_storage": {
+              "label": "uint256[50]"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "IBeaconUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/beacon/IBeaconUpgradeable.sol:8",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "implementation()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "Initializable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:17",
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "UUPSUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:20",
+        "inherit": [
+          "ERC1967UpgradeUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "upgradeTo(address)",
+          "upgradeToAndCall(address,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "UUPSUpgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)50_storage",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:64"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)50_storage": {
+              "label": "uint256[50]"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "PausableUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol:17",
+        "inherit": [
+          "ContextUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "paused()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol:28"
+            },
+            {
+              "contract": "PausableUpgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)49_storage",
+              "src": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol:96"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "ReentrancyGuardUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:22",
+        "inherit": [
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:37"
+            },
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)49_storage",
+              "src": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol:67"
+            }
+          ],
+          "types": {
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC1155Upgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol:20",
+        "version": {
+          "withMetadata": "2d6c499e432ab165b71933ebf02fe279283f757f515042cf943daa54264eaa36",
+          "withoutMetadata": "b34cf3ddb4c396655a5497a03732a06f61e094adc34f70ad9208e14f3ab0ec1c",
+          "linkedWithoutMetadata": "b34cf3ddb4c396655a5497a03732a06f61e094adc34f70ad9208e14f3ab0ec1c"
+        },
+        "inherit": [
+          "IERC1155MetadataURIUpgradeable",
+          "IERC1155Upgradeable",
+          "ERC165Upgradeable",
+          "IERC165Upgradeable",
+          "ContextUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [
+          "AddressUpgradeable"
+        ],
+        "methods": [
+          "supportsInterface(bytes4)",
+          "uri(uint256)",
+          "balanceOf(address,uint256)",
+          "balanceOfBatch(address[],uint256[])",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,uint256,bytes)",
+          "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "ERC1155Upgradeable",
+              "label": "_balances",
+              "type": "t_mapping(t_uint256,t_mapping(t_address,t_uint256))",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol:24"
+            },
+            {
+              "contract": "ERC1155Upgradeable",
+              "label": "_operatorApprovals",
+              "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol:27"
+            },
+            {
+              "contract": "ERC1155Upgradeable",
+              "label": "_uri",
+              "type": "t_string_storage",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol:30"
+            },
+            {
+              "contract": "ERC1155Upgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)47_storage",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol:458"
+            }
+          ],
+          "types": {
+            "t_mapping(t_uint256,t_mapping(t_address,t_uint256))": {
+              "label": "mapping(uint256 => mapping(address => uint256))"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+              "label": "mapping(address => mapping(address => bool))"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)"
+            },
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_string_storage": {
+              "label": "string"
+            },
+            "t_array(t_uint256)47_storage": {
+              "label": "uint256[47]"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC1155ReceiverUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155ReceiverUpgradeable.sol:10",
+        "inherit": [
+          "IERC165Upgradeable"
+        ],
+        "libraries": [],
+        "methods": [
+          "onERC1155Received(address,address,uint256,uint256,bytes)",
+          "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC1155Upgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155Upgradeable.sol:13",
+        "inherit": [
+          "IERC165Upgradeable"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address,uint256)",
+          "balanceOfBatch(address[],uint256[])",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,uint256,bytes)",
+          "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC1155MetadataURIUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/token/ERC1155/extensions/IERC1155MetadataURIUpgradeable.sol:13",
+        "inherit": [
+          "IERC1155Upgradeable",
+          "IERC165Upgradeable"
+        ],
+        "libraries": [],
+        "methods": [
+          "uri(uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC20Upgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:35",
+        "version": {
+          "withMetadata": "e458663a99d7421cec2eb63acf1df163fa04153e6a38d8a49abee44928f971ec",
+          "withoutMetadata": "29c8801ae6ab6c6891797e564b6337ae0bad5f9d8b6f32754d8766479b9070e5",
+          "linkedWithoutMetadata": "29c8801ae6ab6c6891797e564b6337ae0bad5f9d8b6f32754d8766479b9070e5"
+        },
+        "inherit": [
+          "IERC20MetadataUpgradeable",
+          "IERC20Upgradeable",
+          "ContextUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "name()",
+          "symbol()",
+          "decimals()",
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "increaseAllowance(address,uint256)",
+          "decreaseAllowance(address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "ERC20Upgradeable",
+              "label": "_balances",
+              "type": "t_mapping(t_address,t_uint256)",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:36"
+            },
+            {
+              "contract": "ERC20Upgradeable",
+              "label": "_allowances",
+              "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:38"
+            },
+            {
+              "contract": "ERC20Upgradeable",
+              "label": "_totalSupply",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:40"
+            },
+            {
+              "contract": "ERC20Upgradeable",
+              "label": "_name",
+              "type": "t_string_storage",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:42"
+            },
+            {
+              "contract": "ERC20Upgradeable",
+              "label": "_symbol",
+              "type": "t_string_storage",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:43"
+            },
+            {
+              "contract": "ERC20Upgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)45_storage",
+              "src": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol:361"
+            }
+          ],
+          "types": {
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+              "label": "mapping(address => mapping(address => uint256))"
+            },
+            "t_string_storage": {
+              "label": "string"
+            },
+            "t_array(t_uint256)45_storage": {
+              "label": "uint256[45]"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC20Upgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol:8",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "totalSupply()",
+          "balanceOf(address)",
+          "transfer(address,uint256)",
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC20MetadataUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/IERC20MetadataUpgradeable.sol:12",
+        "inherit": [
+          "IERC20Upgradeable"
+        ],
+        "libraries": [],
+        "methods": [
+          "name()",
+          "symbol()",
+          "decimals()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "AddressUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol:8",
+        "version": {
+          "withMetadata": "04a185935d45642aba1a1b10df504ea63e0378ecede92de5b027181f3f4235bc",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ContextUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:16",
+        "inherit": [
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "ContextUpgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)50_storage",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)50_storage": {
+              "label": "uint256[50]"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "CountersUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol:13",
+        "version": {
+          "withMetadata": "7c35436b971cb603af72659471418342b739d3e90215cb99851a8b32b1e418b0",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "StorageSlotUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/StorageSlotUpgradeable.sol:31",
+        "version": {
+          "withMetadata": "d6cc20e144ca6130dd273760a519bc13f3e94494f8aba4c41bdb9695a503c1b7",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC165Upgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:22",
+        "inherit": [
+          "IERC165Upgradeable",
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "ERC165Upgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)50_storage",
+              "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:35"
+            }
+          ],
+          "types": {
+            "t_array(t_uint256)50_storage": {
+              "label": "uint256[50]"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC165Upgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/utils/introspection/IERC165Upgradeable.sol:14",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "Ownable": {
+        "src": "@openzeppelin/contracts/access/Ownable.sol:19",
+        "inherit": [
+          "Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "owner()",
+          "renounceOwnership()",
+          "transferOwnership(address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Ownable",
+            "src": "@openzeppelin/contracts/access/Ownable.sol:27"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "contract": "Ownable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts/access/Ownable.sol:20"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC1967Upgrade": {
+        "src": "@openzeppelin/contracts/proxy/ERC1967/ERC1967Upgrade.sol:17",
+        "inherit": [],
+        "libraries": [
+          "StorageSlot",
+          "Address"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "Proxy": {
+        "src": "@openzeppelin/contracts/proxy/Proxy.sol:15",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "()",
+          "()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "BeaconProxy": {
+        "src": "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol:17",
+        "version": {
+          "withMetadata": "9bb6bb8ae60342935a68570e36a775f85f5b6075c029be307c406956c6363277",
+          "withoutMetadata": "9bb6bb8ae60342935a68570e36a775f85f5b6075c029be307c406956c6363277",
+          "linkedWithoutMetadata": "9bb6bb8ae60342935a68570e36a775f85f5b6075c029be307c406956c6363277"
+        },
+        "inherit": [
+          "ERC1967Upgrade",
+          "Proxy"
+        ],
+        "libraries": [],
+        "methods": [
+          "(address,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "BeaconProxy",
+            "src": "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol:29"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IBeacon": {
+        "src": "@openzeppelin/contracts/proxy/beacon/IBeacon.sol:8",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "implementation()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "UpgradeableBeacon": {
+        "src": "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol:15",
+        "version": {
+          "withMetadata": "59ffc30589dc5e16f67343fdd9f488f30de813d3878be4658184a48842b4e117",
+          "withoutMetadata": "d5005445b0cabafebf8a672ec0e27f28f73015951181bb49d9109831936a650c",
+          "linkedWithoutMetadata": "d5005445b0cabafebf8a672ec0e27f28f73015951181bb49d9109831936a650c"
+        },
+        "inherit": [
+          "Ownable",
+          "Context",
+          "IBeacon"
+        ],
+        "libraries": [
+          "Address"
+        ],
+        "methods": [
+          "(address)",
+          "implementation()",
+          "upgradeTo(address)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "UpgradeableBeacon",
+            "src": "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol:27"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "contract": "UpgradeableBeacon",
+              "label": "_implementation",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol:16"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "Pausable": {
+        "src": "@openzeppelin/contracts/security/Pausable.sol:16",
+        "inherit": [
+          "Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "paused()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "Pausable",
+            "src": "@openzeppelin/contracts/security/Pausable.sol:32"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "contract": "Pausable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts/security/Pausable.sol:27"
+            }
+          ],
+          "types": {
+            "t_bool": {
+              "label": "bool"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "ReentrancyGuard": {
+        "src": "@openzeppelin/contracts/security/ReentrancyGuard.sol:21",
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "ReentrancyGuard",
+            "src": "@openzeppelin/contracts/security/ReentrancyGuard.sol:38"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "contract": "ReentrancyGuard",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts/security/ReentrancyGuard.sol:36"
+            }
+          ],
+          "types": {
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC1155": {
+        "src": "@openzeppelin/contracts/token/ERC1155/IERC1155.sol:13",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address,uint256)",
+          "balanceOfBatch(address[],uint256[])",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,uint256,bytes)",
+          "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC1155Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol:10",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "onERC1155Received(address,address,uint256,uint256,bytes)",
+          "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC1155MetadataURI": {
+        "src": "@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol:13",
+        "inherit": [
+          "IERC1155",
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "uri(uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC1155Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Receiver.sol:11",
+        "inherit": [
+          "IERC1155Receiver",
+          "ERC165",
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721.sol:10",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "balanceOf(address)",
+          "ownerOf(uint256)",
+          "safeTransferFrom(address,address,uint256)",
+          "transferFrom(address,address,uint256)",
+          "approve(address,uint256)",
+          "getApproved(uint256)",
+          "setApprovalForAll(address,bool)",
+          "isApprovedForAll(address,address)",
+          "safeTransferFrom(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721Receiver": {
+        "src": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol:10",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC721Metadata": {
+        "src": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol:11",
+        "inherit": [
+          "IERC721",
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "name()",
+          "symbol()",
+          "tokenURI(uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "Address": {
+        "src": "@openzeppelin/contracts/utils/Address.sol:8",
+        "version": {
+          "withMetadata": "3f503d90dda76860d38f4ccb30ea44d188c009424063d779e7296af9e0ddf42e",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "delegatecall",
+            "src": "@openzeppelin/contracts/utils/Address.sol:185"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "Context": {
+        "src": "@openzeppelin/contracts/utils/Context.sol:15",
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "Counters": {
+        "src": "@openzeppelin/contracts/utils/Counters.sol:13",
+        "version": {
+          "withMetadata": "7387b233f7612fb93fdb4ecb00dac57f901b80c97e80733cc58ae78f71f73593",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "StorageSlot": {
+        "src": "@openzeppelin/contracts/utils/StorageSlot.sol:31",
+        "version": {
+          "withMetadata": "cdc84355611c1f07e160186986094b26d8ba8d02a18ae5ac5fd911fc38bbf12a",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC165": {
+        "src": "@openzeppelin/contracts/utils/introspection/ERC165.sol:21",
+        "inherit": [
+          "IERC165"
+        ],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "IERC165": {
+        "src": "@openzeppelin/contracts/utils/introspection/IERC165.sol:14",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "supportsInterface(bytes4)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "EnumerableSet": {
+        "src": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol:29",
+        "version": {
+          "withMetadata": "7c9efc30cc9de59f5ad3f0db899c84f6cafffd894abaecf383d48c202bb93ab7",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "SLC": {
+        "src": "contracts/slc_v0.sol:15",
+        "version": {
+          "withMetadata": "c47dd20335c6150209b4dc98a1ade88ca7675cbffcc51bfb2049cb28c1b7d113",
+          "withoutMetadata": "da5a2ff24c18a350c28310da8bcd604dd761016fb2a2b66e8fb999c158c91542",
+          "linkedWithoutMetadata": "da5a2ff24c18a350c28310da8bcd604dd761016fb2a2b66e8fb999c158c91542"
+        },
+        "inherit": [
+          "OwnableSlice",
+          "UUPSUpgradeable",
+          "ERC1967UpgradeUpgradeable",
+          "ERC20Upgradeable",
+          "IERC20MetadataUpgradeable",
+          "IERC20Upgradeable",
+          "ContextUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "_mintSLC(address,uint256,uint32)",
+          "_triggerMint(address,uint256,address,uint8)",
+          "getServicePrice(uint32)",
+          "_setServicePrice(uint32,uint256)",
+          "initialize(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SLC",
+              "label": "_sliceCoreAddress",
+              "type": "t_address",
+              "src": "contracts/slc_v0.sol:24"
+            },
+            {
+              "contract": "SLC",
+              "label": "_servicePrices",
+              "type": "t_mapping(t_uint32,t_uint256)",
+              "src": "contracts/slc_v0.sol:26"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            },
+            "t_mapping(t_uint32,t_uint256)": {
+              "label": "mapping(uint32 => uint256)"
+            },
+            "t_uint32": {
+              "label": "uint32"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "SliceCore": {
+        "src": "contracts/sliceCore_v0.sol:21",
+        "version": {
+          "withMetadata": "34d50cbb7e59779f0418caf09d18d84bb95d9e80591341521769888dab424baa",
+          "withoutMetadata": "302c659ef25f11497df7e5e3cf85f3fc4fd228c68057dce078dca5ba2b71e7fe",
+          "linkedWithoutMetadata": "302c659ef25f11497df7e5e3cf85f3fc4fd228c68057dce078dca5ba2b71e7fe"
+        },
+        "inherit": [
+          "ReentrancyGuardUpgradeable",
+          "PausableUpgradeable",
+          "OwnableSlice",
+          "UUPSUpgradeable",
+          "ERC1967UpgradeUpgradeable",
+          "ERC1155Upgradeable",
+          "IERC1155MetadataURIUpgradeable",
+          "IERC1155Upgradeable",
+          "ERC165Upgradeable",
+          "IERC165Upgradeable",
+          "ContextUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [
+          "CountersUpgradeable"
+        ],
+        "methods": [
+          "_mintSlice(address,uint256,uint256,address)",
+          "safeTransferFrom(address,address,uint256,uint256,bytes)",
+          "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)",
+          "slicerBatchTransfer(address,address[],uint256,uint256[])",
+          "slicers(uint256)",
+          "categoryAddress(uint32)",
+          "_addCategory(address)",
+          "_changeCategoryAddress(uint32,address)",
+          "_setMaximumTransferBatch(uint16)",
+          "_setBasePath(string)",
+          "_togglePause()",
+          "totalSupply(uint256)",
+          "exists(uint256)",
+          "initialize()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SliceCore",
+              "label": "_maximumTransferBatch",
+              "type": "t_uint16",
+              "src": "contracts/sliceCore_v0.sol:30"
+            },
+            {
+              "contract": "SliceCore",
+              "label": "_basePath",
+              "type": "t_string_storage",
+              "src": "contracts/sliceCore_v0.sol:31"
+            },
+            {
+              "contract": "SliceCore",
+              "label": "_totalSupply",
+              "type": "t_mapping(t_uint256,t_uint256)",
+              "src": "contracts/sliceCore_v0.sol:32"
+            },
+            {
+              "contract": "SliceCore",
+              "label": "_slicers",
+              "type": "t_mapping(t_uint256,t_address)",
+              "src": "contracts/sliceCore_v0.sol:33"
+            },
+            {
+              "contract": "SliceCore",
+              "label": "_categoryIndex",
+              "type": "t_struct(Counter)3129_storage",
+              "src": "contracts/sliceCore_v0.sol:34"
+            },
+            {
+              "contract": "SliceCore",
+              "label": "_categoryAddresses",
+              "type": "t_mapping(t_uint32,t_address)",
+              "src": "contracts/sliceCore_v0.sol:35"
+            }
+          ],
+          "types": {
+            "t_uint16": {
+              "label": "uint16"
+            },
+            "t_string_storage": {
+              "label": "string"
+            },
+            "t_mapping(t_uint256,t_uint256)": {
+              "label": "mapping(uint256 => uint256)"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_mapping(t_uint256,t_address)": {
+              "label": "mapping(uint256 => address)"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_struct(Counter)3129_storage": {
+              "label": "struct CountersUpgradeable.Counter",
+              "members": [
+                {
+                  "label": "_value",
+                  "type": "t_uint256"
+                }
+              ]
+            },
+            "t_mapping(t_uint32,t_address)": {
+              "label": "mapping(uint32 => address)"
+            },
+            "t_uint32": {
+              "label": "uint32"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "Slice": {
+        "src": "contracts/slice_v0.sol:22",
+        "version": {
+          "withMetadata": "ade49aa360b36d00feb73b24d7a87ad8f81ea87dbc92022a52ba8a66ad170124",
+          "withoutMetadata": "3a1fc90b0ced94dc8d96b666b50e7595d476a7b6300b4274e100c5554e39ebc5",
+          "linkedWithoutMetadata": "3a1fc90b0ced94dc8d96b666b50e7595d476a7b6300b4274e100c5554e39ebc5"
+        },
+        "inherit": [
+          "ReentrancyGuardUpgradeable",
+          "PausableUpgradeable",
+          "OwnableUpgradeable",
+          "ContextUpgradeable",
+          "UUPSUpgradeable",
+          "ERC1967UpgradeUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [
+          "CountersUpgradeable",
+          "AddressUpgradeable"
+        ],
+        "methods": [
+          "slice(address[],uint256[],uint256,bool)",
+          "triggerRelease(address,address[],uint8)",
+          "payProducts(address payable[],uint32[],uint16[])",
+          "unreleasedBatch(address,address[])",
+          "getEthUsd()",
+          "slicers(uint256)",
+          "totalTokens()",
+          "_createSlicer(uint256,uint256,bool)",
+          "_beforeTransfer(address,address,address[],uint256[])",
+          "_setMaximumBatch(uint16,uint16)",
+          "_addToSliceCategory(uint32)",
+          "_upgradeSlicers(address)",
+          "_implementation()",
+          "_togglePause()",
+          "initialize(address,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "Slice",
+              "label": "upgradeableBeacon",
+              "type": "t_contract(UpgradeableBeacon)3987",
+              "src": "contracts/slice_v0.sol:49"
+            },
+            {
+              "contract": "Slice",
+              "label": "_SLCAddress",
+              "type": "t_address",
+              "src": "contracts/slice_v0.sol:51"
+            },
+            {
+              "contract": "Slice",
+              "label": "_sliceCoreAddress",
+              "type": "t_address",
+              "src": "contracts/slice_v0.sol:52"
+            },
+            {
+              "contract": "Slice",
+              "label": "priceFeed",
+              "type": "t_contract(AggregatorV3Interface)45",
+              "src": "contracts/slice_v0.sol:53"
+            },
+            {
+              "contract": "Slice",
+              "label": "_tokenIds",
+              "type": "t_struct(Counter)3129_storage",
+              "src": "contracts/slice_v0.sol:54"
+            },
+            {
+              "contract": "Slice",
+              "label": "_maximumSliceBatch",
+              "type": "t_uint16",
+              "src": "contracts/slice_v0.sol:55"
+            },
+            {
+              "contract": "Slice",
+              "label": "_maximumReleaseBatch",
+              "type": "t_uint16",
+              "src": "contracts/slice_v0.sol:56"
+            }
+          ],
+          "types": {
+            "t_contract(UpgradeableBeacon)3987": {
+              "label": "contract UpgradeableBeacon"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_contract(AggregatorV3Interface)45": {
+              "label": "contract AggregatorV3Interface"
+            },
+            "t_struct(Counter)3129_storage": {
+              "label": "struct CountersUpgradeable.Counter",
+              "members": [
+                {
+                  "label": "_value",
+                  "type": "t_uint256"
+                }
+              ]
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_uint16": {
+              "label": "uint16"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "Slicer": {
+        "src": "contracts/slicer_v0.sol:105",
+        "version": {
+          "withMetadata": "a17572b094587e00f8a03d966f7d731571da9d8c97d83352029313b950a0d4fe",
+          "withoutMetadata": "dcff53591596faaf40dc4f8524d1e41bd8c8b0de24b6c8cff4e1328065ab09c5",
+          "linkedWithoutMetadata": "dcff53591596faaf40dc4f8524d1e41bd8c8b0de24b6c8cff4e1328065ab09c5"
+        },
+        "inherit": [
+          "ReentrancyGuard",
+          "Pausable",
+          "Context",
+          "IERC721Receiver",
+          "ERC1155Receiver",
+          "IERC1155Receiver",
+          "ERC165",
+          "IERC165",
+          "SlicerProducts"
+        ],
+        "libraries": [
+          "Counters",
+          "EnumerableSet",
+          "Address"
+        ],
+        "methods": [
+          "_initialize(uint256,address,uint256,bool)",
+          "_addPayees(address[],uint256[])",
+          "_updatePayees(address,address,uint256)",
+          "_addChildrenSlicer(uint256)",
+          "release(address payable)",
+          "addProduct(uint32,uint256,bool,bool,bool,uint32,bytes,bytes,uint256[],uint32[])",
+          "setProductCategory(uint32,uint32)",
+          "setProductInfo(uint32,bool,uint32,uint256)",
+          "toggleUSDPrice(uint32,bool)",
+          "removeProduct(uint32)",
+          "_payProductFromSlice(address,uint32,uint16)",
+          "_payProductFromSlicer(uint256,address,uint32,uint16)",
+          "validatePurchase(uint32)",
+          "paySLC(uint32[],uint16[])",
+          "()",
+          "productPrice(uint32)",
+          "released(address)",
+          "unreleased(address)",
+          "slicerInfo()",
+          "totalReceived()",
+          "isPayeeAllowed(address)",
+          "onERC1155Received(address,address,uint256,uint256,bytes)",
+          "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "Slicer",
+              "label": "_slicerCreator",
+              "type": "t_address",
+              "src": "contracts/slicer_v0.sol:139"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_isCollectible",
+              "type": "t_bool",
+              "src": "contracts/slicer_v0.sol:140"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_tokenId",
+              "type": "t_uint256",
+              "src": "contracts/slicer_v0.sol:141"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_minimumShares",
+              "type": "t_uint256",
+              "src": "contracts/slicer_v0.sol:142"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_totalShares",
+              "type": "t_uint256",
+              "src": "contracts/slicer_v0.sol:143"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_totalReleased",
+              "type": "t_uint256",
+              "src": "contracts/slicer_v0.sol:144"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_shares",
+              "type": "t_mapping(t_address,t_uint256)",
+              "src": "contracts/slicer_v0.sol:145"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_released",
+              "type": "t_mapping(t_address,t_array(t_uint256)2_storage)",
+              "src": "contracts/slicer_v0.sol:146"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_childrenSlicers",
+              "type": "t_struct(UintSet)5450_storage",
+              "src": "contracts/slicer_v0.sol:147"
+            },
+            {
+              "contract": "Slicer",
+              "label": "_productIds",
+              "type": "t_struct(Counter)4817_storage",
+              "src": "contracts/slicer_v0.sol:148"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            },
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)"
+            },
+            "t_mapping(t_address,t_array(t_uint256)2_storage)": {
+              "label": "mapping(address => uint256[2])"
+            },
+            "t_array(t_uint256)2_storage": {
+              "label": "uint256[2]"
+            },
+            "t_struct(UintSet)5450_storage": {
+              "label": "struct EnumerableSet.UintSet",
+              "members": [
+                {
+                  "label": "_inner",
+                  "type": "t_struct(Set)4992_storage"
+                }
+              ]
+            },
+            "t_struct(Set)4992_storage": {
+              "label": "struct EnumerableSet.Set",
+              "members": [
+                {
+                  "label": "_values",
+                  "type": "t_array(t_bytes32)dyn_storage"
+                },
+                {
+                  "label": "_indexes",
+                  "type": "t_mapping(t_bytes32,t_uint256)"
+                }
+              ]
+            },
+            "t_array(t_bytes32)dyn_storage": {
+              "label": "bytes32[]"
+            },
+            "t_bytes32": {
+              "label": "bytes32"
+            },
+            "t_mapping(t_bytes32,t_uint256)": {
+              "label": "mapping(bytes32 => uint256)"
+            },
+            "t_struct(Counter)4817_storage": {
+              "label": "struct Counters.Counter",
+              "members": [
+                {
+                  "label": "_value",
+                  "type": "t_uint256"
+                }
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "SlicerProducts": {
+        "src": "contracts/slicer_v0.sol:19",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "isProduct(uint32)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SlicerProducts",
+              "label": "_products",
+              "type": "t_mapping(t_uint32,t_struct(Product)7426_storage)",
+              "src": "contracts/slicer_v0.sol:63"
+            }
+          ],
+          "types": {
+            "t_mapping(t_uint32,t_struct(Product)7426_storage)": {
+              "label": "mapping(uint32 => struct SlicerProducts.Product)"
+            },
+            "t_uint32": {
+              "label": "uint32"
+            },
+            "t_struct(Product)7426_storage": {
+              "label": "struct SlicerProducts.Product",
+              "members": [
+                {
+                  "label": "categoryIndex",
+                  "type": "t_uint32"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "isUSD",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "isMultiple",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "isInfinite",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "availableUnits",
+                  "type": "t_uint32"
+                },
+                {
+                  "label": "creator",
+                  "type": "t_address"
+                },
+                {
+                  "label": "data",
+                  "type": "t_bytes_storage"
+                },
+                {
+                  "label": "purchaseData",
+                  "type": "t_bytes_storage"
+                },
+                {
+                  "label": "purchases",
+                  "type": "t_mapping(t_address,t_uint32)"
+                },
+                {
+                  "label": "subSlicers",
+                  "type": "t_array(t_address)dyn_storage"
+                },
+                {
+                  "label": "subProducts",
+                  "type": "t_mapping(t_address,t_array(t_uint32)dyn_storage)"
+                }
+              ]
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_bytes_storage": {
+              "label": "bytes"
+            },
+            "t_mapping(t_address,t_uint32)": {
+              "label": "mapping(address => uint32)"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]"
+            },
+            "t_mapping(t_address,t_array(t_uint32)dyn_storage)": {
+              "label": "mapping(address => uint32[])"
+            },
+            "t_array(t_uint32)dyn_storage": {
+              "label": "uint32[]"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "SliceDummy": {
+        "src": "contracts/test/slice_test_v1.sol:22",
+        "version": {
+          "withMetadata": "0fd2be7fe120dee50f6928881a643ef827744c1cedbc4716a13b3de2c516c8ee",
+          "withoutMetadata": "b18fa6fb00277dae564ee1372a8f692d10ee34d0203ba89f0c7bdd07053320a9",
+          "linkedWithoutMetadata": "b18fa6fb00277dae564ee1372a8f692d10ee34d0203ba89f0c7bdd07053320a9"
+        },
+        "inherit": [
+          "ReentrancyGuardUpgradeable",
+          "PausableUpgradeable",
+          "OwnableUpgradeable",
+          "ContextUpgradeable",
+          "UUPSUpgradeable",
+          "ERC1967UpgradeUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [
+          "CountersUpgradeable",
+          "AddressUpgradeable"
+        ],
+        "methods": [
+          "testDummy()",
+          "slice(address[],uint256[],uint256)",
+          "triggerRelease(address,address[],uint8)",
+          "payProducts(address payable[],uint32[],uint16[])",
+          "unreleasedBatch(address,address[])",
+          "getEthUsd()",
+          "slicers(uint256)",
+          "totalTokens()",
+          "_createSlicer(uint256,uint256)",
+          "_beforeTransfer(address,address,address[],uint256[])",
+          "_setMaximumBatch(uint16,uint16)",
+          "_addToSliceCategory(uint32)",
+          "_upgradeSlicers(address)",
+          "_implementation()",
+          "_togglePause()",
+          "initialize(address,address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SliceDummy",
+              "label": "upgradeableBeacon",
+              "type": "t_contract(UpgradeableBeacon)3987",
+              "src": "contracts/test/slice_test_v1.sol:48"
+            },
+            {
+              "contract": "SliceDummy",
+              "label": "_SLCAddress",
+              "type": "t_address",
+              "src": "contracts/test/slice_test_v1.sol:50"
+            },
+            {
+              "contract": "SliceDummy",
+              "label": "_sliceCoreAddress",
+              "type": "t_address",
+              "src": "contracts/test/slice_test_v1.sol:51"
+            },
+            {
+              "contract": "SliceDummy",
+              "label": "priceFeed",
+              "type": "t_contract(AggregatorV3Interface)45",
+              "src": "contracts/test/slice_test_v1.sol:52"
+            },
+            {
+              "contract": "SliceDummy",
+              "label": "_tokenIds",
+              "type": "t_struct(Counter)3129_storage",
+              "src": "contracts/test/slice_test_v1.sol:53"
+            },
+            {
+              "contract": "SliceDummy",
+              "label": "_maximumSliceBatch",
+              "type": "t_uint16",
+              "src": "contracts/test/slice_test_v1.sol:54"
+            },
+            {
+              "contract": "SliceDummy",
+              "label": "_maximumReleaseBatch",
+              "type": "t_uint16",
+              "src": "contracts/test/slice_test_v1.sol:55"
+            }
+          ],
+          "types": {
+            "t_contract(UpgradeableBeacon)3987": {
+              "label": "contract UpgradeableBeacon"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_contract(AggregatorV3Interface)45": {
+              "label": "contract AggregatorV3Interface"
+            },
+            "t_struct(Counter)3129_storage": {
+              "label": "struct CountersUpgradeable.Counter",
+              "members": [
+                {
+                  "label": "_value",
+                  "type": "t_uint256"
+                }
+              ]
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_uint16": {
+              "label": "uint16"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "SlicerDummyV0": {
+        "src": "contracts/test/slicer_test_v0.sol:105",
+        "version": {
+          "withMetadata": "435179cae566a196c870af518c00a887542f7f34a789bc39b41a29eef58ab958",
+          "withoutMetadata": "4af40bc1ecc71691eb71dd7ffe98ff8e8c122b5e23cba5c910acd9d8d809d6cb",
+          "linkedWithoutMetadata": "4af40bc1ecc71691eb71dd7ffe98ff8e8c122b5e23cba5c910acd9d8d809d6cb"
+        },
+        "inherit": [
+          "ReentrancyGuard",
+          "Pausable",
+          "Context",
+          "IERC721Receiver",
+          "ERC1155Receiver",
+          "IERC1155Receiver",
+          "ERC165",
+          "IERC165",
+          "SlicerProducts"
+        ],
+        "libraries": [
+          "Counters",
+          "EnumerableSet",
+          "Address"
+        ],
+        "methods": [
+          "_initialize(uint256,address,uint256,bool)",
+          "_addPayees(address[],uint256[])",
+          "_updatePayees(address,address,uint256)",
+          "_addChildrenSlicer(uint256)",
+          "release(address payable)",
+          "addProduct(uint32,uint256,bool,bool,bool,uint32,bytes,bytes,uint256[],uint32[])",
+          "setProductCategory(uint32,uint32)",
+          "setProductInfo(uint32,bool,uint32,uint256)",
+          "toggleUSDPrice(uint32,bool)",
+          "removeProduct(uint32)",
+          "_payProductFromSlice(address,uint32,uint16)",
+          "_payProductFromSlicer(uint256,address,uint32,uint16)",
+          "validatePurchase(uint32)",
+          "paySLC(uint32[],uint16[])",
+          "()",
+          "productPrice(uint32)",
+          "released(address)",
+          "unreleased(address)",
+          "slicerInfo()",
+          "totalReceived()",
+          "isPayeeAllowed(address)",
+          "onERC1155Received(address,address,uint256,uint256,bytes)",
+          "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_slicerCreator",
+              "type": "t_address",
+              "src": "contracts/test/slicer_test_v0.sol:139"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_isCollectible",
+              "type": "t_bool",
+              "src": "contracts/test/slicer_test_v0.sol:140"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_tokenId",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v0.sol:141"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_minimumShares",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v0.sol:142"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_totalShares",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v0.sol:143"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_totalReleased",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v0.sol:144"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_shares",
+              "type": "t_mapping(t_address,t_uint256)",
+              "src": "contracts/test/slicer_test_v0.sol:145"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_released",
+              "type": "t_mapping(t_address,t_array(t_uint256)2_storage)",
+              "src": "contracts/test/slicer_test_v0.sol:146"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_childrenSlicers",
+              "type": "t_struct(UintSet)5450_storage",
+              "src": "contracts/test/slicer_test_v0.sol:147"
+            },
+            {
+              "contract": "SlicerDummyV0",
+              "label": "_productIds",
+              "type": "t_struct(Counter)4817_storage",
+              "src": "contracts/test/slicer_test_v0.sol:148"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            },
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)"
+            },
+            "t_mapping(t_address,t_array(t_uint256)2_storage)": {
+              "label": "mapping(address => uint256[2])"
+            },
+            "t_array(t_uint256)2_storage": {
+              "label": "uint256[2]"
+            },
+            "t_struct(UintSet)5450_storage": {
+              "label": "struct EnumerableSet.UintSet",
+              "members": [
+                {
+                  "label": "_inner",
+                  "type": "t_struct(Set)4992_storage"
+                }
+              ]
+            },
+            "t_struct(Set)4992_storage": {
+              "label": "struct EnumerableSet.Set",
+              "members": [
+                {
+                  "label": "_values",
+                  "type": "t_array(t_bytes32)dyn_storage"
+                },
+                {
+                  "label": "_indexes",
+                  "type": "t_mapping(t_bytes32,t_uint256)"
+                }
+              ]
+            },
+            "t_array(t_bytes32)dyn_storage": {
+              "label": "bytes32[]"
+            },
+            "t_bytes32": {
+              "label": "bytes32"
+            },
+            "t_mapping(t_bytes32,t_uint256)": {
+              "label": "mapping(bytes32 => uint256)"
+            },
+            "t_struct(Counter)4817_storage": {
+              "label": "struct Counters.Counter",
+              "members": [
+                {
+                  "label": "_value",
+                  "type": "t_uint256"
+                }
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "SlicerProductsDummyV0": {
+        "src": "contracts/test/slicer_test_v0.sol:19",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "isProduct(uint32)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SlicerProductsDummyV0",
+              "label": "_products",
+              "type": "t_mapping(t_uint32,t_struct(Product)10249_storage)",
+              "src": "contracts/test/slicer_test_v0.sol:63"
+            }
+          ],
+          "types": {
+            "t_mapping(t_uint32,t_struct(Product)10249_storage)": {
+              "label": "mapping(uint32 => struct SlicerProductsDummyV0.Product)"
+            },
+            "t_uint32": {
+              "label": "uint32"
+            },
+            "t_struct(Product)10249_storage": {
+              "label": "struct SlicerProductsDummyV0.Product",
+              "members": [
+                {
+                  "label": "categoryIndex",
+                  "type": "t_uint32"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "isUSD",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "isMultiple",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "isInfinite",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "availableUnits",
+                  "type": "t_uint32"
+                },
+                {
+                  "label": "creator",
+                  "type": "t_address"
+                },
+                {
+                  "label": "data",
+                  "type": "t_bytes_storage"
+                },
+                {
+                  "label": "purchaseData",
+                  "type": "t_bytes_storage"
+                },
+                {
+                  "label": "purchases",
+                  "type": "t_mapping(t_address,t_uint32)"
+                },
+                {
+                  "label": "subSlicers",
+                  "type": "t_array(t_address)dyn_storage"
+                },
+                {
+                  "label": "subProducts",
+                  "type": "t_mapping(t_address,t_array(t_uint32)dyn_storage)"
+                }
+              ]
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_bytes_storage": {
+              "label": "bytes"
+            },
+            "t_mapping(t_address,t_uint32)": {
+              "label": "mapping(address => uint32)"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]"
+            },
+            "t_mapping(t_address,t_array(t_uint32)dyn_storage)": {
+              "label": "mapping(address => uint32[])"
+            },
+            "t_array(t_uint32)dyn_storage": {
+              "label": "uint32[]"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "SlicerDummyV1": {
+        "src": "contracts/test/slicer_test_v1.sol:105",
+        "version": {
+          "withMetadata": "6f3d11339c014e40b421cf751d5d951ef7db7c4adfb8f48e61f3ba30d318770c",
+          "withoutMetadata": "e1bb80cefa56297b838f14112496a0cac677af35b362780380df4cdc09ecc0db",
+          "linkedWithoutMetadata": "e1bb80cefa56297b838f14112496a0cac677af35b362780380df4cdc09ecc0db"
+        },
+        "inherit": [
+          "ReentrancyGuard",
+          "Pausable",
+          "Context",
+          "IERC721Receiver",
+          "ERC1155Receiver",
+          "IERC1155Receiver",
+          "ERC165",
+          "IERC165",
+          "SlicerProducts"
+        ],
+        "libraries": [
+          "Counters",
+          "EnumerableSet",
+          "Address"
+        ],
+        "methods": [
+          "_initialize(uint256,address,uint256,bool)",
+          "testDummy()",
+          "_addPayees(address[],uint256[])",
+          "_updatePayees(address,address,uint256)",
+          "_addChildrenSlicer(uint256)",
+          "release(address payable)",
+          "addProduct(uint32,uint256,bool,bool,bool,uint32,bytes,bytes,uint256[],uint32[])",
+          "setProductCategory(uint32,uint32)",
+          "setProductInfo(uint32,bool,uint32,uint256)",
+          "toggleUSDPrice(uint32,bool)",
+          "removeProduct(uint32)",
+          "_payProductFromSlice(address,uint32,uint16)",
+          "_payProductFromSlicer(uint256,address,uint32,uint16)",
+          "validatePurchase(uint32)",
+          "paySLC(uint32[],uint16[])",
+          "()",
+          "productPrice(uint32)",
+          "released(address)",
+          "unreleased(address)",
+          "slicerInfo()",
+          "totalReceived()",
+          "isPayeeAllowed(address)",
+          "onERC1155Received(address,address,uint256,uint256,bytes)",
+          "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)",
+          "onERC721Received(address,address,uint256,bytes)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_slicerCreator",
+              "type": "t_address",
+              "src": "contracts/test/slicer_test_v1.sol:139"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_isCollectible",
+              "type": "t_bool",
+              "src": "contracts/test/slicer_test_v1.sol:140"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_tokenId",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v1.sol:141"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_minimumShares",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v1.sol:142"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_totalShares",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v1.sol:143"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_totalReleased",
+              "type": "t_uint256",
+              "src": "contracts/test/slicer_test_v1.sol:144"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_shares",
+              "type": "t_mapping(t_address,t_uint256)",
+              "src": "contracts/test/slicer_test_v1.sol:145"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_released",
+              "type": "t_mapping(t_address,t_array(t_uint256)2_storage)",
+              "src": "contracts/test/slicer_test_v1.sol:146"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_childrenSlicers",
+              "type": "t_struct(UintSet)5450_storage",
+              "src": "contracts/test/slicer_test_v1.sol:147"
+            },
+            {
+              "contract": "SlicerDummyV1",
+              "label": "_productIds",
+              "type": "t_struct(Counter)4817_storage",
+              "src": "contracts/test/slicer_test_v1.sol:148"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            },
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)"
+            },
+            "t_mapping(t_address,t_array(t_uint256)2_storage)": {
+              "label": "mapping(address => uint256[2])"
+            },
+            "t_array(t_uint256)2_storage": {
+              "label": "uint256[2]"
+            },
+            "t_struct(UintSet)5450_storage": {
+              "label": "struct EnumerableSet.UintSet",
+              "members": [
+                {
+                  "label": "_inner",
+                  "type": "t_struct(Set)4992_storage"
+                }
+              ]
+            },
+            "t_struct(Set)4992_storage": {
+              "label": "struct EnumerableSet.Set",
+              "members": [
+                {
+                  "label": "_values",
+                  "type": "t_array(t_bytes32)dyn_storage"
+                },
+                {
+                  "label": "_indexes",
+                  "type": "t_mapping(t_bytes32,t_uint256)"
+                }
+              ]
+            },
+            "t_array(t_bytes32)dyn_storage": {
+              "label": "bytes32[]"
+            },
+            "t_bytes32": {
+              "label": "bytes32"
+            },
+            "t_mapping(t_bytes32,t_uint256)": {
+              "label": "mapping(bytes32 => uint256)"
+            },
+            "t_struct(Counter)4817_storage": {
+              "label": "struct Counters.Counter",
+              "members": [
+                {
+                  "label": "_value",
+                  "type": "t_uint256"
+                }
+              ]
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "SlicerProductsDummyV1": {
+        "src": "contracts/test/slicer_test_v1.sol:19",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "isProduct(uint32)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "SlicerProductsDummyV1",
+              "label": "_products",
+              "type": "t_mapping(t_uint32,t_struct(Product)12178_storage)",
+              "src": "contracts/test/slicer_test_v1.sol:63"
+            }
+          ],
+          "types": {
+            "t_mapping(t_uint32,t_struct(Product)12178_storage)": {
+              "label": "mapping(uint32 => struct SlicerProductsDummyV1.Product)"
+            },
+            "t_uint32": {
+              "label": "uint32"
+            },
+            "t_struct(Product)12178_storage": {
+              "label": "struct SlicerProductsDummyV1.Product",
+              "members": [
+                {
+                  "label": "categoryIndex",
+                  "type": "t_uint32"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256"
+                },
+                {
+                  "label": "isUSD",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "isMultiple",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "isInfinite",
+                  "type": "t_bool"
+                },
+                {
+                  "label": "availableUnits",
+                  "type": "t_uint32"
+                },
+                {
+                  "label": "creator",
+                  "type": "t_address"
+                },
+                {
+                  "label": "data",
+                  "type": "t_bytes_storage"
+                },
+                {
+                  "label": "purchaseData",
+                  "type": "t_bytes_storage"
+                },
+                {
+                  "label": "purchases",
+                  "type": "t_mapping(t_address,t_uint32)"
+                },
+                {
+                  "label": "subSlicers",
+                  "type": "t_array(t_address)dyn_storage"
+                },
+                {
+                  "label": "subProducts",
+                  "type": "t_mapping(t_address,t_array(t_uint32)dyn_storage)"
+                }
+              ]
+            },
+            "t_uint256": {
+              "label": "uint256"
+            },
+            "t_bool": {
+              "label": "bool"
+            },
+            "t_address": {
+              "label": "address"
+            },
+            "t_bytes_storage": {
+              "label": "bytes"
+            },
+            "t_mapping(t_address,t_uint32)": {
+              "label": "mapping(address => uint32)"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]"
+            },
+            "t_mapping(t_address,t_array(t_uint32)dyn_storage)": {
+              "label": "mapping(address => uint32[])"
+            },
+            "t_array(t_uint32)dyn_storage": {
+              "label": "uint32[]"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "OwnableSlice": {
+        "src": "contracts/utils/ownableSlice.sol:7",
+        "inherit": [
+          "ContextUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "owner()",
+          "transferOwnership(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "OwnableSlice",
+              "label": "_slice",
+              "type": "t_address",
+              "src": "contracts/utils/ownableSlice.sol:8"
+            },
+            {
+              "contract": "OwnableSlice",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "contracts/utils/ownableSlice.sol:9"
+            },
+            {
+              "contract": "OwnableSlice",
+              "label": "__gap",
+              "type": "t_array(t_uint256)49_storage",
+              "src": "contracts/utils/ownableSlice.sol:58"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      }
+    },
+    {
+      "AggregatorV3Interface": {
+        "src": "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "decimals()",
+          "description()",
+          "version()",
+          "getRoundData(uint80)",
+          "latestRoundData()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.1"
+        }
+      },
+      "OwnableUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:20",
+        "inherit": [
+          "ContextUpgradeable",
+          "Initializable"
+        ],
+        "libraries": [],
+        "methods": [
+          "owner()",
+          "renounceOwnership()",
+          "transferOwnership(address)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+            },
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)49_storage",
+              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address"
+            },
+            "t_array(t_uint256)49_storage": {
+              "label": "uint256[49]"
+            },
+            "t_uint256": {
+              "label": "uint256"
+            }
+          },
+          "layoutVersion": "1.1"
+        }
+      },
+      "ERC1967UpgradeUpgradeable": {
+        "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:18",
+        "inherit": [
+          "Initializable"
+        ],
+        "libraries": [
+          "StorageSlotUpgradeable",
+          "AddressUpgradeable"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [
+            {
+              "contract": "ERC1967UpgradeUpgradeable",
+              "label": "__gap",
+              "type": "t_array(t_uint256)50_storage",
               "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:233"
             }
           ],
