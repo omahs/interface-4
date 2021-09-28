@@ -18,12 +18,12 @@ type Props = {
 }
 
 const SponsorListItem = ({ slicerId, sponsor, sponsorLink }: Props) => {
-  const { account } = useAppContext()
+  const { account, connector } = useAppContext()
   const { address, amount } = sponsor
   const [link, setLink] = useState("")
   const [loading, setLoading] = useState(false)
   const [editSponsor, setEditSponsor] = useState(false)
-  const resolvedAddress = useEns(address)
+  const resolvedAddress = useEns(connector, address)
   const addressReduced = address.replace(
     address.substring(5, address.length - 3),
     "__"

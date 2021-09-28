@@ -33,7 +33,7 @@ const SliceFormInputBlock = ({
   removedCount,
   setRemovedCount,
 }: Props) => {
-  const { account } = useAppContext()
+  const { account, connector } = useAppContext()
   const [visible, setVisible] = useState(true)
   const [address, setAddress] = useState("")
   const [sharesAmount, setSharesAmount] = useState("")
@@ -64,7 +64,7 @@ const SliceFormInputBlock = ({
     if (index == 0 && signerAddress) {
       setAddress(signerAddress)
       setSharesAmount("1000000")
-      resolveEns(signerAddress, setResolvedSignerAddress)
+      resolveEns(connector, signerAddress, setResolvedSignerAddress)
     }
   }, [signerAddress])
 
