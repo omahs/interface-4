@@ -1,13 +1,15 @@
+import WalletConnect from "@walletconnect/client"
 import { slice } from "@lib/initProvider"
 import { initialize } from "@lib/useProvider"
 
 const Slice = async (
+  connector: WalletConnect,
   accounts: string[],
   shares: number[],
   minimumShares: number,
   isCollectible: boolean
 ) => {
-  const { signer } = await initialize()
+  const { signer } = await initialize(connector)
   const contract = slice(signer)
 
   try {

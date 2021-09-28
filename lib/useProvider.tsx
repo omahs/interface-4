@@ -4,16 +4,28 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { ethers } from "ethers"
 import { slicer } from "@lib/initProvider"
 import { useAppContext } from "@components/ui/context"
+import WalletConnectProvider from "@walletconnect/web3-provider"
 
 export const defaultProvider = ethers.getDefaultProvider(
   process.env.NEXT_PUBLIC_NETWORK_URL
 )
 
-export const initialize = async () => {
-  const provider = new ethers.providers.Web3Provider(window.ethereum)
+export const initialize = async (connector) => {
+  let provider
+  if (connector.connected) {
+    const wcProvider = new WalletConnectProvider({
+      rpc: {
+        // 1: process.env.NEXT_PUBLIC_NETWORK_URL, // mainnet
+        4: process.env.NEXT_PUBLIC_NETWORK_URL,
+      },
+    })
+    await wcProvider.enable()
+    provider = new ethers.providers.Web3Provider(wcProvider)
+  } else {
+    provider = new ethers.providers.Web3Provider(window.ethereum)
+  }
   const signer = provider.getSigner()
-  const signerAddress = await signer.getAddress()
-  return { provider, signer, signerAddress }
+  return { provider, signer }
 }
 
 export const useAllowed = (slicerId: number) => {
@@ -44,6 +56,7 @@ const useProvider = (setLoading: Dispatch<SetStateAction<boolean>>) => {
       qrcodeModal: QRCodeModal,
     })
   )
+
   const [isConnected, setIsConnected] = useState(false)
   const [chainId, setChainId] = useState("")
   const [account, setAccount] = useState("")

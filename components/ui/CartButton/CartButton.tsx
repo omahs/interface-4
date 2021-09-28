@@ -47,7 +47,7 @@ const CartButton = ({
   labelRemove,
   preview,
 }: Props) => {
-  const { setModalView } = useAppContext()
+  const { setModalView, connector } = useAppContext()
   const [loading, setLoading] = useState(false)
   const [cookies, setCookie] = useCookies(["cart"])
 
@@ -58,6 +58,7 @@ const CartButton = ({
       className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-blue-500 rounded-md hover:text-white nightwind-prevent group hover:bg-blue-600"
       onClick={() =>
         handleRedeemProduct(
+          connector,
           slicerId,
           productId,
           name,

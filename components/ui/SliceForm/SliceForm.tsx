@@ -5,6 +5,7 @@ import handleSubmit from "@utils/handleSubmit"
 import handleMessage, { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import MessageBlock from "../MessageBlock"
+import { useAppContext } from "../context"
 
 type Props = {
   success: boolean
@@ -14,6 +15,7 @@ type Props = {
 }
 
 const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
+  const { connector } = useAppContext()
   const [addresses, setAddresses] = useState([""])
   const [shares, setShares] = useState([1000000])
   const [minimumShares, setMinimumShares] = useState(0)
@@ -35,7 +37,13 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         cleanedShares.length <= 30
       ) {
         const eventLogs = await handleSubmit(
-          Slice(cleanedAddresses, cleanedShares, minimumShares, isCollectible),
+          Slice(
+            connector,
+            cleanedAddresses,
+            cleanedShares,
+            minimumShares,
+            isCollectible
+          ),
           setMessage,
           setLoading,
           setSuccess,

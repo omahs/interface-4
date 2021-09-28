@@ -12,6 +12,7 @@ import fetcher from "@utils/fetcher"
 import InputAddress from "../InputAddress"
 import getLog from "@utils/getLog"
 import useQuery from "@utils/subgraphQuery"
+import { useAppContext } from "../context"
 
 type Props = {
   account: string
@@ -28,6 +29,7 @@ const TransferForm = ({
   totalSlices,
   minimumSlices,
 }: Props) => {
+  const { connector } = useAppContext()
   const { data: unreleasedData } = useSWR(
     `/api/slicer/${slicerId}/account/${account}/unreleased`,
     fetcher
@@ -53,7 +55,7 @@ const TransferForm = ({
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
     const eventLog = await handleSubmit(
-      TransferShares(account, address, Number(slicerId), shares),
+      TransferShares(connector, account, address, Number(slicerId), shares),
       setMessage,
       setLoading,
       setSuccess

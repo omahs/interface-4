@@ -40,7 +40,7 @@ const AddProductForm = ({
   setSuccess,
   setLogs,
 }: Props) => {
-  const { account, setModalView } = useAppContext()
+  const { account, setModalView, connector } = useAppContext()
   const [usdValue, setUsdValue] = useState<number>()
   const [ethValue, setEthValue] = useState<number>()
   const [name, setName] = useState("")
@@ -89,6 +89,7 @@ const AddProductForm = ({
 
       const eventLogs = await handleSubmit(
         AddProduct(
+          connector,
           slicerId,
           0,
           productPrice,

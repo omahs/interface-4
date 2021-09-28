@@ -17,7 +17,8 @@ import { productsToPurchases } from "@utils/getPurchases"
 type Props = {}
 
 const FloatingCart = ({}: Props) => {
-  const { isConnected, setPurchases, purchases, setModalView } = useAppContext()
+  const { isConnected, setPurchases, purchases, setModalView, connector } =
+    useAppContext()
   const [cookies, setCookie, removeCookie] = useCookies(["cart"])
   const [showCart, setShowCart] = useState(false)
   const [showCartList, setShowCartList] = useState(false)
@@ -65,9 +66,10 @@ const FloatingCart = ({}: Props) => {
   }, [success])
 
   const handleCheckout = async () => {
+    setLoading(true)
     try {
       await handleSubmit(
-        PayProducts(cookieCart),
+        PayProducts(connector, cookieCart),
         setMessage,
         setLoading,
         setSuccess,
@@ -76,6 +78,7 @@ const FloatingCart = ({}: Props) => {
     } catch (err) {
       console.log(err)
     }
+    setLoading(false)
   }
 
   return (

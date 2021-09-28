@@ -1,8 +1,13 @@
+import WalletConnect from "@walletconnect/client"
 import { initialize } from "@lib/useProvider"
 import { slicer } from "@lib/initProvider"
 
-const redeemProduct = async (slicerId: number, productId: number) => {
-  const { signer } = await initialize()
+const redeemProduct = async (
+  connector: WalletConnect,
+  slicerId: number,
+  productId: number
+) => {
+  const { signer } = await initialize(connector)
   const contract = await slicer(slicerId, signer)
 
   try {

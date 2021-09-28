@@ -29,7 +29,7 @@ const ProductPurchaseCard = ({
   creator,
   purchaseInfo,
 }: Props) => {
-  const { setModalView } = useAppContext()
+  const { setModalView, connector } = useAppContext()
   const [loading, setLoading] = useState(false)
 
   return (
@@ -64,6 +64,7 @@ const ProductPurchaseCard = ({
             loading={loading}
             onClick={() =>
               handleRedeemProduct(
+                connector,
                 slicerId,
                 productId,
                 name,

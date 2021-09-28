@@ -1,5 +1,4 @@
 import WalletConnect from "@walletconnect/client"
-import { BigNumber } from "@ethersproject/bignumber"
 
 const handleSendTransaction = async (
   from: string,
