@@ -8,7 +8,7 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "development") {
-      if (isConnected && chainId && chainId !== "0x4") {
+      if (isConnected && chainId && Number(chainId).toString(16) !== "4") {
         setModalView({ cross: false, name: "NETWORK_VIEW" })
       } else {
         setModalView({ name: "" })

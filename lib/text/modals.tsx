@@ -54,18 +54,20 @@ export const CONNECT_VIEW = () => {
         <DoubleText inactive logoText="Connect wallet" />
       </div>
       <div className="space-y-6">
-        <div
-          className="flex items-center justify-between max-w-sm p-6 mx-auto transition-all duration-300 ease-out border-2 border-yellow-100 cursor-pointer flex-between hover:scale-105 shadow-base hover:border-yellow-500 rounded-xl group"
-          onClick={async () => await handleConnectMetamask(setModalView)}
-        >
-          <div className="flex items-center">
-            <Metamask className="w-6 h-6" />
-            <p className="ml-6 font-semibold">Metamask</p>
+        {window.ethereum && (
+          <div
+            className="flex items-center justify-between max-w-sm p-6 mx-auto transition-all duration-300 ease-out border-2 border-yellow-100 cursor-pointer flex-between hover:scale-105 shadow-base hover:border-yellow-500 rounded-xl group"
+            onClick={async () => await handleConnectMetamask(setModalView)}
+          >
+            <div className="flex items-center">
+              <Metamask className="w-6 h-6" />
+              <p className="ml-6 font-semibold">Metamask</p>
+            </div>
+            <div>
+              <Arrow className="transition-colors duration-300 ease-out group-hover:text-yellow-500" />
+            </div>
           </div>
-          <div>
-            <Arrow className="transition-colors duration-300 ease-out group-hover:text-yellow-500" />
-          </div>
-        </div>
+        )}
         <div
           className="flex items-center justify-between max-w-sm p-6 mx-auto transition-all duration-300 ease-out border-2 border-blue-100 cursor-pointer flex-between hover:scale-105 shadow-base hover:border-blue-600 rounded-xl group"
           onClick={async () => await handleConnectWC(connector, setModalView)}
