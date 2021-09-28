@@ -73,7 +73,6 @@ export default Home
  *      - NFT section
  *
  * *High Priority*
- *    - add wallet connect
  *    - FAQs page (see below) + add link where already referenced
  *    - Improve homepage content
  *

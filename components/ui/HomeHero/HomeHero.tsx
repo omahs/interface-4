@@ -20,7 +20,6 @@ const HomeHero = () => {
           size="text-6xl sm:text-7xl"
           position="mr-4"
         />
-        <DoubleText inactive logoText={`beta`} size="text-2xl" position="" />
       </div>
       <h2 className="pb-1 font-black leading-normal">
         Decentralized payments <br />
