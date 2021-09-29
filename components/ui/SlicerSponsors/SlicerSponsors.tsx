@@ -56,31 +56,33 @@ const SlicerSponsors = ({
   }, [subgraphData])
 
   return (
-    <div className="max-w-sm py-4 mx-auto text-center">
-      <h2 className="pb-12">Sponsors</h2>
+    <div className="max-w-sm pt-4 pb-12 mx-auto text-center">
       {loading ? (
         <div className="flex justify-center py-2">
           <Spinner size="h-10 w-10" />
         </div>
-      ) : sponsors.length != 0 ? (
-        <ol className="space-y-5">
-          {sponsors.map((sponsor, key) => {
-            return (
-              <SponsorListItem
-                slicerId={slicerId}
-                sponsor={sponsor}
-                key={key}
-                sponsorLink={sponsorData[sponsor.address]}
-              />
-            )
-          })}
-        </ol>
       ) : (
-        <p className="text-gray-500">Become the first sponsor!</p>
+        sponsors.length != 0 && (
+          <>
+            <h2 className="pb-12">Sponsors</h2>
+            <ol className="space-y-5">
+              {sponsors.map((sponsor, key) => {
+                return (
+                  <SponsorListItem
+                    slicerId={slicerId}
+                    sponsor={sponsor}
+                    key={key}
+                    sponsorLink={sponsorData[sponsor.address]}
+                  />
+                )
+              })}
+            </ol>
+          </>
+        )
       )}
       {!editMode && (
         <>
-          <p className="py-12">
+          <p className="py-10">
             Sponsor this slicer by sending ETH to its address
           </p>
           <PaySlicer slicerAddress={slicerAddress} />
