@@ -84,12 +84,12 @@ const SlicerProducts = ({
         editMode={editMode}
       />
       {editMode && (
-        <div>
+        <div className="pt-6">
           <Button label="Add a new product" href={`${slicerId}/products/new`} />
           {(pendingProducts?.length != 0 ||
             blockchainProducts?.length > products?.data?.length) && (
             <div className="pt-12">
-              <p className="pb-4">
+              <p className="pb-8">
                 There are pending products for your slicer. <br />
                 Click the button below to reload them.
               </p>
