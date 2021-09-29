@@ -41,34 +41,40 @@ const ProductCard = ({
     uid,
     creator,
   } = product
-  const {
-    price,
-    isUSD,
-    isInfinite,
-    isMultiple,
-    availableUnits,
-    totalPurchases,
-    createdAtTimestamp,
-  } = chainInfo
+  const price = chainInfo?.price
+  const isUSD = chainInfo?.isUSD
+  const isInfinite = chainInfo?.isInfinite
+  const isMultiple = chainInfo?.isMultiple
+  const availableUnits = chainInfo?.availableUnits
+  const totalPurchases = chainInfo?.totalPurchases
+  // const createdAtTimestamp = chainInfo?.createdAtTimestamp
 
   const [convertedEthUsd, setConvertedEthUsd] = useState(0)
   const [purchasedQuantity, setPurchasedQuantity] = useState(0)
 
-  const productPrice = {
-    eth: `Ξ ${isUSD ? convertedEthUsd : Math.floor(price / 10 ** 14) / 10000}`,
-    usd: `$ ${isUSD ? formatNumber(price / 100) : convertedEthUsd}`,
-  }
+  const productPrice = chainInfo
+    ? {
+        eth: `Ξ ${
+          isUSD ? convertedEthUsd : Math.floor(price / 10 ** 14) / 10000
+        }`,
+        usd: `$ ${isUSD ? formatNumber(price / 100) : convertedEthUsd}`,
+      }
+    : {
+        eth: "Ξ ...",
+        usd: "$ ...",
+      }
   const cookieCart: ProductCart[] = cookies?.cart
   const productCart: ProductCart = cookieCart?.find(
     (product) =>
       product.slicerAddress == slicerAddress && product.productId == productId
   )
   const availabilityColor =
-    availableUnits < 10
+    availableUnits &&
+    (availableUnits < 10
       ? availableUnits == 0
         ? "text-red-500"
         : "text-yellow-600"
-      : "text-green-600"
+      : "text-green-600")
 
   //todo: optimize
   useEffect(() => {
@@ -140,9 +146,11 @@ const ProductCard = ({
           title: "Purchases",
           content: (
             <>
-              <p className="mr-2 text-indigo-600">
-                {formatNumber(totalPurchases)}
-              </p>
+              {totalPurchases && (
+                <p className="mr-2 text-indigo-600">
+                  {formatNumber(totalPurchases)}
+                </p>
+              )}
               <ShoppingBag className="w-[18px] h-[18px] text-indigo-600" />
             </>
           ),
@@ -154,6 +162,7 @@ const ProductCard = ({
           ),
         }}
         bottomLeft={
+          chainInfo &&
           !isInfinite && {
             title: "Available units",
             content: (
@@ -166,7 +175,7 @@ const ProductCard = ({
             ),
           }
         }
-        onClick={() => handleOnClick()}
+        onClick={() => (chainInfo ? handleOnClick() : null)}
       >
         <div>
           <div className="flex items-center justify-between">
@@ -180,9 +189,9 @@ const ProductCard = ({
           <div className="absolute top-0 right-0 flex items-center justify-center w-24 h-[56px] my-auto mr-5">
             <div
               className="absolute w-full h-full"
-              onClick={() => handleOnClick()}
+              onClick={() => (chainInfo ? handleOnClick() : null)}
             />
-            {!editMode && (
+            {chainInfo && !editMode && (
               <CartButton
                 slicerId={slicerId}
                 productCart={productCart}

@@ -1,4 +1,3 @@
-import Spinner from "@components/icons/Spinner"
 import fetcher from "@utils/fetcher"
 import { useEffect, useState } from "react"
 import useSWR from "swr"
@@ -34,45 +33,34 @@ const ProductsGrid = ({
   }, [items, products])
 
   return products && products.length != 0 ? (
-    blockchainProducts ? (
-      <>
-        <h2 className="pb-6">Products</h2>
-        <div className="grid items-center justify-center grid-cols-1 gap-8 max-w-[400px] mx-auto sm:max-w-none sm:grid-cols-2">
-          {[...Array(iterator)].map((i, key) => {
-            const product = products.find((p) => p.productId == Number(key) + 1)
-            const chainInfo = blockchainProducts.find(
-              (p) => p.id.split("-").pop() == product?.productId
-            )
+    <>
+      <h2 className="pb-6">Products</h2>
+      <div className="grid items-center justify-center grid-cols-1 gap-8 max-w-[400px] mx-auto sm:max-w-none sm:grid-cols-2">
+        {[...Array(iterator)].map((i, key) => {
+          const product = products.find((p) => p.productId == Number(key) + 1)
+          const chainInfo = blockchainProducts?.find(
+            (p) => p.id.split("-").pop() == product?.productId
+          )
 
-            return (
-              chainInfo && (
-                <ProductCard
-                  slicerId={slicerId}
-                  slicerAddress={slicerAddress}
-                  key={key}
-                  product={product}
-                  chainInfo={chainInfo}
-                  editMode={editMode}
-                  ethUsd={ethUsd}
-                />
-              )
-            )
-          })}
-        </div>
-        {items < products?.length && (
-          <p className="py-6 text-center">
-            <a onClick={() => setItems(items + initItems)}>Load more</a>
-          </p>
-        )}
-      </>
-    ) : (
-      <div className="text-center">
-        <h2>Products</h2>
-        <div className="flex justify-center py-14">
-          <Spinner size="h-10 w-10" />
-        </div>
+          return (
+            <ProductCard
+              slicerId={slicerId}
+              slicerAddress={slicerAddress}
+              key={key}
+              product={product}
+              chainInfo={chainInfo}
+              editMode={editMode}
+              ethUsd={ethUsd}
+            />
+          )
+        })}
       </div>
-    )
+      {items < products?.length && (
+        <p className="py-6 text-center">
+          <a onClick={() => setItems(items + initItems)}>Load more</a>
+        </p>
+      )}
+    </>
   ) : null
 }
 
