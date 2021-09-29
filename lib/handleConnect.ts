@@ -17,7 +17,7 @@ export const handleConnectWC = async (
     // Check if connection is already established
     if (!connector.connected) {
       // create new session
-      connector.createSession()
+      await connector.createSession()
       setModalView({ name: "" })
     }
   } catch (err) {

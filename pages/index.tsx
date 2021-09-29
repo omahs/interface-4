@@ -68,13 +68,13 @@ export default Home
 /** TODO
  *
  * *Critical Priority*
- *    - Receive ERC721-1155
- *      - Fix slicer smart contract receive/reject ERC721
- *      - NFT section
+ *    - test receive erc721 actually rejects
  *
  * *High Priority*
  *    - FAQs page (see below) + add link where already referenced
  *    - Improve homepage content
+ *    - Receive ERC721-1155
+ *      - NFT section
  *
  * *Low Priority*
  *    - Products

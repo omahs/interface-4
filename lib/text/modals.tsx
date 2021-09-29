@@ -340,7 +340,7 @@ export const PRODUCT_VIEW = (params: any) => {
               creator={creator}
               labelAdd={`Get it for ${productPrice.eth}`}
               labelRemove={productPrice.eth}
-              preview
+              preview={preview}
             />
           </div>
         )}

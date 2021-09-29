@@ -103,7 +103,7 @@ const SponsorListItem = ({ slicerId, sponsor, sponsorLink }: Props) => {
                   <>{resolvedAddress || addressReduced}</>
                 )}
               </span>
-              {account.toLowerCase() === address && (
+              {account?.toLowerCase() === address && (
                 <a onClick={() => setEditSponsor(true)}>
                   <Edit className="w-[18px] h-[18px]" />
                 </a>
