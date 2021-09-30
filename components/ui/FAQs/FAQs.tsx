@@ -1,5 +1,7 @@
 import { DoubleText, FAQsItem } from ".."
 
+const faqsContent = [{ question: "What is the love", answer: "Nice" }]
+
 const FAQs = () => {
   return (
     <>
@@ -8,7 +10,9 @@ const FAQs = () => {
           <DoubleText inactive logoText="FAQs" size="text-4xl sm:text-5xl" />
         </div>
         <div className="max-w-screen-sm mx-auto prose text-left">
-          <FAQsItem question="What is the love" answer="Nice" />
+          {faqsContent.map((faq, key) => (
+            <FAQsItem key={key} question={faq.question} answer={faq.answer} />
+          ))}
         </div>
       </div>
     </>
