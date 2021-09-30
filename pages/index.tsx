@@ -1,7 +1,7 @@
 import HomeCake from "@components/icons/HomeCake"
 import Logo from "@components/icons/Logo"
 import HomeEth from "@components/icons/HomeEth"
-import { Banner, Container, HomeHero, HomeSection } from "@components/ui"
+import { Banner, Container, FAQs, HomeHero, HomeSection } from "@components/ui"
 import { section1, section2, section3, section4 } from "@lib/text/home"
 import HomeDecentralized from "@components/icons/HomeDecentralized"
 import { NextSeo } from "next-seo"
@@ -59,6 +59,9 @@ const Home = () => {
         </main>
       </Container>
       <Banner />
+      <Container page={true}>
+        <FAQs />
+      </Container>
     </>
   )
 }
