@@ -66,6 +66,7 @@ module.exports = {
             },
             h3: {
               color: theme("colors.black"),
+              fontSize: "1.12em",
             },
             blockquote: {
               borderLeftColor: theme("colors.random2.600"),

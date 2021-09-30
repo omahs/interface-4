@@ -23,7 +23,7 @@ const HomeHero = () => {
       </div>
       <h2 className="pb-1 font-black leading-normal">
         Decentralized payments <br />
-        <span className="text-random2-600">
+        {/* <span className="text-random2-600">
           for{" "}
           <ReactRotatingText
             pause={2000}
@@ -31,7 +31,7 @@ const HomeHero = () => {
             typingInterval={75}
             items={items}
           />
-        </span>
+        </span> */}
       </h2>
 
       <div className="flex flex-col items-center justify-center pt-8 space-y-6 ">

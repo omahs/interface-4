@@ -11,12 +11,14 @@ const FAQsItem = ({ question, answer }: Props) => {
   return (
     <>
       <div
-        className="flex items-center pb-2 border-b-2 border-blue-600 cursor-pointer group"
+        className="flex items-center border-b-2 border-blue-600 cursor-pointer pt-7 group"
         onClick={() => setShowAnswer((showAnswer) => !showAnswer)}
       >
         <Chevron
           className={`w-6 h-6 mb-2 mr-2 transition-transform duration-200 ease-out ${
-            showAnswer ? "-rotate-90" : "group-hover:-rotate-90 -rotate-180"
+            showAnswer
+              ? "-rotate-90"
+              : "group-hover:translate-x-[6px] -rotate-180"
           } `}
         />
         <h3 className="!mt-0 !mb-0">{question}</h3>
