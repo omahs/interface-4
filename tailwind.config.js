@@ -56,6 +56,11 @@ module.exports = {
         DEFAULT: {
           css: {
             color: theme("colors.black"),
+            a: {
+              textDecorationColor: "var(--darkColor2)",
+              textDecorationThickness: "2px",
+              textUnderlineOffset: "1px",
+            },
             h1: {
               color: theme("colors.black"),
               fontWeight: "900",

@@ -23,6 +23,7 @@ const HomeHero = () => {
       </div>
       <h2 className="pb-1 font-black leading-normal">
         Decentralized payments <br />
+        {/* Decentralized product stores <br /> */}
         {/* <span className="text-random2-600">
           for{" "}
           <ReactRotatingText

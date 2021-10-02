@@ -70,25 +70,40 @@ export default Home
 
 /** TODO
  *
- * *Critical Priority*
- *    - test receive erc721 actually rejects
+ * *Pre-launch*
+ *    - wait for low gas price
+ *
+ *  ENS
+ *    - buy ens domain on mainnet -> slice-so.eth
+ *    - Change "slice.eth" placeholders on website (+ stuff related to rinkeby)
+ *
+ *  CONTRACTS
+ *    - deploy on mainnet
+ *
+ *  SUBGRAPH
+ *    - Buy Graph tokens
+ *    - deloy subgraph with mainnet contracts
+ *    - publish subgraph on mainnet
+ *
+ *    - change new env on vercel + change ext. services from rinkeby
+ *
+ *    - add slicers & products to demonstrate use case with digital collectibles
+ *
  *
  * *High Priority*
  *    - FAQs page (see below) + add link where already referenced
  *    - Improve homepage content
- *    - Receive ERC721-1155
- *      - NFT section
  *
  * *Low Priority*
+ *    - Receive ERC721-1155
+ *      - NFT section
  *    - Products
  *      - product likes
  *      - sort products by productId / createdAt / totalPurchases / likes
+ *      - edit/delete products
  *    - sponsorships
  *      - allow creator to hide links
- *    - product features
- *      - edit/delete products
  *
- *    - add products to slicers -> demonstrate use case with digital collectibles
  *    - (prisma) add {isVisible} boolean field in Slicer model to toggle visibility in Explore page
  *    - add slicer tags in metadata & slicer page
  *    - add products "explore" page
@@ -96,28 +111,12 @@ export default Home
  *    - transfer page (select box to choose slicer)
  *    - optimize subgraph queries (products + payeeslicer) in slicer/[id], if possible
  *
+ * *Future*
+ *    - Set maximum batch values as constants, remove unnecessary setter functions
  *
  *
  *
  *
- * FAQS
- * - How file encryption works
- *
- *
- *
- *
- *
- *
- *
- * USE CASES
- * - Use it as a slicer
- *      - IS NOT digital asset
- *      - Editable metadata
- *      - Can receive external NFTs
- * - Create a new single or fractional NFT
- *      - Slicer IS digital asset
- *      - non editable metadata
- *      - CANNOT receive external NFTs or slicers
  *
  * NFT PRODUCTS IDEAS
  * - special concert ticket
@@ -127,11 +126,7 @@ export default Home
  * - Buy movie / music / game / game add-on
  *
  *
- * BEFORE FINAL DEPLOY
- * - Check if it's ok how metadata is handled for collectible slicers
- *
  * OTHER
- * - (LP) Set maximum batch values before deploying on mainnet (and removing not needed functions to set them)
  * - Handle ERC20
  * - DeGov logics
  */

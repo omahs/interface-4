@@ -89,7 +89,7 @@ const SlicerCard = ({
         }
         topRight={
           isAllowed && {
-            title: "Super user",
+            title: "Superowner",
             content: (
               <UserVerified className="text-green-500 py-2 w-[38px] h-[38px]" />
             ),
