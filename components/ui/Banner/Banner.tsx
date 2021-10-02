@@ -4,7 +4,10 @@ import SubscribeForm from "../SubscribeForm"
 const Banner = () => {
   return (
     <>
-      <div className="relative py-24 text-center text-white bg-gray-800">
+      <div
+        className="relative py-24 text-center text-white bg-gray-800"
+        id="subscribe"
+      >
         <div className="pb-8 sm:pb-12">
           <DoubleText
             inactive

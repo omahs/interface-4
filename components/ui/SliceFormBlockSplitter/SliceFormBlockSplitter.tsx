@@ -174,13 +174,23 @@ const SliceFormBlockSplitter = ({
                 </p>
                 <p className="pb-4">
                   It should be enabled if you&apos;re using the slicer as a
-                  typical NFT — representing an image, animation, music,
-                  artwork, or anything that should not change once created.
+                  typical NFT — representing an image (in the future also
+                  animation, music, artwork, or any digital asset) that should
+                  not change once created.
                 </p>
                 <p>
-                  <b>Note:</b> Collectibles will appear in a separate section of
-                  the website, but will have some limitations with respect to
-                  normal slicers.
+                  <b>Note:</b> You can also use{" "}
+                  <Link href="/#products">
+                    <a target="_blank" rel="noreferrer">
+                      sell your files using products
+                    </a>
+                  </Link>
+                  , without necessarily creating a collectible.
+                </p>
+                <p>
+                  <b>Note:</b> In the future collectibles will appear in a
+                  separate section of the website, but have some limitations
+                  with respect to normal slicers.
                 </p>
               </>
             }

@@ -1,15 +1,15 @@
 import { DoubleText, FAQsItem } from ".."
-import { faqsGeneral, faqsNfts, faqsOther } from "@lib/text/faqsContent"
+import { faqsMain, faqsNfts, faqsGeneral } from "@lib/text/faqsContent"
 
 const FAQs = () => {
   return (
     <>
       <div className="pt-12 text-center" id="faqs">
         <div className="pb-8 sm:pb-12">
-          <DoubleText inactive logoText="FAQs" size="text-4xl sm:text-5xl" />
+          <DoubleText inactive logoText="FAQ" size="text-4xl sm:text-5xl" />
         </div>
         <div className="max-w-screen-sm pb-16 mx-auto prose text-left">
-          {faqsGeneral.map((faq, key) => (
+          {faqsMain.map((faq, key) => (
             <FAQsItem
               key={key}
               question={faq.question}
@@ -18,7 +18,7 @@ const FAQs = () => {
             />
           ))}
         </div>
-        <h2 className="font-bold">NFTs</h2>
+        <h2 className="font-bold">NFTs (collectibles)</h2>
         <div className="max-w-screen-sm pt-6 pb-16 mx-auto prose text-left">
           {faqsNfts.map((faq, key) => (
             <FAQsItem
@@ -29,9 +29,9 @@ const FAQs = () => {
             />
           ))}
         </div>
-        <h2 className="font-bold">Other</h2>
+        <h2 className="font-bold">General</h2>
         <div className="max-w-screen-sm pt-6 pb-16 mx-auto prose text-left">
-          {faqsOther.map((faq, key) => (
+          {faqsGeneral.map((faq, key) => (
             <FAQsItem
               key={key}
               question={faq.question}

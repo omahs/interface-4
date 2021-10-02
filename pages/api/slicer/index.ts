@@ -23,3 +23,5 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 }
 
 export default handler
+
+// Todo?: Fix cors for !origin? I can access this from anywhere

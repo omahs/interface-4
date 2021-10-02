@@ -3,8 +3,8 @@ import ReactRotatingText from "react-rotating-text"
 
 const items = [
   "applications 👩‍💻",
+  "NFTs ?",
   "services ✨",
-  "everything 🐶",
   "your store 👩‍🍳",
   "your artworks 👨‍🎨",
   "the real world 🌍",
@@ -21,18 +21,18 @@ const HomeHero = () => {
           position="mr-4"
         />
       </div>
-      <h2 className="pb-1 font-black leading-normal">
-        Decentralized payments <br />
-        {/* Decentralized product stores <br /> */}
-        {/* <span className="text-random2-600">
+      <h2 className="pt-2 pb-1 font-black leading-normal">
+        Decentralized products marketplace
+        {/* <br />
+        <span className="text-random2-600">
           for{" "}
           <ReactRotatingText
             pause={2000}
             emptyPause={750}
             typingInterval={75}
             items={items}
-          />
-        </span> */}
+          /> 
+        </span>*/}
       </h2>
 
       <div className="flex flex-col items-center justify-center pt-8 space-y-6 ">
