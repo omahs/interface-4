@@ -12,9 +12,9 @@ const Logo = ({ ...props }) => {
         viewBox="0 0 493 487"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={`spin-el relative z-10 ${props.interactive ? "peer" : ""} ${
-          props.className ? props.className : ""
-        }`}
+        className={`${props.spin ? "spin-el" : ""} relative z-10 ${
+          props.interactive ? "peer" : ""
+        } ${props.className ? props.className : ""}`}
       >
         <path
           d="M19.4493 253.5L198.18 20.4351C199.508 18.7037 201.564 17.7213 203.742 17.8405C218.716 18.6598 280.396 23.0921 347.587 42.9536C410.737 61.6203 456.039 92.2932 470.503 102.893C473.671 105.215 475.435 108.917 475.435 112.845V317.564C475.435 320.488 473.552 323.08 470.772 323.984L26.8424 468.344C22.4803 469.762 18.004 466.511 18.004 461.924V257.759C18.004 256.219 18.512 254.722 19.4493 253.5Z"
@@ -30,8 +30,10 @@ const Logo = ({ ...props }) => {
         viewBox="0 0 493 477"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={`spin-el ${
-          props.spin ? "drop-shadow-random-strong" : "drop-shadow-random"
+        className={`${
+          props.spin
+            ? "spin-el drop-shadow-random-strong"
+            : "drop-shadow-random"
         } space-y-60 absolute top-0 left-0 ${size} ${margin} transition-all duration-150 peer-hover:mt-0 peer-hover:ml-0 peer-hover:mr-0`}
       >
         <path
