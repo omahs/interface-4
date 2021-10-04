@@ -1,5 +1,5 @@
 import { Button, DoubleText } from "@components/ui"
-import ReactRotatingText from "react-rotating-text"
+// import ReactRotatingText from "react-rotating-text"
 
 const items = [
   "applications 👩‍💻",
@@ -21,8 +21,11 @@ const HomeHero = () => {
           position="mr-4"
         />
       </div>
-      <h2 className="pt-2 pb-1 font-black leading-normal">
-        Decentralized products marketplace
+      <h2 className="py-2 xs:py-4 text-[1.38rem] font-black leading-normal xs:text-2xl sm:text-3xl">
+        NFTs that earn you ETH
+        {/* NFTs with real value */}
+        {/* Decentralized product stores
+        <br />& payments infrastructure */}
         {/* <br />
         <span className="text-random2-600">
           for{" "}
@@ -35,7 +38,7 @@ const HomeHero = () => {
         </span>*/}
       </h2>
 
-      <div className="flex flex-col items-center justify-center pt-8 space-y-6 ">
+      <div className="flex flex-col items-center justify-center space-y-6 pt-7 ">
         <Button label="Start slicing" href="/slice" />
         {/* <Link href="/slicer">
           <a>See Slicers</a>

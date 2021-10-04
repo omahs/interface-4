@@ -34,7 +34,7 @@ const Home = () => {
       <Container page={true}>
         <main className="max-w-screen-lg pb-20 mx-auto text-center">
           <HomeHero />
-          <div className=" space-y-36">
+          <div className="space-y-36 xs:space-y-44">
             <HomeSection
               text={section1}
               image={<HomeCake className="w-32 sm:w-40" spin />}
@@ -46,13 +46,10 @@ const Home = () => {
               }
               side="right"
             />
-            <HomeSection
-              text={section3}
-              image={<HomeEth size="w-32 sm:w-36" spin />}
-            />
+            <HomeSection text={section3} image={<HomeDecentralized />} />
             <HomeSection
               text={section4}
-              image={<HomeDecentralized />}
+              image={<HomeEth size="w-32 sm:w-36" spin />}
               side="right"
             />
           </div>
@@ -67,6 +64,10 @@ const Home = () => {
 }
 
 export default Home
+
+// Homepage todo:
+// 1. use motion.dev for animations
+// 3. new section: examples
 
 /** TODO
  *
