@@ -31,7 +31,8 @@ export const section2 = (
         logoText="Semi-Fungible Tokens"
         size="text-normal"
       />{" "}
-      (fractional NFTs) that represent ownership of a slicer.
+      (fractional NFTs) that represent ownership of a slicer, including the
+      right to redeem any due ETH.
     </p>
     <p>
       They&apos;re ERC1155 tokens so you&apos;re free to transfer or sell your
