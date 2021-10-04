@@ -73,7 +73,7 @@ export const section4 = (
       slices <b>the first tradable NFTs with an objective value</b>.
     </p>
     <p>
-      This also opens up to many exciting use cases, with slicers acting as an{" "}
+      This opens up to many exciting use cases, with slicers acting as an{" "}
       <b>independent, decentralized payments infrastructure</b> and counterpart
       to many real-world applications.
     </p>
