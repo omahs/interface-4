@@ -44,8 +44,7 @@ const SubscribeForm = () => {
         <form className="px-4 space-y-4 sm:px-0" onSubmit={handleSubscribe}>
           <p>
             Sign up to our newsletter to keep up to date with the latest
-            features and get inspired on what sort of things become possible
-            with slicers.
+            features and news about Slice.
           </p>
           <div className="max-w-[350px] mx-auto pt-4">
             <Input
