@@ -21,7 +21,7 @@ const HomeHero = () => {
           position="mr-4"
         />
       </div>
-      <h2 className="py-2 xs:py-4 text-[1.38rem] font-black leading-normal xs:text-2xl sm:text-3xl">
+      <h2 className="py-2 xs:py-4 text-[1.38rem] font-black leading-normal xs:text-2xl sm:!text-3xl">
         NFTs that earn you ETH
         {/* NFTs with real value */}
         {/* Decentralized product stores
