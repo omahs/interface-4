@@ -1,23 +1,35 @@
 import { DoubleText } from "@components/ui"
-import SubscribeForm from "../SubscribeForm"
 
-const Banner = () => {
+type Props = {
+  children: JSX.Element
+  title?: string
+  inverted?: boolean
+  color?: string
+  id?: string
+}
+
+const Banner = ({
+  children,
+  title,
+  inverted,
+  color = "text-white bg-gray-800",
+  id,
+}: Props) => {
   return (
     <>
-      <div
-        className="relative py-24 text-center text-white bg-gray-800"
-        id="subscribe"
-      >
-        <div className="pb-8 sm:pb-12">
-          <DoubleText
-            inactive
-            inverted
-            logoText={`Stay in the loop`}
-            size="text-4xl sm:text-5xl"
-            position=""
-          />
-        </div>
-        <SubscribeForm />
+      <div className={`relative px-2 py-24 text-center ${color}`} id={id}>
+        {title && (
+          <div className="pb-8 sm:pb-12">
+            <DoubleText
+              inactive
+              inverted={inverted}
+              logoText={title}
+              size="text-4xl sm:text-5xl"
+              position=""
+            />
+          </div>
+        )}
+        {children}
       </div>
     </>
   )

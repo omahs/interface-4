@@ -1,7 +1,14 @@
 import HomeCake from "@components/icons/HomeCake"
 import Logo from "@components/icons/Logo"
 import HomeEth from "@components/icons/HomeEth"
-import { Banner, Container, FAQs, HomeHero, HomeSection } from "@components/ui"
+import {
+  Container,
+  Examples,
+  FAQs,
+  HomeHero,
+  HomeSection,
+  SubscribeForm,
+} from "@components/ui"
 import { useEffect } from "react"
 import { section1, section2, section3, section4 } from "@lib/text/home"
 import HomeDecentralized from "@components/icons/HomeDecentralized"
@@ -72,7 +79,8 @@ const Home = () => {
           </div>
         </main>
       </Container>
-      <Banner />
+      <Examples />
+      <SubscribeForm />
       <Container page={true}>
         <FAQs />
       </Container>
@@ -83,10 +91,14 @@ const Home = () => {
 export default Home
 
 // Homepage todo:
-// 1. use motion.dev for animations
 // 3. new section: examples
 
 /** TODO
+ *
+ * *optimization*
+ * - dynamic imports https://nextjs.org/learn/seo/improve/dynamic-imports
+ * - dynamic components
+ * - convert app and documents to typescript https://nextjs.org/learn/excel/typescript/nextjs-types
  *
  * *Pre-launch*
  *    - wait for low gas price
