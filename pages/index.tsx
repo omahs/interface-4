@@ -2,6 +2,7 @@ import HomeCake from "@components/icons/HomeCake"
 import Logo from "@components/icons/Logo"
 import HomeEth from "@components/icons/HomeEth"
 import { Banner, Container, FAQs, HomeHero, HomeSection } from "@components/ui"
+import { useEffect } from "react"
 import { section1, section2, section3, section4 } from "@lib/text/home"
 import HomeDecentralized from "@components/icons/HomeDecentralized"
 import { NextSeo } from "next-seo"
@@ -11,8 +12,24 @@ import {
   longTitle,
   domain,
 } from "@components/common/Head"
+import { animate } from "motion"
 
 const Home = () => {
+  useEffect(() => {
+    const spinElements = document.querySelectorAll(".spin-el")
+
+    animate(
+      spinElements,
+      { transform: "rotate(360deg)" },
+      {
+        easing: "linear",
+        duration: 30,
+        repeat: Infinity,
+        allowWebkitAcceleration: true,
+      }
+    )
+  }, [])
+
   return (
     <>
       <NextSeo
@@ -37,7 +54,7 @@ const Home = () => {
           <div className="space-y-36 xs:space-y-44">
             <HomeSection
               text={section1}
-              image={<HomeCake className="w-32 sm:w-40" spin />}
+              image={<HomeCake className="w-32 sm:w-40" />}
             />
             <HomeSection
               text={section2}
@@ -49,7 +66,7 @@ const Home = () => {
             <HomeSection text={section3} image={<HomeDecentralized />} />
             <HomeSection
               text={section4}
-              image={<HomeEth size="w-32 sm:w-36" spin />}
+              image={<HomeEth size="w-32 sm:w-36" />}
               side="right"
             />
           </div>

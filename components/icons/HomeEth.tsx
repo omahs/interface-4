@@ -104,9 +104,7 @@ const HomeEth = ({ ...props }) => {
         viewBox="0 0 2650 2998"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={`absolute w-full h-full ${
-          props.spin && "animate-spin-slow"
-        } ${props.className}`}
+        className={`absolute w-full h-full spin-el ${props.className}`}
       >
         <mask
           id="mask0"

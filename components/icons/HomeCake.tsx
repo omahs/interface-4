@@ -8,9 +8,7 @@ const HomeCake = ({ ...props }) => {
       viewBox="0 0 608 594"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={`${
-        props.spin && "animate-spin-slow drop-shadow-random-strong"
-      } ${props.className} group nightwind-prevent-block`}
+      className={`drop-shadow-random-strong spin-el ${props.className} group nightwind-prevent-block`}
     >
       <mask id="path-1-inside-1" fill="white">
         <path d="M52.1373 448.136C79.3653 491.226 117.746 526.568 163.423 550.61C209.099 574.653 260.462 586.549 312.348 585.102L303.895 296.895L52.1373 448.136Z" />
