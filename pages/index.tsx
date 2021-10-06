@@ -56,7 +56,7 @@ const Home = () => {
         }}
       />
       <Container page={true}>
-        <main className="max-w-screen-lg pb-20 mx-auto text-center">
+        <main className="max-w-screen-lg pb-10 mx-auto text-center">
           <HomeHero />
           <div className="space-y-36 xs:space-y-44">
             <HomeSection
@@ -78,8 +78,8 @@ const Home = () => {
             />
           </div>
         </main>
+        <Examples />
       </Container>
-      <Examples />
       <SubscribeForm />
       <Container page={true}>
         <FAQs />
@@ -92,6 +92,8 @@ export default Home
 
 // Homepage todo:
 // 3. new section: examples
+// - come up with last 2 examples
+// - test on rinkeby that I can change protocolAddress by redeploying Slicer contract
 
 /** TODO
  *
@@ -99,6 +101,8 @@ export default Home
  * - dynamic imports https://nextjs.org/learn/seo/improve/dynamic-imports
  * - dynamic components
  * - convert app and documents to typescript https://nextjs.org/learn/excel/typescript/nextjs-types
+ *
+ *
  *
  * *Pre-launch*
  *    - wait for low gas price

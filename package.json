@@ -43,6 +43,7 @@
     "next-themes": "^0.0.15",
     "nexus": "^1.1.0",
     "postcss": "^8.3.7",
+    "pure-react-carousel": "^1.27.6",
     "react": "^17.0.2",
     "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2",
