@@ -228,7 +228,7 @@ const HomeCake = () => {
         viewBox="0 0 461 675"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full -ml-8"
+        className="w-full h-full mt-8 -ml-8"
       >
         <path
           d="M1 287.196C163.082 287.196 357.582 41.7285 357.582 41.7285"
