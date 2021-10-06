@@ -91,6 +91,27 @@ const slides = [
     ),
   },
   {
+    title: "Payments",
+    image: "",
+    contentSlicer: (
+      <p>
+        Related to a <b>specific project or team</b> and used as a plain{" "}
+        <b>profit-sharing mechanism</b>.
+      </p>
+    ),
+    contentSlice: (
+      <p>
+        Represent the <b>right to redeem part of the profits</b>.
+      </p>
+    ),
+    contentProduct: (
+      <p>
+        Payments can be received directly or by selling{" "}
+        <b>products, services or files</b> through the store.
+      </p>
+    ),
+  },
+  {
     title: "Startups",
     image: "",
     contentSlicer: (
@@ -107,7 +128,7 @@ const slides = [
     ),
     contentProduct: (
       <p>
-        Sells <b>the startup products</b> and can be integrated via Slice API
+        Sells <b>the startup products and services</b>, integrated via Slice API
         (coming soon).
       </p>
     ),
@@ -128,17 +149,6 @@ const slides = [
       </p>
     ),
     isFuture: true,
-  },
-  {
-    title: "Projects",
-    image: "",
-    contentSlicer: <p>...</p>,
-    contentSlice: <p>...</p>,
-    contentProduct: (
-      <p>
-        Sells <b></b>.
-      </p>
-    ),
   },
 ]
 
