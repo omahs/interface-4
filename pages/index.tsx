@@ -58,11 +58,8 @@ const Home = () => {
       <Container page={true}>
         <main className="max-w-screen-lg pb-10 mx-auto text-center">
           <HomeHero />
-          <div className="space-y-36 xs:space-y-44">
-            <HomeSection
-              text={section1}
-              image={<HomeCake className="w-32 sm:w-40" />}
-            />
+          <div className="space-y-28 sm:space-y-44">
+            <HomeSection text={section1} image={<HomeCake />} />
             <HomeSection
               text={section2}
               image={

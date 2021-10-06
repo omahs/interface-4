@@ -1,129 +1,302 @@
-import { useAppContext } from "@components/ui/context"
-
-const HomeCake = ({ ...props }) => {
-  const { color1, color2 } = useAppContext()
-
+const HomeCake = () => {
   return (
-    <svg
-      viewBox="0 0 608 594"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={`drop-shadow-random-strong spin-el ${props.className} group nightwind-prevent-block`}
-    >
-      <mask id="path-1-inside-1" fill="white">
-        <path d="M52.1373 448.136C79.3653 491.226 117.746 526.568 163.423 550.61C209.099 574.653 260.462 586.549 312.348 585.102L303.895 296.895L52.1373 448.136Z" />
-      </mask>
-      <path
-        d="M52.1373 448.136C79.3653 491.226 117.746 526.568 163.423 550.61C209.099 574.653 260.462 586.549 312.348 585.102L303.895 296.895L52.1373 448.136Z"
-        fill="url(#paint9_linear)"
-        stroke="white"
-        strokeWidth="10"
-        mask="url(#path-1-inside-1)"
-      />
-      <mask id="path-2-inside-2" fill="white">
-        <path d="M312.2 585.106C364.087 583.684 414.676 568.971 458.882 542.444C503.088 515.917 539.354 478.511 564.035 433.987L303.895 296.895L312.2 585.106Z" />
-      </mask>
-      <path
-        d="M312.2 585.106C364.087 583.684 414.676 568.971 458.882 542.444C503.088 515.917 539.354 478.511 564.035 433.987L303.895 296.895L312.2 585.106Z"
-        fill="currentColor"
-        stroke="white"
-        strokeWidth="10"
-        mask="url(#path-2-inside-2)"
-        className="text-gray-800 transition-colors duration-150 group-hover:text-blue-900"
-      />
-      <mask id="path-3-inside-3" fill="white">
-        <path d="M564.034 433.988C588.715 389.463 600.941 339.389 599.484 288.797C598.026 238.206 582.936 188.879 555.73 145.776L303.895 296.895L564.034 433.988Z" />
-      </mask>
-      <path
-        d="M564.034 433.988C588.715 389.463 600.941 339.389 599.484 288.797C598.026 238.206 582.936 188.879 555.73 145.776L303.895 296.895L564.034 433.988Z"
-        fill="currentColor"
-        stroke="white"
-        strokeWidth="10"
-        mask="url(#path-3-inside-3)"
-        className="text-gray-700 transition-colors duration-150 group-hover:text-blue-800"
-      />
-      <mask id="path-4-inside-4" fill="white">
-        <path d="M555.641 145.636C528.41 102.548 490.026 67.2083 444.348 43.169C398.67 19.1297 347.306 7.23757 295.42 8.68799L303.895 296.895L555.641 145.636Z" />
-      </mask>
-      <path
-        d="M555.641 145.636C528.41 102.548 490.026 67.2083 444.348 43.169C398.67 19.1297 347.306 7.23757 295.42 8.68799L303.895 296.895L555.641 145.636Z"
-        fill="currentColor"
-        stroke="white"
-        strokeWidth="10"
-        mask="url(#path-4-inside-4)"
-        className="text-gray-600 transition-colors duration-150 group-hover:text-blue-700"
-      />
-      <mask id="path-5-inside-5" fill="white">
-        <path d="M295.589 8.68332C243.702 10.1049 193.113 24.8185 148.907 51.3455C104.701 77.8724 68.4348 115.278 43.7541 159.802L303.895 296.895L295.589 8.68332Z" />
-      </mask>
-      <path
-        d="M295.589 8.68332C243.702 10.1049 193.113 24.8185 148.907 51.3455C104.701 77.8724 68.4348 115.278 43.7541 159.802L303.895 296.895L295.589 8.68332Z"
-        fill="currentColor"
-        stroke="white"
-        strokeWidth="10"
-        mask="url(#path-5-inside-5)"
-        className="text-gray-500 transition-colors duration-150 group-hover:text-blue-600"
-      />
-      <mask id="path-6-inside-6" fill="white">
-        <path d="M43.6927 159.913C19.0319 204.448 6.82856 254.528 8.30923 305.119C9.78991 355.71 24.9024 405.03 52.1278 448.121L303.895 296.895L43.6927 159.913Z" />
-      </mask>
-      <path
-        d="M43.6927 159.913C19.0319 204.448 6.82856 254.528 8.30923 305.119C9.78991 355.71 24.9024 405.03 52.1278 448.121L303.895 296.895L43.6927 159.913Z"
-        fill="currentColor"
-        stroke="white"
-        strokeWidth="10"
-        mask="url(#path-6-inside-6)"
-        className="text-gray-400 transition-colors duration-150 group-hover:text-blue-500"
-      />
-      <path
-        d="M25.6888 296.895C25.6888 446.053 149.826 567.719 303.895 567.719C457.963 567.719 582.1 446.053 582.1 296.895C582.1 147.736 457.963 26.0695 303.895 26.0695C149.826 26.0695 25.6888 147.736 25.6888 296.895Z"
-        stroke="white"
-        strokeWidth="35"
-      />
-      <path
-        d="M303.755 296.413C298.849 373.885 297.769 536.607 332.695 567.716"
-        stroke="white"
-        strokeWidth="35"
-      />
-      <path
-        d="M303.755 296.413C308.653 219.071 309.731 56.6233 274.864 25.5669"
-        stroke="white"
-        strokeWidth="35"
-      />
-      <path
-        d="M303.603 296.613C369.961 339.492 513.949 421.765 559.043 407.828"
-        stroke="white"
-        strokeWidth="35"
-      />
-      <path
-        d="M303.603 296.613C237.357 253.807 93.6112 171.672 48.5935 185.586"
-        stroke="white"
-        strokeWidth="35"
-      />
-      <path
-        d="M304.008 296.441C232.745 331.035 87.6765 411.484 77.5089 456.53"
-        stroke="white"
-        strokeWidth="35"
-      />
-      <path
-        d="M304.009 296.441C375.152 261.906 519.977 181.593 530.127 136.622"
-        stroke="white"
-        strokeWidth="35"
-      />
-      <defs>
-        <linearGradient
-          id="paint9_linear"
-          x1="320.264"
-          y1="273.66"
-          x2="451.435"
-          y2="425.39"
-          gradientUnits="userSpaceOnUse"
+    <div className="flex items-center w-72 group">
+      <div className="relative w-full h-full">
+        <svg
+          viewBox="0 0 608 594"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="drop-shadow-random-strong spin-el"
         >
-          <stop stopColor={color1[0]} />
-          <stop offset="1" stopColor={color2[0]} />
-        </linearGradient>
-      </defs>
-    </svg>
+          <mask id="path-1-inside-1" fill="white">
+            <path d="M52.1373 448.136C93.2759 513.24 159.254 559.743 235.557 577.415C311.86 595.087 392.238 582.48 459.008 542.368C525.778 502.256 573.471 437.925 591.595 363.527C609.72 289.128 596.79 210.757 555.652 145.653L303.895 296.895L52.1373 448.136Z" />
+          </mask>
+          <path
+            d="M52.1373 448.136C93.2759 513.24 159.254 559.743 235.557 577.415C311.86 595.087 392.238 582.48 459.008 542.368C525.778 502.256 573.471 437.925 591.595 363.527C609.72 289.128 596.79 210.757 555.652 145.653L303.895 296.895L52.1373 448.136Z"
+            fill="url(#paint16_linear)"
+            stroke="white"
+            strokeWidth="10"
+            mask="url(#path-1-inside-1)"
+          />
+          <mask id="path-2-inside-2" fill="white">
+            <path d="M44.9235 157.713C19.816 202.127 7.16718 252.213 8.25339 302.916C9.33961 353.619 24.1224 403.146 51.1101 446.499L303.895 296.895L44.9235 157.713Z" />
+          </mask>
+          <path
+            d="M44.9235 157.713C19.816 202.127 7.16718 252.213 8.25339 302.916C9.33961 353.619 24.1224 403.146 51.1101 446.499L303.895 296.895L44.9235 157.713Z"
+            fill="url(#paint11_linear)"
+            stroke="white"
+            strokeWidth="10"
+            mask="url(#path-2-inside-2)"
+          />
+          <mask id="path-3-inside-3" fill="white">
+            <path d="M556.808 147.499C529.639 103.77 491.032 67.8726 444.947 43.485C398.861 19.0973 346.953 7.0969 294.543 8.71378C242.133 10.3307 191.107 25.5067 146.695 52.6863C102.282 79.8659 66.0804 118.072 41.8003 163.387L303.895 296.895L556.808 147.499Z" />
+          </mask>
+          <path
+            d="M556.808 147.499C529.639 103.77 491.032 67.8726 444.947 43.485C398.861 19.0973 346.953 7.0969 294.543 8.71378C242.133 10.3307 191.107 25.5067 146.695 52.6863C102.282 79.8659 66.0804 118.072 41.8003 163.387L303.895 296.895L556.808 147.499Z"
+            fill="url(#paint12_linear)"
+            stroke="white"
+            strokeWidth="10"
+            mask="url(#path-3-inside-3)"
+          />
+          <path
+            d="M25.6888 296.895C25.6888 446.053 149.826 567.719 303.895 567.719C457.963 567.719 582.1 446.053 582.1 296.895C582.1 147.736 457.963 26.0695 303.895 26.0695C149.826 26.0695 25.6888 147.736 25.6888 296.895Z"
+            stroke="white"
+            strokeWidth="35"
+          />
+          <path
+            d="M303.603 296.613C237.357 253.807 93.6112 171.672 48.5935 185.586"
+            stroke="white"
+            strokeWidth="35"
+          />
+          <path
+            d="M304.008 296.441C232.745 331.035 87.6765 411.484 77.5089 456.53"
+            stroke="white"
+            strokeWidth="35"
+          />
+          <path
+            d="M304.009 296.441C375.152 261.906 519.977 181.593 530.127 136.622"
+            stroke="white"
+            strokeWidth="35"
+          />
+
+          <defs>
+            <filter
+              id="filter0_d"
+              x="186"
+              y="179"
+              width="236"
+              height="236"
+              filterUnits="userSpaceOnUse"
+              colorInterpolationFilters="sRGB"
+            >
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+              />
+              <feOffset />
+              <feGaussianBlur stdDeviation="10" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.35 0"
+              />
+              <feBlend
+                mode="normal"
+                in2="BackgroundImageFix"
+                result="effect1_dropShadow"
+              />
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="effect1_dropShadow"
+                result="shape"
+              />
+            </filter>
+            <linearGradient
+              id="paint16_linear"
+              x1="539"
+              y1="151"
+              x2="125.553"
+              y2="311.478"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#0070F3" />
+              <stop offset="1" stopColor="#22B8CF" />
+            </linearGradient>
+            <linearGradient
+              id="paint11_linear"
+              x1="288.5"
+              y1="297"
+              x2="85.941"
+              y2="201.994"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#D1D5DB" />
+              <stop offset="1" stopColor="#C4B5FD" />
+            </linearGradient>
+            <linearGradient
+              id="paint12_linear"
+              x1="526.5"
+              y1="139"
+              x2="110.744"
+              y2="-56.0519"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#FCD34D" />
+              <stop offset="1" stopColor="#FCA5A5" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <svg
+          width="608"
+          height="594"
+          viewBox="0 0 608 594"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="absolute top-0 w-full h-full transition-transform duration-300 group-hover:scale-[1.20]"
+        >
+          <g filter="url(#filter0_d)">
+            <circle
+              cx="304"
+              cy="297"
+              r="107"
+              fill="url(#paint10_radial)"
+              shapeRendering="crispEdges"
+            />
+          </g>
+          <path
+            d="M303.843 229.467L302.943 232.525V321.251L303.843 322.149L345.028 297.805L303.843 229.467Z"
+            fill="#B8FAF6"
+          />
+          <path
+            d="M303.842 229.467L262.656 297.805L303.842 322.149V279.084V229.467Z"
+            fill="#F0CDC2"
+          />
+          <path
+            d="M303.843 329.95L303.336 330.569V362.175L303.843 363.656L345.053 305.618L303.843 329.95Z"
+            fill="#C8B1F4"
+          />
+          <path
+            d="M303.842 363.656V329.95L262.656 305.618L303.842 363.656Z"
+            fill="#F0CDC2"
+          />
+          <path
+            d="M303.844 322.148L345.028 297.803L303.844 279.083V322.148Z"
+            fill="#C9B3F5"
+          />
+          <path
+            d="M262.656 297.803L303.842 322.148V279.083L262.656 297.803Z"
+            fill="#88AAF1"
+          />
+          <defs>
+            <filter
+              id="filter0_d"
+              x="175.163"
+              y="168.163"
+              width="257.673"
+              height="257.673"
+              filterUnits="userSpaceOnUse"
+              colorInterpolationFilters="sRGB"
+            >
+              <feFlood floodOpacity="0" result="BackgroundImageFix" />
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+              />
+              <feOffset />
+              <feGaussianBlur stdDeviation="10.9184" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.35 0"
+              />
+              <feBlend
+                mode="normal"
+                in2="BackgroundImageFix"
+                result="effect1_dropShadow"
+              />
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="effect1_dropShadow"
+                result="shape"
+              />
+            </filter>
+            <radialGradient
+              id="paint10_radial"
+              cx="0"
+              cy="0"
+              r="1"
+              gradientUnits="userSpaceOnUse"
+              gradientTransform="translate(304 297) rotate(90) scale(107)"
+            >
+              <stop stopColor="white" />
+              <stop offset="0.609375" stopColor="white" />
+              <stop offset="1" stopColor="white" stopOpacity="0.74" />
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <svg
+        viewBox="0 0 461 675"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-full h-full -ml-8"
+      >
+        <path
+          d="M1 287.196C163.082 287.196 357.582 41.7285 357.582 41.7285"
+          stroke="url(#paint13_linear)"
+          strokeWidth="20"
+        />
+        <line
+          x1="1"
+          y1="298"
+          x2="322"
+          y2="298"
+          stroke="url(#paint14_linear)"
+          strokeWidth="40"
+        />
+        <path
+          d="M1 317.729C163.082 317.729 357.582 563.196 357.582 563.196"
+          stroke="url(#paint15_linear)"
+          strokeWidth="60"
+        />
+        <path
+          d="M407.082 296.696L317.082 349.048L317.082 244.344L407.082 296.696Z"
+          fill="#FCD34D"
+        />
+        <path
+          d="M370.085 25.4807L359.134 93.939L305.163 49.8052L370.085 25.4807Z"
+          fill="#C4B5FD"
+        />
+        <path
+          d="M407.885 625.791L386.587 492.637L281.611 578.479L407.885 625.791Z"
+          fill="#0070F3"
+        />
+        <defs>
+          <linearGradient
+            id="paint13_linear"
+            x1="42.0815"
+            y1="279.696"
+            x2="314.509"
+            y2="290.241"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#D1D5DB" />
+            <stop offset="1" stopColor="#C4B5FD" />
+          </linearGradient>
+          <linearGradient
+            id="paint14_linear"
+            x1="282.387"
+            y1="278.872"
+            x2="1.0913"
+            y2="278.227"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#FCD34D" />
+            <stop offset="1" stopColor="#FCA5A5" />
+          </linearGradient>
+          <linearGradient
+            id="paint15_linear"
+            x1="310.582"
+            y1="532.196"
+            x2="25.8756"
+            y2="402.449"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#0070F3" />
+            <stop offset="1" stopColor="#22B8CF" />
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
   )
 }
 
