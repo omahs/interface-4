@@ -1,21 +1,22 @@
 import Logo from "@components/icons/Logo"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import { Dispatch, SetStateAction } from "react"
-import { DropwdownMenuElement } from ".."
+import { DropdownMenuElement } from ".."
 
 type Props = {
   showDropdown: boolean
   setShowDropdown: Dispatch<SetStateAction<boolean>>
 }
 
-function DropwdownMenu({ showDropdown, setShowDropdown }: Props) {
+function DropdownMenu({ showDropdown, setShowDropdown }: Props) {
   return (
     <div
-      className={`absolute top-0 right-0 w-56 p-1.5 mt-20 space-y-1 bg-white rounded-xl shadow-base transition-opacity duration-200 nightwind-prevent-block ${
-        showDropdown ? "z-20 opacity-100" : "-z-10 opacity-0"
-      }`}
+      className={`z-20 absolute top-0 right-0 w-56 p-1.5 mt-20 space-y-1 bg-white rounded-xl shadow-base transition-opacity duration-200 nightwind-prevent-block`}
+      // ${
+      //   showDropdown ? " opacity-100" : "-z-10 opacity-0"
+      // }
     >
-      <DropwdownMenuElement
+      <DropdownMenuElement
         href="/profile"
         image={
           <Logo size="w-5" margin="mt-[4px] ml-[5px]" interactive={false} />
@@ -23,7 +24,7 @@ function DropwdownMenu({ showDropdown, setShowDropdown }: Props) {
         label="Your slicers"
         onClick={() => setShowDropdown(false)}
       />
-      <DropwdownMenuElement
+      <DropdownMenuElement
         href="/purchases"
         image={<ShoppingBag className="w-5 h-5" />}
         label="Purchases"
@@ -33,4 +34,4 @@ function DropwdownMenu({ showDropdown, setShowDropdown }: Props) {
   )
 }
 
-export default DropwdownMenu
+export default DropdownMenu

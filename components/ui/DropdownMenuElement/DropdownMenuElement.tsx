@@ -7,7 +7,7 @@ type Props = {
   onClick: () => void
 }
 
-function DropwdownMenu({ href, image, label, onClick }: Props) {
+function DropdownMenu({ href, image, label, onClick }: Props) {
   return (
     <div onClick={onClick}>
       <Link href={href}>
@@ -22,4 +22,4 @@ function DropwdownMenu({ href, image, label, onClick }: Props) {
   )
 }
 
-export default DropwdownMenu
+export default DropdownMenu
