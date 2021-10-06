@@ -416,7 +416,7 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
               title="Download files"
               files={decryptedFiles}
               uploadable={false}
-              backgroundColor="bg-sky-100"
+              backgroundColor="nightwind-prevent bg-blue-600 text-white"
               downloadable={true}
             />
           </div>
