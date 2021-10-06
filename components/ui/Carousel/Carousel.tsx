@@ -1,6 +1,5 @@
-import productDefault from "public/product_default.png"
 import Image from "next/image"
-import { darkColorList } from "@utils/colorList"
+import { colorList, darkColorList } from "@utils/colorList"
 import {
   CarouselProvider,
   Slider,
@@ -9,7 +8,7 @@ import {
   ButtonNext,
 } from "pure-react-carousel"
 import Arrow from "@components/icons/Arrow"
-import { CarouselDot } from ".."
+import { CarouselDot, DoubleText } from ".."
 import slides from "@lib/text/slides"
 
 const Carousel = () => {
@@ -21,6 +20,7 @@ const Carousel = () => {
       visibleSlides={1}
       infinite={true}
       isIntrinsicHeight={true}
+      lockOnWindowScroll={true}
     >
       <Slider className="pt-16 pb-7 md:pb-4">
         {slides.map((slide, key) => (
@@ -31,7 +31,7 @@ const Carousel = () => {
                   {slide.title}
                 </h1>
                 <div className="space-y-7">
-                  <div className="space-y-2">
+                  <div>
                     <h3
                       className={`text-sm uppercase tracking-wide font-medium ${darkColorList[key][2]}`}
                     >
@@ -39,7 +39,7 @@ const Carousel = () => {
                     </h3>
                     {slide.contentSlicer}
                   </div>
-                  <div className="space-y-2">
+                  <div>
                     <h3
                       className={`text-sm uppercase tracking-wide font-medium ${darkColorList[key][2]}`}
                     >
@@ -47,7 +47,7 @@ const Carousel = () => {
                     </h3>
                     {slide.contentSlice}
                   </div>
-                  <div className="space-y-2">
+                  <div>
                     <h3
                       className={`text-sm uppercase tracking-wide font-medium ${darkColorList[key][2]}`}
                     >
@@ -63,13 +63,34 @@ const Carousel = () => {
                 )}
               </div>
               <div className="relative w-48 h-48 mx-auto border border-gray-200 shadow-lg sm:w-56 sm:h-56 rounded-xl">
-                <Image
-                  src={productDefault}
-                  layout="fill"
-                  objectFit="cover"
-                  alt={`${slide.title} image`}
-                  placeholder="blur"
-                />
+                {typeof slide.image === "string" ? (
+                  <div className="flex items-center justify-center h-full">
+                    <DoubleText
+                      logoText={slide.image}
+                      size="text-4xl md:text-5xl"
+                      color={colorList[key][2]}
+                    />
+                  </div>
+                ) : slide.isNFT ? (
+                  <div style={{ imageRendering: "pixelated" }}>
+                    <Image
+                      src={slide.image}
+                      layout="fill"
+                      objectFit="cover"
+                      alt={`${slide.title} image`}
+                      unoptimized={true}
+                      placeholder="blur"
+                    />
+                  </div>
+                ) : (
+                  <Image
+                    src={slide.image}
+                    layout="fill"
+                    objectFit="cover"
+                    alt={`${slide.title} image`}
+                    placeholder="blur"
+                  />
+                )}
               </div>
             </div>
           </Slide>

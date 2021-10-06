@@ -1,7 +1,10 @@
+import productDefault from "public/product_default.png"
+import punk6721 from "public/punk6721.png"
+
 const slides = [
   {
     title: "NFTs (Collectibles)",
-    image: "",
+    image: punk6721,
     contentSlicer: (
       <p>
         The slicer <b>represents one or more collectible assets</b>, by owning
@@ -18,10 +21,11 @@ const slides = [
         Sells <b>any file or merchandise</b> related to the collectibles.
       </p>
     ),
+    isNFT: true,
   },
   {
     title: "Music artists",
-    image: "",
+    image: productDefault,
     contentSlicer: (
       <p>
         Related to a <b>song, album or project</b>. Owned by the band or group
@@ -42,7 +46,7 @@ const slides = [
   },
   {
     title: "Games",
-    image: "",
+    image: productDefault,
     contentSlicer: (
       <p>
         Related to the <b>games and the universe surrounding them</b>.
@@ -58,7 +62,7 @@ const slides = [
   },
   {
     title: "Writers",
-    image: "",
+    image: productDefault,
     contentSlicer: (
       <p>
         Related to a <b>book, series or project</b>.
@@ -73,10 +77,10 @@ const slides = [
   },
   {
     title: "Files",
-    image: "",
+    image: productDefault,
     contentSlicer: (
       <p>
-        Used as a plain <b>profit-sharing mechanism</b>.
+        Used as a <b>profit-sharing mechanism</b>.
       </p>
     ),
     contentSlice: (
@@ -92,10 +96,10 @@ const slides = [
   },
   {
     title: "Payments",
-    image: "",
+    image: productDefault,
     contentSlicer: (
       <p>
-        Related to a <b>specific project or team</b> and used as a plain{" "}
+        Related to a <b>specific project or team</b> and used as a{" "}
         <b>profit-sharing mechanism</b>.
       </p>
     ),
@@ -106,14 +110,14 @@ const slides = [
     ),
     contentProduct: (
       <p>
-        Payments can be received directly or by selling{" "}
+        Payments can be <b>received directly</b> or by selling{" "}
         <b>products, services or files</b> through the store.
       </p>
     ),
   },
   {
     title: "Startups",
-    image: "",
+    image: productDefault,
     contentSlicer: (
       <p>
         Represents <b>company structure</b>, collects and{" "}
@@ -136,7 +140,7 @@ const slides = [
   },
   {
     title: "Merchandise",
-    image: "",
+    image: productDefault,
     contentSlicer: <p>Related to an entity, project, collectible or meme.</p>,
     contentSlice: (
       <p>
