@@ -22,9 +22,13 @@ const Carousel = () => {
       isIntrinsicHeight={true}
       lockOnWindowScroll={true}
     >
-      <Slider className="pb-5 pt-14 md:pb-2">
+      <Slider
+        className="pb-5 pt-14 md:pb-2"
+        aria-label="Slicers examples"
+        trayTag="div"
+      >
         {slides.map((slide, key) => (
-          <Slide key={key} index={key}>
+          <Slide key={key} index={key} role="slide">
             <div className="grid items-center grid-cols-1 md:grid-cols-3 md:px-8">
               <div className="relative w-full max-w-lg col-span-2 pb-12 mx-auto text-left md:mx-0 md:py-4 md:pr-4">
                 <h1 className={`${darkColorList[key][2]} pb-7`}>
@@ -32,27 +36,27 @@ const Carousel = () => {
                 </h1>
                 <div className="space-y-7">
                   <div>
-                    <h3
-                      className={`text-sm uppercase tracking-wide font-medium ${darkColorList[key][2]}`}
+                    <p
+                      className={`pb-2 text-sm uppercase tracking-wide font-medium ${darkColorList[key][2]}`}
                     >
                       Slicer
-                    </h3>
+                    </p>
                     {slide.contentSlicer}
                   </div>
                   <div>
-                    <h3
-                      className={`text-sm uppercase tracking-wide font-medium ${darkColorList[key][2]}`}
+                    <p
+                      className={`pb-2 text-sm uppercase tracking-wide font-medium ${darkColorList[key][2]}`}
                     >
                       Slices
-                    </h3>
+                    </p>
                     {slide.contentSlice}
                   </div>
                   <div>
-                    <h3
-                      className={`text-sm uppercase tracking-wide font-medium ${darkColorList[key][2]}`}
+                    <p
+                      className={`pb-2 text-sm uppercase tracking-wide font-medium ${darkColorList[key][2]}`}
                     >
                       Products store
-                    </h3>
+                    </p>
                     {slide.contentProduct}
                   </div>
                 </div>
