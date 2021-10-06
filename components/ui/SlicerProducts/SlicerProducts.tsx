@@ -1,4 +1,3 @@
-import { handleCleanup, reload } from "@lib/handleCreateProduct"
 import useQuery from "@utils/subgraphQuery"
 import { useRouter } from "next/dist/client/router"
 import { useEffect, useState } from "react"
@@ -57,6 +56,8 @@ const SlicerProducts = ({
   const blockchainProducts = subgraphData?.products
 
   const handleReload = async () => {
+    const { handleCleanup, reload } = await import("@lib/handleCreateProduct")
+
     try {
       if (pendingProducts?.length != 0) {
         await handleCleanup(Number(slicerId), setLoading)

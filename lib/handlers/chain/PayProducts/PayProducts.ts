@@ -1,7 +1,5 @@
 import WalletConnect from "@walletconnect/client"
 import { BigNumber } from "ethers"
-import { initialize } from "@lib/useProvider"
-import { slice, chainlink } from "@lib/initProvider"
 
 export type PayProductData = {
   slicerAddress: string
@@ -15,6 +13,9 @@ const PayProducts = async (
   connector: WalletConnect,
   productData: PayProductData[]
 ) => {
+  const { initialize } = await import("@lib/useProvider")
+  const { slice, chainlink } = await import("@lib/initProvider")
+
   const { signer } = await initialize(connector)
   const contract = slice(signer)
   const priceFeed = await chainlink(signer).latestRoundData()

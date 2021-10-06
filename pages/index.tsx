@@ -87,16 +87,11 @@ const Home = () => {
 
 export default Home
 
-// Homepage todo:
-// - new slicer image
-// - test on rinkeby that I can change protocolAddress by redeploying Slicer contract
-
 /** TODO
  *
  * *optimization*
  * - dynamic imports https://nextjs.org/learn/seo/improve/dynamic-imports
  * - dynamic components
- * - convert app and documents to typescript https://nextjs.org/learn/excel/typescript/nextjs-types
  *
  *
  *

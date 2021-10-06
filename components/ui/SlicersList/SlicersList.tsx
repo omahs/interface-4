@@ -1,5 +1,4 @@
 import { ListLayout, SlicerCard } from "@components/ui"
-import fetcher from "@utils/fetcher"
 import { useAppContext } from "@components/ui/context"
 import { useEffect, useState } from "react"
 import useQuery from "@utils/subgraphQuery"
@@ -29,6 +28,8 @@ const SlicersList = () => {
   let slicerAddresses = []
 
   const getUnreleasedData = async (data) => {
+    const fetcher = (await import("@utils/fetcher")).default
+
     const unreleasedData = await fetcher(
       `/api/account/${account}/unreleased`,
       data

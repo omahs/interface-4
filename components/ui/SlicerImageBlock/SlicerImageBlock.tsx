@@ -2,7 +2,7 @@ import Camera from "@components/icons/Camera"
 import { SlicerImage } from "@components/ui"
 import { Dispatch, SetStateAction } from "react"
 import { NewImage } from "pages/slicer/[id]"
-import handleMessage, { Message } from "@utils/handleMessage"
+import { Message } from "@utils/handleMessage"
 
 type Props = {
   name: string
@@ -36,6 +36,8 @@ const SlicerImageBlock = ({
   product,
 }: Props) => {
   const updateImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleMessage = (await import("@utils/handleMessage")).default
+
     try {
       const file = e.target.files[0]
       if (file) {

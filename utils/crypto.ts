@@ -1,5 +1,4 @@
 import { Crypto } from "@peculiar/webcrypto"
-import mime from "mime-types"
 
 export const generateKey = async (password: string, salt: string) => {
   const crypto: Crypto = new Crypto()
@@ -82,6 +81,8 @@ export const decryptFiles = async (
   iv: Uint8Array,
   files: File[]
 ) => {
+  const mime = (await import("mime-types")).default
+
   try {
     const decryptedFiles: File[] = []
 

@@ -1,9 +1,7 @@
 import { useState } from "react"
 import { Button } from "@components/ui"
-import handleSubmit from "@utils/handleSubmit"
 import { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
-import TransferShares from "@lib/handlers/chain/TransferShares"
 import Input from "../Input"
 import MessageBlock from "../MessageBlock"
 import { mutate } from "swr"
@@ -11,7 +9,6 @@ import useSWR from "swr"
 import fetcher from "@utils/fetcher"
 import InputAddress from "../InputAddress"
 import getLog from "@utils/getLog"
-import useQuery from "@utils/subgraphQuery"
 import { useAppContext } from "../context"
 
 type Props = {
@@ -53,6 +50,10 @@ const TransferForm = ({
   })
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
+    const handleSubmit = (await import("@utils/handleSubmit")).default
+    const TransferShares = (await import("@lib/handlers/chain/TransferShares"))
+      .default
+
     e.preventDefault()
     const eventLog = await handleSubmit(
       TransferShares(connector, account, address, Number(slicerId), shares),

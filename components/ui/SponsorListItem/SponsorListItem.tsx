@@ -1,6 +1,5 @@
 import Delete from "@components/icons/Delete"
 import Edit from "@components/icons/Edit"
-import fetcher from "@utils/fetcher"
 import { useEns } from "@utils/resolveEns"
 import { useState } from "react"
 import { Input } from ".."
@@ -30,6 +29,8 @@ const SponsorListItem = ({ slicerId, sponsor, sponsorLink }: Props) => {
   )
 
   const updateSponsor = async () => {
+    const fetcher = (await import("@utils/fetcher")).default
+
     setLoading(true)
     const body = {
       method: "POST",

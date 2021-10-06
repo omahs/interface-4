@@ -1,6 +1,4 @@
 import { Dispatch, SetStateAction } from "react"
-import client from "@utils/apollo-client"
-import { gql } from "@apollo/client"
 import { Purchase } from "@components/ui/context"
 import { ProductCart } from "@lib/handleUpdateCart"
 
@@ -8,6 +6,9 @@ export const getPurchases = async (
   buyer: string,
   setPurchases: Dispatch<SetStateAction<Purchase[]>>
 ) => {
+  const client = (await import("@utils/apollo-client")).default
+  const { gql } = await import("@apollo/client")
+
   const tokensQuery = /* GraphQL */ `
     payee (id: "${buyer.toLowerCase()}") {
       purchases (orderBy: "lastPurchasedAtTimestamp", orderDirection: "desc") {

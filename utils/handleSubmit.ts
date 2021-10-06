@@ -1,7 +1,5 @@
 import { Dispatch, SetStateAction } from "react"
-import handleMessage, { Message } from "./handleMessage"
-import launchConfetti from "@utils/launchConfetti"
-import handleLog from "@utils/handleLog"
+import { Message } from "./handleMessage"
 
 const handleSubmit = async (
   action: Promise<any>,
@@ -10,6 +8,10 @@ const handleSubmit = async (
   setSuccess: Dispatch<SetStateAction<boolean>>,
   confetti = false
 ) => {
+  const handleMessage = (await import("./handleMessage")).default
+  const launchConfetti = (await import("./launchConfetti")).default
+  const handleLog = (await import("./handleLog")).default
+
   setMessage({ message: "", messageStatus: "success" })
   try {
     const [contract, call] = await action

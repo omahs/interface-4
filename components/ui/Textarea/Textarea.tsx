@@ -1,4 +1,3 @@
-import markdownToHtml from "@lib/markdownToHtml"
 import React, { InputHTMLAttributes, useState } from "react"
 import { Question } from ".."
 
@@ -34,6 +33,8 @@ const Textarea: React.FC<Props> = (props) => {
   const [htmlContent, setHtmlContent] = useState("")
 
   const handleShowPreview = async () => {
+    const markdownToHtml = (await import("@lib/markdownToHtml")).default
+
     if (!showPreview) {
       setHtmlContent(await markdownToHtml(value))
     }

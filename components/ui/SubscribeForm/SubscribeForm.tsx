@@ -1,10 +1,8 @@
 import { Banner, Button } from "@components/ui"
 import Input from "../Input"
 import { useState } from "react"
-import fetcher from "@utils/fetcher"
-import sendSlack from "@utils/sendSlack"
 import MessageBlock from "../MessageBlock"
-import handleMessage, { Message } from "@utils/handleMessage"
+import { Message } from "@utils/handleMessage"
 import { accounts } from "../Social/Social"
 
 const SubscribeForm = () => {
@@ -17,6 +15,10 @@ const SubscribeForm = () => {
   })
 
   const handleSubscribe = async (event) => {
+    const fetcher = (await import("@utils/fetcher")).default
+    const sendSlack = (await import("@utils/sendSlack")).default
+    const handleMessage = (await import("@utils/handleMessage")).default
+
     event.preventDefault()
     setLoading(true)
     try {

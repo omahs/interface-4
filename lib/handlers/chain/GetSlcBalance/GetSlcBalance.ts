@@ -1,8 +1,9 @@
 import WalletConnect from "@walletconnect/client"
-import { initialize } from "@lib/useProvider"
-import { slc } from "@lib/initProvider"
 
 const GetSlcBalance = async (connector: WalletConnect, address: string) => {
+  const { initialize } = await import("@lib/useProvider")
+  const { slc } = await import("@lib/initProvider")
+
   const { provider } = await initialize(connector)
   const contract = slc(provider)
 

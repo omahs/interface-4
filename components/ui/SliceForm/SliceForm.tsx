@@ -1,8 +1,6 @@
 import { useState, Dispatch, SetStateAction } from "react"
 import { Button, SliceFormBlockSplitter } from "@components/ui"
-import { Slice } from "@lib/handlers/chain"
-import handleSubmit from "@utils/handleSubmit"
-import handleMessage, { Message } from "@utils/handleMessage"
+import { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import MessageBlock from "../MessageBlock"
 import { useAppContext } from "../context"
@@ -30,6 +28,10 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   const cleanedShares = shares.filter(() => true)
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
+    const handleSubmit = (await import("@utils/handleSubmit")).default
+    const handleMessage = (await import("@utils/handleMessage")).default
+    const { Slice } = await import("@lib/handlers/chain")
+
     e.preventDefault()
     try {
       if (

@@ -1,12 +1,13 @@
-import WalletConnect from "@walletconnect/client"
-import { initialize } from "@lib/useProvider"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import WalletConnect from "@walletconnect/client"
 
 const resolveEns = async (
   connector: WalletConnect,
   address: string,
   setAddress: Dispatch<SetStateAction<string>>
 ) => {
+  const { initialize } = await import("@lib/useProvider")
+
   if (address) {
     try {
       const { provider } = await initialize(connector)

@@ -1,13 +1,10 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import useSWR, { mutate } from "swr"
+import useSWR from "swr"
 import { NewImage, SlicerData } from "pages/slicer/[id]"
 import fetcher from "@utils/fetcher"
-import handleMessage, { Message } from "@utils/handleMessage"
-import { defaultProvider } from "@lib/useProvider"
-import { slicer as slicerContract } from "@lib/initProvider"
+import { Message } from "@utils/handleMessage"
 import { useAppContext } from "../context"
 import { Button, MessageBlock } from "@components/ui"
-import supabaseUpload from "@utils/supabaseUpload"
 
 type Props = {
   editMode: boolean
@@ -71,6 +68,12 @@ const SlicerSubmitBlock = ({
   }
 
   const save = async () => {
+    const { mutate } = await import("swr")
+    const handleMessage = (await import("@utils/handleMessage")).default
+    const { defaultProvider } = await import("@lib/useProvider")
+    const slicerContract = (await import("@lib/initProvider")).slicer
+    const supabaseUpload = (await import("@utils/supabaseUpload")).default
+
     setLoading(true)
     let newInfo = {
       description: newDescription,

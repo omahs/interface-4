@@ -2,11 +2,9 @@ import Link from "next/link"
 import Chevron from "@components/icons/Chevron"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import Spinner from "@components/icons/Spinner"
-import { PayProducts } from "@lib/handlers/chain"
 import { ProductCart } from "@lib/handleUpdateCart"
 import fetcher from "@utils/fetcher"
 import { Message } from "@utils/handleMessage"
-import handleSubmit from "@utils/handleSubmit"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import useSWR from "swr"
@@ -66,6 +64,9 @@ const FloatingCart = ({}: Props) => {
   }, [success])
 
   const handleCheckout = async () => {
+    const handleSubmit = (await import("@utils/handleSubmit")).default
+    const { PayProducts } = await import("@lib/handlers/chain")
+
     setLoading(true)
     try {
       await handleSubmit(

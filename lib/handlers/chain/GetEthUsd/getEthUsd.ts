@@ -1,8 +1,9 @@
 import WalletConnect from "@walletconnect/client"
-import { initialize } from "@lib/useProvider"
-import { slice } from "@lib/initProvider"
 
 const getEthUsd = async (connector: WalletConnect) => {
+  const { slice } = await import("@lib/initProvider")
+  const { initialize } = await import("@lib/useProvider")
+
   const { provider } = await initialize(connector)
   const contract = slice(provider)
 

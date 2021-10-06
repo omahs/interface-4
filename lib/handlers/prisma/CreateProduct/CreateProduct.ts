@@ -1,5 +1,3 @@
-import prisma from "@lib/db"
-
 const CreateProduct = async (
   slicerId: number,
   name: string,
@@ -13,6 +11,8 @@ const CreateProduct = async (
   productId?: number | null,
   purchaseInfo?: object
 ) => {
+  const prisma = (await import("@lib/db")).default
+
   let query
   try {
     query = await prisma.product.create({

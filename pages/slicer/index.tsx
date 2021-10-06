@@ -1,5 +1,4 @@
 import { Container, DoubleText, SlicersGrid } from "@components/ui"
-import fetcher from "@utils/fetcher"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
 import { NextSeo } from "next-seo"
 import {
@@ -52,6 +51,8 @@ const SlicerGrid = ({
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
+  const fetcher = (await import("@utils/fetcher")).default
+
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
   const data: SlicerReduced[] = await fetcher(

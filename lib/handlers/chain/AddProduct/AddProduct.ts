@@ -1,7 +1,4 @@
 import WalletConnect from "@walletconnect/client"
-import { BigNumber } from "ethers"
-import { initialize } from "@lib/useProvider"
-import { slicer } from "@lib/initProvider"
 
 const AddProduct = async (
   connector: WalletConnect,
@@ -17,6 +14,10 @@ const AddProduct = async (
   subSlicersIds = [],
   subProducts = []
 ) => {
+  const { BigNumber } = await import("ethers")
+  const { initialize } = await import("@lib/useProvider")
+  const { slicer } = await import("@lib/initProvider")
+
   const { signer } = await initialize(connector)
   const contract = await slicer(slicerId, signer)
   const decimals = BigNumber.from(10).pow(13)

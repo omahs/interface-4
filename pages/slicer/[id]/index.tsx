@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import Head from "next/head"
 import { NextSeo } from "next-seo"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
-import fetcher from "@utils/fetcher"
 import { Message } from "@utils/handleMessage"
 import { useAllowed } from "@lib/useProvider"
 import { useAppContext } from "@components/ui/context"
@@ -12,14 +11,13 @@ import {
   ActionScreen,
   CopyAddress,
   DoubleText,
-  SlicerTags,
+  // SlicerTags,
   SlicerDescription,
   SlicerName,
   SlicerImageBlock,
   Container,
   SlicerSubmitBlock,
   SlicerProducts,
-  PaySlicer,
   SlicerSponsors,
 } from "@components/ui"
 
@@ -239,6 +237,8 @@ const Id = ({
 }
 
 export async function getStaticPaths() {
+  const fetcher = (await import("@utils/fetcher")).default
+
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
   // const totalSlicers = 0
@@ -255,6 +255,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
+  const fetcher = (await import("@utils/fetcher")).default
+
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const id = context.params.id
 

@@ -1,5 +1,3 @@
-import handleSendTransaction from "@utils/handleSendTransaction"
-import { BigNumber } from "ethers"
 import { useState } from "react"
 import { useAppContext } from "../context"
 import InputPrice from "../InputPrice"
@@ -15,6 +13,10 @@ const PaySlicer = ({ slicerAddress }: Props) => {
   const [loading, setLoading] = useState(false)
 
   const pay = async () => {
+    const { BigNumber } = await import("ethers")
+    const handleSendTransaction = (await import("@utils/handleSendTransaction"))
+      .default
+
     setLoading(true)
     try {
       const value = BigNumber.from(Math.floor(ethValue * 100000)).mul(

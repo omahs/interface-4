@@ -7,16 +7,9 @@ import {
   AddProductFormPurchases,
   AddProductFormPreview,
 } from "@components/ui"
-import { AddProduct } from "@lib/handlers/chain"
-import handleSubmit from "@utils/handleSubmit"
-import handleMessage, { Message } from "@utils/handleMessage"
+import { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import { NewImage } from "pages/slicer/[id]"
-import {
-  beforeCreate,
-  handleReject,
-  handleSuccess,
-} from "@lib/handleCreateProduct"
 import { useAppContext } from "../context"
 
 type Props = {
@@ -66,6 +59,12 @@ const AddProductForm = ({
   const submitEl = useRef(null)
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
+    const { beforeCreate, handleReject, handleSuccess } = await import(
+      "@lib/handleCreateProduct"
+    )
+    const { AddProduct } = await import("@lib/handlers/chain")
+    const handleSubmit = (await import("@utils/handleSubmit")).default
+
     e.preventDefault()
     try {
       const { image, newProduct, data, purchaseDataCID, purchaseData } =
