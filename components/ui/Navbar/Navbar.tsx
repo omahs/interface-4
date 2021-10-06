@@ -1,12 +1,17 @@
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
-import { Button, Container, DropwdownMenu, SlcCounter } from "@components/ui"
+import { Button, Container, SlcCounter } from "@components/ui"
 import UserIcon from "@components/icons/UserIcon"
 import { useAppContext } from "@components/ui/context"
 import { useState } from "react"
 
 const Navbar = () => {
+  const DropdownMenu = dynamic(() => import("@components/ui/DropdownMenu"), {
+    ssr: false,
+  })
+
   const { isConnected, loading, setModalView } = useAppContext()
   const [showDropdown, setShowDropdown] = useState(false)
 
@@ -52,10 +57,12 @@ const Navbar = () => {
               </>
             )}
           </div>
-          <DropwdownMenu
-            showDropdown={showDropdown}
-            setShowDropdown={setShowDropdown}
-          />
+          {showDropdown && (
+            <DropdownMenu
+              showDropdown={showDropdown}
+              setShowDropdown={setShowDropdown}
+            />
+          )}
         </nav>
       </Container>
       <hr className="w-full border-gray-200 opacity-80" />
