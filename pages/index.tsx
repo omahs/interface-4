@@ -91,8 +91,7 @@ const Home = () => {
 export default Home
 
 // Homepage todo:
-// 3. new section: examples
-// - come up with last 2 examples
+// - new slicer image
 // - test on rinkeby that I can change protocolAddress by redeploying Slicer contract
 
 /** TODO

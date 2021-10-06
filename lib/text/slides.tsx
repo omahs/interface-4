@@ -1,10 +1,16 @@
-import productDefault from "public/product_default.png"
+import CarouselFiles from "@components/icons/CarouselFiles"
+import CarouselGames from "@components/icons/CarouselGames"
+import CarouselMerchandise from "@components/icons/CarouselMerchandise"
+import CarouselMusic from "@components/icons/CarouselMusic"
+import CarouselPayments from "@components/icons/CarouselPayments"
+import CarouselStartups from "@components/icons/CarouselStartups"
+import CarouselWriters from "@components/icons/CarouselWriters"
 import punk6721 from "public/punk6721.png"
 
 const slides = [
   {
     title: "NFTs (Collectibles)",
-    image: punk6721,
+    imageSrc: punk6721,
     contentSlicer: (
       <p>
         The slicer <b>represents one or more collectible assets</b>, by owning
@@ -25,7 +31,7 @@ const slides = [
   },
   {
     title: "Music artists",
-    image: productDefault,
+    imageContent: (color: string) => CarouselMusic(color),
     contentSlicer: (
       <p>
         Related to a <b>song, album or project</b>. Owned by the band or group
@@ -46,7 +52,7 @@ const slides = [
   },
   {
     title: "Games",
-    image: productDefault,
+    imageContent: (color: string) => CarouselGames(color),
     contentSlicer: (
       <p>
         Related to the <b>games and the universe surrounding them</b>.
@@ -62,7 +68,7 @@ const slides = [
   },
   {
     title: "Writers",
-    image: productDefault,
+    imageContent: (color: string) => CarouselWriters(color),
     contentSlicer: (
       <p>
         Related to a <b>book, series or project</b>.
@@ -77,7 +83,7 @@ const slides = [
   },
   {
     title: "Files",
-    image: productDefault,
+    imageContent: (color: string) => CarouselFiles(color),
     contentSlicer: (
       <p>
         Used as a <b>profit-sharing mechanism</b>.
@@ -96,7 +102,7 @@ const slides = [
   },
   {
     title: "Payments",
-    image: productDefault,
+    imageContent: (color: string) => CarouselPayments(color),
     contentSlicer: (
       <p>
         Related to a <b>specific project or team</b> and used as a{" "}
@@ -117,7 +123,7 @@ const slides = [
   },
   {
     title: "Startups",
-    image: productDefault,
+    imageContent: (color: string) => CarouselStartups(color),
     contentSlicer: (
       <p>
         Represents <b>company structure</b>, collects and{" "}
@@ -140,7 +146,7 @@ const slides = [
   },
   {
     title: "Merchandise",
-    image: productDefault,
+    imageContent: (color: string) => CarouselMerchandise(color),
     contentSlicer: <p>Related to an entity, project, collectible or meme.</p>,
     contentSlice: (
       <p>

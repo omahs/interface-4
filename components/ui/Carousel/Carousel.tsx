@@ -62,34 +62,32 @@ const Carousel = () => {
                   </p>
                 )}
               </div>
-              <div className="relative w-48 h-48 mx-auto border border-gray-200 shadow-lg sm:w-56 sm:h-56 rounded-xl">
-                {typeof slide.image === "string" ? (
-                  <div className="flex items-center justify-center h-full">
-                    <DoubleText
-                      logoText={slide.image}
-                      size="text-4xl md:text-5xl"
-                      color={colorList[key][2]}
-                    />
-                  </div>
-                ) : slide.isNFT ? (
-                  <div style={{ imageRendering: "pixelated" }}>
+              <div className="relative w-48 h-48 p-8 mx-auto border border-gray-200 shadow-lg md:p-10 sm:w-56 sm:h-56 rounded-xl">
+                {slide.imageSrc ? (
+                  slide.isNFT ? (
+                    <div style={{ imageRendering: "pixelated" }}>
+                      <Image
+                        src={slide.imageSrc}
+                        layout="fill"
+                        objectFit="cover"
+                        alt={`${slide.title} image`}
+                        unoptimized={true}
+                        placeholder="blur"
+                      />
+                    </div>
+                  ) : (
                     <Image
-                      src={slide.image}
+                      src={slide.imageSrc}
                       layout="fill"
                       objectFit="cover"
                       alt={`${slide.title} image`}
-                      unoptimized={true}
                       placeholder="blur"
                     />
-                  </div>
+                  )
                 ) : (
-                  <Image
-                    src={slide.image}
-                    layout="fill"
-                    objectFit="cover"
-                    alt={`${slide.title} image`}
-                    placeholder="blur"
-                  />
+                  <div className="relative flex items-center justify-center w-full h-full">
+                    {slide.imageContent(colorList[key][2])}
+                  </div>
                 )}
               </div>
             </div>
