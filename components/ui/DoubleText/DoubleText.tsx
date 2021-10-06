@@ -8,8 +8,7 @@ interface Props {
   position?: string
   inactive?: boolean
   inverted?: boolean
-  fromColor?: string
-  toColor?: string
+  color?: string
 }
 
 const DoubleText: FC<Props> = ({
@@ -18,6 +17,7 @@ const DoubleText: FC<Props> = ({
   position,
   inactive,
   inverted,
+  color,
 }) => {
   const { color1, color2, darkColor1, darkColor2 } = useAppContext()
   const text = logoText || "Slice"
@@ -33,7 +33,7 @@ const DoubleText: FC<Props> = ({
           className={`${
             inverted ? "text-white" : "text-black"
           } relative z-10 !font-black cursor-default ${
-            size ? size : "text-2xl md:text-3xl"
+            size || "text-2xl md:text-3xl"
           }`}
         >
           {text}
@@ -43,24 +43,24 @@ const DoubleText: FC<Props> = ({
           <a
             className={`${
               inverted ? "text-white" : "text-black"
-            } relative z-10 !font-black ${
-              size ? size : "text-2xl md:text-3xl"
-            }`}
+            } relative z-10 !font-black ${size || "text-2xl md:text-3xl"}`}
           >
             {text}
           </a>
         </Link>
       )}
       <span
-        className={`absolute top-0 left-0 w-full select-none
-        ${inactive ? "cursor-default" : ""}
-        ${
-          size ? size : "text-2xl md:text-3xl"
-        } text-transparent !font-black bg-gradient-to-br bg-clip-text ${
-          inverted ? darkColor1[3] : color1[3]
-        } ${
-          inverted ? darkColor2[4] : color2[4]
-        } mt-[0.1em] ml-[0.1em] group-hover:mt-0 group-hover:ml-0 duration-150`}
+        className={`absolute top-0 left-0 w-full select-none !font-black mt-[0.1em] ml-[0.1em] group-hover:mt-0 group-hover:ml-0 duration-150 ${
+          inactive ? "cursor-default" : ""
+        }
+        ${size || "text-2xl md:text-3xl"} ${
+          color ||
+          `text-transparent bg-gradient-to-br bg-clip-text ${
+            inverted
+              ? `${darkColor1[3]} ${darkColor2[4]}`
+              : `${color1[3]} ${color2[4]}`
+          }`
+        }`}
         style={{ marginTop: "0.1em", marginBottom: 0 }}
       >
         {text}
