@@ -4,8 +4,9 @@ import { Background, Layout } from "@components/ui"
 import "../styles/global/styles.scss"
 import { AppWrapper } from "@components/ui/context"
 import { CookiesProvider } from "react-cookie"
+import { AppProps } from "next/dist/shared/lib/router/router"
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head />
