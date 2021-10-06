@@ -22,7 +22,7 @@ const Carousel = () => {
       isIntrinsicHeight={true}
       lockOnWindowScroll={true}
     >
-      <Slider className="pt-16 pb-7 md:pb-4">
+      <Slider className="pb-5 pt-14 md:pb-2">
         {slides.map((slide, key) => (
           <Slide key={key} index={key}>
             <div className="grid items-center grid-cols-1 md:grid-cols-3 md:px-8">
@@ -98,17 +98,17 @@ const Carousel = () => {
       </Slider>
       <div className="space-x-8 md:px-8 md:text-left">
         <ButtonBack>
-          <div className="group p-2.5 border border-gray-200 rounded-full hover:border-black duration-150 transition-all shadow-md hover:shadow-none">
+          <div className="group p-2.5 border border-gray-200 rounded-full hover:border-black duration-150 transition-all shadow-md hover:shadow-none my-2">
             <Arrow className="text-gray-500 transition-colors duration-150 rotate-180 group-hover:text-black" />
           </div>
         </ButtonBack>
         <ButtonNext>
-          <div className="group p-2.5 border border-gray-200 rounded-full hover:border-gray-700 duration-150 transition-all shadow-md hover:shadow-none">
+          <div className="group p-2.5 border border-gray-200 rounded-full hover:border-gray-700 duration-150 transition-all shadow-md hover:shadow-none my-2">
             <Arrow className="text-gray-500 transition-colors duration-150 group-hover:text-black" />
           </div>
         </ButtonNext>
       </div>
-      <div className="grid grid-cols-2 gap-4 pt-12 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 pt-10 sm:grid-cols-4">
         {slides.map((slide, key) => (
           <CarouselDot key={key} index={key} title={slide.title} />
         ))}
