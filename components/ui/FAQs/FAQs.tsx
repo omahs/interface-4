@@ -5,10 +5,10 @@ const FAQs = () => {
   return (
     <>
       <div className="pt-12 text-center" id="faqs">
-        <div className="pb-8 sm:pb-12">
+        <h1 className="pb-8 sm:pb-12">
           <DoubleText inactive logoText="FAQ" size="text-4xl sm:text-5xl" />
-        </div>
-        <div className="max-w-screen-sm pb-16 mx-auto prose text-left">
+        </h1>
+        <ul className="max-w-screen-sm pb-16 mx-auto prose text-left">
           {faqsMain.map((faq, key) => (
             <FAQsItem
               key={key}
@@ -17,9 +17,9 @@ const FAQs = () => {
               id={faq.id}
             />
           ))}
-        </div>
+        </ul>
         <h2 className="font-bold">NFTs (collectibles)</h2>
-        <div className="max-w-screen-sm pt-6 pb-16 mx-auto prose text-left">
+        <ul className="max-w-screen-sm pt-6 pb-16 mx-auto prose text-left">
           {faqsNfts.map((faq, key) => (
             <FAQsItem
               key={key}
@@ -28,9 +28,9 @@ const FAQs = () => {
               id={faq.id}
             />
           ))}
-        </div>
+        </ul>
         <h2 className="font-bold">General</h2>
-        <div className="max-w-screen-sm pt-6 pb-16 mx-auto prose text-left">
+        <ul className="max-w-screen-sm pt-6 pb-16 mx-auto prose text-left">
           {faqsGeneral.map((faq, key) => (
             <FAQsItem
               key={key}
@@ -39,7 +39,7 @@ const FAQs = () => {
               id={faq.id}
             />
           ))}
-        </div>
+        </ul>
         <p className="text-sm">
           Still have questions? Get in touch on{" "}
           <a

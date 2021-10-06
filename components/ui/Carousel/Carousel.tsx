@@ -28,7 +28,7 @@ const Carousel = () => {
         trayTag="div"
       >
         {slides.map((slide, key) => (
-          <Slide key={key} index={key} role="slide">
+          <Slide key={key} index={key}>
             <div className="grid items-center grid-cols-1 md:grid-cols-3 md:px-8">
               <div className="relative w-full max-w-lg col-span-2 pb-12 mx-auto text-left md:mx-0 md:py-4 md:pr-4">
                 <h1 className={`${darkColorList[key][2]} pb-7`}>

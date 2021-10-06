@@ -10,7 +10,7 @@ type Props = {
 const FAQsItem = ({ question, answer, id }: Props) => {
   const [showAnswer, setShowAnswer] = useState(false)
   return (
-    <>
+    <li>
       <div
         className="flex items-center pt-8 pb-1 border-b-2 border-blue-600 cursor-pointer group"
         onClick={() => setShowAnswer((showAnswer) => !showAnswer)}
@@ -25,14 +25,16 @@ const FAQsItem = ({ question, answer, id }: Props) => {
             } `}
           />
         </div>
-        <h3 className="!mt-0 !mb-0">{question}</h3>
+        <span className="mt-0 mb-2 text-lg font-semibold leading-relaxed text-black">
+          {question}
+        </span>
       </div>
       {showAnswer && (
         <div className="pt-2 xs:ml-8">
           {typeof answer == "string" ? <p className="">{answer}</p> : answer}
         </div>
       )}
-    </>
+    </li>
   )
 }
 
