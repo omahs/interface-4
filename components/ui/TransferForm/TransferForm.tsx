@@ -50,11 +50,12 @@ const TransferForm = ({
   })
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
+    e.preventDefault()
+
     const handleSubmit = (await import("@utils/handleSubmit")).default
     const TransferShares = (await import("@lib/handlers/chain/TransferShares"))
       .default
 
-    e.preventDefault()
     const eventLog = await handleSubmit(
       TransferShares(connector, account, address, Number(slicerId), shares),
       setMessage,

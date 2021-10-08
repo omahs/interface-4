@@ -120,7 +120,7 @@ const SliceFormBlockSplitter = ({
             text={
               <>
                 <p className="pb-4">
-                  Accounts with more than the chosen amount of slices will be
+                  Accounts with more than the chosen amount of slices will be{" "}
                   <Link href="/#superowner">
                     <a className="font-black highlight">
                       superowners with privileged access

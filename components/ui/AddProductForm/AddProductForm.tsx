@@ -59,13 +59,14 @@ const AddProductForm = ({
   const submitEl = useRef(null)
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
+    e.preventDefault()
+
     const { beforeCreate, handleReject, handleSuccess } = await import(
       "@lib/handleCreateProduct"
     )
     const { AddProduct } = await import("@lib/handlers/chain")
     const handleSubmit = (await import("@utils/handleSubmit")).default
 
-    e.preventDefault()
     try {
       const { image, newProduct, data, purchaseDataCID, purchaseData } =
         await beforeCreate(
