@@ -56,37 +56,43 @@ const SlicerSponsors = ({
   }, [subgraphData])
 
   return (
-    <div className="max-w-sm pt-4 pb-12 mx-auto text-center">
+    <div className="max-w-sm mx-auto">
       {loading ? (
-        <div className="flex justify-center py-2">
-          <Spinner size="h-10 w-10" />
-        </div>
+        <>
+          <div className="flex justify-center w-full pt-4 pb-12 text-center">
+            <Spinner size="h-10 w-10" />
+          </div>
+          <hr className="w-20 mx-auto my-16 border-gray-300" />
+        </>
       ) : (
         sponsors.length != 0 && (
           <>
-            <h2 className="pb-12">Sponsors</h2>
-            <ol className="space-y-5">
-              {sponsors.map((sponsor, key) => {
-                return (
-                  <SponsorListItem
-                    slicerId={slicerId}
-                    sponsor={sponsor}
-                    key={key}
-                    sponsorLink={sponsorData[sponsor.address]}
-                  />
-                )
-              })}
-            </ol>
+            <div className="text-center">
+              <h2 className="pb-12">Sponsors</h2>
+              <ol className="space-y-5">
+                {sponsors.map((sponsor, key) => {
+                  return (
+                    <SponsorListItem
+                      slicerId={slicerId}
+                      sponsor={sponsor}
+                      key={key}
+                      sponsorLink={sponsorData[sponsor.address]}
+                    />
+                  )
+                })}
+              </ol>
+            </div>
+            <hr className="w-20 mx-auto my-16 border-gray-300" />
           </>
         )
       )}
       {!editMode && (
-        <>
+        <div className="pt-4 pb-12 text-center">
           <p className="py-10">
             Sponsor this slicer by sending ETH to its address
           </p>
           <PaySlicer slicerAddress={slicerAddress} />
-        </>
+        </div>
       )}
     </div>
   )
