@@ -89,11 +89,7 @@ export default Home
 
 /** TODO
  *
- * *optimization*
- * - dynamic imports https://nextjs.org/learn/seo/improve/dynamic-imports
- * - dynamic components
- *
- *
+ * - prepare launch with content for twitter, discord, emails
  *
  * *Pre-launch*
  *    - wait for low gas price
@@ -111,13 +107,7 @@ export default Home
  *    - publish subgraph on mainnet
  *
  *    - change new env on vercel + change ext. services from rinkeby
- *
- *    - add slicers & products to demonstrate use case with digital collectibles
- *
- *
- * *High Priority*
- *    - FAQs page (see below) + add link where already referenced
- *    - Improve homepage content
+ *    - see stuff in context to change (rpc chain somewhere)
  *
  * *Low Priority*
  *    - Receive ERC721-1155
@@ -136,19 +126,6 @@ export default Home
  *    - transfer page (select box to choose slicer)
  *    - optimize subgraph queries (products + payeeslicer) in slicer/[id], if possible
  *
- * *Future*
- *    - Set maximum batch values as constants, remove unnecessary setter functions
- *
- *
- *
- *
- *
- * NFT PRODUCTS IDEAS
- * - special concert ticket
- * - appear as gold/silver/.. sponsor to the slicer
- * - something related to image copyright -> right to use image?
- * - PDF with the NFT behind the scenes
- * - Buy movie / music / game / game add-on
  *
  *
  * OTHER

@@ -21,7 +21,8 @@ export const section1 = (
 export const section2 = (
   <>
     <h1 className="!mb-2">
-      Hold 🍰, <DoubleText inactive logoText="Earn Ξ" size="text-normal" />
+      Hold Slices 🍰,{" "}
+      <DoubleText inactive logoText="Earn Ξ" size="text-normal" />
     </h1>
     <p>
       {" "}
@@ -35,8 +36,8 @@ export const section2 = (
       right to redeem any due ETH.
     </p>
     <p>
-      They&apos;re ERC1155 tokens so you&apos;re free to transfer or sell your
-      slices however you prefer (even on{" "}
+      They&apos;re ERC1155 tokens so you&apos;re free to transfer or sell them
+      however you prefer (even on{" "}
       <a href="https://opensea.io" target="_blank" rel="noreferrer">
         Opensea
       </a>
@@ -58,8 +59,7 @@ export const section3 = (
     </p>
     <p>
       The best part is that this is all decentralized, and product data are
-      encrypted in such a way that only those who buy them can see their
-      content.
+      encrypted so that only those who buy them can see their content.
     </p>
   </>
 )
