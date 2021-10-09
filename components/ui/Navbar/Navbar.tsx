@@ -7,11 +7,11 @@ import UserIcon from "@components/icons/UserIcon"
 import { useAppContext } from "@components/ui/context"
 import { useState } from "react"
 
-const Navbar = () => {
-  const DropdownMenu = dynamic(() => import("@components/ui/DropdownMenu"), {
-    ssr: false,
-  })
+const DropdownMenu = dynamic(() => import("@components/ui/DropdownMenu"), {
+  ssr: false,
+})
 
+const Navbar = () => {
   const { isConnected, loading, setModalView } = useAppContext()
   const [showDropdown, setShowDropdown] = useState(false)
 

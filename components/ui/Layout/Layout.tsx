@@ -1,20 +1,20 @@
-// import dynamic from "next/dynamic"
+import dynamic from "next/dynamic"
 import { Footer, Navbar } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { useEffect } from "react"
 import { useCookies } from "react-cookie"
 import { ProductCart } from "@lib/handleUpdateCart"
-import { Modal, FloatingCart } from "@components/ui"
+// import { Modal, FloatingCart } from "@components/ui"
 // import ProductHuntBadge from "../ProductHuntBadge"
 
-export default function Layout({ children }) {
-  // const FloatingCart = dynamic(() => import("@components/ui/FloatingCart"), {
-  //   ssr: false,
-  // })
-  // const Modal = dynamic(() => import("@components/ui/Modal"), {
-  //   ssr: false,
-  // })
+const FloatingCart = dynamic(() => import("@components/ui/FloatingCart"), {
+  ssr: false,
+})
+const Modal = dynamic(() => import("@components/ui/Modal"), {
+  ssr: false,
+})
 
+export default function Layout({ children }) {
   const { isConnected, chainId, modalView, setModalView } = useAppContext()
   const [cookies] = useCookies(["cart"])
 
