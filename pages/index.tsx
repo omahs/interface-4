@@ -40,7 +40,7 @@ const Home = () => {
   return (
     <>
       <NextSeo
-        title="The decentralized slicing platform"
+        title="Decentralized slicing platform"
         openGraph={{
           title: longTitle,
           description: defaultDescription,
@@ -125,6 +125,7 @@ export default Home
  *    - add detailed section in slicer page (stats & stuff for payees only)
  *    - transfer page (select box to choose slicer)
  *    - optimize subgraph queries (products + payeeslicer) in slicer/[id], if possible
+ *    - Add ENS profile image support -> https://www.npmjs.com/package/@davatar/react / spec https://gist.github.com/Arachnid/9db60bd75277969ee1689c8742b75182
  *
  *
  *

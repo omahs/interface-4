@@ -267,13 +267,12 @@ export const faqsNfts = [
     id: "nft-mint",
   },
   {
-    question: "Can I create fractional NFTs?",
+    question: "Can I create fractionalized NFTs?",
     answer: (
       <>
         <p>
           Yes. Slices are ERC1155, semi-fungible tokens. By specifying 2 or more
-          slices while creating a slicer, you are essentially fractionalizing
-          it.
+          slices while creating a slicer, you are essentially subdividing it.
         </p>
         <p>You can do this with both collectible and normal assets.</p>
       </>

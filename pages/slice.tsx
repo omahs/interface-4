@@ -53,10 +53,10 @@ export default function Slice() {
                 />
                 <div className="py-6 mx-auto space-y-4 sm:py-8 sm:text-lg max-w-screen-xs">
                   <p>
-                    Slicers are a{" "}
+                    Slicers are a special kind of{" "}
                     <DoubleText
                       inactive
-                      logoText="special kind of fractional NFTs"
+                      logoText="fractionalized NFTs"
                       size="text-normal"
                     />{" "}
                     {/* <Link href="/">

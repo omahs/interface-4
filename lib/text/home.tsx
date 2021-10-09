@@ -32,7 +32,7 @@ export const section2 = (
         logoText="Semi-Fungible Tokens"
         size="text-normal"
       />{" "}
-      (fractional NFTs) that represent ownership of a slicer, including the
+      (fractionalized NFTs) that represent ownership of a slicer, including the
       right to redeem any due ETH.
     </p>
     <p>

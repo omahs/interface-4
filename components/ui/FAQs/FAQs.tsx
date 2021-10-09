@@ -4,7 +4,7 @@ import { faqsMain, faqsNfts, faqsGeneral } from "@lib/text/faqsContent"
 const FAQs = () => {
   return (
     <>
-      <div className="pt-12 text-center" id="faqs">
+      <div className="pt-12 text-center" id="faq">
         <h1 className="pb-8 sm:pb-12">
           <DoubleText inactive logoText="FAQ" size="text-4xl sm:text-5xl" />
         </h1>
