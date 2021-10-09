@@ -178,7 +178,7 @@ const SliceFormBlockSplitter = ({
                   animation, music, artwork, or any digital asset) that should
                   not change once created.
                 </p>
-                <p>
+                <p className="pb-4">
                   <b>Note:</b> You can also use{" "}
                   <Link href="/#products">
                     <a target="_blank" rel="noreferrer">

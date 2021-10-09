@@ -67,7 +67,7 @@ const SlicerSponsors = ({
       ) : (
         sponsors.length != 0 && (
           <>
-            <div className="text-center">
+            <div className="pt-8 text-center">
               <h2 className="pb-12">Sponsors</h2>
               <ol className="space-y-5">
                 {sponsors.map((sponsor, key) => {
