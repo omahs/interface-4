@@ -101,9 +101,11 @@ export const faqsMain = [
       <>
         <p>
           <i>Triggering a release</i> means receiving any ETH due from your
-          slicers. After connecting with your account, you can trigger a release
-          by going to <b>Your slicers</b> by clicking on the user menu icon, and
-          triggering a release with the apposite button.
+          slicers. You can trigger a release by going to{" "}
+          <Link href="/profile">
+            <a>Your slicers</a>
+          </Link>{" "}
+          section and triggering a release with the apposite button.
         </p>
         <p>
           You will also trigger an automatic release whenever you perform a
@@ -123,11 +125,13 @@ export const faqsMain = [
           the contents of a product.
         </p>
         <p>
-          After connecting with your account, you can redeem a purchase from the{" "}
-          <b>Purchases</b> section by clicking on the user menu icon, and
-          clicking on the <i>Redeem</i> button of a specific product.
-          Alternatively, you can also do so directly from a slicer page by
-          clicking on the blue button with the shopping bag icon.
+          You can redeem a purchase from the{" "}
+          <Link href="/purchases">
+            <a>Purchases</a>
+          </Link>{" "}
+          section and clicking on the <b>Redeem</b> button of a specific
+          product. Alternatively, you can also do so directly from a slicer page
+          by clicking on the blue button with the shopping bag icon.
         </p>
       </>
     ),
@@ -138,10 +142,13 @@ export const faqsMain = [
     answer: (
       <>
         <p>
-          After connecting with your account, go to <b>Your slicers</b> section
-          by clicking on the user menu icon, and click on <i>transfer</i> for a
-          specific slicer. From there you&apos;ll be able to transfer any amount
-          of slices to an address you specify.
+          Go to{" "}
+          <Link href="/profile">
+            <a>Your slicers</a>
+          </Link>{" "}
+          section and click on <b>transfer</b> for a specified slicer. From
+          there you&apos;ll be able to transfer any amount of slices to an
+          address you specify.
         </p>
         <p>
           If you wish to sell your slices, you can use{" "}
