@@ -7,13 +7,17 @@ type Data = SlicerReduced[]
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   await corsMiddleware(req, res)
-  const { items } = req.query
   try {
     if (req.method === "GET") {
       const SlicerList = await prisma.slicer.findMany({
         orderBy: { id: "desc" },
-        take: Number(items),
-        select: { id: true, name: true, image: true, isCollectible: true },
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          image: true,
+          isCollectible: true,
+        },
       })
       res.status(200).json(SlicerList)
     }
