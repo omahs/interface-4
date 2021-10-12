@@ -11,13 +11,13 @@ import {
 export type SlicerReduced = {
   id: number
   name: string | null
+  description: string | null
   image: string | null
   isCollectible: boolean | null
 }
 
 const SlicerGrid = ({
   data,
-  totalSlicers,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Container page={true}>
@@ -44,7 +44,7 @@ const SlicerGrid = ({
           size="text-4xl sm:text-5xl"
           position="pb-12"
         />
-        <SlicersGrid data={data} totalSlicers={Number(totalSlicers)} />
+        <SlicersGrid data={data} />
       </main>
     </Container>
   )
@@ -54,16 +54,12 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const fetcher = (await import("@utils/fetcher")).default
 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-  const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
-  const data: SlicerReduced[] = await fetcher(
-    `${baseUrl}/api/slicer?items=${totalSlicers}`
-  )
+  const data: SlicerReduced[] = await fetcher(`${baseUrl}/api/slicer`)
   // const totalSlicers = 0
 
   return {
     props: {
       data,
-      totalSlicers,
     },
     revalidate: 10,
   }
