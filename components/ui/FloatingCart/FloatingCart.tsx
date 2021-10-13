@@ -142,7 +142,7 @@ const FloatingCart = ({ cookieCart }: Props) => {
                   ? !loading
                     ? handleCheckout()
                     : null
-                  : () => setModalView({ name: "CONNECT_VIEW", cross: true })
+                  : setModalView({ name: "CONNECT_VIEW", cross: true })
               }
             >
               {success ? (
