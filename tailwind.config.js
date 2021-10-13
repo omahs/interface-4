@@ -12,6 +12,8 @@ module.exports = {
     "./components/**/*.scss",
     "./styles/**/*.scss",
     "./utils/**/*.ts",
+    "./lib/**/*.ts",
+    "./lib/**/*.tsx",
     "./styles/jit-hack.txt",
   ],
 
