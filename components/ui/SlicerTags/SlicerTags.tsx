@@ -12,7 +12,6 @@ type Props = {
 
 const SlicerTags = ({ tags, newTags, setNewTags, editMode }: Props) => {
   const currentTag = tagsList.find((el) => el.value === tags)
-  const { text, bg } = currentTag.colors
   // const [input, setInput] = useState("")
 
   // const onKeyDown = (e) => {
@@ -71,15 +70,13 @@ const SlicerTags = ({ tags, newTags, setNewTags, editMode }: Props) => {
         </select>
       </label>
     </div>
-  ) : (
-    tags && (
-      <p
-        className={`nightwind-prevent mb-8 inline-block px-6 py-1.5 text-sm font-semibold ${text} ${bg} rounded-md shadow-sm`}
-      >
-        {currentTag.name || currentTag.value}
-      </p>
-    )
-  )
+  ) : tags ? (
+    <p
+      className={`nightwind-prevent mb-8 inline-block px-6 py-1.5 text-sm font-semibold ${currentTag.colors.text} ${currentTag.colors.bg} rounded-md shadow-sm`}
+    >
+      {currentTag.name || currentTag.value}
+    </p>
+  ) : null
 }
 
 export default SlicerTags

@@ -7,6 +7,7 @@ import {
   longTitle,
   domain,
 } from "@components/common/Head"
+import fetcher from "@utils/fetcher"
 
 export type SlicerReduced = {
   id: number
@@ -52,11 +53,9 @@ const SlicerGrid = ({
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-  const fetcher = (await import("@utils/fetcher")).default
-
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const data: SlicerReduced[] = await fetcher(`${baseUrl}/api/slicer`)
-  // const totalSlicers = 0
+  // const data = []
 
   return {
     props: {

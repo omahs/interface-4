@@ -20,6 +20,7 @@ import {
   SlicerProducts,
   SlicerSponsors,
 } from "@components/ui"
+import fetcher from "@utils/fetcher"
 
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
@@ -242,8 +243,6 @@ const Id = ({
 }
 
 export async function getStaticPaths() {
-  const fetcher = (await import("@utils/fetcher")).default
-
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
   // const totalSlicers = 0
@@ -260,8 +259,6 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-  const fetcher = (await import("@utils/fetcher")).default
-
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const id = context.params.id
 
