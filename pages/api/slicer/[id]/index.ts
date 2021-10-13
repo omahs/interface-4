@@ -38,15 +38,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             `,
           })
           const creatorAddress = data.slicer.creator.id
-          const creatorAddressFormatted = creatorAddress.replace(
-            creatorAddress.substring(5, creatorAddress.length - 3),
-            "___"
-          )
+          // const creatorAddressFormatted = creatorAddress.replace(
+          //   creatorAddress.substring(5, creatorAddress.length - 3),
+          //   "___"
+          // )
 
           slicerInfo = {
             id: Number(id),
             name: `Slicer #${id}`,
             description: "",
+            tags: "",
             external_url: `https://slice.so/slicer/${id}`,
             address: data.slicer.address,
             image: "https://slice.so/slicer_default.png",
@@ -97,6 +98,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           id: null,
           name: "",
           description: "",
+          tags: "",
           external_url: "",
           address: "",
           image: "",
@@ -110,7 +112,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (req.method === "POST") {
-      const { name, description, imageUrl } = JSON.parse(req.body)
+      const { name, tags, description, imageUrl } = JSON.parse(req.body)
 
       const slicerInfo = await prisma.slicer.findFirst({
         where: { id: Number(id) },
@@ -118,6 +120,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           isCollectible: true,
           id: true,
           name: true,
+          tags: true,
           description: true,
           image: true,
         },
@@ -125,16 +128,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       if (
         slicerInfo.isCollectible &&
-        (slicerInfo.name !== `Slicer #${id}` ||
-          slicerInfo.description !== "" ||
-          slicerInfo.image !== "https://slice.so/slicer_default.png")
+        slicerInfo.name !== `Slicer #${id}` &&
+        slicerInfo.description !== "" &&
+        slicerInfo.tags !== "" &&
+        slicerInfo.image !== "https://slice.so/slicer_default.png"
       ) {
         throw Error("Collectible asset already set")
       }
 
       const query = await prisma.slicer.update({
         where: { id: Number(id) },
-        data: { name, description, image: imageUrl },
+        data: { name, tags, description, image: imageUrl },
       })
       res.status(200).json({ query })
     }

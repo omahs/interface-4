@@ -10,10 +10,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   try {
     if (req.method === "GET") {
       const SlicerList = await prisma.slicer.findMany({
+        where: {
+          OR: [{ tags: { not: "Private" } }, { tags: { equals: null } }],
+        },
         orderBy: { id: "desc" },
         select: {
           id: true,
           name: true,
+          tags: true,
           description: true,
           image: true,
           isCollectible: true,
