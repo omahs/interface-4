@@ -1,25 +1,35 @@
+import dynamic from "next/dynamic"
 import Sliders from "@components/icons/Sliders"
+import { TagElement } from "@lib/content/tagsList"
 import { Dispatch, SetStateAction, useState } from "react"
-import { FiltersElement, Input, MySwitch } from ".."
-import { tagsList } from "../SlicerTags/SlicerTags"
+
+const FiltersFloatingMenu = dynamic(
+  () => import("@components/ui/FiltersFloatingMenu"),
+  {
+    ssr: false,
+  }
+)
 
 type Props = {
+  totalTags: string[]
   filterTags: string[]
   setFilterTags: Dispatch<SetStateAction<string[]>>
   setSearchTerm: Dispatch<SetStateAction<string>>
   showCollectibles: boolean
   setShowCollectibles: Dispatch<SetStateAction<boolean>>
+  tagsList: TagElement[]
 }
 
 function FiltersMenu({
+  totalTags,
   filterTags,
   setFilterTags,
   setSearchTerm,
   showCollectibles,
   setShowCollectibles,
+  tagsList,
 }: Props) {
   const [showFilters, setShowFilters] = useState(false)
-  const totalTags = tagsList.map((tag) => tag["value"])
 
   return (
     <div className="relative flex justify-end w-full pb-4">
@@ -31,29 +41,15 @@ function FiltersMenu({
         <p className="pl-3">Filters</p>
       </button>
       {showFilters && (
-        <div className="absolute top-0 right-0 z-20 px-4 py-6 mt-16 space-y-6 transition-opacity duration-200 bg-white w-80 rounded-xl shadow-base nightwind-prevent-block">
-          {totalTags.map((el, key) => (
-            <FiltersElement
-              key={key}
-              label={el}
-              filterTags={filterTags}
-              setFilterTags={setFilterTags}
-            />
-          ))}
-          <div className="flex items-center justify-end space-x-4">
-            <p>Only collectibles</p>
-            <MySwitch
-              enabled={showCollectibles}
-              setEnabled={setShowCollectibles}
-            />
-          </div>
-          <div>
-            <Input
-              onChange={setSearchTerm}
-              placeholder="Search by name or description..."
-            />
-          </div>
-        </div>
+        <FiltersFloatingMenu
+          tagsList={tagsList}
+          totalTags={totalTags}
+          filterTags={filterTags}
+          setFilterTags={setFilterTags}
+          setSearchTerm={setSearchTerm}
+          showCollectibles={showCollectibles}
+          setShowCollectibles={setShowCollectibles}
+        />
       )}
     </div>
   )

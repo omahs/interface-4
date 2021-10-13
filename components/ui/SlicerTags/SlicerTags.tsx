@@ -1,12 +1,7 @@
+import tagsList from "@lib/content/tagsList"
 import Link from "next/link"
 import { Dispatch, SetStateAction } from "react"
 import { Question } from ".."
-import CarouselGames from "@components/icons/CarouselGames"
-import CarouselArtworks from "@components/icons/CarouselArtworks"
-import CarouselMusic from "@components/icons/CarouselMusic"
-import CarouselPayments from "@components/icons/CarouselPayments"
-import CarouselStartups from "@components/icons/CarouselStartups"
-import CarouselWriters from "@components/icons/CarouselWriters"
 
 type Props = {
   tags: string
@@ -15,52 +10,9 @@ type Props = {
   editMode: boolean
 }
 
-type TagElement = {
-  value: string
-  colors: string
-  image?: JSX.Element
-  name?: string
-}
-
-export const tagsList: TagElement[] = [
-  {
-    value: "Artwork",
-    colors: "bg-pink-100 text-pink-700",
-    image: CarouselArtworks("text-pink-700"),
-  },
-  {
-    value: "Company",
-    colors: "bg-blue-100 text-blue-700",
-    image: CarouselStartups("text-blue-700"),
-  },
-  {
-    value: "Game",
-    colors: "bg-purple-100 text-purple-700",
-    image: CarouselGames("text-purple-700"),
-  },
-  {
-    value: "Music",
-    colors: "bg-green-100 text-green-700",
-    image: CarouselMusic("text-green-700"),
-  },
-  {
-    value: "Project",
-    colors: "bg-red-100 text-red-700",
-    image: CarouselPayments("text-red-700"),
-  },
-  {
-    value: "Writing",
-    colors: "bg-yellow-100 text-yellow-700",
-    image: CarouselWriters("text-yellow-700"),
-  },
-  {
-    value: "Private",
-    colors: "bg-gray-100 text-gray-700",
-  },
-]
-
 const SlicerTags = ({ tags, newTags, setNewTags, editMode }: Props) => {
   const currentTag = tagsList.find((el) => el.value === tags)
+  const { text, bg } = currentTag.colors
   // const [input, setInput] = useState("")
 
   // const onKeyDown = (e) => {
@@ -122,7 +74,7 @@ const SlicerTags = ({ tags, newTags, setNewTags, editMode }: Props) => {
   ) : (
     tags && (
       <p
-        className={`nightwind-prevent mb-8 inline-block px-6 py-1.5 text-sm font-semibold ${currentTag.colors} rounded-md shadow-sm`}
+        className={`nightwind-prevent mb-8 inline-block px-6 py-1.5 text-sm font-semibold ${text} ${bg} rounded-md shadow-sm`}
       >
         {currentTag.name || currentTag.value}
       </p>

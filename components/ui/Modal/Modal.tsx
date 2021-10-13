@@ -9,7 +9,7 @@ import {
   CREATE_PRODUCT_CONFIRM_VIEW,
   PRODUCT_VIEW,
   REDEEM_PRODUCT_VIEW,
-} from "lib/text/modals"
+} from "@lib/content/modals"
 
 type Props = {
   modalView: View

@@ -1,5 +1,5 @@
 import { DoubleText, FAQsItem } from ".."
-import { faqsMain, faqsNfts, faqsGeneral } from "@lib/text/faqsContent"
+import { faqsMain, faqsNfts, faqsGeneral } from "@lib/content/faqsContent"
 
 const FAQs = () => {
   return (

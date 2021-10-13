@@ -10,7 +10,7 @@ import {
   SubscribeForm,
 } from "@components/ui"
 import { useEffect } from "react"
-import { section1, section2, section3, section4 } from "@lib/text/home"
+import { section1, section2, section3, section4 } from "@lib/content/home"
 import HomeDecentralized from "@components/icons/HomeDecentralized"
 import { NextSeo } from "next-seo"
 import {

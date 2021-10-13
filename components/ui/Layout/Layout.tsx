@@ -4,7 +4,6 @@ import { useAppContext } from "@components/ui/context"
 import { useEffect } from "react"
 import { useCookies } from "react-cookie"
 import { ProductCart } from "@lib/handleUpdateCart"
-// import { Modal, FloatingCart } from "@components/ui"
 // import ProductHuntBadge from "../ProductHuntBadge"
 
 const FloatingCart = dynamic(() => import("@components/ui/FloatingCart"), {

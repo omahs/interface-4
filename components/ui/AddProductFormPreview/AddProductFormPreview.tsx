@@ -1,6 +1,6 @@
 import { NewImage } from "pages/slicer/[id]"
 import React, { Dispatch, SetStateAction } from "react"
-import { View } from "@lib/text/modals"
+import { View } from "@lib/content/modals"
 
 type Props = {
   slicerId: number

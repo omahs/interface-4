@@ -1,6 +1,6 @@
 import WalletConnect from "@walletconnect/client"
 import { Dispatch, SetStateAction } from "react"
-import { View } from "./text/modals"
+import { View } from "./content/modals"
 
 export const handleConnectMetamask = async (
   setModalView: Dispatch<SetStateAction<View>>

@@ -1,7 +1,7 @@
 import useProvider from "@lib/useProvider"
 import { createContext, useContext, useEffect, useState } from "react"
 import { colorList, darkColorList } from "@utils/colorList"
-import { View } from "@lib/text/modals"
+import { View } from "@lib/content/modals"
 import { getPurchases } from "@utils/getPurchases"
 
 export type Purchase = {

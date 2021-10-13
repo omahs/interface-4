@@ -1,6 +1,6 @@
 import WalletConnect from "@walletconnect/client"
 import { Dispatch, SetStateAction } from "react"
-import { View } from "@lib/text/modals"
+import { View } from "@lib/content/modals"
 
 const handleRedeemProduct = async (
   connector: WalletConnect,

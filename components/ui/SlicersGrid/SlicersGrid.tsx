@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { SlicerReduced } from "pages/slicer"
 import { Card, FiltersMenu } from ".."
 import Collectible from "@components/icons/Collectible"
-import { tagsList } from "../SlicerTags/SlicerTags"
+import tagsList from "@lib/content/tagsList"
 
 type Props = {
   data: SlicerReduced[]
@@ -18,11 +18,12 @@ const SlicersGrid = ({ data }: Props) => {
     useState<SlicerReduced[]>(null)
   const filteredData = searchFilteredSlicers || filteredSlicers
 
+  const totalTags = tagsList.map((tag) =>
+    tag["value"] !== "Private" ? tag["value"] : ""
+  )
   const [showCollectibles, setShowCollectibles] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
-  const [filterTags, setFilterTags] = useState(
-    tagsList.map((tag) => tag["value"])
-  )
+  const [filterTags, setFilterTags] = useState(totalTags)
 
   const performSearch = async (
     searchTerm: string,
@@ -39,10 +40,13 @@ const SlicersGrid = ({ data }: Props) => {
       const onlyCollectibles = showCollectibles
         ? el.isCollectible == showCollectibles
         : true
-      return onlyCollectibles && (filterTags.includes(el.tags) || !el.tags)
+      const isFiltered = !el.tags
+        ? filterTags.includes("")
+        : filterTags.includes(el.tags)
+      return onlyCollectibles && isFiltered
     })
     setFilteredSlicers(newFilteredSlicers)
-  }, [showCollectibles])
+  }, [showCollectibles, filterTags])
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -63,53 +67,59 @@ const SlicersGrid = ({ data }: Props) => {
   return (
     <>
       <FiltersMenu
+        tagsList={tagsList}
+        totalTags={totalTags}
         filterTags={filterTags}
         setFilterTags={setFilterTags}
         setSearchTerm={setSearchTerm}
         showCollectibles={showCollectibles}
         setShowCollectibles={setShowCollectibles}
       />
-      <div className="grid items-center justify-center grid-cols-1 gap-2 max-w-[400px] sm:gap-6 lg:gap-8 sm:max-w-[550px] mx-auto sm:grid-cols-2 md:max-w-none md:grid-cols-3">
-        {[...Array(iterator)].map((el, key) => {
-          const slicerData = filteredData[key]
-          const { id, name, tags, image, isCollectible } = slicerData
-          const slicerLink = `/slicer/${id}`
-          const slicerName = name || `Slicer #${id}`
-          const currentTag = tagsList.find((el) => el.value === tags)
-          return (
-            <Card
-              key={key}
-              name={slicerName}
-              image={image}
-              href={slicerLink}
-              className="rounded-none"
-              size="h-44"
-              topLeft={
-                isCollectible && {
-                  title: "Collectible asset",
-                  content: (
-                    <Collectible className="py-2 text-indigo-600 w-[38px] h-[38px]" />
-                  ),
-                  padding: "px-4",
+      {filteredData.length != 0 ? (
+        <div className="grid items-center justify-center grid-cols-1 gap-2 max-w-[400px] sm:gap-6 lg:gap-8 sm:max-w-[550px] mx-auto sm:grid-cols-2 md:max-w-none md:grid-cols-3">
+          {[...Array(iterator)].map((el, key) => {
+            const slicerData = filteredData[key]
+            const { id, name, tags, image, isCollectible } = slicerData
+            const slicerLink = `/slicer/${id}`
+            const slicerName = name || `Slicer #${id}`
+            const currentTag = tagsList.find((el) => el.value === tags)
+            return (
+              <Card
+                key={key}
+                name={slicerName}
+                image={image}
+                href={slicerLink}
+                className="rounded-none"
+                size="h-44"
+                topLeft={
+                  isCollectible && {
+                    title: "Collectible asset",
+                    content: (
+                      <Collectible className="py-2 text-indigo-600 w-[38px] h-[38px]" />
+                    ),
+                    padding: "px-4",
+                  }
                 }
-              }
-              topRight={
-                tags && {
-                  title: tags,
-                  content: (
-                    <div className="py-2 px-1.5 w-[38px] h-[38px]">
-                      {currentTag.image}
-                    </div>
-                  ),
-                  padding: "px-4",
+                topRight={
+                  tags && {
+                    title: tags,
+                    content: (
+                      <div className="py-2 px-1.5 w-[38px] h-[38px]">
+                        {currentTag.image}
+                      </div>
+                    ),
+                    padding: "px-4",
+                  }
                 }
-              }
-            >
-              <p className="mr-2 text-lg font-medium">{slicerName}</p>
-            </Card>
-          )
-        })}
-      </div>
+              >
+                <p className="mr-2 text-lg font-medium">{slicerName}</p>
+              </Card>
+            )
+          })}
+        </div>
+      ) : (
+        <p className="pt-6 text-lg">No slicer matches the selected filters</p>
+      )}
       <div className="pt-10 pb-4 space-y-8">
         {items < filteredSlicers.length && (
           <p className="text-center">

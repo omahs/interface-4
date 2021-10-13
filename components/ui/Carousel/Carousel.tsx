@@ -9,7 +9,7 @@ import {
 } from "pure-react-carousel"
 import Arrow from "@components/icons/Arrow"
 import { CarouselDot } from ".."
-import slides from "@lib/text/slides"
+import slides from "@lib/content/slides"
 
 const Carousel = () => {
   return (
