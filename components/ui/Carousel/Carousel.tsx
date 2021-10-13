@@ -8,7 +8,7 @@ import {
   ButtonNext,
 } from "pure-react-carousel"
 import Arrow from "@components/icons/Arrow"
-import { CarouselDot, DoubleText } from ".."
+import { CarouselDot } from ".."
 import slides from "@lib/text/slides"
 
 const Carousel = () => {

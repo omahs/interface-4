@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { SlicerReduced } from "pages/slicer"
 import { Card, FiltersMenu } from ".."
 import Collectible from "@components/icons/Collectible"
+import { tagsList } from "../SlicerTags/SlicerTags"
 
 type Props = {
   data: SlicerReduced[]
@@ -19,6 +20,9 @@ const SlicersGrid = ({ data }: Props) => {
 
   const [showCollectibles, setShowCollectibles] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
+  const [filterTags, setFilterTags] = useState(
+    tagsList.map((tag) => tag["value"])
+  )
 
   const performSearch = async (
     searchTerm: string,
@@ -35,7 +39,7 @@ const SlicersGrid = ({ data }: Props) => {
       const onlyCollectibles = showCollectibles
         ? el.isCollectible == showCollectibles
         : true
-      return onlyCollectibles
+      return onlyCollectibles && (filterTags.includes(el.tags) || !el.tags)
     })
     setFilteredSlicers(newFilteredSlicers)
   }, [showCollectibles])
@@ -59,6 +63,8 @@ const SlicersGrid = ({ data }: Props) => {
   return (
     <>
       <FiltersMenu
+        filterTags={filterTags}
+        setFilterTags={setFilterTags}
         setSearchTerm={setSearchTerm}
         showCollectibles={showCollectibles}
         setShowCollectibles={setShowCollectibles}
@@ -66,9 +72,10 @@ const SlicersGrid = ({ data }: Props) => {
       <div className="grid items-center justify-center grid-cols-1 gap-2 max-w-[400px] sm:gap-6 lg:gap-8 sm:max-w-[550px] mx-auto sm:grid-cols-2 md:max-w-none md:grid-cols-3">
         {[...Array(iterator)].map((el, key) => {
           const slicerData = filteredData[key]
-          const { id, name, image, isCollectible } = slicerData
+          const { id, name, tags, image, isCollectible } = slicerData
           const slicerLink = `/slicer/${id}`
           const slicerName = name || `Slicer #${id}`
+          const currentTag = tagsList.find((el) => el.value === tags)
           return (
             <Card
               key={key}
@@ -82,6 +89,17 @@ const SlicersGrid = ({ data }: Props) => {
                   title: "Collectible asset",
                   content: (
                     <Collectible className="py-2 text-indigo-600 w-[38px] h-[38px]" />
+                  ),
+                  padding: "px-4",
+                }
+              }
+              topRight={
+                tags && {
+                  title: tags,
+                  content: (
+                    <div className="py-2 px-1.5 w-[38px] h-[38px]">
+                      {currentTag.image}
+                    </div>
                   ),
                   padding: "px-4",
                 }

@@ -11,6 +11,7 @@ import {
 export type SlicerReduced = {
   id: number
   name: string | null
+  tags: string | null
   description: string | null
   image: string | null
   isCollectible: boolean | null

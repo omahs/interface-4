@@ -18,6 +18,8 @@ type Props = {
   setNewName: Dispatch<SetStateAction<any>>
   newDescription: any
   setNewDescription: Dispatch<SetStateAction<any>>
+  newTags: string
+  setNewTags: Dispatch<SetStateAction<string>>
   newImage: NewImage
   setNewImage: Dispatch<SetStateAction<NewImage>>
   setTempImageUrl: Dispatch<SetStateAction<string>>
@@ -37,6 +39,8 @@ const SlicerSubmitBlock = ({
   setNewName,
   newDescription,
   setNewDescription,
+  newTags,
+  setNewTags,
   newImage,
   setNewImage,
   setTempImageUrl,
@@ -76,8 +80,9 @@ const SlicerSubmitBlock = ({
 
     setLoading(true)
     let newInfo = {
-      description: newDescription,
       name: newName,
+      tags: newTags,
+      description: newDescription,
       imageUrl: slicer.imageUrl,
     }
     try {
@@ -101,8 +106,9 @@ const SlicerSubmitBlock = ({
         const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
         setTempStorageUrl(newFilePath)
         newInfo = {
-          description: newDescription,
           name: newName,
+          tags: newTags,
+          description: newDescription,
           imageUrl: newFilePath,
         }
         await updateDb(newInfo)
@@ -134,6 +140,7 @@ const SlicerSubmitBlock = ({
   const cancel = () => {
     setNewName(slicer.name)
     setNewDescription(slicer.description)
+    setNewTags(slicer.tags)
     setNewImage({ url: "", file: undefined })
     setEditMode(false)
   }

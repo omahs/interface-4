@@ -11,7 +11,7 @@ import {
   ActionScreen,
   CopyAddress,
   DoubleText,
-  // SlicerTags,
+  SlicerTags,
   SlicerDescription,
   SlicerName,
   SlicerImageBlock,
@@ -31,6 +31,7 @@ export type SlicerAttributes = {
 export type SlicerData = {
   name: any
   description: any
+  tags: any
   imageUrl: any
 }
 
@@ -57,12 +58,14 @@ const Id = ({
   const [slicer, setSlicer] = useState<SlicerData>({
     name: slicerInfo?.name,
     description: slicerInfo?.description,
+    tags: slicerInfo?.tags,
     imageUrl: slicerInfo?.image,
   })
   const [slicerAttributes, setSlicerAttributes] =
     useState<SlicerAttributes>(initAttributes)
 
   const [newDescription, setNewDescription] = useState(slicer.description)
+  const [newTags, setNewTags] = useState(slicer.tags)
   const [newName, setNewName] = useState(slicer.name)
   const [newImage, setNewImage] = useState<NewImage>({
     url: "",
@@ -93,6 +96,7 @@ const Id = ({
     setSlicer({
       name: slicerInfo?.name,
       description: slicerInfo?.description,
+      tags: slicerInfo?.tags,
       imageUrl: slicerInfo?.image,
     })
   }, [slicerInfo])
@@ -163,13 +167,12 @@ const Id = ({
               editMode={editMode}
               loading={loading}
             />
-            {/* <SlicerTags
-          description={slicer.description}
-          newDescription={newDescription}
-          setNewDescription={setNewDescription}
-          editMode={editMode}
-          loading={loading}
-        /> */}
+            <SlicerTags
+              tags={slicer.tags}
+              newTags={newTags}
+              setNewTags={setNewTags}
+              editMode={editMode}
+            />
             <SlicerDescription
               description={slicer.description}
               newDescription={newDescription}
@@ -217,6 +220,8 @@ const Id = ({
               setNewName={setNewName}
               newDescription={newDescription}
               setNewDescription={setNewDescription}
+              newTags={newTags}
+              setNewTags={setNewTags}
               newImage={newImage}
               setNewImage={setNewImage}
               setTempImageUrl={setTempImageUrl}
