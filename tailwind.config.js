@@ -87,5 +87,9 @@ module.exports = {
     nightwind: ["group-hover", "focus", "disabled"],
   },
 
-  plugins: [require("@tailwindcss/typography"), require("nightwind")],
+  plugins: [
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/typography"),
+    require("nightwind"),
+  ],
 }
