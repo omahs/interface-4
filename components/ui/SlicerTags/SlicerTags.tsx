@@ -24,7 +24,7 @@ type TagElement = {
 
 export const tagsList: TagElement[] = [
   {
-    value: "Artworks",
+    value: "Artwork",
     colors: "bg-pink-100 text-pink-700",
     image: CarouselArtworks("text-pink-700"),
   },
@@ -34,7 +34,7 @@ export const tagsList: TagElement[] = [
     image: CarouselStartups("text-blue-700"),
   },
   {
-    value: "Games",
+    value: "Game",
     colors: "bg-purple-100 text-purple-700",
     image: CarouselGames("text-purple-700"),
   },
