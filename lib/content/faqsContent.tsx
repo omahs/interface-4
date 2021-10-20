@@ -167,12 +167,12 @@ export const faqsMain = [
       <>
         <p>
           Slicers only appear in the explore section after you visit their page
-          at least once. To do so, go to{" "}
+          or see them at least once. To solve this, simply go to{" "}
           <Link href="/profile">
             <a>Your slicers</a>
-          </Link>{" "}
-          and click on the slicer you wish to appear. The slicer should now be
-          in the Explore section.
+          </Link>
+          . The slicer should now be in the Explore section (if you don&apos;t
+          see them refresh the page a couple of times).
         </p>
         <p>
           Note that if you pick the <b>Private</b> tag for a slicer, it will be

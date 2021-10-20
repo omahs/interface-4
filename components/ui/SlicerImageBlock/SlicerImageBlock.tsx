@@ -99,6 +99,7 @@ const SlicerImageBlock = ({
                     name={name}
                     imageUrl={imageUrl}
                     product={product}
+                    disableHover
                   />
                 )}
               </div>

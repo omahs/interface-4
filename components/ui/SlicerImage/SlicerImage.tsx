@@ -6,12 +6,13 @@ type Props = {
   name: string
   imageUrl?: string
   product?: boolean
+  disableHover?: boolean
 }
 
 const imageClassName =
-  "transform transition-transform duration-1000 ease-out hover:scale-[1.075]"
+  "transform transition-transform duration-1000 ease-out group-hover:scale-[1.075]"
 
-const SlicerImage = ({ name, imageUrl, product }: Props) => {
+const SlicerImage = ({ name, imageUrl, product, disableHover }: Props) => {
   return !imageUrl || imageUrl === "https://slice.so/slicer_default.png" ? (
     product ? (
       <Image
@@ -20,7 +21,7 @@ const SlicerImage = ({ name, imageUrl, product }: Props) => {
         objectFit="cover"
         alt={`${name} product image`}
         placeholder="blur"
-        className={imageClassName}
+        className={disableHover ? "" : imageClassName}
       />
     ) : (
       <Image
@@ -29,7 +30,7 @@ const SlicerImage = ({ name, imageUrl, product }: Props) => {
         objectFit="cover"
         alt={`${name} image`}
         placeholder="blur"
-        className={imageClassName}
+        className={disableHover ? "" : imageClassName}
       />
     )
   ) : (
@@ -40,7 +41,7 @@ const SlicerImage = ({ name, imageUrl, product }: Props) => {
       alt={`${name}${product ? " product" : ""} image`}
       blurDataURL={`${imageUrl}_blur`}
       placeholder="blur"
-      className={imageClassName}
+      className={disableHover ? "" : imageClassName}
     />
   )
 }
