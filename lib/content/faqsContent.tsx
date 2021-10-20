@@ -146,9 +146,9 @@ export const faqsMain = [
           <Link href="/profile">
             <a>Your slicers</a>
           </Link>{" "}
-          section and click on <b>transfer</b> for a specified slicer. From
-          there you&apos;ll be able to transfer any amount of slices to an
-          address you specify.
+          and click on <b>transfer</b> for a specified slicer. From there
+          you&apos;ll be able to transfer any amount of slices to an address you
+          specify.
         </p>
         <p>
           If you wish to sell your slices, you can use{" "}
@@ -156,6 +156,27 @@ export const faqsMain = [
             Opensea
           </a>
           .
+        </p>
+      </>
+    ),
+    id: "transfer",
+  },
+  {
+    question: "My slicer doesn't appear in the Explore section",
+    answer: (
+      <>
+        <p>
+          Slicers only appear in the explore section after you visit their page
+          at least once. To do so, go to{" "}
+          <Link href="/profile">
+            <a>Your slicers</a>
+          </Link>{" "}
+          and click on the slicer you wish to appear. The slicer should now be
+          in the Explore section.
+        </p>
+        <p>
+          Note that if you pick the <b>Private</b> tag for a slicer, it will be
+          hidden from the Explore section.
         </p>
       </>
     ),
