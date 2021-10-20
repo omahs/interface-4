@@ -41,7 +41,8 @@ const CopyAddress = ({ slicerAddress, showIcon = true, position }: Props) => {
           className={`w-40 absolute p-2 ${
             position ? position : "top-[40px] sm:top-[auto] sm:right-[-180px]"
           } shadow-md rounded-md overflow-hidden flex justify-center items-center text-white bg-gray-800 transition-opacity duration-100 ${
-            showAlert ? "opacity-100 z-20" : "opacity-0 -z-10"
+            showAlert ? "" : "hidden"
+            // showAlert ? "opacity-100 z-20" : "opacity-0 -z-10"
           }`}
         >
           <p className="text-sm">Address copied! 🍰</p>

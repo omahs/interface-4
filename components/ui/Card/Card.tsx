@@ -29,7 +29,7 @@ const Card = ({
   bottomLeft,
   bottomRight,
   containerClassName = "my-6 cursor-pointer",
-  cardClassName = "overflow-hidden transition-all duration-1000 ease-out bg-white rounded-xl shadow-medium-random hover:scale-105",
+  cardClassName = "overflow-hidden transition-all duration-1000 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.02]",
   className,
   size,
   product,
