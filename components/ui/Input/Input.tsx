@@ -43,7 +43,7 @@ const Input: React.FC<Props> = (props) => {
 
   const rootClassName = `peer py-2 pl-5 w-full appearance-none transition-all duration-150 rounded-t-sm ${
     !prefix && !error ? "shadow-light-focusable" : ""
-  } ease-in-out pr-3 border-b-[3px] focus:outline-none ${className} ${
+  } ease-in-out pr-3 border-t-0 border-r-0 border-l-0 border-b-[3px] focus:outline-none ${className} ${
     error
       ? "text-red-500 border-red-400 bg-white focus:border-red-400 shadow-error"
       : inverted
