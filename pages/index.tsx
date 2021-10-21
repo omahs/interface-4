@@ -89,8 +89,6 @@ export default Home
 
 /** TODO
  *
- * - prepare launch with content for twitter, discord, emails
- *
  * *Pre-launch*
  *    - wait for low gas price
  *

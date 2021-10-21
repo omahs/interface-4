@@ -78,11 +78,10 @@ const Id = ({
       ? slicer.name
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
 
-  // Todo: Check this isCollectible conditional edit thing
   // Todo: For collectibles save image on web3Storage instead of supabase? + Allow indefinite size? Figure it out
   const editAllowed = !slicerInfo?.isCollectible
     ? isAllowed
-    : slicerAttributes?.Creator === account?.toLowerCase() &&
+    : slicerAttributes?.Creator === account?.toLowerCase() && // only Creator + default name, descr & image
       newName === `Slicer #${slicerInfo?.id}` &&
       newDescription === "" &&
       newImage.url === "" &&

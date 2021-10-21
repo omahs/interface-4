@@ -136,7 +136,7 @@ const ProductCard = ({
     <div className="h-full">
       <Card
         containerClassName="h-full cursor-pointer"
-        cardClassName="h-full overflow-hidden transition-all duration-1000 ease-out bg-white rounded-xl shadow-medium-random hover:scale-105"
+        cardClassName="group h-full overflow-hidden transition-all duration-1000 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025]"
         name={name}
         image={image}
         className="rounded-none"
