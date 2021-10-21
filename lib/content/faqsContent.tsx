@@ -172,7 +172,7 @@ export const faqsMain = [
             <a>Your slicers</a>
           </Link>
           . The slicer should now be in the Explore section (if you don&apos;t
-          see them refresh the page a couple of times).
+          see it refresh the page a couple of times).
         </p>
         <p>
           Note that if you pick the <b>Private</b> tag for a slicer, it will be

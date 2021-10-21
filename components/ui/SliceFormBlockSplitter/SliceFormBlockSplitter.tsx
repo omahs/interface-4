@@ -169,8 +169,8 @@ const SliceFormBlockSplitter = ({
               <>
                 <p className="pb-4">
                   If enabled, as a creator you will be able to set the metadata{" "}
-                  <b>only once</b> after creating the slicer, thus granting it
-                  immutability.
+                  <b>only once</b> after creating the slicer, thus making it
+                  immutable.
                 </p>
                 <p className="pb-4">
                   It should be enabled if you&apos;re using the slicer as a
@@ -179,18 +179,13 @@ const SliceFormBlockSplitter = ({
                   not change once created.
                 </p>
                 <p className="pb-4">
-                  <b>Note:</b> You can also use{" "}
-                  <Link href="/#products">
-                    <a target="_blank" rel="noreferrer">
-                      sell your files using products
-                    </a>
-                  </Link>
-                  , without necessarily creating a collectible.
+                  <b>Note:</b> Slicers metadata are currently stored on Slice
+                  servers, not on IPFS.
                 </p>
                 <p>
-                  <b>Note:</b> In the future collectibles will appear in a
-                  separate section of the website, but have some limitations
-                  with respect to normal slicers.
+                  <b>Note:</b> Collectibles appear in a separate section of the
+                  website, but have some limitations with respect to normal
+                  slicers.
                 </p>
               </>
             }

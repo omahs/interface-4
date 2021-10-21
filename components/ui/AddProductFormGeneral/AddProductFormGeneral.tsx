@@ -86,7 +86,7 @@ const AddProductFormGeneral = ({
       <div>
         <Textarea
           label="Description*"
-          placeholder="Describe this product for prospecting customers. What will they get for buying it?"
+          placeholder="Describe the product to customers. What will they get for buying it?"
           value={description}
           onChange={setDescription}
           required

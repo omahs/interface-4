@@ -41,7 +41,7 @@ const Textarea: React.FC<Props> = (props) => {
     setShowPreview((showPreview) => !showPreview)
   }
 
-  const rootClassName = `peer py-2 mb-[-7px] pl-5 w-full appearance-none transition-all duration-150 rounded-t-sm shadow-light-focusable ease-in-out pr-3 border-b-[3px] focus:outline-none ${
+  const rootClassName = `peer py-2 mb-[-7px] pl-5 w-full appearance-none transition-all duration-150 rounded-t-sm shadow-light-focusable ease-in-out pr-3 border-t-0 border-r-0 border-l-0 border-b-[3px] focus:outline-none ${
     className ? className : ""
   } ${
     inverted

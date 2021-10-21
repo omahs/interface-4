@@ -213,6 +213,9 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
         To make the product immediately appear on the website{" "}
         <b>do not leave this page until the process has completed</b>
       </p>
+      <p className="max-w-sm pb-6 mx-auto text-sm">
+        Note: <b>Do not change the gas fee suggested by your wallet</b>
+      </p>
       <Button
         label={uploadStep === 8 ? "Create a new product" : "Go to slicer"}
         loading={processing}
@@ -283,6 +286,7 @@ export const PRODUCT_VIEW = (params: any) => {
           name={name}
           imageUrl={image}
           size="h-52 xs:h-72"
+          disableHover
           product
           topLeft={{
             title: "Purchases",
@@ -380,7 +384,13 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
         <DoubleText inactive logoText={name} size="text-3xl sm:text-4xl" />
       </div>
       <div>
-        <CardImage name={name} imageUrl={image} size="h-52 xs:h-72" product />
+        <CardImage
+          name={name}
+          imageUrl={image}
+          size="h-52 xs:h-72"
+          product
+          disableHover
+        />
         {purchasedQuantity != 1 && (
           <p className="pt-6 text-sm text-center text-gray-500">
             You bought this product {purchasedQuantity} times

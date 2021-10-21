@@ -82,7 +82,7 @@ export default function Slice() {
               <ActionScreen
                 text="Slicing in progress ..."
                 helpText={
-                  <p className="max-w-sm mx-auto pb-7">
+                  <p className="max-w-sm pb-10 mx-auto">
                     Please wait while the blockchain does its thing, or find the
                     slicer later in your{" "}
                     <Link href="/profile">
@@ -97,7 +97,7 @@ export default function Slice() {
             <ActionScreen
               highlightTitle="Slicer created! 🍰"
               helpText={
-                <div className="max-w-lg pb-6 mx-auto space-y-4">
+                <div className="max-w-lg pb-10 mx-auto space-y-4">
                   <p>
                     Your slicer address is <b>{eventLog && eventLog[0]}</b>
                   </p>

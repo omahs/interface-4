@@ -99,7 +99,7 @@ const AddProductFormPreview = ({
               params: {
                 slicerId,
                 productId: 0,
-                name,
+                name: name || "A nice product",
                 image: newImage.url,
                 purchasedQuantity: Number(1),
                 decryptedFiles: files,

@@ -127,7 +127,7 @@ const FilesList = ({
           <p className="pt-8 text-sm">
             Files are saved immutably on IPFS, and encrypted so that only those
             who buy them can see their content.{" "}
-            <Link href="/#faqs">
+            <Link href="/#faq">
               <a className="highlight" target="_blank" rel="noreferrer">
                 Learn more in our FAQs.
               </a>
