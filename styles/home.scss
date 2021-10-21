@@ -86,6 +86,14 @@
   background-image: radial-gradient(rgba(0, 0, 0, 0) 1px, black 1px);
 }
 
+.group-cart-el {
+  @apply transition-transform duration-150 transform;
+}
+
+.group-cart:hover .group-cart-el {
+  @apply rotate-[-20deg];
+}
+
 #imageWrapper div {
   position: inherit !important;
   height: 100% !important;

@@ -55,7 +55,7 @@ const CartButton = ({
 
   return purchasedQuantity != 0 ? (
     <div
-      className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-blue-500 rounded-md hover:text-white nightwind-prevent group hover:bg-blue-600"
+      className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-blue-500 rounded-md hover:text-white nightwind-prevent group-cart hover:bg-blue-600"
       onClick={() =>
         handleRedeemProduct(
           connector,
@@ -84,14 +84,14 @@ const CartButton = ({
       {loading ? (
         <Spinner color="text-white nightwind-prevent" />
       ) : (
-        <ShoppingBag className="w-5 h-5 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
+        <ShoppingBag className="w-5 h-5 group-cart-el" />
       )}
     </div>
   ) : !productCart ? (
     <div
       className={`relative z-10 flex items-center justify-center w-full py-2 text-center text-white rounded-md nightwind-prevent ${
         availableUnits != 0
-          ? "group bg-green-500 hover:bg-green-600 transition-colors duration-150"
+          ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
           : "bg-gray-400"
       }`}
       onClick={async () =>
@@ -114,7 +114,7 @@ const CartButton = ({
       {labelAdd && (
         <p className="mr-2 text-sm font-medium sm:text-base">{labelAdd}</p>
       )}
-      <Cart className="w-5 h-5 mr-1 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
+      <Cart className="w-5 h-5 mr-1 group-cart-el" />
     </div>
   ) : isMultiple ? (
     <div className="relative z-10 grid items-center justify-center w-full grid-cols-3 overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md">
@@ -167,7 +167,7 @@ const CartButton = ({
     </div>
   ) : (
     <div
-      className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-red-500 rounded-md nightwind-prevent group hover:bg-red-600"
+      className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-red-500 rounded-md nightwind-prevent group-cart hover:bg-red-600"
       onClick={async () =>
         await handleUpdateCart(
           cookies,
@@ -186,7 +186,7 @@ const CartButton = ({
       {labelRemove && (
         <p className="mr-2 text-sm font-medium sm:text-base">{labelRemove}</p>
       )}
-      <Trash className="w-5 h-5 mr-1 transition-transform duration-150 transform group-hover:rotate-[-20deg]" />
+      <Trash className="w-5 h-5 mr-1 group-cart-el" />
     </div>
   )
 }
