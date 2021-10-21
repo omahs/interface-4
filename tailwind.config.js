@@ -49,6 +49,9 @@ module.exports = {
       zIndex: {
         "-10": "-10",
       },
+      rotate: {
+        "-20": "-20deg",
+      },
       animation: {
         "spin-slow": "spin 30s linear infinite",
         "ping-slow": "ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite",
