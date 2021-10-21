@@ -38,13 +38,12 @@ const SlicerTags = ({ tags, newTags, setNewTags, editMode }: Props) => {
           <Question
             text={
               <>
-                <p className="pb-4">
+                <p>
                   Tags will be used to make your slicer relevant when searched
                   through the{" "}
                   <Link href="/slicer">
-                    <a>Explore</a>
+                    <a>Explore section</a>
                   </Link>{" "}
-                  section
                 </p>
                 <p>
                   <strong>Note:</strong> Pick <b>Private</b> if you wish your

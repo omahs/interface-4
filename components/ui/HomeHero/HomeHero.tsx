@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { Button, DoubleText } from "@components/ui"
 // import ReactRotatingText from "react-rotating-text"
 
@@ -38,11 +39,11 @@ const HomeHero = () => {
         </span>*/}
       </h2>
 
-      <div className="flex flex-col items-center justify-center space-y-6 pt-7 ">
+      <div className="flex flex-col items-center justify-center space-y-8 pt-7 ">
         <Button label="Start slicing" href="/slice" />
-        {/* <Link href="/slicer">
-          <a>See Slicers</a>
-        </Link> */}
+        <Link href="/slicer/1">
+          <a className="highlight">Check out the first community slicer</a>
+        </Link>
       </div>
       {/* <div className="absolute top-0 right-0">
         <Image src={isthis} alt="" />

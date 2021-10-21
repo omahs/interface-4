@@ -73,7 +73,7 @@ const SponsorListItem = ({ slicerId, sponsor, sponsorLink }: Props) => {
               onClick={async () => await updateSponsor()}
               question={
                 <>
-                  <p className="pb-4">
+                  <p>
                     You can add a link to redirect anyone clicking on your
                     address to a website.
                   </p>

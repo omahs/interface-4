@@ -70,7 +70,7 @@ const SliceFormBlockSplitter = ({
           <Question
             text={
               <>
-                <p className="pb-4">
+                <p>
                   The percentage represents the relative amount of ETH earned by
                   the account from all payments made to the slicer.
                 </p>
@@ -119,7 +119,7 @@ const SliceFormBlockSplitter = ({
           <Question
             text={
               <>
-                <p className="pb-4">
+                <p>
                   Accounts with more than the chosen amount of slices will be{" "}
                   <Link href="/#superowner">
                     <a className="font-black highlight">
@@ -128,7 +128,7 @@ const SliceFormBlockSplitter = ({
                   </Link>{" "}
                   to this slicer.
                 </p>
-                <p className="pb-4">
+                <p>
                   They can edit the slicer page, add products, access restricted
                   information, update data on the blockchain, and use other
                   future features.
@@ -167,18 +167,23 @@ const SliceFormBlockSplitter = ({
           <Question
             text={
               <>
-                <p className="pb-4">
+                <p>
                   If enabled, as a creator you will be able to set the metadata{" "}
                   <b>only once</b> after creating the slicer, thus making it
                   immutable.
                 </p>
-                <p className="pb-4">
-                  It should be enabled if you&apos;re using the slicer as a
-                  typical NFT — representing an image (in the future also
-                  animation, music, artwork, or any digital asset) that should
-                  not change once created.
-                </p>
-                <p className="pb-4">
+                <p>It should be enabled if:</p>
+                <ul>
+                  <li>
+                    You&apos;re using the slicer as a <b>typical NFT</b>, whose
+                    metadata should not change once created
+                  </li>
+                  <li>
+                    You want to avoid superusers editing the metadata at their
+                    discretion (useful for community slicers)
+                  </li>
+                </ul>
+                <p>
                   <b>Note:</b> Slicers metadata are currently stored on Slice
                   servers, not on IPFS.
                 </p>
