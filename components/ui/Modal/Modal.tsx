@@ -22,7 +22,7 @@ const Modal = ({ modalView, setModalView }: Props) => {
 
   switch (name) {
     case "NETWORK_VIEW":
-      content = NETWORK_VIEW
+      content = NETWORK_VIEW()
       break
     case "CONNECT_VIEW":
       content = CONNECT_VIEW()

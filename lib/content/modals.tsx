@@ -34,17 +34,23 @@ type ViewNames =
   | "PRODUCT_VIEW"
   | "REDEEM_PRODUCT_VIEW"
 
-export const NETWORK_VIEW = (
-  <>
-    <div className="pb-6 text-center">
-      <DoubleText inactive logoText="Pick the right chain" />
-    </div>
-    <p className="text-lg text-center">
-      Connect to the <span className="font-black">Rinkeby</span> Network to
-      access Slice
-    </p>
-  </>
-)
+export const NETWORK_VIEW = () => {
+  const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
+  return (
+    <>
+      <div className="pb-6 text-center">
+        <DoubleText inactive logoText="Pick the right chain" />
+      </div>
+      <p className="text-lg text-center">
+        Connect to the{" "}
+        <span className="font-black">
+          {chainId === "4" ? "Rinkeby" : "Ethereum Mainnet"}
+        </span>{" "}
+        Network
+      </p>
+    </>
+  )
+}
 
 export const CONNECT_VIEW = () => {
   const { connector, setModalView } = useAppContext()

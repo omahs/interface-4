@@ -21,7 +21,11 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     if (process.env.NODE_ENV !== "development") {
-      if (isConnected && chainId && Number(chainId).toString(16) !== "4") {
+      if (
+        isConnected &&
+        chainId &&
+        Number(chainId).toString(16) !== process.env.NEXT_PUBLIC_CHAIN_ID
+      ) {
         setModalView({ cross: false, name: "NETWORK_VIEW" })
       } else {
         setModalView({ name: "" })

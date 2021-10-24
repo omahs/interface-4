@@ -11,12 +11,13 @@ export const defaultProvider = ethers.getDefaultProvider(
 )
 
 export const initialize = async (connector) => {
+  // Keep this synced with env next_public_network_url
   let provider
   if (connector.connected) {
     const wcProvider = new WalletConnectProvider({
       rpc: {
-        // 1: process.env.NEXT_PUBLIC_NETWORK_URL, // mainnet
-        4: process.env.NEXT_PUBLIC_NETWORK_URL,
+        1: "https://eth-mainnet.alchemyapi.io/v2/B59wdqLy61AGhx6UV-ScRCa96t3sdj78",
+        4: "https://eth-rinkeby.alchemyapi.io/v2/wbmuZNbuiaab8Bc_ivuDkgJAOVxartLH",
       },
     })
     await wcProvider.enable()
