@@ -89,20 +89,9 @@ export default Home
 
 /** TODO
  *
- * *Pre-launch*
- *    - wait for low gas price
- *
  *  ENS
  *    - buy ens domain on mainnet -> slice-so.eth
- *    - Change "slice.eth" placeholders on website (+ stuff related to rinkeby)
- *
- *  CONTRACTS
- *    - deploy on mainnet
- *
- *  SUBGRAPH
- *    - Buy Graph tokens
- *    - deloy subgraph with mainnet contracts
- *    - publish subgraph on mainnet
+ *    - Change stuff related to rinkeby
  *
  *    - change new env on vercel + change ext. services from rinkeby
  *    - see stuff in context to change (rpc chain somewhere)
@@ -115,16 +104,15 @@ export default Home
  *      - sort products by productId / createdAt / totalPurchases / likes
  *      - edit/delete products
  *    - sponsorships
+ *      - improve what sponsors can do
  *      - allow creator to hide links
  *
  *    - (prisma) add {isVisible} boolean field in Slicer model to toggle visibility in Explore page
- *    - add slicer tags in metadata & slicer page
  *    - add products "explore" page
  *    - add detailed section in slicer page (stats & stuff for payees only)
  *    - transfer page (select box to choose slicer)
  *    - optimize subgraph queries (products + payeeslicer) in slicer/[id], if possible
- *    - Add ENS profile image support -> https://www.npmjs.com/package/@davatar/react / spec https://gist.github.com/Arachnid/9db60bd75277969ee1689c8742b75182
- *
+ *    - Add ENS profile image support for avatar -> https://www.npmjs.com/package/@davatar/react / spec https://gist.github.com/Arachnid/9db60bd75277969ee1689c8742b75182
  *
  *
  * OTHER

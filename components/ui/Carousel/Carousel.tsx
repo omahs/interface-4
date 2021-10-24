@@ -120,3 +120,5 @@ const Carousel = () => {
 }
 
 export default Carousel
+
+// todo: substitute pure-react-carousel with glidejs --> https://glidejs.com/docs/

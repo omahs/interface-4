@@ -30,7 +30,7 @@ const InputAddress: React.FC<Props> = (props) => {
       <Input
         type="string"
         value={address}
-        placeholder="0x… / slice.eth"
+        placeholder="0x… / slice-so.eth"
         label={label}
         required={required}
         error={resolvedAddress === "Invalid ENS name"}
