@@ -1,6 +1,7 @@
 import Arrow from "@components/icons/Arrow"
 import Spinner from "@components/icons/Spinner"
 import React, { InputHTMLAttributes } from "react"
+import { Question } from ".."
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   className?: string
@@ -11,6 +12,8 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   loading?: boolean
   inverted?: boolean
   submit?: boolean
+  question?: JSX.Element
+  questionPosition?: string
   onClickLabel?: string
   prefixAction?: (...args: any[]) => any
   onClick?: (...args: any[]) => any
@@ -29,6 +32,8 @@ const Input: React.FC<Props> = (props) => {
     disabled,
     inverted,
     submit,
+    question,
+    questionPosition = "bottom-[20px] left-[-40px] xs:left-0",
     prefixAction,
     onClick,
     onClickLabel,
@@ -38,7 +43,7 @@ const Input: React.FC<Props> = (props) => {
 
   const rootClassName = `peer py-2 pl-5 w-full appearance-none transition-all duration-150 rounded-t-sm ${
     !prefix && !error ? "shadow-light-focusable" : ""
-  } ease-in-out pr-3 border-b-[3px] focus:outline-none ${className} ${
+  } ease-in-out pr-3 border-t-0 border-r-0 border-l-0 border-b-[3px] focus:outline-none ${className} ${
     error
       ? "text-red-500 border-red-400 bg-white focus:border-red-400 shadow-error"
       : inverted
@@ -56,13 +61,20 @@ const Input: React.FC<Props> = (props) => {
   return (
     <label>
       {label && (
-        <p
-          className={`pb-2 text-sm font-semibold text-left ${
-            inverted ? "text-gray-200" : "text-gray-700"
-          }`}
-        >
-          {label}
-        </p>
+        <>
+          <div className="relative flex items-center pb-2">
+            <p
+              className={`text-sm font-semibold text-left pr-1 ${
+                inverted ? "text-gray-200" : "text-gray-700"
+              }`}
+            >
+              {label}
+            </p>
+            {question && (
+              <Question position={questionPosition} text={question} />
+            )}
+          </div>
+        </>
       )}
       <div
         className={`flex flex-row-reverse mb-3 rounded-t-sm ${

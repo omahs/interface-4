@@ -151,11 +151,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/utils/ownableSlice.sol": {
-      "lastModificationDate": 1628943508987,
+      "lastModificationDate": 1632872955974,
       "contentHash": "4688adc46800d94f1dc10f7abd847e8a",
       "sourceName": "contracts/utils/ownableSlice.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -188,11 +188,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol": {
-      "lastModificationDate": 1628717217214,
+      "lastModificationDate": 1631474219674,
       "contentHash": "031a7983b11bec7e02de657f47cf507b",
       "sourceName": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -225,11 +225,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol": {
-      "lastModificationDate": 1628717217189,
-      "contentHash": "5e56530333366ea985068aee1cdc332f",
+      "lastModificationDate": 1631474217260,
+      "contentHash": "faa705d36c5df2f4972b44506b2bd682",
       "sourceName": "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -264,11 +264,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol": {
-      "lastModificationDate": 1628717217205,
+      "lastModificationDate": 1631474218982,
       "contentHash": "cbb8386f0120d46d66ff42dffbbc16c1",
       "sourceName": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -298,11 +298,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol": {
-      "lastModificationDate": 1628717217097,
-      "contentHash": "5a73d7f4dcc0f73231e5599a3935b8cf",
+      "lastModificationDate": 1631474216032,
+      "contentHash": "3eaa562e66c40d85f919cc6ee5059ebe",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -334,11 +334,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol": {
-      "lastModificationDate": 1628717217184,
-      "contentHash": "40b1a73984b4dd6af1cdca28d38db5d4",
+      "lastModificationDate": 1631474216982,
+      "contentHash": "ecd434ff9a99971b3b5af6be2ddeec5b",
       "sourceName": "@openzeppelin/contracts-upgradeable/token/ERC1155/ERC1155Upgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -376,11 +376,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol": {
-      "lastModificationDate": 1628717217206,
+      "lastModificationDate": 1631474219168,
       "contentHash": "12a1ac4f7ef141dcf92f6dba57890d16",
       "sourceName": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -413,11 +413,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol": {
-      "lastModificationDate": 1628717217207,
+      "lastModificationDate": 1631474219264,
       "contentHash": "304d95a6b1f0ca8db842e5fe1f2024a9",
       "sourceName": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -449,11 +449,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol": {
-      "lastModificationDate": 1628717217098,
+      "lastModificationDate": 1631474216062,
       "contentHash": "4961a2524a1c70dae08535e239d5eb37",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -483,11 +483,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol": {
-      "lastModificationDate": 1628294320766,
+      "lastModificationDate": 1631474216439,
       "contentHash": "7217d9a0b6e1cf9842df0915c87081ad",
       "sourceName": "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -521,11 +521,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol": {
-      "lastModificationDate": 1628294321292,
+      "lastModificationDate": 1631474219690,
       "contentHash": "ce8ae93e65f6e34105b9abc9d1be67ee",
       "sourceName": "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -559,11 +559,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol": {
-      "lastModificationDate": 1628717217206,
+      "lastModificationDate": 1631474219141,
       "contentHash": "0961e9d7e3b0767794d82a179f4b88e4",
       "sourceName": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -596,11 +596,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol": {
-      "lastModificationDate": 1628717217095,
-      "contentHash": "2bd96e8402394a4ae3e1c2f2ab29e7af",
+      "lastModificationDate": 1631474215910,
+      "contentHash": "25dd93dd672c3114a782e2a4424201b3",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -630,11 +630,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol": {
-      "lastModificationDate": 1628294321683,
+      "lastModificationDate": 1631474220227,
       "contentHash": "b9be3f7aa79153708acdc3be6bd1cb35",
       "sourceName": "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -700,11 +700,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/utils/Address.sol": {
-      "lastModificationDate": 1628294320751,
-      "contentHash": "37103cdc416efc2601c6f6734044b559",
+      "lastModificationDate": 1631474216356,
+      "contentHash": "c5f6c4e4df069c789e7d84b4c3011913",
       "sourceName": "@openzeppelin/contracts/utils/Address.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -734,11 +734,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/utils/Counters.sol": {
-      "lastModificationDate": 1628294320791,
-      "contentHash": "86ddbfba30a7d811a86f54416c364be3",
+      "lastModificationDate": 1631474216646,
+      "contentHash": "b7811964d33f23b2d45ed3ebb76a4548",
       "sourceName": "@openzeppelin/contracts/utils/Counters.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -768,11 +768,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/utils/structs/EnumerableSet.sol": {
-      "lastModificationDate": 1628294320877,
-      "contentHash": "212c7600a5dc9486dc7c82a82144fb88",
+      "lastModificationDate": 1631474216927,
+      "contentHash": "2c46fb3033f19693d6cbe230950fec96",
       "sourceName": "@openzeppelin/contracts/utils/structs/EnumerableSet.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -802,11 +802,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/security/Pausable.sol": {
-      "lastModificationDate": 1628294321194,
-      "contentHash": "835673b68fdeaf41b38c84e966e8630b",
+      "lastModificationDate": 1631474219141,
+      "contentHash": "662437c05ba6f3706097c8d5ca68a52a",
       "sourceName": "@openzeppelin/contracts/security/Pausable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -838,11 +838,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/security/ReentrancyGuard.sol": {
-      "lastModificationDate": 1628294321215,
-      "contentHash": "1d45ab4bd9b10c657bd26a957be5bcd9",
+      "lastModificationDate": 1631474219255,
+      "contentHash": "53fbff678f378956efcb207fa748eaa6",
       "sourceName": "@openzeppelin/contracts/security/ReentrancyGuard.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -872,11 +872,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol": {
-      "lastModificationDate": 1628717217186,
-      "contentHash": "1ce379e575876793f7b9c64add3f7593",
+      "lastModificationDate": 1631474217090,
+      "contentHash": "430950c379ec78aff91b5e8fa04c8aba",
       "sourceName": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -911,11 +911,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/proxy/beacon/IBeaconUpgradeable.sol": {
-      "lastModificationDate": 1628717217199,
+      "lastModificationDate": 1631474218256,
       "contentHash": "02d4784b119cc80015bef24a5e6bb0ea",
       "sourceName": "@openzeppelin/contracts-upgradeable/proxy/beacon/IBeaconUpgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -945,11 +945,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/utils/StorageSlotUpgradeable.sol": {
-      "lastModificationDate": 1628717217213,
+      "lastModificationDate": 1631474219492,
       "contentHash": "92db084d1a7fc35176205dae79fa7da0",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/StorageSlotUpgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -979,11 +979,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155Upgradeable.sol": {
-      "lastModificationDate": 1628717217200,
+      "lastModificationDate": 1631474218345,
       "contentHash": "0291099f7d93b2b6e0ddd0b920b63c18",
       "sourceName": "@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155Upgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1015,11 +1015,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155ReceiverUpgradeable.sol": {
-      "lastModificationDate": 1628717217200,
+      "lastModificationDate": 1631474218316,
       "contentHash": "6d6cd06859add18b8fa76e351d2d1744",
       "sourceName": "@openzeppelin/contracts-upgradeable/token/ERC1155/IERC1155ReceiverUpgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1051,11 +1051,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/token/ERC1155/extensions/IERC1155MetadataURIUpgradeable.sol": {
-      "lastModificationDate": 1628717217200,
+      "lastModificationDate": 1631474218288,
       "contentHash": "4026e7fca1ef18053e6519bef31ebf4d",
       "sourceName": "@openzeppelin/contracts-upgradeable/token/ERC1155/extensions/IERC1155MetadataURIUpgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1087,11 +1087,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol": {
-      "lastModificationDate": 1628717217185,
+      "lastModificationDate": 1631474217051,
       "contentHash": "3649e7528117ffc7d8a3ccf199b0c6d8",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1124,11 +1124,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/utils/introspection/IERC165Upgradeable.sol": {
-      "lastModificationDate": 1628717217201,
+      "lastModificationDate": 1631474218416,
       "contentHash": "4db71815975139b4bcedb3b615131302",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/introspection/IERC165Upgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1158,11 +1158,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol": {
-      "lastModificationDate": 1628717217202,
+      "lastModificationDate": 1631474218526,
       "contentHash": "3a5432b9dfef2ff5c8f58fcc0b1452b2",
       "sourceName": "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1192,11 +1192,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts-upgradeable/token/ERC20/extensions/IERC20MetadataUpgradeable.sol": {
-      "lastModificationDate": 1628717217202,
+      "lastModificationDate": 1631474218502,
       "contentHash": "751ef4b010fddf04a9e90de13fe1ffe7",
       "sourceName": "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/IERC20MetadataUpgradeable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1228,11 +1228,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/proxy/beacon/IBeacon.sol": {
-      "lastModificationDate": 1628294321120,
+      "lastModificationDate": 1631474218241,
       "contentHash": "e1e6df7276b048c6b544c757c6e179ec",
       "sourceName": "@openzeppelin/contracts/proxy/beacon/IBeacon.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1262,11 +1262,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/proxy/Proxy.sol": {
-      "lastModificationDate": 1628294321204,
-      "contentHash": "f357a7069052b75c96929e1a1327d299",
+      "lastModificationDate": 1631474219178,
+      "contentHash": "39dead889de1329620d1634e0b499e30",
       "sourceName": "@openzeppelin/contracts/proxy/Proxy.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1296,11 +1296,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/proxy/ERC1967/ERC1967Upgrade.sol": {
-      "lastModificationDate": 1628294320971,
-      "contentHash": "fede7135bca5828ca42601e91d20b600",
+      "lastModificationDate": 1631474217231,
+      "contentHash": "0a0f799e1bf1527d28cfe1bd43fbab7f",
       "sourceName": "@openzeppelin/contracts/proxy/ERC1967/ERC1967Upgrade.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1334,11 +1334,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/utils/StorageSlot.sol": {
-      "lastModificationDate": 1628294321271,
+      "lastModificationDate": 1631474219550,
       "contentHash": "dcfdd37663042ccb99d67060a9eaebec",
       "sourceName": "@openzeppelin/contracts/utils/StorageSlot.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1368,11 +1368,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
-      "lastModificationDate": 1628294321190,
-      "contentHash": "17d9f40220b0ab370db2c77e7c92c4ef",
+      "lastModificationDate": 1631474219090,
+      "contentHash": "4fe56b59ced59d87df6b796758f62895",
       "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1404,11 +1404,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/utils/Context.sol": {
-      "lastModificationDate": 1628294320788,
-      "contentHash": "bc047f55d4e6dcc5a9c7ee096f530312",
+      "lastModificationDate": 1631474216641,
+      "contentHash": "851485d5b925529b1a2f34a0be077891",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1438,11 +1438,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC1155/utils/ERC1155Receiver.sol": {
-      "lastModificationDate": 1628294320946,
-      "contentHash": "baa5a1c248a5f5bfae096368ccf4bc5c",
+      "lastModificationDate": 1631474217143,
+      "contentHash": "de467e2231a0f5a8ec4c03d572a853d7",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Receiver.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1475,11 +1475,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol": {
-      "lastModificationDate": 1628294321133,
-      "contentHash": "4c2325989961abc760910c904c6cde62",
+      "lastModificationDate": 1631474218346,
+      "contentHash": "82e386b6255dba9eb011192f66eb78b6",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1511,11 +1511,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol": {
-      "lastModificationDate": 1628294320951,
+      "lastModificationDate": 1631474217173,
       "contentHash": "a9a5319dff9088c6ffe757ea1c2a6729",
       "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1547,11 +1547,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
-      "lastModificationDate": 1628294321141,
+      "lastModificationDate": 1631474218417,
       "contentHash": "9a04322bb8f6b8f2767d8358d1d2537b",
       "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1581,11 +1581,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/test/slicer_test_v1.sol": {
-      "lastModificationDate": 1629758021642,
-      "contentHash": "2c9bcfd472815d302071d5a4cfbddfeb",
+      "lastModificationDate": 1632872955947,
+      "contentHash": "94d337f2cfc6c64fa18e9f93ea665550",
       "sourceName": "contracts/test/slicer_test_v1.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1627,11 +1627,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/test/slicer_test_v0.sol": {
-      "lastModificationDate": 1629757706034,
-      "contentHash": "3a3c33e7a560981ab473d073abc80633",
+      "lastModificationDate": 1632872955945,
+      "contentHash": "55e72a92ed1347ef85692bca06187da3",
       "sourceName": "contracts/test/slicer_test_v0.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1673,11 +1673,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
-      "lastModificationDate": 1628294321165,
-      "contentHash": "e6d69a0b5b95ac1112eb4746a2d66f3e",
+      "lastModificationDate": 1631474218779,
+      "contentHash": "9a367cecca6fed80a3e975b7e6b3bd5c",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1707,11 +1707,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/slc_v0.sol": {
-      "lastModificationDate": 1629584207955,
+      "lastModificationDate": 1632872955874,
       "contentHash": "9a7e4d57ad885354ec25167444e5f085",
       "sourceName": "contracts/slc_v0.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1746,11 +1746,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/sliceCore_v0.sol": {
-      "lastModificationDate": 1629584207956,
+      "lastModificationDate": 1632872955881,
       "contentHash": "70827ea893baa9f4cbc3c977ffc5d148",
       "sourceName": "contracts/sliceCore_v0.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1788,11 +1788,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/slice_v0.sol": {
-      "lastModificationDate": 1629934257559,
-      "contentHash": "66e050afdae0dd5d39c914660917a3dd",
+      "lastModificationDate": 1634753132929,
+      "contentHash": "c0fa670d189e4e142ca46246e18b41d9",
       "sourceName": "contracts/slice_v0.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1833,11 +1833,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/slicer_v0.sol": {
-      "lastModificationDate": 1629934248142,
-      "contentHash": "db217a0a7c5af1c82ee96fc35608f1a2",
+      "lastModificationDate": 1635067910527,
+      "contentHash": "3025d5b83786d7c147feb2189e8d5d81",
       "sourceName": "contracts/slicer_v0.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1879,11 +1879,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/test/slice_test_v1.sol": {
-      "lastModificationDate": 1629931307954,
+      "lastModificationDate": 1632872955943,
       "contentHash": "9823238fb7e774e720a7c342eb58ffd4",
       "sourceName": "contracts/test/slice_test_v1.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1924,11 +1924,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
-      "lastModificationDate": 1628294321163,
-      "contentHash": "75cedcb24edaec014d2071ed59a03ff3",
+      "lastModificationDate": 1631474218754,
+      "contentHash": "8aa69ca8424167555baaaa9f607801db",
       "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1960,11 +1960,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
-      "lastModificationDate": 1628294321159,
-      "contentHash": "93a5aa8a276e028a4f46f22b5d8f7bd3",
+      "lastModificationDate": 1631474218676,
+      "contentHash": "53919d6975f2c0f3dffee5e3a1064116",
       "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -1996,11 +1996,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol": {
-      "lastModificationDate": 1628294321126,
-      "contentHash": "79f5ef33a7ed00ffb7dfdcd4339a946c",
+      "lastModificationDate": 1631474218271,
+      "contentHash": "bcbcd549c9bfc2da42e5426780ce4e4e",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/IERC1155.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -2032,11 +2032,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/node_modules/@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol": {
-      "lastModificationDate": 1628294321131,
+      "lastModificationDate": 1631474218319,
       "contentHash": "f67c3445291b9506fdff7d6527c9e552",
       "sourceName": "@openzeppelin/contracts/token/ERC1155/extensions/IERC1155MetadataURI.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,
@@ -2068,11 +2068,11 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/utils/metadata.sol": {
-      "lastModificationDate": 1629931369559,
+      "lastModificationDate": 1632872955972,
       "contentHash": "072f8dba477b4d322a8c4ce26cbfff42",
       "sourceName": "contracts/utils/metadata.sol",
       "solcConfig": {
-        "version": "0.8.7",
+        "version": "0.8.8",
         "settings": {
           "optimizer": {
             "enabled": true,

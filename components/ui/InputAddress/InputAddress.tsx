@@ -1,6 +1,6 @@
 import resolveEns from "@utils/resolveEns"
-import throttleFunction from "@utils/throttleFunction"
 import React, { InputHTMLAttributes, useEffect, useState } from "react"
+import { useAppContext } from "../context"
 import Input from "../Input/Input"
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
@@ -10,12 +10,13 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const InputAddress: React.FC<Props> = (props) => {
+  const { connector } = useAppContext()
   const { address, required, label, onChange, ...rest } = props
   const [resolvedAddress, setResolvedAddress] = useState("")
 
   useEffect(() => {
     const timeout = setTimeout(
-      () => resolveEns(address, setResolvedAddress),
+      () => resolveEns(connector, address, setResolvedAddress),
       200
     )
     return () => {
@@ -29,7 +30,7 @@ const InputAddress: React.FC<Props> = (props) => {
       <Input
         type="string"
         value={address}
-        placeholder="0x… / slice.eth"
+        placeholder="0x… / slice-so.eth"
         label={label}
         required={required}
         error={resolvedAddress === "Invalid ENS name"}

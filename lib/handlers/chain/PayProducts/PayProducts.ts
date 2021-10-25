@@ -1,6 +1,5 @@
+import WalletConnect from "@walletconnect/client"
 import { BigNumber } from "ethers"
-import { initialize } from "@lib/useProvider"
-import { slice, chainlink } from "@lib/initProvider"
 
 export type PayProductData = {
   slicerAddress: string
@@ -10,8 +9,14 @@ export type PayProductData = {
   isUSD: boolean
 }
 
-const PayProducts = async (productData: PayProductData[]) => {
-  const { signer } = await initialize()
+const PayProducts = async (
+  connector: WalletConnect,
+  productData: PayProductData[]
+) => {
+  const { initialize } = await import("@lib/useProvider")
+  const { slice, chainlink } = await import("@lib/initProvider")
+
+  const { signer } = await initialize(connector)
   const contract = slice(signer)
   const priceFeed = await chainlink(signer).latestRoundData()
 
@@ -30,8 +35,11 @@ const PayProducts = async (productData: PayProductData[]) => {
       quantities.push(quantity)
 
       const productPrice = isUSD
-        ? BigNumber.from(price).mul(BigNumber.from(10).pow(24)).div(ethUsd)
-        : BigNumber.from(price)
+        ? BigNumber.from(price)
+            .mul(BigNumber.from(10).pow(24))
+            .div(ethUsd)
+            .mul(quantity)
+        : BigNumber.from(price).mul(quantity)
 
       totalPrice = BigNumber.from(currentPrice).add(productPrice)
     })

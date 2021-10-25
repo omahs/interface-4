@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
 import { Button, FileSubmit, MessageBlock } from "@components/ui"
 import FilePlus from "@components/icons/FilePlus"
@@ -126,15 +127,11 @@ const FilesList = ({
           <p className="pt-8 text-sm">
             Files are saved immutably on IPFS, and encrypted so that only those
             who buy them can see their content.{" "}
-            <a
-              className="highlight"
-              href="/faqs"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Learn more
-            </a>{" "}
-            in our FAQs.
+            <Link href="/#faq">
+              <a className="highlight" target="_blank" rel="noreferrer">
+                Learn more in our FAQs.
+              </a>
+            </Link>
           </p>
           <input
             className="absolute hidden"

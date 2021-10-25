@@ -1,12 +1,15 @@
-import { initialize } from "@lib/useProvider"
-import { slice, slc } from "@lib/initProvider"
+import WalletConnect from "@walletconnect/client"
 
 const TriggerRelease = async (
+  connector: WalletConnect,
   account: string,
   slicerAddresses: string[],
   slicerPercentage: number
 ) => {
-  const { signer } = await initialize()
+  const { initialize } = await import("@lib/useProvider")
+  const { slice, slc } = await import("@lib/initProvider")
+
+  const { signer } = await initialize(connector)
   const contract = slc(signer)
   const sliceContract = slice(signer)
 

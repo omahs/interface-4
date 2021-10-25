@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import markdownToHtml from "@lib/markdownToHtml"
 
 type Props = {
   content: string
@@ -15,6 +14,8 @@ const MarkdownBlock = ({
   const [htmlContent, setHtmlContent] = useState("")
 
   const handleFormatContent = async () => {
+    const markdownToHtml = (await import("@lib/markdownToHtml")).default
+
     setHtmlContent(await markdownToHtml(content))
   }
 
@@ -31,5 +32,3 @@ const MarkdownBlock = ({
 }
 
 export default MarkdownBlock
-
-// Todo: Add <Question /> to alert users that they can write using md

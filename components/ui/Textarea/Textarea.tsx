@@ -1,5 +1,5 @@
-import markdownToHtml from "@lib/markdownToHtml"
 import React, { InputHTMLAttributes, useState } from "react"
+import { Question } from ".."
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   value: string
@@ -11,6 +11,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   required?: boolean
   rows?: number
   previewBox?: string
+  question?: JSX.Element
   onChange?: (...args: any[]) => any
 }
 
@@ -25,19 +26,22 @@ const Textarea: React.FC<Props> = (props) => {
     required,
     rows = 3,
     previewBox,
+    question,
     onChange,
   } = props
   const [showPreview, setShowPreview] = useState(false)
   const [htmlContent, setHtmlContent] = useState("")
 
   const handleShowPreview = async () => {
+    const markdownToHtml = (await import("@lib/markdownToHtml")).default
+
     if (!showPreview) {
       setHtmlContent(await markdownToHtml(value))
     }
     setShowPreview((showPreview) => !showPreview)
   }
 
-  const rootClassName = `peer py-2 mb-[-7px] pl-5 w-full appearance-none transition-all duration-150 rounded-t-sm shadow-light-focusable ease-in-out pr-3 border-b-[3px] focus:outline-none ${
+  const rootClassName = `peer py-2 mb-[-7px] pl-5 w-full appearance-none transition-all duration-150 rounded-t-sm shadow-light-focusable ease-in-out pr-3 border-t-0 border-r-0 border-l-0 border-b-[3px] focus:outline-none ${
     className ? className : ""
   } ${
     inverted
@@ -48,15 +52,36 @@ const Textarea: React.FC<Props> = (props) => {
   return (
     <label>
       {label && (
-        <div className="relative">
+        <div className="relative flex items-center pb-2">
           <p
-            className={`pb-2 text-sm font-semibold text-left ${
+            className={`text-sm pr-1 font-semibold text-left ${
               inverted ? "text-gray-200" : "text-gray-700"
             }`}
           >
             {label}
           </p>
 
+          {!showPreview && (
+            <Question
+              text={
+                <>
+                  {question}
+                  <p>
+                    <b>Note:</b> You can use{" "}
+                    <a
+                      className="highlight"
+                      href="https://www.markdownguide.org/cheat-sheet/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      markdown syntax
+                    </a>{" "}
+                    to add elements such as headings, links or lists.{" "}
+                  </p>
+                </>
+              }
+            />
+          )}
           {value && (
             <a
               className="absolute top-0 right-0 flex items-center h-full pb-2 mr-1 text-sm text-blue-600"

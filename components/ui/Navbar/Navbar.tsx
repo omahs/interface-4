@@ -1,15 +1,18 @@
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
-import { Button, Container, DropwdownMenu, SlcCounter } from "@components/ui"
+import { Button, Container, SlcCounter } from "@components/ui"
 import UserIcon from "@components/icons/UserIcon"
 import { useAppContext } from "@components/ui/context"
-import Metamask from "@components/icons/Metamask"
-import handleConnect from "@lib/handleConnect"
 import { useState } from "react"
 
+const DropdownMenu = dynamic(() => import("@components/ui/DropdownMenu"), {
+  ssr: false,
+})
+
 const Navbar = () => {
-  const { isConnected, loading } = useAppContext()
+  const { isConnected, loading, setModalView } = useAppContext()
   const [showDropdown, setShowDropdown] = useState(false)
 
   return (
@@ -18,7 +21,7 @@ const Navbar = () => {
         <nav className="relative px-3 sm:px-6 h-[4.25rem] items-center mx-auto flex justify-between">
           <div className="flex items-center space-x-7 sm:space-x-10">
             <Link href="/">
-              <a className="mb-1">
+              <a className="mb-1" aria-label="Slice logo">
                 <Logo size="w-[24px]" />
               </a>
             </Link>
@@ -37,7 +40,9 @@ const Navbar = () => {
                 double={false}
                 label="Connect"
                 loading={loading}
-                onClick={() => handleConnect()}
+                onClick={() =>
+                  setModalView({ name: "CONNECT_VIEW", cross: true })
+                }
               />
             ) : (
               <>
@@ -52,10 +57,12 @@ const Navbar = () => {
               </>
             )}
           </div>
-          <DropwdownMenu
-            showDropdown={showDropdown}
-            setShowDropdown={setShowDropdown}
-          />
+          {showDropdown && (
+            <DropdownMenu
+              showDropdown={showDropdown}
+              setShowDropdown={setShowDropdown}
+            />
+          )}
         </nav>
       </Container>
       <hr className="w-full border-gray-200 opacity-80" />

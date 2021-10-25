@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import Head from "next/head"
 import { NextSeo } from "next-seo"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
-import fetcher from "@utils/fetcher"
 import { Message } from "@utils/handleMessage"
 import { useAllowed } from "@lib/useProvider"
 import { useAppContext } from "@components/ui/context"
@@ -19,7 +18,9 @@ import {
   Container,
   SlicerSubmitBlock,
   SlicerProducts,
+  SlicerSponsors,
 } from "@components/ui"
+import fetcher from "@utils/fetcher"
 
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
@@ -31,6 +32,7 @@ export type SlicerAttributes = {
 export type SlicerData = {
   name: any
   description: any
+  tags: any
   imageUrl: any
 }
 
@@ -57,12 +59,14 @@ const Id = ({
   const [slicer, setSlicer] = useState<SlicerData>({
     name: slicerInfo?.name,
     description: slicerInfo?.description,
+    tags: slicerInfo?.tags,
     imageUrl: slicerInfo?.image,
   })
   const [slicerAttributes, setSlicerAttributes] =
     useState<SlicerAttributes>(initAttributes)
 
   const [newDescription, setNewDescription] = useState(slicer.description)
+  const [newTags, setNewTags] = useState(slicer.tags)
   const [newName, setNewName] = useState(slicer.name)
   const [newImage, setNewImage] = useState<NewImage>({
     url: "",
@@ -74,11 +78,10 @@ const Id = ({
       ? slicer.name
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
 
-  // Todo: Check this isCollectible conditional edit thing
   // Todo: For collectibles save image on web3Storage instead of supabase? + Allow indefinite size? Figure it out
   const editAllowed = !slicerInfo?.isCollectible
     ? isAllowed
-    : slicerAttributes?.Creator === account?.toLowerCase() &&
+    : slicerAttributes?.Creator === account?.toLowerCase() && // only Creator + default name, descr & image
       newName === `Slicer #${slicerInfo?.id}` &&
       newDescription === "" &&
       newImage.url === "" &&
@@ -90,7 +93,17 @@ const Id = ({
       attr[el.trait_type] = el.value
     })
     setSlicerAttributes(attr)
+    setSlicer({
+      name: slicerInfo?.name,
+      description: slicerInfo?.description,
+      tags: slicerInfo?.tags,
+      imageUrl: slicerInfo?.image,
+    })
   }, [slicerInfo])
+
+  useEffect(() => {
+    setEditMode(false)
+  }, [account])
 
   return (
     <Container page={true}>
@@ -154,13 +167,12 @@ const Id = ({
               editMode={editMode}
               loading={loading}
             />
-            {/* <SlicerTags
-          description={slicer.description}
-          newDescription={newDescription}
-          setNewDescription={setNewDescription}
-          editMode={editMode}
-          loading={loading}
-        /> */}
+            <SlicerTags
+              tags={slicer.tags}
+              newTags={newTags}
+              setNewTags={setNewTags}
+              editMode={editMode}
+            />
             <SlicerDescription
               description={slicer.description}
               newDescription={newDescription}
@@ -189,24 +201,34 @@ const Id = ({
             slicerAddress={slicerInfo?.address}
             products={products}
           />
-          <SlicerSubmitBlock
+          <SlicerSponsors
+            slicerId={slicerInfo?.id}
+            slicerAddress={slicerInfo?.address}
+            sponsorData={slicerInfo?.sponsors}
             editMode={editMode}
-            setEditMode={setEditMode}
-            slicerInfo={slicerInfo}
-            slicer={slicer}
-            setSlicer={setSlicer}
-            loading={loading}
-            setLoading={setLoading}
-            newName={newName}
-            setNewName={setNewName}
-            newDescription={newDescription}
-            setNewDescription={setNewDescription}
-            newImage={newImage}
-            setNewImage={setNewImage}
-            setTempImageUrl={setTempImageUrl}
-            msg={msg}
-            setMsg={setMsg}
           />
+          {editMode && (
+            <SlicerSubmitBlock
+              editMode={editMode}
+              setEditMode={setEditMode}
+              slicerInfo={slicerInfo}
+              slicer={slicer}
+              setSlicer={setSlicer}
+              loading={loading}
+              setLoading={setLoading}
+              newName={newName}
+              setNewName={setNewName}
+              newDescription={newDescription}
+              setNewDescription={setNewDescription}
+              newTags={newTags}
+              setNewTags={setNewTags}
+              newImage={newImage}
+              setNewImage={setNewImage}
+              setTempImageUrl={setTempImageUrl}
+              msg={msg}
+              setMsg={setMsg}
+            />
+          )}
         </main>
       ) : (
         <ActionScreen

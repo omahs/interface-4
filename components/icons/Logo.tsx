@@ -12,8 +12,8 @@ const Logo = ({ ...props }) => {
         viewBox="0 0 493 487"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={`relative z-10 ${props.interactive ? "peer" : ""} ${
-          props.spin ? "animate-spin-slow" : ""
+        className={`${props.spin ? "spin-el" : ""} relative z-10 ${
+          props.interactive ? "peer" : ""
         } ${props.className ? props.className : ""}`}
       >
         <path
@@ -30,11 +30,11 @@ const Logo = ({ ...props }) => {
         viewBox="0 0 493 477"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={`absolute top-0 left-0 ${size} ${margin} transition-all duration-150 peer-hover:mt-0 peer-hover:ml-0 peer-hover:mr-0 ${
+        className={`${
           props.spin
-            ? "animate-spin-slow drop-shadow-random-strong"
+            ? "spin-el drop-shadow-random-strong"
             : "drop-shadow-random"
-        }`}
+        } space-y-60 absolute top-0 left-0 ${size} ${margin} transition-all duration-150 peer-hover:mt-0 peer-hover:ml-0 peer-hover:mr-0`}
       >
         <path
           d="M19.4533 253.562L198.04 20.6852C199.368 18.9538 201.423 17.9714 203.602 18.0906C218.566 18.9095 280.176 23.3379 347.29 43.1766C414.413 63.0181 461.351 96.4391 472.468 104.832C474.096 106.061 475 107.974 475 110.014V307.765C475 310.689 473.118 313.281 470.337 314.185L26.8978 458.385C22.5357 459.804 18.0594 456.552 18.0594 451.966V257.67C18.0594 256.185 18.5494 254.741 19.4533 253.562Z"

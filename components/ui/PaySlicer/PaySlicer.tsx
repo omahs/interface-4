@@ -1,5 +1,5 @@
-import { ethers } from "ethers"
 import { useState } from "react"
+import { useAppContext } from "../context"
 import InputPrice from "../InputPrice"
 
 type Props = {
@@ -7,22 +7,27 @@ type Props = {
 }
 
 const PaySlicer = ({ slicerAddress }: Props) => {
+  const { account, connector } = useAppContext()
   const [usdValue, setUsdValue] = useState(0)
   const [ethValue, setEthValue] = useState(0)
   const [loading, setLoading] = useState(false)
 
   const pay = async () => {
+    const { BigNumber } = await import("ethers")
+    const handleSendTransaction = (await import("@utils/handleSendTransaction"))
+      .default
+
     setLoading(true)
     try {
-      const transactionParameters = {
-        to: slicerAddress,
-        from: window.ethereum.selectedAddress,
-        value: ethers.utils.parseEther(String(ethValue))._hex,
-      }
-      await window.ethereum.request({
-        method: "eth_sendTransaction",
-        params: [transactionParameters],
-      })
+      const value = BigNumber.from(Math.floor(ethValue * 100000)).mul(
+        BigNumber.from(10).pow(13)
+      )._hex
+      const transactionInfo = await handleSendTransaction(
+        account,
+        slicerAddress,
+        value,
+        connector
+      )
 
       setEthValue(0)
       setUsdValue(0)
@@ -39,8 +44,8 @@ const PaySlicer = ({ slicerAddress }: Props) => {
       usdValue={usdValue}
       setUsdValue={setUsdValue}
       loading={loading}
-      actionLabel="Pay"
-      marginLabel="mr-28 xs:mr-[7.6rem]"
+      actionLabel="Send"
+      marginLabel="mr-32"
       action={pay}
     />
   )

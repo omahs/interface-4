@@ -1,7 +1,7 @@
-import { defaultProvider } from "@lib/useProvider"
-import { slicer } from "@lib/initProvider"
-
 const TotalReceived = async (id: number) => {
+  const { defaultProvider } = await import("@lib/useProvider")
+  const { slicer } = await import("@lib/initProvider")
+
   const contract = await slicer(Number(id), defaultProvider)
 
   try {

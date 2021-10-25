@@ -1,8 +1,16 @@
 import HomeCake from "@components/icons/HomeCake"
 import Logo from "@components/icons/Logo"
 import HomeEth from "@components/icons/HomeEth"
-import { Banner, Container, HomeHero, HomeSection } from "@components/ui"
-import { section1, section2, section3, section4 } from "@lib/text/home"
+import {
+  Container,
+  Examples,
+  FAQs,
+  HomeHero,
+  HomeSection,
+  SubscribeForm,
+} from "@components/ui"
+import { useEffect } from "react"
+import { section1, section2, section3, section4 } from "@lib/content/home"
 import HomeDecentralized from "@components/icons/HomeDecentralized"
 import { NextSeo } from "next-seo"
 import {
@@ -11,12 +19,28 @@ import {
   longTitle,
   domain,
 } from "@components/common/Head"
+import { animate } from "motion"
 
 const Home = () => {
+  useEffect(() => {
+    const spinElements = document.querySelectorAll(".spin-el")
+
+    animate(
+      spinElements,
+      { transform: "rotate(360deg)" },
+      {
+        easing: "linear",
+        duration: 30,
+        repeat: Infinity,
+        allowWebkitAcceleration: true,
+      }
+    )
+  }, [])
+
   return (
     <>
       <NextSeo
-        title="The decentralized slicing platform"
+        title="Decentralized slicing platform"
         openGraph={{
           title: longTitle,
           description: defaultDescription,
@@ -32,13 +56,10 @@ const Home = () => {
         }}
       />
       <Container page={true}>
-        <main className="max-w-screen-lg pb-20 mx-auto text-center">
+        <main className="max-w-screen-lg pb-10 mx-auto text-center">
           <HomeHero />
-          <div className=" space-y-36">
-            <HomeSection
-              text={section1}
-              image={<HomeCake className="w-32 sm:w-40" spin />}
-            />
+          <div className="space-y-28 sm:space-y-44">
+            <HomeSection text={section1} image={<HomeCake />} />
             <HomeSection
               text={section2}
               image={
@@ -46,19 +67,20 @@ const Home = () => {
               }
               side="right"
             />
-            <HomeSection
-              text={section3}
-              image={<HomeEth size="w-32 sm:w-36" spin />}
-            />
+            <HomeSection text={section3} image={<HomeDecentralized />} />
             <HomeSection
               text={section4}
-              image={<HomeDecentralized />}
+              image={<HomeEth size="w-32 sm:w-36" />}
               side="right"
             />
           </div>
         </main>
+        <Examples />
       </Container>
-      <Banner />
+      <SubscribeForm />
+      <Container page={true}>
+        <FAQs />
+      </Container>
     </>
   )
 }
@@ -67,75 +89,33 @@ export default Home
 
 /** TODO
  *
- * *Critical Priority*
- *    - Receive ERC721-1155
- *      - Fix slicer smart contract receive/reject ERC721
- *      - NFT section
- *    - sponsorships
- *      - section in slicer page
- *      - allow sponsor to edit link
- *      - allow creator to hide links
+ *  ENS
+ *    - buy ens domain on mainnet -> slice-so.eth
+ *    - Change stuff related to rinkeby
  *
- * *High Priority*
- *    - add wallet connect
- *    - FAQs page (see below) + add link where already referenced
- *    - Improve homepage content
+ *    - change new env on vercel + change ext. services from rinkeby
+ *    - see stuff in context to change (rpc chain somewhere)
  *
  * *Low Priority*
- *    - add products to slicers -> demonstrate use case with digital collectibles
+ *    - Receive ERC721-1155
+ *      - NFT section
+ *    - Products
+ *      - product likes
+ *      - sort products by productId / createdAt / totalPurchases / likes
+ *      - edit/delete products
+ *    - sponsorships
+ *      - improve what sponsors can do
+ *      - allow creator to hide links
+ *
  *    - (prisma) add {isVisible} boolean field in Slicer model to toggle visibility in Explore page
- *    - make product defaultImage on figma + add on CardImage component
- *    - add slicer tags in metadata & slicer page
  *    - add products "explore" page
  *    - add detailed section in slicer page (stats & stuff for payees only)
  *    - transfer page (select box to choose slicer)
- *    - Products
- *      - add short description (text input) in productCard small and full (under title)
- *      - product likes
- *      - sort products by productId / createdAt / totalPurchases / likes
- *    - signal when markdown can be used in textareas
- *    - cart persists with user (save data on db & make user sign transaction ?)
+ *    - optimize subgraph queries (products + payeeslicer) in slicer/[id], if possible
+ *    - Add ENS profile image support for avatar -> https://www.npmjs.com/package/@davatar/react / spec https://gist.github.com/Arachnid/9db60bd75277969ee1689c8742b75182
  *
- *    - product features
- *      - edit/delete products
- *
- *
- *
- *
- * FAQS
- * - How file encryption works
- *
- *
- *
- *
- *
- *
- *
- * USE CASES
- * - Use it as a slicer
- *      - IS NOT digital asset
- *      - Editable metadata
- *      - Can receive external NFTs
- * - Create a new single or fractional NFT
- *      - Slicer IS digital asset
- *      - non editable metadata
- *      - CANNOT receive external NFTs or slicers
- *
- * NFT PRODUCTS IDEAS
- * - special concert ticket
- * - appear as gold/silver/.. sponsor to the slicer
- * - something related to image copyright -> right to use image?
- * - PDF with the NFT behind the scenes
- * - Buy movie / music / game / game add-on
- *
- * FILE STORAGE
- * - https://web3.storage
- *
- * BEFORE FINAL DEPLOY
- * - Check if it's ok how metadata is handled for collectible slicers
  *
  * OTHER
- * - (LP) Set maximum batch values before deploying on mainnet (and removing not needed functions to set them)
  * - Handle ERC20
  * - DeGov logics
  */

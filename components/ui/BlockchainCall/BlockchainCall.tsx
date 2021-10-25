@@ -1,5 +1,4 @@
 import { mutate } from "swr"
-import handleSubmit from "@utils/handleSubmit"
 import { LogDescription } from "ethers/lib/utils"
 import { Dispatch, SetStateAction, useState, useEffect } from "react"
 import Button from "../Button"
@@ -34,6 +33,8 @@ const BlockchainCall = ({
   })
 
   const submit = async () => {
+    const handleSubmit = (await import("@utils/handleSubmit")).default
+
     const eventLog = await handleSubmit(
       action(),
       setMessage,

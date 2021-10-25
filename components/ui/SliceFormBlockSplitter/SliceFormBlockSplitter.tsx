@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { useEffect, useState, Dispatch, SetStateAction } from "react"
 import { Input, SliceFormInputBlock, Question } from "@components/ui"
 import Add from "@components/icons/Add"
@@ -69,7 +70,7 @@ const SliceFormBlockSplitter = ({
           <Question
             text={
               <>
-                <p className="pb-4">
+                <p>
                   The percentage represents the relative amount of ETH earned by
                   the account from all payments made to the slicer.
                 </p>
@@ -118,21 +119,19 @@ const SliceFormBlockSplitter = ({
           <Question
             text={
               <>
-                <p className="pb-4">
-                  Accounts with the chosen amount of slices have{" "}
-                  <DoubleText
-                    inactive
-                    logoText="privileged access"
-                    size="text-normal"
-                  />{" "}
-                  {/* <Link href="/">
-                  <a className="font-black highlight">privileged access</a>
-                </Link>{" "} */}
+                <p>
+                  Accounts with more than the chosen amount of slices will be{" "}
+                  <Link href="/#superowner">
+                    <a className="font-black highlight">
+                      superowners with privileged access
+                    </a>
+                  </Link>{" "}
                   to this slicer.
                 </p>
-                <p className="pb-4">
-                  They can edit the slicer page, access restricted information,
-                  update data on the blockchain, and use other future features.
+                <p>
+                  They can edit the slicer page, add products, access restricted
+                  information, update data on the blockchain, and use other
+                  future features.
                 </p>
                 <p>
                   <strong>Note</strong>: At least one account has to hold the
@@ -168,20 +167,30 @@ const SliceFormBlockSplitter = ({
           <Question
             text={
               <>
-                <p className="pb-4">
+                <p>
                   If enabled, as a creator you will be able to set the metadata{" "}
-                  <b>only once</b> after creating the slicer, thus granting it
-                  immutability.
+                  <b>only once</b> after creating the slicer, thus making it
+                  immutable.
                 </p>
-                <p className="pb-4">
-                  It should be enabled if you&apos;re using the slicer as a
-                  typical NFT — representing an image, animation, music,
-                  artwork, or anything that should not change once created.
+                <p>It should be enabled if:</p>
+                <ul>
+                  <li>
+                    You&apos;re using the slicer as a <b>typical NFT</b>, whose
+                    metadata should not change once created
+                  </li>
+                  <li>
+                    You want to avoid superusers editing the metadata at their
+                    discretion (useful for community slicers)
+                  </li>
+                </ul>
+                <p>
+                  <b>Note:</b> Slicers metadata are currently stored on Slice
+                  servers, not on IPFS.
                 </p>
                 <p>
-                  <b>Note:</b> Collectibles will appear in a separate section of
-                  the website, but will have some limitations with respect to
-                  normal slicers.
+                  <b>Note:</b> Collectibles appear in a separate section of the
+                  website, but have some limitations with respect to normal
+                  slicers.
                 </p>
               </>
             }

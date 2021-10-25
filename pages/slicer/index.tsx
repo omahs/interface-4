@@ -1,5 +1,4 @@
 import { Container, DoubleText, SlicersGrid } from "@components/ui"
-import fetcher from "@utils/fetcher"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
 import { NextSeo } from "next-seo"
 import {
@@ -8,17 +7,19 @@ import {
   longTitle,
   domain,
 } from "@components/common/Head"
+import fetcher from "@utils/fetcher"
 
 export type SlicerReduced = {
   id: number
   name: string | null
+  tags: string | null
+  description: string | null
   image: string | null
   isCollectible: boolean | null
 }
 
 const SlicerGrid = ({
   data,
-  totalSlicers,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Container page={true}>
@@ -45,7 +46,7 @@ const SlicerGrid = ({
           size="text-4xl sm:text-5xl"
           position="pb-12"
         />
-        <SlicersGrid data={data} totalSlicers={Number(totalSlicers)} />
+        <SlicersGrid data={data} />
       </main>
     </Container>
   )
@@ -53,21 +54,15 @@ const SlicerGrid = ({
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-  const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
-  const data: SlicerReduced[] = await fetcher(
-    `${baseUrl}/api/slicer?items=${totalSlicers}`
-  )
-  // const totalSlicers = 0
+  const data: SlicerReduced[] = await fetcher(`${baseUrl}/api/slicer`)
+  // const data = []
 
   return {
     props: {
       data,
-      totalSlicers,
     },
     revalidate: 10,
   }
 }
 
 export default SlicerGrid
-
-// Todo: Add sorting / filtering for slicers/NFT

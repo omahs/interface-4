@@ -1,7 +1,3 @@
-import fetcher from "@utils/fetcher"
-import web3Storage from "./web3Storage"
-import { decryptFiles, decryptTexts, importKey } from "@utils/crypto"
-
 const handleDecryptData = async (
   slicerId: number,
   name: string,
@@ -9,6 +5,12 @@ const handleDecryptData = async (
   uid: string,
   cid: string
 ) => {
+  const fetcher = (await import("@utils/fetcher")).default
+  const web3Storage = (await import("./web3Storage")).default
+  const { decryptFiles, decryptTexts, importKey } = await import(
+    "@utils/crypto"
+  )
+
   try {
     const { webStorageKey } = await fetcher("/api/webStorage")
     const res = await web3Storage(webStorageKey).get(cid)

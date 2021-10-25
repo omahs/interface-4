@@ -1,4 +1,3 @@
-import { handleCleanup, reload } from "@lib/handleCreateProduct"
 import useQuery from "@utils/subgraphQuery"
 import { useRouter } from "next/dist/client/router"
 import { useEffect, useState } from "react"
@@ -56,11 +55,17 @@ const SlicerProducts = ({
   const subgraphData = useQuery(tokensQuery)
   const blockchainProducts = subgraphData?.products
 
-  const handleReload = () => {
-    if (pendingProducts?.length != 0) {
-      handleCleanup(Number(slicerId), setLoading)
-    } else {
-      reload(Number(slicerId), setLoading)
+  const handleReload = async () => {
+    const { handleCleanup, reload } = await import("@lib/handleCreateProduct")
+
+    try {
+      if (pendingProducts?.length != 0) {
+        await handleCleanup(Number(slicerId), setLoading)
+      } else {
+        await reload(Number(slicerId), setLoading)
+      }
+    } catch (err) {
+      console.log(err)
     }
     router.reload()
   }
@@ -80,12 +85,12 @@ const SlicerProducts = ({
         editMode={editMode}
       />
       {editMode && (
-        <div>
+        <div className="pt-6">
           <Button label="Add a new product" href={`${slicerId}/products/new`} />
           {(pendingProducts?.length != 0 ||
             blockchainProducts?.length > products?.data?.length) && (
             <div className="pt-12">
-              <p className="pb-4">
+              <p className="pb-8">
                 There are pending products for your slicer. <br />
                 Click the button below to reload them.
               </p>
@@ -93,7 +98,7 @@ const SlicerProducts = ({
                 label="Reload products"
                 type="button"
                 loading={loading}
-                onClick={() => handleReload()}
+                onClick={async () => await handleReload()}
               />
             </div>
           )}

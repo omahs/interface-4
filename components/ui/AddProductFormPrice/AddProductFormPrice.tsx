@@ -46,7 +46,7 @@ const AddProductFormPrice = ({
           label="Multiple purchases"
           questionText={
             <>
-              <p className="pb-4">
+              <p>
                 If enabled, users will be able to buy this product multiple
                 times.
               </p>
@@ -62,7 +62,7 @@ const AddProductFormPrice = ({
           label="Limited availability"
           questionText={
             <>
-              <p className="pb-4">
+              <p>
                 If enabled, purchases will be disabled once available units drop
                 to 0.
               </p>
@@ -101,13 +101,13 @@ const AddProductFormPrice = ({
         label="Dynamic pricing"
         questionText={
           <>
-            <p className="pb-4">
+            <p>
               If enabled, it&apos;s like setting the product price in USD. The
               user will always pay in ETH the corresponding USD value set
               {usdValue && usdValue != 0 && <b> ${usdValue}</b>}. This can be
               useful to protect against changes in ETH value over time.
             </p>
-            <p className="pb-4">
+            <p>
               <b>Note:</b> Products with dynamic pricing have a higher
               transaction fee for the buyer.
             </p>

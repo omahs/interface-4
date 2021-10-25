@@ -1,13 +1,10 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import useSWR, { mutate } from "swr"
+import useSWR from "swr"
 import { NewImage, SlicerData } from "pages/slicer/[id]"
 import fetcher from "@utils/fetcher"
-import handleMessage, { Message } from "@utils/handleMessage"
-import { defaultProvider } from "@lib/useProvider"
-import { slicer as slicerContract } from "@lib/initProvider"
+import { Message } from "@utils/handleMessage"
 import { useAppContext } from "../context"
-import { PaySlicer, Button, MessageBlock } from "@components/ui"
-import supabaseUpload from "@utils/supabaseUpload"
+import { Button, MessageBlock } from "@components/ui"
 
 type Props = {
   editMode: boolean
@@ -21,6 +18,8 @@ type Props = {
   setNewName: Dispatch<SetStateAction<any>>
   newDescription: any
   setNewDescription: Dispatch<SetStateAction<any>>
+  newTags: string
+  setNewTags: Dispatch<SetStateAction<string>>
   newImage: NewImage
   setNewImage: Dispatch<SetStateAction<NewImage>>
   setTempImageUrl: Dispatch<SetStateAction<string>>
@@ -40,6 +39,8 @@ const SlicerSubmitBlock = ({
   setNewName,
   newDescription,
   setNewDescription,
+  newTags,
+  setNewTags,
   newImage,
   setNewImage,
   setTempImageUrl,
@@ -71,10 +72,17 @@ const SlicerSubmitBlock = ({
   }
 
   const save = async () => {
+    const { mutate } = await import("swr")
+    const handleMessage = (await import("@utils/handleMessage")).default
+    const { defaultProvider } = await import("@lib/useProvider")
+    const slicerContract = (await import("@lib/initProvider")).slicer
+    const supabaseUpload = (await import("@utils/supabaseUpload")).default
+
     setLoading(true)
     let newInfo = {
-      description: newDescription,
       name: newName,
+      tags: newTags,
+      description: newDescription,
       imageUrl: slicer.imageUrl,
     }
     try {
@@ -98,8 +106,9 @@ const SlicerSubmitBlock = ({
         const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
         setTempStorageUrl(newFilePath)
         newInfo = {
-          description: newDescription,
           name: newName,
+          tags: newTags,
+          description: newDescription,
           imageUrl: newFilePath,
         }
         await updateDb(newInfo)
@@ -131,6 +140,7 @@ const SlicerSubmitBlock = ({
   const cancel = () => {
     setNewName(slicer.name)
     setNewDescription(slicer.description)
+    setNewTags(slicer.tags)
     setNewImage({ url: "", file: undefined })
     setEditMode(false)
   }
@@ -147,9 +157,7 @@ const SlicerSubmitBlock = ({
     }
   }, [slicerInfoUpdated])
 
-  return !editMode ? (
-    <PaySlicer slicerAddress={slicerInfo?.address} />
-  ) : (
+  return (
     <div>
       <p className="pb-8 mx-auto max-w-screen-xs">
         <strong>Note:</strong> Edits will appear after around 10 seconds.

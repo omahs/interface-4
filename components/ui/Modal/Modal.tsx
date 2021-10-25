@@ -2,13 +2,14 @@ import Cross from "@components/icons/Cross"
 import { Dispatch, SetStateAction } from "react"
 import {
   View,
+  NETWORK_VIEW,
   CONNECT_VIEW,
   IRREVERSIBLE_VIEW,
   CREATE_PRODUCT_VIEW,
   CREATE_PRODUCT_CONFIRM_VIEW,
   PRODUCT_VIEW,
   REDEEM_PRODUCT_VIEW,
-} from "lib/text/modals"
+} from "@lib/content/modals"
 
 type Props = {
   modalView: View
@@ -20,8 +21,11 @@ const Modal = ({ modalView, setModalView }: Props) => {
   const { name, cross, params } = modalView
 
   switch (name) {
+    case "NETWORK_VIEW":
+      content = NETWORK_VIEW()
+      break
     case "CONNECT_VIEW":
-      content = CONNECT_VIEW
+      content = CONNECT_VIEW()
       break
     case "IRREVERSIBLE_VIEW":
       content = IRREVERSIBLE_VIEW()
@@ -41,7 +45,7 @@ const Modal = ({ modalView, setModalView }: Props) => {
   }
 
   return (
-    <div className="fixed top-0 z-10 w-screen h-screen py-12 overflow-y-scroll xs:py-20 background-modal">
+    <div className="fixed top-0 z-30 w-screen h-screen py-12 overflow-y-scroll xs:py-20 background-modal">
       <div
         className="absolute w-full h-full mt-[-3rem] xs:mt-[-5rem]"
         onClick={() => (cross ? setModalView({ name: "" }) : null)}
@@ -50,7 +54,7 @@ const Modal = ({ modalView, setModalView }: Props) => {
         className="flex items-center justify-center"
         style={{ minHeight: "100%" }}
       >
-        <div className="relative w-full px-4 py-8 mx-4 bg-white shadow-xl xs:py-12 xs:px-8 rounded-xl max-w-screen-xs">
+        <div className="relative w-full px-4 py-16 mx-4 bg-white shadow-xl xs:py-20 xs:px-8 rounded-xl max-w-screen-xs">
           {cross && (
             <div className="absolute top-[24px] right-[24px]">
               <Cross

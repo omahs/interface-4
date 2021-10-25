@@ -1,61 +1,127 @@
 import Button from "../Button"
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { SlicerReduced } from "pages/slicer"
-import { Card } from ".."
+import { Card, FiltersMenu } from ".."
 import Collectible from "@components/icons/Collectible"
+import tagsList from "@lib/content/tagsList"
 
 type Props = {
   data: SlicerReduced[]
-  totalSlicers: number
 }
 
-const SlicersGrid = ({ data, totalSlicers }: Props) => {
+const SlicersGrid = ({ data }: Props) => {
   const initItems = 12
   const [items, setItems] = useState(initItems)
   const [iterator, setIterator] = useState(0)
+  const [filteredSlicers, setFilteredSlicers] = useState<SlicerReduced[]>(data)
+  const [searchFilteredSlicers, setSearchFilteredSlicers] =
+    useState<SlicerReduced[]>(null)
+  const filteredData = searchFilteredSlicers || filteredSlicers
+
+  const totalTags = tagsList.map((tag) =>
+    tag["value"] !== "Private" ? tag["value"] : ""
+  )
+  const [showCollectibles, setShowCollectibles] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [filterTags, setFilterTags] = useState(totalTags)
+
+  const performSearch = async (
+    searchTerm: string,
+    data: any[],
+    setData: Dispatch<SetStateAction<any[]>>
+  ) => {
+    const search = (await import("@utils/search")).default
+    search(searchTerm, data, setData)
+  }
 
   useEffect(() => {
-    setIterator(items < totalSlicers ? items : totalSlicers)
-  }, [items])
+    setIterator(0)
+    const newFilteredSlicers = data.filter((el) => {
+      const onlyCollectibles = showCollectibles
+        ? el.isCollectible == showCollectibles
+        : true
+      const isFiltered = !el.tags
+        ? filterTags.includes("")
+        : filterTags.includes(el.tags)
+      return onlyCollectibles && isFiltered
+    })
+    setFilteredSlicers(newFilteredSlicers)
+  }, [showCollectibles, filterTags])
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (searchTerm) {
+        setIterator(0)
+      }
+      performSearch(searchTerm, filteredSlicers, setSearchFilteredSlicers)
+    }, 200)
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [searchTerm, filteredSlicers])
+
+  useEffect(() => {
+    setIterator(items < filteredData.length ? items : filteredData.length)
+  }, [filteredData])
 
   return (
     <>
-      <div className="grid items-center justify-center grid-cols-1 gap-2 max-w-[400px] sm:gap-4 lg:gap-5 sm:max-w-[550px] mx-auto sm:grid-cols-2 md:max-w-none md:grid-cols-3">
-        {[...Array(iterator)].map((el, key) => {
-          const slicerId = Number(key)
-          const slicerData = data.find((el) => el.id === slicerId)
-          const { name, image, isCollectible } = slicerData || {
-            name: `Slicer #${slicerId}`,
-            image: "",
-            isCollectible: false,
-          }
-          const slicerLink = `/slicer/${slicerId}`
-          const slicerName = name || `Slicer #${slicerId}`
-          return (
-            <Card
-              key={key}
-              name={slicerName}
-              image={image}
-              href={slicerLink}
-              className="rounded-none"
-              size="h-44"
-              topLeft={
-                isCollectible && {
-                  title: "Collectible asset",
-                  content: (
-                    <Collectible className="py-2 text-indigo-600 w-[38px] h-[38px]" />
-                  ),
-                  padding: "px-4",
+      <FiltersMenu
+        tagsList={tagsList}
+        totalTags={totalTags}
+        filterTags={filterTags}
+        setFilterTags={setFilterTags}
+        setSearchTerm={setSearchTerm}
+        showCollectibles={showCollectibles}
+        setShowCollectibles={setShowCollectibles}
+      />
+      {filteredData.length != 0 ? (
+        <div className="grid items-center justify-center grid-cols-1 gap-2 max-w-[400px] sm:gap-6 lg:gap-8 sm:max-w-[550px] mx-auto sm:grid-cols-2 md:max-w-none md:grid-cols-3">
+          {[...Array(iterator)].map((el, key) => {
+            const slicerData = filteredData[key]
+            const { id, name, tags, image, isCollectible } = slicerData
+            const slicerLink = `/slicer/${id}`
+            const slicerName = name || `Slicer #${id}`
+            const currentTag = tagsList.find((el) => el.value === tags)
+            return (
+              <Card
+                key={key}
+                name={slicerName}
+                image={image}
+                href={slicerLink}
+                className="rounded-none"
+                size="h-44"
+                topLeft={
+                  isCollectible && {
+                    title: "Collectible asset",
+                    content: (
+                      <Collectible className="py-2 text-indigo-600 w-[38px] h-[38px]" />
+                    ),
+                    padding: "px-4",
+                  }
                 }
-              }
-            >
-              <p className="mr-2 text-lg font-medium">{slicerName}</p>
-            </Card>
-          )
-        })}
-      </div>
+                topRight={
+                  tags && {
+                    title: tags,
+                    content: (
+                      <div className="py-2 px-1.5 w-[38px] h-[38px]">
+                        {currentTag.image}
+                      </div>
+                    ),
+                    padding: "px-4",
+                  }
+                }
+              >
+                <p className="mr-2 text-lg font-medium">{slicerName}</p>
+              </Card>
+            )
+          })}
+        </div>
+      ) : (
+        <p className="pt-6 text-lg">No slicer matches the selected filters</p>
+      )}
       <div className="pt-10 pb-4 space-y-8">
-        {items < totalSlicers && (
+        {items < filteredSlicers.length && (
           <p className="text-center">
             <a onClick={() => setItems(items + initItems)}>Load more</a>
           </p>
@@ -69,3 +135,5 @@ const SlicersGrid = ({ data, totalSlicers }: Props) => {
 }
 
 export default SlicersGrid
+
+// Todo: refactor & remove setIterator(0)

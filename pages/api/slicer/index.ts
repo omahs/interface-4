@@ -7,13 +7,21 @@ type Data = SlicerReduced[]
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   await corsMiddleware(req, res)
-  const { items } = req.query
   try {
     if (req.method === "GET") {
       const SlicerList = await prisma.slicer.findMany({
+        where: {
+          OR: [{ tags: { not: "Private" } }, { tags: { equals: null } }],
+        },
         orderBy: { id: "desc" },
-        take: Number(items),
-        select: { id: true, name: true, image: true, isCollectible: true },
+        select: {
+          id: true,
+          name: true,
+          tags: true,
+          description: true,
+          image: true,
+          isCollectible: true,
+        },
       })
       res.status(200).json(SlicerList)
     }
@@ -23,3 +31,5 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 }
 
 export default handler
+
+// Todo?: Fix cors for !origin? I can access this from anywhere

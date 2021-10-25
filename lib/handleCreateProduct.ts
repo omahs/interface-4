@@ -1,16 +1,7 @@
 import { Dispatch, SetStateAction } from "react"
-import { CID } from "multiformats/cid"
-import supabaseUpload from "@utils/supabaseUpload"
-import fetcher from "@utils/fetcher"
 import { NewImage } from "pages/slicer/[id]"
-import web3Storage from "./web3Storage"
-import { encryptFiles, importKey } from "@utils/crypto"
 import { LogDescription } from "@ethersproject/abi"
-import getLog from "@utils/getLog"
-import { base16 } from "multiformats/bases/base16"
-import client from "@utils/apollo-client"
-import { gql } from "@apollo/client"
-import { mutate } from "swr"
+// import { mutate } from "swr"
 
 export const beforeCreate = async (
   creator: string,
@@ -26,6 +17,12 @@ export const beforeCreate = async (
   setUploadStep: Dispatch<SetStateAction<number>>,
   setUploadPct: Dispatch<SetStateAction<number>>
 ) => {
+  const { CID } = await import("multiformats/cid")
+  const supabaseUpload = (await import("@utils/supabaseUpload")).default
+  const fetcher = (await import("@utils/fetcher")).default
+  const web3Storage = (await import("./web3Storage")).default
+  const { encryptFiles, importKey } = await import("@utils/crypto")
+
   const uid = Math.random().toString().substring(2)
   const purchaseInfo = {
     instructions: instructions.length != 0,
@@ -144,6 +141,9 @@ export const handleSuccess = async (
   id: string,
   eventLogs: LogDescription[]
 ) => {
+  const fetcher = (await import("@utils/fetcher")).default
+  const getLog = (await import("@utils/getLog")).default
+
   const eventLog = getLog(eventLogs, "ProductAdded")
   const productId = eventLog[0]
 
@@ -166,6 +166,9 @@ export const handleReject = async (
   purchaseDataCID: string,
   productId: string
 ) => {
+  const { CID } = await import("multiformats/cid")
+  const fetcher = (await import("@utils/fetcher")).default
+
   const supabaseStorage = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_NAME
   // unpin
   if (dataHash) {
@@ -214,6 +217,12 @@ export const handleCleanup = async (
   slicerId: number,
   setLoading: Dispatch<SetStateAction<boolean>>
 ) => {
+  const { CID } = await import("multiformats/cid")
+  const fetcher = (await import("@utils/fetcher")).default
+  const { base16 } = await import("multiformats/bases/base16")
+  const client = (await import("@utils/apollo-client")).default
+  const { gql } = await import("@apollo/client")
+
   setLoading(true)
 
   // Get all pending products and loop through them
@@ -274,6 +283,12 @@ export const reload = async (
   slicerId: number,
   setLoading: Dispatch<SetStateAction<boolean>>
 ) => {
+  const { CID } = await import("multiformats/cid")
+  const fetcher = (await import("@utils/fetcher")).default
+  const { base16 } = await import("multiformats/bases/base16")
+  const client = (await import("@utils/apollo-client")).default
+  const { gql } = await import("@apollo/client")
+
   setLoading(true)
 
   // Get all missing minted products on prisma

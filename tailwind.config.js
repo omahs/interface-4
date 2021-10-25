@@ -12,6 +12,8 @@ module.exports = {
     "./components/**/*.scss",
     "./styles/**/*.scss",
     "./utils/**/*.ts",
+    "./lib/**/*.ts",
+    "./lib/**/*.tsx",
     "./styles/jit-hack.txt",
   ],
 
@@ -47,6 +49,9 @@ module.exports = {
       zIndex: {
         "-10": "-10",
       },
+      rotate: {
+        "-20": "-20deg",
+      },
       animation: {
         "spin-slow": "spin 30s linear infinite",
         "ping-slow": "ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite",
@@ -56,6 +61,11 @@ module.exports = {
         DEFAULT: {
           css: {
             color: theme("colors.black"),
+            a: {
+              textDecorationColor: "var(--darkColor2)",
+              textDecorationThickness: "2px",
+              textUnderlineOffset: "1px",
+            },
             h1: {
               color: theme("colors.black"),
               fontWeight: "900",
@@ -66,6 +76,7 @@ module.exports = {
             },
             h3: {
               color: theme("colors.black"),
+              fontSize: "1.12em",
             },
             blockquote: {
               borderLeftColor: theme("colors.random2.600"),
@@ -81,5 +92,9 @@ module.exports = {
     nightwind: ["group-hover", "focus", "disabled"],
   },
 
-  plugins: [require("@tailwindcss/typography"), require("nightwind")],
+  plugins: [
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/typography"),
+    require("nightwind"),
+  ],
 }

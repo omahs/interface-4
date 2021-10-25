@@ -1,10 +1,9 @@
 import { useState, Dispatch, SetStateAction } from "react"
 import { Button, SliceFormBlockSplitter } from "@components/ui"
-import { Slice } from "@lib/handlers/chain"
-import handleSubmit from "@utils/handleSubmit"
-import handleMessage, { Message } from "@utils/handleMessage"
+import { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import MessageBlock from "../MessageBlock"
+import { useAppContext } from "../context"
 
 type Props = {
   success: boolean
@@ -14,6 +13,7 @@ type Props = {
 }
 
 const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
+  const { connector } = useAppContext()
   const [addresses, setAddresses] = useState([""])
   const [shares, setShares] = useState([1000000])
   const [minimumShares, setMinimumShares] = useState(0)
@@ -29,13 +29,24 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
+
+    const handleSubmit = (await import("@utils/handleSubmit")).default
+    const handleMessage = (await import("@utils/handleMessage")).default
+    const { Slice } = await import("@lib/handlers/chain")
+
     try {
       if (
         cleanedShares.length == cleanedAddresses.length &&
         cleanedShares.length <= 30
       ) {
         const eventLogs = await handleSubmit(
-          Slice(cleanedAddresses, cleanedShares, minimumShares, isCollectible),
+          Slice(
+            connector,
+            cleanedAddresses,
+            cleanedShares,
+            minimumShares,
+            isCollectible
+          ),
           setMessage,
           setLoading,
           setSuccess,
@@ -81,24 +92,27 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         </p>
         {totalShares === 1 && (
           <p className="pt-4">
-            <strong>Note:</strong> You are about to create a non-fractional
+            <strong>Note:</strong> You are about to create a non-fractionalized
             Slicer. That means that there can only be a single owner at any
             given time which gets all ETH earned by the slicer.
           </p>
         )}
-        <p className="pt-4">
-          <strong>Note:</strong> This version of Slice runs on Rinkeby Testnet,
-          so it does not use real ETH. You can get some ETH on Rinkeby{" "}
-          <a
-            href="https://faucet.rinkeby.io"
-            target="_blank"
-            rel="noreferrer"
-            className="font-black highlight"
-          >
-            here
-          </a>
-          .
-        </p>
+        {process.env.NEXT_PUBLIC_CHAIN_ID === "4" && (
+          <p className="pt-4">
+            <strong>Note:</strong> This version of Slice runs on Rinkeby
+            Testnet, so it does not use real ETH. You can get some ETH on
+            Rinkeby{" "}
+            <a
+              href="https://faucet.rinkeby.io"
+              target="_blank"
+              rel="noreferrer"
+              className="font-black highlight"
+            >
+              here
+            </a>
+            .
+          </p>
+        )}
       </div>
       <div className="py-1">
         <Button label="Slice" type="submit" />

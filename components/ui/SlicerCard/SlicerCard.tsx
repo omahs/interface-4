@@ -11,6 +11,7 @@ import Arrow from "@components/icons/Arrow"
 import { CardImage, CopyAddress } from ".."
 import UserVerified from "@components/icons/UserVerified"
 import Collectible from "@components/icons/Collectible"
+import { useAppContext } from "../context"
 
 type SlicerInfo = {
   name: string
@@ -39,6 +40,7 @@ const SlicerCard = ({
   isCollectible,
   unreleasedAmount,
 }: Props) => {
+  const { connector } = useAppContext()
   const { data: slicerInfo } = useSWR(
     `/api/slicer/${slicerId}?stats=false`,
     fetcher
@@ -87,7 +89,7 @@ const SlicerCard = ({
         }
         topRight={
           isAllowed && {
-            title: "Super user",
+            title: "Superowner",
             content: (
               <UserVerified className="text-green-500 py-2 w-[38px] h-[38px]" />
             ),
@@ -154,7 +156,9 @@ const SlicerCard = ({
             </p>
             <BlockchainCall
               label="Trigger release"
-              action={() => TriggerRelease(account, [slicerAddress], 0)}
+              action={() =>
+                TriggerRelease(connector, account, [slicerAddress], 0)
+              }
               success={success}
               setSuccess={setSuccess}
               setLogs={setLogs}

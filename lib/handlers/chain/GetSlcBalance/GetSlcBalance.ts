@@ -1,12 +1,14 @@
-import { initialize } from "@lib/useProvider"
-import { slc } from "@lib/initProvider"
+import WalletConnect from "@walletconnect/client"
 
-const GetSlcBalance = async () => {
-  const { signer, signerAddress } = await initialize()
-  const contract = slc(signer)
+const GetSlcBalance = async (connector: WalletConnect, address: string) => {
+  const { initialize } = await import("@lib/useProvider")
+  const { slc } = await import("@lib/initProvider")
+
+  const { provider } = await initialize(connector)
+  const contract = slc(provider)
 
   try {
-    const call = await contract.balanceOf(signerAddress)
+    const call = await contract.balanceOf(address)
     return [contract, call]
   } catch (err) {
     throw err

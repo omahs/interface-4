@@ -1,6 +1,6 @@
 import { NewImage } from "pages/slicer/[id]"
 import React, { Dispatch, SetStateAction } from "react"
-import { View } from "@lib/text/modals"
+import { View } from "@lib/content/modals"
 
 type Props = {
   slicerId: number
@@ -99,7 +99,7 @@ const AddProductFormPreview = ({
               params: {
                 slicerId,
                 productId: 0,
-                name,
+                name: name || "A nice product",
                 image: newImage.url,
                 purchasedQuantity: Number(1),
                 decryptedFiles: files,

@@ -1,13 +1,16 @@
-import { initialize } from "@lib/useProvider"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import WalletConnect from "@walletconnect/client"
 
 const resolveEns = async (
+  connector: WalletConnect,
   address: string,
   setAddress: Dispatch<SetStateAction<string>>
 ) => {
+  const { initialize } = await import("@lib/useProvider")
+
   if (address) {
     try {
-      const { provider } = await initialize()
+      const { provider } = await initialize(connector)
       const resolved =
         address.substr(0, 2) === "0x"
           ? await provider.lookupAddress(address)
@@ -23,6 +26,14 @@ const resolveEns = async (
       }
     }
   }
+}
+
+export const useEns = (connector: WalletConnect, address: string) => {
+  const [resolvedAddress, setResolvedAddress] = useState("")
+  useEffect(() => {
+    resolveEns(connector, address, setResolvedAddress)
+  }, [address])
+  return resolvedAddress
 }
 
 export default resolveEns

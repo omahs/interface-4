@@ -1,11 +1,9 @@
-import { View } from "@lib/text/modals"
+import WalletConnect from "@walletconnect/client"
 import { Dispatch, SetStateAction } from "react"
-import { CID } from "multiformats/cid"
-import { base16 } from "multiformats/bases/base16"
-import redeemProduct from "@lib/handlers/chain/redeemProduct"
-import handleDecryptData from "@lib/handleDecryptData"
+import { View } from "@lib/content/modals"
 
 const handleRedeemProduct = async (
+  connector: WalletConnect,
   slicerId: number,
   productId: number,
   name: string,
@@ -15,8 +13,14 @@ const handleRedeemProduct = async (
   setLoading: Dispatch<SetStateAction<boolean>>,
   setModalView: Dispatch<SetStateAction<View>>
 ) => {
+  const { CID } = await import("multiformats/cid")
+  const { base16 } = await import("multiformats/bases/base16")
+  const redeemProduct = (await import("@lib/handlers/chain/redeemProduct"))
+    .default
+  const handleDecryptData = (await import("@lib/handleDecryptData")).default
+
   setLoading(true)
-  const redeemed = await redeemProduct(slicerId, productId)
+  const redeemed = await redeemProduct(connector, slicerId, productId)
   const purchaseHash = CID.parse("f" + redeemed[1].substring(2), base16.decoder)
     .toV1()
     .toString()

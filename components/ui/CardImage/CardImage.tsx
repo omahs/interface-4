@@ -19,6 +19,7 @@ type Props = {
   bottomRight?: CardInfo
   className?: string
   size?: string
+  disableHover?: boolean
   product?: boolean
   onClick?: (...args: any[]) => any
 }
@@ -33,21 +34,32 @@ const CardImage = ({
   bottomRight,
   className = "shadow-md rounded-xl",
   size = "sm:w-80 h-60 sm:h-52",
+  disableHover,
   product,
   onClick,
 }: Props) => {
   return (
     <div
-      className={`relative w-full overflow-hidden ${className} nightwind-prevent-block img-background ${size}`}
+      className={`relative group w-full overflow-hidden ${className} nightwind-prevent-block img-background ${size}`}
     >
       {href ? (
         <Link href={href}>
           <a>
-            <SlicerImage name={name} imageUrl={imageUrl} product={product} />
+            <SlicerImage
+              name={name}
+              imageUrl={imageUrl}
+              product={product}
+              disableHover={disableHover}
+            />
           </a>
         </Link>
       ) : (
-        <SlicerImage name={name} imageUrl={imageUrl} product={product} />
+        <SlicerImage
+          name={name}
+          imageUrl={imageUrl}
+          product={product}
+          disableHover={disableHover}
+        />
       )}
       {topLeft && (
         <CardImageElement

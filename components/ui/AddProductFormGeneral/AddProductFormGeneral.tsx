@@ -86,13 +86,12 @@ const AddProductFormGeneral = ({
       <div>
         <Textarea
           label="Description*"
-          placeholder="Describe this product for prospecting customers. What will they get for buying it?"
+          placeholder="Describe the product to customers. What will they get for buying it?"
           value={description}
           onChange={setDescription}
           required
         />
       </div>
-      {/* Todo: Add tags */}
       {/* <InputTags tags={tagsList} setTags={setTags} /> */}
       <SlicerImageBlock
         name={name}
@@ -104,6 +103,7 @@ const AddProductFormGeneral = ({
         setMsg={setMsg}
         loading={loading}
         maxHeight="max-h-[250px]"
+        product
       />
       <p className="pt-3">
         <b>Note:</b> You cannot change the name, description and image later.

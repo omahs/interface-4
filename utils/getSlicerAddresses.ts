@@ -1,7 +1,7 @@
-import { sliceCore } from "@lib/initProvider"
-import { defaultProvider } from "@lib/useProvider"
-
 const getSlicerAddresses = async (slicerIds: number[]) => {
+  const { sliceCore } = await import("@lib/initProvider")
+  const { defaultProvider } = await import("@lib/useProvider")
+
   const sliceCorecontract = sliceCore(defaultProvider)
   let slicerAddresses = []
 

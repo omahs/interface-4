@@ -1,5 +1,4 @@
 import { ListLayout, SlicerCard } from "@components/ui"
-import fetcher from "@utils/fetcher"
 import { useAppContext } from "@components/ui/context"
 import { useEffect, useState } from "react"
 import useQuery from "@utils/subgraphQuery"
@@ -10,8 +9,8 @@ const SlicersList = () => {
   const [unreleased, setUnreleased] = useState([])
 
   const tokensQuery = /* GraphQL */ `
-      payee(id: "${account.toLowerCase()}") {
-        slicers {
+      payee(id: "${account?.toLowerCase()}") {
+        slicers (where: {slices_gt: "0"}){
           slices
           slicer {
             id
@@ -24,11 +23,13 @@ const SlicersList = () => {
       }
     `
   let subgraphData = useQuery(tokensQuery, [account])
-  const slicers = subgraphData?.payee?.slicers
-  const slicersOwned = slicers?.filter((el) => el.slices != 0)
+  const payeeData = subgraphData?.payee
+  const slicers = payeeData?.slicers
   let slicerAddresses = []
 
   const getUnreleasedData = async (data) => {
+    const fetcher = (await import("@utils/fetcher")).default
+
     const unreleasedData = await fetcher(
       `/api/account/${account}/unreleased`,
       data
@@ -38,7 +39,7 @@ const SlicersList = () => {
 
   useEffect(() => {
     if (account && slicers) {
-      slicersOwned?.map((slicer) => {
+      slicers?.map((slicer) => {
         slicerAddresses.push(slicer.slicer.address)
       })
       const body = {
@@ -52,7 +53,7 @@ const SlicersList = () => {
 
   return (
     <ListLayout
-      elementsArray={slicersOwned}
+      elementsArray={subgraphData && (slicers || [])}
       setIterator={setIterator}
       actionScreenText="You have no slicers :("
       actionScreenHref="/slice"
@@ -61,15 +62,15 @@ const SlicersList = () => {
     >
       <>
         {[...Array(iterator)].map((el, key) => {
-          // Todo: Add sorting
           const i = Number(key)
-          const ownedShares = slicersOwned[i].slices
-          const slicer = slicersOwned[i].slicer
-          const slicerId = slicer.id
-          const totalSlices = slicer.slices
-          const slicerAddress = slicer.address
-          const isCollectible = slicer.isCollectible
-          const isAllowed = Number(ownedShares) >= Number(slicer.minimumSlices)
+          const slicerOwned = slicers && slicers[i]
+          const ownedShares = slicerOwned?.slices
+          const slicer = slicerOwned?.slicer
+          const slicerId = slicer?.id
+          const totalSlices = slicer?.slices
+          const slicerAddress = slicer?.address
+          const isCollectible = slicer?.isCollectible
+          const isAllowed = Number(ownedShares) >= Number(slicer?.minimumSlices)
           const unreleasedAmount = unreleased[i]
             ? Math.floor(
                 (Number(unreleased[i].hex) / Math.pow(10, 18)) * 10000
@@ -100,5 +101,5 @@ const SlicersList = () => {
 
 export default SlicersList
 
-// Todo: Add sorting by unreleased amount
+// Todo: Add sorting options, if possible also by unreleased amount
 // Todo: Unrelease batch

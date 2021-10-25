@@ -3,7 +3,6 @@ import Spinner from "@components/icons/Spinner"
 import Link from "next/link"
 import { useAppContext } from "@components/ui/context"
 import Logo from "@components/icons/Logo"
-import handleConnect from "@lib/handleConnect"
 
 interface ButtonProps {
   loading?: boolean
@@ -31,7 +30,7 @@ const Button: FC<ButtonProps> = (props) => {
     ...rest
   } = props
 
-  const { color1, color2, isConnected } = useAppContext()
+  const { color1, color2, isConnected, setModalView } = useAppContext()
   const innerText =
     requireConnection && !isConnected ? (
       <>
@@ -65,7 +64,7 @@ const Button: FC<ButtonProps> = (props) => {
           onClick={
             !loading
               ? requireConnection && !isConnected
-                ? handleConnect
+                ? () => setModalView({ name: "CONNECT_VIEW", cross: true })
                 : onClick
               : null
           }
