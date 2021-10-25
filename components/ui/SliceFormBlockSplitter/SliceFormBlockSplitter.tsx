@@ -115,7 +115,7 @@ const SliceFormBlockSplitter = ({
         </p>
         <p className="col-span-3 pl-5">{formatNumber(totalShares, 3)}</p>
         <div className="relative flex items-center justify-end col-span-5 pb-3 xs:col-end-7">
-          <p className="pr-1">Minimum slices</p>
+          <p className="pr-1">Superowner slices</p>
           <Question
             text={
               <>
@@ -134,8 +134,8 @@ const SliceFormBlockSplitter = ({
                   future features.
                 </p>
                 <p>
-                  <strong>Note</strong>: At least one account has to hold the
-                  minimum amount of slices.
+                  <strong>Note</strong>: At least one account has to be a
+                  superowner.
                 </p>
               </>
             }

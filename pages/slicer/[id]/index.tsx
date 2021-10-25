@@ -25,7 +25,7 @@ import fetcher from "@utils/fetcher"
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
   Creator: string
-  "Minimum slices": number
+  "Superowner slices": number
   "Sliced on": number
   "Total slices": number
 }
@@ -38,7 +38,7 @@ export type SlicerData = {
 
 const initAttributes = {
   Creator: "",
-  "Minimum slices": 0,
+  "Superowner slices": 0,
   "Sliced on": 0,
   "Total slices": 0,
 }

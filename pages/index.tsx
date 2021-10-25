@@ -89,13 +89,6 @@ export default Home
 
 /** TODO
  *
- *  ENS
- *    - buy ens domain on mainnet -> slice-so.eth
- *    - Change stuff related to rinkeby
- *
- *    - change new env on vercel + change ext. services from rinkeby
- *    - see stuff in context to change (rpc chain somewhere)
- *
  * *Low Priority*
  *    - Receive ERC721-1155
  *      - NFT section

@@ -102,7 +102,7 @@ export default function Slice() {
                     Your slicer address is <b>{eventLog && eventLog[0]}</b>
                   </p>
                   <p>
-                    If you hold the minimum slices, you can now customize it by
+                    If you are a superowner, you can now customize it by
                     clicking on the edit icon near the slicer name
                   </p>
                 </div>

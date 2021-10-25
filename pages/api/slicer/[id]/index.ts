@@ -60,7 +60,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               },
               {
                 display_type: "number",
-                trait_type: "Minimum slices",
+                trait_type: "Superowner slices",
                 value: data.slicer.minimumSlices,
               },
               {
