@@ -22,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 },
                 {
                   createdAt: {
-                    lte: new Date(Date.now() - 1000 * 60 * 15),
+                    lte: new Date(Date.now() - 1000 * 60 * 60),
                   },
                 },
               ],
