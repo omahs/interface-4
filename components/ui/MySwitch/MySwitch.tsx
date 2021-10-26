@@ -3,7 +3,7 @@ import { Switch } from "@headlessui/react"
 
 type Props = {
   enabled: boolean
-  setEnabled: Dispatch<SetStateAction<boolean>>
+  setEnabled: Dispatch<SetStateAction<boolean>> | { (): void }
 }
 
 const MySwitch = ({ enabled, setEnabled }: Props) => {

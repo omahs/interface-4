@@ -21,6 +21,7 @@ function FiltersFloatingMenu({
   setShowCollectibles,
   tagsList,
 }: Props) {
+  const allTagsEnabled = filterTags.length === totalTags.length
   return (
     <div className="absolute top-0 right-0 z-20 px-4 py-6 mt-16 space-y-8 text-black transition-opacity duration-200 bg-white nightwind-prevent w-80 rounded-xl shadow-base nightwind-prevent-block">
       <div className="flex flex-wrap items-center justify-end gap-3">
@@ -43,6 +44,15 @@ function FiltersFloatingMenu({
             />
           )
         })}
+      </div>
+      <div className="flex items-center justify-end space-x-4">
+        <p>All categories</p>
+        <MySwitch
+          enabled={allTagsEnabled}
+          setEnabled={() =>
+            allTagsEnabled ? setFilterTags([]) : setFilterTags(totalTags)
+          }
+        />
       </div>
       <div className="flex items-center justify-end space-x-4">
         <p>Only collectibles</p>
