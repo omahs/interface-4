@@ -135,13 +135,13 @@ const ProductCard = ({
   return (
     <div className="h-full">
       <Card
+        product
         containerClassName="h-full cursor-pointer"
         cardClassName="group h-full overflow-hidden transition-all duration-1000 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025]"
+        className="rounded-none"
         name={name}
         image={image}
-        className="rounded-none"
         size="h-44"
-        product={true}
         topLeft={{
           title: "Purchases",
           content: (
