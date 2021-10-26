@@ -81,11 +81,13 @@ const Id = ({
   // Todo: For collectibles save image on web3Storage instead of supabase? + Allow indefinite size? Figure it out
   const editAllowed = !slicerInfo?.isCollectible
     ? isAllowed
-    : slicerAttributes?.Creator === account?.toLowerCase() && // only Creator + default name, descr & image
-      newName === `Slicer #${slicerInfo?.id}` &&
-      newDescription === "" &&
-      newImage.url === "" &&
-      slicer.imageUrl === "https://slice.so/slicer_default.png"
+    : slicerAttributes?.Creator === account?.toLowerCase() // only Creator
+    ? (newName === `Slicer #${slicerInfo?.id}` && // default name, descr & image
+        newDescription === "" &&
+        newImage.url === "" &&
+        slicer.imageUrl === "https://slice.so/slicer_default.png") ||
+      false // slicerAttributes["Total slices"] === account.slices // creator has all slices
+    : false
 
   useEffect(() => {
     let attr = initAttributes
@@ -276,4 +278,5 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 export default Id
 
 // TODO
+// - retrieve account.slices in editAllowed condition
 // - Clean stuff
