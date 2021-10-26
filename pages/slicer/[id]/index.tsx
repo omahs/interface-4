@@ -269,10 +269,11 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       slicerInfo,
       products,
     },
-    revalidate: 10,
+    revalidate: 60,
   }
 }
 
 export default Id
 
+// TODO
 // - Clean stuff
