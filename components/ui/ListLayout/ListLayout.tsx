@@ -24,7 +24,7 @@ const ListLayout = ({
   endpageHref = actionScreenHref,
   children,
 }: Props) => {
-  const initItems = 4
+  const initItems = 6
   const [items, setItems] = useState(initItems)
 
   useEffect(() => {
