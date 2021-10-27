@@ -37,3 +37,5 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 }
 
 export default handler
+
+// Todo: Figure out how to make key generation safer (anyone could make requests to this endpoint)

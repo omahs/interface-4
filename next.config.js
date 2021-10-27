@@ -1,7 +1,12 @@
 module.exports = {
-  swcMinify: true,
+  // swcMinify: true,
   images: {
-    domains: ["tjqdcmrertmapvramecf.supabase.co", "api.producthunt.com", ""],
+    domains: [
+      "irdzgezsxggqvykkylyj.supabase.co",
+      "tjqdcmrertmapvramecf.supabase.co",
+      "api.producthunt.com",
+      "",
+    ],
   },
   experimental: {
     esmExternals: true,

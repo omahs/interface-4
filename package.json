@@ -40,7 +40,7 @@
     "mime-types": "^2.1.32",
     "motion": "^10.0.0",
     "multiformats": "^9.4.7",
-    "next": "^12.0.0",
+    "next": "^11.1.0",
     "next-seo": "^4.26.0",
     "next-themes": "^0.0.15",
     "nexus": "^1.1.0",
