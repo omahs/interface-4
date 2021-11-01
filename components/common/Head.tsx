@@ -7,7 +7,7 @@ export const defaultTitle = "Slice"
 export const longTitle = "Slice – Decentralized slicing platform"
 export const defaultDescription =
   "Decentralized payments infrastructure for real world applications, products and services."
-export const domain = "slice.so"
+export const domain = process.env.NEXT_PUBLIC_APP_URL
 const twitterAccount = accounts.twitter.split("twitter.com/").pop()
 
 const Head: FC = () => {
@@ -30,10 +30,7 @@ const Head: FC = () => {
       />
       <NextHead>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          name="twitter:image"
-          content={`https://${domain}/twitter_card.jpg`}
-        />
+        <meta name="twitter:image" content={`${domain}/twitter_card.jpg`} />
         <link
           rel="apple-touch-icon"
           sizes="180x180"

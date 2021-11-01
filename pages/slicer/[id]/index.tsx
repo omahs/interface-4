@@ -118,14 +118,14 @@ const Id = ({
                 openGraph={{
                   title: pageTitle,
                   description: slicer.description,
-                  url: `https://${domain}/slicer/${slicerInfo?.id}`,
+                  url: `${domain}/slicer/${slicerInfo?.id}`,
                   images: [
                     {
                       url: slicer.imageUrl,
                       alt: `${slicer.name} cover image`,
                     },
                     {
-                      url: `https://slice.so/og_image.jpg`,
+                      url: `${domain}/og_image.jpg`,
                       alt: `${slicer.name} cover image`,
                     },
                   ],
