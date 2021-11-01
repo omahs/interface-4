@@ -6,6 +6,7 @@ import { defaultProvider } from "lib/useProvider"
 import { TotalReceived } from "@lib/handlers/chain"
 import client from "@utils/apollo-client"
 import { gql } from "@apollo/client"
+import { domain } from "@components/common/Head"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id, stats } = req.query
@@ -48,7 +49,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             name: `Slicer #${id}`,
             description: "",
             tags: "",
-            external_url: `https://slice.so/slicer/${id}`,
+            external_url: `${domain}/slicer/${id}`,
             address: data.slicer.address,
             image: "https://slice.so/slicer_default.png",
             isCollectible: data.slicer.isCollectible,

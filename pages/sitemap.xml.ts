@@ -1,3 +1,4 @@
+import { domain } from "@components/common/Head"
 import fetcher from "@utils/fetcher"
 import { GetServerSideProps } from "next"
 
@@ -5,17 +6,17 @@ function generateSiteMap(totalSlicers) {
   return `<?xml version="1.0" encoding="UTF-8"?>
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <url>
-        <loc>https://slice.so/</loc>
+        <loc>${domain}</loc>
       </url>
       <url>
-        <loc>https://slice.so/slicer</loc>
+        <loc>${domain}/slicer</loc>
       </url>
      ${[...Array(totalSlicers)]
        .map((el, key) => {
          const slicerId = Number(key)
          return `
        <url>
-           <loc>${`https://slice.so/slicer/${slicerId}`}</loc>
+           <loc>${`${domain}/slicer/${slicerId}`}</loc>
        </url>
      `
        })
