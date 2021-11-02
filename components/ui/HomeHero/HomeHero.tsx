@@ -31,9 +31,9 @@ const HomeHero = () => {
 
       <div className="flex flex-col items-center justify-center space-y-8 pt-7 ">
         <Button label="Start slicing" href="/slice" />
-        <Link href="/slicer/1">
+        {/* <Link href="/slicer/1">
           <a className="highlight">Check out the first community slicer</a>
-        </Link>
+        </Link> */}
       </div>
       {/* <div className="absolute top-0 right-0">
         <Image src={heroImage} alt="" />
