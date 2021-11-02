@@ -2,14 +2,14 @@ import Link from "next/link"
 import { Button, DoubleText } from "@components/ui"
 // import ReactRotatingText from "react-rotating-text"
 
-const items = [
-  "applications 👩‍💻",
-  "NFTs ?",
-  "services ✨",
-  "your store 👩‍🍳",
-  "your artworks 👨‍🎨",
-  "the real world 🌍",
-]
+// const items = [
+//   "applications 👩‍💻",
+//   "NFTs ?",
+//   "services ✨",
+//   "your store 👩‍🍳",
+//   "your artworks 👨‍🎨",
+//   "the real world 🌍",
+// ]
 
 const HomeHero = () => {
   return (
@@ -22,31 +22,21 @@ const HomeHero = () => {
           position="mr-4"
         />
       </div>
-      <h2 className="py-2 xs:py-4 text-[1.38rem] font-black leading-normal xs:text-2xl sm:!text-3xl">
-        NFTs that earn you ETH
-        {/* NFTs with real value */}
-        {/* Decentralized product stores
-        <br />& payments infrastructure */}
-        {/* <br />
-        <span className="text-random2-600">
-          for{" "}
-          <ReactRotatingText
-            pause={2000}
-            emptyPause={750}
-            typingInterval={75}
-            items={items}
-          /> 
-        </span>*/}
+      <h2 className="py-2 sm:py-4 text-[1.38rem] font-black leading-normal xs:text-2xl sm:!text-3xl">
+        Decentralized stores
+      </h2>
+      <h2 className="text-xl font-semibold leading-normal sm:!text-xl">
+        with NFT-based profit sharing
       </h2>
 
       <div className="flex flex-col items-center justify-center space-y-8 pt-7 ">
         <Button label="Start slicing" href="/slice" />
-        <Link href="/slicer/1">
+        {/* <Link href="/slicer/1">
           <a className="highlight">Check out the first community slicer</a>
-        </Link>
+        </Link> */}
       </div>
       {/* <div className="absolute top-0 right-0">
-        <Image src={isthis} alt="" />
+        <Image src={heroImage} alt="" />
       </div> */}
     </div>
   )

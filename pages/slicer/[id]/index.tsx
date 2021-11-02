@@ -25,7 +25,7 @@ import fetcher from "@utils/fetcher"
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
   Creator: string
-  "Minimum slices": number
+  "Superowner slices": number
   "Sliced on": number
   "Total slices": number
 }
@@ -38,7 +38,7 @@ export type SlicerData = {
 
 const initAttributes = {
   Creator: "",
-  "Minimum slices": 0,
+  "Superowner slices": 0,
   "Sliced on": 0,
   "Total slices": 0,
 }
@@ -81,11 +81,13 @@ const Id = ({
   // Todo: For collectibles save image on web3Storage instead of supabase? + Allow indefinite size? Figure it out
   const editAllowed = !slicerInfo?.isCollectible
     ? isAllowed
-    : slicerAttributes?.Creator === account?.toLowerCase() && // only Creator + default name, descr & image
-      newName === `Slicer #${slicerInfo?.id}` &&
-      newDescription === "" &&
-      newImage.url === "" &&
-      slicer.imageUrl === "https://slice.so/slicer_default.png"
+    : slicerAttributes?.Creator === account?.toLowerCase() // only Creator
+    ? (newName === `Slicer #${slicerInfo?.id}` && // default name, descr & image
+        newDescription === "" &&
+        newImage.url === "" &&
+        slicer.imageUrl === "https://slice.so/slicer_default.png") ||
+      false // slicerAttributes["Total slices"] === account.slices // creator has all slices
+    : false
 
   useEffect(() => {
     let attr = initAttributes
@@ -116,14 +118,14 @@ const Id = ({
                 openGraph={{
                   title: pageTitle,
                   description: slicer.description,
-                  url: `https://${domain}/slicer/${slicerInfo?.id}`,
+                  url: `${domain}/slicer/${slicerInfo?.id}`,
                   images: [
                     {
                       url: slicer.imageUrl,
                       alt: `${slicer.name} cover image`,
                     },
                     {
-                      url: `https://slice.so/og_image.jpg`,
+                      url: `${domain}/og_image.jpg`,
                       alt: `${slicer.name} cover image`,
                     },
                   ],
@@ -269,10 +271,12 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       slicerInfo,
       products,
     },
-    revalidate: 10,
+    revalidate: 60,
   }
 }
 
 export default Id
 
+// TODO
+// - retrieve account.slices in editAllowed condition
 // - Clean stuff

@@ -28,10 +28,10 @@ const SlicerGrid = ({
         openGraph={{
           title: longTitle,
           description: defaultDescription,
-          url: `https://${domain}`,
+          url: domain,
           images: [
             {
-              url: `https://${domain}/og_image.jpg`,
+              url: `${domain}/og_image.jpg`,
               width: 1000,
               height: 1000,
               alt: `${defaultTitle} cover image`,

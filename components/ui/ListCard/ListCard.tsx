@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Delete from "@components/icons/Delete"
+import React from "react"
 
 type Props = {
   label: string
@@ -18,7 +19,12 @@ const ListCard = ({ label, sideLabel, subLabel, href, remove }: Props) => {
         <p className="text-sm text-gray-400">{subLabel}</p>
       </div>
       <div className="flex justify-center">
-        <Delete onClick={() => remove()} />
+        <Delete
+          onClick={(e: React.SyntheticEvent) => {
+            e.preventDefault()
+            remove()
+          }}
+        />
       </div>
     </div>
   )

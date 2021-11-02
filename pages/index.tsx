@@ -44,10 +44,10 @@ const Home = () => {
         openGraph={{
           title: longTitle,
           description: defaultDescription,
-          url: `https://${domain}`,
+          url: domain,
           images: [
             {
-              url: `https://${domain}/og_image.jpg`,
+              url: `${domain}/og_image.jpg`,
               width: 1000,
               height: 1000,
               alt: `${defaultTitle} cover image`,
@@ -88,13 +88,6 @@ const Home = () => {
 export default Home
 
 /** TODO
- *
- *  ENS
- *    - buy ens domain on mainnet -> slice-so.eth
- *    - Change stuff related to rinkeby
- *
- *    - change new env on vercel + change ext. services from rinkeby
- *    - see stuff in context to change (rpc chain somewhere)
  *
  * *Low Priority*
  *    - Receive ERC721-1155

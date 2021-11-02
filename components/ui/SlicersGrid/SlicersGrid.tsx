@@ -76,7 +76,7 @@ const SlicersGrid = ({ data }: Props) => {
         setShowCollectibles={setShowCollectibles}
       />
       {filteredData.length != 0 ? (
-        <div className="grid items-center justify-center grid-cols-1 gap-2 max-w-[400px] sm:gap-6 lg:gap-8 sm:max-w-[550px] mx-auto sm:grid-cols-2 md:max-w-none md:grid-cols-3">
+        <div className="grid items-center justify-center grid-cols-1 gap-2 max-w-[400px] gap-y-6 sm:gap-6 lg:gap-8 sm:max-w-[550px] mx-auto sm:grid-cols-2 md:max-w-none md:grid-cols-3 my-14">
           {[...Array(iterator)].map((el, key) => {
             const slicerData = filteredData[key]
             const { id, name, tags, image, isCollectible } = slicerData
@@ -90,6 +90,8 @@ const SlicersGrid = ({ data }: Props) => {
                 image={image}
                 href={slicerLink}
                 className="rounded-none"
+                containerClassName="h-full cursor-pointer"
+                cardClassName="group h-full overflow-hidden transition-all duration-1000 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025]"
                 size="h-44"
                 topLeft={
                   isCollectible && {
