@@ -1,9 +1,6 @@
 import Image from "next/image"
-import { useRouter } from "next/dist/client/router"
 
 const Footer = () => {
-  const router = useRouter()
-
   return (
     <div className="relative z-10 flex justify-center md:z-30">
       <div className="fixed bottom-0 w-screen max-w-screen-xl">
