@@ -26,7 +26,7 @@ const SlicerTags = ({ tags, newTags, setNewTags, editMode }: Props) => {
   // }
 
   return editMode ? (
-    <div className="container pt-4">
+    <div className="pt-4">
       {/* {tags.map((tag, key) => (
         <div key={key}>
           <p>{tag}</p>
