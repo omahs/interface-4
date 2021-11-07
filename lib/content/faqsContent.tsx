@@ -193,11 +193,14 @@ export const faqsMain = [
         </ul>
         <p>
           Note: You can check the total amount of ETH earned by a slicer on
-          Opensea, in the properties section.
-          {/* Check out an example{" "}
-          <a href="https://opensea.io/" target="_blank" rel="noreferrer">
+          Opensea, in the <i>Stats</i> section. Check out an example{" "}
+          <a
+            href="https://opensea.io/assets/0x0fd0d9aa44a05ee158ddf6f01d7dcf503388781d/0"
+            target="_blank"
+            rel="noreferrer"
+          >
             here
-          </a> */}
+          </a>
         </p>
       </>
     ),

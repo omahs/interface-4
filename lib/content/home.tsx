@@ -38,7 +38,11 @@ export const section2 = (
     <p>
       They&apos;re ERC1155 tokens so you&apos;re free to transfer or sell them
       however you prefer (even on{" "}
-      <a href="https://opensea.io" target="_blank" rel="noreferrer">
+      <a
+        href="https://opensea.io/assets/0x0fd0d9aa44a05ee158ddf6f01d7dcf503388781d/0"
+        target="_blank"
+        rel="noreferrer"
+      >
         Opensea
       </a>
       ), and the slicer will always give you any ETH you earned.
