@@ -45,7 +45,7 @@ const Modal = ({ modalView, setModalView }: Props) => {
   }
 
   return (
-    <div className="fixed top-0 z-30 w-screen h-screen py-12 overflow-y-scroll xs:py-20 background-modal">
+    <div className="fixed top-0 z-50 w-screen h-screen py-12 overflow-y-scroll xs:py-20 background-modal">
       <div
         className="absolute w-full h-full mt-[-3rem] xs:mt-[-5rem]"
         onClick={() => (cross ? setModalView({ name: "" }) : null)}

@@ -5,9 +5,9 @@ const Footer = () => {
   const router = useRouter()
 
   return (
-    <div className="relative z-10 flex justify-center">
+    <div className="relative z-10 flex justify-center md:z-30">
       <div className="fixed bottom-0 w-screen max-w-screen-xl">
-        <div className=" absolute bottom-[20px] right-[20px] sm:bottom-[40px] sm:right-[50px] z-20">
+        <div className=" absolute bottom-[20px] right-[20px] md:bottom-[40px] md:right-[50px]">
           <a
             href="https://www.producthunt.com/posts/slice-beta?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-slice-beta"
             target="_blank"
