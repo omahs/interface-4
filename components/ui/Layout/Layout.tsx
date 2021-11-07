@@ -4,8 +4,10 @@ import { useAppContext } from "@components/ui/context"
 import { useEffect } from "react"
 import { useCookies } from "react-cookie"
 import { ProductCart } from "@lib/handleUpdateCart"
-// import ProductHuntBadge from "../ProductHuntBadge"
 
+const ProductHuntBadge = dynamic(
+  () => import("@components/ui/ProductHuntBadge")
+)
 const FloatingCart = dynamic(() => import("@components/ui/FloatingCart"), {
   ssr: false,
 })
@@ -42,8 +44,11 @@ export default function Layout({ children }) {
         {modalView.name && (
           <Modal modalView={modalView} setModalView={setModalView} />
         )}
-        <FloatingCart cookieCart={cookieCart} />
-        {/* <ProductHuntBadge /> */}
+        {cookieCart && cookieCart.length != 0 ? (
+          <FloatingCart cookieCart={cookieCart} />
+        ) : (
+          <ProductHuntBadge />
+        )}
       </div>
     </>
   )
