@@ -46,9 +46,9 @@ export default function Layout({ children }) {
         )}
         {cookieCart && cookieCart.length != 0 ? (
           <FloatingCart cookieCart={cookieCart} />
-        ) : (
-          <ProductHuntBadge />
-        )}
+        ) : null
+        // <ProductHuntBadge />
+        }
       </div>
     </>
   )
