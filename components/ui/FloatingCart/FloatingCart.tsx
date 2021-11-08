@@ -100,7 +100,7 @@ const FloatingCart = ({ cookieCart }: Props) => {
       {/* } */}
       {(showCart || loading || success) && (
         <div
-          className={`fixed z-20 bottom-0 mb-[20px] sm:mb-[32px] right-[20px] sm:right-[32px] nightwind-prevent-block transition-opacity duration-200`}
+          className={`fixed z-30 bottom-0 mb-[20px] sm:mb-[32px] right-[20px] sm:right-[32px] nightwind-prevent-block transition-opacity duration-200`}
           // ${
           //   showCart || loading || success
           //     ? "z-20 opacity-100"

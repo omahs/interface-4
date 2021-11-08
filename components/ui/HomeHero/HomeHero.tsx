@@ -26,7 +26,7 @@ const HomeHero = () => {
         Decentralized stores
       </h2>
       <h2 className="text-xl font-semibold leading-normal sm:!text-xl">
-        with NFT-based profit sharing
+        with NFT-based ownership
       </h2>
 
       <div className="flex flex-col items-center justify-center space-y-8 pt-7 ">
