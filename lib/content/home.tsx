@@ -12,7 +12,7 @@ export const section1 = (
     </p>
     <p>
       The cool thing about slicers is they can be used to represent any entity,
-      project or digital asset. They generate revenue and split it among all
+      project or digital asset. They collect payments and split them among all
       their owners.
     </p>
   </>
