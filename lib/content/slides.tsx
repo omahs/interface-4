@@ -86,12 +86,12 @@ const slides = [
     imageContent: (color: string) => CarouselFiles(color),
     contentSlicer: (
       <p>
-        Used as a <b>profit-sharing mechanism</b>.
+        Used to <b>split payments between owners</b>.
       </p>
     ),
     contentSlice: (
       <p>
-        Represent the <b>right to redeem part of the profits</b>.
+        Represent the <b>right to redeem any due ETH</b>.
       </p>
     ),
     contentProduct: (
@@ -105,13 +105,13 @@ const slides = [
     imageContent: (color: string) => CarouselPayments(color),
     contentSlicer: (
       <p>
-        Related to a <b>specific project or team</b> and used as a{" "}
-        <b>profit-sharing mechanism</b>.
+        Related to a <b>specific project or team</b> and used to{" "}
+        <b>split payments between owners</b>.
       </p>
     ),
     contentSlice: (
       <p>
-        Represent the <b>right to redeem part of the profits</b>.
+        Represent the <b>right to redeem any due ETH</b>.
       </p>
     ),
     contentProduct: (
@@ -126,8 +126,7 @@ const slides = [
     imageContent: (color: string) => CarouselStartups(color),
     contentSlicer: (
       <p>
-        Represents <b>company structure</b>, collects and{" "}
-        <b>distributes profits</b>.
+        Represents <b>company structure</b>, collects and <b>split payments</b>.
       </p>
     ),
     contentSlice: (
@@ -150,7 +149,7 @@ const slides = [
     contentSlicer: <p>Related to an entity, project, collectible or meme.</p>,
     contentSlice: (
       <p>
-        Represent the <b>right to redeem part of the profits</b>.
+        Represent the <b>right to redeem any due ETH</b>.
       </p>
     ),
     contentProduct: (
