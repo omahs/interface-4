@@ -111,4 +111,5 @@ export default Home
  * OTHER
  * - Handle ERC20
  * - DeGov logics
+ * - create vaults and allow spending money directly from slicer
  */

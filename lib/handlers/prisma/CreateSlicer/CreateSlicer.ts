@@ -4,7 +4,7 @@ const CreateSlicer = async (
   name: string,
   description: string
 ) => {
-  const prisma = (await import("@lib/db")).default
+  const prisma = (await import("@lib/prisma")).default
 
   const query = await prisma.slicer.create({
     data: { id, address, name, description },
