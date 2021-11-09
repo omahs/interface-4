@@ -39,7 +39,7 @@ export const section2 = (
       They&apos;re ERC1155 tokens so you&apos;re free to transfer or sell them
       however you prefer (even on{" "}
       <a
-        href="https://opensea.io/assets/0x0fd0d9aa44a05ee158ddf6f01d7dcf503388781d/0"
+        href="https://opensea.io/collection/slice-so"
         target="_blank"
         rel="noreferrer"
       >
