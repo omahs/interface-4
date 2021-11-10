@@ -122,17 +122,18 @@ const slides = [
     ),
   },
   {
-    title: "Startups",
+    title: "Startup & DAO",
     imageContent: (color: string) => CarouselStartups(color),
     contentSlicer: (
       <p>
-        Represents <b>company structure</b>, collects and <b>split payments</b>.
+        Represents <b>company/DAO structure</b>, collects and{" "}
+        <b>split payments</b>.
       </p>
     ),
     contentSlice: (
       <p>
-        Analogous to <b>equity shares</b>. Can be sold to investors to{" "}
-        <b>raise capital</b> or as a <b>crowdfunding mechanism</b>.
+        Can be sold to investors to <b>raise capital</b> or as a{" "}
+        <b>crowdfunding mechanism</b>.
       </p>
     ),
     contentProduct: (

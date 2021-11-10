@@ -3,7 +3,7 @@ const UpdateProduct = async (
   tempProductHash: string,
   productId: number
 ) => {
-  const prisma = (await import("@lib/db")).default
+  const prisma = (await import("@lib/prisma")).default
 
   const query = await prisma.product.update({
     where: { id },

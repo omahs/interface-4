@@ -1,5 +1,5 @@
 const AddRevert = async (hash: string) => {
-  const prisma = (await import("@lib/db")).default
+  const prisma = (await import("@lib/prisma")).default
 
   const query = await prisma.revert.create({
     data: { hash },

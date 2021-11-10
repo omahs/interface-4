@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import { sliceCore } from "@lib/initProvider"
 import { Slicer } from "@prisma/client"
-import prisma from "@lib/db"
+import prisma from "@lib/prisma"
 import { defaultProvider } from "lib/useProvider"
 import { TotalReceived } from "@lib/handlers/chain"
 import client from "@utils/apollo-client"

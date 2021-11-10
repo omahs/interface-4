@@ -152,7 +152,11 @@ export const faqsMain = [
         </p>
         <p>
           If you wish to sell your slices, you can use{" "}
-          <a href="https://opensea.io/" target="_blank" rel="noreferrer">
+          <a
+            href="https://opensea.io/collection/slice-so"
+            target="_blank"
+            rel="noreferrer"
+          >
             Opensea
           </a>
           .
