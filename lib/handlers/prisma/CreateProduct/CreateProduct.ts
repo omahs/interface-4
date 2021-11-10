@@ -11,7 +11,7 @@ const CreateProduct = async (
   productId?: number | null,
   purchaseInfo?: object
 ) => {
-  const prisma = (await import("@lib/db")).default
+  const prisma = (await import("@lib/prisma")).default
 
   let query
   try {

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import prisma from "@lib/db"
+import prisma from "@lib/prisma"
 import corsMiddleware from "@utils/corsMiddleware"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
