@@ -24,15 +24,15 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
     messageStatus: "success",
   })
 
-  const cleanedAddresses = addresses.filter(() => true)
-  const cleanedShares = shares.filter(() => true)
-
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
 
     const handleSubmit = (await import("@utils/handleSubmit")).default
     const handleMessage = (await import("@utils/handleMessage")).default
     const { Slice } = await import("@lib/handlers/chain")
+
+    const cleanedAddresses = addresses.filter(() => true)
+    const cleanedShares = shares.filter(() => true)
 
     try {
       if (
