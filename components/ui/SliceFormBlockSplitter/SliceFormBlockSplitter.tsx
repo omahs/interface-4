@@ -41,7 +41,6 @@ const SliceFormBlockSplitter = ({
 
   useEffect(() => {
     setInitAddress(account)
-    setAddresses([account])
   }, [account])
 
   useEffect(() => {
