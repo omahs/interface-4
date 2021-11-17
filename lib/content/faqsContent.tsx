@@ -16,14 +16,22 @@ export const faqsMain = [
           those slices.
         </p>
         <p>
-          <b>Slices</b> are digital tokens (ERC1155) used to{" "}
+          <b>Slices</b> are ERC1155 tokens used to{" "}
           <b>subdivide the ownership of a slicer</b>. Their total amount is
           defined when a slicer is created and cannot be changed later. Owners
           can{" "}
           <Link href="/#transfer">
             <a>transfer them like any other ERC1155 token</a>
           </Link>
-          , or even sell them on opensea.
+          , or even sell them on{" "}
+          <a
+            href="https://opensea.io/collection/slice-so"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Opensea
+          </a>
+          .
         </p>
       </>
     ),
