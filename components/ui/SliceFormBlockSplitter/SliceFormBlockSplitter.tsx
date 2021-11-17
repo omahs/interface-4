@@ -62,7 +62,7 @@ const SliceFormBlockSplitter = ({
     <div>
       <div className="grid items-center grid-cols-8 text-left xs:grid-cols-10 md:grid-cols-12 gap-x-4 gap-y-4 xs:gap-y-6">
         <p className="mb-[-25px] text-sm text-gray-700 font-semibold hidden xs:block xs:col-span-5 xs:col-start-2 md:col-span-7 md:col-start-2">
-          Addresses (Max. 30)
+          Addresses
         </p>
         <div className="mb-[-25px] text-gray-700 relative items-center hidden xs:flex">
           <p className="pr-1 text-sm font-semibold">Slices</p>
@@ -83,7 +83,7 @@ const SliceFormBlockSplitter = ({
           />
         </div>
         <p className="col-span-8 pb-2 font-semibold text-center xs:hidden">
-          Add up to 30 addresses
+          Add the addresses who will own the slicer
         </p>
         {[...Array(inputCount)].map((el, key) => {
           const i = key
@@ -105,9 +105,7 @@ const SliceFormBlockSplitter = ({
           )
         })}
         <div className="col-span-1 col-start-1 mx-auto">
-          {inputCount - removedCount < 30 && (
-            <Add onClick={() => setInputCount(inputCount + 1)} />
-          )}
+          <Add onClick={() => setInputCount(inputCount + 1)} />
         </div>
         <p className="col-span-4 py-3 pr-2 text-right xs:col-span-3 xs:col-end-7 md:col-end-9 md:col-span-3">
           Total slices
