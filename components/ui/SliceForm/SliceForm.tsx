@@ -35,10 +35,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
     const cleanedShares = shares.filter(() => true)
 
     try {
-      if (
-        cleanedShares.length == cleanedAddresses.length &&
-        cleanedShares.length <= 30
-      ) {
+      if (cleanedShares.length == cleanedAddresses.length) {
         const eventLogs = await handleSubmit(
           Slice(
             connector,
