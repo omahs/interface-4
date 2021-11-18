@@ -1788,8 +1788,8 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/slice_v0.sol": {
-      "lastModificationDate": 1637151009418,
-      "contentHash": "dc7f3251a845a96d9c486b54a89e4a09",
+      "lastModificationDate": 1637198325535,
+      "contentHash": "2d990d38efa4fcc1be572d0c66326eed",
       "sourceName": "contracts/slice_v0.sol",
       "solcConfig": {
         "version": "0.8.8",

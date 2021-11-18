@@ -37,7 +37,7 @@ const FloatingCart = ({ cookieCart }: Props) => {
   const reducer = (previousValue: number, currentValue: ProductCart) => {
     const { quantity, price, isUSD } = currentValue
     const productPrice = isUSD
-      ? Math.floor((price * 10) / Number(ethUsd?.price)) / 1000
+      ? Math.floor((price * 100) / Number(ethUsd?.price)) / 10000
       : Math.floor(price / 10 ** 14) / 10000
     return previousValue + productPrice * quantity
   }

@@ -87,6 +87,11 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           <strong>Note:</strong> minimum and total slices cannot be changed
           later.
         </p>
+        {/* {"???" && ( // TODO
+          <p className="pt-4">
+            <strong>Note:</strong> At least one user needs to be a superowner.
+          </p>
+        )} */}
         {totalShares === 1 && (
           <p className="pt-4">
             <strong>Note:</strong> You are about to create a non-fractionalized
@@ -94,6 +99,13 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
             given time which gets all ETH earned by the slicer.
           </p>
         )}
+        {/* {"???" && ( // TODO
+          <p className="pt-4">
+            <strong>Note:</strong> You are making it so that a user needs to own
+            all of the slices to operate this slicer. Make sure this is the
+            desired behaviour, since it cannot be changed later.
+          </p>
+        )} */}
         {process.env.NEXT_PUBLIC_CHAIN_ID === "4" && (
           <p className="pt-4">
             <strong>Note:</strong> This version of Slice runs on Rinkeby

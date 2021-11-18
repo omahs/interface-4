@@ -122,7 +122,7 @@ const ProductCard = ({
     if (price && ethUsd) {
       if (isUSD) {
         const convertedPrice =
-          Math.floor((price * 10) / Number(ethUsd?.price)) / 1000
+          Math.floor((price * 100) / Number(ethUsd?.price)) / 10000
         setConvertedEthUsd(convertedPrice)
       } else {
         const convertedPrice =
