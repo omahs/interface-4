@@ -90,7 +90,6 @@ export default Home
 /** TODO
  *
  * *Critical priority*
- * - Allow contracts to own slices -> beforeTransferToSlicer function in Slice contract
  *
  * *High Priority*
  *
