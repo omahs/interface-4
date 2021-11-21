@@ -5,7 +5,7 @@ import Spinner from "@components/icons/Spinner"
 import { ProductCart } from "@lib/handleUpdateCart"
 import fetcher from "@utils/fetcher"
 import { Message } from "@utils/handleMessage"
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import useSWR from "swr"
 import { CartList } from ".."
@@ -14,16 +14,17 @@ import { productsToPurchases } from "@utils/getPurchases"
 
 type Props = {
   cookieCart: ProductCart[]
+  success: boolean
+  setSuccess: Dispatch<SetStateAction<boolean>>
 }
 
-const FloatingCart = ({ cookieCart }: Props) => {
+const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
   const { isConnected, setPurchases, purchases, setModalView, connector } =
     useAppContext()
   const [cookies, setCookie, removeCookie] = useCookies(["cart"])
   const [showCartList, setShowCartList] = useState(false)
   const [showCart, setShowCart] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
   const [message, setMessage] = useState<Message>({
     message: "",
     messageStatus: "success",
