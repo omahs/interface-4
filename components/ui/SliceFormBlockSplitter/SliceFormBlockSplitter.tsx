@@ -19,6 +19,7 @@ type Props = {
   setMinimumShares: Dispatch<SetStateAction<number>>
   setTotalShares: Dispatch<SetStateAction<number>>
   setIsCollectible: Dispatch<SetStateAction<boolean>>
+  hasMinimumShares: boolean
 }
 
 const SliceFormBlockSplitter = ({
@@ -33,6 +34,7 @@ const SliceFormBlockSplitter = ({
   setMinimumShares,
   setTotalShares,
   setIsCollectible,
+  hasMinimumShares,
 }: Props) => {
   const { account } = useAppContext()
   const [initAddress, setInitAddress] = useState("")
@@ -143,7 +145,7 @@ const SliceFormBlockSplitter = ({
           <Input
             type="number"
             placeholder="100000"
-            error={minimumShares > totalShares}
+            error={minimumShares > totalShares || !hasMinimumShares}
             required
             onChange={setMinimumShares}
           />
