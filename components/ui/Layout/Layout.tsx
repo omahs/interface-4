@@ -45,16 +45,16 @@ export default function Layout({ children }) {
         {modalView.name && (
           <Modal modalView={modalView} setModalView={setModalView} />
         )}
-        {
-          success || (cookieCart && cookieCart.length != 0) ? (
-            <FloatingCart
-              cookieCart={cookieCart}
-              success={success}
-              setSuccess={setSuccess}
-            />
-          ) : null
-          // ) : <ProductHuntBadge />
-        }
+        {success || (cookieCart && cookieCart.length != 0) ? (
+          <FloatingCart
+            cookieCart={cookieCart}
+            success={success}
+            setSuccess={setSuccess}
+          />
+        ) : (
+          // ) : null
+          <ProductHuntBadge />
+        )}
       </div>
     </>
   )
