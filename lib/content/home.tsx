@@ -33,7 +33,7 @@ export const section2 = (
         size="text-normal"
       />{" "}
       (fractionalized NFTs) that represent ownership of a slicer, including the
-      right to redeem any due ETH.
+      right to redeem any due ETH. Think of them as the royalties of a slicer.
     </p>
     <p>
       They&apos;re ERC1155 tokens so you&apos;re free to transfer or sell them

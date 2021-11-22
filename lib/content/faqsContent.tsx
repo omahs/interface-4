@@ -17,9 +17,9 @@ export const faqsMain = [
         </p>
         <p>
           <b>Slices</b> are ERC1155 tokens used to{" "}
-          <b>subdivide the ownership of a slicer</b>. Their total amount is
-          defined when a slicer is created and cannot be changed later. Owners
-          can{" "}
+          <b>subdivide the ownership of a slicer</b>, which can also be seen as
+          the slicer&apos;s royalties. Their total amount is defined when a
+          slicer is created and cannot be changed later. Owners can{" "}
           <Link href="/#transfer">
             <a>transfer them like any other ERC1155 token</a>
           </Link>
