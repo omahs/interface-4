@@ -67,7 +67,7 @@ export default function Slice() {
                     which can be shared among multiple accounts.
                   </p>
                   <p>
-                    When slicers receive ETH, owners can redeem an amount
+                    When a slicer receives ETH, owners can redeem an amount
                     proportional to the owned slices.
                   </p>
                 </div>

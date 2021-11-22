@@ -151,7 +151,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/utils/ownableSlice.sol": {
-      "lastModificationDate": 1632872955974,
+      "lastModificationDate": 1636909207942,
       "contentHash": "4688adc46800d94f1dc10f7abd847e8a",
       "sourceName": "contracts/utils/ownableSlice.sol",
       "solcConfig": {
@@ -1788,8 +1788,8 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/slice_v0.sol": {
-      "lastModificationDate": 1636672905669,
-      "contentHash": "d2c32f737ad86389639a420214a9d8ed",
+      "lastModificationDate": 1637198325535,
+      "contentHash": "2d990d38efa4fcc1be572d0c66326eed",
       "sourceName": "contracts/slice_v0.sol",
       "solcConfig": {
         "version": "0.8.8",
@@ -2068,7 +2068,7 @@
       ]
     },
     "/Users/jaco/Documents/dev/slice.so/contracts/utils/metadata.sol": {
-      "lastModificationDate": 1632872955972,
+      "lastModificationDate": 1636909161452,
       "contentHash": "072f8dba477b4d322a8c4ce26cbfff42",
       "sourceName": "contracts/utils/metadata.sol",
       "solcConfig": {
