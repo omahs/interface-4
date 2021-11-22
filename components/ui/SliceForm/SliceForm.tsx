@@ -4,6 +4,7 @@ import { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import MessageBlock from "../MessageBlock"
 import { useAppContext } from "../context"
+import formatNumber from "@utils/formatNumber"
 
 type Props = {
   success: boolean
@@ -23,6 +24,9 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
     message: "",
     messageStatus: "success",
   })
+
+  const hasMinimumShares =
+    shares.filter((share) => share >= minimumShares).length > 0
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
@@ -81,17 +85,30 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         setMinimumShares={setMinimumShares}
         setTotalShares={setTotalShares}
         setIsCollectible={setIsCollectible}
+        hasMinimumShares={hasMinimumShares}
       />
       <div className="py-8">
         <p>
           <strong>Note:</strong> minimum and total slices cannot be changed
           later.
         </p>
-        {/* {"???" && ( // TODO
-          <p className="pt-4">
-            <strong>Note:</strong> At least one user needs to be a superowner.
-          </p>
-        )} */}
+        {minimumShares &&
+          minimumShares != 0 &&
+          (hasMinimumShares ? (
+            <p className="pt-4">
+              <strong>Note:</strong> This slicer allows up to
+              {totalShares / minimumShares > 1000 ? " about " : " "}
+              <b>
+                {`${formatNumber(totalShares / minimumShares)}`.split(".")[0]}
+              </b>{" "}
+              superowners at the same time.
+            </p>
+          ) : (
+            <p className="pt-4">
+              <strong className="text-red-500">Error:</strong> At least one user
+              needs to be a superowner.
+            </p>
+          ))}
         {totalShares === 1 && (
           <p className="pt-4">
             <strong>Note:</strong> You are about to create a non-fractionalized
@@ -99,13 +116,14 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
             given time which gets all ETH earned by the slicer.
           </p>
         )}
-        {/* {"???" && ( // TODO
+        {minimumShares != 0 && totalShares == minimumShares && (
           <p className="pt-4">
-            <strong>Note:</strong> You are making it so that a user needs to own
-            all of the slices to operate this slicer. Make sure this is the
-            desired behaviour, since it cannot be changed later.
+            <strong>Note:</strong> A user would need to own all of the slices to
+            operate this slicer. Superowner slices cannot be changed later, so
+            make sure this is the desired behaviour or reduce them accordingly
+            to your needs.
           </p>
-        )} */}
+        )}
         {process.env.NEXT_PUBLIC_CHAIN_ID === "4" && (
           <p className="pt-4">
             <strong>Note:</strong> This version of Slice runs on Rinkeby

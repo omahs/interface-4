@@ -114,6 +114,7 @@ const SliceFormInputBlock = ({
           <Input
             type="number"
             placeholder="1000000"
+            min="0"
             value={sharesAmount}
             required={address && true}
             onChange={setSharesAmount}

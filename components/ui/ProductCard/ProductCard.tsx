@@ -141,7 +141,7 @@ const ProductCard = ({
         className="rounded-none"
         name={name}
         image={image}
-        size="h-44"
+        size="h-52"
         topLeft={{
           title: "Purchases",
           content: (

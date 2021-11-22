@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic"
 import { Footer, Navbar } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import { ProductCart } from "@lib/handleUpdateCart"
 
@@ -17,6 +17,7 @@ const Modal = dynamic(() => import("@components/ui/Modal"), {
 
 export default function Layout({ children }) {
   const { isConnected, chainId, modalView, setModalView } = useAppContext()
+  const [success, setSuccess] = useState(false)
   const [cookies] = useCookies(["cart"])
 
   const cookieCart: ProductCart[] = cookies?.cart
@@ -44,11 +45,16 @@ export default function Layout({ children }) {
         {modalView.name && (
           <Modal modalView={modalView} setModalView={setModalView} />
         )}
-        {cookieCart && cookieCart.length != 0 ? (
-          <FloatingCart cookieCart={cookieCart} />
-        ) : null
-        // <ProductHuntBadge />
-        }
+        {success || (cookieCart && cookieCart.length != 0) ? (
+          <FloatingCart
+            cookieCart={cookieCart}
+            success={success}
+            setSuccess={setSuccess}
+          />
+        ) : (
+          // ) : null
+          <ProductHuntBadge />
+        )}
       </div>
     </>
   )
