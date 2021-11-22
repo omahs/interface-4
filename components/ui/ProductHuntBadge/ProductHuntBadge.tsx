@@ -6,13 +6,13 @@ const Footer = () => {
       <div className="fixed bottom-0 w-screen max-w-screen-xl">
         <div className=" absolute bottom-[20px] right-[20px] md:bottom-[40px] md:right-[50px]">
           <a
-            href="https://www.producthunt.com/posts/slice-beta?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-slice-beta"
+            href="https://www.producthunt.com/posts/slice-4?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-slice-4"
             target="_blank"
             rel="noreferrer"
           >
             <Image
-              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=307313&amp;theme=dark"
-              alt="Slice (beta) - Decentralized payments infrastructure for everything 🍰 | Product Hunt"
+              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=320448&theme=dark"
+              alt="Slice - Decentralized stores with NFT-based ownership | Product Hunt"
               width={250}
               height={54}
             />
