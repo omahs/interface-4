@@ -271,7 +271,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       slicerInfo,
       products,
     },
-    revalidate: 60,
+    revalidate: 10,
   }
 }
 
