@@ -51,10 +51,9 @@ export default function Layout({ children }) {
             success={success}
             setSuccess={setSuccess}
           />
-        ) : (
-          // ) : null
-          <ProductHuntBadge />
-        )}
+        ) : null
+        // <ProductHuntBadge />
+        }
       </div>
     </>
   )
