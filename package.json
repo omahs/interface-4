@@ -20,7 +20,7 @@
     "@mailchimp/mailchimp_marketing": "^3.0.55",
     "@openzeppelin/contracts-upgradeable": "^4.2.0",
     "@peculiar/webcrypto": "^1.1.7",
-    "@prisma/client": "^3.1.1",
+    "@prisma/client": "^3.5.0",
     "@supabase/supabase-js": "^1.22.4",
     "@tailwindcss/forms": "^0.3.4",
     "@types/react": "^16.14.6",
@@ -76,7 +76,7 @@
     "hardhat": "^2.4.1",
     "mocha": "^9.0.1",
     "nightwind": "^1.1.12",
-    "prisma": "^3.1.1",
+    "prisma": "^3.5.0",
     "tailwindcss": "^2.2.15",
     "ts-node": "^10.0.0",
     "typescript": "^4.3.4"
