@@ -93,13 +93,14 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           later.
         </p>
         {minimumShares &&
-          minimumShares != 0 &&
+          minimumShares > 0 &&
           (hasMinimumShares ? (
             <p className="pt-4">
-              <strong>Note:</strong> This slicer allows up to
-              {totalShares / minimumShares > 1000 ? " about " : " "}
+              <strong>Note:</strong> This slicer allows up to{" "}
               <b>
-                {`${formatNumber(totalShares / minimumShares)}`.split(".")[0]}
+                {totalShares / minimumShares > 1000
+                  ? `about ${formatNumber(totalShares / minimumShares)}`
+                  : `${totalShares / minimumShares}`.split(".")[0]}
               </b>{" "}
               superowners at the same time.
             </p>
