@@ -104,8 +104,10 @@ const AddProductFormPrice = ({
             <p>
               If enabled, it&apos;s like setting the product price in USD. The
               user will always pay in ETH the corresponding USD value set
-              {usdValue && usdValue != 0 && <b> ${usdValue.toFixed(2)}</b>}.
-              This can be useful to protect against changes in ETH value over
+              {usdValue && usdValue != 0 && (
+                <b> ${Number(usdValue).toFixed(2)}</b>
+              )}
+              . This can be useful to protect against changes in ETH value over
               time.
             </p>
             <p>

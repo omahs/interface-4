@@ -145,9 +145,14 @@ const SliceFormBlockSplitter = ({
           <Input
             type="number"
             placeholder="100000"
-            error={minimumShares > totalShares || !hasMinimumShares}
+            error={
+              minimumShares > totalShares ||
+              !hasMinimumShares ||
+              minimumShares < 0
+            }
             required
             onChange={setMinimumShares}
+            min={0}
           />
         </div>
         <div className="flex items-center col-start-6 pl-5 mb-3 xs:pl-0 xs:col-span-1">
