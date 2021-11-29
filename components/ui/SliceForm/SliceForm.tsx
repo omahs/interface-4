@@ -92,24 +92,25 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           <strong>Note:</strong> minimum and total slices cannot be changed
           later.
         </p>
-        {minimumShares &&
-          minimumShares > 0 &&
-          (hasMinimumShares ? (
-            <p className="pt-4">
-              <strong>Note:</strong> This slicer allows up to{" "}
-              <b>
-                {totalShares / minimumShares > 1000
-                  ? `about ${formatNumber(totalShares / minimumShares)}`
-                  : `${totalShares / minimumShares}`.split(".")[0]}
-              </b>{" "}
-              superowners at the same time.
-            </p>
-          ) : (
-            <p className="pt-4">
-              <strong className="text-red-500">Error:</strong> At least one user
-              needs to be a superowner.
-            </p>
-          ))}
+        {minimumShares
+          ? minimumShares > 0 &&
+            (hasMinimumShares ? (
+              <p className="pt-4">
+                <strong>Note:</strong> This slicer allows up to{" "}
+                <b>
+                  {totalShares / minimumShares > 1000
+                    ? `about ${formatNumber(totalShares / minimumShares)}`
+                    : `${totalShares / minimumShares}`.split(".")[0]}
+                </b>{" "}
+                superowners at the same time.
+              </p>
+            ) : (
+              <p className="pt-4">
+                <strong className="text-red-500">Error:</strong> At least one
+                user needs to be a superowner.
+              </p>
+            ))
+          : null}
         {totalShares === 1 && (
           <p className="pt-4">
             <strong>Note:</strong> You are about to create a non-fractionalized
