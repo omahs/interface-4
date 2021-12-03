@@ -53,22 +53,17 @@ export default function Slice() {
                 />
                 <div className="py-6 mx-auto space-y-4 sm:py-8 sm:text-lg max-w-screen-xs">
                   <p>
-                    Slicers are a special kind of{" "}
+                    When a slicer receives ETH, owners receive an amount
+                    proportional to the held slices.
+                  </p>
+                  <p>
+                    Slices are{" "}
                     <DoubleText
                       inactive
                       logoText="fractionalized NFTs"
                       size="text-normal"
                     />{" "}
-                    {/* <Link href="/">
-                      <a className="font-black highlight">
-                        special kind of fractional NFTs
-                      </a>
-                    </Link> */}
-                    which can be shared among multiple accounts.
-                  </p>
-                  <p>
-                    When a slicer receives ETH, owners can redeem an amount
-                    proportional to the owned slices.
+                    (ERC1155 tokens) that represent ownership over a slicer.
                   </p>
                 </div>
                 <SliceForm
