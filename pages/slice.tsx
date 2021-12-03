@@ -51,7 +51,7 @@ export default function Slice() {
                   size="text-4xl sm:text-5xl"
                   position="pb-4 sm:pb-6"
                 />
-                <div className="py-6 mx-auto space-y-4 sm:py-8 sm:text-lg max-w-screen-xs">
+                <div className="py-6 mx-auto space-y-4 sm:px-6 max-w-screen-xs">
                   <p>
                     When a slicer receives ETH, owners receive an amount
                     proportional to the held slices.
