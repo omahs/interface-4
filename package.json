@@ -35,6 +35,7 @@
     "ethers": "^5.3.1",
     "fuse.js": "^6.4.6",
     "graphql": "^15.5.1",
+    "gray-matter": "^4.0.3",
     "image-blob-reduce": "^3.0.1",
     "ipfs-unixfs-importer": "^9.0.4",
     "mime-types": "^2.1.32",
