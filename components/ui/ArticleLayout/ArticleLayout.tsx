@@ -43,9 +43,9 @@ export default function Article(props) {
 
         <section className="max-w-screen-sm pt-2 pb-10 mx-auto text-left">
           <Back />
-          <div className="pt-6">
+          <div className="pt-4">
             <h1 className="pb-2 text-3xl">{props.title}</h1>
-            <h2 className="text-base font-normal">{props.subtitle}</h2>
+            <h2 className="text-lg font-normal">{props.subtitle}</h2>
           </div>
           {props.coverImage ? (
             <div className="relative mt-5 mb-8 rounded-xl overflow-hidden height-[40vw] max-height-[270px]">
@@ -58,7 +58,7 @@ export default function Article(props) {
             </div>
           ) : null}
 
-          <article className="prose description">{props.children}</article>
+          <article className="prose">{props.children}</article>
         </section>
       </Container>
     </>
