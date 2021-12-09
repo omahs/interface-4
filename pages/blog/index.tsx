@@ -26,27 +26,30 @@ export default function Blog({ allPosts }) {
         />
 
         <section className="max-w-screen-sm pt-2 mx-auto text-left">
-          <div className="py-6 sm:pt-10">
-            <h1 className="py-3 text-center">
-              <DoubleText
-                inactive
-                logoText={`Slice blog`}
-                size="text-5xl sm:text-6xl"
-              />
-            </h1>
-          </div>
-          <main className="description">
+          <h1 className="pb-20 text-center">
+            <DoubleText
+              inactive
+              logoText={`Slice blog`}
+              size="text-5xl sm:text-6xl"
+            />
+          </h1>
+          <main className="">
             <ul>
               {allPosts.map((post, key) => {
                 return (
-                  <li key={key}>
-                    <p>
-                      <Link href={`/blog/${encodeURIComponent(post.slug)}`}>
-                        <a className="font-medium">{post.title}</a>
-                      </Link>
-                      : {post.subtitle}
-                    </p>
-                  </li>
+                  <>
+                    <Link href={`/blog/${encodeURIComponent(post.slug)}`}>
+                      <a>
+                        <li key={key}>
+                          <p className="text-xl font-black sm:text-2xl">
+                            {post.title}
+                          </p>
+                          <p className="pt-1 font-normal">{post.subtitle}</p>
+                        </li>
+                      </a>
+                    </Link>
+                    <hr className="mx-auto my-8 border-gray-300" />
+                  </>
                 )
               })}
             </ul>
