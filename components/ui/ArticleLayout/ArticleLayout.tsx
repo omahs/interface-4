@@ -41,10 +41,10 @@ export default function Article(props) {
           />
         </Head>
 
-        <section className="max-w-screen-sm pt-2 pb-10 mx-auto text-left">
+        <section className="max-w-screen-sm pb-10 mx-auto text-left">
           <Back />
-          <div className="pt-4">
-            <h1 className="pb-2 text-3xl">{props.title}</h1>
+          <div className="py-4">
+            <h1 className="pb-1 text-3xl">{props.title}</h1>
             <h2 className="text-lg font-normal">{props.subtitle}</h2>
           </div>
           {props.coverImage ? (
