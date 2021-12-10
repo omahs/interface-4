@@ -5,12 +5,12 @@ export default function Back() {
   return (
     <div className="inline-block">
       <Link href="/blog">
-        <a className="group text-sm">
+        <a className="text-sm group">
           <div className="flex items-center">
-            <div className="transform group-hover:-translate-x-1 w-6 h-6 mr-1 transition-transform duration-200">
+            <div className="w-6 h-6 mr-1 transition-transform duration-200 transform group-hover:-translate-x-1">
               <Chevron />
             </div>
-            <p>Go back</p>
+            <p className="mt-0.5 font-normal">Go back</p>
           </div>
         </a>
       </Link>
