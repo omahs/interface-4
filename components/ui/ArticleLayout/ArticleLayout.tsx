@@ -28,7 +28,9 @@ export default function Article(props) {
             url: `${domain}/blog/${props.slug}`,
             images: [
               {
-                url: `${domain}/blog/${props.coverImage}`,
+                url: props.coverImage
+                  ? `${domain}/blog/${props.coverImage}`
+                  : `${domain}/og_image.jpg`,
                 alt: `${props.slug} blog post cover image`,
               },
             ],
@@ -37,7 +39,11 @@ export default function Article(props) {
         <Head>
           <meta
             name="twitter:image"
-            content={`${domain}/${props.coverImage}`}
+            content={
+              props.coverImage
+                ? `${domain}/blog/${props.coverImage}`
+                : `${domain}/twitter_card.jpg`
+            }
           />
         </Head>
 
