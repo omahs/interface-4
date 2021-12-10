@@ -1,5 +1,5 @@
 import { getAllPosts, getPostBySlug } from "../api/getPosts"
-import markdownToHtml from "../../lib/markdownToHtml"
+import markdownToHtml from "lib/markdownToHtml"
 
 import { ArticleLayout } from "@components/ui"
 
@@ -10,6 +10,9 @@ export default function Doc({ post }) {
       title={post.title}
       slug={post.slug}
       subtitle={post.subtitle}
+      author={post.author}
+      authorLink={post.authorLink}
+      ogImage={post.ogImage}
       coverImage={post.coverImage}
     >
       <main dangerouslySetInnerHTML={{ __html: post.content }}></main>
@@ -25,6 +28,7 @@ export async function getStaticProps({ params }) {
     "date",
     "slug",
     "author",
+    "authorLink",
     "content",
     "ogImage",
     "coverImage",
