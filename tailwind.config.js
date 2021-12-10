@@ -20,7 +20,11 @@ module.exports = {
   theme: {
     nightwind: {
       colorClasses: ["gradient", "placeholder"],
-      typography: true,
+      typography: {
+        strong: {
+          color: colors.white,
+        },
+      },
       colors: {
         white: "#0F1115",
         black: "gray.50",
@@ -83,6 +87,9 @@ module.exports = {
             },
             "blockquote p:first-of-type::before": false,
             "blockquote p:last-of-type::after": false,
+            strong: {
+              fontWeight: "900",
+            },
           },
         },
       }),

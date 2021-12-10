@@ -50,7 +50,7 @@ const DoubleText: FC<Props> = ({
         </Link>
       )}
       <span
-        className={`absolute top-0 left-0 w-full select-none !font-black mt-[0.1em] ml-[0.1em] group-hover:mt-0 group-hover:ml-0 duration-150 ${
+        className={`absolute top-0 left-0 w-full select-none !font-black pb-3 ml-[0.1em] group-hover:mt-0 group-hover:ml-0 duration-150 ${
           inactive ? "cursor-default" : ""
         }
         ${size || "text-2xl md:text-3xl"} ${

@@ -9,6 +9,7 @@ import {
   Mail,
   Github,
   Discord,
+  Blog,
 } from "@components/icons/Social"
 
 type Props = {
@@ -19,8 +20,10 @@ type Props = {
 
 export const accounts = {
   twitter: "https://twitter.com/slice__so",
-  reddit: "https://reddit.com/r/slice",
   discord: "https://discord.gg/CdyHUzdZks",
+  blog: "/blog",
+  // juicebox: "",
+  // reddit: "https://reddit.com/r/slice",
   // github: "https://github.com/jjranalli/slice.so",
 }
 
@@ -37,6 +40,7 @@ const Social: FC<Props> = ({ wrapperClassName, accounts }, props) => {
     mail: { color: "hover:text-gray-500", element: Mail },
     github: { color: "hover:text-yellow-500", element: Github },
     discord: { color: "hover:text-indigo-500", element: Discord },
+    blog: { color: "hover:text-green-500", element: Blog },
   }
 
   const size = "h-6"
