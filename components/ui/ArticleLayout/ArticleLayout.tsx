@@ -82,7 +82,7 @@ export default function Article({
           </div>
           {coverImage ? (
             <div
-              className="relative mt-5 mb-10 overflow-hidden rounded-xl"
+              className="relative max-h-[53.35vw] sm:max-h-[360px] h-screen mt-5 mb-10 overflow-hidden rounded-xl box-content"
               style={{ aspectRatio: "16 / 9" }}
             >
               <Image
