@@ -81,7 +81,10 @@ export default function Article({
             )}
           </div>
           {coverImage ? (
-            <div className="relative mt-5 mb-8 rounded-xl overflow-hidden h-96 max-height-[270px]">
+            <div
+              className="relative mt-5 mb-10 overflow-hidden rounded-xl"
+              style={{ aspectRatio: "16 / 9" }}
+            >
               <Image
                 src={`${domain}/blog/${coverImage}`}
                 alt={`Cover image of ${slug} post`}
