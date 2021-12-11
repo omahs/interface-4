@@ -37,19 +37,17 @@ export default function Blog({ allPosts }) {
             <ul>
               {allPosts.map((post, key) => {
                 return (
-                  <>
+                  <li key={key}>
                     <Link href={`/blog/${encodeURIComponent(post.slug)}`}>
                       <a>
-                        <li key={key}>
-                          <p className="text-xl font-black sm:text-2xl">
-                            {post.title}
-                          </p>
-                          <p className="pt-1 font-normal">{post.subtitle}</p>
-                        </li>
+                        <p className="text-xl font-black sm:text-2xl">
+                          {post.title}
+                        </p>
+                        <p className="pt-1.5 font-normal">{post.subtitle}</p>
                       </a>
                     </Link>
                     <hr className="mx-auto my-8 border-gray-300" />
-                  </>
+                  </li>
                 )
               })}
             </ul>
@@ -61,11 +59,9 @@ export default function Blog({ allPosts }) {
 }
 
 export async function getStaticProps() {
-  const allPosts = getAllPosts(["title", "subtitle", "slug"])
+  const allPosts = getAllPosts(["title", "subtitle", "slug", "date"])
 
   return {
     props: { allPosts },
   }
 }
-
-// TODO: fix spacing

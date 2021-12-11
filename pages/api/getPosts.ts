@@ -18,7 +18,7 @@ export function getPostBySlug(slug, fields = []) {
     htmlTitle?: string
     title?: string
     subtitle?: string
-    date?: number
+    date?: string
     slug?: string
     author?: string
     content?: string
