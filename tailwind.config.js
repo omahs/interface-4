@@ -90,6 +90,9 @@ module.exports = {
             strong: {
               fontWeight: "900",
             },
+            img: {
+              borderRadius: "0.75rem",
+            },
           },
         },
       }),

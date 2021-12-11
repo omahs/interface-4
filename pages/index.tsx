@@ -92,6 +92,7 @@ export default Home
  * *Critical priority*
  *
  * *High Priority*
+ * change <SubscribeForm/> into "check out blog" or "invest in juicebox"
  *
  * *Low Priority*
  *    - Receive ERC721-1155
