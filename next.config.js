@@ -10,6 +10,9 @@ module.exports = withMDX({
   // swcMinify: true,
   images: {
     domains: [
+      "localhost",
+      "testnet.slice.so",
+      "slice.so",
       "irdzgezsxggqvykkylyj.supabase.co",
       "tjqdcmrertmapvramecf.supabase.co",
       "api.producthunt.com",

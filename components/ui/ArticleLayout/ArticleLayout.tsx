@@ -38,7 +38,7 @@ export default function Article({
             url: `${domain}/blog/${slug}`,
             images: [
               {
-                url: coverImage
+                url: ogImage
                   ? `${domain}/blog/${ogImage}`
                   : `${domain}/og_image.jpg`,
                 alt: `${slug} blog post cover image`,
@@ -81,12 +81,15 @@ export default function Article({
             )}
           </div>
           {coverImage ? (
-            <div className="relative mt-5 mb-8 rounded-xl overflow-hidden height-[40vw] max-height-[270px]">
+            <div
+              className="relative max-h-[53.35vw] sm:max-h-[360px] h-screen mt-5 mb-10 overflow-hidden rounded-xl box-content"
+              style={{ aspectRatio: "16 / 9" }}
+            >
               <Image
-                src={coverImage}
+                src={`${domain}/blog/${coverImage}`}
                 alt={`Cover image of ${slug} post`}
                 layout="fill"
-                className="object-cover"
+                objectFit="cover"
               />
             </div>
           ) : null}
@@ -97,3 +100,5 @@ export default function Article({
     </>
   )
 }
+
+// coverImage needs to be 16/9 aspect ratio

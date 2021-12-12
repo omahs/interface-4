@@ -13,6 +13,7 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset"
   label?: string | JSX.Element
   href?: string
+  external?: boolean
   onClick?: any
 }
 
@@ -27,6 +28,7 @@ const Button: FC<ButtonProps> = (props) => {
     loading = false,
     requireConnection = false,
     double = true,
+    external = false,
     ...rest
   } = props
 
@@ -52,11 +54,23 @@ const Button: FC<ButtonProps> = (props) => {
   return (
     <div className="relative inline-block">
       {href ? (
-        <Link href={href} passHref>
-          <button className={`peer relative z-10 ${rootClassName} ${color}`}>
-            <div className="flex items-center justify-center">{innerText}</div>
-          </button>
-        </Link>
+        !external ? (
+          <Link href={href} passHref>
+            <button className={`peer relative z-10 ${rootClassName} ${color}`}>
+              <div className="flex items-center justify-center">
+                {innerText}
+              </div>
+            </button>
+          </Link>
+        ) : (
+          <a href={href} target="_blank" rel="noreferrer">
+            <button className={`peer relative z-10 ${rootClassName} ${color}`}>
+              <div className="flex items-center justify-center">
+                {innerText}
+              </div>
+            </button>
+          </a>
+        )
       ) : (
         <button
           className={`peer relative z-10 ${rootClassName} ${color}`}
