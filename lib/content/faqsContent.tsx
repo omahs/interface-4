@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { DoubleText } from "@components/ui"
+import { accounts } from "@components/ui/Social/Social"
 
 export const faqsMain = [
   {
@@ -328,9 +329,14 @@ export const faqsNfts = [
       <>
         <p>
           Very soon. If you want to get posted on upcoming features, consider{" "}
-          <Link href="/#subscribe">
-            <a>subscribing to our mailing list</a>
-          </Link>
+          <a
+            className="text-white highlight"
+            href={accounts.discord}
+            target="_blank"
+            rel="noreferrer"
+          >
+            hanging out in our Discord
+          </a>
           .
         </p>
       </>
@@ -404,9 +410,14 @@ export const faqsGeneral = [
         </p>
         <p>
           If you want to know as soon as there are news about SLCs, consider{" "}
-          <Link href="/#subscribe">
-            <a>subscribing to our mailing list</a>
-          </Link>
+          <a
+            className="text-white highlight"
+            href={accounts.discord}
+            target="_blank"
+            rel="noreferrer"
+          >
+            hanging out in our Discord
+          </a>
           .
         </p>
       </>

@@ -5,9 +5,9 @@ import {
   Container,
   Examples,
   FAQs,
+  HomeBanner,
   HomeHero,
   HomeSection,
-  SubscribeForm,
 } from "@components/ui"
 import { useEffect } from "react"
 import { section1, section2, section3, section4 } from "@lib/content/home"
@@ -77,7 +77,7 @@ const Home = () => {
         </main>
         <Examples />
       </Container>
-      <SubscribeForm />
+      <HomeBanner />
       <Container page={true}>
         <FAQs />
       </Container>
@@ -92,7 +92,6 @@ export default Home
  * *Critical priority*
  *
  * *High Priority*
- * change <SubscribeForm/> into "check out blog" or "invest in juicebox"
  *
  * *Low Priority*
  *    - Receive ERC721-1155

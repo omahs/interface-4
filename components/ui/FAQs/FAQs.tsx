@@ -1,5 +1,6 @@
 import { DoubleText, FAQsItem } from ".."
 import { faqsMain, faqsNfts, faqsGeneral } from "@lib/content/faqsContent"
+import { accounts } from "../Social/Social"
 
 const FAQs = () => {
   return (
@@ -43,14 +44,23 @@ const FAQs = () => {
         <p className="text-sm">
           Still have questions? Get in touch on{" "}
           <a
-            href="https://discord.gg/CdyHUzdZks"
+            href={accounts.discord}
             target="_blank"
             rel="noreferrer"
             className="highlight"
           >
             Discord
           </a>{" "}
-          or any of our socials.
+          or{" "}
+          <a
+            href={accounts.twitter}
+            target="_blank"
+            rel="noreferrer"
+            className="highlight"
+          >
+            Twitter
+          </a>
+          .
         </p>
       </div>
     </>

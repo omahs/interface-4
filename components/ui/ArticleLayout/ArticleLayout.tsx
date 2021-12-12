@@ -100,3 +100,5 @@ export default function Article({
     </>
   )
 }
+
+// coverImage needs to be 16/9 aspect ratio
