@@ -1,0 +1,63 @@
+---
+# htmlTitle: ""
+# slug: ""
+title: "How to split Opensea royalties with slicers"
+subtitle: "A 1-minute guide for NFT creators"
+date: "2021-12-10"
+author: "Jacopo"
+authorLink: "https://twitter.com/jj_ranalli"
+ogImage: "opensea-royalties.jpg"
+coverImage: "opensea-royalties.jpg"
+---
+
+Slicers are the building blocks of the Slice platform. They can do a bunch of things, but mainly they're **smart contracts which split any ETH received to their owners, proportionally to the amount of owned slices**.
+
+By setting the slicer address as the payout address for your NFT collection, all ETH received will be split among the slicer owners.
+
+---
+
+## 1. Create a slicer
+
+Head to [this page](http://localhost:3000/slice) to create a new slicer.
+
+![Slicer creation page](http://localhost:3000/blog/opensea-royalties-1.jpg)
+
+Select the addresses who will receive the royalties and the amount of **slices** in their possession. In this case, each owner will equally split any ETH received by the slicer.
+
+Let's dive into it.
+
+> Slices are ERC1155 tokens so they can be transferred or sold on Opensea like any other token.
+
+**Superowner slices**: represent the amount of slices that a user needs to own to edit Slicer metadata, add products on the decentralized store and other admin-level actions. Pick any amount that is convenient for you.
+
+**Collectible asset**: If active, the slicer's metadata cannot be changed once set for the first time, useful for slicers that need to represent NFTs. You can leave this unchecked.
+
+Now click on **Slice** and wait for the transaction to go through. If it takes time you can leave this page and find it later in your [profile page](https://slice.so/profile).
+
+## 2. Find the slicer address
+
+Once the slicer is created, head to its page to find its address (you can also find it directly on your profile page). **Click on it to copy it**
+
+![Section with the slicer address on its page](http://localhost:3000/blog/opensea-royalties-2.jpg)
+
+Optionally, you can set the slicer metadata to customize it (it won't cost transaction fees).
+
+## 3. Set the slicer address as the payout address for your NFT collection
+
+Head to your collection page on Opensea, connect with the address that owns it and click to the **Edit** button.
+
+In the **royalties** section, look for the **Payout wallet address** and set your slicer address there.
+
+![Section with the payout address on Opensea](http://localhost:3000/blog/opensea-royalties-3.jpg)
+
+And that's it! 🥳
+
+## 4. Redeem ETH from the slicer
+
+Once your slicer receives some ETH, as an owner you can redeem what is own to you from your [profile page](https://slice.so/profile).
+
+![Trigger release from profile page](http://localhost:3000/blog/opensea-royalties-4.jpg)
+
+Click **Trigger release**, and once the transaction goes through you will find the ETH and some complimentary **SLC utility tokens** in your wallet.
+
+Sweet right?

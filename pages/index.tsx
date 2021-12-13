@@ -92,6 +92,7 @@ export default Home
  * *Critical priority*
  *
  * *High Priority*
+ *    - Move api routes to api.slice.so (or at least keygen one)
  *
  * *Low Priority*
  *    - Receive ERC721-1155
