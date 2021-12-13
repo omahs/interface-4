@@ -10,6 +10,7 @@ import {
   Github,
   Discord,
   Blog,
+  Juicebox,
 } from "@components/icons/Social"
 
 type Props = {
@@ -22,7 +23,7 @@ export const accounts = {
   twitter: "https://twitter.com/slice__so",
   discord: "https://discord.gg/CdyHUzdZks",
   blog: "/blog",
-  // juicebox: "",
+  juicebox: "https://juicebox.money/#/p/slice",
   // reddit: "https://reddit.com/r/slice",
   // github: "https://github.com/jjranalli/slice.so",
 }
@@ -41,6 +42,7 @@ const Social: FC<Props> = ({ wrapperClassName, accounts }, props) => {
     github: { color: "hover:text-yellow-500", element: Github },
     discord: { color: "hover:text-indigo-500", element: Discord },
     blog: { color: "hover:text-green-500", element: Blog },
+    juicebox: { color: "hover:text-yellow-600", element: Juicebox },
   }
 
   const size = "h-6"
