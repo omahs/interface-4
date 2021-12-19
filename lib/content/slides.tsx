@@ -132,8 +132,8 @@ const slides = [
     ),
     contentSlice: (
       <p>
-        Can be sold to investors to <b>raise capital</b> or as a{" "}
-        <b>crowdfunding mechanism</b>.
+        Can be given to individuals / community members to involve them in the
+        project.
       </p>
     ),
     contentProduct: (
