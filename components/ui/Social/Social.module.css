@@ -3,5 +3,5 @@
 }
 
 .social {
-  @apply mx-[18px];
+  @apply mx-[18px] sm:mx-6;
 }
