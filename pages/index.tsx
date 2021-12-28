@@ -92,7 +92,6 @@ export default Home
  * *Critical priority*
  *
  * *High Priority*
- *    - Move api routes to api.slice.so (or at least keygen one)
  *
  * *Low Priority*
  *    - Receive ERC721-1155
@@ -105,8 +104,7 @@ export default Home
  *      - improve what sponsors can do
  *      - allow creator to hide links
  *
- *    - (prisma) add {isVisible} boolean field in Slicer model to toggle visibility in Explore page
- *    - add products "explore" page
+ *    - add "explore products" page
  *    - add detailed section in slicer page (stats & stuff for payees only)
  *    - transfer page (select box to choose slicer)
  *    - optimize subgraph queries (products + payeeslicer) in slicer/[id], if possible
