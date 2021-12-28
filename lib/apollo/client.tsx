@@ -1,5 +1,3 @@
-// To check if it should
-
 import React from "react"
 // import Head from "next/head"
 import { ApolloProvider } from "@apollo/react-hooks"
