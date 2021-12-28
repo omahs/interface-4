@@ -11,6 +11,7 @@ import {
   Discord,
   Blog,
   Juicebox,
+  Notion,
 } from "@components/icons/Social"
 
 type Props = {
@@ -22,10 +23,11 @@ type Props = {
 export const accounts = {
   twitter: "https://twitter.com/slice__so",
   discord: "https://discord.gg/CdyHUzdZks",
+  notion: "https://slice-so.notion.site",
+  github: "https://github.com/slice-so",
   blog: "/blog",
   juicebox: "https://juicebox.money/#/p/slice",
   // reddit: "https://reddit.com/r/slice",
-  // github: "https://github.com/jjranalli/slice.so",
 }
 
 const Social: FC<Props> = ({ wrapperClassName, accounts }, props) => {
@@ -34,15 +36,16 @@ const Social: FC<Props> = ({ wrapperClassName, accounts }, props) => {
 
   const components = {
     twitter: { color: "hover:text-blue-500", element: Twitter },
+    discord: { color: "hover:text-indigo-500", element: Discord },
+    github: { color: "hover:text-purple-500", element: Github },
+    notion: { color: "hover:text-gray-500", element: Notion },
+    blog: { color: "hover:text-green-500", element: Blog },
+    juicebox: { color: "hover:text-yellow-600", element: Juicebox },
     facebook: { color: "hover:text-blue-700", element: Facebook },
     instagram: { color: "hover:text-pink-500", element: Instagram },
     reddit: { color: "hover:text-red-500", element: Reddit },
     linkedin: { color: "hover:text-blue-700", element: Linkedin },
     mail: { color: "hover:text-gray-500", element: Mail },
-    github: { color: "hover:text-yellow-500", element: Github },
-    discord: { color: "hover:text-indigo-500", element: Discord },
-    blog: { color: "hover:text-green-500", element: Blog },
-    juicebox: { color: "hover:text-yellow-600", element: Juicebox },
   }
 
   const size = "h-6"
