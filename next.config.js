@@ -11,10 +11,12 @@ module.exports = withMDX({
   images: {
     domains: [
       "localhost",
-      "testnet.slice.so",
       "slice.so",
-      "irdzgezsxggqvykkylyj.supabase.co",
+      "testnet.slice.so",
+      "dev.slice.so",
       "tjqdcmrertmapvramecf.supabase.co",
+      "irdzgezsxggqvykkylyj.supabase.co",
+      "diaoluyyhxqydojrszqz.supabase.co",
       "api.producthunt.com",
       "",
     ],
