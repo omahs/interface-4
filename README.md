@@ -54,7 +54,7 @@ Slice uses [Pinata](https://www.pinata.cloud) to store products metadata.
 
 Follow these steps to create a Pinata key
 
-1. Create or log into your account by clicking on **Login**
+1. Create or log into your account on [Pinata](https://www.pinata.cloud) by clicking on **Login**
 2. On the top left corner, open the user menu and click on **API Keys**
 3. Create a new API key and copy the JWT secret access token into **PINATA_JWT** in your `.env` file
 
@@ -64,7 +64,7 @@ Slice uses [Web3Storage](https://web3.storage) to store encrypted product metada
 
 Follow these steps to create a web3Storage key
 
-1. Create or log into your account by clicking on **Login**
+1. Create or log into your account on [Web3Storage](https://web3.storage) by clicking on **Login**
 2. Create an API token and copy it in **WEB3STORAGE_KEY** in your `.env` file
 
 #### Supabase
@@ -86,9 +86,9 @@ Follow these steps to set up your db and storage:
    - Click on **policies** in the left menu and create a new policy from scratch for the new bucket. You can name it "allow anon users to upload to slicer-images"
    - Check `INSERT` as the allowed operations and paste the following snippet in the policy definition
 
-   ```sql
-      ((bucket_id = 'slicer-images'::text) AND (role() = 'anon'::text))
-   ```
+```sql
+   ((bucket_id = 'slicer-images'::text) AND (role() = 'anon'::text))
+```
 
 5. Link the database to your app
 
