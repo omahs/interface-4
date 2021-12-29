@@ -34,7 +34,7 @@ development.
 - [Web3Storage](#Web3Storage)
 - [Supabase](#Supabase)
 
-> A shared staging environment has also been set up on the domain https://dev.slice.so. The shared environment uses the same contracts and subgraphs as the ones used for local development, so the slicers and products created locally will also appear there.
+> A shared staging environment has also been set up on https://dev.slice.so. The shared environment uses the same contracts and subgraphs as the ones used for local development, so the slicers and products created locally will also appear there.
 
 #### Alchemy
 
@@ -56,7 +56,7 @@ Follow these steps to create a Pinata key
 
 1. Create or log into your account on [Pinata](https://www.pinata.cloud) by clicking on **Login**
 2. On the top left corner, open the user menu and click on **API Keys**
-3. Create a new API key and copy the JWT secret access token into **PINATA_JWT** in your `.env` file
+3. Create a new API key with admin permissions and copy the JWT secret access token into **PINATA_JWT** in your `.env` file
 
 #### Web3Storage
 
@@ -69,7 +69,9 @@ Follow these steps to create a web3Storage key
 
 #### Supabase
 
-Slice uses [Supabase](https://supabase.com) as its database and storage solution. The database is used for optimization purposes and to store slicers metadata, product metadata, list reverted products, as well as to support interface-only features such as likes. It should be noted that the database acts as the source of truth when it comes to slicer metadata.
+Slice uses [Supabase](https://supabase.com) as its database and storage solution. The database is used for optimization purposes and to store slicers metadata, product metadata, list reverted products, as well as to support interface-only features such as likes.
+
+> The database represents the source of truth when it comes to slicer metadata.
 
 Follow these steps to set up your db and storage:
 
@@ -80,7 +82,6 @@ Follow these steps to set up your db and storage:
    - `secret key` -> `BACKEND_SUPABASE_KEY`
    - `project configuration url` -> `NEXT_PUBLIC_SUPABASE_URL`
 4. Create a storage
-
    - Click on **storage** on the left sidebar and click on **create a new bucket**
    - (Important) Name it **slicer-images** and make it public
    - Click on **policies** in the left menu and create a new policy from scratch for the new bucket. You can name it "allow anon users to upload to slicer-images"
@@ -104,8 +105,6 @@ Follow these steps to set up your db and storage:
 
 7. Add the string `?pgbouncer=true` at the end of the **DATABASE_URL** in your `.env` file
 
-8. Add your database domain (the value in NEXT_PUBLIC_SUPABASE_URL without "https://") under the domains list in `next.config.js`
-
 > The interface uses incremental static regeneration to populate the db, so once you start the app you will see any slicer that other devs have created in their own local environments, without their images or metadata.
 
 > Products generation for a slicer can only be triggered by a superowner, so you won't be able to see any products created in other slicers by default.
@@ -122,4 +121,4 @@ Follow these steps to set up your db and storage:
 
 ## Deployment
 
-Frontend application(s) is hosted on [Vercel](https://vercel.com/) and new versions are automatically deployed when pushed to `main` or `testnet`.
+Frontend application(s) is hosted on [Vercel](https://vercel.com/) and new versions are automatically deployed when pushed to `master`, `testnet` or `staging`.
