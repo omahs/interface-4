@@ -105,8 +105,6 @@ Follow these steps to set up your db and storage:
 
 7. Add the string `?pgbouncer=true` at the end of the **DATABASE_URL** in your `.env` file
 
-8. Add your database domain (the value in NEXT_PUBLIC_SUPABASE_URL without "https://") under the domains list in `next.config.js`
-
 > The interface uses incremental static regeneration to populate the db, so once you start the app you will see any slicer that other devs have created in their own local environments, without their images or metadata.
 
 > Products generation for a slicer can only be triggered by a superowner, so you won't be able to see any products created in other slicers by default.
