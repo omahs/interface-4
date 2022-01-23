@@ -37,15 +37,8 @@ export const section2 = (
     </p>
     <p>
       They&apos;re ERC1155 tokens so you&apos;re free to transfer or sell them
-      however you prefer (even on{" "}
-      <a
-        href="https://opensea.io/collection/slice-so"
-        target="_blank"
-        rel="noreferrer"
-      >
-        Opensea
-      </a>
-      ), and the slicer will always give you any ETH you earned.
+      however you prefer (on any NFT marketplace), and the slicer will always
+      give you any ETH you earned.
     </p>
   </>
 )
