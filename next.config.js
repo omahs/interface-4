@@ -10,13 +10,8 @@ module.exports = withMDX({
   // swcMinify: true,
   images: {
     domains: [
-      "localhost",
-      "slice.so",
-      "testnet.slice.so",
-      "dev.slice.so",
-      "tjqdcmrertmapvramecf.supabase.co",
-      "irdzgezsxggqvykkylyj.supabase.co",
-      "diaoluyyhxqydojrszqz.supabase.co",
+      process.env.NEXT_PUBLIC_APP_URL.split("://").pop().split(":")[0],
+      process.env.NEXT_PUBLIC_SUPABASE_URL.split("://").pop(),
       "api.producthunt.com",
       "",
     ],
