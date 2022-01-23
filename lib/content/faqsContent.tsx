@@ -24,7 +24,7 @@ export const faqsMain = [
           <Link href="/#transfer">
             <a>transfer them like any other ERC1155 token</a>
           </Link>
-          , or even sell them on{" "}
+          , or even sell them on a NFT marketplace like{" "}
           <a
             href="https://opensea.io/collection/slice-so"
             target="_blank"
