@@ -196,13 +196,13 @@ const Id = ({
               loading={loading}
             />
           </div>
-          <SlicerProducts
+          {/* <SlicerProducts
             account={account}
             editMode={editMode}
             slicerId={slicerInfo?.id}
             slicerAddress={slicerInfo?.address}
             products={products}
-          />
+          /> */}
           <SlicerSponsors
             slicerId={slicerInfo?.id}
             slicerAddress={slicerInfo?.address}
