@@ -23,7 +23,7 @@ type Props = {
 export const accounts = {
   twitter: "https://twitter.com/slice__so",
   discord: "https://discord.gg/CdyHUzdZks",
-  notion: "https://slice-so.notion.site",
+  notion: "https://slicedao.notion.site",
   github: "https://github.com/slice-so",
   blog: "/blog",
   juicebox: "https://juicebox.money/#/p/slice",
