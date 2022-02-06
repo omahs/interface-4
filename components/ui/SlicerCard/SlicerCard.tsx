@@ -146,7 +146,9 @@ const SlicerCard = ({
             </Link>
           </div>
         </div>
-        {!released && unreleasedAmount ? (
+        {!released &&
+        // unreleasedAmount
+        false ? (
           <div className="mt-2">
             <p className="mb-6 text-sm">
               Unreleased:{" "}
