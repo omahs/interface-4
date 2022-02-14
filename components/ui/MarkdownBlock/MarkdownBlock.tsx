@@ -9,7 +9,7 @@ type Props = {
 const MarkdownBlock = ({
   content,
   deps = [],
-  className = "prose text-left",
+  className = "prose text-left break-words",
 }: Props) => {
   const [htmlContent, setHtmlContent] = useState("")
 
