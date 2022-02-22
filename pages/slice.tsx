@@ -65,6 +65,11 @@ export default function Slice() {
                     />{" "}
                     (ERC1155 tokens) that represent ownership over a slicer.
                   </p>
+                  <p className="font-semibold text-red-600">
+                    This is a beta version. Slicers created here won&apos;t
+                    leverage the features introduced in the main version of the
+                    protocol.
+                  </p>
                 </div>
                 <SliceForm
                   success={success}
