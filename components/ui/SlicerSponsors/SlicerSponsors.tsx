@@ -3,6 +3,7 @@ import { PaySlicer, SponsorListItem } from "@components/ui"
 import useQuery from "@utils/subgraphQuery"
 import { BigNumber } from "ethers"
 import { useEffect, useState } from "react"
+import ListLayout from "../ListLayout"
 
 type Sponsor = {
   address: string
@@ -24,10 +25,10 @@ const SlicerSponsors = ({
 }: Props) => {
   const [sponsors, setSponsors] = useState<Sponsor[]>([])
   const [loading, setLoading] = useState(true)
+  const [iterator, setIterator] = useState(0)
 
   const tokensQuery = /* GraphQL */ `
   payeeSlicers (
-    first: 11, 
     where: {slicer: "${slicerId}"}, 
     orderBy: "totalPaid", 
     orderDirection: "desc"
@@ -69,20 +70,27 @@ const SlicerSponsors = ({
           <>
             <div className="pt-8 text-center">
               <h2 className="pb-12">Sponsors</h2>
-              <ol className="space-y-5">
-                {sponsors.map((sponsor, key) => {
-                  return (
-                    <SponsorListItem
-                      slicerId={slicerId}
-                      sponsor={sponsor}
-                      key={key}
-                      sponsorLink={sponsorData[sponsor.address]}
-                    />
-                  )
-                })}
-              </ol>
+              <ListLayout
+                elementsArray={sponsors}
+                setIterator={setIterator}
+                itemsIncrement={10}
+              >
+                <ul className="space-y-5">
+                  {[...Array(iterator)].map((el, key) => {
+                    const sponsor = sponsors[Number(key)]
+                    return (
+                      <SponsorListItem
+                        slicerId={slicerId}
+                        sponsor={sponsor}
+                        key={key}
+                        sponsorLink={sponsorData[sponsor.address]}
+                      />
+                    )
+                  })}
+                </ul>
+              </ListLayout>
             </div>
-            <hr className="w-20 mx-auto mt-16 mb-6 border-gray-300" />
+            <hr className="w-20 mx-auto mt-6 mb-6 border-gray-300" />
           </>
         )
       )}
