@@ -208,6 +208,7 @@ const Id = ({
             slicerAddress={slicerInfo?.address}
             sponsorData={slicerInfo?.sponsors}
             editMode={editMode}
+            tag={slicer.tags}
           />
           {editMode && (
             <SlicerSubmitBlock

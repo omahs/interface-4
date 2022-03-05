@@ -15,6 +15,7 @@ type Props = {
   slicerAddress: string
   sponsorData: object
   editMode: boolean
+  tag: string
 }
 
 const SlicerSponsors = ({
@@ -22,6 +23,7 @@ const SlicerSponsors = ({
   slicerAddress,
   sponsorData,
   editMode,
+  tag,
 }: Props) => {
   const [sponsors, setSponsors] = useState<Sponsor[]>([])
   const [loading, setLoading] = useState(true)
@@ -69,7 +71,9 @@ const SlicerSponsors = ({
         sponsors.length != 0 && (
           <>
             <div className="pt-8 text-center">
-              <h2 className="pb-12">Sponsors</h2>
+              <h2 className="pb-12">
+                {tag === "Charity" ? "Donors" : "Sponsors"}
+              </h2>
               <ListLayout
                 elementsArray={sponsors}
                 setIterator={setIterator}
@@ -97,7 +101,8 @@ const SlicerSponsors = ({
       {!editMode && (
         <div className="pt-4 pb-12 text-center">
           <p className="py-10">
-            Sponsor this slicer by sending ETH to its address
+            {tag === "Charity" ? "Donate to" : "Sponsor"} this slicer by sending
+            ETH to its address
           </p>
           <PaySlicer slicerAddress={slicerAddress} />
         </div>
