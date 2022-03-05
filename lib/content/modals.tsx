@@ -10,6 +10,7 @@ import {
   FilesList,
   LoadingStep,
   MarkdownBlock,
+  ResolvedAddress,
 } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { ProductCart } from "@lib/handleUpdateCart"
@@ -29,6 +30,7 @@ type ViewNames =
   | "NETWORK_VIEW"
   | "CONNECT_VIEW"
   | "IRREVERSIBLE_VIEW"
+  | "OWNERS_VIEW"
   | "CREATE_PRODUCT_VIEW"
   | "CREATE_PRODUCT_CONFIRM_VIEW"
   | "PRODUCT_VIEW"
@@ -110,6 +112,34 @@ export const IRREVERSIBLE_VIEW = () => {
       <div className="flex justify-center pt-8">
         <Button label="Continue" onClick={() => setModalView({ name: "" })} />
       </div>
+    </>
+  )
+}
+
+export const OWNERS_VIEW = (params: any) => {
+  const { owners, totalSlices } = params
+
+  return (
+    <>
+      <div className="pb-6 text-center">
+        <DoubleText inactive logoText="Slicer owners" />
+        <p className="pt-4">{totalSlices} Total slices 🍰</p>
+      </div>
+      <ul className="pt-6 space-y-5 max-w-sm mx-auto">
+        {owners.map((el, key) => {
+          return (
+            <li className="flex justify-between" key={key}>
+              <p>
+                <ResolvedAddress address={el.address} />
+              </p>
+              <p>
+                <b className="pr-1">{formatNumber(el.amount)}</b> (
+                {((el.amount / totalSlices) * 100).toFixed(2)}%)
+              </p>
+            </li>
+          )
+        })}
+      </ul>
     </>
   )
 }
