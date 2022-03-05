@@ -246,6 +246,9 @@ const Id = ({
               msg={msg}
               setMsg={setMsg}
               loading={loading}
+              slicerId={slicerInfo?.id}
+              totalSlices={slicerAttributes["Total slices"]}
+              owners={owners}
             />
           </div>
           {/* <SlicerProducts
