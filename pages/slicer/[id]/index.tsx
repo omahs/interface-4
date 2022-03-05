@@ -21,6 +21,8 @@ import {
   SlicerSponsors,
 } from "@components/ui"
 import fetcher from "@utils/fetcher"
+import useQuery from "@utils/subgraphQuery"
+import { BigNumber } from "ethers"
 
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
@@ -34,6 +36,10 @@ export type SlicerData = {
   description: any
   tags: any
   imageUrl: any
+}
+export type AddressAmount = {
+  address: string
+  amount: number
 }
 
 const initAttributes = {
@@ -51,6 +57,7 @@ const Id = ({
   const { isAllowed } = useAllowed(slicerInfo?.id)
   const [editMode, setEditMode] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [sponsorLoading, setSponsorLoading] = useState(true)
   const [msg, setMsg] = useState<Message>({
     message: "",
     messageStatus: "success",
@@ -73,6 +80,8 @@ const Id = ({
     file: undefined,
   })
   const [tempImageUrl, setTempImageUrl] = useState("")
+  const [sponsors, setSponsors] = useState<AddressAmount[]>([])
+  const [owners, setOwners] = useState<AddressAmount[]>([])
   const pageTitle =
     slicer.name === `Slicer #${slicerInfo?.id}`
       ? slicer.name
@@ -88,6 +97,19 @@ const Id = ({
         slicer.imageUrl === "https://slice.so/slicer_default.png") ||
       false // slicerAttributes["Total slices"] === account.slices // creator has all slices
     : false
+
+  const tokensQuery = /* GraphQL */ `
+  payeeSlicers (
+    where: {slicer: "${slicerInfo?.id}"}, 
+    orderBy: "totalPaid", 
+    orderDirection: "desc"
+  ) {
+    id
+    slices
+    totalPaid
+  }
+`
+  const subgraphData = useQuery(tokensQuery, [slicerInfo?.address])
 
   useEffect(() => {
     let attr = initAttributes
@@ -106,6 +128,36 @@ const Id = ({
   useEffect(() => {
     setEditMode(false)
   }, [account])
+
+  useEffect(() => {
+    if (subgraphData) {
+      const sponsorsList: AddressAmount[] = []
+      subgraphData.payeeSlicers.forEach((el) => {
+        const address = el.id.split("-")[1]
+        const totalPaid = el.totalPaid
+        if (address != slicerInfo?.address && totalPaid) {
+          const amount = Number(
+            BigNumber.from(totalPaid).div(BigNumber.from(10).pow(15))
+          )
+          sponsorsList.push({ address, amount })
+        }
+      })
+      setSponsors(sponsorsList)
+
+      const ownersList: AddressAmount[] = []
+      subgraphData.payeeSlicers.forEach((el) => {
+        const address = el.id.split("-")[1]
+        const slicesOwned = el.slices
+        if (slicesOwned != "0") {
+          ownersList.push({ address, amount: Number(slicesOwned) })
+        }
+      })
+      const sortedOwners = ownersList.sort((a, b) => b.amount - a.amount)
+      setOwners(sortedOwners)
+
+      setSponsorLoading(false)
+    }
+  }, [subgraphData])
 
   return (
     <Container page={true}>
@@ -204,11 +256,13 @@ const Id = ({
             products={products}
           /> */}
           <SlicerSponsors
+            sponsors={sponsors}
             slicerId={slicerInfo?.id}
             slicerAddress={slicerInfo?.address}
             sponsorData={slicerInfo?.sponsors}
             editMode={editMode}
             tag={slicer.tags}
+            loading={sponsorLoading}
           />
           {editMode && (
             <SlicerSubmitBlock

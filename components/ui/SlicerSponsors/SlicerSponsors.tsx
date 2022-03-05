@@ -1,62 +1,29 @@
 import Spinner from "@components/icons/Spinner"
 import { PaySlicer, SponsorListItem } from "@components/ui"
-import useQuery from "@utils/subgraphQuery"
-import { BigNumber } from "ethers"
-import { useEffect, useState } from "react"
+import { AddressAmount } from "pages/slicer/[id]"
+import { useState } from "react"
 import ListLayout from "../ListLayout"
 
-type Sponsor = {
-  address: string
-  amount: number
-}
-
 type Props = {
+  sponsors: AddressAmount[]
   slicerId: string
   slicerAddress: string
   sponsorData: object
   editMode: boolean
   tag: string
+  loading: boolean
 }
 
 const SlicerSponsors = ({
   slicerId,
-  slicerAddress,
   sponsorData,
+  sponsors,
+  slicerAddress,
   editMode,
   tag,
+  loading,
 }: Props) => {
-  const [sponsors, setSponsors] = useState<Sponsor[]>([])
-  const [loading, setLoading] = useState(true)
   const [iterator, setIterator] = useState(0)
-
-  const tokensQuery = /* GraphQL */ `
-  payeeSlicers (
-    where: {slicer: "${slicerId}"}, 
-    orderBy: "totalPaid", 
-    orderDirection: "desc"
-  ) {
-    id
-    totalPaid
-  }`
-  const subgraphData = useQuery(tokensQuery, [slicerAddress])
-
-  useEffect(() => {
-    if (subgraphData) {
-      let sponsorList: Sponsor[] = []
-      subgraphData.payeeSlicers.forEach((el) => {
-        const address = el.id.split("-")[1]
-        const totalPaid = el.totalPaid
-        if (address != slicerAddress && totalPaid) {
-          const amount = Number(
-            BigNumber.from(totalPaid).div(BigNumber.from(10).pow(15))
-          )
-          sponsorList.push({ address, amount })
-        }
-      })
-      setSponsors(sponsorList)
-      setLoading(false)
-    }
-  }, [subgraphData])
 
   return (
     <div className="max-w-sm mx-auto">
