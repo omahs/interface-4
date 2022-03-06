@@ -14,8 +14,6 @@ const imageClassName =
   "transform transition-transform duration-1000 ease-out group-hover:scale-[1.075]"
 
 const SlicerImage = ({ name, imageUrl, product, disableHover }: Props) => {
-  const blurImageUrl = getBlurImageUrl(imageUrl)
-
   return !imageUrl || imageUrl === "https://slice.so/slicer_default.png" ? (
     product ? (
       <Image
@@ -42,7 +40,7 @@ const SlicerImage = ({ name, imageUrl, product, disableHover }: Props) => {
       layout="fill"
       objectFit="cover"
       alt={`${name}${product ? " product" : ""} image`}
-      blurDataURL={blurImageUrl}
+      blurDataURL={getBlurImageUrl(imageUrl)}
       placeholder="blur"
       className={disableHover ? "" : imageClassName}
     />
