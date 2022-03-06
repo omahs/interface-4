@@ -1,9 +1,9 @@
 import Delete from "@components/icons/Delete"
 import Edit from "@components/icons/Edit"
-import { useEns } from "@utils/resolveEns"
 import { useState } from "react"
 import { Input } from ".."
 import { useAppContext } from "../context"
+import ResolvedAddress from "../ResolvedAddress"
 
 type Sponsor = {
   address: string
@@ -17,16 +17,11 @@ type Props = {
 }
 
 const SponsorListItem = ({ slicerId, sponsor, sponsorLink }: Props) => {
-  const { account, connector } = useAppContext()
+  const { account } = useAppContext()
   const { address, amount } = sponsor
   const [link, setLink] = useState("")
   const [loading, setLoading] = useState(false)
   const [editSponsor, setEditSponsor] = useState(false)
-  const resolvedAddress = useEns(connector, address)
-  const addressReduced = address.replace(
-    address.substring(5, address.length - 3),
-    "__"
-  )
 
   const updateSponsor = async () => {
     const fetcher = (await import("@utils/fetcher")).default
@@ -91,18 +86,16 @@ const SponsorListItem = ({ slicerId, sponsor, sponsorLink }: Props) => {
           <div className="flex items-center">
             <>
               <span className="mr-3">
-                {link || sponsorLink ? (
-                  <a
-                    href={link || sponsorLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="higlight"
-                  >
-                    {resolvedAddress || addressReduced}
-                  </a>
-                ) : (
-                  <>{resolvedAddress || addressReduced}</>
-                )}
+                <ResolvedAddress
+                  address={address}
+                  href={
+                    link ||
+                    sponsorLink ||
+                    `https://${
+                      process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
+                    }etherscan.io/address/${address}`
+                  }
+                />
               </span>
               {account?.toLowerCase() === address && (
                 <a onClick={() => setEditSponsor(true)}>

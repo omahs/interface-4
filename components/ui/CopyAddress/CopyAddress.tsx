@@ -1,5 +1,6 @@
 import Copy from "@components/icons/Copy"
 import { useState } from "react"
+import ResolvedAddress from "../ResolvedAddress"
 
 type Props = {
   slicerAddress: string
@@ -21,22 +22,31 @@ const CopyAddress = ({ slicerAddress, showIcon = true, position }: Props) => {
   return slicerAddress ? (
     <div className="inline-block">
       <div className="relative flex items-center justify-center w-full">
-        <div
-          className="flex items-center justify-center cursor-pointer highlight"
-          onClick={() => copy()}
-        >
-          <p className="inline-block text-sm font-medium">
-            {slicerAddress.replace(
-              slicerAddress.substring(5, slicerAddress.length - 3),
-              `\xa0\xa0\xa0\xa0\xa0\xa0`
-            )}
-          </p>
-          {showIcon && (
-            <div className="inline-block pl-2">
+        {showIcon ? (
+          <div className="flex items-center justify-center ">
+            <p className="text-sm">
+              <ResolvedAddress address={slicerAddress} />
+            </p>
+            <div
+              className="inline-block pl-2 cursor-pointer highlight"
+              onClick={() => copy()}
+            >
               <Copy className="w-5 h-5" />
             </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div
+            className="flex items-center justify-center cursor-pointer highlight"
+            onClick={() => copy()}
+          >
+            <p className="inline-block text-sm font-medium">
+              {slicerAddress.replace(
+                slicerAddress.substring(5, slicerAddress.length - 3),
+                `\xa0\xa0\xa0\xa0\xa0\xa0`
+              )}
+            </p>
+          </div>
+        )}
         <div
           className={`w-40 absolute p-2 ${
             position ? position : "top-[40px] sm:top-[auto] sm:right-[-180px]"

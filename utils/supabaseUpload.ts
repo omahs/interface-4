@@ -29,7 +29,7 @@ const supabaseUpload = async (
   }
   const { data, error } = await supabase(supabaseKey)
     .storage.from(supabaseStorage)
-    .upload(filename, mainImage, {
+    .upload(`${filename}.${fileExt}`, mainImage, {
       cacheControl: "3600",
       upsert: false,
     })
@@ -40,7 +40,7 @@ const supabaseUpload = async (
   const blurredImage = await reduce.toBlob(newImage.file, { max: 4 })
   await supabase(supabaseKey)
     .storage.from(supabaseStorage)
-    .upload(`${filename}_blur`, blurredImage, {
+    .upload(`${filename}_blur.${fileExt}`, blurredImage, {
       cacheControl: "3600",
       upsert: false,
     })

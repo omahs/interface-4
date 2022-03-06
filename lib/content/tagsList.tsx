@@ -4,6 +4,7 @@ import CarouselMusic from "@components/icons/CarouselMusic"
 import CarouselPayments from "@components/icons/CarouselPayments"
 import CarouselStartups from "@components/icons/CarouselStartups"
 import CarouselWriters from "@components/icons/CarouselWriters"
+import CarouselCharity from "@components/icons/CarouselCharity"
 
 export type TagElement = {
   value: string
@@ -70,6 +71,15 @@ const tagsList: TagElement[] = [
       border: "border-yellow-100",
     },
     image: CarouselWriters("text-yellow-700"),
+  },
+  {
+    value: "Charity",
+    colors: {
+      text: "text-cyan-700",
+      bg: "bg-cyan-100",
+      border: "border-cyan-100",
+    },
+    image: CarouselCharity("text-cyan-700"),
   },
   {
     value: "Private",

@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import { createClient } from "@supabase/supabase-js"
 import corsMiddleware from "@utils/corsMiddleware"
+import getBlurImageUrl from "@utils/getBlurImageUrl"
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseKey = process.env.BACKEND_SUPABASE_KEY
@@ -12,9 +13,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { url } = JSON.parse(req.body)
   try {
     if (req.method === "POST") {
+      const blurImageUrl = getBlurImageUrl(url)
+
       const { data, error } = await supabase.storage
         .from(supabaseStorage)
-        .remove([url, `${url}_blur`])
+        .remove([url, blurImageUrl])
 
       if (error) {
         throw Error(error.message)
