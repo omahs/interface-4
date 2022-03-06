@@ -62,7 +62,7 @@ const SlicersGrid = ({ data }: Props) => {
 
   useEffect(() => {
     setIterator(items < filteredData.length ? items : filteredData.length)
-  }, [filteredData])
+  }, [filteredData, items])
 
   return (
     <>
