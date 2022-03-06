@@ -10,7 +10,7 @@ import {
   FilesList,
   LoadingStep,
   MarkdownBlock,
-  ResolvedAddress,
+  OwnerBlock,
 } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { ProductCart } from "@lib/handleUpdateCart"
@@ -117,28 +117,30 @@ export const IRREVERSIBLE_VIEW = () => {
 }
 
 export const OWNERS_VIEW = (params: any) => {
-  const { owners, totalSlices } = params
+  const { slicerId, totalSlices, owners, unreleased, setUnreleased } = params
 
   return (
     <>
       <div className="pb-6 text-center">
         <DoubleText inactive logoText="Slicer owners" />
-        <p className="pt-4">{totalSlices} Total slices 🍰</p>
+        <p className="pt-4">{formatNumber(totalSlices)} Total slices 🍰</p>
       </div>
-      <ul className="pt-6 space-y-5 max-w-sm mx-auto">
-        {owners.map((el, key) => {
-          return (
-            <li className="flex justify-between" key={key}>
-              <p>
-                <ResolvedAddress address={el.address} />
-              </p>
-              <p>
-                <b className="pr-1">{formatNumber(el.amount)}</b> (
-                {((el.amount / totalSlices) * 100).toFixed(2)}%)
-              </p>
-            </li>
-          )
-        })}
+      <ul className="max-w-sm pt-6 mx-auto space-y-8">
+        {owners.map((el, key) => (
+          <>
+            <OwnerBlock
+              key={key}
+              index={Number(key)}
+              slicerId={slicerId}
+              totalSlices={totalSlices}
+              owner={owners[Number(key)]}
+              unreleasedOwner={unreleased[Number(key)]}
+              unreleased={unreleased}
+              setUnreleased={setUnreleased}
+            />
+            {key != owners.length - 1 && <hr className="border-gray-300" />}
+          </>
+        ))}
       </ul>
     </>
   )

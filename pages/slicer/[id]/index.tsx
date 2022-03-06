@@ -137,7 +137,7 @@ const Id = ({
       subgraphData.payeeSlicers.forEach((el) => {
         const address = el.id.split("-")[1]
         const totalPaid = el.totalPaid
-        if (address != slicerInfo?.address && totalPaid) {
+        if (address != slicerInfo?.address && totalPaid && totalPaid != "0") {
           const amount = Number(
             BigNumber.from(totalPaid).div(BigNumber.from(10).pow(15))
           )
@@ -272,6 +272,7 @@ const Id = ({
               totalSlices={slicerAttributes["Total slices"]}
               owners={owners}
               unreleased={unreleased}
+              setUnreleased={setUnreleased}
             />
           </div>
           {/* <SlicerProducts
