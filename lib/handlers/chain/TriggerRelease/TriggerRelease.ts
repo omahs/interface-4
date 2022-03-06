@@ -3,22 +3,16 @@ import WalletConnect from "@walletconnect/client"
 const TriggerRelease = async (
   connector: WalletConnect,
   account: string,
-  slicerAddresses: string[],
-  slicerPercentage: number
+  slicerId: number
 ) => {
   const { initialize } = await import("@lib/useProvider")
-  const { slice, slc } = await import("@lib/initProvider")
+  const { slicer } = await import("@lib/initProvider")
 
   const { signer } = await initialize(connector)
-  const contract = slc(signer)
-  const sliceContract = slice(signer)
+  const contract = await slicer(slicerId, signer)
 
   try {
-    const call = await sliceContract.triggerRelease(
-      account,
-      slicerAddresses,
-      slicerPercentage
-    )
+    const call = await contract.release(account)
     return [contract, call]
   } catch (err) {
     throw err
