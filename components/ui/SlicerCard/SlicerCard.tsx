@@ -54,17 +54,9 @@ const SlicerCard = ({
   const [released, setReleased] = useState(false)
   const [success, setSuccess] = useState(false)
   const [logs, setLogs] = useState<LogDescription[]>()
-  const eventLog = getLog(logs, "MintTriggered")
   const slicerLink = `/slicer/${slicerId}`
   const slicerName = name || `Slicer #${slicerId}`
   const slicePercentage = `${Math.floor((shares / totalSlices) * 10000) / 100}%`
-
-  const slcReleased =
-    eventLog &&
-    formatNumber(
-      Math.floor((Number(eventLog.amount._hex) / Math.pow(10, 18)) * 100) / 100,
-      3
-    )
 
   useEffect(() => {
     if (success) {
@@ -156,9 +148,7 @@ const SlicerCard = ({
             </p>
             <BlockchainCall
               label="Trigger release"
-              action={() =>
-                TriggerRelease(connector, account, [slicerAddress], 0)
-              }
+              action={() => TriggerRelease(connector, account, slicerId)}
               success={success}
               setSuccess={setSuccess}
               setLogs={setLogs}
@@ -167,10 +157,10 @@ const SlicerCard = ({
             />
           </div>
         ) : null}
-        {slcReleased && (
+        {ethReleased != 0 && (
           <p className="pt-4 text-sm text-green-500">
-            You received <span className="font-medium">{ethReleased} ETH</span>{" "}
-            and <span className="font-medium">{slcReleased} SLC!</span> 🎉
+            You received <span className="font-medium">{ethReleased} ETH</span>!
+            🎉
           </p>
         )}
       </div>
