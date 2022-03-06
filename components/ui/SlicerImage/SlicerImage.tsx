@@ -1,6 +1,7 @@
 import Image from "next/image"
 import slicerDefault from "public/slicer_default.png"
 import productDefault from "public/product_default.png"
+import getBlurImageUrl from "@utils/getBlurImageUrl"
 
 type Props = {
   name: string
@@ -39,7 +40,7 @@ const SlicerImage = ({ name, imageUrl, product, disableHover }: Props) => {
       layout="fill"
       objectFit="cover"
       alt={`${name}${product ? " product" : ""} image`}
-      blurDataURL={`${imageUrl}_blur`}
+      blurDataURL={getBlurImageUrl(imageUrl)}
       placeholder="blur"
       className={disableHover ? "" : imageClassName}
     />

@@ -60,7 +60,7 @@ export default function NewProduct() {
               <Spinner size="w-10 h-10" />
             </div>
           </main>
-        ) : isAllowed ? (
+        ) : false /* isAllowed */ ? (
           // !success ? (
           //   !loadingForm ? (
           <main className="max-w-[420px] mx-auto sm:max-w-screen-md">

@@ -55,7 +55,7 @@ const SlicerGrid = ({
 export async function getStaticProps(context: GetStaticPropsContext) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const data: SlicerReduced[] = await fetcher(`${baseUrl}/api/slicer`)
-  // const data = []
+  // const data = [] //
 
   return {
     props: {
