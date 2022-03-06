@@ -22,7 +22,8 @@ import {
 } from "@components/ui"
 import fetcher from "@utils/fetcher"
 import useQuery from "@utils/subgraphQuery"
-import { BigNumber } from "ethers"
+import { BigNumber, ethers } from "ethers"
+import multicall from "@utils/multicall"
 
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
@@ -82,6 +83,7 @@ const Id = ({
   const [tempImageUrl, setTempImageUrl] = useState("")
   const [sponsors, setSponsors] = useState<AddressAmount[]>([])
   const [owners, setOwners] = useState<AddressAmount[]>([])
+  const [unreleased, setUnreleased] = useState([])
   const pageTitle =
     slicer.name === `Slicer #${slicerInfo?.id}`
       ? slicer.name
@@ -158,6 +160,26 @@ const Id = ({
       setSponsorLoading(false)
     }
   }, [subgraphData])
+
+  const getOwnersUnreleased = async (args: string[]) => {
+    const result = await multicall(
+      slicerInfo?.address,
+      "unreleased(address)",
+      args
+    )
+    setUnreleased(result)
+  }
+
+  useEffect(() => {
+    if (owners.length != 0) {
+      const args = []
+      owners.forEach((owner) => {
+        args.push(ethers.utils.hexZeroPad(owner.address, 32).substring(2))
+      })
+
+      getOwnersUnreleased(args)
+    }
+  }, [owners])
 
   return (
     <Container page={true}>
@@ -249,6 +271,7 @@ const Id = ({
               slicerId={slicerInfo?.id}
               totalSlices={slicerAttributes["Total slices"]}
               owners={owners}
+              unreleased={unreleased}
             />
           </div>
           {/* <SlicerProducts
