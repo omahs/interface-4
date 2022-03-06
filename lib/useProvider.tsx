@@ -6,7 +6,7 @@ import { slicer } from "@lib/initProvider"
 import { useAppContext } from "@components/ui/context"
 import WalletConnectProvider from "@walletconnect/web3-provider"
 
-export const defaultProvider = ethers.getDefaultProvider(
+export const defaultProvider = new ethers.providers.JsonRpcBatchProvider(
   process.env.NEXT_PUBLIC_NETWORK_URL
 )
 
