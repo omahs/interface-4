@@ -168,7 +168,7 @@ const SlicerImageBlock = ({
             target="_blank"
             rel="noreferrer"
           >
-            <p className="pr-2">See on Opensea</p>
+            <p className="pr-2">View on Opensea</p>
             <ExtLink />
           </a>
         </div>
