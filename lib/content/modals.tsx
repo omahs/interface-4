@@ -127,9 +127,8 @@ export const OWNERS_VIEW = (params: any) => {
       </div>
       <ul className="max-w-sm pt-6 mx-auto space-y-8">
         {owners.map((el, key) => (
-          <>
+          <li key={key}>
             <OwnerBlock
-              key={key}
               index={Number(key)}
               slicerId={slicerId}
               totalSlices={totalSlices}
@@ -139,7 +138,7 @@ export const OWNERS_VIEW = (params: any) => {
               setUnreleased={setUnreleased}
             />
             {key != owners.length - 1 && <hr className="border-gray-300" />}
-          </>
+          </li>
         ))}
       </ul>
     </>
