@@ -125,7 +125,7 @@ export const OWNERS_VIEW = (params: any) => {
         <DoubleText inactive logoText="Slicer owners" />
         <p className="pt-4">{formatNumber(totalSlices)} Total slices 🍰</p>
       </div>
-      <ul className="max-w-sm pt-6 mx-auto space-y-8">
+      <ul className="max-w-sm pt-6 mx-auto">
         {owners.map((el, key) => (
           <li key={key}>
             <OwnerBlock
@@ -137,7 +137,9 @@ export const OWNERS_VIEW = (params: any) => {
               unreleased={unreleased}
               setUnreleased={setUnreleased}
             />
-            {key != owners.length - 1 && <hr className="border-gray-300" />}
+            {key != owners.length - 1 && (
+              <hr className="my-8 border-gray-300" />
+            )}
           </li>
         ))}
       </ul>
