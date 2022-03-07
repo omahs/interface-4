@@ -10,6 +10,7 @@ import {
   FilesList,
   LoadingStep,
   MarkdownBlock,
+  OwnerBlock,
 } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { ProductCart } from "@lib/handleUpdateCart"
@@ -29,6 +30,7 @@ type ViewNames =
   | "NETWORK_VIEW"
   | "CONNECT_VIEW"
   | "IRREVERSIBLE_VIEW"
+  | "OWNERS_VIEW"
   | "CREATE_PRODUCT_VIEW"
   | "CREATE_PRODUCT_CONFIRM_VIEW"
   | "PRODUCT_VIEW"
@@ -110,6 +112,36 @@ export const IRREVERSIBLE_VIEW = () => {
       <div className="flex justify-center pt-8">
         <Button label="Continue" onClick={() => setModalView({ name: "" })} />
       </div>
+    </>
+  )
+}
+
+export const OWNERS_VIEW = (params: any) => {
+  const { slicerId, totalSlices, owners, unreleased, setUnreleased } = params
+
+  return (
+    <>
+      <div className="pb-6 text-center">
+        <DoubleText inactive logoText="Slicer owners" />
+        <p className="pt-4">{formatNumber(totalSlices)} Total slices 🍰</p>
+      </div>
+      <ul className="max-w-sm pt-6 mx-auto space-y-8">
+        {owners.map((el, key) => (
+          <>
+            <OwnerBlock
+              key={key}
+              index={Number(key)}
+              slicerId={slicerId}
+              totalSlices={totalSlices}
+              owner={owners[Number(key)]}
+              unreleasedOwner={unreleased[Number(key)]}
+              unreleased={unreleased}
+              setUnreleased={setUnreleased}
+            />
+            {key != owners.length - 1 && <hr className="border-gray-300" />}
+          </>
+        ))}
+      </ul>
     </>
   )
 }

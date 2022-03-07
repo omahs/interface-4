@@ -7,9 +7,10 @@ type Props = {
   children: JSX.Element
   elementsArray: any[]
   setIterator: Dispatch<SetStateAction<number>>
-  actionScreenText: string
-  actionScreenHref: string
-  actionScreenButtonLabel: string
+  itemsIncrement?: number
+  actionScreenText?: string
+  actionScreenHref?: string
+  actionScreenButtonLabel?: string
   endpageButtonLabel?: string
   endpageHref?: string
 }
@@ -17,6 +18,7 @@ type Props = {
 const ListLayout = ({
   elementsArray,
   setIterator,
+  itemsIncrement = 6,
   actionScreenText,
   actionScreenHref,
   actionScreenButtonLabel,
@@ -24,13 +26,12 @@ const ListLayout = ({
   endpageHref = actionScreenHref,
   children,
 }: Props) => {
-  const initItems = 6
-  const [items, setItems] = useState(initItems)
+  const [items, setItems] = useState(itemsIncrement)
 
   useEffect(() => {
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", () => {
-        setItems(initItems)
+        setItems(itemsIncrement)
         setIterator(
           items < elementsArray?.length ? items : elementsArray?.length
         )
@@ -56,15 +57,17 @@ const ListLayout = ({
           <p className="text-center">
             <a
               className="underline"
-              onClick={() => setItems(items + initItems)}
+              onClick={() => setItems(items + itemsIncrement)}
             >
               Load more
             </a>
           </p>
         )}
-        <div className="flex justify-center pt-4 sm:pt-8">
-          <Button label={endpageButtonLabel} href={endpageHref} />
-        </div>
+        {endpageButtonLabel && (
+          <div className="flex justify-center pt-4 sm:pt-8">
+            <Button label={endpageButtonLabel} href={endpageHref} />
+          </div>
+        )}
       </div>
     </div>
   ) : (

@@ -1,8 +1,11 @@
 import Camera from "@components/icons/Camera"
 import { SlicerImage } from "@components/ui"
+import ExtLink from "@components/icons/ExtLink"
 import { Dispatch, SetStateAction } from "react"
-import { NewImage } from "pages/slicer/[id]"
+import { AddressAmount, NewImage } from "pages/slicer/[id]"
 import { Message } from "@utils/handleMessage"
+import formatNumber from "@utils/formatNumber"
+import { useAppContext } from "../context"
 
 type Props = {
   name: string
@@ -18,6 +21,11 @@ type Props = {
   border?: string
   maxHeight?: string
   product?: boolean
+  slicerId?: number
+  totalSlices?: number
+  owners?: AddressAmount[]
+  unreleased?: string[]
+  setUnreleased?: Dispatch<SetStateAction<number[]>>
 }
 
 const SlicerImageBlock = ({
@@ -34,7 +42,14 @@ const SlicerImageBlock = ({
   border,
   maxHeight,
   product,
+  slicerId,
+  totalSlices,
+  owners,
+  unreleased,
+  setUnreleased,
 }: Props) => {
+  const { setModalView } = useAppContext()
+
   const updateImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const handleMessage = (await import("@utils/handleMessage")).default
 
@@ -122,6 +137,52 @@ const SlicerImageBlock = ({
           )}
         </div>
       </div>
+      {!product && (
+        <div className="flex justify-between pt-5">
+          <div className="flex">
+            <p className="pr-3">{formatNumber(totalSlices)} 🍰</p>
+            <p>
+              {owners.length != 0 ? (
+                <a
+                  className="highlight"
+                  onClick={() =>
+                    setModalView({
+                      cross: true,
+                      name: "OWNERS_VIEW",
+                      params: {
+                        slicerId,
+                        owners,
+                        totalSlices,
+                        unreleased,
+                        setUnreleased,
+                      },
+                    })
+                  }
+                >
+                  See owners
+                </a>
+              ) : (
+                <span className="font-medium text-gray-600 cursor-wait">
+                  See owners
+                </span>
+              )}
+            </p>
+          </div>
+          <a
+            className="flex highlight"
+            href={`https://${
+              process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "testnets." : ""
+            }opensea.io/assets/${
+              process.env.NEXT_PUBLIC_SLICECORE_ADDRESS
+            }/${slicerId}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <p className="pr-2">View on Opensea</p>
+            <ExtLink />
+          </a>
+        </div>
+      )}
     </div>
   )
 }

@@ -40,7 +40,25 @@ export default function Slice() {
           ],
         }}
       />
-      <ConnectBlock>
+      <ActionScreen
+        highlightTitle="Try out the beta"
+        helpText={
+          <div className="max-w-lg pb-10 mx-auto space-y-4">
+            <p>
+              The complete version of Slice will be released soon! In the
+              meantime, try out the beta to split ETH between addresses and
+              trade slicer royalties.
+            </p>
+            <p className="font-semibold">
+              Note that slicers created in the beta will not be compatible with
+              the new version of Slice and won&apos;t be automatically upgraded.
+            </p>
+          </div>
+        }
+        buttonLabel="Go to beta"
+        href="https://beta.slice.so"
+      />
+      {/* <ConnectBlock>
         <main>
           {!success ? (
             !loading ? (
@@ -114,7 +132,7 @@ export default function Slice() {
             />
           )}
         </main>
-      </ConnectBlock>
+      </ConnectBlock> */}
     </Container>
   )
 }
