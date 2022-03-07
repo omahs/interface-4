@@ -40,25 +40,7 @@ export default function Slice() {
           ],
         }}
       />
-      <ActionScreen
-        highlightTitle="Try out the beta"
-        helpText={
-          <div className="max-w-lg pb-10 mx-auto space-y-4">
-            <p>
-              The complete version of Slice will be released soon! In the
-              meantime, try out the beta to split ETH between addresses and
-              trade slicer royalties.
-            </p>
-            <p className="font-semibold">
-              Note that slicers created in the beta will not be compatible with
-              the new version of Slice and won&apos;t be automatically upgraded.
-            </p>
-          </div>
-        }
-        buttonLabel="Go to beta"
-        href="https://beta.slice.so"
-      />
-      {/* <ConnectBlock>
+      <ConnectBlock>
         <main>
           {!success ? (
             !loading ? (
@@ -82,6 +64,11 @@ export default function Slice() {
                       size="text-normal"
                     />{" "}
                     (ERC1155 tokens) that represent ownership over a slicer.
+                  </p>
+                  <p className="font-semibold text-red-600">
+                    This is a beta version. Slicers created here won&apos;t
+                    leverage the features introduced in the main version of the
+                    protocol.
                   </p>
                 </div>
                 <SliceForm
@@ -127,7 +114,7 @@ export default function Slice() {
             />
           )}
         </main>
-      </ConnectBlock> */}
+      </ConnectBlock>
     </Container>
   )
 }
