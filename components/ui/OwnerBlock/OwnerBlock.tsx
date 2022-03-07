@@ -59,7 +59,7 @@ const OwnerBlock = ({
       : null
 
   return (
-    <li className="flex items-center justify-between">
+    <div className="flex items-center justify-between">
       <p className="truncate">
         <ResolvedAddress address={owner.address} />
       </p>
@@ -99,7 +99,7 @@ const OwnerBlock = ({
           </p>
         )}
       </div>
-    </li>
+    </div>
   )
 }
 
