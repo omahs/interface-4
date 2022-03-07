@@ -40,81 +40,103 @@ export default function Slice() {
           ],
         }}
       />
-      <ConnectBlock>
-        <main>
-          {!success ? (
-            !loading ? (
-              <>
-                <DoubleText
-                  inactive
-                  logoText={`Create a Slicer`}
-                  size="text-4xl sm:text-5xl"
-                  position="pb-4 sm:pb-6"
+      {domain === "https://slice.so" ? (
+        <ActionScreen
+          highlightTitle="Try out the beta"
+          helpText={
+            <div className="max-w-lg pb-10 mx-auto space-y-4">
+              <p>
+                The complete version of Slice will be released soon! In the
+                meantime, try out the beta to split ETH between addresses and
+                trade slicer royalties.
+              </p>
+              <p className="font-semibold">
+                Note that slicers created in the beta will not be compatible
+                with the new version of Slice and won&apos;t be automatically
+                upgraded.
+              </p>
+            </div>
+          }
+          buttonLabel="Go to beta"
+          href="https://beta.slice.so"
+        />
+      ) : (
+        <ConnectBlock>
+          <main>
+            {!success ? (
+              !loading ? (
+                <>
+                  <DoubleText
+                    inactive
+                    logoText={`Create a Slicer`}
+                    size="text-4xl sm:text-5xl"
+                    position="pb-4 sm:pb-6"
+                  />
+                  <div className="py-6 mx-auto space-y-4 sm:px-6 max-w-screen-xs">
+                    <p>
+                      When a slicer receives ETH, owners receive an amount
+                      proportional to the held slices.
+                    </p>
+                    <p>
+                      Slices are{" "}
+                      <DoubleText
+                        inactive
+                        logoText="fractionalized NFTs"
+                        size="text-normal"
+                      />{" "}
+                      (ERC1155 tokens) that represent ownership over a slicer.
+                    </p>
+                    <p className="font-semibold text-red-600">
+                      This is a beta version. Slicers created here won&apos;t
+                      leverage the features introduced in the main version of
+                      the protocol.
+                    </p>
+                  </div>
+                  <SliceForm
+                    success={success}
+                    setLoading={setLoading}
+                    setSuccess={setSuccess}
+                    setLogs={setLogs}
+                  />
+                </>
+              ) : (
+                <ActionScreen
+                  text="Slicing in progress ..."
+                  helpText={
+                    <p className="max-w-sm pb-10 mx-auto">
+                      Please wait while the blockchain does its thing, or find
+                      the slicer later in your{" "}
+                      <Link href="/profile">
+                        <a className="font-black highlight">profile section</a>
+                      </Link>{" "}
+                    </p>
+                  }
+                  loading
                 />
-                <div className="py-6 mx-auto space-y-4 sm:px-6 max-w-screen-xs">
-                  <p>
-                    When a slicer receives ETH, owners receive an amount
-                    proportional to the held slices.
-                  </p>
-                  <p>
-                    Slices are{" "}
-                    <DoubleText
-                      inactive
-                      logoText="fractionalized NFTs"
-                      size="text-normal"
-                    />{" "}
-                    (ERC1155 tokens) that represent ownership over a slicer.
-                  </p>
-                  <p className="font-semibold text-red-600">
-                    This is a beta version. Slicers created here won&apos;t
-                    leverage the features introduced in the main version of the
-                    protocol.
-                  </p>
-                </div>
-                <SliceForm
-                  success={success}
-                  setLoading={setLoading}
-                  setSuccess={setSuccess}
-                  setLogs={setLogs}
-                />
-              </>
+              )
             ) : (
               <ActionScreen
-                text="Slicing in progress ..."
+                highlightTitle="Slicer created! 🍰"
                 helpText={
-                  <p className="max-w-sm pb-10 mx-auto">
-                    Please wait while the blockchain does its thing, or find the
-                    slicer later in your{" "}
-                    <Link href="/profile">
-                      <a className="font-black highlight">profile section</a>
-                    </Link>{" "}
-                  </p>
+                  <div className="max-w-lg pb-10 mx-auto space-y-4">
+                    <p>
+                      Your slicer address is <b>{eventLog && eventLog[0]}</b>
+                    </p>
+                    <p>
+                      If you are a superowner, you can now customize it by
+                      clicking on the edit icon near the slicer name
+                    </p>
+                  </div>
                 }
-                loading
+                buttonLabel="Go to slicer"
+                href={`/slicer/${Number(eventLog?.tokenId)}`}
+                buttonLabelSecondary="Create a new Slicer"
+                onClickSecondary={() => setSuccess(false)}
               />
-            )
-          ) : (
-            <ActionScreen
-              highlightTitle="Slicer created! 🍰"
-              helpText={
-                <div className="max-w-lg pb-10 mx-auto space-y-4">
-                  <p>
-                    Your slicer address is <b>{eventLog && eventLog[0]}</b>
-                  </p>
-                  <p>
-                    If you are a superowner, you can now customize it by
-                    clicking on the edit icon near the slicer name
-                  </p>
-                </div>
-              }
-              buttonLabel="Go to slicer"
-              href={`/slicer/${Number(eventLog?.tokenId)}`}
-              buttonLabelSecondary="Create a new Slicer"
-              onClickSecondary={() => setSuccess(false)}
-            />
-          )}
-        </main>
-      </ConnectBlock>
+            )}
+          </main>
+        </ConnectBlock>
+      )}
     </Container>
   )
 }
