@@ -5,6 +5,7 @@ import { ethers } from "ethers"
 import { slicer } from "@lib/initProvider"
 import { useAppContext } from "@components/ui/context"
 import WalletConnectProvider from "@walletconnect/web3-provider"
+import { JsonRpcProvider } from "@ethersproject/providers"
 
 export const defaultProvider = new ethers.providers.JsonRpcBatchProvider(
   process.env.NEXT_PUBLIC_NETWORK_URL
@@ -12,7 +13,7 @@ export const defaultProvider = new ethers.providers.JsonRpcBatchProvider(
 
 export const initialize = async (connector) => {
   // Keep this synced with env next_public_network_url
-  let provider
+  let provider: JsonRpcProvider
   if (connector.connected) {
     const wcProvider = new WalletConnectProvider({
       rpc: {
@@ -22,8 +23,10 @@ export const initialize = async (connector) => {
     })
     await wcProvider.enable()
     provider = new ethers.providers.Web3Provider(wcProvider)
-  } else {
+  } else if (window.ethereum) {
     provider = new ethers.providers.Web3Provider(window.ethereum)
+  } else {
+    provider = defaultProvider
   }
   const signer = provider.getSigner()
   return { provider, signer }
