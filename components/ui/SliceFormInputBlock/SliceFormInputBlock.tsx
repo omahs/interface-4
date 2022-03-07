@@ -36,7 +36,7 @@ const SliceFormInputBlock = ({
   const { account, connector } = useAppContext()
   const [visible, setVisible] = useState(true)
   const [address, setAddress] = useState("")
-  const [sharesAmount, setSharesAmount] = useState("")
+  const [sharesAmount, setSharesAmount] = useState(0)
   const [resolvedSignerAddress, setResolvedSignerAddress] = useState("")
 
   const handleChange = (
@@ -45,15 +45,15 @@ const SliceFormInputBlock = ({
     setState: Dispatch<SetStateAction<string[] | number[]>>
   ) => {
     let items = currentState
-    value ? (items[index] = value) : items.splice(index, 1)
+    items[index] = value
     setState(items)
   }
 
   const handleRemove = () => {
+    setSharesAmount(0)
+    setAddress("")
     let tempShares = shares
     let tempAddresses = addresses
-    setSharesAmount("")
-    tempAddresses.splice(index, 1)
     setShares(tempShares)
     setAddresses(tempAddresses)
     setVisible(false)
@@ -63,7 +63,7 @@ const SliceFormInputBlock = ({
   useEffect(() => {
     if (index == 0 && signerAddress) {
       setAddress(signerAddress)
-      setSharesAmount("1000000")
+      setSharesAmount(1000000)
       resolveEns(connector, signerAddress, setResolvedSignerAddress)
     }
   }, [signerAddress])
@@ -106,7 +106,7 @@ const SliceFormInputBlock = ({
           <InputAddress
             address={address}
             onChange={setAddress}
-            required={sharesAmount && true}
+            required={sharesAmount != 0}
           />
         </div>
         <p className="col-span-2 pt-1.5 pr-2 text-right xs:hidden">Slices</p>
@@ -114,8 +114,8 @@ const SliceFormInputBlock = ({
           <Input
             type="number"
             placeholder="1000000"
-            min="0"
-            value={sharesAmount}
+            min="1"
+            value={sharesAmount != 0 ? sharesAmount : ""}
             required={address && true}
             onChange={setSharesAmount}
           />
@@ -127,7 +127,7 @@ const SliceFormInputBlock = ({
               "text-green-600 font-bold"
             }`}
           >
-            {sharesAmount &&
+            {sharesAmount != 0 &&
               Math.floor((Number(sharesAmount) / totalShares) * 10000) / 100 +
                 "%"}
           </p>
