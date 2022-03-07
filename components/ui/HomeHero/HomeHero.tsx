@@ -17,9 +17,15 @@ const HomeHero = () => {
       <div className="pb-6 sm:pb-6">
         <DoubleText
           inactive
-          logoText={`Slice`}
+          logoText="Slice"
           size="text-6xl sm:text-7xl"
           position="mr-4"
+        />
+        <DoubleText
+          inactive
+          logoText="beta"
+          size="text-3xl sm:text-4xl"
+          position="pl-1 mr-4"
         />
       </div>
       <h2 className="py-2 sm:py-4 text-[1.38rem] font-black leading-normal xs:text-2xl sm:!text-3xl">

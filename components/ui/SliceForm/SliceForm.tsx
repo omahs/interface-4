@@ -35,8 +35,8 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
     const handleMessage = (await import("@utils/handleMessage")).default
     const { Slice } = await import("@lib/handlers/chain")
 
-    const cleanedAddresses = addresses.filter(() => true)
-    const cleanedShares = shares.filter(() => true)
+    const cleanedAddresses = addresses.filter((el) => el != "")
+    const cleanedShares = shares.filter((el) => el != 0)
 
     try {
       if (cleanedShares.length == cleanedAddresses.length) {
