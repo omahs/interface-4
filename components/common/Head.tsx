@@ -4,7 +4,7 @@ import { DefaultSeo } from "next-seo"
 import { accounts } from "@components/ui/Social/Social"
 
 export const defaultTitle = "Slice"
-export const longTitle = "Slice – The decentralized slicing platform"
+export const longTitle = "Slice – The decentralized slicing protocol"
 export const defaultDescription =
   "Decentralized payments infrastructure for real world applications, products and services."
 export const domain = process.env.NEXT_PUBLIC_APP_URL
