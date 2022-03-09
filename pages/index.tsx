@@ -40,7 +40,7 @@ const Home = () => {
   return (
     <>
       <NextSeo
-        title="Decentralized slicing platform"
+        title="The decentralized slicing protocol"
         openGraph={{
           title: longTitle,
           description: defaultDescription,
