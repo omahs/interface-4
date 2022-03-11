@@ -1,19 +1,20 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@components/ui"
 import { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
-import Input from "../Input"
 import MessageBlock from "../MessageBlock"
 import { mutate } from "swr"
-import useSWR from "swr"
-import fetcher from "@utils/fetcher"
-import InputAddress from "../InputAddress"
 import getLog from "@utils/getLog"
 import { useAppContext } from "../context"
+import getEthFromWei from "@utils/getEthFromWei"
+import getUnreleasedData from "@utils/getUnreleasedData"
+import TransferFormInputBlock from "../TransferFormInputBlock"
+import TransferFormNotes from "../TransferFormNotes"
 
 type Props = {
   account: string
   slicerId: string
+  slicerAddress: string
   ownedSlices: number
   totalSlices: number
   minimumSlices: number
@@ -22,106 +23,125 @@ type Props = {
 const TransferForm = ({
   account,
   slicerId,
+  slicerAddress,
   ownedSlices,
   totalSlices,
   minimumSlices,
 }: Props) => {
   const { connector } = useAppContext()
-  const { data: unreleasedData } = useSWR(
-    `/api/slicer/${slicerId}/account/${account}/unreleased`,
-    fetcher
-  )
-  const { unreleased } = unreleasedData || { unreleased: null }
-  const unreleasedAmount = unreleased
-    ? Math.floor((Number(unreleased?.hex) / Math.pow(10, 18)) * 10000) / 10000
-    : null
 
-  const [address, setAddress] = useState("")
-  const [shares, setShares] = useState<number>(0)
+  const [unreleased, setUnreleased] = useState([])
+  const [batchMode, setBatchMode] = useState(false)
+  const [addresses, setAddresses] = useState([""])
+  const [shares, setShares] = useState([0])
+  const [totalShares, setTotalShares] = useState(0)
 
   const [success, setSuccess] = useState(false)
-  const [logs, setLogs] = useState<LogDescription[]>()
-  const eventLog = getLog(logs, "TransferSingle")
-
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message>({
     message: "",
     messageStatus: "success",
   })
+  const [logs, setLogs] = useState<LogDescription[]>()
+  const eventLog = getLog(logs, "TransferSingle")
+
+  const unreleasedEth = getEthFromWei(unreleased[0])
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
 
-    const handleSubmit = (await import("@utils/handleSubmit")).default
-    const TransferShares = (await import("@lib/handlers/chain/TransferShares"))
-      .default
+    if (!batchMode) {
+      const handleSubmit = (await import("@utils/handleSubmit")).default
+      const TransferShares = (
+        await import("@lib/handlers/chain/TransferShares")
+      ).default
 
-    const eventLog = await handleSubmit(
-      TransferShares(connector, account, address, Number(slicerId), shares),
-      setMessage,
-      setLoading,
-      setSuccess
-    )
-    setLogs(eventLog)
+      const eventLog = await handleSubmit(
+        TransferShares(
+          connector,
+          account,
+          addresses[0],
+          Number(slicerId),
+          shares[0]
+        ),
+        setMessage,
+        setLoading,
+        setSuccess
+      )
+      setLogs(eventLog)
+    } else {
+      const cleanedAddresses = addresses.filter((el) => el != "")
+      const cleanedShares = shares.filter((el) => el != 0)
+
+      const handleSubmit = (await import("@utils/handleSubmit")).default
+      const TransferSharesBatch = (
+        await import("@lib/handlers/chain/TransferSharesBatch")
+      ).default
+
+      const eventLog = await handleSubmit(
+        TransferSharesBatch(
+          connector,
+          account,
+          Number(slicerId),
+          cleanedAddresses,
+          cleanedShares
+        ),
+        setMessage,
+        setLoading,
+        setSuccess
+      )
+      setLogs(eventLog)
+    }
   }
 
   const reset = () => {
     mutate(`/api/account/${account}/slicers`)
-    setAddress("")
-    setShares(0)
+    setAddresses([])
+    setShares([])
     setSuccess(false)
   }
+
+  useEffect(() => {
+    if (account && slicerAddress && !success) {
+      getUnreleasedData(account, [slicerAddress], setUnreleased)
+    }
+    return () => setUnreleased([])
+  }, [slicerAddress, account, success])
 
   return (
     <div className="relative px-4 py-10 bg-white shadow-xl sm:px-10 rounded-2xl">
       {!success ? (
         <form onSubmit={submit}>
           <div className="space-y-6">
-            <div className="pb-1">
-              <InputAddress
-                label="Receiver address"
-                address={address}
-                onChange={setAddress}
-                required
-              />
-            </div>
-            <div className="mb-2">
-              <Input
-                type="number"
-                label="Slices to transfer"
-                placeholder={`Up to ${ownedSlices || "..."}`}
-                required
-                error={shares > ownedSlices}
-                onChange={setShares}
-              />
-            </div>
-            <div className="space-y-4">
-              {minimumSlices != 0 &&
-              ownedSlices > minimumSlices &&
-              ownedSlices - shares < minimumSlices ? (
-                <p className="text-sm">
-                  <span className="font-medium">Note:</span> You&apos;ll lose
-                  privileged access to the slicer, as you will not hold the
-                  minimum amount of slices (
-                  <span className="font-medium">{minimumSlices}</span>)
-                </p>
-              ) : null}
-              {unreleased && Number(unreleased.hex) !== 0 && (
-                <p className="text-sm">
-                  <span className="font-medium">Note:</span> you have an
-                  unreleased amount of {unreleasedAmount} ETH which will be
-                  released during the transfer. Expect the transaction fee to be
-                  higher.
-                </p>
-              )}
-            </div>
+            <TransferFormInputBlock
+              batchMode={batchMode}
+              addresses={addresses}
+              shares={shares}
+              totalShares={totalShares}
+              ownedSlices={ownedSlices}
+              totalSlices={totalSlices}
+              minimumSlices={minimumSlices}
+              setAddresses={setAddresses}
+              setShares={setShares}
+              setTotalShares={setTotalShares}
+            />
+            <TransferFormNotes
+              unreleasedEth={unreleasedEth}
+              ownedSlices={ownedSlices}
+              slicesToTransfer={totalShares}
+              minimumSlices={minimumSlices}
+            />
             <div>
               <div className="pt-3">
-                <Button
-                  label="Transfer slices"
-                  loading={loading}
-                  type="submit"
-                />
+                <Button label="Transfer" loading={loading} type="submit" />
+              </div>
+              <div className="mt-8">
+                <a
+                  className="highlight"
+                  onClick={() => setBatchMode(!batchMode)}
+                >
+                  {batchMode ? "Single transfer" : "Batch transfer"}
+                </a>
               </div>
               <div>
                 <MessageBlock msg={message} />
