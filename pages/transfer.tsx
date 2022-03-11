@@ -45,7 +45,7 @@ const Transfer = () => {
   return (
     <Container page={true}>
       <ConnectBlock>
-        <main className="max-w-[440px] mx-auto sm:pb-20">
+        <main className="max-w-screen-sm mx-auto sm:pb-20">
           <DoubleText
             inactive
             logoText="Transfer"
@@ -76,7 +76,8 @@ const Transfer = () => {
                     account={account}
                     slicerId={String(id)}
                     ownedSlices={ownedSlices}
-                    totalSlices={slicer?.totalSlices}
+                    slicerAddress={slicer?.address}
+                    totalSlices={slicer?.slices}
                     minimumSlices={slicer?.minimumSlices}
                   />
                 ) : (
@@ -90,6 +91,7 @@ const Transfer = () => {
                 <TransferForm
                   account={account}
                   slicerId={String(id)}
+                  slicerAddress={null}
                   ownedSlices={0}
                   totalSlices={0}
                   minimumSlices={0}

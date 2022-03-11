@@ -8,7 +8,6 @@ import resolveEns from "@utils/resolveEns"
 
 type Props = {
   index: number
-  signerAddress: string
   addresses: string[]
   shares: number[]
   totalShares: number
@@ -18,6 +17,8 @@ type Props = {
   setShares: Dispatch<SetStateAction<number[]>>
   setTotalShares: Dispatch<SetStateAction<number>>
   setRemovedCount: Dispatch<SetStateAction<number>>
+  signerAddress?: string
+  ownedSlices?: number
 }
 
 const SliceFormInputBlock = ({
@@ -32,11 +33,12 @@ const SliceFormInputBlock = ({
   setTotalShares,
   removedCount,
   setRemovedCount,
+  ownedSlices,
 }: Props) => {
   const { account, connector } = useAppContext()
   const [visible, setVisible] = useState(true)
-  const [address, setAddress] = useState("")
-  const [sharesAmount, setSharesAmount] = useState(0)
+  const [address, setAddress] = useState(addresses[index] || "")
+  const [sharesAmount, setSharesAmount] = useState(shares[index] || 0)
   const [resolvedSignerAddress, setResolvedSignerAddress] = useState("")
 
   const handleChange = (
@@ -88,7 +90,8 @@ const SliceFormInputBlock = ({
         <div className="col-span-1 col-start-1 mx-auto mt-3 mb-3">
           <div className="">
             {index === 0 ? (
-              account === address || resolvedSignerAddress === address ? (
+              address &&
+              (account === address || resolvedSignerAddress === address) ? (
                 <UserIcon
                   className={
                     minimumShares <= Number(sharesAmount)
@@ -123,8 +126,10 @@ const SliceFormInputBlock = ({
         <div className="mt-3 mb-3">
           <p
             className={`col-span-2 xs:col-span-1 text-sm ${
-              minimumShares <= Number(sharesAmount) &&
-              "text-green-600 font-bold"
+              ownedSlices && Number(sharesAmount) > Number(ownedSlices)
+                ? "text-red-500 font-bold"
+                : minimumShares <= Number(sharesAmount) &&
+                  "text-green-600 font-bold"
             }`}
           >
             {sharesAmount != 0 &&
