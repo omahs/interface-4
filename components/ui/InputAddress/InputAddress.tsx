@@ -1,4 +1,4 @@
-import resolveEns from "@utils/resolveEns"
+import resolveEns, { useEns } from "@utils/resolveEns"
 import React, { InputHTMLAttributes, useEffect, useState } from "react"
 import { useAppContext } from "../context"
 import Input from "../Input/Input"
@@ -13,6 +13,17 @@ const InputAddress: React.FC<Props> = (props) => {
   const { connector } = useAppContext()
   const { address, required, label, onChange, ...rest } = props
   const [resolvedAddress, setResolvedAddress] = useState("")
+
+  // const resolvedAddress = useEns(connector, address)
+  const addressReduced = resolvedAddress
+    ? resolvedAddress.substring(resolvedAddress.length - 4) !== ".eth" &&
+      resolvedAddress !== "Invalid ENS name"
+      ? resolvedAddress.replace(
+          resolvedAddress.substring(5, resolvedAddress.length - 3),
+          `___`
+        )
+      : resolvedAddress
+    : null
 
   useEffect(() => {
     const timeout = setTimeout(
@@ -45,7 +56,7 @@ const InputAddress: React.FC<Props> = (props) => {
           } absolute text-xs opacity-80 font-black left-0 bottom-[-23px]
           }`}
         >
-          {resolvedAddress}
+          {addressReduced}
         </p>
       )}
     </div>
