@@ -8,7 +8,6 @@ import resolveEns from "@utils/resolveEns"
 
 type Props = {
   index: number
-  signerAddress: string
   addresses: string[]
   shares: number[]
   totalShares: number
@@ -18,6 +17,9 @@ type Props = {
   setShares: Dispatch<SetStateAction<number[]>>
   setTotalShares: Dispatch<SetStateAction<number>>
   setRemovedCount: Dispatch<SetStateAction<number>>
+  signerAddress?: string
+  ownedSlices?: number
+  placeholder?: string
 }
 
 const SliceFormInputBlock = ({
@@ -32,11 +34,13 @@ const SliceFormInputBlock = ({
   setTotalShares,
   removedCount,
   setRemovedCount,
+  ownedSlices,
+  placeholder = "1000000",
 }: Props) => {
   const { account, connector } = useAppContext()
   const [visible, setVisible] = useState(true)
-  const [address, setAddress] = useState("")
-  const [sharesAmount, setSharesAmount] = useState(0)
+  const [address, setAddress] = useState(addresses[index] || "")
+  const [sharesAmount, setSharesAmount] = useState(shares[index] || 0)
   const [resolvedSignerAddress, setResolvedSignerAddress] = useState("")
 
   const handleChange = (
@@ -88,7 +92,8 @@ const SliceFormInputBlock = ({
         <div className="col-span-1 col-start-1 mx-auto mt-3 mb-3">
           <div className="">
             {index === 0 ? (
-              account === address || resolvedSignerAddress === address ? (
+              address &&
+              (account === address || resolvedSignerAddress === address) ? (
                 <UserIcon
                   className={
                     minimumShares <= Number(sharesAmount)
@@ -109,11 +114,11 @@ const SliceFormInputBlock = ({
             required={sharesAmount != 0}
           />
         </div>
-        <p className="col-span-2 pt-1.5 pr-2 text-right xs:hidden">Slices</p>
+        <p className="col-span-2 pr-2 text-right xs:hidden">Slices</p>
         <div className="col-span-4 mt-3 xs:col-span-3">
           <Input
             type="number"
-            placeholder="1000000"
+            placeholder={placeholder}
             min="1"
             value={sharesAmount != 0 ? sharesAmount : ""}
             required={address && true}
@@ -123,8 +128,10 @@ const SliceFormInputBlock = ({
         <div className="mt-3 mb-3">
           <p
             className={`col-span-2 xs:col-span-1 text-sm ${
-              minimumShares <= Number(sharesAmount) &&
-              "text-green-600 font-bold"
+              ownedSlices && Number(sharesAmount) > Number(ownedSlices)
+                ? "text-red-500 font-bold"
+                : minimumShares <= Number(sharesAmount) &&
+                  "text-green-600 font-bold"
             }`}
           >
             {sharesAmount != 0 &&

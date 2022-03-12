@@ -13,14 +13,12 @@ const resolveEns = async (
       const { provider } = await initialize(connector)
 
       const resolved =
-        address.substring(0, 2) === "0x"
+        address.substring(address.length - 4) !== ".eth"
           ? await provider.lookupAddress(address)
           : await provider.resolveName(address)
       setAddress(resolved)
     } catch (err) {
-      if (address.substring(0, 2) !== "0x") {
-        setAddress("Invalid ENS name")
-      }
+      setAddress("Invalid ENS name")
     }
   }
 }
