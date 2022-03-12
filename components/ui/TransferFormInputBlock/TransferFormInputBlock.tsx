@@ -3,6 +3,7 @@ import SliceFormInputBlock from "../SliceFormInputBlock"
 import Add from "@components/icons/Add"
 import formatNumber from "@utils/formatNumber"
 import TransferFormInputSingle from "../TransferFormInputSingle"
+import Question from "../Question"
 
 type Props = {
   batchMode: boolean
@@ -43,6 +44,30 @@ const TransferFormInputBlock = ({
     />
   ) : (
     <div className="grid items-center grid-cols-8 text-left xs:grid-cols-10 md:grid-cols-12 gap-x-4 gap-y-4 xs:gap-y-6">
+      <p className="mb-[-25px] text-sm text-gray-700 font-semibold hidden xs:block xs:col-span-5 xs:col-start-2 md:col-span-7 md:col-start-2">
+        Addresses
+      </p>
+      <div className="mb-[-25px] text-gray-700 relative items-center hidden xs:flex">
+        <p className="pr-1 text-sm font-semibold">Slices</p>
+        <Question
+          text={
+            <>
+              <p>
+                The percentage represents the relative amount of ETH earned by
+                the account from all payments made to the slicer.
+              </p>
+              <p>
+                If it&apos;s green, the account holds more than the minimum
+                slices amount.
+              </p>
+            </>
+          }
+          position="top-[35px] right-[-35px]"
+        />
+      </div>
+      <p className="col-span-8 pb-2 font-semibold text-center xs:hidden">
+        Add the addresses who will receive the slices
+      </p>
       {[...Array(inputCount)].map((el, key) => {
         return (
           <SliceFormInputBlock
@@ -58,6 +83,7 @@ const TransferFormInputBlock = ({
             setTotalShares={setTotalShares}
             setRemovedCount={setRemovedCount}
             ownedSlices={ownedSlices}
+            placeholder={`Up to ${formatNumber(ownedSlices) || "..."}`}
           />
         )
       })}

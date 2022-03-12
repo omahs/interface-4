@@ -1,3 +1,4 @@
+import formatNumber from "@utils/formatNumber"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import Input from "../Input"
 import InputAddress from "../InputAddress"
@@ -54,7 +55,7 @@ const TransferFormInputSingle = ({
       <div className="mb-2">
         <Input
           type="number"
-          placeholder={`Up to ${ownedSlices || "..."}`}
+          placeholder={`Up to ${formatNumber(ownedSlices) || "..."}`}
           label="Slices to transfer"
           min="1"
           value={firstShares != 0 ? firstShares : ""}
