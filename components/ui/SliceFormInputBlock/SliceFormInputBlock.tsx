@@ -19,6 +19,7 @@ type Props = {
   setRemovedCount: Dispatch<SetStateAction<number>>
   signerAddress?: string
   ownedSlices?: number
+  placeholder?: string
 }
 
 const SliceFormInputBlock = ({
@@ -34,6 +35,7 @@ const SliceFormInputBlock = ({
   removedCount,
   setRemovedCount,
   ownedSlices,
+  placeholder = "1000000",
 }: Props) => {
   const { account, connector } = useAppContext()
   const [visible, setVisible] = useState(true)
@@ -112,11 +114,11 @@ const SliceFormInputBlock = ({
             required={sharesAmount != 0}
           />
         </div>
-        <p className="col-span-2 pt-1.5 pr-2 text-right xs:hidden">Slices</p>
+        <p className="col-span-2 pr-2 text-right xs:hidden">Slices</p>
         <div className="col-span-4 mt-3 xs:col-span-3">
           <Input
             type="number"
-            placeholder="1000000"
+            placeholder={placeholder}
             min="1"
             value={sharesAmount != 0 ? sharesAmount : ""}
             required={address && true}
