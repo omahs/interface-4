@@ -2,6 +2,7 @@ import { ListLayout, SlicerCard } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { useEffect, useState } from "react"
 import useQuery from "@utils/subgraphQuery"
+import getEthFromWei from "@utils/getEthFromWei"
 
 const SlicersList = () => {
   const { account } = useAppContext()
@@ -71,11 +72,8 @@ const SlicersList = () => {
           const slicerAddress = slicer?.address
           const isCollectible = slicer?.isCollectible
           const isAllowed = Number(ownedShares) >= Number(slicer?.minimumSlices)
-          const unreleasedAmount = unreleased[i]
-            ? Math.floor(
-                (Number(unreleased[i].hex) / Math.pow(10, 18)) * 10000
-              ) / 10000
-            : null
+          const unreleasedAmount = getEthFromWei(unreleased[i])
+
           return (
             <div className="mt-3" key={key}>
               <SlicerCard
