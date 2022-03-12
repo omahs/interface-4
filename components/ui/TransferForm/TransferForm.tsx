@@ -109,7 +109,7 @@ const TransferForm = ({
   }, [slicerAddress, account, success])
 
   return (
-    <div className="relative px-4 py-10 bg-white shadow-xl sm:px-10 rounded-2xl">
+    <div className="relative px-4 py-12 bg-white shadow-xl sm:px-10 rounded-2xl">
       {!success ? (
         <form onSubmit={submit}>
           <div className="space-y-6">
