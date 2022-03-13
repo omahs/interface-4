@@ -344,8 +344,9 @@ export async function getStaticPaths() {
 export async function getStaticProps(context: GetStaticPropsContext) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const id = context.params.id
+  const hexId = Number(id).toString(16)
 
-  const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${id}?stats=false`)
+  const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${hexId}?stats=false`)
   const products = await fetcher(`${baseUrl}/api/slicer/${id}/products`)
 
   return {
