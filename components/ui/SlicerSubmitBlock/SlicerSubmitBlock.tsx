@@ -48,8 +48,10 @@ const SlicerSubmitBlock = ({
   setMsg,
 }: Props) => {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+
+  const hexId = Number(slicerInfo?.id).toString(16)
   const { data: slicerInfoUpdated } = useSWR(
-    editMode ? `/api/slicer/${slicerInfo?.id}?stats=false` : null,
+    editMode ? `/api/slicer/${hexId}?stats=false` : null,
     fetcher
   )
 
@@ -68,7 +70,7 @@ const SlicerSubmitBlock = ({
       method: "POST",
       body: JSON.stringify(newInfo),
     }
-    await fetcher(`/api/slicer/${slicerInfo?.id}`, body)
+    await fetcher(`/api/slicer/${hexId}`, body)
   }
 
   const save = async () => {
@@ -112,7 +114,7 @@ const SlicerSubmitBlock = ({
           imageUrl: newFilePath,
         }
         await updateDb(newInfo)
-        mutate(`/api/slicer/${slicerInfo?.id}?stats=false`)
+        mutate(`/api/slicer/${hexId}?stats=false`)
         setNewImage({ url: "", file: undefined })
         setEditMode(false)
         setLoading(false)
