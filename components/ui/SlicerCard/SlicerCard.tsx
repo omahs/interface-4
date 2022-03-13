@@ -41,10 +41,13 @@ const SlicerCard = ({
   unreleasedAmount,
 }: Props) => {
   const { connector } = useAppContext()
+
+  const hexId = Number(slicerId).toString(16)
   const { data: slicerInfo } = useSWR(
-    `/api/slicer/${slicerId}?stats=false`,
+    `/api/slicer/${hexId}?stats=false`,
     fetcher
   )
+
   const { name, image }: SlicerInfo = slicerInfo || {
     name: null,
     image: null,

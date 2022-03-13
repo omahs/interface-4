@@ -11,21 +11,26 @@ import { domain } from "@components/common/Head"
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id, stats } = req.query
 
+  // Endpoint assumes passed id is hex
+  const decimalId = parseInt(String(id), 16)
+
   try {
     if (req.method === "GET") {
-      const slicerExists: boolean = await sliceCore(defaultProvider).exists(id)
+      const slicerExists: boolean = await sliceCore(defaultProvider).exists(
+        decimalId
+      )
       let totalReceived = 0
       let slicerInfo: Slicer
 
       if (slicerExists) {
         slicerInfo = await prisma.slicer.findFirst({
-          where: { id: Number(id) },
+          where: { id: Number(decimalId) },
         })
         if (slicerInfo == null) {
           const { data } = await client.query({
             query: gql`
               query Slicers {
-                slicer(id: "${id}") {
+                slicer(id: "${decimalId}") {
                   address
                   slices
                   minimumSlices
@@ -45,11 +50,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           // )
 
           slicerInfo = {
-            id: Number(id),
-            name: `Slicer #${id}`,
+            id: Number(decimalId),
+            name: `Slicer #${decimalId}`,
             description: "",
             tags: "",
-            external_url: `${domain}/slicer/${id}`,
+            external_url: `${domain}/slicer/${decimalId}`,
             address: data.slicer.address,
             image: "https://slice.so/slicer_default.png",
             isCollectible: data.slicer.isCollectible,
@@ -83,7 +88,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           })
         }
         if (stats !== "false") {
-          const query = await TotalReceived(Number(id))
+          const query = await TotalReceived(Number(decimalId))
           if (Number(query[1]) != 0) {
             totalReceived =
               Math.floor(Number(query[1]) / 0.975 / 10 ** 16) / 100
@@ -116,7 +121,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const { name, tags, description, imageUrl } = JSON.parse(req.body)
 
       const slicerInfo = await prisma.slicer.findFirst({
-        where: { id: Number(id) },
+        where: { id: Number(decimalId) },
         select: {
           isCollectible: true,
           id: true,
@@ -129,7 +134,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       if (
         slicerInfo.isCollectible &&
-        slicerInfo.name !== `Slicer #${id}` &&
+        slicerInfo.name !== `Slicer #${decimalId}` &&
         slicerInfo.description !== "" &&
         slicerInfo.tags !== "" &&
         slicerInfo.image !== "https://slice.so/slicer_default.png"
@@ -138,7 +143,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
 
       const query = await prisma.slicer.update({
-        where: { id: Number(id) },
+        where: { id: Number(decimalId) },
         data: { name, tags, description, image: imageUrl },
       })
       res.status(200).json({ query })
