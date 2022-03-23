@@ -18,7 +18,7 @@ import {
   Container,
   SlicerSubmitBlock,
   SlicerProducts,
-  SlicerSponsors,
+  SlicerSponsors
 } from "@components/ui"
 import fetcher from "@utils/fetcher"
 import useQuery from "@utils/subgraphQuery"
@@ -47,12 +47,12 @@ const initAttributes = {
   Creator: "",
   "Superowner slices": 0,
   "Sliced on": 0,
-  "Total slices": 0,
+  "Total slices": 0
 }
 
 const Id = ({
   slicerInfo,
-  products,
+  products
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { account } = useAppContext()
   const { isAllowed } = useAllowed(slicerInfo?.id)
@@ -61,14 +61,14 @@ const Id = ({
   const [sponsorLoading, setSponsorLoading] = useState(true)
   const [msg, setMsg] = useState<Message>({
     message: "",
-    messageStatus: "success",
+    messageStatus: "success"
   })
 
   const [slicer, setSlicer] = useState<SlicerData>({
     name: slicerInfo?.name,
     description: slicerInfo?.description,
     tags: slicerInfo?.tags,
-    imageUrl: slicerInfo?.image,
+    imageUrl: slicerInfo?.image
   })
   const [slicerAttributes, setSlicerAttributes] =
     useState<SlicerAttributes>(initAttributes)
@@ -78,7 +78,7 @@ const Id = ({
   const [newName, setNewName] = useState(slicer.name)
   const [newImage, setNewImage] = useState<NewImage>({
     url: "",
-    file: undefined,
+    file: undefined
   })
   const [tempImageUrl, setTempImageUrl] = useState("")
   const [sponsors, setSponsors] = useState<AddressAmount[]>([])
@@ -123,7 +123,7 @@ const Id = ({
       name: slicerInfo?.name,
       description: slicerInfo?.description,
       tags: slicerInfo?.tags,
-      imageUrl: slicerInfo?.image,
+      imageUrl: slicerInfo?.image
     })
   }, [slicerInfo])
 
@@ -195,14 +195,10 @@ const Id = ({
                   url: `${domain}/slicer/${slicerInfo?.id}`,
                   images: [
                     {
-                      url: slicer.imageUrl,
-                      alt: `${slicer.name} cover image`,
-                    },
-                    {
-                      url: `${domain}/og_image.jpg`,
-                      alt: `${slicer.name} cover image`,
-                    },
-                  ],
+                      url: slicer.imageUrl || `${domain}/og_image.jpg`,
+                      alt: `${slicer.name} cover image`
+                    }
+                  ]
                 }}
               />
               {slicer.imageUrl && (
@@ -333,8 +329,8 @@ export async function getStaticPaths() {
     const id = String(slicerId)
     return {
       params: {
-        id,
-      },
+        id
+      }
     }
   })
 
@@ -352,9 +348,9 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   return {
     props: {
       slicerInfo,
-      products,
+      products
     },
-    revalidate: 10,
+    revalidate: 10
   }
 }
 
