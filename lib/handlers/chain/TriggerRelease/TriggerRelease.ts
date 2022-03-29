@@ -5,7 +5,7 @@ const TriggerRelease = async (
   slicerId: number,
   account: string,
   currency: string,
-  toWithdraw = false
+  toWithdraw: boolean
 ) => {
   const { initialize } = await import("@lib/useProvider")
   const { slicer } = await import("@lib/initProvider")

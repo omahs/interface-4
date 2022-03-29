@@ -12,6 +12,7 @@ import { CardImage, CopyAddress } from ".."
 import UserVerified from "@components/icons/UserVerified"
 import { useAppContext } from "../context"
 import Immutable from "@components/icons/Immutable"
+import { ethers } from "ethers"
 
 type SlicerInfo = {
   name: string
@@ -151,7 +152,15 @@ const SlicerCard = ({
             </p>
             <BlockchainCall
               label="Trigger release"
-              action={() => TriggerRelease(connector, account, slicerId)}
+              action={() =>
+                TriggerRelease(
+                  connector,
+                  slicerId,
+                  account,
+                  ethers.constants.AddressZero,
+                  false
+                )
+              }
               success={success}
               setSuccess={setSuccess}
               setLogs={setLogs}

@@ -7,7 +7,7 @@ const TransferShares = async (
   to: string,
   slicerId: number,
   shares: number,
-  toRelease = true
+  toRelease: boolean
 ) => {
   const { initialize } = await import("@lib/useProvider")
   const { sliceCore } = await import("@lib/initProvider")
