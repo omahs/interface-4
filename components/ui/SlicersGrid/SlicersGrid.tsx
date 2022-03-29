@@ -2,7 +2,7 @@ import Button from "../Button"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { SlicerReduced } from "pages/slicer"
 import { Card, FiltersMenu } from ".."
-import Collectible from "@components/icons/Collectible"
+import Collectible from "@components/icons/Immutable"
 import tagsList from "@lib/content/tagsList"
 
 type Props = {
@@ -38,7 +38,7 @@ const SlicersGrid = ({ data }: Props) => {
     setIterator(0)
     const newFilteredSlicers = data.filter((el) => {
       const onlyCollectibles = showCollectibles
-        ? el.isCollectible == showCollectibles
+        ? el.isImmutable == showCollectibles
         : true
       const isFiltered = !el.tags
         ? filterTags.includes("")
@@ -79,7 +79,7 @@ const SlicersGrid = ({ data }: Props) => {
         <div className="grid items-center justify-center grid-cols-1 gap-2 max-w-[400px] gap-y-6 sm:gap-6 lg:gap-8 sm:max-w-[550px] mx-auto sm:grid-cols-2 md:max-w-none md:grid-cols-3 my-14">
           {[...Array(iterator)].map((el, key) => {
             const slicerData = filteredData[key]
-            const { id, name, tags, image, isCollectible } = slicerData
+            const { id, name, tags, image, isImmutable } = slicerData
             const slicerLink = `/slicer/${id}`
             const slicerName = name || `Slicer #${id}`
             const currentTag = tagsList.find((el) => el.value === tags)
@@ -94,12 +94,12 @@ const SlicersGrid = ({ data }: Props) => {
                 cardClassName="group h-full overflow-hidden transition-all duration-1000 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025]"
                 size="h-44"
                 topLeft={
-                  isCollectible && {
+                  isImmutable && {
                     title: "Collectible asset",
                     content: (
                       <Collectible className="py-2 text-indigo-600 w-[38px] h-[38px]" />
                     ),
-                    padding: "px-4",
+                    padding: "px-4"
                   }
                 }
                 topRight={
@@ -110,7 +110,7 @@ const SlicersGrid = ({ data }: Props) => {
                         {currentTag.image}
                       </div>
                     ),
-                    padding: "px-4",
+                    padding: "px-4"
                   }
                 }
               >

@@ -18,7 +18,7 @@ const SlicersList = () => {
             address
             slices
             minimumSlices
-            isCollectible
+            isImmutable
           }
         }
       }
@@ -45,7 +45,7 @@ const SlicersList = () => {
       })
       const body = {
         method: "POST",
-        body: JSON.stringify({ slicerAddresses }),
+        body: JSON.stringify({ slicerAddresses })
       }
       getUnreleasedData(body)
     }
@@ -67,10 +67,10 @@ const SlicersList = () => {
           const slicerOwned = slicers && slicers[i]
           const ownedShares = slicerOwned?.slices
           const slicer = slicerOwned?.slicer
-          const slicerId = slicer?.id
+          const slicerId = parseInt(String(slicer?.id), 16)
           const totalSlices = slicer?.slices
           const slicerAddress = slicer?.address
-          const isCollectible = slicer?.isCollectible
+          const isImmutable = slicer?.isImmutable
           const isAllowed = Number(ownedShares) >= Number(slicer?.minimumSlices)
           const unreleasedAmount = getEthFromWei(unreleased[i])
 
@@ -83,7 +83,7 @@ const SlicersList = () => {
                 shares={ownedShares}
                 totalSlices={totalSlices}
                 isAllowed={isAllowed}
-                isCollectible={isCollectible}
+                isImmutable={isImmutable}
                 unreleasedAmount={unreleasedAmount}
               />
               {i + 1 != iterator && (

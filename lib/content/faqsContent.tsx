@@ -36,7 +36,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "difference",
+    id: "difference"
   },
   {
     question: "What can slicers be used for?",
@@ -80,7 +80,7 @@ export const faqsMain = [
         </p> */}
       </>
     ),
-    id: "usefulness",
+    id: "usefulness"
   },
   {
     question: "What is a superowner?",
@@ -102,7 +102,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "superowner",
+    id: "superowner"
   },
   {
     question: "How to release ETH from my slicer?",
@@ -123,7 +123,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "release",
+    id: "release"
   },
   {
     question: "How to redeem a product I bought?",
@@ -144,7 +144,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "redeem",
+    id: "redeem"
   },
   {
     question: "How to transfer or sell slices?",
@@ -172,7 +172,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "transfer",
+    id: "transfer"
   },
   {
     question: "My slicer doesn't appear in the Explore section",
@@ -193,7 +193,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "transfer",
+    id: "transfer"
   },
   {
     question: "How do slicers make ETH?",
@@ -217,7 +217,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "slicer-earn",
+    id: "slicer-earn"
   },
   {
     question: "What are products?",
@@ -249,7 +249,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "products",
+    id: "products"
   },
   {
     question: "What are sponsorships?",
@@ -272,8 +272,8 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "sponsorships",
-  },
+    id: "sponsorships"
+  }
 
   // { id:'nice',question: "Can slicers be upgraded?", answer: "Nice" },
 ]
@@ -308,7 +308,7 @@ export const faqsNfts = [
         </p> */}
       </>
     ),
-    id: "nft-mint",
+    id: "nft-mint"
   },
   {
     question: "Can I create fractionalized NFTs?",
@@ -321,7 +321,7 @@ export const faqsNfts = [
         <p>You can do this with both collectible and normal assets.</p>
       </>
     ),
-    id: "nice",
+    id: "nice"
   },
   {
     question: "Can I use Slice with existing NFTs?",
@@ -341,8 +341,8 @@ export const faqsNfts = [
         </p>
       </>
     ),
-    id: "nft-existing",
-  },
+    id: "nft-existing"
+  }
 ]
 
 export const faqsGeneral = [
@@ -368,7 +368,7 @@ export const faqsGeneral = [
         </p>
       </>
     ),
-    id: "mission",
+    id: "mission"
   },
   {
     question: "How much does it cost?",
@@ -388,40 +388,7 @@ export const faqsGeneral = [
         </p>
       </>
     ),
-    id: "pricing",
-  },
+    id: "pricing"
+  }
   // { id:'nice',question: "Where can I see the smart contract?", answer: "Slice's smart contract are currently private but will become open source in the next weeks. If you're a developer and are interested in contributing to the project, please reach out.' " },
-  {
-    question: "What are SLCs and what's their purpose?",
-    answer: (
-      <>
-        <p>
-          Whenever you receive ETH from a slicer by triggering a release, you
-          also receive a varying amount of SLC – Slice&apos;s ERC20 token.
-        </p>
-        <p>
-          The amount received depends on the ETH amount released and the SLC
-          tokens in circulation, with a slowly decreasing trend over time.
-        </p>
-        <p>
-          Their use inside the Slice ecosystem will be uncovered soon. For now
-          you can consider them a gift for being one of the first users of
-          Slice!
-        </p>
-        <p>
-          If you want to know as soon as there are news about SLCs, consider{" "}
-          <a
-            className="text-white highlight"
-            href={accounts.discord}
-            target="_blank"
-            rel="noreferrer"
-          >
-            hanging out in our Discord
-          </a>
-          .
-        </p>
-      </>
-    ),
-    id: "slc",
-  },
 ]
