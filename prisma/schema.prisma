@@ -19,7 +19,7 @@ model Slicer {
   address       String?
   image         String?
   tags          String?
-  isCollectible Boolean?
+  isImmutable   Boolean?
   config        Json        @default("{\"sponsors\": true}")
   sponsors      Json        @default("{ }")
   attributes    Json[]
