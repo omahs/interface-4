@@ -2,8 +2,10 @@ import WalletConnect from "@walletconnect/client"
 
 const TriggerRelease = async (
   connector: WalletConnect,
+  slicerId: number,
   account: string,
-  slicerId: number
+  currency: string,
+  toWithdraw = false
 ) => {
   const { initialize } = await import("@lib/useProvider")
   const { slicer } = await import("@lib/initProvider")
@@ -12,7 +14,7 @@ const TriggerRelease = async (
   const contract = await slicer(slicerId, signer)
 
   try {
-    const call = await contract.release(account)
+    const call = await contract.release(account, currency, toWithdraw)
     return [contract, call]
   } catch (err) {
     throw err

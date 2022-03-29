@@ -1,11 +1,13 @@
 import WalletConnect from "@walletconnect/client"
+import { ContractTransaction } from "ethers"
 
 const TransferShares = async (
   connector: WalletConnect,
   from: string,
   to: string,
   slicerId: number,
-  shares: number
+  shares: number,
+  toRelease = true
 ) => {
   const { initialize } = await import("@lib/useProvider")
   const { sliceCore } = await import("@lib/initProvider")
@@ -14,7 +16,18 @@ const TransferShares = async (
   const contract = sliceCore(signer)
 
   try {
-    const call = await contract.safeTransferFrom(from, to, slicerId, shares, [])
+    let call: ContractTransaction
+    if (toRelease) {
+      call = await contract.safeTransferFrom(from, to, slicerId, shares, [])
+    } else {
+      call = await contract.safeTransferFromUnreleased(
+        from,
+        to,
+        slicerId,
+        shares,
+        []
+      )
+    }
     return [contract, call]
   } catch (err) {
     throw err

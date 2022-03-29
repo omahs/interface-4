@@ -11,13 +11,14 @@ export type PayProductData = {
 
 const PayProducts = async (
   connector: WalletConnect,
+  buyer: string,
   productData: PayProductData[]
 ) => {
   const { initialize } = await import("@lib/useProvider")
-  const { slice, chainlink } = await import("@lib/initProvider")
+  const { productsModule, chainlink } = await import("@lib/initProvider")
 
   const { signer } = await initialize(connector)
-  const contract = slice(signer)
+  const contract = productsModule(signer)
   const priceFeed = await chainlink(signer).latestRoundData()
 
   const ethUsd = Number(priceFeed[1])
@@ -44,14 +45,9 @@ const PayProducts = async (
       totalPrice = BigNumber.from(currentPrice).add(productPrice)
     })
 
-    const call = await contract.payProducts(
-      slicerAddresses,
-      productIds,
-      quantities,
-      {
-        value: totalPrice,
-      }
-    )
+    const call = await contract.payProducts(buyer, productData, {
+      value: totalPrice
+    })
     return [contract, call]
   } catch (err) {
     throw err
@@ -60,4 +56,5 @@ const PayProducts = async (
 
 export default PayProducts
 
+// todo: finish this
 // todo?: calculate price here when price edits are possible
