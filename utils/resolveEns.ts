@@ -31,7 +31,9 @@ export const useEns = (connector: WalletConnect, address: string) => {
   useEffect(() => {
     resolveEns(connector, address, setResolvedAddress)
   }, [address])
-  return resolvedAddress
+  return !resolvedAddress || resolvedAddress == "Invalid ENS name"
+    ? null
+    : resolvedAddress
 }
 
 export default resolveEns
