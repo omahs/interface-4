@@ -1,26 +1,30 @@
 import { ethers } from "ethers"
-import SLCContract from "artifacts/contracts/slc_v0.sol/SLC.json"
-import SliceCoreContract from "artifacts/contracts/sliceCore_v0.sol/SliceCore.json"
-import SliceContract from "artifacts/contracts/slice_v0.sol/Slice.json"
-import SlicerContract from "artifacts/contracts/slicer_v0.sol/Slicer.json"
+import SliceCoreContract from "artifacts/contracts/SliceCore.sol/SliceCore.json"
+import ProductsModuleContract from "artifacts/contracts/ProductsModule.sol/ProductsModule.json"
+import FundsModuleContract from "artifacts/contracts/FundsModule.sol/FundsModule.json"
+import SlicerContract from "artifacts/contracts/Slicer.sol/Slicer.json"
 import ChainlinkContract from "artifacts/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol/AggregatorV3Interface.json"
 
-export const slc = (signer: ethers.Signer | ethers.providers.Provider) =>
-  new ethers.Contract(
-    process.env.NEXT_PUBLIC_SLC_ADDRESS,
-    SLCContract.abi,
-    signer
-  )
 export const sliceCore = (signer: ethers.Signer | ethers.providers.Provider) =>
   new ethers.Contract(
     process.env.NEXT_PUBLIC_SLICECORE_ADDRESS,
     SliceCoreContract.abi,
     signer
   )
-export const slice = (signer: ethers.Signer | ethers.providers.Provider) =>
+export const productsModule = (
+  signer: ethers.Signer | ethers.providers.Provider
+) =>
   new ethers.Contract(
-    process.env.NEXT_PUBLIC_SLICE_ADDRESS,
-    SliceContract.abi,
+    process.env.NEXT_PUBLIC_PRODUCTS_ADDRESS,
+    ProductsModuleContract.abi,
+    signer
+  )
+export const fundsModule = (
+  signer: ethers.Signer | ethers.providers.Provider
+) =>
+  new ethers.Contract(
+    process.env.NEXT_PUBLIC_FUNDS_ADDRESS,
+    FundsModuleContract.abi,
     signer
   )
 
