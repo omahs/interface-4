@@ -1,31 +1,17 @@
 import { ListLayout, SlicerCard } from "@components/ui"
-import { useAppContext } from "@components/ui/context"
 import { useEffect, useState } from "react"
-import useQuery from "@utils/subgraphQuery"
 import getEthFromWei from "@utils/getEthFromWei"
 
-const SlicersList = () => {
-  const { account } = useAppContext()
+type Props = {
+  account: string
+  payeeData: any
+  slicers: any
+  loading: boolean
+}
+
+const SlicersList = ({ account, payeeData, slicers, loading }: Props) => {
   const [iterator, setIterator] = useState(0)
   const [unreleased, setUnreleased] = useState([])
-
-  const tokensQuery = /* GraphQL */ `
-      payee(id: "${account?.toLowerCase()}") {
-        slicers (where: {slices_gt: "0"}){
-          slices
-          slicer {
-            id
-            address
-            slices
-            minimumSlices
-            isImmutable
-          }
-        }
-      }
-    `
-  let subgraphData = useQuery(tokensQuery, [account])
-  const payeeData = subgraphData?.payee
-  const slicers = payeeData?.slicers
   let slicerAddresses = []
 
   const getUnreleasedData = async (data) => {
@@ -54,7 +40,7 @@ const SlicersList = () => {
 
   return (
     <ListLayout
-      elementsArray={subgraphData && (slicers || [])}
+      elementsArray={!loading && (slicers || [])}
       setIterator={setIterator}
       actionScreenText="You have no slicers :("
       actionScreenHref="/slice"
@@ -71,6 +57,7 @@ const SlicersList = () => {
           const totalSlices = slicer?.slices
           const slicerAddress = slicer?.address
           const isImmutable = slicer?.isImmutable
+          const productsModuleBalance = slicer?.productsModuleBalance
           const isAllowed = Number(ownedShares) >= Number(slicer?.minimumSlices)
           const unreleasedAmount = getEthFromWei(unreleased[i])
 
@@ -84,6 +71,7 @@ const SlicersList = () => {
                 totalSlices={totalSlices}
                 isAllowed={isAllowed}
                 isImmutable={isImmutable}
+                productsModuleBalance={productsModuleBalance}
                 unreleasedAmount={unreleasedAmount}
               />
               {i + 1 != iterator && (
