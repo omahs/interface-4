@@ -19,10 +19,10 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   const [shares, setShares] = useState([1000000])
   const [minimumShares, setMinimumShares] = useState(0)
   const [totalShares, setTotalShares] = useState(1000000)
-  const [isCollectible, setIsCollectible] = useState(false)
+  const [isImmutable, setisImmutable] = useState(false)
   const [message, setMessage] = useState<Message>({
     message: "",
-    messageStatus: "success",
+    messageStatus: "success"
   })
 
   const hasMinimumShares =
@@ -38,16 +38,18 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
     const cleanedAddresses = addresses.filter((el) => el != "")
     const cleanedShares = shares.filter((el) => el != 0)
 
+    const payees = []
+    for (let i = 0; i < cleanedAddresses.length; i++) {
+      const account = cleanedAddresses[i]
+      const shares = cleanedShares[i]
+
+      payees.push({ account, shares })
+    }
+
     try {
       if (cleanedShares.length == cleanedAddresses.length) {
         const eventLogs = await handleSubmit(
-          Slice(
-            connector,
-            cleanedAddresses,
-            cleanedShares,
-            minimumShares,
-            isCollectible
-          ),
+          Slice(connector, payees, minimumShares, [], 0, 0, isImmutable, false),
           setMessage,
           setLoading,
           setSuccess,
@@ -58,7 +60,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         handleMessage(
           {
             message: "Inputs don't correspond, please try again",
-            messageStatus: "error",
+            messageStatus: "error"
           },
           setMessage
         )
@@ -79,12 +81,12 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         shares={shares}
         minimumShares={minimumShares}
         totalShares={totalShares}
-        isCollectible={isCollectible}
+        isImmutable={isImmutable}
         setAddresses={setAddresses}
         setShares={setShares}
         setMinimumShares={setMinimumShares}
         setTotalShares={setTotalShares}
-        setIsCollectible={setIsCollectible}
+        setisImmutable={setisImmutable}
         hasMinimumShares={hasMinimumShares}
       />
       <div className="py-8">

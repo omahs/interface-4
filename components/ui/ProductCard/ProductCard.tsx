@@ -2,6 +2,7 @@ import ShoppingBag from "@components/icons/ShoppingBag"
 import Units from "@components/icons/Units"
 import { ProductCart } from "@lib/handleUpdateCart"
 import formatNumber from "@utils/formatNumber"
+import { ethers } from "ethers"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import { Card, CartButton } from ".."
@@ -26,7 +27,7 @@ const ProductCard = ({
   product,
   chainInfo,
   ethUsd,
-  editMode,
+  editMode
 }: Props) => {
   const [cookies] = useCookies(["cart"])
   const { setModalView, purchases } = useAppContext()
@@ -39,10 +40,17 @@ const ProductCard = ({
     image,
     purchaseInfo,
     uid,
-    creator,
+    creator
   } = product
-  const price = chainInfo?.price
-  const isUSD = chainInfo?.isUSD
+  const prices = chainInfo?.prices
+  const ethPrice = prices?.find(
+    (price) => price.currency.id == ethers.constants.AddressZero
+  )
+  const isUSD = ethPrice?.dynamicPricing
+  const price = ethPrice?.price
+
+  // TODO Refactor this to handle  multiple currencies
+
   const isInfinite = chainInfo?.isInfinite
   const isMultiple = chainInfo?.isMultiple
   const availableUnits = chainInfo?.availableUnits
@@ -52,17 +60,18 @@ const ProductCard = ({
   const [convertedEthUsd, setConvertedEthUsd] = useState(0)
   const [purchasedQuantity, setPurchasedQuantity] = useState(0)
 
-  const productPrice = chainInfo
-    ? {
-        eth: `Ξ ${
-          isUSD ? convertedEthUsd : Math.floor(price / 10 ** 14) / 10000
-        }`,
-        usd: `$ ${isUSD ? formatNumber(price / 100) : convertedEthUsd}`,
-      }
-    : {
-        eth: "Ξ ...",
-        usd: "$ ...",
-      }
+  const productPrice =
+    chainInfo && ethPrice
+      ? {
+          eth: `Ξ ${
+            isUSD ? convertedEthUsd : Math.floor(price / 10 ** 14) / 10000
+          }`,
+          usd: `$ ${isUSD ? formatNumber(price / 100) : convertedEthUsd}`
+        }
+      : {
+          eth: "Ξ ...",
+          usd: "$ ..."
+        }
   const cookieCart: ProductCart[] = cookies?.cart
   const productCart: ProductCart = cookieCart?.find(
     (product) =>
@@ -113,8 +122,8 @@ const ProductCard = ({
         price,
         editMode,
         purchasedQuantity,
-        availabilityColor,
-      },
+        availabilityColor
+      }
     })
   }
 
@@ -153,13 +162,13 @@ const ProductCard = ({
               )}
               <ShoppingBag className="w-[18px] h-[18px] text-indigo-600" />
             </>
-          ),
+          )
         }}
         topRight={{
           title: "Product price",
           content: (
             <p className="text-sm font-medium text-black">{productPrice.eth}</p>
-          ),
+          )
         }}
         bottomLeft={
           chainInfo &&
@@ -172,7 +181,7 @@ const ProductCard = ({
                 </p>
                 <Units className={`w-[18px] h-[18px] ${availabilityColor}`} />
               </>
-            ),
+            )
           }
         }
         onClick={() => (chainInfo ? handleOnClick() : null)}

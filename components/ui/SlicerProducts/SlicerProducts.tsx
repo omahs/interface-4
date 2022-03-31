@@ -1,3 +1,4 @@
+import decimalToHex from "@utils/decimalToHex"
 import useQuery from "@utils/subgraphQuery"
 import { useRouter } from "next/dist/client/router"
 import { useEffect, useState } from "react"
@@ -34,18 +35,25 @@ const SlicerProducts = ({
   slicerId,
   slicerAddress,
   products,
-  editMode,
+  editMode
 }: Props) => {
   const [loading, setLoading] = useState(false)
   const [showProducts, setShowProducts] = useState<Product[]>([])
   const [pendingProducts, setPendingProducts] = useState<Product[]>([])
   const router = useRouter()
 
+  const hexId = decimalToHex(Number(slicerId))
+
   const tokensQuery = /* GraphQL */ `
-  products (where: {slicer: "${slicerId}"}) {
+  products (where: {slicer: "${hexId}"}) {
     id
-    price
-    isUSD
+    prices {
+      currency {
+        id
+      }
+      price
+      dynamicPricing
+    }
     isInfinite
     isMultiple
     availableUnits

@@ -38,7 +38,7 @@ const handleUpdateCart = async (
         quantity,
         price,
         isUSD,
-        name,
+        name
       }
     } else {
       newCookies.splice(index, 1)
@@ -52,7 +52,7 @@ const handleUpdateCart = async (
       quantity,
       price,
       isUSD,
-      name,
+      name
     })
   }
   setCookie("cart", newCookies)

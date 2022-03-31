@@ -17,7 +17,7 @@ const ProductsGrid = ({
   slicerAddress,
   products,
   editMode,
-  blockchainProducts,
+  blockchainProducts
 }: Props) => {
   const initItems = 9
   const [items, setItems] = useState(initItems)

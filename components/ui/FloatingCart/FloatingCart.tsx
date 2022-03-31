@@ -19,15 +19,21 @@ type Props = {
 }
 
 const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
-  const { isConnected, setPurchases, purchases, setModalView, connector } =
-    useAppContext()
+  const {
+    isConnected,
+    setPurchases,
+    purchases,
+    setModalView,
+    connector,
+    account
+  } = useAppContext()
   const [cookies, setCookie, removeCookie] = useCookies(["cart"])
   const [showCartList, setShowCartList] = useState(false)
   const [showCart, setShowCart] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message>({
     message: "",
-    messageStatus: "success",
+    messageStatus: "success"
   })
 
   const { data: ethUsd } = useSWR(
@@ -71,7 +77,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     setLoading(true)
     try {
       await handleSubmit(
-        PayProducts(connector, cookieCart),
+        PayProducts(connector, account, cookieCart),
         setMessage,
         setLoading,
         setSuccess,

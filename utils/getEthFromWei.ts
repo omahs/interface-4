@@ -1,6 +1,6 @@
-const getEthFromWei = (amount: { type: string; hex: string }) => {
+const getEthFromWei = (amount: string) => {
   return amount
-    ? Math.floor((Number(amount.hex) / Math.pow(10, 18)) * 10000) / 10000
+    ? Math.floor((Number(amount) / Math.pow(10, 18)) * 10000) / 10000
     : null
 }
 

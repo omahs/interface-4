@@ -3,7 +3,7 @@ import {
   ConnectBlock,
   Container,
   DoubleText,
-  TransferForm,
+  TransferForm
 } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { useEffect, useState } from "react"
@@ -12,10 +12,11 @@ import {
   defaultDescription,
   defaultTitle,
   longTitle,
-  domain,
+  domain
 } from "@components/common/Head"
 import { useRouter } from "next/dist/client/router"
 import useQuery from "@utils/subgraphQuery"
+import decimalToHex from "@utils/decimalToHex"
 
 const Transfer = () => {
   const { account } = useAppContext()
@@ -23,8 +24,10 @@ const Transfer = () => {
   const { id } = router.query
   const [ownedSlices, setOwnedSlices] = useState(0)
 
+  const hexId = decimalToHex(Number(id))
+
   const tokensQuery = /* GraphQL */ `
-      payeeSlicer(id: "${id}-${account.toLowerCase()}") {
+      payeeSlicer(id: "${account.toLowerCase()}-${hexId}") {
         slices
         slicer {
           address
@@ -65,9 +68,9 @@ const Transfer = () => {
                       url: `${domain}/og_image.jpg`,
                       width: 1000,
                       height: 1000,
-                      alt: `${defaultTitle} cover image`,
-                    },
-                  ],
+                      alt: `${defaultTitle} cover image`
+                    }
+                  ]
                 }}
               />
               {subgraphData ? (

@@ -1,7 +1,7 @@
 import { TriggerRelease } from "@lib/handlers/chain"
 import formatNumber from "@utils/formatNumber"
 import { Message } from "@utils/handleMessage"
-import { BigNumber } from "ethers"
+import { BigNumber, ethers } from "ethers"
 import { LogDescription } from "ethers/lib/utils"
 import { AddressAmount } from "pages/slicer/[id]"
 import { Dispatch, SetStateAction, useState } from "react"
@@ -25,14 +25,14 @@ const OwnerBlock = ({
   owner,
   unreleasedOwner,
   unreleased,
-  setUnreleased,
+  setUnreleased
 }: Props) => {
   const { connector, isConnected, setModalView } = useAppContext()
 
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message>({
     message: "",
-    messageStatus: "success",
+    messageStatus: "success"
   })
   const [success, setSuccess] = useState(false)
   const [logs, setLogs] = useState<LogDescription[]>()
@@ -41,7 +41,13 @@ const OwnerBlock = ({
     const handleSubmit = (await import("@utils/handleSubmit")).default
 
     const eventLog = await handleSubmit(
-      TriggerRelease(connector, ownerAddress, slicerId),
+      TriggerRelease(
+        connector,
+        slicerId,
+        ownerAddress,
+        ethers.constants.AddressZero,
+        false
+      ),
       setMessage,
       setLoading,
       setSuccess
@@ -81,7 +87,7 @@ const OwnerBlock = ({
                       ? submit(owner.address)
                       : setModalView({
                           name: "CONNECT_VIEW",
-                          cross: true,
+                          cross: true
                         })
                   }
                 >
