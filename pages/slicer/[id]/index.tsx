@@ -141,7 +141,12 @@ const Id = ({
       subgraphData.payeeSlicers.forEach((el) => {
         const address = el.id.split("-")[0]
         const ethSent = el.ethSent
-        if (address != slicerInfo?.address && ethSent && ethSent != "0") {
+        if (
+          address != process.env.NEXT_PUBLIC_PRODUCTS_ADDRESS.toLowerCase() &&
+          address != slicerInfo?.address &&
+          ethSent &&
+          ethSent != "0"
+        ) {
           const amount = Number(
             BigNumber.from(ethSent).div(BigNumber.from(10).pow(15))
           )
