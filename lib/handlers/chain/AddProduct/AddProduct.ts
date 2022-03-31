@@ -2,7 +2,7 @@ import WalletConnect from "@walletconnect/client"
 import {
   FunctionStruct,
   ProductParamsStruct
-} from "contracts/typechain-types/ProductsModule"
+} from "types/typechain/ProductsModule"
 
 const AddProduct = async (
   connector: WalletConnect,

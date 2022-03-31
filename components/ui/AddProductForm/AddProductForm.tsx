@@ -11,8 +11,8 @@ import { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import { NewImage } from "pages/slicer/[id]"
 import { useAppContext } from "../context"
-import { ProductParamsStruct } from "contracts/typechain-types/ProductsModule"
-import { FunctionStruct } from "contracts/typechain-types/ProductsModule"
+import { ProductParamsStruct } from "types/typechain/ProductsModule"
+import { FunctionStruct } from "types/typechain/ProductsModule"
 import { BigNumber, ethers } from "ethers"
 
 type Props = {

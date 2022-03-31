@@ -4,10 +4,10 @@ import ProductsModuleContract from "artifacts/contracts/ProductsModule.sol/Produ
 import FundsModuleContract from "artifacts/contracts/FundsModule.sol/FundsModule.json"
 import SlicerContract from "artifacts/contracts/Slicer.sol/Slicer.json"
 import ChainlinkContract from "artifacts/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol/AggregatorV3Interface.json"
-import { SliceCore } from "../contracts/typechain-types/SliceCore"
-import { ProductsModule } from "../contracts/typechain-types/ProductsModule"
-import { FundsModule } from "../contracts/typechain-types/FundsModule"
-import { Slicer } from "../contracts/typechain-types/Slicer"
+import { SliceCore } from "../types/typechain/SliceCore"
+import { ProductsModule } from "../types/typechain/ProductsModule"
+import { FundsModule } from "../types/typechain/FundsModule"
+import { Slicer } from "../types/typechain/Slicer"
 
 export const sliceCore = (signer: ethers.Signer | ethers.providers.Provider) =>
   new ethers.Contract(

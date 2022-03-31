@@ -1,5 +1,5 @@
 import WalletConnect from "@walletconnect/client"
-import { PurchaseParamsStruct } from "contracts/typechain-types/ProductsModule"
+import { PurchaseParamsStruct } from "types/typechain/ProductsModule"
 import { BigNumber, ethers } from "ethers"
 
 export type PayProductData = {
