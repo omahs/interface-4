@@ -16,7 +16,7 @@ const resolveEns = async (
         address.substring(address.length - 4) !== ".eth"
           ? await provider.lookupAddress(address)
           : await provider.resolveName(address)
-      if (!resolved) {
+      if (address.substring(address.length - 4) === ".eth" && !resolved) {
         throw Error
       }
       setAddress(resolved)
