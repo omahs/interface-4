@@ -24,7 +24,7 @@ const AppContext = createContext<any>({
   setModalView: () => null,
   setPurchases: () => null,
   shuffleColors: () => null,
-  purchases: [],
+  purchases: []
 })
 
 export function AppWrapper({ children }) {
@@ -80,7 +80,7 @@ export function AppWrapper({ children }) {
         setModalView,
         shuffleColors,
         purchases,
-        setPurchases,
+        setPurchases
       }}
     >
       {children}

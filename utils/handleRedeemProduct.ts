@@ -42,8 +42,8 @@ const handleRedeemProduct = async (
       image,
       purchasedQuantity: Number(redeemed[0]),
       decryptedFiles,
-      decryptedTexts,
-    },
+      decryptedTexts
+    }
   })
   setLoading(false)
 }

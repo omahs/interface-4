@@ -10,6 +10,7 @@ import getEthFromWei from "@utils/getEthFromWei"
 import getUnreleasedData from "@utils/getUnreleasedData"
 import TransferFormInputBlock from "../TransferFormInputBlock"
 import TransferFormNotes from "../TransferFormNotes"
+import MySwitch from "../MySwitch"
 
 type Props = {
   account: string
@@ -26,7 +27,7 @@ const TransferForm = ({
   slicerAddress,
   ownedSlices,
   totalSlices,
-  minimumSlices,
+  minimumSlices
 }: Props) => {
   const { connector } = useAppContext()
 
@@ -34,13 +35,14 @@ const TransferForm = ({
   const [batchMode, setBatchMode] = useState(false)
   const [addresses, setAddresses] = useState([""])
   const [shares, setShares] = useState([0])
+  const [toRelease, setToRelease] = useState(true)
   const [totalShares, setTotalShares] = useState(0)
 
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message>({
     message: "",
-    messageStatus: "success",
+    messageStatus: "success"
   })
   const [logs, setLogs] = useState<LogDescription[]>()
   const eventLog = getLog(logs, "TransferSingle")
@@ -62,7 +64,8 @@ const TransferForm = ({
           account,
           addresses[0],
           Number(slicerId),
-          shares[0]
+          shares[0],
+          toRelease
         ),
         setMessage,
         setLoading,
@@ -84,7 +87,8 @@ const TransferForm = ({
           account,
           Number(slicerId),
           cleanedAddresses,
-          cleanedShares
+          cleanedShares,
+          toRelease
         ),
         setMessage,
         setLoading,
@@ -125,15 +129,27 @@ const TransferForm = ({
               setShares={setShares}
               setTotalShares={setTotalShares}
             />
+            {unreleasedEth && unreleasedEth != 0 ? (
+              <div className="flex items-center justify-end pt-4 pb-2 space-x-4">
+                <p>Trigger release during transfer</p>
+                <MySwitch enabled={toRelease} setEnabled={setToRelease} />
+              </div>
+            ) : null}
             <TransferFormNotes
               unreleasedEth={unreleasedEth}
               ownedSlices={ownedSlices}
               slicesToTransfer={totalShares}
               minimumSlices={minimumSlices}
+              toRelease={toRelease}
             />
             <div>
               <div className="pt-3">
-                <Button label="Transfer" loading={loading} type="submit" />
+                <Button
+                  label={unreleasedEth == null ? "Wait" : "Transfer"}
+                  loading={loading}
+                  type="submit"
+                  disabled={unreleasedEth == null}
+                />
               </div>
               <div className="mt-8">
                 <a
@@ -166,3 +182,5 @@ const TransferForm = ({
 }
 
 export default TransferForm
+
+// TODO: When multiple currencies are added, extend unreleased checks/notes to all accepted currencies & set toRelease to false if all are 0.

@@ -14,6 +14,7 @@ interface ButtonProps {
   label?: string | JSX.Element
   href?: string
   external?: boolean
+  disabled?: boolean
   onClick?: any
 }
 
@@ -29,6 +30,7 @@ const Button: FC<ButtonProps> = (props) => {
     requireConnection = false,
     double = true,
     external = false,
+    disabled = false,
     ...rest
   } = props
 
@@ -73,15 +75,18 @@ const Button: FC<ButtonProps> = (props) => {
         )
       ) : (
         <button
-          className={`peer relative z-10 ${rootClassName} ${color}`}
+          className={`peer relative z-10 ${rootClassName} ${
+            disabled ? "text-white bg-gray-600 cursor-wait" : color
+          }`}
           type={type}
           onClick={
-            !loading
+            !disabled && !loading
               ? requireConnection && !isConnected
                 ? () => setModalView({ name: "CONNECT_VIEW", cross: true })
                 : onClick
               : null
           }
+          disabled={disabled}
         >
           {loading ? (
             <div className="flex items-center justify-center w-full">
@@ -94,7 +99,13 @@ const Button: FC<ButtonProps> = (props) => {
       )}
       {double && (
         <div
-          className={`${rootClassName} shadow-light-random absolute top-0 mt-[0.6rem] ml-[0.6rem] mr-[-0.6rem] bg-gradient-to-br ${color1[3]} ${color2[4]} text-transparent peer-hover:mt-0 peer-hover:ml-0 peer-hover:mr-0 peer-focus:mt-0 peer-focus:ml-0 peer-focus:mr-0 transition-all duration-150`}
+          className={`${rootClassName} shadow-light-random absolute top-0 mt-[0.6rem] ml-[0.6rem] mr-[-0.6rem] bg-gradient-to-br ${
+            color1[3]
+          } ${color2[4]} text-transparent ${
+            !disabled
+              ? "peer-hover:mt-0 peer-hover:ml-0 peer-hover:mr-0 peer-focus:mt-0 peer-focus:ml-0 peer-focus:mr-0 transition-all duration-150"
+              : ""
+          }`}
         >
           <div className="relative flex items-center justify-center -z-10">
             {innerText}

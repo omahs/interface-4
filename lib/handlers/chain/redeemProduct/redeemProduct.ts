@@ -6,13 +6,13 @@ const redeemProduct = async (
   productId: number
 ) => {
   const { initialize } = await import("@lib/useProvider")
-  const { slicer } = await import("@lib/initProvider")
+  const { productsModule } = await import("@lib/initProvider")
 
   const { signer } = await initialize(connector)
-  const contract = await slicer(slicerId, signer)
+  const contract = productsModule(signer)
 
   try {
-    const call = await contract.validatePurchase(productId)
+    const call = await contract.validatePurchase(slicerId, productId)
     return call
   } catch (err) {
     throw err

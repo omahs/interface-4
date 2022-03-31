@@ -1,4 +1,4 @@
-import resolveEns, { useEns } from "@utils/resolveEns"
+import resolveEns from "@utils/resolveEns"
 import React, { InputHTMLAttributes, useEffect, useState } from "react"
 import { useAppContext } from "../context"
 import Input from "../Input/Input"
@@ -14,7 +14,6 @@ const InputAddress: React.FC<Props> = (props) => {
   const { address, required, label, onChange, ...rest } = props
   const [resolvedAddress, setResolvedAddress] = useState("")
 
-  // const resolvedAddress = useEns(connector, address)
   const addressReduced = resolvedAddress
     ? resolvedAddress.substring(resolvedAddress.length - 4) !== ".eth" &&
       resolvedAddress !== "Invalid ENS name"

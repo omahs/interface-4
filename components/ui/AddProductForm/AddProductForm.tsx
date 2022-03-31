@@ -5,12 +5,15 @@ import {
   AddProductFormPrice,
   AddProductFormGeneral,
   AddProductFormPurchases,
-  AddProductFormPreview,
+  AddProductFormPreview
 } from "@components/ui"
 import { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import { NewImage } from "pages/slicer/[id]"
 import { useAppContext } from "../context"
+import { ProductParamsStruct } from "types/typechain/ProductsModule"
+import { FunctionStruct } from "types/typechain/ProductsModule"
+import { BigNumber, ethers } from "ethers"
 
 type Props = {
   slicerId: number
@@ -31,7 +34,7 @@ const AddProductForm = ({
   uploadStep,
   setUploadStep,
   setSuccess,
-  setLogs,
+  setLogs
 }: Props) => {
   const { account, setModalView, connector } = useAppContext()
   const [usdValue, setUsdValue] = useState<number>()
@@ -41,7 +44,7 @@ const AddProductForm = ({
   const [description, setDescription] = useState("")
   const [newImage, setNewImage] = useState<NewImage>({
     url: "",
-    file: undefined,
+    file: undefined
   })
   const [isUSD, setIsUSD] = useState(false)
   const [isMultiple, setIsMultiple] = useState(false)
@@ -54,7 +57,7 @@ const AddProductForm = ({
   const [uploadPct, setUploadPct] = useState(0)
   const [message, setMessage] = useState<Message>({
     message: "",
-    messageStatus: "success",
+    messageStatus: "success"
   })
   const submitEl = useRef(null)
 
@@ -85,27 +88,44 @@ const AddProductForm = ({
         )
 
       // Create product on smart contract
-      const productPrice = isUSD ? Math.floor(usdValue * 100) : ethValue
+      const decimals = BigNumber.from(10).pow(13)
+      const ethToWei = BigNumber.from(ethValue * 10 ** 5).mul(decimals)
+      const productPrice = isUSD ? Math.floor(usdValue * 100) : ethToWei
+
+      const productParams: ProductParamsStruct = {
+        subSlicerProducts: [],
+        currencyPrices: [
+          {
+            currency: ethers.constants.AddressZero,
+            value: productPrice,
+            dynamicPricing: isUSD
+          }
+        ],
+        data,
+        purchaseData,
+        availableUnits: units,
+        isFree: false,
+        isMultiple,
+        isInfinite: !isLimited
+      }
+      const externalCall: FunctionStruct = {
+        data: [],
+        value: 0,
+        externalAddress: ethers.constants.AddressZero,
+        checkFunctionSignature: "0x00000000",
+        execFunctionSignature: "0x00000000"
+      }
 
       const eventLogs = await handleSubmit(
-        AddProduct(
-          connector,
-          slicerId,
-          0,
-          productPrice,
-          isUSD,
-          isMultiple,
-          !isLimited,
-          units,
-          data,
-          purchaseData
-        ),
+        AddProduct(connector, slicerId, productParams, externalCall),
         setMessage,
         setLoading,
         setSuccess,
         true
       )
       if (eventLogs) {
+        console.log(eventLogs)
+        // TODO debug event handling
         setLogs(eventLogs)
         setUploadStep(9)
         await handleSuccess(slicerId, newProduct.id, eventLogs)
@@ -132,7 +152,7 @@ const AddProductForm = ({
       setModalView({
         cross: false,
         name: `CREATE_PRODUCT_VIEW`,
-        params: { slicerId, uploadStep, uploadPct, setModalView },
+        params: { slicerId, uploadStep, uploadPct, setModalView }
       })
     }
   }, [loading, uploadStep])
@@ -202,7 +222,7 @@ const AddProductForm = ({
             setModalView({
               cross: true,
               name: "CREATE_PRODUCT_CONFIRM_VIEW",
-              params: { submitEl, uploadStep, setModalView },
+              params: { submitEl, uploadStep, setModalView }
             })
           }
         />

@@ -10,7 +10,7 @@ import {
   FilesList,
   LoadingStep,
   MarkdownBlock,
-  OwnerBlock,
+  OwnerBlock
 } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { ProductCart } from "@lib/handleUpdateCart"
@@ -297,7 +297,7 @@ export const PRODUCT_VIEW = (params: any) => {
     editMode,
     purchasedQuantity,
     availabilityColor,
-    preview,
+    preview
   } = params
 
   const cookieCart: ProductCart[] = cookies?.cart
@@ -336,7 +336,7 @@ export const PRODUCT_VIEW = (params: any) => {
                 </p>
                 <ShoppingBag className="w-[18px] h-[18px] text-indigo-600" />
               </>
-            ),
+            )
           }}
           topRight={{
             title: "Product price",
@@ -344,7 +344,7 @@ export const PRODUCT_VIEW = (params: any) => {
               <p className="text-sm font-medium text-black">
                 {productPrice.usd}
               </p>
-            ),
+            )
           }}
           bottomLeft={
             !isInfinite && {
@@ -356,7 +356,7 @@ export const PRODUCT_VIEW = (params: any) => {
                   </p>
                   <Units className={`w-[18px] h-[18px] ${availabilityColor}`} />
                 </>
-              ),
+              )
             }
           }
         />
@@ -412,7 +412,7 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
     image,
     purchasedQuantity,
     decryptedFiles,
-    decryptedTexts,
+    decryptedTexts
   } = params
 
   const { thanks, notes, instructions } = decryptedTexts
@@ -474,5 +474,6 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
     </>
   )
 }
+// TODO: Do not decrypt thankMessage and instructions
 
 // Todo: Add 'download all' button

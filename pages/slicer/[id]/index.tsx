@@ -24,6 +24,8 @@ import fetcher from "@utils/fetcher"
 import useQuery from "@utils/subgraphQuery"
 import { BigNumber, ethers } from "ethers"
 import multicall from "@utils/multicall"
+import decimalToHex from "@utils/decimalToHex"
+import formatCalldata from "@utils/formatCalldata"
 
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
@@ -90,7 +92,7 @@ const Id = ({
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
 
   // Todo: For collectibles save image on web3Storage instead of supabase? + Allow indefinite size? Figure it out
-  const editAllowed = !slicerInfo?.isCollectible
+  const editAllowed = !slicerInfo?.isImmutable
     ? isAllowed
     : slicerAttributes?.Creator === account?.toLowerCase() // only Creator
     ? (newName === `Slicer #${slicerInfo?.id}` && // default name, descr & image
@@ -100,15 +102,17 @@ const Id = ({
       false // slicerAttributes["Total slices"] === account.slices // creator has all slices
     : false
 
+  const hexId = decimalToHex(Number(slicerInfo?.id))
+
   const tokensQuery = /* GraphQL */ `
   payeeSlicers (
-    where: {slicer: "${slicerInfo?.id}"}, 
-    orderBy: "totalPaid", 
+    where: {slicer: "${hexId}"}, 
+    orderBy: "ethSent", 
     orderDirection: "desc"
   ) {
     id
     slices
-    totalPaid
+    ethSent
   }
 `
   const subgraphData = useQuery(tokensQuery, [slicerInfo?.address])
@@ -135,11 +139,16 @@ const Id = ({
     if (subgraphData) {
       const sponsorsList: AddressAmount[] = []
       subgraphData.payeeSlicers.forEach((el) => {
-        const address = el.id.split("-")[1]
-        const totalPaid = el.totalPaid
-        if (address != slicerInfo?.address && totalPaid && totalPaid != "0") {
+        const address = el.id.split("-")[0]
+        const ethSent = el.ethSent
+        if (
+          address != process.env.NEXT_PUBLIC_PRODUCTS_ADDRESS.toLowerCase() &&
+          address != slicerInfo?.address &&
+          ethSent &&
+          ethSent != "0"
+        ) {
           const amount = Number(
-            BigNumber.from(totalPaid).div(BigNumber.from(10).pow(15))
+            BigNumber.from(ethSent).div(BigNumber.from(10).pow(15))
           )
           sponsorsList.push({ address, amount })
         }
@@ -148,7 +157,7 @@ const Id = ({
 
       const ownersList: AddressAmount[] = []
       subgraphData.payeeSlicers.forEach((el) => {
-        const address = el.id.split("-")[1]
+        const address = el.id.split("-")[0]
         const slicesOwned = el.slices
         if (slicesOwned != "0") {
           ownersList.push({ address, amount: Number(slicesOwned) })
@@ -164,7 +173,7 @@ const Id = ({
   const getOwnersUnreleased = async (args: string[]) => {
     const result = await multicall(
       slicerInfo?.address,
-      "unreleased(address)",
+      "unreleased(address,address)",
       args
     )
     setUnreleased(result)
@@ -174,7 +183,8 @@ const Id = ({
     if (owners.length != 0) {
       const args = []
       owners.forEach((owner) => {
-        args.push(ethers.utils.hexZeroPad(owner.address, 32).substring(2))
+        const currency = ethers.constants.AddressZero
+        args.push(formatCalldata(owner.address, currency))
       })
 
       getOwnersUnreleased(args)
@@ -323,8 +333,8 @@ const Id = ({
 
 export async function getStaticPaths() {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-  const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
-  // const totalSlicers = 0
+  // const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
+  const totalSlicers = 0
   const paths = [...Array(totalSlicers).keys()].map((slicerId) => {
     const id = String(slicerId)
     return {
@@ -340,7 +350,7 @@ export async function getStaticPaths() {
 export async function getStaticProps(context: GetStaticPropsContext) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const id = context.params.id
-  const hexId = Number(id).toString(16)
+  const hexId = decimalToHex(Number(id))
 
   const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${hexId}?stats=false`)
   const products = await fetcher(`${baseUrl}/api/slicer/${id}/products`)

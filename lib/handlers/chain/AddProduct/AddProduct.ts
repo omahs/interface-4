@@ -1,41 +1,25 @@
 import WalletConnect from "@walletconnect/client"
+import {
+  FunctionStruct,
+  ProductParamsStruct
+} from "types/typechain/ProductsModule"
 
 const AddProduct = async (
   connector: WalletConnect,
   slicerId: number,
-  categoryIndex: number,
-  price: number,
-  isUSD: boolean,
-  isMultiple: boolean,
-  isInfinite: boolean,
-  units: number,
-  data: string | object = [],
-  purchaseData: string | object = [],
-  subSlicersIds = [],
-  subProducts = []
+  productParams: ProductParamsStruct,
+  externalCall: FunctionStruct
 ) => {
-  const { BigNumber } = await import("ethers")
   const { initialize } = await import("@lib/useProvider")
-  const { slicer } = await import("@lib/initProvider")
-
+  const { productsModule } = await import("@lib/initProvider")
   const { signer } = await initialize(connector)
-  const contract = await slicer(slicerId, signer)
-  const decimals = BigNumber.from(10).pow(13)
-  const ethToWei = BigNumber.from(price * 10 ** 5).mul(decimals)
-  const productPrice = isUSD ? price : ethToWei
+  const contract = productsModule(signer)
 
   try {
     const call = await contract.addProduct(
-      categoryIndex,
-      productPrice,
-      isUSD,
-      isMultiple,
-      isInfinite,
-      units,
-      data,
-      purchaseData,
-      subSlicersIds,
-      subProducts
+      slicerId,
+      productParams,
+      externalCall
     )
     return [contract, call]
   } catch (err) {

@@ -13,12 +13,12 @@ type Props = {
   shares: number[]
   minimumShares: number
   totalShares: number
-  isCollectible: boolean
+  isImmutable: boolean
   setAddresses: Dispatch<SetStateAction<string[]>>
   setShares: Dispatch<SetStateAction<number[]>>
   setMinimumShares: Dispatch<SetStateAction<number>>
   setTotalShares: Dispatch<SetStateAction<number>>
-  setIsCollectible: Dispatch<SetStateAction<boolean>>
+  setisImmutable: Dispatch<SetStateAction<boolean>>
   hasMinimumShares: boolean
 }
 
@@ -28,13 +28,13 @@ const SliceFormBlockSplitter = ({
   shares,
   minimumShares,
   totalShares,
-  isCollectible,
+  isImmutable,
   setAddresses,
   setShares,
   setMinimumShares,
   setTotalShares,
-  setIsCollectible,
-  hasMinimumShares,
+  setisImmutable,
+  hasMinimumShares
 }: Props) => {
   const { account } = useAppContext()
   const [initAddress, setInitAddress] = useState("")
@@ -201,7 +201,7 @@ const SliceFormBlockSplitter = ({
           />
         </div>
         <div>
-          <MySwitch enabled={isCollectible} setEnabled={setIsCollectible} />
+          <MySwitch enabled={isImmutable} setEnabled={setisImmutable} />
         </div>
       </div>
     </div>

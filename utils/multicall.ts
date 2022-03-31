@@ -2,7 +2,7 @@ import { defaultProvider } from "@lib/useProvider"
 import getSelector from "./getSelector"
 
 const multicall = async (
-  to: string,
+  to: string | string[],
   functionSignature: string,
   args: string[]
 ) => {
@@ -11,12 +11,23 @@ const multicall = async (
 
   args.forEach((arg) => {
     const data = selector + arg
-    promises.push(
-      defaultProvider.call({
-        to,
-        data,
+    if (typeof to === "string") {
+      promises.push(
+        defaultProvider.call({
+          to,
+          data
+        })
+      )
+    } else {
+      to.forEach((callAddress) => {
+        promises.push(
+          defaultProvider.call({
+            to: callAddress,
+            data
+          })
+        )
       })
-    )
+    }
   })
 
   const results = await Promise.all(promises)

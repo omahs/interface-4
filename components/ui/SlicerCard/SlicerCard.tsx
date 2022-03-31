@@ -1,7 +1,7 @@
 import Link from "next/link"
 import fetcher from "@utils/fetcher"
 import useSWR from "swr"
-import { TriggerRelease } from "lib/handlers/chain"
+import { releaseEthToSlicer, TriggerRelease } from "lib/handlers/chain"
 import BlockchainCall from "../BlockchainCall"
 import { useEffect, useState } from "react"
 import { LogDescription } from "ethers/lib/utils"
@@ -10,8 +10,10 @@ import getLog from "@utils/getLog"
 import Arrow from "@components/icons/Arrow"
 import { CardImage, CopyAddress } from ".."
 import UserVerified from "@components/icons/UserVerified"
-import Collectible from "@components/icons/Collectible"
 import { useAppContext } from "../context"
+import Immutable from "@components/icons/Immutable"
+import { ethers } from "ethers"
+import getEthFromWei from "@utils/getEthFromWei"
 
 type SlicerInfo = {
   name: string
@@ -26,7 +28,8 @@ type Props = {
   totalSlices: number
   account: string
   isAllowed: boolean
-  isCollectible: boolean
+  isImmutable: boolean
+  productsModuleBalance: string
   unreleasedAmount: number
 }
 
@@ -37,8 +40,9 @@ const SlicerCard = ({
   shares,
   totalSlices,
   isAllowed,
-  isCollectible,
-  unreleasedAmount,
+  isImmutable,
+  productsModuleBalance,
+  unreleasedAmount
 }: Props) => {
   const { connector } = useAppContext()
 
@@ -50,7 +54,7 @@ const SlicerCard = ({
 
   const { name, image }: SlicerInfo = slicerInfo || {
     name: null,
-    image: null,
+    image: null
   }
 
   const [ethReleased, setEthReleased] = useState(0)
@@ -74,12 +78,12 @@ const SlicerCard = ({
         href={slicerLink}
         name={slicerName}
         topLeft={
-          isCollectible && {
-            title: "Collectible asset",
+          isImmutable && {
+            title: "Immutable asset",
             content: (
-              <Collectible className="py-2 text-indigo-600 w-[38px] h-[38px]" />
+              <Immutable className="py-2 text-indigo-600 w-[38px] h-[38px]" />
             ),
-            padding: "px-4",
+            padding: "px-4"
           }
         }
         topRight={
@@ -88,7 +92,7 @@ const SlicerCard = ({
             content: (
               <UserVerified className="text-green-500 py-2 w-[38px] h-[38px]" />
             ),
-            padding: "px-4",
+            padding: "px-4"
           }
         }
         bottomLeft={{
@@ -102,12 +106,12 @@ const SlicerCard = ({
           ) : (
             <div className="w-24 h-4 rounded-md bg-sky-300 animate-pulse" />
           ),
-          clickable: false,
+          clickable: false
         }}
         bottomRight={{
           title: "Total slices",
           content: `${formatNumber(totalSlices)} 🍰`,
-          className: "text-black text-sm font-medium",
+          className: "text-black text-sm font-medium"
         }}
         imageUrl={image}
       />
@@ -141,17 +145,40 @@ const SlicerCard = ({
             </Link>
           </div>
         </div>
+        {productsModuleBalance && productsModuleBalance.length > 15 && (
+          <>
+            <div className="flex items-center mt-2 text-sm ">
+              <p>
+                Product balance:{" "}
+                <span className="font-medium text-black">
+                  {getEthFromWei(productsModuleBalance)} ETH
+                </span>
+              </p>
+              <a
+                className="flex items-center ml-3 highlight group"
+                onClick={() => releaseEthToSlicer(connector, slicerId)}
+              >
+                <p>Release</p>
+                <div className="w-5 h-5 ml-1 transition-transform duration-150 group-hover:translate-x-1">
+                  <Arrow />
+                </div>
+              </a>
+            </div>
+          </>
+        )}
         {!released && unreleasedAmount ? (
-          <div className="mt-2">
-            <p className="mb-6 text-sm">
-              Unreleased:{" "}
-              <span className="font-medium text-black">
-                {unreleasedAmount} ETH
-              </span>
-            </p>
+          <div className="mt-6">
             <BlockchainCall
-              label="Trigger release"
-              action={() => TriggerRelease(connector, account, slicerId)}
+              label={`Release ${unreleasedAmount} ETH`}
+              action={() =>
+                TriggerRelease(
+                  connector,
+                  slicerId,
+                  account,
+                  ethers.constants.AddressZero,
+                  false
+                )
+              }
               success={success}
               setSuccess={setSuccess}
               setLogs={setLogs}

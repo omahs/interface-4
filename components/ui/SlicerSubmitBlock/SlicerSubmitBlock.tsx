@@ -45,7 +45,7 @@ const SlicerSubmitBlock = ({
   setNewImage,
   setTempImageUrl,
   msg,
-  setMsg,
+  setMsg
 }: Props) => {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 
@@ -68,7 +68,7 @@ const SlicerSubmitBlock = ({
     setSlicer(newInfo)
     const body = {
       method: "POST",
-      body: JSON.stringify(newInfo),
+      body: JSON.stringify(newInfo)
     }
     await fetcher(`/api/slicer/${hexId}`, body)
   }
@@ -85,7 +85,7 @@ const SlicerSubmitBlock = ({
       name: newName,
       tags: newTags,
       description: newDescription,
-      imageUrl: slicer.imageUrl,
+      imageUrl: slicer.imageUrl
     }
     try {
       const contract = await slicerContract(slicerInfo?.id, defaultProvider)
@@ -100,10 +100,10 @@ const SlicerSubmitBlock = ({
           `${slicerInfo?.id}/main`,
           newImage,
           slicer.imageUrl,
-          slicerInfo?.isCollectible
+          slicerInfo?.isImmutable
         )
 
-        // Todo? If isCollectible store on web3Storage
+        // Todo? If isImmutable store on web3Storage
 
         const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
         setTempStorageUrl(newFilePath)
@@ -111,7 +111,7 @@ const SlicerSubmitBlock = ({
           name: newName,
           tags: newTags,
           description: newDescription,
-          imageUrl: newFilePath,
+          imageUrl: newFilePath
         }
         await updateDb(newInfo)
         mutate(`/api/slicer/${hexId}?stats=false`)
@@ -132,7 +132,7 @@ const SlicerSubmitBlock = ({
             err.message === "Payee is not allowed"
               ? err.message
               : "Something went wrong, try again",
-          messageStatus: "error",
+          messageStatus: "error"
         },
         setMsg
       )
@@ -148,7 +148,7 @@ const SlicerSubmitBlock = ({
   }
 
   useEffect(() => {
-    if (slicerInfo?.isCollectible) {
+    if (slicerInfo?.isImmutable) {
       setPreventSubmit(true)
     }
   }, [slicerInfo])
