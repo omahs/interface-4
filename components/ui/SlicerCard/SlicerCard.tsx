@@ -30,7 +30,7 @@ type Props = {
   isAllowed: boolean
   isImmutable: boolean
   productsModuleBalance: string
-  unreleasedAmount: number
+  unreleasedAmount: string
 }
 
 const SlicerCard = ({
@@ -57,7 +57,7 @@ const SlicerCard = ({
     image: null
   }
 
-  const [ethReleased, setEthReleased] = useState(0)
+  const [ethReleased, setEthReleased] = useState("")
   const [released, setReleased] = useState(false)
   const [success, setSuccess] = useState(false)
   const [logs, setLogs] = useState<LogDescription[]>()
@@ -67,7 +67,7 @@ const SlicerCard = ({
 
   useEffect(() => {
     if (success) {
-      setEthReleased(unreleasedAmount)
+      setEthReleased(String(getEthFromWei(unreleasedAmount)))
       setReleased(true)
     }
   }, [success])
@@ -145,7 +145,7 @@ const SlicerCard = ({
             </Link>
           </div>
         </div>
-        {productsModuleBalance && productsModuleBalance.length > 15 && (
+        {productsModuleBalance && productsModuleBalance.length > 1 && (
           <>
             <div className="flex items-center mt-2 text-sm ">
               <p>
@@ -166,10 +166,10 @@ const SlicerCard = ({
             </div>
           </>
         )}
-        {!released && unreleasedAmount ? (
+        {!released && unreleasedAmount && Number(unreleasedAmount) != 0 ? (
           <div className="mt-6">
             <BlockchainCall
-              label={`Release ${unreleasedAmount} ETH`}
+              label={`Release ${getEthFromWei(unreleasedAmount)} ETH`}
               action={() =>
                 TriggerRelease(
                   connector,
@@ -182,15 +182,15 @@ const SlicerCard = ({
               success={success}
               setSuccess={setSuccess}
               setLogs={setLogs}
-              mutateUrl={`/api/slicer/${slicerId}/account/${account}/unreleased`}
+              mutateUrl={`/api/account/${account}/unreleased`}
               mutateObj={{ unreleased: 0 }}
             />
           </div>
         ) : null}
-        {ethReleased != 0 && (
+        {ethReleased != "" && (
           <p className="pt-4 text-sm text-green-500">
-            You received <span className="font-medium">{ethReleased} ETH</span>!
-            🎉
+            <span className="font-medium">{ethReleased} ETH</span> was sent to
+            your balance! 🎉
           </p>
         )}
       </div>
