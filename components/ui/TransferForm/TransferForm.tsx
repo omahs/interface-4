@@ -47,7 +47,7 @@ const TransferForm = ({
   const [logs, setLogs] = useState<LogDescription[]>()
   const eventLog = getLog(logs, "TransferSingle")
 
-  const unreleasedEth = getEthFromWei(unreleased[0])
+  const unreleasedEth = getEthFromWei(unreleased[0], true)
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
@@ -136,7 +136,7 @@ const TransferForm = ({
               </div>
             ) : null}
             <TransferFormNotes
-              unreleasedEth={unreleasedEth}
+              unreleasedEth={Number(unreleasedEth)}
               ownedSlices={ownedSlices}
               slicesToTransfer={totalShares}
               minimumSlices={minimumSlices}
