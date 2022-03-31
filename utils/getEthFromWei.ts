@@ -1,4 +1,4 @@
-const getEthFromWei = (weiAmount: string, noString = true) => {
+const getEthFromWei = (weiAmount: string, noString = false) => {
   const ethAmount = weiAmount
     ? Math.floor((Number(weiAmount) / Math.pow(10, 18)) * 10000) / 10000
     : null
