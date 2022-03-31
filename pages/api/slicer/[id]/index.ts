@@ -6,6 +6,7 @@ import { defaultProvider } from "lib/useProvider"
 import client from "@utils/apollo-client"
 import { gql } from "@apollo/client"
 import { domain } from "@components/common/Head"
+import getEthFromWei from "@utils/getEthFromWei"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id, stats } = req.query
@@ -95,7 +96,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               }
             `
           })
-          const totalReceived = data.slicer.ethReceived
+          const totalReceived = getEthFromWei(data.slicer.ethReceived, true)
 
           slicerInfo.attributes.push({
             display_type: "number",
