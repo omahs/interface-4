@@ -1,7 +1,7 @@
 import Link from "next/link"
 import fetcher from "@utils/fetcher"
 import useSWR from "swr"
-import { TriggerRelease } from "lib/handlers/chain"
+import { releaseEthToSlicer, TriggerRelease } from "lib/handlers/chain"
 import BlockchainCall from "../BlockchainCall"
 import { useEffect, useState } from "react"
 import { LogDescription } from "ethers/lib/utils"
@@ -13,6 +13,7 @@ import UserVerified from "@components/icons/UserVerified"
 import { useAppContext } from "../context"
 import Immutable from "@components/icons/Immutable"
 import { ethers } from "ethers"
+import getEthFromWei from "@utils/getEthFromWei"
 
 type SlicerInfo = {
   name: string
@@ -28,6 +29,7 @@ type Props = {
   account: string
   isAllowed: boolean
   isImmutable: boolean
+  productsModuleBalance: string
   unreleasedAmount: number
 }
 
@@ -39,6 +41,7 @@ const SlicerCard = ({
   totalSlices,
   isAllowed,
   isImmutable,
+  productsModuleBalance,
   unreleasedAmount
 }: Props) => {
   const { connector } = useAppContext()
@@ -142,16 +145,31 @@ const SlicerCard = ({
             </Link>
           </div>
         </div>
+        {productsModuleBalance && productsModuleBalance.length > 15 && (
+          <>
+            <div className="flex items-center mt-2 text-sm ">
+              <p>
+                Product balance:{" "}
+                <span className="font-medium text-black">
+                  {getEthFromWei(productsModuleBalance)} ETH
+                </span>
+              </p>
+              <a
+                className="flex items-center ml-3 highlight group"
+                onClick={() => releaseEthToSlicer(connector, slicerId)}
+              >
+                <p>Release</p>
+                <div className="w-5 h-5 ml-1 transition-transform duration-150 group-hover:translate-x-1">
+                  <Arrow />
+                </div>
+              </a>
+            </div>
+          </>
+        )}
         {!released && unreleasedAmount ? (
-          <div className="mt-2">
-            <p className="mb-6 text-sm">
-              Unreleased:{" "}
-              <span className="font-medium text-black">
-                {unreleasedAmount} ETH
-              </span>
-            </p>
+          <div className="mt-6">
             <BlockchainCall
-              label="Trigger release"
+              label={`Release ${unreleasedAmount} ETH`}
               action={() =>
                 TriggerRelease(
                   connector,
