@@ -46,7 +46,7 @@ const SlicerImageBlock = ({
   totalSlices,
   owners,
   unreleased,
-  setUnreleased,
+  setUnreleased
 }: Props) => {
   const { setModalView } = useAppContext()
 
@@ -109,7 +109,6 @@ const SlicerImageBlock = ({
                     alt={`${name} image`}
                   />
                 ) : (
-                  /* eslint-enable @next/next/no-img-element */
                   <SlicerImage
                     name={name}
                     imageUrl={imageUrl}
@@ -154,8 +153,8 @@ const SlicerImageBlock = ({
                         owners,
                         totalSlices,
                         unreleased,
-                        setUnreleased,
-                      },
+                        setUnreleased
+                      }
                     })
                   }
                 >
