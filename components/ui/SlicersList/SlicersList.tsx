@@ -59,7 +59,7 @@ const SlicersList = ({ account, payeeData, slicers, loading }: Props) => {
           const isImmutable = slicer?.isImmutable
           const productsModuleBalance = slicer?.productsModuleBalance
           const isAllowed = Number(ownedShares) >= Number(slicer?.minimumSlices)
-          const unreleasedAmount = getEthFromWei(unreleased[i])
+          const unreleasedAmount = unreleased[i]
 
           return (
             <div className="mt-3" key={key}>
