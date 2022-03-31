@@ -22,14 +22,15 @@ export const getPurchases = async (
       query {
         ${tokensQuery}
       }
-    `,
+    `
   })
   const payeePurchases = data?.payee?.purchases
   let purchasesList: Purchase[] = []
   payeePurchases?.map((p) => {
     const id = p.id.split("-")
-    const slicerId = id[0]
-    const productId = id[1]
+    const slicerId = parseInt(id[0], 16).toString()
+    const productId = parseInt(id[1], 16).toString()
+
     purchasesList.push({ slicerId, productId, quantity: p.quantity })
   })
   setPurchases(purchasesList)
@@ -41,7 +42,7 @@ export const productsToPurchases = (products: ProductCart[]) => {
     purchasesList.push({
       slicerId: String(p.slicerId),
       productId: String(p.productId),
-      quantity: String(p.quantity),
+      quantity: String(p.quantity)
     })
   })
   return purchasesList

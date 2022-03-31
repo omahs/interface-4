@@ -48,8 +48,6 @@ const ProductCard = ({
   )
   const isUSD = ethPrice?.dynamicPricing
   const price = ethPrice?.price
-  console.log(prices)
-  console.log(ethPrice)
 
   // TODO Refactor this to handle  multiple currencies
 
