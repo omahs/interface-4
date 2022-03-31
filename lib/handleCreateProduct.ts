@@ -91,8 +91,6 @@ export const beforeCreate = async (
     texts
   )
 
-  // TODO: Do not encrypt thankMessage and instructions
-
   // save purchaseFiles on web3Storage
   setUploadStep(4)
   const { webStorageKey } = await fetcher("/api/webStorage")
