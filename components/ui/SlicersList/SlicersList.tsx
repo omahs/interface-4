@@ -1,6 +1,5 @@
 import { ListLayout, SlicerCard } from "@components/ui"
 import { useEffect, useState } from "react"
-import getEthFromWei from "@utils/getEthFromWei"
 
 type Props = {
   account: string
