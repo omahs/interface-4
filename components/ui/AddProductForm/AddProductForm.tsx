@@ -88,10 +88,11 @@ const AddProductForm = ({
         )
 
       // Create product on smart contract
-      const decimals = BigNumber.from(10).pow(13)
-      const ethToWei = BigNumber.from(ethValue * 10 ** 5).mul(decimals)
+      const decimals = BigNumber.from(10).pow(9)
+      const ethToWei = BigNumber.from((ethValue * 10 ** 9).toFixed(0)).mul(
+        decimals
+      )
       const productPrice = isUSD ? Math.floor(usdValue * 100) : ethToWei
-
       const productParams: ProductParamsStruct = {
         subSlicerProducts: [],
         currencyPrices: [
@@ -123,9 +124,7 @@ const AddProductForm = ({
         setSuccess,
         true
       )
-      if (eventLogs) {
-        console.log(eventLogs)
-        // TODO debug event handling
+      if (success) {
         setLogs(eventLogs)
         setUploadStep(9)
         await handleSuccess(slicerId, newProduct.id, eventLogs)

@@ -146,7 +146,7 @@ export const handleSuccess = async (
   const getLog = (await import("@utils/getLog")).default
 
   const eventLog = getLog(eventLogs, "ProductAdded")
-  const productId = eventLog[0]
+  const productId = Number(eventLog[1]._hex)
 
   // Update product in prisma, adding productId and removing productHash
   const putBody = {

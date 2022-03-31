@@ -3,14 +3,14 @@ import {
   AddProductForm,
   ConnectBlock,
   Container,
-  DoubleText,
+  DoubleText
 } from "@components/ui"
 import { NextSeo } from "next-seo"
 import {
   defaultDescription,
   defaultTitle,
   longTitle,
-  domain,
+  domain
 } from "@components/common/Head"
 import { useAllowed } from "@lib/useProvider"
 import { useRouter } from "next/dist/client/router"
@@ -42,9 +42,9 @@ export default function NewProduct() {
               url: `${domain}/og_image.jpg`,
               width: 1000,
               height: 1000,
-              alt: `${defaultTitle} cover image`,
-            },
-          ],
+              alt: `${defaultTitle} cover image`
+            }
+          ]
         }}
       />
       <ConnectBlock>
@@ -94,7 +94,8 @@ export default function NewProduct() {
               helpText={
                 <p className="pb-6">
                   You can find the new product with id{" "}
-                  <b>{eventLog && eventLog[0]}</b> in the slicer page.
+                  <b>{eventLog && Number(eventLog[1]._hex)}</b> in the slicer
+                  page.
                 </p>
               }
               buttonLabel="Go to slicer"
