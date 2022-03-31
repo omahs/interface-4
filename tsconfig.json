@@ -2,7 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es2018",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -17,13 +21,25 @@
     "sourceMap": true,
     "outDir": "dist",
     "paths": {
-      "@lib/*": ["lib/*"],
-      "@assets/*": ["assets/*"],
-      "@config/*": ["config/*"],
-      "@components/*": ["components/*"],
-      "@utils/*": ["utils/*"]
+      "@lib/*": [
+        "lib/*"
+      ],
+      "@assets/*": [
+        "assets/*"
+      ],
+      "@config/*": [
+        "config/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@utils/*": [
+        "utils/*"
+      ]
     }
     // "incremental": true
+    ,
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",
@@ -32,5 +48,7 @@
     "javascript/themeContext.js",
     "test/main.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
