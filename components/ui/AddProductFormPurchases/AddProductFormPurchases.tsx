@@ -22,13 +22,11 @@ const AddProductFormPurchases = ({
   files,
   setFiles
 }: Props) => {
-  const [loading, setLoading] = useState(false)
   return (
     <>
-      <h2 className="pb-6">Purchases</h2>
+      <h2 className="pb-6">Purchases info</h2>
       <p className="pb-3">
-        This section describes what buyers will receive after buying this
-        product.
+        Customize what buyers will see after buying the product.
       </p>
       <div>
         <Textarea
@@ -47,20 +45,23 @@ const AddProductFormPurchases = ({
         />
       </div>
       <div>
+        <hr className="w-20 mx-auto border-gray-300 my-14" />
+      </div>
+      <h2 className="pb-6">Encrypted notes & files</h2>
+      <p className="pb-3">
+        Add files or notes that can only be decrypted by buyers (adding either
+        files or notes will increase transaction cost).
+      </p>
+      <div>
         <Textarea
-          label="Notes"
-          placeholder="Encrypted notes"
+          label="Encrypted Notes"
+          placeholder="Additional notes"
           value={notes}
           onChange={setNotes}
         />
       </div>
       <div className="py-6">
-        <FilesList
-          title="Upload files"
-          files={files}
-          loading={loading}
-          setFiles={setFiles}
-        />
+        <FilesList title="Upload files" files={files} setFiles={setFiles} />
       </div>
     </>
   )
