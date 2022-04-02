@@ -37,7 +37,7 @@ const AddProductFormPreview = ({
   instructions,
   notes,
   files,
-  setModalView,
+  setModalView
 }: Props) => {
   return (
     <div>
@@ -58,23 +58,27 @@ const AddProductFormPreview = ({
                 shortDescription,
                 description,
                 image: newImage.url,
+                texts: {
+                  thanks: thankMessage,
+                  instructions: instructions
+                },
                 productPrice: {
                   eth: `Ξ ${
                     ethValue ? Math.floor(ethValue * 1000) / 1000 : "..."
                   }`,
                   usd: `$ ${
                     usdValue ? Math.floor(usdValue * 100) / 100 : "..."
-                  }`,
+                  }`
                 },
                 isUSD,
                 isInfinite: !isLimited,
                 isMultiple,
                 availableUnits: units,
-                totalPurchases: 69000000,
+                totalPurchases: 69000,
                 purchaseInfo: {
                   files: files.length != 0,
                   instructions: instructions.length != 0,
-                  notes: notes.length != 0,
+                  notes: notes.length != 0
                 },
                 slicerAddress: "preview",
                 purchasedQuantity: 0,
@@ -83,8 +87,8 @@ const AddProductFormPreview = ({
                     ? units == 0
                       ? "text-red-500"
                       : "text-yellow-600"
-                    : "text-green-600",
-              },
+                    : "text-green-600"
+              }
             })
           }
         >
@@ -102,9 +106,13 @@ const AddProductFormPreview = ({
                 name: name || "A nice product",
                 image: newImage.url,
                 purchasedQuantity: Number(1),
+                texts: {
+                  thanks: thankMessage,
+                  instructions: instructions
+                },
                 decryptedFiles: files,
-                decryptedTexts: { thanks: thankMessage, notes, instructions },
-              },
+                decryptedTexts: { notes }
+              }
             })
           }
         >

@@ -26,7 +26,7 @@ const ActionScreen: FC<ActionScreenProps> = ({
   href = "",
   loading = false,
   onClick = () => null,
-  onClickSecondary = () => null,
+  onClickSecondary = () => null
 }) => {
   return (
     <main className="w-full max-w-screen-sm mx-auto">
@@ -50,18 +50,22 @@ const ActionScreen: FC<ActionScreenProps> = ({
         ) : (
           helpText
         )}
-        {(buttonLabel || loading) && loading ? (
-          <Button loading />
-        ) : href ? (
-          <Button label={buttonLabel} href={href} />
-        ) : (
-          <Button label={buttonLabel} onClick={onClick} />
-        )}
-        {buttonLabelSecondary && (
-          <a className="mt-8 highlight" onClick={onClickSecondary}>
-            {buttonLabelSecondary}
-          </a>
-        )}
+        <div className="pt-6">
+          {(buttonLabel || loading) && loading ? (
+            <Button loading />
+          ) : href ? (
+            <Button label={buttonLabel} href={href} />
+          ) : (
+            <Button label={buttonLabel} onClick={onClick} />
+          )}
+          {buttonLabelSecondary && (
+            <p className="pt-8">
+              <a className="highlight" onClick={onClickSecondary}>
+                {buttonLabelSecondary}
+              </a>
+            </p>
+          )}
+        </div>
       </div>
     </main>
   )

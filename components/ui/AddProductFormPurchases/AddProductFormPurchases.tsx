@@ -20,7 +20,7 @@ const AddProductFormPurchases = ({
   notes,
   setNotes,
   files,
-  setFiles,
+  setFiles
 }: Props) => {
   const [loading, setLoading] = useState(false)
   return (
@@ -44,13 +44,12 @@ const AddProductFormPurchases = ({
           placeholder="How can buyers redeem or use the product?"
           value={instructions}
           onChange={setInstructions}
-          required={files.length == 0}
         />
       </div>
       <div>
         <Textarea
           label="Notes"
-          placeholder="Additional notes"
+          placeholder="Encrypted notes"
           value={notes}
           onChange={setNotes}
         />

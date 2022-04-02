@@ -22,6 +22,10 @@ type Props = {
   isMultiple: boolean
   uid: string
   creator: string
+  texts: {
+    thanks?: string
+    instructions?: string
+  }
   availableUnits: number
   purchasedQuantity: number
   labelAdd?: string
@@ -41,11 +45,12 @@ const CartButton = ({
   image,
   uid,
   creator,
+  texts,
   availableUnits,
   purchasedQuantity,
   labelAdd,
   labelRemove,
-  preview,
+  preview
 }: Props) => {
   const { setModalView, connector } = useAppContext()
   const [loading, setLoading] = useState(false)
@@ -65,6 +70,7 @@ const CartButton = ({
           image,
           uid,
           creator,
+          texts,
           setLoading,
           setModalView
         )

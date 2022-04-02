@@ -155,20 +155,16 @@ export const decryptTexts = async (
     const filename = encoded[i].name.toLowerCase()
     const buf = await encoded[i].arrayBuffer()
 
-    if (filename == "thanks" || filename == "instructions") {
-      decryptedTexts[filename] = dec.decode(buf)
-    } else {
-      const decryptedBuf: ArrayBuffer = await window.crypto.subtle.decrypt(
-        {
-          name: "AES-GCM",
-          iv: iv
-        },
-        key,
-        buf
-      )
-      const decryptedText = dec.decode(decryptedBuf)
-      decryptedTexts[filename] = decryptedText
-    }
+    const decryptedBuf: ArrayBuffer = await window.crypto.subtle.decrypt(
+      {
+        name: "AES-GCM",
+        iv: iv
+      },
+      key,
+      buf
+    )
+    const decryptedText = dec.decode(decryptedBuf)
+    decryptedTexts[filename] = decryptedText
   }
 
   return decryptedTexts

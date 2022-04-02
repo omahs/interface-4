@@ -40,7 +40,8 @@ const ProductCard = ({
     image,
     purchaseInfo,
     uid,
-    creator
+    creator,
+    texts
   } = product
   const prices = chainInfo?.prices
   const ethPrice = prices?.find(
@@ -111,6 +112,7 @@ const ProductCard = ({
         image,
         uid,
         creator,
+        texts,
         productPrice,
         isUSD,
         isInfinite,
@@ -215,6 +217,7 @@ const ProductCard = ({
                 purchasedQuantity={purchasedQuantity}
                 uid={uid}
                 creator={creator}
+                texts={texts}
               />
             )}
           </div>

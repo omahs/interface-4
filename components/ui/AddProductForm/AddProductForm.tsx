@@ -22,6 +22,7 @@ type Props = {
   uploadStep: number
   setLoading: Dispatch<SetStateAction<boolean>>
   setUploadStep: Dispatch<SetStateAction<number>>
+  setUploadPct: Dispatch<SetStateAction<number>>
   setSuccess: Dispatch<SetStateAction<boolean>>
   setLogs: Dispatch<SetStateAction<LogDescription[]>>
 }
@@ -33,6 +34,7 @@ const AddProductForm = ({
   setLoading,
   uploadStep,
   setUploadStep,
+  setUploadPct,
   setSuccess,
   setLogs
 }: Props) => {
@@ -54,7 +56,6 @@ const AddProductForm = ({
   const [instructions, setInstructions] = useState("")
   const [notes, setNotes] = useState("")
   const [files, setFiles] = useState<File[]>([])
-  const [uploadPct, setUploadPct] = useState(0)
   const [message, setMessage] = useState<Message>({
     message: "",
     messageStatus: "success"
@@ -124,11 +125,12 @@ const AddProductForm = ({
         setSuccess,
         true
       )
-      if (success) {
+
+      if (eventLogs) {
         setLogs(eventLogs)
         setUploadStep(9)
         await handleSuccess(slicerId, newProduct.id, eventLogs)
-        setUploadStep(10)
+        setModalView({ name: "" })
       } else {
         setUploadStep(7)
         await handleReject(
@@ -145,16 +147,6 @@ const AddProductForm = ({
     }
     setLoading(false)
   }
-
-  useEffect(() => {
-    if (uploadStep != 0) {
-      setModalView({
-        cross: false,
-        name: `CREATE_PRODUCT_VIEW`,
-        params: { slicerId, uploadStep, uploadPct, setModalView }
-      })
-    }
-  }, [loading, uploadStep])
 
   return (
     <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>

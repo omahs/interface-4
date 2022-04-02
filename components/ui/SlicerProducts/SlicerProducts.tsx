@@ -20,6 +20,10 @@ export type Product = {
     instructions: boolean
     notes: boolean
   }
+  texts: {
+    thanks?: string
+    instructions?: string
+  }
 }
 
 type Props = {

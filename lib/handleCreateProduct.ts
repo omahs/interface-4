@@ -12,7 +12,7 @@ export const beforeCreate = async (
   description: string,
   newImage: NewImage,
   purchaseFiles: File[],
-  thankMessage: string,
+  thanks: string,
   instructions: string,
   notes: string,
   setUploadStep: Dispatch<SetStateAction<number>>,
@@ -23,6 +23,7 @@ export const beforeCreate = async (
   const fetcher = (await import("@utils/fetcher")).default
   const web3Storage = (await import("./web3Storage")).default
   const { encryptFiles, importKey } = await import("@utils/crypto")
+  let purchaseDataCID: string
 
   const uid = Math.random().toString().substring(2)
   const purchaseInfo = {
@@ -36,7 +37,11 @@ export const beforeCreate = async (
     description,
     creator,
     uid,
-    purchaseInfo
+    purchaseInfo,
+    texts: {
+      thanks,
+      instructions
+    }
   }
   let image = ""
 
@@ -67,44 +72,44 @@ export const beforeCreate = async (
   const data = CID.parse(IpfsHash).bytes
 
   // encrypt files
-  setUploadStep(3)
-  const texts = [
-    { value: thankMessage, filename: "Thanks" },
-    { value: instructions, filename: "Instructions" },
-    { value: notes, filename: "Notes" }
-  ]
-  const keygenBody = {
-    method: "POST",
-    body: JSON.stringify({
-      slicerId,
-      name,
-      creator,
-      uid
+  if (purchaseFiles.length != 0 || notes.length != 0) {
+    setUploadStep(3)
+    const texts = [{ value: notes, filename: "Notes" }]
+    const keygenBody = {
+      method: "POST",
+      body: JSON.stringify({
+        slicerId,
+        name,
+        creator,
+        uid
+      })
+    }
+    const { exportedKey, iv } = await fetcher("/api/keygen", keygenBody)
+    const key = await importKey(exportedKey)
+    const encryptedFiles = await encryptFiles(
+      key,
+      new Uint8Array(iv),
+      purchaseFiles,
+      texts
+    )
+
+    // save purchaseFiles on web3Storage
+    setUploadStep(4)
+    const { webStorageKey } = await fetcher("/api/webStorage")
+    const totalSize = encryptedFiles
+      .map((f) => f.size)
+      .reduce((a, b) => a + b, 0)
+    let uploaded = 0
+    const onStoredChunk = (size: number) => {
+      uploaded += size
+      setUploadPct((uploaded * 100) / totalSize)
+    }
+    purchaseDataCID = await web3Storage(webStorageKey).put(encryptedFiles, {
+      maxRetries: 3,
+      onStoredChunk
     })
   }
-  const { exportedKey, iv } = await fetcher("/api/keygen", keygenBody)
-  const key = await importKey(exportedKey)
-  const encryptedFiles = await encryptFiles(
-    key,
-    new Uint8Array(iv),
-    purchaseFiles,
-    texts
-  )
-
-  // save purchaseFiles on web3Storage
-  setUploadStep(4)
-  const { webStorageKey } = await fetcher("/api/webStorage")
-  const totalSize = encryptedFiles.map((f) => f.size).reduce((a, b) => a + b, 0)
-  let uploaded = 0
-  const onStoredChunk = (size: number) => {
-    uploaded += size
-    setUploadPct((uploaded * 100) / totalSize)
-  }
-  const purchaseDataCID = await web3Storage(webStorageKey).put(encryptedFiles, {
-    maxRetries: 3,
-    onStoredChunk
-  })
-  const purchaseData = CID.parse(purchaseDataCID).bytes
+  const purchaseData = purchaseDataCID ? CID.parse(purchaseDataCID).bytes : []
 
   // Save metadata, hashes & imageUrl on prisma
   setUploadStep(5)
@@ -119,7 +124,11 @@ export const beforeCreate = async (
       uid,
       hash: IpfsHash,
       tempProductHash: purchaseDataCID,
-      purchaseInfo
+      purchaseInfo,
+      texts: {
+        thanks,
+        instructions
+      }
     })
   }
   const { data: newProduct } = await fetcher(
@@ -337,7 +346,8 @@ export const reload = async (
           creator,
           image,
           uid,
-          purchaseInfo
+          purchaseInfo,
+          texts
         } = await fetcher(`https://gateway.pinata.cloud/ipfs/${dataHash}`)
         const body = {
           method: "POST",
@@ -351,7 +361,8 @@ export const reload = async (
             uid: uid || "",
             tempProductHash: null,
             hash: dataHash,
-            purchaseInfo
+            purchaseInfo,
+            texts
           })
         }
         await fetcher(`/api/slicer/${slicerId}/products`, body)

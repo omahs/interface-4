@@ -19,7 +19,7 @@ const ProductsGrid = ({
   editMode,
   blockchainProducts
 }: Props) => {
-  const initItems = 9
+  const initItems = 8
   const [items, setItems] = useState(initItems)
   const [iterator, setIterator] = useState(0)
 
