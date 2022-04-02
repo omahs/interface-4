@@ -22,26 +22,21 @@ const handleDecryptData = async (
         slicerId,
         name,
         creator,
-        uid,
-      }),
+        uid
+      })
     }
 
-    const thanks = files.pop()
-    const notes = files.pop()
-    const instructions = files.pop()
+    const notes = files.filter((file) => file.name === "Notes")
+    const filteredFiles = files.filter((file) => file.name !== "Notes")
 
     const { exportedKey, iv } = await fetcher("/api/keygen", keygenBody)
     const key = await importKey(exportedKey)
     const decryptedFiles =
-      files.length != 0
-        ? await decryptFiles(key, new Uint8Array(iv), files)
+      filteredFiles.length != 0
+        ? await decryptFiles(key, new Uint8Array(iv), filteredFiles)
         : []
 
-    const decryptedTexts = await decryptTexts(key, new Uint8Array(iv), [
-      thanks,
-      notes,
-      instructions,
-    ])
+    const decryptedTexts = await decryptTexts(key, new Uint8Array(iv), notes)
 
     return { decryptedFiles, decryptedTexts }
   } catch (err) {

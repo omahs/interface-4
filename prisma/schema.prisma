@@ -37,6 +37,7 @@ model Product {
   uid              String
   hash             String
   image            String?
+  texts            Json     @default("{}")
   purchaseInfo     Json     @default("{}")
   tempProductHash  String?
   slicer           Slicer   @relation(fields: [slicerId], references: [id])

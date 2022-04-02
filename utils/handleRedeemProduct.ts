@@ -10,6 +10,10 @@ const handleRedeemProduct = async (
   image: string,
   uid: string,
   creator: string,
+  texts: {
+    thanks?: string
+    instructions?: string
+  },
   setLoading: Dispatch<SetStateAction<boolean>>,
   setModalView: Dispatch<SetStateAction<View>>
 ) => {
@@ -19,19 +23,30 @@ const handleRedeemProduct = async (
     .default
   const handleDecryptData = (await import("@lib/handleDecryptData")).default
 
-  setLoading(true)
-  const redeemed = await redeemProduct(connector, slicerId, productId)
-  const purchaseHash = CID.parse("f" + redeemed[1].substring(2), base16.decoder)
-    .toV1()
-    .toString()
-  const { decryptedFiles, decryptedTexts } = await handleDecryptData(
-    slicerId,
-    name,
-    creator,
-    uid,
-    purchaseHash
-  )
+  let decryptedFiles: File[] = []
+  let decryptedTexts: {} = {}
 
+  setLoading(true)
+
+  const redeemed = await redeemProduct(connector, slicerId, productId)
+
+  if (redeemed[1] != "0x") {
+    const purchaseHash = CID.parse(
+      "f" + redeemed[1].substring(2),
+      base16.decoder
+    )
+      .toV1()
+      .toString()
+    const decrypted = await handleDecryptData(
+      slicerId,
+      name,
+      creator,
+      uid,
+      purchaseHash
+    )
+    decryptedFiles = decrypted.decryptedFiles
+    decryptedTexts = decrypted.decryptedTexts
+  }
   setModalView({
     name: "REDEEM_PRODUCT_VIEW",
     cross: true,
@@ -41,6 +56,7 @@ const handleRedeemProduct = async (
       name,
       image,
       purchasedQuantity: Number(redeemed[0]),
+      texts,
       decryptedFiles,
       decryptedTexts
     }

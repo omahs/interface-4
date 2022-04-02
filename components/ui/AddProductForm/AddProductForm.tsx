@@ -14,6 +14,7 @@ import { useAppContext } from "../context"
 import { ProductParamsStruct } from "types/typechain/ProductsModule"
 import { FunctionStruct } from "types/typechain/ProductsModule"
 import { BigNumber, ethers } from "ethers"
+import AddProductFormExternal from "../AddProductFormExternal"
 
 type Props = {
   slicerId: number
@@ -22,6 +23,7 @@ type Props = {
   uploadStep: number
   setLoading: Dispatch<SetStateAction<boolean>>
   setUploadStep: Dispatch<SetStateAction<number>>
+  setUploadPct: Dispatch<SetStateAction<number>>
   setSuccess: Dispatch<SetStateAction<boolean>>
   setLogs: Dispatch<SetStateAction<LogDescription[]>>
 }
@@ -33,12 +35,13 @@ const AddProductForm = ({
   setLoading,
   uploadStep,
   setUploadStep,
+  setUploadPct,
   setSuccess,
   setLogs
 }: Props) => {
   const { account, setModalView, connector } = useAppContext()
-  const [usdValue, setUsdValue] = useState<number>()
-  const [ethValue, setEthValue] = useState<number>()
+  const [usdValue, setUsdValue] = useState(0)
+  const [ethValue, setEthValue] = useState(0)
   const [name, setName] = useState("")
   const [shortDescription, setShortDescription] = useState("")
   const [description, setDescription] = useState("")
@@ -49,12 +52,19 @@ const AddProductForm = ({
   const [isUSD, setIsUSD] = useState(false)
   const [isMultiple, setIsMultiple] = useState(false)
   const [isLimited, setIsLimited] = useState(false)
+  const [isFree, setIsFree] = useState(false)
   const [units, setUnits] = useState(0)
+  const [externalCall, setExternalCall] = useState<FunctionStruct>({
+    data: [],
+    value: 0,
+    externalAddress: ethers.constants.AddressZero,
+    checkFunctionSignature: "0x00000000",
+    execFunctionSignature: "0x00000000"
+  })
   const [thankMessage, setThankMessage] = useState("")
   const [instructions, setInstructions] = useState("")
   const [notes, setNotes] = useState("")
   const [files, setFiles] = useState<File[]>([])
-  const [uploadPct, setUploadPct] = useState(0)
   const [message, setMessage] = useState<Message>({
     message: "",
     messageStatus: "success"
@@ -93,28 +103,27 @@ const AddProductForm = ({
         decimals
       )
       const productPrice = isUSD ? Math.floor(usdValue * 100) : ethToWei
+
+      const currencyPrices =
+        productPrice != 0
+          ? [
+              {
+                currency: ethers.constants.AddressZero,
+                value: productPrice,
+                dynamicPricing: isUSD
+              }
+            ]
+          : []
+
       const productParams: ProductParamsStruct = {
         subSlicerProducts: [],
-        currencyPrices: [
-          {
-            currency: ethers.constants.AddressZero,
-            value: productPrice,
-            dynamicPricing: isUSD
-          }
-        ],
+        currencyPrices,
         data,
         purchaseData,
         availableUnits: units,
-        isFree: false,
+        isFree,
         isMultiple,
         isInfinite: !isLimited
-      }
-      const externalCall: FunctionStruct = {
-        data: [],
-        value: 0,
-        externalAddress: ethers.constants.AddressZero,
-        checkFunctionSignature: "0x00000000",
-        execFunctionSignature: "0x00000000"
       }
 
       const eventLogs = await handleSubmit(
@@ -124,11 +133,12 @@ const AddProductForm = ({
         setSuccess,
         true
       )
-      if (success) {
+
+      if (eventLogs) {
         setLogs(eventLogs)
         setUploadStep(9)
         await handleSuccess(slicerId, newProduct.id, eventLogs)
-        setUploadStep(10)
+        setModalView({ name: "" })
       } else {
         setUploadStep(7)
         await handleReject(
@@ -147,14 +157,12 @@ const AddProductForm = ({
   }
 
   useEffect(() => {
-    if (uploadStep != 0) {
-      setModalView({
-        cross: false,
-        name: `CREATE_PRODUCT_VIEW`,
-        params: { slicerId, uploadStep, uploadPct, setModalView }
-      })
+    if (ethValue != 0) {
+      setIsFree(false)
+    } else {
+      setIsFree(true)
     }
-  }, [loading, uploadStep])
+  }, [ethValue, usdValue])
 
   return (
     <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>
@@ -173,6 +181,7 @@ const AddProductForm = ({
       <AddProductFormPrice
         isMultiple={isMultiple}
         isLimited={isLimited}
+        isFree={isFree}
         units={units}
         ethValue={ethValue}
         usdValue={usdValue}
@@ -184,6 +193,10 @@ const AddProductForm = ({
         setEthValue={setEthValue}
         setUsdValue={setUsdValue}
         setIsUSD={setIsUSD}
+      />
+      <AddProductFormExternal
+        externalCall={externalCall}
+        setExternalCall={setExternalCall}
       />
       <AddProductFormPurchases
         thankMessage={thankMessage}

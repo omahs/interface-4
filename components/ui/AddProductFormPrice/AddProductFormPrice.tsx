@@ -5,6 +5,7 @@ import { InputPrice, InputSwitch } from "@components/ui"
 type Props = {
   isMultiple: boolean
   isLimited: boolean
+  isFree: boolean
   units: number
   ethValue: number
   usdValue: number
@@ -21,6 +22,7 @@ type Props = {
 const AddProductFormPrice = ({
   isMultiple,
   isLimited,
+  isFree,
   units,
   ethValue,
   usdValue,
@@ -31,27 +33,19 @@ const AddProductFormPrice = ({
   setUnits,
   setEthValue,
   setUsdValue,
-  setIsUSD,
+  setIsUSD
 }: Props) => {
   return (
     <>
       <h2 className="pb-6">Price and availability</h2>
-
-      <p className="pb-3">
-        Apart from the <i>multiple purchases</i> option, you can change these
-        details afterwards by paying the relative blockchain transaction fee.
-      </p>
       <div>
         <InputSwitch
-          label="Multiple purchases"
+          label="Allow multiple purchases"
           questionText={
             <>
               <p>
-                If enabled, users will be able to buy this product multiple
+                If enabled, a buyer will be able to buy this product multiple
                 times.
-              </p>
-              <p>
-                <b>Note:</b> You cannot change this later.
               </p>
             </>
           }
@@ -94,8 +88,6 @@ const AddProductFormPrice = ({
         setUsdValue={setUsdValue}
         loading={loading}
         label="Price per unit"
-        error={ethValue === 0}
-        required
       />
       <InputSwitch
         label="Dynamic pricing"
@@ -123,9 +115,13 @@ const AddProductFormPrice = ({
         enabled={isUSD}
         setEnabled={setIsUSD}
       />
-      <p className="pt-3">
-        <b>Note:</b> You can edit the price later, but only to reduce it.
-      </p>
+      {isFree ? (
+        <p className="text-yellow-600">
+          <b>
+            If a price is not specified this product can be purchased for free
+          </b>
+        </p>
+      ) : null}
       <div>
         <hr className="w-20 mx-auto border-gray-300 my-14" />
       </div>

@@ -7,7 +7,6 @@ import handleMessage, { Message } from "@utils/handleMessage"
 type Props = {
   title: string
   files: File[]
-  loading?: boolean
   setFiles?: Dispatch<SetStateAction<File[]>>
   uploadable?: boolean
   downloadable?: boolean
@@ -18,18 +17,19 @@ const FilesList = ({
   title,
   files,
   setFiles,
-  loading,
   uploadable = true,
   backgroundColor,
-  downloadable,
+  downloadable
 }: Props) => {
+  const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message>({
     message: "",
-    messageStatus: "success",
+    messageStatus: "success"
   })
   const uploadEl = useRef(null)
 
   const uploadFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLoading(true)
     let execute = true
     const uploadedFiles = [...e.target.files]
     uploadedFiles.map((file) => {
@@ -38,7 +38,7 @@ const FilesList = ({
         handleMessage(
           {
             message: "File too big (max 128 MB)",
-            messageStatus: "error",
+            messageStatus: "error"
           },
           setMessage
         )
@@ -57,12 +57,13 @@ const FilesList = ({
               }
             })
             return !included
-          }),
+          })
         ])
       } else {
         setFiles([...e.target.files])
       }
     }
+    setLoading(false)
   }
 
   return (
@@ -119,6 +120,7 @@ const FilesList = ({
                   <FilePlus className="inline-block ml-1 pl-0.5" />
                 </>
               }
+              loading={loading}
               type="button"
               onClick={() => uploadEl.current.click()}
             />

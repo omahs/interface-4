@@ -20,6 +20,10 @@ export type Product = {
     instructions: boolean
     notes: boolean
   }
+  texts: {
+    thanks?: string
+    instructions?: string
+  }
 }
 
 type Props = {
@@ -59,6 +63,10 @@ const SlicerProducts = ({
     availableUnits
     totalPurchases
     createdAtTimestamp
+    extAddress
+    extValue
+    extCheckSig
+    extExecSig
   }`
   const subgraphData = useQuery(tokensQuery)
   const blockchainProducts = subgraphData?.products

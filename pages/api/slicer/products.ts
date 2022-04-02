@@ -18,12 +18,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         getProductsBody.push({
           AND: [
             {
-              slicerId: { equals: slicerId },
+              slicerId: { equals: slicerId }
             },
             {
-              productId: { equals: productId },
-            },
-          ],
+              productId: { equals: productId }
+            }
+          ]
         })
       })
 
@@ -38,7 +38,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           purchaseInfo: true,
           uid: true,
           creator: true,
-        },
+          texts: true
+        }
       })
     }
 
