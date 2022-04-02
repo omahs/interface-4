@@ -56,16 +56,23 @@ const ProductCard = ({
   const isMultiple = chainInfo?.isMultiple
   const availableUnits = chainInfo?.availableUnits
   const totalPurchases = chainInfo?.totalPurchases
+  const extAddress = chainInfo?.extAddress
+  const extValue = chainInfo?.extValue
+  const extCheckSig = chainInfo?.extCheckSig
+  const extExecSig = chainInfo?.extExecSig
+
+  const totalPrice = price && extValue && Number(price) + Number(extValue)
+
   // const createdAtTimestamp = chainInfo?.createdAtTimestamp
 
   const [convertedEthUsd, setConvertedEthUsd] = useState(0)
   const [purchasedQuantity, setPurchasedQuantity] = useState(0)
 
   const productPrice =
-    chainInfo && ethPrice
+    chainInfo && ethPrice && extValue
       ? {
           eth: `Ξ ${
-            isUSD ? convertedEthUsd : Math.floor(price / 10 ** 14) / 10000
+            isUSD ? convertedEthUsd : Math.floor(totalPrice / 10 ** 14) / 10000
           }`,
           usd: `$ ${isUSD ? formatNumber(price / 100) : convertedEthUsd}`
         }
@@ -130,14 +137,15 @@ const ProductCard = ({
   }
 
   useEffect(() => {
-    if (price && ethUsd) {
+    if (totalPrice && ethUsd) {
       if (isUSD) {
         const convertedPrice =
-          Math.floor((price * 100) / Number(ethUsd?.price)) / 10000
+          Math.floor((price * 100) / Number(ethUsd?.price) + extValue * 10000) /
+          10000
         setConvertedEthUsd(convertedPrice)
       } else {
         const convertedPrice =
-          Math.floor((price / 10 ** 16) * Number(ethUsd?.price)) / 100
+          Math.floor((totalPrice / 10 ** 16) * Number(ethUsd?.price)) / 100
         setConvertedEthUsd(convertedPrice)
       }
     }
@@ -208,7 +216,7 @@ const ProductCard = ({
                 productCart={productCart}
                 slicerAddress={slicerAddress}
                 productId={productId}
-                price={price}
+                price={String(totalPrice)}
                 isUSD={isUSD}
                 image={image}
                 name={name}
