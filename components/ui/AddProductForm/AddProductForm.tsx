@@ -39,8 +39,8 @@ const AddProductForm = ({
   setLogs
 }: Props) => {
   const { account, setModalView, connector } = useAppContext()
-  const [usdValue, setUsdValue] = useState<number>()
-  const [ethValue, setEthValue] = useState<number>()
+  const [usdValue, setUsdValue] = useState(0)
+  const [ethValue, setEthValue] = useState(0)
   const [name, setName] = useState("")
   const [shortDescription, setShortDescription] = useState("")
   const [description, setDescription] = useState("")
@@ -51,6 +51,7 @@ const AddProductForm = ({
   const [isUSD, setIsUSD] = useState(false)
   const [isMultiple, setIsMultiple] = useState(false)
   const [isLimited, setIsLimited] = useState(false)
+  const [isFree, setIsFree] = useState(false)
   const [units, setUnits] = useState(0)
   const [thankMessage, setThankMessage] = useState("")
   const [instructions, setInstructions] = useState("")
@@ -94,19 +95,25 @@ const AddProductForm = ({
         decimals
       )
       const productPrice = isUSD ? Math.floor(usdValue * 100) : ethToWei
+
+      const currencyPrices =
+        productPrice != 0
+          ? [
+              {
+                currency: ethers.constants.AddressZero,
+                value: productPrice,
+                dynamicPricing: isUSD
+              }
+            ]
+          : []
+
       const productParams: ProductParamsStruct = {
         subSlicerProducts: [],
-        currencyPrices: [
-          {
-            currency: ethers.constants.AddressZero,
-            value: productPrice,
-            dynamicPricing: isUSD
-          }
-        ],
+        currencyPrices,
         data,
         purchaseData,
         availableUnits: units,
-        isFree: false,
+        isFree,
         isMultiple,
         isInfinite: !isLimited
       }
@@ -117,6 +124,7 @@ const AddProductForm = ({
         checkFunctionSignature: "0x00000000",
         execFunctionSignature: "0x00000000"
       }
+      console.log(productParams)
 
       const eventLogs = await handleSubmit(
         AddProduct(connector, slicerId, productParams, externalCall),
@@ -148,6 +156,14 @@ const AddProductForm = ({
     setLoading(false)
   }
 
+  useEffect(() => {
+    if (ethValue != 0) {
+      setIsFree(false)
+    } else {
+      setIsFree(true)
+    }
+  }, [ethValue, usdValue])
+
   return (
     <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>
       <AddProductFormGeneral
@@ -165,6 +181,7 @@ const AddProductForm = ({
       <AddProductFormPrice
         isMultiple={isMultiple}
         isLimited={isLimited}
+        isFree={isFree}
         units={units}
         ethValue={ethValue}
         usdValue={usdValue}
