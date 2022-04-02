@@ -14,6 +14,7 @@ import { useAppContext } from "../context"
 import { ProductParamsStruct } from "types/typechain/ProductsModule"
 import { FunctionStruct } from "types/typechain/ProductsModule"
 import { BigNumber, ethers } from "ethers"
+import AddProductFormExternal from "../AddProductFormExternal"
 
 type Props = {
   slicerId: number
@@ -53,6 +54,13 @@ const AddProductForm = ({
   const [isLimited, setIsLimited] = useState(false)
   const [isFree, setIsFree] = useState(false)
   const [units, setUnits] = useState(0)
+  const [externalCall, setExternalCall] = useState<FunctionStruct>({
+    data: [],
+    value: 0,
+    externalAddress: ethers.constants.AddressZero,
+    checkFunctionSignature: "0x00000000",
+    execFunctionSignature: "0x00000000"
+  })
   const [thankMessage, setThankMessage] = useState("")
   const [instructions, setInstructions] = useState("")
   const [notes, setNotes] = useState("")
@@ -117,14 +125,6 @@ const AddProductForm = ({
         isMultiple,
         isInfinite: !isLimited
       }
-      const externalCall: FunctionStruct = {
-        data: [],
-        value: 0,
-        externalAddress: ethers.constants.AddressZero,
-        checkFunctionSignature: "0x00000000",
-        execFunctionSignature: "0x00000000"
-      }
-      console.log(productParams)
 
       const eventLogs = await handleSubmit(
         AddProduct(connector, slicerId, productParams, externalCall),
@@ -193,6 +193,10 @@ const AddProductForm = ({
         setEthValue={setEthValue}
         setUsdValue={setUsdValue}
         setIsUSD={setIsUSD}
+      />
+      <AddProductFormExternal
+        externalCall={externalCall}
+        setExternalCall={setExternalCall}
       />
       <AddProductFormPurchases
         thankMessage={thankMessage}

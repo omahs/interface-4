@@ -15,7 +15,7 @@ type Props = {
   slicerId: number
   slicerAddress: string
   productId: number
-  price: number
+  price: string
   isUSD: boolean
   name: string
   image: string

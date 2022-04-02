@@ -19,7 +19,7 @@ const handleUpdateCart = async (
   slicerId: number,
   slicerAddress: string,
   productId: number,
-  price: number,
+  price: string,
   isUSD: boolean,
   name: string,
   newQuantity: number

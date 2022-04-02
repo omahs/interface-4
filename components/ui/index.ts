@@ -1,6 +1,7 @@
 export { default as AccountBalance } from "./AccountBalance"
 export { default as ActionScreen } from "./ActionScreen"
 export { default as AddProductForm } from "./AddProductForm"
+export { default as AddProductFormExternal } from "./AddProductFormExternal"
 export { default as AddProductFormGeneral } from "./AddProductFormGeneral"
 export { default as AddProductFormPrice } from "./AddProductFormPrice"
 export { default as AddProductFormPurchases } from "./AddProductFormPurchases"

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react"
+import React, { Dispatch, SetStateAction } from "react"
 import { FilesList, Textarea } from ".."
 
 type Props = {
@@ -24,7 +24,7 @@ const AddProductFormPurchases = ({
 }: Props) => {
   return (
     <>
-      <h2 className="pb-6">Purchases info</h2>
+      <h2 className="pb-6">Purchase info</h2>
       <p className="pb-3">
         Customize what buyers will see after buying the product.
       </p>
@@ -49,8 +49,8 @@ const AddProductFormPurchases = ({
       </div>
       <h2 className="pb-6">Encrypted notes & files</h2>
       <p className="pb-3">
-        Add files or notes that can only be decrypted by buyers (adding either
-        files or notes will increase transaction cost).
+        Add files or notes that can only be decrypted by buyers (
+        <b>increases transaction cost</b>).
       </p>
       <div>
         <Textarea

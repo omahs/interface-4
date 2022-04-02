@@ -63,6 +63,10 @@ const SlicerProducts = ({
     availableUnits
     totalPurchases
     createdAtTimestamp
+    extAddress
+    extValue
+    extCheckSig
+    extExecSig
   }`
   const subgraphData = useQuery(tokensQuery)
   const blockchainProducts = subgraphData?.products
