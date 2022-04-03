@@ -90,29 +90,29 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         hasMinimumShares={hasMinimumShares}
       />
       <div className="py-8">
-        <p>
+        {totalShares > 1000000000 && (
+          <p className="pt-4 text-red-500">
+            <strong>Note:</strong> You can create slicers with up to 1 Billion
+            total slices.
+          </p>
+        )}
+        {minimumShares ? (
+          minimumShares > 0 ? (
+            <p className="pt-4">
+              <strong>Note:</strong> This slicer allows up to{" "}
+              <b>
+                {totalShares / minimumShares > 1000
+                  ? `about ${formatNumber(totalShares / minimumShares)}`
+                  : `${totalShares / minimumShares}`.split(".")[0]}
+              </b>{" "}
+              superowners at the same time.
+            </p>
+          ) : null
+        ) : null}
+        <p className="pt-4">
           <strong>Note:</strong> minimum and total slices cannot be changed
           later.
         </p>
-        {minimumShares
-          ? minimumShares > 0 &&
-            (hasMinimumShares ? (
-              <p className="pt-4">
-                <strong>Note:</strong> This slicer allows up to{" "}
-                <b>
-                  {totalShares / minimumShares > 1000
-                    ? `about ${formatNumber(totalShares / minimumShares)}`
-                    : `${totalShares / minimumShares}`.split(".")[0]}
-                </b>{" "}
-                superowners at the same time.
-              </p>
-            ) : (
-              <p className="pt-4">
-                <strong className="text-red-500">Error:</strong> At least one
-                user needs to be a superowner.
-              </p>
-            ))
-          : null}
         {totalShares === 1 && (
           <p className="pt-4">
             <strong>Note:</strong> You are about to create a non-fractionalized
@@ -134,7 +134,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
             Testnet, so it does not use real ETH. You can get some ETH on
             Rinkeby{" "}
             <a
-              href="https://faucet.rinkeby.io"
+              href="https://rinkebyfaucet.com/"
               target="_blank"
               rel="noreferrer"
               className="font-black highlight"
