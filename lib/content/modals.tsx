@@ -270,6 +270,7 @@ export const PRODUCT_VIEW = (params: any) => {
     image,
     productPrice,
     isUSD,
+    extValue,
     isInfinite,
     isMultiple,
     uid,
@@ -360,6 +361,7 @@ export const PRODUCT_VIEW = (params: any) => {
               productId={productId}
               price={price}
               isUSD={isUSD}
+              extCallValue={extValue}
               name={name}
               image={image}
               isMultiple={isMultiple}

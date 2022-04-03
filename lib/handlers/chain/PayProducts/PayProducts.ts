@@ -8,6 +8,7 @@ export type PayProductData = {
   quantity: number
   price: number
   isUSD: boolean
+  extCallValue: number
 }
 
 const PayProducts = async (
@@ -29,15 +30,17 @@ const PayProducts = async (
 
   try {
     productData.forEach((product) => {
-      const { slicerId, productId, quantity, price, isUSD } = product
+      const { slicerId, productId, quantity, price, isUSD, extCallValue } =
+        product
       const currentPrice = totalPrice || 0
-
-      const productPrice = isUSD
+      const weiPrice = isUSD
         ? BigNumber.from(price)
             .mul(BigNumber.from(10).pow(24))
             .div(ethUsd)
-            .mul(quantity)
-        : BigNumber.from(price).mul(quantity)
+            .add(extCallValue)
+        : BigNumber.from(price).add(extCallValue)
+
+      const productPrice = weiPrice.mul(quantity)
 
       purchaseParams.push({ slicerId, quantity, currency, productId })
       totalPrice = BigNumber.from(currentPrice).add(productPrice)

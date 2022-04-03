@@ -129,6 +129,7 @@ const ProductCard = ({
         texts,
         productPrice,
         isUSD,
+        extValue,
         isInfinite,
         isMultiple,
         availableUnits,
@@ -224,8 +225,9 @@ const ProductCard = ({
                 productCart={productCart}
                 slicerAddress={slicerAddress}
                 productId={productId}
-                price={String(totalPrice)}
+                price={price}
                 isUSD={isUSD}
+                extCallValue={extValue}
                 image={image}
                 name={name}
                 isMultiple={isMultiple}

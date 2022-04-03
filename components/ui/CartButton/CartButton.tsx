@@ -17,6 +17,7 @@ type Props = {
   productId: number
   price: string
   isUSD: boolean
+  extCallValue: string
   name: string
   image: string
   isMultiple: boolean
@@ -40,6 +41,7 @@ const CartButton = ({
   productId,
   price,
   isUSD,
+  extCallValue,
   name,
   isMultiple,
   image,
@@ -112,6 +114,7 @@ const CartButton = ({
           productId,
           price,
           isUSD,
+          extCallValue,
           name,
           1
         ))
@@ -136,6 +139,7 @@ const CartButton = ({
             productId,
             price,
             isUSD,
+            extCallValue,
             name,
             -1
           )
@@ -163,6 +167,7 @@ const CartButton = ({
             productId,
             price,
             isUSD,
+            extCallValue,
             name,
             1
           ))
@@ -184,6 +189,7 @@ const CartButton = ({
           productId,
           price,
           isUSD,
+          extCallValue,
           name,
           -1
         )
