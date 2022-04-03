@@ -1,6 +1,9 @@
 import { NewImage } from "pages/slicer/[id]"
 import React, { Dispatch, SetStateAction } from "react"
 import { View } from "@lib/content/modals"
+import { BigNumberish, utils } from "ethers"
+import useSWR from "swr"
+import fetcher from "@utils/fetcher"
 
 type Props = {
   slicerId: number
@@ -11,14 +14,15 @@ type Props = {
   isMultiple: boolean
   isLimited: boolean
   units: number
-  ethValue: number
-  usdValue: number
+  ethValue: number | string
+  usdValue: number | string
   isUSD: boolean
   thankMessage: string
   instructions: string
   notes: string
   files: File[]
   setModalView: Dispatch<SetStateAction<View>>
+  externalCallValue: BigNumberish
 }
 
 const AddProductFormPreview = ({
@@ -37,8 +41,29 @@ const AddProductFormPreview = ({
   instructions,
   notes,
   files,
-  setModalView
+  setModalView,
+  externalCallValue
 }: Props) => {
+  const { data: ethUsd } = useSWR(
+    "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT",
+    fetcher
+  )
+
+  const externalCallEth = utils.formatEther(externalCallValue)
+  const externalCallUsd = Number(externalCallEth) * Number(ethUsd?.price)
+  const productPrice = {
+    eth: `Ξ ${
+      ethValue
+        ? Math.floor((Number(ethValue) + Number(externalCallEth)) * 1000) / 1000
+        : "..."
+    }`,
+    usd: `$ ${
+      usdValue
+        ? Math.floor((Number(usdValue) + externalCallUsd) * 100) / 100
+        : "..."
+    }`
+  }
+
   return (
     <div>
       <hr className="w-20 mx-auto border-gray-300 my-14" />
@@ -66,14 +91,7 @@ const AddProductFormPreview = ({
                   thanks: thankMessage,
                   instructions: instructions
                 },
-                productPrice: {
-                  eth: `Ξ ${
-                    ethValue ? Math.floor(ethValue * 1000) / 1000 : "..."
-                  }`,
-                  usd: `$ ${
-                    usdValue ? Math.floor(usdValue * 100) / 100 : "..."
-                  }`
-                },
+                productPrice,
                 isUSD,
                 isInfinite: !isLimited,
                 isMultiple,
