@@ -14,6 +14,7 @@ import { useAppContext } from "../context"
 import Immutable from "@components/icons/Immutable"
 import { ethers } from "ethers"
 import getEthFromWei from "@utils/getEthFromWei"
+import ProductsBalance from "../ProductsBalance"
 
 type SlicerInfo = {
   name: string
@@ -145,27 +146,10 @@ const SlicerCard = ({
             </Link>
           </div>
         </div>
-        {productsModuleBalance && productsModuleBalance.length > 1 && (
-          <>
-            <div className="flex items-center mt-2 text-sm ">
-              <p>
-                Product balance:{" "}
-                <span className="font-medium text-black">
-                  {getEthFromWei(productsModuleBalance)} ETH
-                </span>
-              </p>
-              <a
-                className="flex items-center ml-3 highlight group"
-                onClick={() => releaseEthToSlicer(connector, slicerId)}
-              >
-                <p>Release</p>
-                <div className="w-5 h-5 ml-1 transition-transform duration-150 group-hover:translate-x-1">
-                  <Arrow />
-                </div>
-              </a>
-            </div>
-          </>
-        )}
+        <ProductsBalance
+          slicerId={slicerId}
+          productsModuleBalance={productsModuleBalance}
+        />
         {!released && unreleasedAmount && Number(unreleasedAmount) != 0 ? (
           <div className="mt-6">
             <BlockchainCall
