@@ -279,49 +279,48 @@ export const faqsMain = [
 ]
 
 export const faqsNfts = [
-  {
-    question: "Can I use Slice to mint NFTs (collectibles)?",
-    answer: (
-      <>
-        <p>
-          Yes. You can create a collectible asset through Slice by{" "}
-          <Link href="/slice">
-            <a target="_blank" rel="noreferrer">
-              creating a new slicer
-            </a>
-          </Link>{" "}
-          and <b>enabling the collectible asset switch</b>: this makes it
-          possible to edit its information <b>only once</b> after its creation
-        </p>
-        <p>
-          Note: If you wish to <b>disable fractionalization</b> and simulate the
-          behaviour of a NFT (ERC721), <b>set the total slices amount to 1</b>{" "}
-          (the resulting slice will still be an ERC1155 token)
-        </p>
-        {/* <p>
-          Note: Due to how Slice works, slicers&apos; metadata are not stored on
-          IPFS. If you want your collectibles to be truly immutable, check out{" "}
-          <Link href="/#nft-existing">
-            <a>how to use Slice with existing NFTs</a>
-          </Link>
-          .
-        </p> */}
-      </>
-    ),
-    id: "nft-mint"
-  },
+  // {
+  //   question: "Can I use Slice to mint NFTs (collectibles)?",
+  //   answer: (
+  //     <>
+  //       <p>
+  //         Yes. You can create a slicer with immutable metadata by{" "}
+  //         <Link href="/slice">
+  //           <a target="_blank" rel="noreferrer">
+  //             creating a new slicer
+  //           </a>
+  //         </Link>{" "}
+  //         and <b>enabling the immutable metadata switch</b>: this makes it
+  //         possible to edit its information <b>only once</b> after its creation
+  //       </p>
+  //       <p>
+  //         Note: If you wish to <b>disable fractionalization</b> and simulate the
+  //         behaviour of a NFT (ERC721), <b>set the total slices amount to 1</b>{" "}
+  //         (the resulting slice will still be an ERC1155 token)
+  //       </p>
+  //       {/* <p>
+  //         Note: Due to how Slice works, slicers&apos; metadata are not stored on
+  //         IPFS. If you want your collectibles to be truly immutable, check out{" "}
+  //         <Link href="/#nft-existing">
+  //           <a>how to use Slice with existing NFTs</a>
+  //         </Link>
+  //         .
+  //       </p> */}
+  //     </>
+  //   ),
+  //   id: "nft-mint"
+  // },
   {
     question: "Can I create fractionalized NFTs?",
     answer: (
       <>
         <p>
           Yes. Slices are ERC1155, semi-fungible tokens. By specifying 2 or more
-          slices while creating a slicer, you are essentially subdividing it.
+          slices while creating a slicer, you are fractionalizing it.
         </p>
-        <p>You can do this with both collectible and normal assets.</p>
       </>
     ),
-    id: "nice"
+    id: "fractionalized"
   },
   {
     question: "Can I use Slice with existing NFTs?",

@@ -19,7 +19,7 @@ function FiltersFloatingMenu({
   setSearchTerm,
   showCollectibles,
   setShowCollectibles,
-  tagsList,
+  tagsList
 }: Props) {
   const allTagsEnabled = filterTags.length === totalTags.length
   return (
@@ -30,8 +30,8 @@ function FiltersFloatingMenu({
             colors: {
               text: "text-gray-700",
               bg: "bg-gray-100",
-              border: "border-gray-100",
-            },
+              border: "border-gray-100"
+            }
           }
           return (
             <FiltersElement
@@ -55,7 +55,7 @@ function FiltersFloatingMenu({
         />
       </div>
       <div className="flex items-center justify-end space-x-4">
-        <p>Only collectibles</p>
+        <p>Only Immutable</p>
         <MySwitch enabled={showCollectibles} setEnabled={setShowCollectibles} />
       </div>
       <div>
