@@ -26,6 +26,7 @@ const handleSubmit = async (
     }
     return eventLogs
   } catch (err) {
+    setLoading(false)
     const message = err.data?.message
       ?.split("reverted with reason string '")[1]
       ?.slice(0, -1)
