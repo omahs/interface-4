@@ -42,10 +42,14 @@ const AddProductFormPreview = ({
   return (
     <div>
       <hr className="w-20 mx-auto border-gray-300 my-14" />
-      <h3 className="pb-12 font-bold">Preview pages</h3>
+      <h3 className="pb-6 font-bold">Preview</h3>
+      <p className="pb-12">
+        See how the product will appear to buyers before the purchase and after
+        redeeming it.
+      </p>
       <div className="flex flex-wrap justify-around gap-4">
         <a
-          className="underline"
+          className="highlight"
           onClick={() =>
             setModalView({
               name: "PRODUCT_VIEW",
@@ -92,10 +96,10 @@ const AddProductFormPreview = ({
             })
           }
         >
-          Product
+          Product page
         </a>
         <a
-          className="underline"
+          className="highlight"
           onClick={() =>
             setModalView({
               name: "REDEEM_PRODUCT_VIEW",
@@ -116,7 +120,7 @@ const AddProductFormPreview = ({
             })
           }
         >
-          Purchase
+          Redeem purchase
         </a>
       </div>
       <hr className="w-20 mx-auto border-gray-300 my-14" />

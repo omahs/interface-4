@@ -23,6 +23,13 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
   const [ethValue, setEthValue] = useState(0)
   const resolvedAddress = useEns(connector, address)
 
+  const execSelector = execFunctionSignature
+    ? getSelector(execFunctionSignature)
+    : "0x00000000"
+  const checkSelector = checkFunctionSignature
+    ? getSelector(checkFunctionSignature)
+    : "0x00000000"
+
   useEffect(() => {
     const externalAddress =
       address && resolvedAddress
@@ -30,12 +37,6 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
           ? resolvedAddress
           : address
         : ethers.constants.AddressZero
-    const execSelector = execFunctionSignature
-      ? getSelector(execFunctionSignature)
-      : "0x00000000"
-    const checkSelector = checkFunctionSignature
-      ? getSelector(checkFunctionSignature)
-      : "0x00000000"
     const decimals = BigNumber.from(10).pow(9)
     const ethToWei = BigNumber.from((ethValue * 10 ** 9).toFixed(0)).mul(
       decimals
@@ -53,8 +54,8 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
     usdValue,
     address,
     resolvedAddress,
-    checkFunctionSignature,
-    execFunctionSignature
+    checkSelector,
+    execSelector
   ])
 
   useEffect(() => {
@@ -68,6 +69,13 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
       setExecFunctionSignature("")
     }
   }, [isContractCall])
+
+  useEffect(() => {
+    if (!isPayable) {
+      setEthValue(0)
+      setUsdValue(0)
+    }
+  }, [isPayable])
 
   return (
     <>
@@ -83,7 +91,7 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
           onChange={setAddress}
         />
       </div>
-      <div>
+      <div className="pt-3">
         <InputSwitch
           label="Send ETH"
           enabled={isPayable}
@@ -91,17 +99,15 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
         />
       </div>
       {isPayable ? (
-        <>
-          <div>
-            <InputPrice
-              ethValue={ethValue}
-              setEthValue={setEthValue}
-              usdValue={usdValue}
-              setUsdValue={setUsdValue}
-              label="Value per unit"
-            />
-          </div>
-        </>
+        <div className="pb-3">
+          <InputPrice
+            ethValue={ethValue}
+            setEthValue={setEthValue}
+            usdValue={usdValue}
+            setUsdValue={setUsdValue}
+            label="Value per unit"
+          />
+        </div>
       ) : null}
       <div>
         <InputSwitch
@@ -112,7 +118,13 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
       </div>
       {isContractCall ? (
         <>
-          <div>
+          <p className="pb-3 text-yellow-600">
+            <b>
+              This section is for advanced users. Enable it only if you know
+              what you&apos;re doing
+            </b>
+          </p>
+          <div className="relative">
             <Input
               label="Function signature (exec)"
               type="string"
@@ -128,8 +140,11 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
                 </>
               }
             />
+            <p className="text-blue-600 dark:text-sky-300 absolute text-xs opacity-80 font-black left-0 bottom-[-23px]">
+              {execSelector}
+            </p>
           </div>
-          <div>
+          <div className="relative pt-3">
             <Input
               label="Function signature (check)"
               type="string"
@@ -140,11 +155,18 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
                 <>
                   <p>
                     The signature of the function that checks if a buyer is
-                    eligible for purchase.
+                    eligible for purchase.{" "}
+                  </p>
+                  <p>
+                    Called to enable purchases for a buyer on the slicer store
+                    on Slice website.
                   </p>
                 </>
               }
             />
+            <p className="text-blue-600 dark:text-sky-300 absolute text-xs opacity-80 font-black left-0 bottom-[-23px]">
+              {checkSelector}
+            </p>
           </div>
         </>
       ) : null}

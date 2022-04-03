@@ -28,7 +28,7 @@ const InputPrice = ({
   label,
   actionLabel,
   marginLabel,
-  action,
+  action
 }: Props) => {
   const { data } = useSWR(
     "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT",
@@ -64,6 +64,7 @@ const InputPrice = ({
           <Input
             type="number"
             placeholder={isEth ? "0.01" : "100"}
+            min={0}
             label={label}
             prefix={currency}
             prefixAction={() => setIsEth((isEth) => !isEth)}
@@ -79,6 +80,7 @@ const InputPrice = ({
           <Input
             type="number"
             placeholder={isEth ? "0.01" : "100"}
+            min={0}
             label={label}
             prefix={currency}
             prefixAction={() => setIsEth((isEth) => !isEth)}
