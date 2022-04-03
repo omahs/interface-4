@@ -13,8 +13,9 @@ import { NewImage } from "pages/slicer/[id]"
 import { useAppContext } from "../context"
 import { ProductParamsStruct } from "types/typechain/ProductsModule"
 import { FunctionStruct } from "types/typechain/ProductsModule"
-import { BigNumber, ethers } from "ethers"
+import { ethers } from "ethers"
 import AddProductFormExternal from "../AddProductFormExternal"
+import ethToWei from "@utils/ethToWei"
 
 type Props = {
   slicerId: number
@@ -98,11 +99,8 @@ const AddProductForm = ({
         )
 
       // Create product on smart contract
-      const decimals = BigNumber.from(10).pow(9)
-      const ethToWei = BigNumber.from((ethValue * 10 ** 9).toFixed(0)).mul(
-        decimals
-      )
-      const productPrice = isUSD ? Math.floor(usdValue * 100) : ethToWei
+      const weiValue = ethToWei(ethValue)
+      const productPrice = isUSD ? Math.floor(usdValue * 100) : weiValue
 
       const currencyPrices =
         productPrice != 0
@@ -225,6 +223,7 @@ const AddProductForm = ({
         notes={notes}
         files={files}
         setModalView={setModalView}
+        externalCallValue={externalCall?.value}
       />
       <div className="pb-1">
         <Button

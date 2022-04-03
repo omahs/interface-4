@@ -2,7 +2,7 @@ import ShoppingBag from "@components/icons/ShoppingBag"
 import Units from "@components/icons/Units"
 import { ProductCart } from "@lib/handleUpdateCart"
 import formatNumber from "@utils/formatNumber"
-import { ethers } from "ethers"
+import { ethers, utils } from "ethers"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import { Card, CartButton } from ".."
@@ -62,6 +62,9 @@ const ProductCard = ({
   const extExecSig = chainInfo?.extExecSig
 
   const totalPrice = price && extValue && Number(price) + Number(extValue)
+  const externalCallEth = extValue && utils.formatEther(extValue)
+  const externalCallUsd =
+    externalCallEth && Number(externalCallEth) * Number(ethUsd?.price) * 100
 
   // const createdAtTimestamp = chainInfo?.createdAtTimestamp
 
@@ -74,7 +77,11 @@ const ProductCard = ({
           eth: `Ξ ${
             isUSD ? convertedEthUsd : Math.floor(totalPrice / 10 ** 14) / 10000
           }`,
-          usd: `$ ${isUSD ? formatNumber(price / 100) : convertedEthUsd}`
+          usd: `$ ${
+            isUSD
+              ? formatNumber((Number(price) + externalCallUsd) / 100)
+              : convertedEthUsd
+          }`
         }
       : {
           eth: "Ξ ...",
@@ -122,6 +129,7 @@ const ProductCard = ({
         texts,
         productPrice,
         isUSD,
+        extValue,
         isInfinite,
         isMultiple,
         availableUnits,
@@ -140,8 +148,9 @@ const ProductCard = ({
     if (totalPrice && ethUsd) {
       if (isUSD) {
         const convertedPrice =
-          Math.floor((price * 100) / Number(ethUsd?.price) + extValue * 10000) /
-          10000
+          Math.floor(
+            ((Number(price) + externalCallUsd) * 100) / Number(ethUsd?.price)
+          ) / 10000
         setConvertedEthUsd(convertedPrice)
       } else {
         const convertedPrice =
@@ -216,8 +225,9 @@ const ProductCard = ({
                 productCart={productCart}
                 slicerAddress={slicerAddress}
                 productId={productId}
-                price={String(totalPrice)}
+                price={price}
                 isUSD={isUSD}
+                extCallValue={extValue}
                 image={image}
                 name={name}
                 isMultiple={isMultiple}

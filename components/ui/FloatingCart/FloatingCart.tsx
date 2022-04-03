@@ -11,6 +11,7 @@ import useSWR from "swr"
 import { CartList } from ".."
 import { Purchase, useAppContext } from "../context"
 import { productsToPurchases } from "@utils/getPurchases"
+import { utils } from "ethers"
 
 type Props = {
   cookieCart: ProductCart[]
@@ -42,11 +43,12 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
   )
 
   const reducer = (previousValue: number, currentValue: ProductCart) => {
-    const { quantity, price, isUSD } = currentValue
+    const { quantity, price, isUSD, extCallValue } = currentValue
     const productPrice = isUSD
       ? Math.floor((price * 100) / Number(ethUsd?.price)) / 10000
       : Math.floor(price / 10 ** 14) / 10000
-    return previousValue + productPrice * quantity
+    const externalCallEth = utils.formatEther(extCallValue)
+    return previousValue + (productPrice + Number(externalCallEth)) * quantity
   }
   const totalPrice: number = cookieCart?.reduce(reducer, 0) || 0
 
@@ -74,7 +76,6 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     const handleSubmit = (await import("@utils/handleSubmit")).default
     const { PayProducts } = await import("@lib/handlers/chain")
 
-    setLoading(true)
     try {
       await handleSubmit(
         PayProducts(connector, account, cookieCart),
@@ -86,7 +87,6 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     } catch (err) {
       console.log(err)
     }
-    setLoading(false)
   }
 
   return (
@@ -94,7 +94,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
       {/* Todo: fix errors in console without breaking opacity transition */}
       {/* {showCart && showCartList && ( */}
       <div
-        className={`fixed bottom-0 mb-[80px] sm:mb-[100px] right-[20px] sm:right-[32px]transition-opacity duration-200 ${
+        className={`fixed bottom-0 mb-[80px] sm:mb-[100px] right-[20px] sm:right-[32px] transition-opacity duration-200 ${
           showCart && showCartList ? "z-20 opacity-100" : "-z-10 opacity-0"
         }`}
       >

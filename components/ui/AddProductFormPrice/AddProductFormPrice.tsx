@@ -94,22 +94,22 @@ const AddProductFormPrice = ({
         questionText={
           <>
             <p>
-              If enabled, it&apos;s like setting the product price in USD. The
-              user will always pay in ETH the corresponding USD value set
+              If enabled, the buyer will pay in ETH the corresponding USD value
+              set
               {usdValue && usdValue != 0 && (
                 <b> ${Number(usdValue).toFixed(2)}</b>
               )}
-              . This can be useful to protect against changes in ETH value over
-              time.
+              . It&apos;s like setting the product price in USD and thus{" "}
+              <b>protects against changes in ETH value over time.</b>
             </p>
             <p>
               <b>Note:</b> Products with dynamic pricing have a higher
               transaction fee for the buyer.
             </p>
-            <p>
+            {/* <p>
               <b>Note:</b> As a creator, you can enable/disable dynamic pricing
               anytime.
-            </p>
+            </p> */}
           </>
         }
         enabled={isUSD}

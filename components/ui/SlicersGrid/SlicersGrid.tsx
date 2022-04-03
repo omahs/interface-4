@@ -95,7 +95,7 @@ const SlicersGrid = ({ data }: Props) => {
                 size="h-44"
                 topLeft={
                   isImmutable && {
-                    title: "Collectible asset",
+                    title: "Immutable",
                     content: (
                       <Collectible className="py-2 text-indigo-600 w-[38px] h-[38px]" />
                     ),

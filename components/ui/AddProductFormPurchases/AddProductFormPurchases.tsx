@@ -49,8 +49,8 @@ const AddProductFormPurchases = ({
       </div>
       <h2 className="pb-6">Encrypted notes & files</h2>
       <p className="pb-3">
-        Add files or notes that can only be decrypted by buyers (
-        <b>increases transaction cost</b>).
+        Add files or notes that can only be decrypted by buyers (increases
+        transaction cost).
       </p>
       <div>
         <Textarea

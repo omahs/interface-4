@@ -35,7 +35,7 @@ const SliceFormInputBlock = ({
   removedCount,
   setRemovedCount,
   ownedSlices,
-  placeholder = "1000000",
+  placeholder = "1000000"
 }: Props) => {
   const { account, connector } = useAppContext()
   const [visible, setVisible] = useState(true)
@@ -120,6 +120,8 @@ const SliceFormInputBlock = ({
             type="number"
             placeholder={placeholder}
             min="1"
+            max="1000000000"
+            error={sharesAmount > 1000000000}
             value={sharesAmount != 0 ? sharesAmount : ""}
             required={address && true}
             onChange={setSharesAmount}
