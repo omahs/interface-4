@@ -58,11 +58,13 @@ const ProductPurchaseCard = ({
             </p>
           )}
         </div>
-        <div className="text-gray-700">
-          <p className="text-sm">
-            Contains <b>{purchaseInfo || "..."}</b>
-          </p>
-        </div>
+        {purchaseInfo != "" ? (
+          <div className="text-gray-700">
+            <p className="text-sm">
+              Contains <b>{purchaseInfo || "..."}</b>
+            </p>
+          </div>
+        ) : null}
         <div className="mt-4">
           <Button
             label={name ? "Redeem" : "Wait..."}

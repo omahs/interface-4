@@ -159,7 +159,7 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
                   </p>
                   <p>
                     Called to enable purchases for a buyer on the slicer store
-                    on Slice website.
+                    on Slice website. Returns true if buyer is allowed.
                   </p>
                 </>
               }
