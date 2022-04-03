@@ -76,7 +76,6 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     const handleSubmit = (await import("@utils/handleSubmit")).default
     const { PayProducts } = await import("@lib/handlers/chain")
 
-    setLoading(true)
     try {
       await handleSubmit(
         PayProducts(connector, account, cookieCart),
@@ -88,7 +87,6 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     } catch (err) {
       console.log(err)
     }
-    setLoading(false)
   }
 
   return (

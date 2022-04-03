@@ -12,7 +12,7 @@ const releaseEthToSlicer = async (
 
   try {
     const call = await contract.releaseEthToSlicer(slicerId)
-    return call
+    return [contract, call]
   } catch (err) {
     throw err
   }

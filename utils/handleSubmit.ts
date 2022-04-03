@@ -14,9 +14,9 @@ const handleSubmit = async (
 
   setMessage({ message: "", messageStatus: "success" })
   try {
+    setLoading(true)
     const [contract, call] = await action
 
-    setLoading(true)
     const eventLogs = await handleLog(contract, call)
     setLoading(false)
 
