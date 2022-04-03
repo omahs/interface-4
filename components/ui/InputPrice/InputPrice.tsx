@@ -65,6 +65,7 @@ const InputPrice = ({
             type="number"
             placeholder={isEth ? "0.01" : "100"}
             min={0}
+            step={isEth ? 0.001 : 0.01}
             label={label}
             prefix={currency}
             prefixAction={() => setIsEth((isEth) => !isEth)}
@@ -81,6 +82,7 @@ const InputPrice = ({
             type="number"
             placeholder={isEth ? "0.01" : "100"}
             min={0}
+            step={isEth ? 0.001 : 0.01}
             label={label}
             prefix={currency}
             prefixAction={() => setIsEth((isEth) => !isEth)}
