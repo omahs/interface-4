@@ -84,7 +84,7 @@ const ProductCard = ({
           }`
         }
       : {
-          eth: "Free",
+          eth: "free",
           usd: "$ 0"
         }
     : {
@@ -136,6 +136,7 @@ const ProductCard = ({
         extAddress,
         extValue,
         extCheckSig,
+        extExecSig,
         isInfinite,
         isMultiple,
         availableUnits,
@@ -193,7 +194,7 @@ const ProductCard = ({
           title: "Product price",
           content: (
             <p
-              className={`text-sm font-medium text-black${
+              className={`text-sm capitalize font-medium text-black${
                 chainInfo && !ethPrice ? " text-green-600" : ""
               }`}
             >

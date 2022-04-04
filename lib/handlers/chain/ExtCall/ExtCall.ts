@@ -31,4 +31,4 @@ const ExtCall = async (
 
 export default ExtCall
 
-// to (test purchasable): 0x96DDA286a261f620aa410524BfB9558e84A25F29
+// 0x96DDA286a261f620aa410524BfB9558e84A25F29

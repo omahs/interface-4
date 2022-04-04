@@ -1,7 +1,7 @@
 import { NewImage } from "pages/slicer/[id]"
 import React, { Dispatch, SetStateAction } from "react"
 import { View } from "@lib/content/modals"
-import { BigNumberish, utils } from "ethers"
+import { BigNumberish, BytesLike, utils } from "ethers"
 import useSWR from "swr"
 import fetcher from "@utils/fetcher"
 
@@ -23,6 +23,9 @@ type Props = {
   files: File[]
   setModalView: Dispatch<SetStateAction<View>>
   externalCallValue: BigNumberish
+  extAddress: string
+  extCheckSig: BytesLike
+  extExecSig: BytesLike
 }
 
 const AddProductFormPreview = ({
@@ -42,7 +45,10 @@ const AddProductFormPreview = ({
   notes,
   files,
   setModalView,
-  externalCallValue
+  externalCallValue,
+  extAddress,
+  extCheckSig,
+  extExecSig
 }: Props) => {
   const { data: ethUsd } = useSWR(
     "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT",
@@ -89,6 +95,10 @@ const AddProductFormPreview = ({
                   instructions: instructions
                 },
                 productPrice,
+                extAddress,
+                extValue: externalCallValue,
+                extCheckSig,
+                extExecSig,
                 isUSD,
                 isInfinite: !isLimited,
                 isMultiple,

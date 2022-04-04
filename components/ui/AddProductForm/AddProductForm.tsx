@@ -224,6 +224,9 @@ const AddProductForm = ({
         files={files}
         setModalView={setModalView}
         externalCallValue={externalCall?.value}
+        extAddress={externalCall?.externalAddress}
+        extCheckSig={externalCall?.checkFunctionSignature}
+        extExecSig={externalCall?.execFunctionSignature}
       />
       <div className="pb-1">
         <Button

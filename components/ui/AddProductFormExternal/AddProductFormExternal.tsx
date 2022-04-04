@@ -3,7 +3,6 @@ import { BigNumber, ethers } from "ethers"
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { FunctionStruct } from "types/typechain/ProductsModule"
 import { Input, InputPrice, InputSwitch, InputAddress } from "../"
-import { useAppContext } from "../context"
 
 type Props = {
   externalCall: FunctionStruct
@@ -172,6 +171,14 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
           </div>
         </>
       ) : null}
+      {/* {externalCall.externalAddress &&
+      externalCall.externalAddress != ethers.constants.AddressZero &&
+      !isPayable &&
+      !isContractCall ? (
+        <p className="pt-3 text-yellow-600">
+          <b>Either enable sending ETH or executing contract logic.</b>
+        </p>
+      ) : null} */}
       {ethValue != 0 ? (
         <p className="text-yellow-600">
           <b>The sent value will be added to the unit product price.</b>
