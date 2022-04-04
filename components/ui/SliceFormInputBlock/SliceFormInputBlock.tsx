@@ -40,6 +40,7 @@ const SliceFormInputBlock = ({
   const { account, connector } = useAppContext()
   const [visible, setVisible] = useState(true)
   const [address, setAddress] = useState(addresses[index] || "")
+  const [resolvedAddress, setResolvedAddress] = useState("")
   const [sharesAmount, setSharesAmount] = useState(shares[index] || 0)
   const [resolvedSignerAddress, setResolvedSignerAddress] = useState("")
 
@@ -112,6 +113,8 @@ const SliceFormInputBlock = ({
             address={address}
             onChange={setAddress}
             required={sharesAmount != 0}
+            resolvedAddress={resolvedAddress}
+            setResolvedAddress={setResolvedAddress}
           />
         </div>
         <p className="col-span-2 pr-2 text-right xs:hidden">Slices</p>
