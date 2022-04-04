@@ -136,6 +136,7 @@ const ProductCard = ({
         extAddress,
         extValue,
         extCheckSig,
+        extExecSig,
         isInfinite,
         isMultiple,
         availableUnits,

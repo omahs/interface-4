@@ -14,11 +14,12 @@ import {
 } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { ProductCart } from "@lib/handleUpdateCart"
+import getEthFromWei from "@utils/getEthFromWei"
 import formatNumber from "@utils/formatNumber"
-import { useRouter } from "next/dist/client/router"
 import { useCookies } from "react-cookie"
 import { handleConnectMetamask, handleConnectWC } from "@lib/handleConnect"
 import WalletConnect from "@components/icons/WalletConnect"
+import { ethers } from "ethers"
 
 export type View = {
   name: ViewNames
@@ -273,6 +274,7 @@ export const PRODUCT_VIEW = (params: any) => {
     extAddress,
     extValue,
     extCheckSig,
+    extExecSig,
     isInfinite,
     isMultiple,
     uid,
@@ -389,9 +391,47 @@ export const PRODUCT_VIEW = (params: any) => {
             ) / 1000
           }`}</p>
         )}
-        <p className="pt-6 text-sm text-center mx-auto max-w-[340px]">
-          This product contains <b>{purchaseEl}</b>
-        </p>
+        {extAddress != "0x00000000" &&
+        extAddress != ethers.constants.AddressZero &&
+        (extValue != "0" || extExecSig != "0x00000000") ? (
+          <p className="pt-6 mx-auto text-sm text-center text-yellow-600">
+            Interacts with{" "}
+            <a
+              className="font-bold text-yellow-600 highlight"
+              href={`https://${
+                process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
+              }etherscan.io/address/${extAddress}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {extAddress.replace(
+                extAddress.substring(5, extAddress.length - 3),
+                `\xa0\xa0\xa0\xa0\xa0\xa0`
+              )}
+            </a>{" "}
+            by{" "}
+            {extValue != "0" ? (
+              <>
+                sending <b>{getEthFromWei(extValue)}</b> ETH
+              </>
+            ) : (
+              ""
+            )}
+            {extValue != "0" && extExecSig != "0x00000000" ? " and " : ""}
+            {extExecSig != "0x00000000" ? (
+              <>
+                executing a function <b>({extExecSig})</b>
+              </>
+            ) : (
+              ""
+            )}
+          </p>
+        ) : null}
+        {purchaseElArray.length != 0 ? (
+          <p className="pt-6 text-sm text-center mx-auto max-w-[340px]">
+            This product contains <b>{purchaseEl}</b>
+          </p>
+        ) : null}
       </div>
     </>
   )
