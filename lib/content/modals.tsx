@@ -20,6 +20,7 @@ import { useCookies } from "react-cookie"
 import { handleConnectMetamask, handleConnectWC } from "@lib/handleConnect"
 import WalletConnect from "@components/icons/WalletConnect"
 import { ethers } from "ethers"
+import getFunctionFromSelector from "@utils/getFunctionFromSelector"
 
 export type View = {
   name: ViewNames
@@ -376,7 +377,7 @@ export const PRODUCT_VIEW = (params: any) => {
               uid={uid}
               creator={creator}
               texts={texts}
-              labelAdd={`Get it for ${productPrice.eth.toLowerCase()}`}
+              labelAdd={`Get it for ${productPrice.eth}`}
               labelRemove={productPrice.eth}
               preview={preview}
             />
@@ -420,7 +421,8 @@ export const PRODUCT_VIEW = (params: any) => {
             {extValue != "0" && extExecSig != "0x00000000" ? " and " : ""}
             {extExecSig != "0x00000000" ? (
               <>
-                executing a function <b>({extExecSig})</b>
+                executing a function{" "}
+                <b>({getFunctionFromSelector(extExecSig)})</b>
               </>
             ) : (
               ""
