@@ -270,7 +270,9 @@ export const PRODUCT_VIEW = (params: any) => {
     image,
     productPrice,
     isUSD,
+    extAddress,
     extValue,
+    extCheckSig,
     isInfinite,
     isMultiple,
     uid,
@@ -361,7 +363,9 @@ export const PRODUCT_VIEW = (params: any) => {
               productId={productId}
               price={price}
               isUSD={isUSD}
+              extAddress={extAddress}
               extCallValue={extValue}
+              extCheckSig={extCheckSig}
               name={name}
               image={image}
               isMultiple={isMultiple}
@@ -370,7 +374,7 @@ export const PRODUCT_VIEW = (params: any) => {
               uid={uid}
               creator={creator}
               texts={texts}
-              labelAdd={`Get it for ${productPrice.eth}`}
+              labelAdd={`Get it for ${productPrice.eth.toLowerCase()}`}
               labelRemove={productPrice.eth}
               preview={preview}
             />

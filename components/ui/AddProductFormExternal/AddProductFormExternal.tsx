@@ -3,7 +3,6 @@ import { BigNumber, ethers } from "ethers"
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { FunctionStruct } from "types/typechain/ProductsModule"
 import { Input, InputPrice, InputSwitch, InputAddress } from "../"
-import { useEns } from "@utils/resolveEns"
 import { useAppContext } from "../context"
 
 type Props = {
@@ -12,16 +11,15 @@ type Props = {
 }
 
 const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
-  const { connector } = useAppContext()
   const [data, setData] = useState([])
   const [address, setAddress] = useState("")
+  const [resolvedAddress, setResolvedAddress] = useState("")
   const [checkFunctionSignature, setCheckFunctionSignature] = useState("")
   const [execFunctionSignature, setExecFunctionSignature] = useState("")
   const [isContractCall, setIsContractCall] = useState(false)
   const [isPayable, setIsPayable] = useState(false)
   const [usdValue, setUsdValue] = useState(0)
   const [ethValue, setEthValue] = useState(0)
-  const resolvedAddress = useEns(connector, address)
 
   const execSelector = execFunctionSignature
     ? getSelector(execFunctionSignature)
@@ -31,12 +29,13 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
     : "0x00000000"
 
   useEffect(() => {
-    const externalAddress =
-      address && resolvedAddress
-        ? address.substring(address.length - 4) === ".eth"
-          ? resolvedAddress
-          : address
-        : ethers.constants.AddressZero
+    const externalAddress = address
+      ? address.substring(address.length - 4) !== ".eth"
+        ? resolvedAddress != "Invalid ENS name"
+          ? address
+          : ethers.constants.AddressZero
+        : resolvedAddress
+      : ethers.constants.AddressZero
     const decimals = BigNumber.from(10).pow(9)
     const ethToWei = BigNumber.from((ethValue * 10 ** 9).toFixed(0)).mul(
       decimals
@@ -61,7 +60,7 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
   useEffect(() => {
     if (isContractCall) {
       setCheckFunctionSignature(
-        "isPurchaseAllowed(uint256,uint32,address,uint256,bytes)"
+        "isPurchaseAllowed(uint256,uint256,address,uint256,bytes)"
       )
       setExecFunctionSignature("onProductPurchase(bytes)")
     } else {
@@ -89,6 +88,9 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
           label="External address"
           address={address}
           onChange={setAddress}
+          required={isPayable || isContractCall}
+          resolvedAddress={resolvedAddress}
+          setResolvedAddress={setResolvedAddress}
         />
       </div>
       <div className="pt-3">
@@ -148,7 +150,7 @@ const AddProductFormExternal = ({ externalCall, setExternalCall }: Props) => {
             <Input
               label="Function signature (check)"
               type="string"
-              placeholder="isPurchaseAllowed(uint256,uint32,address,uint256,bytes)"
+              placeholder="isPurchaseAllowed(uint256,uint256,address,uint256,bytes)"
               value={checkFunctionSignature}
               onChange={setCheckFunctionSignature}
               question={

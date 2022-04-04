@@ -71,8 +71,8 @@ const ProductCard = ({
   const [convertedEthUsd, setConvertedEthUsd] = useState(0)
   const [purchasedQuantity, setPurchasedQuantity] = useState(0)
 
-  const productPrice =
-    chainInfo && ethPrice && extValue
+  const productPrice = chainInfo
+    ? ethPrice && extValue
       ? {
           eth: `Ξ ${
             isUSD ? convertedEthUsd : Math.floor(totalPrice / 10 ** 14) / 10000
@@ -84,9 +84,13 @@ const ProductCard = ({
           }`
         }
       : {
-          eth: "Ξ ...",
-          usd: "$ ..."
+          eth: "Free",
+          usd: "$ 0"
         }
+    : {
+        eth: "Ξ ...",
+        usd: "$ ..."
+      }
   const cookieCart: ProductCart[] = cookies?.cart
   const productCart: ProductCart = cookieCart?.find(
     (product) =>
@@ -129,7 +133,9 @@ const ProductCard = ({
         texts,
         productPrice,
         isUSD,
+        extAddress,
         extValue,
+        extCheckSig,
         isInfinite,
         isMultiple,
         availableUnits,
@@ -186,7 +192,13 @@ const ProductCard = ({
         topRight={{
           title: "Product price",
           content: (
-            <p className="text-sm font-medium text-black">{productPrice.eth}</p>
+            <p
+              className={`text-sm font-medium text-black${
+                chainInfo && !ethPrice ? " text-green-600" : ""
+              }`}
+            >
+              {productPrice.eth}
+            </p>
           )
         }}
         bottomLeft={
@@ -227,7 +239,9 @@ const ProductCard = ({
                 productId={productId}
                 price={price}
                 isUSD={isUSD}
+                extAddress={extAddress}
                 extCallValue={extValue}
+                extCheckSig={extCheckSig}
                 image={image}
                 name={name}
                 isMultiple={isMultiple}
