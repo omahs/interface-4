@@ -38,7 +38,7 @@ const handleUpdateCart = async (
         slicerAddress,
         productId,
         quantity,
-        price,
+        price: price || "0",
         isUSD,
         extCallValue,
         name
@@ -53,7 +53,7 @@ const handleUpdateCart = async (
       slicerAddress,
       productId,
       quantity,
-      price,
+      price: price || "0",
       isUSD,
       extCallValue,
       name

@@ -126,18 +126,16 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
               {success ? (
                 <p className="px-2 text-sm">Keep buying</p>
               ) : (
-                totalPrice != 0 && (
-                  <>
-                    <Chevron
-                      className={`h-5 transition-transform duration-200 ${
-                        showCartList ? "rotate-90" : ""
-                      } w-7`}
-                    />
-                    <p className="w-full ml-2 text-center">
-                      Ξ {Math.round(totalPrice * 1000) / 1000}
-                    </p>
-                  </>
-                )
+                <>
+                  <Chevron
+                    className={`h-5 transition-transform duration-200 ${
+                      showCartList ? "rotate-90" : ""
+                    } w-7`}
+                  />
+                  <p className="w-full ml-2 text-center">
+                    Ξ {Math.round(totalPrice * 1000) / 1000}
+                  </p>
+                </>
               )}
             </div>
             <div

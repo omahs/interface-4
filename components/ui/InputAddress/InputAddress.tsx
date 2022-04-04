@@ -1,5 +1,11 @@
 import resolveEns from "@utils/resolveEns"
-import React, { InputHTMLAttributes, useEffect, useState } from "react"
+import React, {
+  Dispatch,
+  InputHTMLAttributes,
+  SetStateAction,
+  useEffect,
+  useState
+} from "react"
 import { useAppContext } from "../context"
 import Input from "../Input/Input"
 
@@ -7,12 +13,21 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   address: string
   label?: string
   onChange?: (...args: any[]) => any
+  resolvedAddress: string
+  setResolvedAddress: Dispatch<SetStateAction<string>>
 }
 
 const InputAddress: React.FC<Props> = (props) => {
   const { connector } = useAppContext()
-  const { address, required, label, onChange, ...rest } = props
-  const [resolvedAddress, setResolvedAddress] = useState("")
+  const {
+    address,
+    required,
+    label,
+    onChange,
+    resolvedAddress,
+    setResolvedAddress,
+    ...rest
+  } = props
 
   const addressReduced = resolvedAddress
     ? resolvedAddress.substring(resolvedAddress.length - 4) !== ".eth" &&

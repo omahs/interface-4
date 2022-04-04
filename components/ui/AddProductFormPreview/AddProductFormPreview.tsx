@@ -52,16 +52,13 @@ const AddProductFormPreview = ({
   const externalCallEth = utils.formatEther(externalCallValue)
   const externalCallUsd = Number(externalCallEth) * Number(ethUsd?.price)
   const productPrice = {
-    eth: `Ξ ${
-      ethValue
-        ? Math.floor((Number(ethValue) + Number(externalCallEth)) * 1000) / 1000
-        : "..."
-    }`,
-    usd: `$ ${
-      usdValue
-        ? Math.floor((Number(usdValue) + externalCallUsd) * 100) / 100
-        : "..."
-    }`
+    eth: ethValue
+      ? "Ξ " +
+        Math.floor((Number(ethValue) + Number(externalCallEth)) * 1000) / 1000
+      : "free",
+    usd: usdValue
+      ? "$ " + Math.floor((Number(usdValue) + externalCallUsd) * 100) / 100
+      : "$ 0"
   }
 
   return (
