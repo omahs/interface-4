@@ -106,7 +106,7 @@ const Id = ({
 
   const tokensQuery = /* GraphQL */ `
   payeeSlicers (
-    where: {slicer: "${hexId}", totalPaid_gt: "0"}, 
+    where: {slicer: "${hexId}", ethSent_gt: "0"}, 
     orderBy: "ethSent", 
     orderDirection: "desc"
   ) {
@@ -333,8 +333,8 @@ const Id = ({
 
 export async function getStaticPaths() {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-  const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
-  // const totalSlicers = 0
+  // const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
+  const totalSlicers = 0
   const paths = [...Array(totalSlicers).keys()].map((slicerId) => {
     const id = String(slicerId)
     return {
