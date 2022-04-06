@@ -104,9 +104,14 @@ const Id = ({
 
   const hexId = decimalToHex(Number(slicerInfo?.id))
 
+  /**
+   * TODO
+   * Add condition: or: [{slices_gt: "0"}, {ethSent_gt: "0"}]
+   * Deal with pagination when number of payeeSlicers > 100
+   */
   const tokensQuery = /* GraphQL */ `
   payeeSlicers (
-    where: {slicer: "${hexId}", ethSent_gt: "0"}, 
+    where: {slicer: "${hexId}"}, 
     orderBy: "ethSent", 
     orderDirection: "desc"
   ) {
