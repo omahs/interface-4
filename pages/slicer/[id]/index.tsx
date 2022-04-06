@@ -106,7 +106,7 @@ const Id = ({
 
   const tokensQuery = /* GraphQL */ `
   payeeSlicers (
-    where: {slicer: "${hexId}"}, 
+    where: {slicer: "${hexId}", totalPaid_gt: "0"}, 
     orderBy: "ethSent", 
     orderDirection: "desc"
   ) {
