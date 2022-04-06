@@ -2,6 +2,7 @@ import ShoppingBag from "@components/icons/ShoppingBag"
 import Units from "@components/icons/Units"
 import { ProductCart } from "@lib/handleUpdateCart"
 import formatNumber from "@utils/formatNumber"
+import { ethers, utils } from "ethers"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import { Card, CartButton } from ".."
@@ -26,7 +27,7 @@ const ProductCard = ({
   product,
   chainInfo,
   ethUsd,
-  editMode,
+  editMode
 }: Props) => {
   const [cookies] = useCookies(["cart"])
   const { setModalView, purchases } = useAppContext()
@@ -40,28 +41,55 @@ const ProductCard = ({
     purchaseInfo,
     uid,
     creator,
+    texts
   } = product
-  const price = chainInfo?.price
-  const isUSD = chainInfo?.isUSD
+  const prices = chainInfo?.prices
+  const ethPrice = prices?.find(
+    (price) => price.currency.id == ethers.constants.AddressZero
+  )
+  const isUSD = ethPrice?.dynamicPricing
+  const price = ethPrice?.price
+
+  // TODO Refactor this to handle  multiple currencies
+
   const isInfinite = chainInfo?.isInfinite
   const isMultiple = chainInfo?.isMultiple
   const availableUnits = chainInfo?.availableUnits
   const totalPurchases = chainInfo?.totalPurchases
+  const extAddress = chainInfo?.extAddress
+  const extValue = chainInfo?.extValue
+  const extCheckSig = chainInfo?.extCheckSig
+  const extExecSig = chainInfo?.extExecSig
+
+  const totalPrice = price && extValue && Number(price) + Number(extValue)
+  const externalCallEth = extValue && utils.formatEther(extValue)
+  const externalCallUsd =
+    externalCallEth && Number(externalCallEth) * Number(ethUsd?.price) * 100
+
   // const createdAtTimestamp = chainInfo?.createdAtTimestamp
 
   const [convertedEthUsd, setConvertedEthUsd] = useState(0)
   const [purchasedQuantity, setPurchasedQuantity] = useState(0)
 
   const productPrice = chainInfo
-    ? {
-        eth: `Ξ ${
-          isUSD ? convertedEthUsd : Math.floor(price / 10 ** 14) / 10000
-        }`,
-        usd: `$ ${isUSD ? formatNumber(price / 100) : convertedEthUsd}`,
-      }
+    ? ethPrice && extValue
+      ? {
+          eth: `Ξ ${
+            isUSD ? convertedEthUsd : Math.floor(totalPrice / 10 ** 14) / 10000
+          }`,
+          usd: `$ ${
+            isUSD
+              ? formatNumber((Number(price) + externalCallUsd) / 100)
+              : convertedEthUsd
+          }`
+        }
+      : {
+          eth: "free",
+          usd: "$ 0"
+        }
     : {
         eth: "Ξ ...",
-        usd: "$ ...",
+        usd: "$ ..."
       }
   const cookieCart: ProductCart[] = cookies?.cart
   const productCart: ProductCart = cookieCart?.find(
@@ -102,8 +130,13 @@ const ProductCard = ({
         image,
         uid,
         creator,
+        texts,
         productPrice,
         isUSD,
+        extAddress,
+        extValue,
+        extCheckSig,
+        extExecSig,
         isInfinite,
         isMultiple,
         availableUnits,
@@ -113,20 +146,22 @@ const ProductCard = ({
         price,
         editMode,
         purchasedQuantity,
-        availabilityColor,
-      },
+        availabilityColor
+      }
     })
   }
 
   useEffect(() => {
-    if (price && ethUsd) {
+    if (totalPrice && ethUsd) {
       if (isUSD) {
         const convertedPrice =
-          Math.floor((price * 100) / Number(ethUsd?.price)) / 10000
+          Math.floor(
+            ((Number(price) + externalCallUsd) * 100) / Number(ethUsd?.price)
+          ) / 10000
         setConvertedEthUsd(convertedPrice)
       } else {
         const convertedPrice =
-          Math.floor((price / 10 ** 16) * Number(ethUsd?.price)) / 100
+          Math.floor((totalPrice / 10 ** 16) * Number(ethUsd?.price)) / 100
         setConvertedEthUsd(convertedPrice)
       }
     }
@@ -153,13 +188,19 @@ const ProductCard = ({
               )}
               <ShoppingBag className="w-[18px] h-[18px] text-indigo-600" />
             </>
-          ),
+          )
         }}
         topRight={{
           title: "Product price",
           content: (
-            <p className="text-sm font-medium text-black">{productPrice.eth}</p>
-          ),
+            <p
+              className={`text-sm capitalize font-medium text-black${
+                chainInfo && !ethPrice ? " text-green-600" : ""
+              }`}
+            >
+              {productPrice.eth}
+            </p>
+          )
         }}
         bottomLeft={
           chainInfo &&
@@ -172,7 +213,7 @@ const ProductCard = ({
                 </p>
                 <Units className={`w-[18px] h-[18px] ${availabilityColor}`} />
               </>
-            ),
+            )
           }
         }
         onClick={() => (chainInfo ? handleOnClick() : null)}
@@ -199,6 +240,9 @@ const ProductCard = ({
                 productId={productId}
                 price={price}
                 isUSD={isUSD}
+                extAddress={extAddress}
+                extCallValue={extValue}
+                extCheckSig={extCheckSig}
                 image={image}
                 name={name}
                 isMultiple={isMultiple}
@@ -206,6 +250,7 @@ const ProductCard = ({
                 purchasedQuantity={purchasedQuantity}
                 uid={uid}
                 creator={creator}
+                texts={texts}
               />
             )}
           </div>

@@ -17,7 +17,7 @@ export const generateKey = async (password: string, salt: string) => {
       name: "PBKDF2",
       salt: Buffer.from(salt),
       iterations: 100000,
-      hash: "SHA-256",
+      hash: "SHA-256"
     },
     keyMaterial,
     { name: "AES-GCM", length: 256 },
@@ -56,21 +56,28 @@ export const encryptFiles = async (
     const encryptedBuf: ArrayBuffer = await window.crypto.subtle.encrypt(
       {
         name: "AES-GCM",
-        iv: iv,
+        iv: iv
       },
       key,
       buf
     )
     const encryptedFile = new File([encryptedBuf], `${i + 1}.${fileExt}`, {
-      type: files[i].type,
+      type: files[i].type
     })
     encryptedFiles.push(encryptedFile)
   }
 
   for (let i = 0; i < texts.length; i++) {
     const text = texts[i]
-    const encryptedText = await encryptText(key, iv, text.value, text.filename)
-    encryptedFiles.push(encryptedText)
+    let textFile: File
+    if (text.filename == "Thanks" || text.filename == "Instructions") {
+      textFile = new File([text.value], text.filename, {
+        type: "text/plain"
+      })
+    } else {
+      textFile = await encryptText(key, iv, text.value, text.filename)
+    }
+    encryptedFiles.push(textFile)
   }
 
   return encryptedFiles
@@ -95,13 +102,13 @@ export const decryptFiles = async (
       const decryptedBuf: ArrayBuffer = await window.crypto.subtle.decrypt(
         {
           name: "AES-GCM",
-          iv: iv,
+          iv: iv
         },
         key,
         buf
       )
       const decryptedFile = new File([decryptedBuf], filename, {
-        type: type,
+        type: type
       })
       decryptedFiles.push(decryptedFile)
     }
@@ -123,14 +130,14 @@ export const encryptText = async (
   const encryptedBuf: ArrayBuffer = await window.crypto.subtle.encrypt(
     {
       name: "AES-GCM",
-      iv: iv,
+      iv: iv
     },
     key,
     encoded
   )
 
   const encryptedFile = new File([encryptedBuf], filename, {
-    type: "text/plain",
+    type: "text/plain"
   })
 
   return encryptedFile
@@ -151,7 +158,7 @@ export const decryptTexts = async (
     const decryptedBuf: ArrayBuffer = await window.crypto.subtle.decrypt(
       {
         name: "AES-GCM",
-        iv: iv,
+        iv: iv
       },
       key,
       buf

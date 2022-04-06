@@ -5,7 +5,7 @@ import {
   ConnectBlock,
   Container,
   DoubleText,
-  SliceForm,
+  SliceForm
 } from "@components/ui"
 import { LogDescription } from "ethers/lib/utils"
 import getLog from "@utils/getLog"
@@ -13,7 +13,7 @@ import { NextSeo } from "next-seo"
 import {
   defaultDescription,
   defaultTitle,
-  domain,
+  domain
 } from "@components/common/Head"
 
 export default function Slice() {
@@ -35,9 +35,9 @@ export default function Slice() {
               url: `${domain}/og_image.jpg`,
               width: 1000,
               height: 1000,
-              alt: `${defaultTitle} cover image`,
-            },
-          ],
+              alt: `${defaultTitle} cover image`
+            }
+          ]
         }}
       />
       {domain === "https://slice.so" ? (
@@ -85,11 +85,6 @@ export default function Slice() {
                         size="text-normal"
                       />{" "}
                       (ERC1155 tokens) that represent ownership over a slicer.
-                    </p>
-                    <p className="font-semibold text-red-600">
-                      This is a beta version. Slicers created here won&apos;t
-                      leverage the features introduced in the main version of
-                      the protocol.
                     </p>
                   </div>
                   <SliceForm

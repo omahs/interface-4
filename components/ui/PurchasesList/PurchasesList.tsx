@@ -53,6 +53,7 @@ const PurchasesList = () => {
           const image = purchaseDataEl?.image
           const uid = purchaseDataEl?.uid
           const creator = purchaseDataEl?.creator
+          const texts = purchaseDataEl?.texts
           const purchaseElArray =
             purchaseDataEl &&
             Object.keys(purchaseDataEl?.purchaseInfo).filter(
@@ -71,6 +72,7 @@ const PurchasesList = () => {
                 uid={uid}
                 creator={creator}
                 purchaseInfo={purchaseInfo}
+                texts={texts}
               />
               {i + 1 != iterator && (
                 <hr className="w-20 mx-auto my-16 border-gray-300" />

@@ -5,7 +5,8 @@ const TransferSharesBatch = async (
   from: string,
   slicerId: number,
   accounts: string[],
-  shares: number[]
+  shares: number[],
+  toRelease: boolean
 ) => {
   const { initialize } = await import("@lib/useProvider")
   const { sliceCore } = await import("@lib/initProvider")
@@ -18,7 +19,8 @@ const TransferSharesBatch = async (
       from,
       accounts,
       slicerId,
-      shares
+      shares,
+      toRelease
     )
     return [contract, call]
   } catch (err) {

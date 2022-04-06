@@ -7,6 +7,7 @@ export type ProductCart = {
   quantity: number
   price: number
   isUSD: boolean
+  extCallValue: number
   name: string
 }
 
@@ -19,8 +20,9 @@ const handleUpdateCart = async (
   slicerId: number,
   slicerAddress: string,
   productId: number,
-  price: number,
+  price: string,
   isUSD: boolean,
+  extCallValue: string,
   name: string,
   newQuantity: number
 ) => {
@@ -36,9 +38,10 @@ const handleUpdateCart = async (
         slicerAddress,
         productId,
         quantity,
-        price,
+        price: price || "0",
         isUSD,
-        name,
+        extCallValue,
+        name
       }
     } else {
       newCookies.splice(index, 1)
@@ -50,9 +53,10 @@ const handleUpdateCart = async (
       slicerAddress,
       productId,
       quantity,
-      price,
+      price: price || "0",
       isUSD,
-      name,
+      extCallValue,
+      name
     })
   }
   setCookie("cart", newCookies)

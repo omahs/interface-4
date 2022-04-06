@@ -35,11 +35,12 @@ const SliceFormInputBlock = ({
   removedCount,
   setRemovedCount,
   ownedSlices,
-  placeholder = "1000000",
+  placeholder = "1000000"
 }: Props) => {
   const { account, connector } = useAppContext()
   const [visible, setVisible] = useState(true)
   const [address, setAddress] = useState(addresses[index] || "")
+  const [resolvedAddress, setResolvedAddress] = useState("")
   const [sharesAmount, setSharesAmount] = useState(shares[index] || 0)
   const [resolvedSignerAddress, setResolvedSignerAddress] = useState("")
 
@@ -112,6 +113,8 @@ const SliceFormInputBlock = ({
             address={address}
             onChange={setAddress}
             required={sharesAmount != 0}
+            resolvedAddress={resolvedAddress}
+            setResolvedAddress={setResolvedAddress}
           />
         </div>
         <p className="col-span-2 pr-2 text-right xs:hidden">Slices</p>
@@ -120,6 +123,8 @@ const SliceFormInputBlock = ({
             type="number"
             placeholder={placeholder}
             min="1"
+            max="1000000000"
+            error={sharesAmount > 1000000000}
             value={sharesAmount != 0 ? sharesAmount : ""}
             required={address && true}
             onChange={setSharesAmount}

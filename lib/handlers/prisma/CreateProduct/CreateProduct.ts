@@ -9,7 +9,11 @@ const CreateProduct = async (
   tempProductHash: string,
   image?: string,
   productId?: number | null,
-  purchaseInfo?: object
+  purchaseInfo?: object,
+  texts?: {
+    thanks?: string
+    instructions?: string
+  }
 ) => {
   const prisma = (await import("@lib/prisma")).default
 
@@ -28,8 +32,9 @@ const CreateProduct = async (
         hash,
         productId,
         purchaseInfo,
+        texts
         // version
-      },
+      }
     })
   } catch (err) {
     console.log(err)

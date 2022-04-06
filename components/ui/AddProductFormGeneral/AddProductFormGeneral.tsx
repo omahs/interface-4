@@ -4,7 +4,7 @@ import {
   SlicerImageBlock,
   MessageBlock,
   InputTags,
-  Textarea,
+  Textarea
 } from "@components/ui"
 import { NewImage } from "pages/slicer/[id]"
 import { Message } from "@utils/handleMessage"
@@ -36,7 +36,7 @@ const AddProductFormGeneral = ({
   setShortDescription,
   setDescription,
   // setTags,
-  setNewImage,
+  setNewImage
 }: Props) => {
   // const { data: versionData } = useSWR(
   //   name ? `/api/slicer/${slicerId}/products?name=${name}` : null,
@@ -45,7 +45,7 @@ const AddProductFormGeneral = ({
   // const [version, setVersion] = useState(0)
   const [msg, setMsg] = useState<Message>({
     message: "",
-    messageStatus: "success",
+    messageStatus: "success"
   })
 
   // useEffect(() => {
@@ -105,8 +105,8 @@ const AddProductFormGeneral = ({
         maxHeight="max-h-[250px]"
         product
       />
-      <p className="pt-3">
-        <b>Note:</b> You cannot change the name, description and image later.
+      <p className="pt-3 text-yellow-600">
+        <b>You cannot change the name, description and image later.</b>
       </p>
 
       <MessageBlock msg={msg} />

@@ -16,6 +16,9 @@ const resolveEns = async (
         address.substring(address.length - 4) !== ".eth"
           ? await provider.lookupAddress(address)
           : await provider.resolveName(address)
+      if (address.substring(address.length - 4) === ".eth" && !resolved) {
+        throw Error
+      }
       setAddress(resolved)
     } catch (err) {
       setAddress("Invalid ENS name")
@@ -28,7 +31,9 @@ export const useEns = (connector: WalletConnect, address: string) => {
   useEffect(() => {
     resolveEns(connector, address, setResolvedAddress)
   }, [address])
-  return resolvedAddress
+  return !resolvedAddress || resolvedAddress == "Invalid ENS name"
+    ? null
+    : resolvedAddress
 }
 
 export default resolveEns

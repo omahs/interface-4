@@ -17,6 +17,10 @@ type Props = {
   uid: string
   creator: string
   purchaseInfo: string
+  texts: {
+    thanks?: string
+    instructions?: string
+  }
 }
 
 const ProductPurchaseCard = ({
@@ -28,6 +32,7 @@ const ProductPurchaseCard = ({
   uid,
   creator,
   purchaseInfo,
+  texts
 }: Props) => {
   const { setModalView, connector } = useAppContext()
   const [loading, setLoading] = useState(false)
@@ -53,15 +58,18 @@ const ProductPurchaseCard = ({
             </p>
           )}
         </div>
-        <div className="text-gray-700">
-          <p className="text-sm">
-            Contains <b>{purchaseInfo || "..."}</b>
-          </p>
-        </div>
+        {purchaseInfo != "" ? (
+          <div className="text-gray-700">
+            <p className="text-sm">
+              Contains <b>{purchaseInfo || "..."}</b>
+            </p>
+          </div>
+        ) : null}
         <div className="mt-4">
           <Button
-            label="Redeem"
+            label={name ? "Redeem" : "Wait..."}
             loading={loading}
+            disabled={!name}
             onClick={() =>
               handleRedeemProduct(
                 connector,
@@ -71,6 +79,7 @@ const ProductPurchaseCard = ({
                 image,
                 uid,
                 creator,
+                texts,
                 setLoading,
                 setModalView
               )

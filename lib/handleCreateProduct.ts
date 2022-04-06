@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react"
 import { NewImage } from "pages/slicer/[id]"
 import { LogDescription } from "@ethersproject/abi"
+import decimalToHex from "@utils/decimalToHex"
 // import { mutate } from "swr"
 
 export const beforeCreate = async (
@@ -11,7 +12,7 @@ export const beforeCreate = async (
   description: string,
   newImage: NewImage,
   purchaseFiles: File[],
-  thankMessage: string,
+  thanks: string,
   instructions: string,
   notes: string,
   setUploadStep: Dispatch<SetStateAction<number>>,
@@ -22,12 +23,13 @@ export const beforeCreate = async (
   const fetcher = (await import("@utils/fetcher")).default
   const web3Storage = (await import("./web3Storage")).default
   const { encryptFiles, importKey } = await import("@utils/crypto")
+  let purchaseDataCID: string
 
   const uid = Math.random().toString().substring(2)
   const purchaseInfo = {
     instructions: instructions.length != 0,
     notes: notes.length != 0,
-    files: purchaseFiles.length != 0,
+    files: purchaseFiles.length != 0
   }
   const metadata = {
     name,
@@ -36,6 +38,10 @@ export const beforeCreate = async (
     creator,
     uid,
     purchaseInfo,
+    texts: {
+      thanks,
+      instructions
+    }
   }
   let image = ""
 
@@ -58,52 +64,52 @@ export const beforeCreate = async (
   const pinMetadataBody = {
     body: JSON.stringify({
       metadata,
-      slicerId,
+      slicerId
     }),
-    method: "POST",
+    method: "POST"
   }
   const { IpfsHash } = await fetcher("/api/pin_json", pinMetadataBody)
   const data = CID.parse(IpfsHash).bytes
 
   // encrypt files
-  setUploadStep(3)
-  const texts = [
-    { value: thankMessage, filename: "Thanks" },
-    { value: instructions, filename: "Instructions" },
-    { value: notes, filename: "Notes" },
-  ]
-  const keygenBody = {
-    method: "POST",
-    body: JSON.stringify({
-      slicerId,
-      name,
-      creator,
-      uid,
-    }),
-  }
-  const { exportedKey, iv } = await fetcher("/api/keygen", keygenBody)
-  const key = await importKey(exportedKey)
-  const encryptedFiles = await encryptFiles(
-    key,
-    new Uint8Array(iv),
-    purchaseFiles,
-    texts
-  )
+  if (purchaseFiles.length != 0 || notes.length != 0) {
+    setUploadStep(3)
+    const texts = [{ value: notes, filename: "Notes" }]
+    const keygenBody = {
+      method: "POST",
+      body: JSON.stringify({
+        slicerId,
+        name,
+        creator,
+        uid
+      })
+    }
+    const { exportedKey, iv } = await fetcher("/api/keygen", keygenBody)
+    const key = await importKey(exportedKey)
+    const encryptedFiles = await encryptFiles(
+      key,
+      new Uint8Array(iv),
+      purchaseFiles,
+      texts
+    )
 
-  // save purchaseFiles on web3Storage
-  setUploadStep(4)
-  const { webStorageKey } = await fetcher("/api/webStorage")
-  const totalSize = encryptedFiles.map((f) => f.size).reduce((a, b) => a + b, 0)
-  let uploaded = 0
-  const onStoredChunk = (size: number) => {
-    uploaded += size
-    setUploadPct((uploaded * 100) / totalSize)
+    // save purchaseFiles on web3Storage
+    setUploadStep(4)
+    const { webStorageKey } = await fetcher("/api/webStorage")
+    const totalSize = encryptedFiles
+      .map((f) => f.size)
+      .reduce((a, b) => a + b, 0)
+    let uploaded = 0
+    const onStoredChunk = (size: number) => {
+      uploaded += size
+      setUploadPct((uploaded * 100) / totalSize)
+    }
+    purchaseDataCID = await web3Storage(webStorageKey).put(encryptedFiles, {
+      maxRetries: 3,
+      onStoredChunk
+    })
   }
-  const purchaseDataCID = await web3Storage(webStorageKey).put(encryptedFiles, {
-    maxRetries: 3,
-    onStoredChunk,
-  })
-  const purchaseData = CID.parse(purchaseDataCID).bytes
+  const purchaseData = purchaseDataCID ? CID.parse(purchaseDataCID).bytes : []
 
   // Save metadata, hashes & imageUrl on prisma
   setUploadStep(5)
@@ -119,7 +125,11 @@ export const beforeCreate = async (
       hash: IpfsHash,
       tempProductHash: purchaseDataCID,
       purchaseInfo,
-    }),
+      texts: {
+        thanks,
+        instructions
+      }
+    })
   }
   const { data: newProduct } = await fetcher(
     `/api/slicer/${slicerId}/products`,
@@ -132,7 +142,7 @@ export const beforeCreate = async (
     newProduct,
     data,
     purchaseData,
-    purchaseDataCID,
+    purchaseDataCID
   }
 }
 
@@ -145,7 +155,7 @@ export const handleSuccess = async (
   const getLog = (await import("@utils/getLog")).default
 
   const eventLog = getLog(eventLogs, "ProductAdded")
-  const productId = eventLog[0]
+  const productId = Number(eventLog[1]._hex)
 
   // Update product in prisma, adding productId and removing productHash
   const putBody = {
@@ -153,8 +163,8 @@ export const handleSuccess = async (
     body: JSON.stringify({
       id,
       productId,
-      tempProductHash: null,
-    }),
+      tempProductHash: null
+    })
   }
   await fetcher(`/api/slicer/${slicerId}/products`, putBody)
 }
@@ -178,7 +188,7 @@ export const handleReject = async (
     }
     const unpinBody = {
       body: JSON.stringify({ hash }),
-      method: "POST",
+      method: "POST"
     }
     await fetcher("/api/unpin", unpinBody)
   }
@@ -189,15 +199,15 @@ export const handleReject = async (
     const body = {
       method: "POST",
       body: JSON.stringify({
-        url: currentImageName,
-      }),
+        url: currentImageName
+      })
     }
     await fetcher(`/api/slicer/delete_file`, body)
   }
 
   // delete from prisma
   const body = {
-    method: "DELETE",
+    method: "DELETE"
   }
   await fetcher(`/api/slicer/${slicerId}/products?productId=${productId}`, body)
 
@@ -206,8 +216,8 @@ export const handleReject = async (
     const revertBody = {
       method: "POST",
       body: JSON.stringify({
-        purchaseDataCID,
-      }),
+        purchaseDataCID
+      })
     }
     await fetcher(`/api/addRevert`, revertBody)
   }
@@ -222,6 +232,8 @@ export const handleCleanup = async (
   const { base16 } = await import("multiformats/bases/base16")
   const client = (await import("@utils/apollo-client")).default
   const { gql } = await import("@apollo/client")
+
+  const hexId = decimalToHex(slicerId)
 
   setLoading(true)
 
@@ -238,7 +250,7 @@ export const handleCleanup = async (
     // // Distinguish between minted / not minted product
     const tokensQuery = /* GraphQL */ `
       products(where: {
-        slicer: "${slicerId}",
+        slicer: "${hexId}",
         creator: "${product.creator.toLowerCase()}",
         data: "${dataHash}"
       }) {
@@ -250,7 +262,7 @@ export const handleCleanup = async (
       query {
         ${tokensQuery}
       }
-    `,
+    `
     })
 
     if (data.products.length != 0 /* minted */) {
@@ -261,8 +273,8 @@ export const handleCleanup = async (
         body: JSON.stringify({
           id: product.id,
           productId: productId,
-          tempProductHash: null,
-        }),
+          tempProductHash: null
+        })
       }
       await fetcher(`/api/slicer/${slicerId}/products`, putBody)
     } /* not minted */ else {
@@ -289,13 +301,14 @@ export const reload = async (
   const client = (await import("@utils/apollo-client")).default
   const { gql } = await import("@apollo/client")
 
+  const hexId = decimalToHex(slicerId)
   setLoading(true)
 
   // Get all missing minted products on prisma
   const { data: products } = await fetcher(`/api/slicer/${slicerId}/products`)
 
   const tokensQuery = /* GraphQL */ `
-  products (where: {slicer: "${slicerId}"}) {
+  products (where: {slicer: "${hexId}"}) {
     id
     data
     createdAtTimestamp
@@ -306,7 +319,7 @@ export const reload = async (
       query {
         ${tokensQuery}
       }
-    `,
+    `
   })
   const blockchainProducts = data.products
 
@@ -334,6 +347,7 @@ export const reload = async (
           image,
           uid,
           purchaseInfo,
+          texts
         } = await fetcher(`https://gateway.pinata.cloud/ipfs/${dataHash}`)
         const body = {
           method: "POST",
@@ -348,7 +362,8 @@ export const reload = async (
             tempProductHash: null,
             hash: dataHash,
             purchaseInfo,
-          }),
+            texts
+          })
         }
         await fetcher(`/api/slicer/${slicerId}/products`, body)
       }

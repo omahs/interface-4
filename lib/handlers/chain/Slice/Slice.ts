@@ -2,23 +2,32 @@ import WalletConnect from "@walletconnect/client"
 
 const Slice = async (
   connector: WalletConnect,
-  accounts: string[],
-  shares: number[],
+  payees: {
+    account: string
+    shares: number
+  }[],
   minimumShares: number,
-  isCollectible: boolean
+  currencies: string[],
+  releaseTimelock: number,
+  transferableTimelock: number,
+  isImmutable: boolean,
+  isControlled: boolean
 ) => {
   const { initialize } = await import("@lib/useProvider")
-  const { slice } = await import("@lib/initProvider")
+  const { sliceCore } = await import("@lib/initProvider")
 
   const { signer } = await initialize(connector)
-  const contract = slice(signer)
+  const contract = sliceCore(signer)
 
   try {
     const call = await contract.slice(
-      accounts,
-      shares,
+      payees,
       minimumShares,
-      isCollectible
+      currencies,
+      releaseTimelock,
+      transferableTimelock,
+      isImmutable,
+      isControlled
     )
     return [contract, call]
   } catch (err) {

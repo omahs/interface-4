@@ -27,7 +27,7 @@ const Textarea: React.FC<Props> = (props) => {
     rows = 3,
     previewBox,
     question,
-    onChange,
+    onChange
   } = props
   const [showPreview, setShowPreview] = useState(false)
   const [htmlContent, setHtmlContent] = useState("")
@@ -67,7 +67,7 @@ const Textarea: React.FC<Props> = (props) => {
                 <>
                   {question}
                   <p>
-                    <b>Note:</b> You can use{" "}
+                    You can use{" "}
                     <a
                       className="highlight"
                       href="https://www.markdownguide.org/cheat-sheet/"

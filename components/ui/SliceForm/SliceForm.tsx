@@ -19,10 +19,10 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   const [shares, setShares] = useState([1000000])
   const [minimumShares, setMinimumShares] = useState(0)
   const [totalShares, setTotalShares] = useState(1000000)
-  const [isCollectible, setIsCollectible] = useState(false)
+  const [isImmutable, setisImmutable] = useState(false)
   const [message, setMessage] = useState<Message>({
     message: "",
-    messageStatus: "success",
+    messageStatus: "success"
   })
 
   const hasMinimumShares =
@@ -38,16 +38,18 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
     const cleanedAddresses = addresses.filter((el) => el != "")
     const cleanedShares = shares.filter((el) => el != 0)
 
+    const payees = []
+    for (let i = 0; i < cleanedAddresses.length; i++) {
+      const account = cleanedAddresses[i]
+      const shares = cleanedShares[i]
+
+      payees.push({ account, shares })
+    }
+
     try {
       if (cleanedShares.length == cleanedAddresses.length) {
         const eventLogs = await handleSubmit(
-          Slice(
-            connector,
-            cleanedAddresses,
-            cleanedShares,
-            minimumShares,
-            isCollectible
-          ),
+          Slice(connector, payees, minimumShares, [], 0, 0, isImmutable, false),
           setMessage,
           setLoading,
           setSuccess,
@@ -58,7 +60,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         handleMessage(
           {
             message: "Inputs don't correspond, please try again",
-            messageStatus: "error",
+            messageStatus: "error"
           },
           setMessage
         )
@@ -79,38 +81,38 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         shares={shares}
         minimumShares={minimumShares}
         totalShares={totalShares}
-        isCollectible={isCollectible}
+        isImmutable={isImmutable}
         setAddresses={setAddresses}
         setShares={setShares}
         setMinimumShares={setMinimumShares}
         setTotalShares={setTotalShares}
-        setIsCollectible={setIsCollectible}
+        setisImmutable={setisImmutable}
         hasMinimumShares={hasMinimumShares}
       />
       <div className="py-8">
-        <p>
+        {totalShares > 1000000000 && (
+          <p className="pt-4 text-red-500">
+            <strong>Note:</strong> You can create slicers with up to 1 Billion
+            total slices.
+          </p>
+        )}
+        {minimumShares ? (
+          minimumShares > 0 ? (
+            <p className="pt-4">
+              <strong>Note:</strong> This slicer allows up to{" "}
+              <b>
+                {totalShares / minimumShares > 1000
+                  ? `about ${formatNumber(totalShares / minimumShares)}`
+                  : `${totalShares / minimumShares}`.split(".")[0]}
+              </b>{" "}
+              superowners at the same time.
+            </p>
+          ) : null
+        ) : null}
+        <p className="pt-4">
           <strong>Note:</strong> minimum and total slices cannot be changed
           later.
         </p>
-        {minimumShares
-          ? minimumShares > 0 &&
-            (hasMinimumShares ? (
-              <p className="pt-4">
-                <strong>Note:</strong> This slicer allows up to{" "}
-                <b>
-                  {totalShares / minimumShares > 1000
-                    ? `about ${formatNumber(totalShares / minimumShares)}`
-                    : `${totalShares / minimumShares}`.split(".")[0]}
-                </b>{" "}
-                superowners at the same time.
-              </p>
-            ) : (
-              <p className="pt-4">
-                <strong className="text-red-500">Error:</strong> At least one
-                user needs to be a superowner.
-              </p>
-            ))
-          : null}
         {totalShares === 1 && (
           <p className="pt-4">
             <strong>Note:</strong> You are about to create a non-fractionalized
@@ -132,7 +134,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
             Testnet, so it does not use real ETH. You can get some ETH on
             Rinkeby{" "}
             <a
-              href="https://faucet.rinkeby.io"
+              href="https://rinkebyfaucet.com/"
               target="_blank"
               rel="noreferrer"
               className="font-black highlight"

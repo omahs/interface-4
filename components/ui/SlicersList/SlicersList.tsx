@@ -1,31 +1,16 @@
 import { ListLayout, SlicerCard } from "@components/ui"
-import { useAppContext } from "@components/ui/context"
 import { useEffect, useState } from "react"
-import useQuery from "@utils/subgraphQuery"
-import getEthFromWei from "@utils/getEthFromWei"
 
-const SlicersList = () => {
-  const { account } = useAppContext()
+type Props = {
+  account: string
+  payeeData: any
+  slicers: any
+  loading: boolean
+}
+
+const SlicersList = ({ account, payeeData, slicers, loading }: Props) => {
   const [iterator, setIterator] = useState(0)
   const [unreleased, setUnreleased] = useState([])
-
-  const tokensQuery = /* GraphQL */ `
-      payee(id: "${account?.toLowerCase()}") {
-        slicers (where: {slices_gt: "0"}){
-          slices
-          slicer {
-            id
-            address
-            slices
-            minimumSlices
-            isCollectible
-          }
-        }
-      }
-    `
-  let subgraphData = useQuery(tokensQuery, [account])
-  const payeeData = subgraphData?.payee
-  const slicers = payeeData?.slicers
   let slicerAddresses = []
 
   const getUnreleasedData = async (data) => {
@@ -45,7 +30,7 @@ const SlicersList = () => {
       })
       const body = {
         method: "POST",
-        body: JSON.stringify({ slicerAddresses }),
+        body: JSON.stringify({ slicerAddresses })
       }
       getUnreleasedData(body)
     }
@@ -54,7 +39,7 @@ const SlicersList = () => {
 
   return (
     <ListLayout
-      elementsArray={subgraphData && (slicers || [])}
+      elementsArray={!loading && (slicers || [])}
       setIterator={setIterator}
       actionScreenText="You have no slicers :("
       actionScreenHref="/slice"
@@ -67,12 +52,13 @@ const SlicersList = () => {
           const slicerOwned = slicers && slicers[i]
           const ownedShares = slicerOwned?.slices
           const slicer = slicerOwned?.slicer
-          const slicerId = slicer?.id
+          const slicerId = parseInt(String(slicer?.id), 16)
           const totalSlices = slicer?.slices
           const slicerAddress = slicer?.address
-          const isCollectible = slicer?.isCollectible
+          const isImmutable = slicer?.isImmutable
+          const productsModuleBalance = slicer?.productsModuleBalance
           const isAllowed = Number(ownedShares) >= Number(slicer?.minimumSlices)
-          const unreleasedAmount = getEthFromWei(unreleased[i])
+          const unreleasedAmount = unreleased[i]
 
           return (
             <div className="mt-3" key={key}>
@@ -83,7 +69,8 @@ const SlicersList = () => {
                 shares={ownedShares}
                 totalSlices={totalSlices}
                 isAllowed={isAllowed}
-                isCollectible={isCollectible}
+                isImmutable={isImmutable}
+                productsModuleBalance={productsModuleBalance}
                 unreleasedAmount={unreleasedAmount}
               />
               {i + 1 != iterator && (

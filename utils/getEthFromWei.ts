@@ -1,7 +1,15 @@
-const getEthFromWei = (amount: { type: string; hex: string }) => {
-  return amount
-    ? Math.floor((Number(amount.hex) / Math.pow(10, 18)) * 10000) / 10000
+import { utils } from "ethers"
+
+const getEthFromWei = (weiAmount: string, noString = false) => {
+  const ethAmount = weiAmount
+    ? Math.floor(Number(utils.formatEther(weiAmount)) * 10000) / 10000
     : null
+
+  if (noString) {
+    return weiAmount ? (ethAmount != 0 ? ethAmount : null) : null
+  } else {
+    return weiAmount ? (ethAmount != 0 ? ethAmount : "~0") : null
+  }
 }
 
 export default getEthFromWei

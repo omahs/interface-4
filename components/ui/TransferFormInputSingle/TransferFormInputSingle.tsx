@@ -18,8 +18,9 @@ const TransferFormInputSingle = ({
   ownedSlices,
   setAddresses,
   setShares,
-  setTotalShares,
+  setTotalShares
 }: Props) => {
+  const [resolvedAddress, setResolvedAddress] = useState("")
   const [firstAddress, setFirstAddress] = useState(addresses[0] || "")
   const [firstShares, setFirstShares] = useState(shares[0] || 0)
 
@@ -49,6 +50,8 @@ const TransferFormInputSingle = ({
           label="Receiver address"
           address={firstAddress}
           onChange={setFirstAddress}
+          resolvedAddress={resolvedAddress}
+          setResolvedAddress={setResolvedAddress}
           required
         />
       </div>

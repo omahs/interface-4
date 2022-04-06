@@ -3,31 +3,44 @@ import {
   AddProductForm,
   ConnectBlock,
   Container,
-  DoubleText,
+  DoubleText
 } from "@components/ui"
 import { NextSeo } from "next-seo"
 import {
   defaultDescription,
   defaultTitle,
   longTitle,
-  domain,
+  domain
 } from "@components/common/Head"
 import { useAllowed } from "@lib/useProvider"
 import { useRouter } from "next/dist/client/router"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { LogDescription } from "ethers/lib/utils"
 import getLog from "@utils/getLog"
 import Spinner from "@components/icons/Spinner"
+import { useAppContext } from "@components/ui/context"
 
 export default function NewProduct() {
+  const { setModalView } = useAppContext()
   const router = useRouter()
   const { id } = router.query
   const { isAllowed, loading } = useAllowed(Number(id))
   const [loadingForm, setLoadingForm] = useState(false)
   const [uploadStep, setUploadStep] = useState(0)
+  const [uploadPct, setUploadPct] = useState(0)
   const [success, setSuccess] = useState(false)
   const [logs, setLogs] = useState<LogDescription[]>()
   const eventLog = getLog(logs, "ProductAdded")
+
+  useEffect(() => {
+    if (uploadStep != 0) {
+      setModalView({
+        cross: false,
+        name: `CREATE_PRODUCT_VIEW`,
+        params: { uploadStep, uploadPct, setModalView }
+      })
+    }
+  }, [loading, uploadStep])
 
   return (
     <Container page={true}>
@@ -42,9 +55,9 @@ export default function NewProduct() {
               url: `${domain}/og_image.jpg`,
               width: 1000,
               height: 1000,
-              alt: `${defaultTitle} cover image`,
-            },
-          ],
+              alt: `${defaultTitle} cover image`
+            }
+          ]
         }}
       />
       <ConnectBlock>
@@ -77,6 +90,7 @@ export default function NewProduct() {
                   setLoading={setLoadingForm}
                   uploadStep={uploadStep}
                   setUploadStep={setUploadStep}
+                  setUploadPct={setUploadPct}
                   setSuccess={setSuccess}
                   setLogs={setLogs}
                 />
@@ -93,13 +107,14 @@ export default function NewProduct() {
               highlightTitle="Product added! 🍰"
               helpText={
                 <p className="pb-6">
-                  You can find the new product with id{" "}
-                  <b>{eventLog && eventLog[0]}</b> in the slicer page.
+                  You can find the new product with ID{" "}
+                  <b>#{eventLog && Number(eventLog[1]._hex)}</b> in the slicer
+                  page.
                 </p>
               }
               buttonLabel="Go to slicer"
               href={`/slicer/${id}`}
-              buttonLabelSecondary="Add product"
+              buttonLabelSecondary="Create new product"
               onClickSecondary={() => setSuccess(false)}
             />
           )

@@ -5,6 +5,7 @@ import { InputPrice, InputSwitch } from "@components/ui"
 type Props = {
   isMultiple: boolean
   isLimited: boolean
+  isFree: boolean
   units: number
   ethValue: number
   usdValue: number
@@ -21,6 +22,7 @@ type Props = {
 const AddProductFormPrice = ({
   isMultiple,
   isLimited,
+  isFree,
   units,
   ethValue,
   usdValue,
@@ -31,27 +33,19 @@ const AddProductFormPrice = ({
   setUnits,
   setEthValue,
   setUsdValue,
-  setIsUSD,
+  setIsUSD
 }: Props) => {
   return (
     <>
       <h2 className="pb-6">Price and availability</h2>
-
-      <p className="pb-3">
-        Apart from the <i>multiple purchases</i> option, you can change these
-        details afterwards by paying the relative blockchain transaction fee.
-      </p>
       <div>
         <InputSwitch
-          label="Multiple purchases"
+          label="Allow multiple purchases"
           questionText={
             <>
               <p>
-                If enabled, users will be able to buy this product multiple
+                If enabled, a buyer will be able to buy this product multiple
                 times.
-              </p>
-              <p>
-                <b>Note:</b> You cannot change this later.
               </p>
             </>
           }
@@ -94,38 +88,40 @@ const AddProductFormPrice = ({
         setUsdValue={setUsdValue}
         loading={loading}
         label="Price per unit"
-        error={ethValue === 0}
-        required
       />
       <InputSwitch
         label="Dynamic pricing"
         questionText={
           <>
             <p>
-              If enabled, it&apos;s like setting the product price in USD. The
-              user will always pay in ETH the corresponding USD value set
+              If enabled, the buyer will pay in ETH the corresponding USD value
+              set
               {usdValue && usdValue != 0 && (
                 <b> ${Number(usdValue).toFixed(2)}</b>
               )}
-              . This can be useful to protect against changes in ETH value over
-              time.
+              . It&apos;s like setting the product price in USD and thus{" "}
+              <b>protects against changes in ETH value over time.</b>
             </p>
             <p>
               <b>Note:</b> Products with dynamic pricing have a higher
               transaction fee for the buyer.
             </p>
-            <p>
+            {/* <p>
               <b>Note:</b> As a creator, you can enable/disable dynamic pricing
               anytime.
-            </p>
+            </p> */}
           </>
         }
         enabled={isUSD}
         setEnabled={setIsUSD}
       />
-      <p className="pt-3">
-        <b>Note:</b> You can edit the price later, but only to reduce it.
-      </p>
+      {isFree ? (
+        <p className="text-yellow-600">
+          <b>
+            If a price is not specified this product can be purchased for free
+          </b>
+        </p>
+      ) : null}
       <div>
         <hr className="w-20 mx-auto border-gray-300 my-14" />
       </div>

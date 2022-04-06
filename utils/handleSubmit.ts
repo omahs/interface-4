@@ -14,9 +14,9 @@ const handleSubmit = async (
 
   setMessage({ message: "", messageStatus: "success" })
   try {
+    setLoading(true)
     const [contract, call] = await action
 
-    setLoading(true)
     const eventLogs = await handleLog(contract, call)
     setLoading(false)
 
@@ -26,6 +26,7 @@ const handleSubmit = async (
     }
     return eventLogs
   } catch (err) {
+    setLoading(false)
     const message = err.data?.message
       ?.split("reverted with reason string '")[1]
       ?.slice(0, -1)

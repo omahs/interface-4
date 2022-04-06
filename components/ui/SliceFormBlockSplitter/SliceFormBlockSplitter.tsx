@@ -13,12 +13,12 @@ type Props = {
   shares: number[]
   minimumShares: number
   totalShares: number
-  isCollectible: boolean
+  isImmutable: boolean
   setAddresses: Dispatch<SetStateAction<string[]>>
   setShares: Dispatch<SetStateAction<number[]>>
   setMinimumShares: Dispatch<SetStateAction<number>>
   setTotalShares: Dispatch<SetStateAction<number>>
-  setIsCollectible: Dispatch<SetStateAction<boolean>>
+  setisImmutable: Dispatch<SetStateAction<boolean>>
   hasMinimumShares: boolean
 }
 
@@ -28,13 +28,13 @@ const SliceFormBlockSplitter = ({
   shares,
   minimumShares,
   totalShares,
-  isCollectible,
+  isImmutable,
   setAddresses,
   setShares,
   setMinimumShares,
   setTotalShares,
-  setIsCollectible,
-  hasMinimumShares,
+  setisImmutable,
+  hasMinimumShares
 }: Props) => {
   const { account } = useAppContext()
   const [initAddress, setInitAddress] = useState("")
@@ -112,7 +112,13 @@ const SliceFormBlockSplitter = ({
         <p className="col-span-4 py-3 pr-2 text-right xs:col-span-3 xs:col-end-7 md:col-end-9 md:col-span-3">
           Total slices
         </p>
-        <p className="col-span-3 pl-5">{formatNumber(totalShares, 3)}</p>
+        <p
+          className={`col-span-3 pl-5${
+            totalShares > 1000000000 ? " text-red-500 font-bold" : ""
+          }`}
+        >
+          {formatNumber(totalShares, 3)}
+        </p>
         <div className="relative flex items-center justify-end col-span-5 pb-3 xs:col-end-7">
           <p className="pr-1">Superowner slices</p>
           <Question
@@ -129,12 +135,7 @@ const SliceFormBlockSplitter = ({
                 </p>
                 <p>
                   They can edit the slicer page, add products, access restricted
-                  information, update data on the blockchain, and use other
-                  future features.
-                </p>
-                <p>
-                  <strong>Note</strong>: At least one account has to be a
-                  superowner.
+                  information, update data on the blockchain, and more.
                 </p>
               </>
             }
@@ -145,14 +146,10 @@ const SliceFormBlockSplitter = ({
           <Input
             type="number"
             placeholder="100000"
-            error={
-              minimumShares > totalShares ||
-              !hasMinimumShares ||
-              minimumShares < 0
-            }
+            error={minimumShares > totalShares || minimumShares < 0}
             required
             onChange={setMinimumShares}
-            min={0}
+            min={1}
           />
         </div>
         <div className="flex items-center col-start-6 pl-5 mb-3 xs:pl-0 xs:col-span-1">
@@ -167,7 +164,7 @@ const SliceFormBlockSplitter = ({
           </p>
         </div>
         <div className="relative flex items-center justify-end col-span-5 xs:col-end-7">
-          <p className="pr-1">Collectible asset</p>
+          <p className="pr-1">Immutable metadata</p>
           <Question
             text={
               <>
@@ -183,7 +180,7 @@ const SliceFormBlockSplitter = ({
                     metadata should not change once created
                   </li>
                   <li>
-                    You want to avoid superusers editing the metadata at their
+                    You want to avoid superowners editing the metadata at their
                     discretion (useful for community slicers)
                   </li>
                 </ul>
@@ -191,17 +188,12 @@ const SliceFormBlockSplitter = ({
                   <b>Note:</b> Slicers metadata are currently stored on Slice
                   servers, not on IPFS.
                 </p>
-                <p>
-                  <b>Note:</b> Collectibles appear in a separate section of the
-                  website, but have some limitations with respect to normal
-                  slicers.
-                </p>
               </>
             }
           />
         </div>
         <div>
-          <MySwitch enabled={isCollectible} setEnabled={setIsCollectible} />
+          <MySwitch enabled={isImmutable} setEnabled={setisImmutable} />
         </div>
       </div>
     </div>
