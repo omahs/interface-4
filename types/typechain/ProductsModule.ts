@@ -68,8 +68,8 @@ export type ProductParamsStruct = {
   data: BytesLike;
   purchaseData: BytesLike;
   availableUnits: BigNumberish;
+  maxUnitsPerBuyer: BigNumberish;
   isFree: boolean;
-  isMultiple: boolean;
   isInfinite: boolean;
 };
 
@@ -79,7 +79,7 @@ export type ProductParamsStructOutput = [
   string,
   string,
   number,
-  boolean,
+  number,
   boolean,
   boolean
 ] & {
@@ -88,8 +88,8 @@ export type ProductParamsStructOutput = [
   data: string;
   purchaseData: string;
   availableUnits: number;
+  maxUnitsPerBuyer: number;
   isFree: boolean;
-  isMultiple: boolean;
   isInfinite: boolean;
 };
 
@@ -110,10 +110,8 @@ export type PurchaseParamsStructOutput = [BigNumber, number, string, number] & {
 export interface ProductsModuleInterface extends utils.Interface {
   contractName: "ProductsModule";
   functions: {
-    "_getCurrencyPrice(address,uint256,int16)": FunctionFragment;
-    "_getPool(address)": FunctionFragment;
     "_togglePause()": FunctionFragment;
-    "addProduct(uint256,((uint128,uint32)[],(uint248,bool,address)[],bytes,bytes,uint32,bool,bool,bool),(bytes,uint256,address,bytes4,bytes4))": FunctionFragment;
+    "addProduct(uint256,((uint128,uint32)[],(uint248,bool,address)[],bytes,bytes,uint32,uint8,bool,bool),(bytes,uint256,address,bytes4,bytes4))": FunctionFragment;
     "ethBalance(uint256)": FunctionFragment;
     "initialize()": FunctionFragment;
     "owner()": FunctionFragment;
@@ -124,7 +122,7 @@ export interface ProductsModuleInterface extends utils.Interface {
     "releaseEthToSlicer(uint256)": FunctionFragment;
     "removeProduct(uint256,uint32)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "setProductInfo(uint256,uint32,bool,bool,uint32,(uint248,bool,address)[])": FunctionFragment;
+    "setProductInfo(uint256,uint32,uint8,bool,bool,uint32,(uint248,bool,address)[])": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "upgradeTo(address)": FunctionFragment;
     "upgradeToAndCall(address,bytes)": FunctionFragment;
@@ -132,11 +130,6 @@ export interface ProductsModuleInterface extends utils.Interface {
     "validatePurchaseUnits(address,uint256,uint32)": FunctionFragment;
   };
 
-  encodeFunctionData(
-    functionFragment: "_getCurrencyPrice",
-    values: [string, BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "_getPool", values: [string]): string;
   encodeFunctionData(
     functionFragment: "_togglePause",
     values?: undefined
@@ -184,6 +177,7 @@ export interface ProductsModuleInterface extends utils.Interface {
     values: [
       BigNumberish,
       BigNumberish,
+      BigNumberish,
       boolean,
       boolean,
       BigNumberish,
@@ -208,11 +202,6 @@ export interface ProductsModuleInterface extends utils.Interface {
     values: [string, BigNumberish, BigNumberish]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "_getCurrencyPrice",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "_getPool", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "_togglePause",
     data: BytesLike
@@ -275,8 +264,8 @@ export interface ProductsModuleInterface extends utils.Interface {
     "ERC721ListingChanged(uint256,address,uint256,bool)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Paused(address)": EventFragment;
-    "ProductAdded(uint256,uint256,uint256,bool,bool,bool,uint256,address,bytes,tuple[],tuple[],tuple)": EventFragment;
-    "ProductInfoChanged(uint256,uint256,bool,bool,uint256,tuple[])": EventFragment;
+    "ProductAdded(uint256,uint256,uint256,bool,uint8,bool,uint256,address,bytes,tuple[],tuple[],tuple)": EventFragment;
+    "ProductInfoChanged(uint256,uint256,uint8,bool,bool,uint256,tuple[])": EventFragment;
     "ProductPaid(uint256,uint256,uint256,address,address,uint256,uint256)": EventFragment;
     "ProductRemoved(uint256,uint256)": EventFragment;
     "ReleasedToSlicer(uint256,uint256)": EventFragment;
@@ -354,7 +343,7 @@ export type ProductAddedEvent = TypedEvent<
     BigNumber,
     BigNumber,
     boolean,
-    boolean,
+    number,
     boolean,
     BigNumber,
     string,
@@ -368,7 +357,7 @@ export type ProductAddedEvent = TypedEvent<
     productId: BigNumber;
     categoryIndex: BigNumber;
     isFree: boolean;
-    isMultiple: boolean;
+    maxUnitsPerBuyer: number;
     isInfinite: boolean;
     availableUnits: BigNumber;
     creator: string;
@@ -385,6 +374,7 @@ export type ProductInfoChangedEvent = TypedEvent<
   [
     BigNumber,
     BigNumber,
+    number,
     boolean,
     boolean,
     BigNumber,
@@ -393,6 +383,7 @@ export type ProductInfoChangedEvent = TypedEvent<
   {
     slicerId: BigNumber;
     productId: BigNumber;
+    maxUnitsPerBuyer: number;
     isFree: boolean;
     isInfinite: boolean;
     newUnits: BigNumber;
@@ -469,15 +460,6 @@ export interface ProductsModule extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    _getCurrencyPrice(
-      currency: string,
-      weiPrice: BigNumberish,
-      twapInterval: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber] & { currencyPrice: BigNumber }>;
-
-    _getPool(currency: string, overrides?: CallOverrides): Promise<[string]>;
-
     _togglePause(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -540,6 +522,7 @@ export interface ProductsModule extends BaseContract {
     setProductInfo(
       slicerId: BigNumberish,
       productId: BigNumberish,
+      newMaxUnits: BigNumberish,
       isFree: boolean,
       isInfinite: boolean,
       newUnits: BigNumberish,
@@ -578,15 +561,6 @@ export interface ProductsModule extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { purchases: BigNumber }>;
   };
-
-  _getCurrencyPrice(
-    currency: string,
-    weiPrice: BigNumberish,
-    twapInterval: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
-  _getPool(currency: string, overrides?: CallOverrides): Promise<string>;
 
   _togglePause(
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -650,6 +624,7 @@ export interface ProductsModule extends BaseContract {
   setProductInfo(
     slicerId: BigNumberish,
     productId: BigNumberish,
+    newMaxUnits: BigNumberish,
     isFree: boolean,
     isInfinite: boolean,
     newUnits: BigNumberish,
@@ -689,15 +664,6 @@ export interface ProductsModule extends BaseContract {
   ): Promise<BigNumber>;
 
   callStatic: {
-    _getCurrencyPrice(
-      currency: string,
-      weiPrice: BigNumberish,
-      twapInterval: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    _getPool(currency: string, overrides?: CallOverrides): Promise<string>;
-
     _togglePause(overrides?: CallOverrides): Promise<void>;
 
     addProduct(
@@ -754,6 +720,7 @@ export interface ProductsModule extends BaseContract {
     setProductInfo(
       slicerId: BigNumberish,
       productId: BigNumberish,
+      newMaxUnits: BigNumberish,
       isFree: boolean,
       isInfinite: boolean,
       newUnits: BigNumberish,
@@ -846,12 +813,12 @@ export interface ProductsModule extends BaseContract {
     "Paused(address)"(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
-    "ProductAdded(uint256,uint256,uint256,bool,bool,bool,uint256,address,bytes,tuple[],tuple[],tuple)"(
+    "ProductAdded(uint256,uint256,uint256,bool,uint8,bool,uint256,address,bytes,tuple[],tuple[],tuple)"(
       slicerId?: BigNumberish | null,
       productId?: BigNumberish | null,
       categoryIndex?: BigNumberish | null,
       isFree?: null,
-      isMultiple?: null,
+      maxUnitsPerBuyer?: null,
       isInfinite?: null,
       availableUnits?: null,
       creator?: null,
@@ -865,7 +832,7 @@ export interface ProductsModule extends BaseContract {
       productId?: BigNumberish | null,
       categoryIndex?: BigNumberish | null,
       isFree?: null,
-      isMultiple?: null,
+      maxUnitsPerBuyer?: null,
       isInfinite?: null,
       availableUnits?: null,
       creator?: null,
@@ -875,9 +842,10 @@ export interface ProductsModule extends BaseContract {
       externalCall?: null
     ): ProductAddedEventFilter;
 
-    "ProductInfoChanged(uint256,uint256,bool,bool,uint256,tuple[])"(
+    "ProductInfoChanged(uint256,uint256,uint8,bool,bool,uint256,tuple[])"(
       slicerId?: BigNumberish | null,
       productId?: BigNumberish | null,
+      maxUnitsPerBuyer?: null,
       isFree?: null,
       isInfinite?: null,
       newUnits?: null,
@@ -886,6 +854,7 @@ export interface ProductsModule extends BaseContract {
     ProductInfoChanged(
       slicerId?: BigNumberish | null,
       productId?: BigNumberish | null,
+      maxUnitsPerBuyer?: null,
       isFree?: null,
       isInfinite?: null,
       newUnits?: null,
@@ -937,15 +906,6 @@ export interface ProductsModule extends BaseContract {
   };
 
   estimateGas: {
-    _getCurrencyPrice(
-      currency: string,
-      weiPrice: BigNumberish,
-      twapInterval: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    _getPool(currency: string, overrides?: CallOverrides): Promise<BigNumber>;
-
     _togglePause(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1003,6 +963,7 @@ export interface ProductsModule extends BaseContract {
     setProductInfo(
       slicerId: BigNumberish,
       productId: BigNumberish,
+      newMaxUnits: BigNumberish,
       isFree: boolean,
       isInfinite: boolean,
       newUnits: BigNumberish,
@@ -1041,18 +1002,6 @@ export interface ProductsModule extends BaseContract {
   };
 
   populateTransaction: {
-    _getCurrencyPrice(
-      currency: string,
-      weiPrice: BigNumberish,
-      twapInterval: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    _getPool(
-      currency: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     _togglePause(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -1110,6 +1059,7 @@ export interface ProductsModule extends BaseContract {
     setProductInfo(
       slicerId: BigNumberish,
       productId: BigNumberish,
+      newMaxUnits: BigNumberish,
       isFree: boolean,
       isInfinite: boolean,
       newUnits: BigNumberish,

@@ -90,7 +90,7 @@ export interface SlicerPurchasablePayable extends BaseContract {
       quantity: BigNumberish,
       customData: BytesLike,
       overrides?: CallOverrides
-    ): Promise<[void]>;
+    ): Promise<[boolean]>;
 
     onProductPurchase(
       data: BytesLike,
@@ -109,7 +109,7 @@ export interface SlicerPurchasablePayable extends BaseContract {
     quantity: BigNumberish,
     customData: BytesLike,
     overrides?: CallOverrides
-  ): Promise<void>;
+  ): Promise<boolean>;
 
   onProductPurchase(
     data: BytesLike,
@@ -128,7 +128,7 @@ export interface SlicerPurchasablePayable extends BaseContract {
       quantity: BigNumberish,
       customData: BytesLike,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<boolean>;
 
     onProductPurchase(
       data: BytesLike,
