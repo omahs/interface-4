@@ -24,7 +24,7 @@ type Props = {
   extCheckSig: string
   name: string
   image: string
-  isMultiple: boolean
+  maxUnits: number
   uid: string
   creator: string
   texts: {
@@ -49,7 +49,7 @@ const CartButton = ({
   extCallValue,
   extCheckSig,
   name,
-  isMultiple,
+  maxUnits,
   image,
   uid,
   creator,
@@ -60,7 +60,7 @@ const CartButton = ({
   labelRemove,
   preview
 }: Props) => {
-  const { account, setModalView, connector } = useAppContext()
+  const { account, setModalView, isConnected, connector } = useAppContext()
   const [loading, setLoading] = useState(false)
   const [isUnlocked, setIsUnlocked] = useState(false)
   const [isLoadingExtCall, setisLoadingExtCall] = useState(false)
@@ -144,7 +144,11 @@ const CartButton = ({
             ? "bg-red-500 hover:bg-red-600"
             : "bg-gray-500 hover:bg-gray-600"
         } transition-colors duration-150`}
-        onClick={async () => await handleExtCall()}
+        onClick={async () =>
+          isConnected
+            ? await handleExtCall()
+            : setModalView({ name: "CONNECT_VIEW", cross: true })
+        }
         onMouseEnter={() => setIsUnlocked(true)}
         onMouseLeave={() => setIsUnlocked(false)}
       >
@@ -191,7 +195,7 @@ const CartButton = ({
         <Cart className="w-5 h-5 mr-1 group-cart-el" />
       </div>
     )
-  ) : isMultiple ? (
+  ) : maxUnits != 1 ? (
     <div className="relative z-10 grid items-center justify-center w-full grid-cols-3 overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md">
       <div
         className="flex items-center justify-center h-8 text-red-500 transition-colors duration-150 hover:bg-red-500 hover:text-white"
@@ -218,12 +222,13 @@ const CartButton = ({
       </div>
       <div
         className={`flex items-center justify-center h-8 transition-colors duration-150 ${
-          adjustedAvailability != 0
+          adjustedAvailability != 0 && productCart.quantity < maxUnits
             ? "text-green-500 hover:bg-green-500 hover:text-white"
-            : "text-white bg-gray-400"
+            : "text-white bg-gray-400 cursor-default"
         }`}
         onClick={async () =>
           adjustedAvailability != 0 &&
+          productCart.quantity < maxUnits &&
           (await handleUpdateCart(
             cookies,
             setCookie,

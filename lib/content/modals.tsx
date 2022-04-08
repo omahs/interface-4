@@ -277,7 +277,7 @@ export const PRODUCT_VIEW = (params: any) => {
     extCheckSig,
     extExecSig,
     isInfinite,
-    isMultiple,
+    maxUnits,
     uid,
     creator,
     texts,
@@ -371,7 +371,7 @@ export const PRODUCT_VIEW = (params: any) => {
               extCheckSig={extCheckSig}
               name={name}
               image={image}
-              isMultiple={isMultiple}
+              maxUnits={Number(maxUnits)}
               availableUnits={isInfinite ? -1 : availableUnits}
               purchasedQuantity={purchasedQuantity}
               uid={uid}
@@ -383,7 +383,7 @@ export const PRODUCT_VIEW = (params: any) => {
             />
           </div>
         )}
-        {!editMode && isMultiple && productCart?.quantity && (
+        {!editMode && Number(maxUnits) != 1 && productCart?.quantity && (
           <p className="pt-4 text-sm text-center ">{`Ξ ${
             Math.floor(
               Number(productPrice.eth.substring(1)) *

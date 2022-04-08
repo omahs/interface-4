@@ -42,7 +42,7 @@ const ProductsGrid = ({
             (p) => p.id.split("-").pop() == product?.productId
           )
 
-          return (
+          return product ? (
             <ProductCard
               slicerId={slicerId}
               slicerAddress={slicerAddress}
@@ -52,7 +52,7 @@ const ProductsGrid = ({
               editMode={editMode}
               ethUsd={ethUsd}
             />
-          )
+          ) : null
         })}
       </div>
       {items < products?.length && (

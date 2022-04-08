@@ -53,7 +53,7 @@ const ProductCard = ({
   // TODO Refactor this to handle  multiple currencies
 
   const isInfinite = chainInfo?.isInfinite
-  const isMultiple = chainInfo?.isMultiple
+  const maxUnits = chainInfo?.maxUnitsPerBuyer
   const availableUnits = chainInfo?.availableUnits
   const totalPurchases = chainInfo?.totalPurchases
   const extAddress = chainInfo?.extAddress
@@ -138,7 +138,7 @@ const ProductCard = ({
         extCheckSig,
         extExecSig,
         isInfinite,
-        isMultiple,
+        maxUnits,
         availableUnits,
         totalPurchases,
         purchaseInfo,
@@ -245,7 +245,7 @@ const ProductCard = ({
                 extCheckSig={extCheckSig}
                 image={image}
                 name={name}
-                isMultiple={isMultiple}
+                maxUnits={Number(maxUnits)}
                 availableUnits={isInfinite ? -1 : availableUnits}
                 purchasedQuantity={purchasedQuantity}
                 uid={uid}
