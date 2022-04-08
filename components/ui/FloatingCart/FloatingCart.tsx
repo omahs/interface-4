@@ -95,7 +95,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
       {/* {showCart && showCartList && ( */}
       <div
         className={`fixed bottom-0 mb-[80px] sm:mb-[100px] right-[20px] sm:right-[32px] transition-opacity duration-200 ${
-          showCart && showCartList ? "z-20 opacity-100" : "-z-10 opacity-0"
+          showCart && showCartList ? "z-50 opacity-100" : "-z-10 opacity-0"
         }`}
       >
         <CartList
@@ -107,7 +107,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
       {/* } */}
       {(showCart || loading || success) && (
         <div
-          className={`fixed z-30 bottom-0 mb-[20px] sm:mb-[32px] right-[20px] sm:right-[32px] nightwind-prevent-block transition-opacity duration-200`}
+          className={`fixed z-50 bottom-0 mb-[20px] sm:mb-[32px] right-[20px] sm:right-[32px] nightwind-prevent-block transition-opacity duration-200`}
           // ${
           //   showCart || loading || success
           //     ? "z-20 opacity-100"

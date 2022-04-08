@@ -11,7 +11,7 @@ type Props = {
   shortDescription: string
   description: string
   newImage: NewImage
-  isMultiple: boolean
+  maxUnits: number
   isLimited: boolean
   units: number
   ethValue: number | string
@@ -34,7 +34,7 @@ const AddProductFormPreview = ({
   shortDescription,
   description,
   newImage,
-  isMultiple,
+  maxUnits,
   isLimited,
   units,
   ethValue,
@@ -101,7 +101,7 @@ const AddProductFormPreview = ({
                 extExecSig,
                 isUSD,
                 isInfinite: !isLimited,
-                isMultiple,
+                maxUnits,
                 availableUnits: units,
                 totalPurchases: 69000,
                 purchaseInfo: {
