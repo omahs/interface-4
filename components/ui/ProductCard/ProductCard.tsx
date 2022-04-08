@@ -42,7 +42,21 @@ const ProductCard = ({
     uid,
     creator,
     texts
-  } = product
+  } = product || {
+    productId: NaN,
+    name: "",
+    shortDescription: "",
+    description: "",
+    hash: "",
+    image: "",
+    purchaseInfo: "",
+    uid: "",
+    creator: "",
+    texts: {
+      thanks: "",
+      instructions: ""
+    }
+  }
   const prices = chainInfo?.prices
   const ethPrice = prices?.find(
     (price) => price.currency.id == ethers.constants.AddressZero
