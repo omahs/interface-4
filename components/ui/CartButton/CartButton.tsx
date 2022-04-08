@@ -222,7 +222,8 @@ const CartButton = ({
       </div>
       <div
         className={`flex items-center justify-center h-8 transition-colors duration-150 ${
-          adjustedAvailability != 0 && productCart.quantity < maxUnits
+          adjustedAvailability != 0 &&
+          purchasedQuantity + productCart.quantity < maxUnits
             ? "text-green-500 hover:bg-green-500 hover:text-white"
             : "text-white bg-gray-400 cursor-default"
         }`}
