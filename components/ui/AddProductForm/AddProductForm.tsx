@@ -55,6 +55,7 @@ const AddProductForm = ({
   const [isLimited, setIsLimited] = useState(false)
   const [isFree, setIsFree] = useState(false)
   const [units, setUnits] = useState(0)
+  const [maxUnits, setMaxUnits] = useState(1)
   const [externalCall, setExternalCall] = useState<FunctionStruct>({
     data: [],
     value: 0,
@@ -120,7 +121,7 @@ const AddProductForm = ({
         purchaseData,
         availableUnits: units,
         isFree,
-        isMultiple,
+        maxUnitsPerBuyer: maxUnits,
         isInfinite: !isLimited
       }
 
@@ -155,12 +156,12 @@ const AddProductForm = ({
   }
 
   useEffect(() => {
-    if (ethValue != 0) {
-      setIsFree(false)
-    } else {
-      setIsFree(true)
-    }
+    setIsFree(ethValue != 0 ? false : true)
   }, [ethValue, usdValue])
+
+  useEffect(() => {
+    setMaxUnits(isMultiple ? 0 : 1)
+  }, [isMultiple])
 
   return (
     <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>
@@ -181,6 +182,7 @@ const AddProductForm = ({
         isLimited={isLimited}
         isFree={isFree}
         units={units}
+        maxUnits={maxUnits}
         ethValue={ethValue}
         usdValue={usdValue}
         isUSD={isUSD}
@@ -188,6 +190,7 @@ const AddProductForm = ({
         setIsMultiple={setIsMultiple}
         setIsLimited={setIsLimited}
         setUnits={setUnits}
+        setMaxUnits={setMaxUnits}
         setEthValue={setEthValue}
         setUsdValue={setUsdValue}
         setIsUSD={setIsUSD}
@@ -212,7 +215,7 @@ const AddProductForm = ({
         shortDescription={shortDescription}
         description={description}
         newImage={newImage}
-        isMultiple={isMultiple}
+        maxUnits={Number(maxUnits)}
         isLimited={isLimited}
         units={units}
         ethValue={ethValue}

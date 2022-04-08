@@ -7,6 +7,7 @@ type Props = {
   isLimited: boolean
   isFree: boolean
   units: number
+  maxUnits: number
   ethValue: number
   usdValue: number
   isUSD: boolean
@@ -14,6 +15,7 @@ type Props = {
   setIsMultiple: Dispatch<SetStateAction<boolean>>
   setIsLimited: Dispatch<SetStateAction<boolean>>
   setUnits: Dispatch<SetStateAction<number>>
+  setMaxUnits: Dispatch<SetStateAction<number>>
   setEthValue: Dispatch<SetStateAction<number>>
   setUsdValue: Dispatch<SetStateAction<number>>
   setIsUSD: Dispatch<SetStateAction<boolean>>
@@ -24,6 +26,7 @@ const AddProductFormPrice = ({
   isLimited,
   isFree,
   units,
+  maxUnits,
   ethValue,
   usdValue,
   isUSD,
@@ -31,6 +34,7 @@ const AddProductFormPrice = ({
   setIsMultiple,
   setIsLimited,
   setUnits,
+  setMaxUnits,
   setEthValue,
   setUsdValue,
   setIsUSD
@@ -44,14 +48,28 @@ const AddProductFormPrice = ({
           questionText={
             <>
               <p>
-                If enabled, a buyer will be able to buy this product multiple
-                times.
+                If enabled, a buyer will be able to buy more than one unit of
+                this product.
               </p>
             </>
           }
           enabled={isMultiple}
           setEnabled={setIsMultiple}
         />
+        {isMultiple && (
+          <div className="pt-5 pb-2">
+            <Input
+              label="Max units per buyer (up to 255)"
+              placeholder="Leave blank for unlimited"
+              type="number"
+              min={0}
+              max={255}
+              value={maxUnits == 0 ? "" : maxUnits}
+              error={maxUnits > 255}
+              onChange={setMaxUnits}
+            />
+          </div>
+        )}
         <InputSwitch
           label="Limited availability"
           questionText={
@@ -70,10 +88,12 @@ const AddProductFormPrice = ({
           setEnabled={setIsLimited}
         />
         {isLimited && (
-          <div className="pt-5 pb-0">
+          <div className="pt-5 pb-2">
             <Input
               label="Available units for sale"
               type="number"
+              min={0}
+              max={4000000000}
               value={units}
               onChange={setUnits}
               required={isLimited}

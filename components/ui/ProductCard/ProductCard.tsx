@@ -42,7 +42,21 @@ const ProductCard = ({
     uid,
     creator,
     texts
-  } = product
+  } = product || {
+    productId: NaN,
+    name: "",
+    shortDescription: "",
+    description: "",
+    hash: "",
+    image: "",
+    purchaseInfo: "",
+    uid: "",
+    creator: "",
+    texts: {
+      thanks: "",
+      instructions: ""
+    }
+  }
   const prices = chainInfo?.prices
   const ethPrice = prices?.find(
     (price) => price.currency.id == ethers.constants.AddressZero
@@ -53,7 +67,7 @@ const ProductCard = ({
   // TODO Refactor this to handle  multiple currencies
 
   const isInfinite = chainInfo?.isInfinite
-  const isMultiple = chainInfo?.isMultiple
+  const maxUnits = chainInfo?.maxUnitsPerBuyer
   const availableUnits = chainInfo?.availableUnits
   const totalPurchases = chainInfo?.totalPurchases
   const extAddress = chainInfo?.extAddress
@@ -138,7 +152,7 @@ const ProductCard = ({
         extCheckSig,
         extExecSig,
         isInfinite,
-        isMultiple,
+        maxUnits,
         availableUnits,
         totalPurchases,
         purchaseInfo,
@@ -245,7 +259,7 @@ const ProductCard = ({
                 extCheckSig={extCheckSig}
                 image={image}
                 name={name}
-                isMultiple={isMultiple}
+                maxUnits={Number(maxUnits)}
                 availableUnits={isInfinite ? -1 : availableUnits}
                 purchasedQuantity={purchasedQuantity}
                 uid={uid}

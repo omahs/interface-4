@@ -59,8 +59,8 @@ const SlicerProducts = ({
       dynamicPricing
     }
     isInfinite
-    isMultiple
     availableUnits
+    maxUnitsPerBuyer
     totalPurchases
     createdAtTimestamp
     extAddress
