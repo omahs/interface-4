@@ -34,7 +34,7 @@ const ProductsBalance = ({ slicerId, productsModuleBalance }: Props) => {
       setMessage({
         message: `You have released ${getEthFromWei(
           productsModuleBalance
-        )} ETH to the slicer! 🎉`,
+        )} ETH to the slicer! 🎉 Refresh the page to see the updated balance`,
         messageStatus: "success"
       })
     }
