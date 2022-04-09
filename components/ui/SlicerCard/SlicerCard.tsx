@@ -27,6 +27,7 @@ type Props = {
   slicerAddress: string
   shares: number
   totalSlices: number
+  protocolFee: number
   account: string
   isAllowed: boolean
   isImmutable: boolean
@@ -40,6 +41,7 @@ const SlicerCard = ({
   account,
   shares,
   totalSlices,
+  protocolFee,
   isAllowed,
   isImmutable,
   productsModuleBalance,
@@ -160,7 +162,7 @@ const SlicerCard = ({
                   slicerId,
                   account,
                   ethers.constants.AddressZero,
-                  false
+                  true
                 )
               }
               success={success}
@@ -173,8 +175,13 @@ const SlicerCard = ({
         ) : null}
         {ethReleased != "" && (
           <p className="pt-4 text-sm text-green-500">
-            <span className="font-medium">{ethReleased} ETH</span> was sent to
-            your balance! 🎉
+            You received{" "}
+            <span className="font-medium">
+              {((Number(ethReleased) * (1000 - protocolFee)) / 1000).toFixed(4)}{" "}
+              ETH + {((Number(ethReleased) * protocolFee) / 1000).toFixed(4)}{" "}
+              ETH in SLX
+            </span>
+            ! 🎉
           </p>
         )}
       </div>

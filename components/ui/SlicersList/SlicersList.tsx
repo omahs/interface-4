@@ -56,6 +56,7 @@ const SlicersList = ({ account, payeeData, slicers, loading }: Props) => {
           const totalSlices = slicer?.slices
           const slicerAddress = slicer?.address
           const isImmutable = slicer?.isImmutable
+          const protocolFee = slicer?.protocolFee
           const productsModuleBalance = slicer?.productsModuleBalance
           const isAllowed = Number(ownedShares) >= Number(slicer?.minimumSlices)
           const unreleasedAmount = unreleased[i]
@@ -68,6 +69,7 @@ const SlicersList = ({ account, payeeData, slicers, loading }: Props) => {
                 account={account}
                 shares={ownedShares}
                 totalSlices={totalSlices}
+                protocolFee={Number(protocolFee)}
                 isAllowed={isAllowed}
                 isImmutable={isImmutable}
                 productsModuleBalance={productsModuleBalance}
