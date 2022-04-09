@@ -288,6 +288,7 @@ const Id = ({
           </div>
           <SlicerProducts
             account={account}
+            isAllowed={isAllowed}
             editMode={editMode}
             slicerId={slicerInfo?.id}
             slicerAddress={slicerInfo?.address}
