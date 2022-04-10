@@ -3,7 +3,7 @@ import Head from "next/head"
 import { NextSeo } from "next-seo"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
 import { Message } from "@utils/handleMessage"
-import { useAllowed } from "@lib/useProvider"
+import { defaultProvider, useAllowed } from "@lib/useProvider"
 import { useAppContext } from "@components/ui/context"
 import { domain } from "@components/common/Head"
 import Edit from "@components/icons/Edit"
@@ -21,11 +21,13 @@ import {
   SlicerSponsors
 } from "@components/ui"
 import fetcher from "@utils/fetcher"
-import useQuery from "@utils/subgraphQuery"
 import { BigNumber, ethers } from "ethers"
 import multicall from "@utils/multicall"
 import decimalToHex from "@utils/decimalToHex"
 import formatCalldata from "@utils/formatCalldata"
+import client from "@utils/apollo-client"
+import { gql } from "@apollo/client"
+import { sliceCore } from "@lib/initProvider"
 
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
@@ -39,6 +41,7 @@ export type SlicerData = {
   description: any
   tags: any
   imageUrl: any
+  attributes: SlicerAttributes
 }
 export type AddressAmount = {
   address: string
@@ -54,7 +57,8 @@ const initAttributes = {
 
 const Id = ({
   slicerInfo,
-  products
+  products,
+  subgraphData
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { account } = useAppContext()
   const { isAllowed } = useAllowed(slicerInfo?.id)
@@ -70,10 +74,9 @@ const Id = ({
     name: slicerInfo?.name,
     description: slicerInfo?.description,
     tags: slicerInfo?.tags,
-    imageUrl: slicerInfo?.image
+    imageUrl: slicerInfo?.image,
+    attributes: slicerInfo?.attributes
   })
-  const [slicerAttributes, setSlicerAttributes] =
-    useState<SlicerAttributes>(initAttributes)
 
   const [newDescription, setNewDescription] = useState(slicer.description)
   const [newTags, setNewTags] = useState(slicer.tags)
@@ -94,47 +97,13 @@ const Id = ({
   // Todo: For collectibles save image on web3Storage instead of supabase? + Allow indefinite size? Figure it out
   const editAllowed = !slicerInfo?.isImmutable
     ? isAllowed
-    : slicerAttributes?.Creator === account?.toLowerCase() // only Creator
+    : slicer?.attributes?.Creator === account?.toLowerCase() // only Creator
     ? (newName === `Slicer #${slicerInfo?.id}` && // default name, descr & image
         newDescription === "" &&
         newImage.url === "" &&
         slicer.imageUrl === "https://slice.so/slicer_default.png") ||
-      false // slicerAttributes["Total slices"] === account.slices // creator has all slices
+      false // slicer?.attributes["Total slices"] === account.slices // creator has all slices
     : false
-
-  const hexId = decimalToHex(Number(slicerInfo?.id))
-
-  /**
-   * TODO
-   * Add condition: or: [{slices_gt: "0"}, {ethSent_gt: "0"}]
-   * Deal with pagination when number of payeeSlicers > 100
-   */
-  const tokensQuery = /* GraphQL */ `
-  payeeSlicers (
-    where: {slicer: "${hexId}"}, 
-    orderBy: "ethSent", 
-    orderDirection: "desc"
-  ) {
-    id
-    slices
-    ethSent
-  }
-`
-  const subgraphData = useQuery(tokensQuery, [slicerInfo?.address])
-
-  useEffect(() => {
-    let attr = initAttributes
-    slicerInfo?.attributes.map((el) => {
-      attr[el.trait_type] = el.value
-    })
-    setSlicerAttributes(attr)
-    setSlicer({
-      name: slicerInfo?.name,
-      description: slicerInfo?.description,
-      tags: slicerInfo?.tags,
-      imageUrl: slicerInfo?.image
-    })
-  }, [slicerInfo])
 
   useEffect(() => {
     setEditMode(false)
@@ -148,7 +117,6 @@ const Id = ({
         const ethSent = el.ethSent
         if (
           address != process.env.NEXT_PUBLIC_PRODUCTS_ADDRESS.toLowerCase() &&
-          address != slicerInfo?.address &&
           ethSent &&
           ethSent != "0"
         ) {
@@ -280,7 +248,7 @@ const Id = ({
               setMsg={setMsg}
               loading={loading}
               slicerId={slicerInfo?.id}
-              totalSlices={slicerAttributes["Total slices"]}
+              totalSlices={slicer?.attributes["Total slices"]}
               owners={owners}
               unreleased={unreleased}
               setUnreleased={setUnreleased}
@@ -338,10 +306,9 @@ const Id = ({
 }
 
 export async function getStaticPaths() {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-  const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
+  const totalSlicers = await sliceCore(defaultProvider).supply()
   // const totalSlicers = 0
-  const paths = [...Array(totalSlicers).keys()].map((slicerId) => {
+  const paths = [...Array(Number(totalSlicers)).keys()].map((slicerId) => {
     const id = String(slicerId)
     return {
       params: {
@@ -350,7 +317,7 @@ export async function getStaticPaths() {
     }
   })
 
-  return { paths, fallback: true }
+  return { paths, fallback: "blocking" }
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
@@ -358,15 +325,42 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const id = context.params.id
   const hexId = decimalToHex(Number(id))
 
-  const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${hexId}?stats=false`)
-  const products = await fetcher(`${baseUrl}/api/slicer/${id}/products`)
+  /**
+   * TODO
+   * Add condition: or: [{slices_gt: "0"}, {ethSent_gt: "0"}]
+   * Deal with pagination when number of payeeSlicers > 100
+   */
+  const tokensQuery = /* GraphQL */ `
+  payeeSlicers (
+    where: {slicer: "${hexId}"}, 
+    orderBy: "ethSent", 
+    orderDirection: "desc"
+  ) {
+    id
+    slices
+    ethSent
+  }
+`
+
+  const [slicerInfo, products, { data: subgraphData }] = await Promise.all([
+    fetcher(`${baseUrl}/api/slicer/${hexId}?stats=false`),
+    fetcher(`${baseUrl}/api/slicer/${id}/products`),
+    client.query({
+      query: gql`
+        query {
+          ${tokensQuery}
+        }
+      `
+    })
+  ])
 
   return {
     props: {
       slicerInfo,
-      products
+      products,
+      subgraphData
     },
-    revalidate: 1
+    revalidate: 10
   }
 }
 
