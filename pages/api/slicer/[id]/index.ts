@@ -86,6 +86,30 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             data: slicerInfo
           })
         }
+        if (slicerInfo?.attributes?.length == 3) {
+          const attributes = slicerInfo.attributes
+
+          const { data } = await client.query({
+            query: gql`
+              query Slicers {
+                slicer(id: "${id}") {
+                  createdAtTimestamp
+                }
+              }
+            `
+          })
+          if (data?.slicer?.createdAtTimestamp) {
+            attributes.push({
+              display_type: "date",
+              trait_type: "Sliced on",
+              value: data.slicer.createdAtTimestamp
+            })
+          }
+          await prisma.slicer.update({
+            where: { id: Number(decimalId) },
+            data: { attributes }
+          })
+        }
         if (stats !== "false") {
           const { data } = await client.query({
             query: gql`
