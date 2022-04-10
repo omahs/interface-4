@@ -1,5 +1,3 @@
-import decimalToHex from "@utils/decimalToHex"
-import useQuery from "@utils/subgraphQuery"
 import { useRouter } from "next/dist/client/router"
 import { useEffect, useState } from "react"
 import { ProductsGrid } from ".."
@@ -32,6 +30,7 @@ type Props = {
   slicerId: string
   slicerAddress: string
   products: any
+  blockchainProducts: any
   editMode: boolean
 }
 
@@ -41,37 +40,13 @@ const SlicerProducts = ({
   slicerId,
   slicerAddress,
   products,
+  blockchainProducts,
   editMode
 }: Props) => {
   const [loading, setLoading] = useState(false)
   const [showProducts, setShowProducts] = useState<Product[]>([])
   const [pendingProducts, setPendingProducts] = useState<Product[]>([])
   const router = useRouter()
-
-  const hexId = decimalToHex(Number(slicerId))
-
-  const tokensQuery = /* GraphQL */ `
-  products (where: {slicer: "${hexId}"}) {
-    id
-    prices {
-      currency {
-        id
-      }
-      price
-      dynamicPricing
-    }
-    isInfinite
-    availableUnits
-    maxUnitsPerBuyer
-    totalPurchases
-    createdAtTimestamp
-    extAddress
-    extValue
-    extCheckSig
-    extExecSig
-  }`
-  const subgraphData = useQuery(tokensQuery)
-  const blockchainProducts = subgraphData?.products
 
   const handleReload = async () => {
     const { handleCleanup, reload } = await import("@lib/handleCreateProduct")
