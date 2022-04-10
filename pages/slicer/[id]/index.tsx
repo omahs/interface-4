@@ -31,11 +31,10 @@ import { sliceCore } from "@lib/initProvider"
 
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
-  Creator: string
-  "Superowner slices": number
-  "Sliced on": number
-  "Total slices": number
-}
+  display_type: "number" | "date" | undefined
+  trait_type: "Total slices" | "Superowner slices" | "Creator" | "Sliced on"
+  value: string | number
+}[]
 export type SlicerData = {
   name: any
   description: any
@@ -88,10 +87,15 @@ const Id = ({
       ? slicer.name
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
 
+  const totalSlices = Number(
+    slicer?.attributes.filter((el) => el.trait_type === "Total slices")[0].value
+  )
+
   // Todo: For collectibles save image on web3Storage instead of supabase? + Allow indefinite size? Figure it out
   const editAllowed = !slicerInfo?.isImmutable
     ? isAllowed
-    : slicer?.attributes?.Creator === account?.toLowerCase() // only Creator
+    : slicer?.attributes?.filter((el) => el.trait_type === "Creator")[0]
+        .value === account?.toLowerCase() // only Creator
     ? (newName === `Slicer #${slicerInfo?.id}` && // default name, descr & image
         newDescription === "" &&
         newImage.url === "" &&
@@ -242,7 +246,7 @@ const Id = ({
               setMsg={setMsg}
               loading={loading}
               slicerId={slicerInfo?.id}
-              totalSlices={slicer?.attributes["Total slices"]}
+              totalSlices={totalSlices}
               owners={owners}
               unreleased={unreleased}
               setUnreleased={setUnreleased}
