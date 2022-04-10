@@ -48,13 +48,6 @@ export type AddressAmount = {
   amount: number
 }
 
-const initAttributes = {
-  Creator: "",
-  "Superowner slices": 0,
-  "Sliced on": 0,
-  "Total slices": 0
-}
-
 const Id = ({
   slicerInfo,
   products,
