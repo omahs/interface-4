@@ -234,7 +234,7 @@ const ProductCard = ({
       >
         <div>
           <div className="flex items-center justify-between">
-            <div className="flex flex-wrap items-center mr-24">
+            <div className="flex flex-wrap items-center mr-28">
               <p className="mr-2 font-medium">{name}</p>
               <p className="h-5 mt-1 text-xs font-normal text-gray-500">
                 #{productId}
