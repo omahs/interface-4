@@ -51,7 +51,8 @@ export type AddressAmount = {
 const Id = ({
   slicerInfo,
   products,
-  subgraphData
+  subgraphDataPayees,
+  subgraphDataProducts
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { account } = useAppContext()
   const { isAllowed } = useAllowed(slicerInfo?.id)
@@ -103,9 +104,9 @@ const Id = ({
   }, [account])
 
   useEffect(() => {
-    if (subgraphData) {
+    if (subgraphDataPayees) {
       const sponsorsList: AddressAmount[] = []
-      subgraphData.payeeSlicers.forEach((el) => {
+      subgraphDataPayees.payeeSlicers.forEach((el) => {
         const address = el.id.split("-")[0]
         const ethSent = el.ethSent
         if (
@@ -122,7 +123,7 @@ const Id = ({
       setSponsors(sponsorsList)
 
       const ownersList: AddressAmount[] = []
-      subgraphData.payeeSlicers.forEach((el) => {
+      subgraphDataPayees.payeeSlicers.forEach((el) => {
         const address = el.id.split("-")[0]
         const slicesOwned = el.slices
         if (slicesOwned != "0") {
@@ -134,7 +135,7 @@ const Id = ({
 
       setSponsorLoading(false)
     }
-  }, [subgraphData])
+  }, [subgraphDataPayees])
 
   const getOwnersUnreleased = async (args: string[]) => {
     const result = await multicall(
@@ -254,6 +255,7 @@ const Id = ({
             slicerId={slicerInfo?.id}
             slicerAddress={slicerInfo?.address}
             products={products}
+            blockchainProducts={subgraphDataProducts}
           />
           <SlicerSponsors
             sponsors={sponsors}
@@ -323,7 +325,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
    * Add condition: or: [{slices_gt: "0"}, {ethSent_gt: "0"}]
    * Deal with pagination when number of payeeSlicers > 100
    */
-  const tokensQuery = /* GraphQL */ `
+  const tokensQueryPayees = /* GraphQL */ `
   payeeSlicers (
     where: {slicer: "${hexId}"}, 
     orderBy: "ethSent", 
@@ -335,13 +337,46 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   }
 `
 
-  const [slicerInfo, products, { data: subgraphData }] = await Promise.all([
+  const tokensQueryProducts = /* GraphQL */ `
+products (where: {slicer: "${hexId}"}) {
+  id
+  prices {
+    currency {
+      id
+    }
+    price
+    dynamicPricing
+  }
+  isInfinite
+  availableUnits
+  maxUnitsPerBuyer
+  totalPurchases
+  createdAtTimestamp
+  extAddress
+  extValue
+  extCheckSig
+  extExecSig
+}`
+
+  const [
+    slicerInfo,
+    products,
+    { data: subgraphDataPayees },
+    { data: subgraphDataProducts }
+  ] = await Promise.all([
     fetcher(`${baseUrl}/api/slicer/${hexId}?stats=false`),
     fetcher(`${baseUrl}/api/slicer/${id}/products`),
     client.query({
       query: gql`
         query {
-          ${tokensQuery}
+          ${tokensQueryPayees}
+        }
+      `
+    }),
+    client.query({
+      query: gql`
+        query {
+          ${tokensQueryProducts}
         }
       `
     })
@@ -351,7 +386,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     props: {
       slicerInfo,
       products,
-      subgraphData
+      subgraphDataPayees,
+      subgraphDataProducts: subgraphDataProducts?.products
     },
     revalidate: 10
   }
