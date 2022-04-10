@@ -100,6 +100,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         )
       }
     } catch (err) {
+      setloadingButton(false)
       console.log(err)
     }
   }
@@ -180,7 +181,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         )}
       </div>
       <div className="py-1">
-        <Button label="Slice" type="submit" loading={loadingButton} />
+        <Button label="Create slicer" type="submit" loading={loadingButton} />
       </div>
       <div>
         <MessageBlock msg={message} />
