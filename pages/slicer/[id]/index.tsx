@@ -288,6 +288,7 @@ const Id = ({
           </div>
           <SlicerProducts
             account={account}
+            isAllowed={isAllowed}
             editMode={editMode}
             slicerId={slicerInfo?.id}
             slicerAddress={slicerInfo?.address}
@@ -365,7 +366,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       slicerInfo,
       products
     },
-    revalidate: 10
+    revalidate: 1
   }
 }
 

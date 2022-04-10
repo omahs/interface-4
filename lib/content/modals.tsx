@@ -102,12 +102,12 @@ export const IRREVERSIBLE_VIEW = () => {
       <div className="pb-6 text-center">
         <DoubleText inactive logoText="Be careful" />
       </div>
-      <div className="text-lg text-center">
+      <div className="text-center">
         <p className="pb-4">
-          This action is irreversible, you cannot change the name, description
-          and image of your slicer a second time.
+          You won&apos;t be able to change the name, description and image of
+          your slicer a second time.
         </p>
-        <p className="font-semibold">
+        <p className="font-bold text-yellow-600">
           Make sure the slicer details and image are correct
         </p>
       </div>

@@ -5,6 +5,9 @@ import { LogDescription } from "ethers/lib/utils"
 import MessageBlock from "../MessageBlock"
 import { useAppContext } from "../context"
 import formatNumber from "@utils/formatNumber"
+import getLog from "@utils/getLog"
+import decimalToHex from "@utils/decimalToHex"
+import { Contract, ContractTransaction } from "ethers"
 
 type Props = {
   success: boolean
@@ -14,7 +17,7 @@ type Props = {
 }
 
 const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
-  const { connector } = useAppContext()
+  const { account: creator, connector } = useAppContext()
   const [addresses, setAddresses] = useState([""])
   const [shares, setShares] = useState([1000000])
   const [minimumShares, setMinimumShares] = useState(0)
@@ -24,6 +27,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
     message: "",
     messageStatus: "success"
   })
+  const [loadingButton, setloadingButton] = useState(false)
 
   const hasMinimumShares =
     shares.filter((share) => share >= minimumShares).length > 0
@@ -31,12 +35,17 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
 
-    const handleSubmit = (await import("@utils/handleSubmit")).default
+    const fetcher = (await import("@utils/fetcher")).default
     const handleMessage = (await import("@utils/handleMessage")).default
+    const launchConfetti = (await import("@utils/launchConfetti")).default
+    const handleLog = (await import("@utils/handleLog")).default
     const { Slice } = await import("@lib/handlers/chain")
 
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL
     const cleanedAddresses = addresses.filter((el) => el != "")
     const cleanedShares = shares.filter((el) => el != 0)
+
+    setloadingButton(true)
 
     const payees = []
     for (let i = 0; i < cleanedAddresses.length; i++) {
@@ -48,14 +57,39 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
 
     try {
       if (cleanedShares.length == cleanedAddresses.length) {
-        const eventLogs = await handleSubmit(
-          Slice(connector, payees, minimumShares, [], 0, 0, isImmutable, false),
-          setMessage,
-          setLoading,
-          setSuccess,
-          true
-        )
+        const [contract, call] = (await Slice(
+          connector,
+          payees,
+          minimumShares,
+          [],
+          0,
+          0,
+          isImmutable,
+          false
+        )) as [Contract, ContractTransaction]
+        setLoading(true)
+
+        const eventLogs = await handleLog(contract, call)
+        const eventLog = getLog(eventLogs, "TokenSliced")
+        const slicerId = eventLog?.tokenId
+        const slicerAddress = eventLog?.slicerAddress
+        const hexId = decimalToHex(Number(slicerId))
+
+        const body = {
+          body: JSON.stringify({
+            slicerAddress,
+            isImmutable,
+            totalShares,
+            minimumShares,
+            creator
+          }),
+          method: "POST"
+        }
+        await fetcher(`${baseUrl}/api/slicer/${hexId}/create`, body)
         setLogs(eventLogs)
+        launchConfetti()
+        setSuccess(true)
+        setLoading(false)
       } else {
         handleMessage(
           {
@@ -146,7 +180,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         )}
       </div>
       <div className="py-1">
-        <Button label="Slice" type="submit" />
+        <Button label="Slice" type="submit" loading={loadingButton} />
       </div>
       <div>
         <MessageBlock msg={message} />

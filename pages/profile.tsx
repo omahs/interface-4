@@ -29,20 +29,21 @@ export default function Profile() {
             minimumSlices
             isImmutable
             productsModuleBalance
+            protocolFee
           }
         }
-        currencies(where: {toWithdraw_gt: "1"}){
-          toWithdraw
-          currency {
-            id
-          }
-        }
+        # currencies(where: {toWithdraw_gt: "1"}){
+        #   toWithdraw
+        #   currency {
+        #     id
+        #   }
+        # }
       }
     `
   let subgraphData = useQuery(tokensQuery, [account])
   const payeeData = subgraphData?.payee
   const slicers = payeeData?.slicers
-  const payeeCurrencyData = payeeData?.currencies
+  // const payeeCurrencyData = payeeData?.currencies
 
   return (
     <Container page={true}>
@@ -70,10 +71,10 @@ export default function Profile() {
             size="text-4xl sm:text-5xl"
             position="pb-12"
           />
-          <AccountBalance
+          {/* <AccountBalance
             account={account}
             payeeCurrencyData={payeeCurrencyData}
-          />
+          /> */}
 
           <div className="space-y-4 text-left">
             <SlicersList
