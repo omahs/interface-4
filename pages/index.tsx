@@ -7,7 +7,7 @@ import {
   FAQs,
   HomeBanner,
   HomeHero,
-  HomeSection,
+  HomeSection
 } from "@components/ui"
 import { useEffect } from "react"
 import { section1, section2, section3, section4 } from "@lib/content/home"
@@ -17,7 +17,7 @@ import {
   defaultDescription,
   defaultTitle,
   longTitle,
-  domain,
+  domain
 } from "@components/common/Head"
 import { animate } from "motion"
 
@@ -32,7 +32,7 @@ const Home = () => {
         easing: "linear",
         duration: 30,
         repeat: Infinity,
-        allowWebkitAcceleration: true,
+        allowWebkitAcceleration: true
       }
     )
   }, [])
@@ -50,9 +50,9 @@ const Home = () => {
               url: `${domain}/og_image.jpg`,
               width: 1000,
               height: 1000,
-              alt: `${defaultTitle} cover image`,
-            },
-          ],
+              alt: `${defaultTitle} cover image`
+            }
+          ]
         }}
       />
       <Container page={true}>
@@ -86,33 +86,3 @@ const Home = () => {
 }
 
 export default Home
-
-/** TODO
- *
- * *Critical priority*
- *
- * *High Priority*
- *
- * *Low Priority*
- *    - Receive ERC721-1155
- *      - NFT section
- *    - Products
- *      - product likes
- *      - sort products by productId / createdAt / totalPurchases / likes
- *      - edit/delete products
- *    - sponsorships
- *      - improve what sponsors can do
- *      - allow creator to hide links
- *
- *    - add "explore products" page
- *    - add detailed section in slicer page (stats & stuff for payees only)
- *    - transfer page (select box to choose slicer)
- *    - optimize subgraph queries (products + payeeslicer) in slicer/[id], if possible
- *    - Add ENS profile image support for avatar -> https://www.npmjs.com/package/@davatar/react / spec https://gist.github.com/Arachnid/9db60bd75277969ee1689c8742b75182
- *
- *
- * OTHER
- * - Handle ERC20
- * - DeGov logics
- * - create vaults and allow spending money directly from slicer
- */
