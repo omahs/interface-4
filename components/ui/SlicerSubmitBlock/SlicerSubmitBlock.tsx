@@ -64,7 +64,7 @@ const SlicerSubmitBlock = ({
     setPreventSubmit(false)
   }
 
-  const updateDb = async (newInfo) => {
+  const updateDb = async (newInfo: SlicerData) => {
     setSlicer(newInfo)
     const body = {
       method: "POST",
@@ -81,11 +81,12 @@ const SlicerSubmitBlock = ({
     const supabaseUpload = (await import("@utils/supabaseUpload")).default
 
     setLoading(true)
-    let newInfo = {
+    let newInfo: SlicerData = {
       name: newName,
       tags: newTags,
       description: newDescription,
-      imageUrl: slicer.imageUrl
+      imageUrl: slicer.imageUrl,
+      attributes: slicer.attributes
     }
     try {
       const contract = await slicerContract(slicerInfo?.id, defaultProvider)
@@ -111,7 +112,8 @@ const SlicerSubmitBlock = ({
           name: newName,
           tags: newTags,
           description: newDescription,
-          imageUrl: newFilePath
+          imageUrl: newFilePath,
+          attributes: slicer.attributes
         }
         await updateDb(newInfo)
         mutate(`/api/slicer/${hexId}?stats=false`)
