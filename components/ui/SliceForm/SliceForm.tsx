@@ -102,7 +102,6 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
     } catch (err) {
       console.log(err)
     }
-    setloadingButton(false)
   }
 
   return (
