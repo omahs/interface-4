@@ -52,7 +52,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               },
               {
                 trait_type: "Creator",
-                value: creator
+                value: String(creator).toLowerCase()
               }
             ],
             config: { sponsors: true },
