@@ -28,6 +28,7 @@ export type Product = {
 
 type Props = {
   account: string
+  isAllowed: boolean
   slicerId: string
   slicerAddress: string
   products: any
@@ -36,6 +37,7 @@ type Props = {
 
 const SlicerProducts = ({
   account,
+  isAllowed,
   slicerId,
   slicerAddress,
   products,
@@ -100,7 +102,7 @@ const SlicerProducts = ({
         products={showProducts}
         editMode={editMode}
       />
-      {editMode && (
+      {isAllowed && (
         <div className="pt-6">
           <Button label="Add a new product" href={`${slicerId}/products/new`} />
           {(pendingProducts?.length != 0 ||
