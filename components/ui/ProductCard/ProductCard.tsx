@@ -1,3 +1,4 @@
+import { useRouter } from "next/dist/client/router"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import Units from "@components/icons/Units"
 import { ProductCart } from "@lib/handleUpdateCart"
@@ -29,6 +30,8 @@ const ProductCard = ({
   ethUsd,
   editMode
 }: Props) => {
+  const router = useRouter()
+  const { product: p } = router.query
   const [cookies] = useCookies(["cart"])
   const { setModalView, purchases } = useAppContext()
   const {
@@ -180,6 +183,12 @@ const ProductCard = ({
       }
     }
   }, [price, ethUsd])
+
+  useEffect(() => {
+    if (Number(p) != NaN && Number(p) == productId) {
+      handleOnClick()
+    }
+  }, [p])
 
   return (
     <div className="h-full">
