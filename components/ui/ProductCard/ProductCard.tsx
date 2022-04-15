@@ -44,7 +44,8 @@ const ProductCard = ({
     purchaseInfo,
     uid,
     creator,
-    texts
+    texts,
+    allowedAddresses
   } = product || {
     productId: NaN,
     name: "",
@@ -58,7 +59,8 @@ const ProductCard = ({
     texts: {
       thanks: "",
       instructions: ""
-    }
+    },
+    allowedAddresses: []
   }
   const prices = chainInfo?.prices
   const ethPrice = prices?.find(
@@ -148,6 +150,7 @@ const ProductCard = ({
         uid,
         creator,
         texts,
+        allowedAddresses,
         productPrice,
         isUSD,
         extAddress,
@@ -274,6 +277,7 @@ const ProductCard = ({
                 uid={uid}
                 creator={creator}
                 texts={texts}
+                allowedAddresses={allowedAddresses}
               />
             )}
           </div>

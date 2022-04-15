@@ -56,6 +56,7 @@ const AddProductForm = ({
   const [isFree, setIsFree] = useState(false)
   const [units, setUnits] = useState(0)
   const [maxUnits, setMaxUnits] = useState(1)
+  const [allowedAddresses, setAllowedAddresses] = useState([])
   const [externalCall, setExternalCall] = useState<FunctionStruct>({
     data: [],
     value: 0,
@@ -90,6 +91,7 @@ const AddProductForm = ({
           name,
           shortDescription,
           description,
+          allowedAddresses,
           newImage,
           files,
           thankMessage,
@@ -150,7 +152,10 @@ const AddProductForm = ({
         setUploadStep(8)
       }
     } catch (err) {
-      console.log(err)
+      setMessage({
+        message: err.message,
+        messageStatus: "error"
+      })
     }
     setLoading(false)
   }
@@ -196,8 +201,9 @@ const AddProductForm = ({
         setIsUSD={setIsUSD}
       />
       <AddProductFormExternal
-        externalCall={externalCall}
+        allowedAddresses={allowedAddresses}
         setExternalCall={setExternalCall}
+        setAllowedAddresses={setAllowedAddresses}
       />
       <AddProductFormPurchases
         thankMessage={thankMessage}

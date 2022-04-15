@@ -31,7 +31,12 @@ export const getPurchases = async (
     const slicerId = parseInt(id[0], 16).toString()
     const productId = parseInt(id[1], 16).toString()
 
-    purchasesList.push({ slicerId, productId, quantity: p.quantity })
+    purchasesList.push({
+      slicerId,
+      productId,
+      quantity: p.quantity,
+      buyerCustomData: p.proof
+    })
   })
   setPurchases(purchasesList)
 }
@@ -42,7 +47,8 @@ export const productsToPurchases = (products: ProductCart[]) => {
     purchasesList.push({
       slicerId: String(p.slicerId),
       productId: String(p.productId),
-      quantity: String(p.quantity)
+      quantity: String(p.quantity),
+      buyerCustomData: p.proof
     })
   })
   return purchasesList

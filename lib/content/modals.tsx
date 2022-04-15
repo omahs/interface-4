@@ -293,6 +293,7 @@ export const PRODUCT_VIEW = (params: any) => {
     uid,
     creator,
     texts,
+    allowedAddresses,
     availableUnits,
     totalPurchases,
     purchaseInfo,
@@ -389,6 +390,7 @@ export const PRODUCT_VIEW = (params: any) => {
               uid={uid}
               creator={creator}
               texts={texts}
+              allowedAddresses={allowedAddresses}
               labelAdd={`Get it for ${productPrice.eth}`}
               labelRemove={productPrice.eth}
               preview={preview}

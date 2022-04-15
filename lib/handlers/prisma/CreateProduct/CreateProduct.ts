@@ -13,7 +13,8 @@ const CreateProduct = async (
   texts?: {
     thanks?: string
     instructions?: string
-  }
+  },
+  allowedAddresses?: string[]
 ) => {
   const prisma = (await import("@lib/prisma")).default
 
@@ -32,7 +33,8 @@ const CreateProduct = async (
         hash,
         productId,
         purchaseInfo,
-        texts
+        texts,
+        allowedAddresses
         // version
       }
     })
