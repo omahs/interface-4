@@ -11,6 +11,9 @@ import handleRedeemProduct from "@utils/handleRedeemProduct"
 import Spinner from "@components/icons/Spinner"
 import Lock from "@components/icons/Lock"
 import { ExtCall } from "@lib/handlers/chain"
+import { MerkleTree } from "merkletreejs"
+import keccak256 from "keccak256"
+import { ethers, BytesLike } from "ethers"
 
 type Props = {
   productCart: ProductCart
@@ -31,6 +34,7 @@ type Props = {
     thanks?: string
     instructions?: string
   }
+  allowedAddresses: string[]
   availableUnits: number
   purchasedQuantity: number
   labelAdd?: string
@@ -54,6 +58,7 @@ const CartButton = ({
   uid,
   creator,
   texts,
+  allowedAddresses,
   availableUnits,
   purchasedQuantity,
   labelAdd,
@@ -67,8 +72,8 @@ const CartButton = ({
   const [isSuccessExtCall, seSuccessExtCall] = useState(false)
   const [isFailExtCall, setIsFailExtCall] = useState(false)
   const [cookies, setCookie] = useCookies(["cart"])
-
   const adjustedAvailability = availableUnits - productCart?.quantity
+  let buyerCustomData: any = []
 
   const handleExtCall = async () => {
     setisLoadingExtCall(true)
@@ -81,7 +86,8 @@ const CartButton = ({
         productId,
         account,
         1,
-        []
+        [],
+        buyerCustomData
       )
       if (Number(call) === 1) {
         seSuccessExtCall(true)
@@ -92,7 +98,10 @@ const CartButton = ({
         }, 1500)
       }
     } catch (err) {
-      null
+      setIsFailExtCall(true)
+      setTimeout(() => {
+        setIsFailExtCall(false)
+      }, 1500)
     }
     setisLoadingExtCall(false)
   }
@@ -100,6 +109,20 @@ const CartButton = ({
   useEffect(() => {
     seSuccessExtCall(false)
   }, [account])
+
+  if (account && allowedAddresses.length != 0) {
+    const leafNodes = allowedAddresses.map((addr) => keccak256(addr))
+    const tree = new MerkleTree(leafNodes, keccak256, {
+      sortPairs: true
+    })
+    const proof = tree.getHexProof(keccak256(account.toLowerCase()))
+    if (proof.length != 0) {
+      buyerCustomData = ethers.utils.defaultAbiCoder.encode(
+        ["bytes32[]"],
+        [proof]
+      )
+    }
+  }
 
   return purchasedQuantity != 0 ? (
     <div
@@ -184,6 +207,7 @@ const CartButton = ({
             price,
             isUSD,
             extCallValue,
+            buyerCustomData,
             name,
             1
           ))
@@ -210,6 +234,7 @@ const CartButton = ({
             price,
             isUSD,
             extCallValue,
+            buyerCustomData,
             name,
             -1
           )
@@ -240,6 +265,7 @@ const CartButton = ({
             price,
             isUSD,
             extCallValue,
+            buyerCustomData,
             name,
             1
           ))
@@ -262,6 +288,7 @@ const CartButton = ({
           price,
           isUSD,
           extCallValue,
+          buyerCustomData,
           name,
           -1
         )

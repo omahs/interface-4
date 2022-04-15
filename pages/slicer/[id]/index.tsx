@@ -1,3 +1,4 @@
+import { useRouter } from "next/dist/client/router"
 import { useEffect, useState } from "react"
 import Head from "next/head"
 import { NextSeo } from "next-seo"
@@ -53,7 +54,9 @@ const Id = ({
   subgraphDataPayees,
   subgraphDataProducts
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { account } = useAppContext()
+  const router = useRouter()
+  const { view } = router.query
+  const { account, setModalView } = useAppContext()
   const { isAllowed } = useAllowed(slicerInfo?.id)
   const [editMode, setEditMode] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -161,6 +164,29 @@ const Id = ({
       getOwnersUnreleased(args)
     }
   }, [owners])
+
+  useEffect(() => {
+    if (view == "owners") {
+      if (unreleased.length != 0) {
+        setModalView({
+          cross: true,
+          name: "OWNERS_VIEW",
+          params: {
+            slicerId: slicerInfo?.id,
+            owners,
+            totalSlices,
+            unreleased,
+            setUnreleased
+          }
+        })
+      } else {
+        setModalView({
+          cross: false,
+          name: "LOADING_VIEW"
+        })
+      }
+    }
+  }, [view, unreleased])
 
   return (
     <Container page={true}>

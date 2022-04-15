@@ -1,3 +1,4 @@
+import { BytesLike } from "ethers"
 import { CookieSetOptions } from "universal-cookie"
 
 export type ProductCart = {
@@ -8,6 +9,7 @@ export type ProductCart = {
   price: number
   isUSD: boolean
   extCallValue: number
+  buyerCustomData: BytesLike
   name: string
 }
 
@@ -23,6 +25,7 @@ const handleUpdateCart = async (
   price: string,
   isUSD: boolean,
   extCallValue: string,
+  buyerCustomData: BytesLike,
   name: string,
   newQuantity: number
 ) => {
@@ -41,6 +44,7 @@ const handleUpdateCart = async (
         price: price || "0",
         isUSD,
         extCallValue,
+        buyerCustomData,
         name
       }
     } else {
@@ -56,6 +60,7 @@ const handleUpdateCart = async (
       price: price || "0",
       isUSD,
       extCallValue,
+      buyerCustomData,
       name
     })
   }

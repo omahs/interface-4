@@ -21,14 +21,21 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface SlicerPurchasablePayableInterface extends utils.Interface {
   contractName: "SlicerPurchasablePayable";
   functions: {
-    "isPurchaseAllowed(uint256,uint256,address,uint256,bytes)": FunctionFragment;
+    "isPurchaseAllowed(uint256,uint256,address,uint256,bytes,bytes)": FunctionFragment;
     "onProductPurchase(bytes)": FunctionFragment;
     "releaseToCollector()": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "isPurchaseAllowed",
-    values: [BigNumberish, BigNumberish, string, BigNumberish, BytesLike]
+    values: [
+      BigNumberish,
+      BigNumberish,
+      string,
+      BigNumberish,
+      BytesLike,
+      BytesLike
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "onProductPurchase",
@@ -88,7 +95,8 @@ export interface SlicerPurchasablePayable extends BaseContract {
       productId: BigNumberish,
       account: string,
       quantity: BigNumberish,
-      customData: BytesLike,
+      slicerCustomData: BytesLike,
+      buyerCustomData: BytesLike,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -107,7 +115,8 @@ export interface SlicerPurchasablePayable extends BaseContract {
     productId: BigNumberish,
     account: string,
     quantity: BigNumberish,
-    customData: BytesLike,
+    slicerCustomData: BytesLike,
+    buyerCustomData: BytesLike,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -126,7 +135,8 @@ export interface SlicerPurchasablePayable extends BaseContract {
       productId: BigNumberish,
       account: string,
       quantity: BigNumberish,
-      customData: BytesLike,
+      slicerCustomData: BytesLike,
+      buyerCustomData: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -146,7 +156,8 @@ export interface SlicerPurchasablePayable extends BaseContract {
       productId: BigNumberish,
       account: string,
       quantity: BigNumberish,
-      customData: BytesLike,
+      slicerCustomData: BytesLike,
+      buyerCustomData: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -166,7 +177,8 @@ export interface SlicerPurchasablePayable extends BaseContract {
       productId: BigNumberish,
       account: string,
       quantity: BigNumberish,
-      customData: BytesLike,
+      slicerCustomData: BytesLike,
+      buyerCustomData: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

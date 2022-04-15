@@ -3,11 +3,13 @@ import { createContext, useContext, useEffect, useState } from "react"
 import { colorList, darkColorList } from "@utils/colorList"
 import { View } from "@lib/content/modals"
 import { getPurchases } from "@utils/getPurchases"
+import { BytesLike } from "ethers"
 
 export type Purchase = {
   slicerId: string
   productId: string
   quantity: string
+  buyerCustomData: BytesLike
 }
 
 const AppContext = createContext<any>({
