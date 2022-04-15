@@ -9,10 +9,10 @@ const ProductHuntBadge = dynamic(
   () => import("@components/ui/ProductHuntBadge")
 )
 const FloatingCart = dynamic(() => import("@components/ui/FloatingCart"), {
-  ssr: false,
+  ssr: false
 })
 const Modal = dynamic(() => import("@components/ui/Modal"), {
-  ssr: false,
+  ssr: false
 })
 
 export default function Layout({ children }) {
@@ -31,7 +31,9 @@ export default function Layout({ children }) {
     ) {
       setModalView({ cross: false, name: "NETWORK_VIEW" })
     } else {
-      setModalView({ name: "" })
+      if (modalView.name == "NETWORK_VIEW") {
+        setModalView({ name: "" })
+      }
     }
     // }
   }, [isConnected, chainId])

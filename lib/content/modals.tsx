@@ -29,6 +29,7 @@ export type View = {
 }
 type ViewNames =
   | ""
+  | "LOADING_VIEW"
   | "NETWORK_VIEW"
   | "CONNECT_VIEW"
   | "IRREVERSIBLE_VIEW"
@@ -37,6 +38,17 @@ type ViewNames =
   | "CREATE_PRODUCT_CONFIRM_VIEW"
   | "PRODUCT_VIEW"
   | "REDEEM_PRODUCT_VIEW"
+
+export const LOADING_VIEW = () => {
+  return (
+    <>
+      <div className="pb-6 text-center">
+        <DoubleText inactive logoText="Loading..." />
+      </div>
+      <p className="text-lg text-center">🍰 Please wait 🍰</p>
+    </>
+  )
+}
 
 export const NETWORK_VIEW = () => {
   const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
@@ -281,6 +293,7 @@ export const PRODUCT_VIEW = (params: any) => {
     uid,
     creator,
     texts,
+    allowedAddresses,
     availableUnits,
     totalPurchases,
     purchaseInfo,
@@ -377,6 +390,7 @@ export const PRODUCT_VIEW = (params: any) => {
               uid={uid}
               creator={creator}
               texts={texts}
+              allowedAddresses={allowedAddresses}
               labelAdd={`Get it for ${productPrice.eth}`}
               labelRemove={productPrice.eth}
               preview={preview}

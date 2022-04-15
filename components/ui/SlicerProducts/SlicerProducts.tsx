@@ -22,6 +22,7 @@ export type Product = {
     thanks?: string
     instructions?: string
   }
+  allowedAddresses: string[]
 }
 
 type Props = {

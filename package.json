@@ -38,6 +38,8 @@
     "gray-matter": "^4.0.3",
     "image-blob-reduce": "^4.1.0",
     "ipfs-unixfs-importer": "^9.0.6",
+    "keccak256": "^1.0.6",
+    "merkletreejs": "^0.2.31",
     "mime-types": "^2.1.35",
     "motion": "^10.7.0",
     "multiformats": "^9.6.4",

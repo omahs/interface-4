@@ -11,6 +11,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   required?: boolean
   rows?: number
   previewBox?: string
+  markdownView?: boolean
   question?: JSX.Element
   onChange?: (...args: any[]) => any
 }
@@ -26,6 +27,7 @@ const Textarea: React.FC<Props> = (props) => {
     required,
     rows = 3,
     previewBox,
+    markdownView = true,
     question,
     onChange
   } = props
@@ -61,7 +63,7 @@ const Textarea: React.FC<Props> = (props) => {
             {label}
           </p>
 
-          {!showPreview && (
+          {markdownView && !showPreview && (
             <Question
               text={
                 <>
@@ -82,7 +84,7 @@ const Textarea: React.FC<Props> = (props) => {
               }
             />
           )}
-          {value && (
+          {markdownView && value && (
             <a
               className="absolute top-0 right-0 flex items-center h-full pb-2 mr-1 text-sm text-blue-600"
               onClick={async () => await handleShowPreview()}

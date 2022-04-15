@@ -9,13 +9,14 @@ const ExtCall = async (
   productId: number,
   account: string,
   quantity: number,
-  extData: BytesLike
+  extData: BytesLike,
+  buyerCustomData: BytesLike
 ) => {
   const { initialize } = await import("@lib/useProvider")
   const { provider } = await initialize(connector)
   const customData = utils.defaultAbiCoder.encode(
-    ["uint256", "uint256", "address", "uint256", "bytes"],
-    [slicerId, productId, account, quantity, extData]
+    ["uint256", "uint256", "address", "uint256", "bytes", "bytes"],
+    [slicerId, productId, account, quantity, extData, buyerCustomData]
   )
   const data = selector + customData.substring(2)
   try {

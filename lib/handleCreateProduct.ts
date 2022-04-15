@@ -10,6 +10,7 @@ export const beforeCreate = async (
   name: string,
   shortDescription: string,
   description: string,
+  allowedAddresses: string[],
   newImage: NewImage,
   purchaseFiles: File[],
   thanks: string,
@@ -43,9 +44,18 @@ export const beforeCreate = async (
       instructions
     }
   }
-  let image = ""
+
+  if (allowedAddresses.length != 0) {
+    allowedAddresses.forEach((address) => {
+      if (!address.match(/^0x[a-fA-F0-9]{40}$/)) {
+        throw Error("Allowlisted addresses are not valid")
+      }
+    })
+    metadata["allowedAddresses"] = allowedAddresses
+  }
 
   // Save image on supabase
+  let image = ""
   setUploadStep(1)
   if (newImage.url) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -128,9 +138,11 @@ export const beforeCreate = async (
       texts: {
         thanks,
         instructions
-      }
+      },
+      allowedAddresses
     })
   }
+
   const { data: newProduct } = await fetcher(
     `/api/slicer/${slicerId}/products`,
     body

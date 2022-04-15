@@ -44,7 +44,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           hash: true,
           image: true,
           purchaseInfo: true,
-          texts: true
+          texts: true,
+          allowedAddresses: true
         }
       })
       // else {
@@ -75,7 +76,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         hash,
         tempProductHash,
         purchaseInfo,
-        texts
+        texts,
+        allowedAddresses
       } = JSON.parse(req.body)
       const pid = productId ? Number(productId) : null
       data = await CreateProduct(
@@ -90,7 +92,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         image,
         pid,
         purchaseInfo,
-        texts
+        texts,
+        allowedAddresses
       )
     }
 

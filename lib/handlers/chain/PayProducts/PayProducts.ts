@@ -1,6 +1,6 @@
 import WalletConnect from "@walletconnect/client"
 import { PurchaseParamsStruct } from "types/typechain/ProductsModule"
-import { BigNumber, ethers } from "ethers"
+import { BigNumber, BytesLike, ethers } from "ethers"
 
 export type PayProductData = {
   slicerId: string
@@ -9,6 +9,7 @@ export type PayProductData = {
   price: number
   isUSD: boolean
   extCallValue: number
+  buyerCustomData: BytesLike
 }
 
 const PayProducts = async (
@@ -30,8 +31,15 @@ const PayProducts = async (
 
   try {
     productData.forEach((product) => {
-      const { slicerId, productId, quantity, price, isUSD, extCallValue } =
-        product
+      const {
+        slicerId,
+        productId,
+        quantity,
+        price,
+        isUSD,
+        extCallValue,
+        buyerCustomData
+      } = product
       const currentPrice = totalPrice || 0
       const weiPrice = isUSD
         ? BigNumber.from(price)
@@ -42,7 +50,13 @@ const PayProducts = async (
 
       const productPrice = weiPrice.mul(quantity)
 
-      purchaseParams.push({ slicerId, quantity, currency, productId })
+      purchaseParams.push({
+        slicerId,
+        quantity,
+        currency,
+        productId,
+        buyerCustomData
+      })
       totalPrice = BigNumber.from(currentPrice).add(productPrice)
     })
 
