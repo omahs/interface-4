@@ -39,6 +39,7 @@ model Product {
   image            String?
   texts            Json     @default("{}")
   purchaseInfo     Json     @default("{}")
+  allowedAddresses String[]
   tempProductHash  String?
   slicer           Slicer   @relation(fields: [slicerId], references: [id])
   slicerId         Int      @map(name: "slicer_id")
