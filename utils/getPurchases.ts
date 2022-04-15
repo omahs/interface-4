@@ -35,7 +35,7 @@ export const getPurchases = async (
       slicerId,
       productId,
       quantity: p.quantity,
-      buyerCustomData: p.proof
+      buyerCustomData: []
     })
   })
   setPurchases(purchasesList)
@@ -48,7 +48,7 @@ export const productsToPurchases = (products: ProductCart[]) => {
       slicerId: String(p.slicerId),
       productId: String(p.productId),
       quantity: String(p.quantity),
-      buyerCustomData: p.proof
+      buyerCustomData: p.buyerCustomData
     })
   })
   return purchasesList
