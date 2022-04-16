@@ -124,41 +124,95 @@ const CartButton = ({
     }
   }
 
-  return purchasedQuantity != 0 ? (
-    <div
-      className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-blue-500 rounded-md hover:text-white nightwind-prevent group-cart hover:bg-blue-600"
-      onClick={() =>
-        handleRedeemProduct(
-          connector,
-          slicerId,
-          productId,
-          name,
-          image,
-          uid,
-          creator,
-          texts,
-          setLoading,
-          setModalView
-        )
-      }
-    >
-      {labelAdd ? (
-        <p className="mr-2 text-sm font-medium sm:text-base">
-          {`Redeem${purchasedQuantity != 1 ? ` (${purchasedQuantity})` : ""}`}
-        </p>
-      ) : (
-        purchasedQuantity != 1 && (
+  return !productCart && purchasedQuantity != 0 ? (
+    maxUnits == 1 || maxUnits == purchasedQuantity ? (
+      <div
+        className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-blue-500 rounded-md hover:text-white nightwind-prevent group-cart hover:bg-blue-600"
+        onClick={async () =>
+          await handleRedeemProduct(
+            connector,
+            slicerId,
+            productId,
+            name,
+            image,
+            uid,
+            creator,
+            texts,
+            setLoading,
+            setModalView
+          )
+        }
+      >
+        {labelAdd ? (
           <p className="mr-2 text-sm font-medium sm:text-base">
-            {purchasedQuantity}
+            {`Redeem${purchasedQuantity != 1 ? ` (${purchasedQuantity})` : ""}`}
           </p>
-        )
-      )}
-      {loading ? (
-        <Spinner color="text-white nightwind-prevent" />
-      ) : (
-        <ShoppingBag className="w-5 h-5 group-cart-el" />
-      )}
-    </div>
+        ) : (
+          purchasedQuantity != 1 && (
+            <p className="mr-2 text-sm font-medium sm:text-base">
+              {purchasedQuantity}
+            </p>
+          )
+        )}
+        {loading ? (
+          <Spinner color="text-white nightwind-prevent" />
+        ) : (
+          <ShoppingBag className="w-5 h-5 group-cart-el" />
+        )}
+      </div>
+    ) : (
+      <div className="relative z-10 grid items-center justify-center w-full grid-cols-2 overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md nightwind-prevent-block">
+        <div
+          className={`relative z-10 h-8 flex items-center justify-center text-white ${
+            availableUnits != 0
+              ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
+              : "bg-gray-400"
+          }`}
+          onClick={async () =>
+            availableUnits != 0 &&
+            (await handleUpdateCart(
+              cookies,
+              setCookie,
+              productCart,
+              slicerId,
+              slicerAddress,
+              productId,
+              price,
+              isUSD,
+              extCallValue,
+              buyerCustomData,
+              name,
+              1
+            ))
+          }
+        >
+          <Cart className="w-5 h-5 mr-1 group-cart-el" />
+        </div>
+        <div
+          className="relative z-10 flex items-center justify-center h-8 transition-colors duration-150 bg-blue-500 rounded-r-md nightwind-prevent group-cart hover:bg-blue-600"
+          onClick={() =>
+            handleRedeemProduct(
+              connector,
+              slicerId,
+              productId,
+              name,
+              image,
+              uid,
+              creator,
+              texts,
+              setLoading,
+              setModalView
+            )
+          }
+        >
+          {loading ? (
+            <Spinner color="text-white nightwind-prevent" />
+          ) : (
+            <ShoppingBag className="w-5 h-5 group-cart-el" />
+          )}
+        </div>
+      </div>
+    )
   ) : !productCart ? (
     extCheckSig != "0x00000000" && !isSuccessExtCall ? (
       <div
@@ -254,7 +308,7 @@ const CartButton = ({
         }`}
         onClick={async () =>
           adjustedAvailability != 0 &&
-          productCart.quantity < maxUnits &&
+          purchasedQuantity + productCart.quantity < maxUnits &&
           (await handleUpdateCart(
             cookies,
             setCookie,
