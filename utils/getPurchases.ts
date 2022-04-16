@@ -41,15 +41,29 @@ export const getPurchases = async (
   setPurchases(purchasesList)
 }
 
-export const productsToPurchases = (products: ProductCart[]) => {
-  let purchasesList: Purchase[] = []
-  products.map((p) => {
-    purchasesList.push({
-      slicerId: String(p.slicerId),
-      productId: String(p.productId),
-      quantity: String(p.quantity),
-      buyerCustomData: p.buyerCustomData
-    })
+export const updatePurchases = (
+  cookieCart: ProductCart[],
+  purchases: Purchase[]
+) => {
+  let newPurchases: Purchase[] = []
+  cookieCart.map((p) => {
+    const index = purchases.findIndex(
+      (purchase) =>
+        purchase.slicerId == p.slicerId &&
+        Number(purchase.productId) == p.productId
+    )
+    if (index != -1) {
+      purchases[index].quantity = String(
+        Number(purchases[index].quantity) + Number(p.quantity)
+      )
+    } else {
+      newPurchases.push({
+        slicerId: String(p.slicerId),
+        productId: String(p.productId),
+        quantity: String(p.quantity),
+        buyerCustomData: p.buyerCustomData
+      })
+    }
   })
-  return purchasesList
+  return [...newPurchases, ...purchases]
 }
