@@ -10,7 +10,7 @@ import { useCookies } from "react-cookie"
 import useSWR from "swr"
 import { CartList } from ".."
 import { Purchase, useAppContext } from "../context"
-import { productsToPurchases } from "@utils/getPurchases"
+import { updatePurchases } from "@utils/getPurchases"
 import { utils } from "ethers"
 
 type Props = {
@@ -66,8 +66,8 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
 
   useEffect(() => {
     if (success) {
-      const newPurchases: Purchase[] = productsToPurchases(cookieCart)
-      setPurchases([...newPurchases, ...purchases])
+      const newPurchases = updatePurchases(cookieCart, purchases)
+      setPurchases(newPurchases)
       removeCookie("cart")
     }
   }, [success])
