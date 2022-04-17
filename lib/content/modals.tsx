@@ -409,10 +409,10 @@ export const PRODUCT_VIEW = (params: any) => {
         {extAddress != "0x00000000" &&
         extAddress != ethers.constants.AddressZero &&
         (extValue != "0" || extExecSig != "0x00000000") ? (
-          <p className="pt-6 mx-auto text-sm text-center text-yellow-600">
+          <p className="pt-6 mx-auto text-sm text-center">
             Interacts with{" "}
             <a
-              className="font-bold text-yellow-600 highlight"
+              className="font-bold highlight"
               href={`https://${
                 process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
               }etherscan.io/address/${extAddress}`}
@@ -435,8 +435,10 @@ export const PRODUCT_VIEW = (params: any) => {
             {extValue != "0" && extExecSig != "0x00000000" ? " and " : ""}
             {extExecSig != "0x00000000" ? (
               <>
-                executing a function{" "}
-                <b>({getFunctionFromSelector(extExecSig)})</b>
+                executing the function{" "}
+                <b className="text-yellow-600">
+                  {getFunctionFromSelector(extExecSig)}
+                </b>
               </>
             ) : (
               ""
@@ -445,7 +447,7 @@ export const PRODUCT_VIEW = (params: any) => {
         ) : null}
         {purchaseElArray.length != 0 ? (
           <p className="pt-6 text-sm text-center mx-auto max-w-[340px]">
-            This product contains <b>{purchaseEl}</b>
+            Contains <b>{purchaseEl}</b>
           </p>
         ) : null}
       </div>
