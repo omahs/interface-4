@@ -227,7 +227,7 @@ const AddProductFormExternal = ({
               </p>
               <div className="pt-4">
                 <Textarea
-                  label="Addresses list"
+                  label="Addresses list (no ENS)"
                   placeholder="Add addresses separated by comma"
                   value={allowedAddressesString}
                   onChange={setAllowedAddressesString}

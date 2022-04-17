@@ -47,8 +47,8 @@ export const beforeCreate = async (
 
   if (allowedAddresses.length != 0) {
     allowedAddresses.forEach((address) => {
-      if (!address.match(/^0x[a-fA-F0-9]{40}$/)) {
-        throw Error("Allowlisted addresses are not valid")
+      if (!address.match(/^0x[a-f0-9]{40}$/)) {
+        throw Error(`Allowlisted address ${address} is not valid`)
       }
     })
     metadata["allowedAddresses"] = allowedAddresses
