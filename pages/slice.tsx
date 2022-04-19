@@ -87,7 +87,7 @@ export default function Slice() {
                       </Link>{" "}
                     </p>
 
-                    <p className="max-w-sm mx-auto text-sm">
+                    <p className="max-w-sm mx-auto">
                       To make the slicer immediately appear on the website{" "}
                       <b className="text-yellow-600">
                         don&apos;t leave this page until the process has
