@@ -145,10 +145,10 @@ const TransferForm = ({
             <div>
               <div className="pt-3">
                 <Button
-                  label={unreleasedEth == null ? "Wait" : "Transfer"}
+                  label={unreleased.length == 0 ? "Wait" : "Transfer"}
                   loading={loading}
                   type="submit"
-                  disabled={unreleasedEth == null}
+                  disabled={unreleased.length == 0}
                 />
               </div>
               <div className="mt-8">
