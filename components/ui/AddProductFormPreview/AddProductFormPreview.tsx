@@ -100,6 +100,7 @@ const AddProductFormPreview = ({
                 extCheckSig,
                 extExecSig,
                 isUSD,
+                allowedAddresses: [],
                 isInfinite: !isLimited,
                 maxUnits,
                 availableUnits: units,
