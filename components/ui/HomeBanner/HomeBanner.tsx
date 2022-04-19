@@ -8,12 +8,11 @@ const HomeBanner = () => {
       <div className="mx-auto space-y-6 max-w-screen-xs">
         <p>
           If you&apos;re excited about what we&apos;re building, consider
-          supporting Slice by funding the DAO treasury on Juicebox.
+          supporting Slice by contributing to our treasury on Juicebox.
         </p>
         <p>
-          In exchange for your contribution you&apos;ll receive{" "}
-          <b>SLX governance tokens</b>. The sooner you do it, the more tokens
-          you&apos;ll receive.
+          In exchange for your contribution you&apos;ll become a DAO member and
+          receive <b>SLX governance tokens</b>.
         </p>
         <div className="pt-1 pb-4">
           <Button
