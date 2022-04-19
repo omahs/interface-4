@@ -15,10 +15,12 @@ const supabaseUpload = async (
   const fileExt = newImage.file.name.split(".").pop()
   const randomString = Math.random().toString(36).slice(4)
   const filename =
-    name.replaceAll(
-      /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g,
-      ""
-    ) + `_${randomString}`
+    name
+      .replaceAll(
+        /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g,
+        ""
+      )
+      .trim() + `_${randomString}`
 
   let mainImage: File
   if (fileExt !== "gif") {
