@@ -43,7 +43,7 @@ export const faqsMain = [
     answer: (
       <>
         <p>
-          Slicers are ideal to split an income between multiple owners, or to
+          Slicers are ideal to split payments between multiple owners, or to
           represent anything that needs to have an objective value. Each slicer
           also comes with a{" "}
           <Link href="/#products">
@@ -65,11 +65,7 @@ export const faqsMain = [
             <Link href="/#superowner">
               <a>superowner</a>
             </Link>{" "}
-            and be able to do things like adding new products
-          </li>
-          <li>
-            Transfer some of your slices to investors in your project, or sell
-            them to allow others to earn income from your slicer
+            and be able to do add new products
           </li>
         </ul>
         {/* <p>
