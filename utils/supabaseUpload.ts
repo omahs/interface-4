@@ -2,7 +2,7 @@ import { NewImage } from "pages/slicer/[id]"
 const reduce = require("image-blob-reduce")()
 
 const supabaseUpload = async (
-  filename: string,
+  name: string,
   newImage: NewImage,
   currentImageUrl = "",
   highQuality = false
@@ -14,7 +14,11 @@ const supabaseUpload = async (
   const { supabaseKey } = await fetcher("/api/supabase")
   const fileExt = newImage.file.name.split(".").pop()
   const randomString = Math.random().toString(36).slice(4)
-  filename += `_${randomString}`
+  const filename =
+    name.replaceAll(
+      /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g,
+      ""
+    ) + `_${randomString}`
 
   let mainImage: File
   if (fileExt !== "gif") {
@@ -31,7 +35,7 @@ const supabaseUpload = async (
     .storage.from(supabaseStorage)
     .upload(`${filename}.${fileExt}`, mainImage, {
       cacheControl: "3600",
-      upsert: false,
+      upsert: false
     })
   if (error) {
     throw Error(error.message)
@@ -42,7 +46,7 @@ const supabaseUpload = async (
     .storage.from(supabaseStorage)
     .upload(`${filename}_blur.${fileExt}`, blurredImage, {
       cacheControl: "3600",
-      upsert: false,
+      upsert: false
     })
 
   if (
@@ -53,8 +57,8 @@ const supabaseUpload = async (
     const body = {
       method: "POST",
       body: JSON.stringify({
-        url: currentImageName,
-      }),
+        url: currentImageName
+      })
     }
     await fetcher(`/api/slicer/delete_file`, body)
   }
