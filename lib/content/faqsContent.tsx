@@ -36,14 +36,14 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "difference",
+    id: "difference"
   },
   {
     question: "What can slicers be used for?",
     answer: (
       <>
         <p>
-          Slicers are ideal to split an income between multiple owners, or to
+          Slicers are ideal to split payments between multiple owners, or to
           represent anything that needs to have an objective value. Each slicer
           also comes with a{" "}
           <Link href="/#products">
@@ -65,11 +65,7 @@ export const faqsMain = [
             <Link href="/#superowner">
               <a>superowner</a>
             </Link>{" "}
-            and be able to do things like adding new products
-          </li>
-          <li>
-            Transfer some of your slices to investors in your project, or sell
-            them to allow others to earn income from your slicer
+            and be able to do add new products
           </li>
         </ul>
         {/* <p>
@@ -80,7 +76,7 @@ export const faqsMain = [
         </p> */}
       </>
     ),
-    id: "usefulness",
+    id: "usefulness"
   },
   {
     question: "What is a superowner?",
@@ -102,7 +98,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "superowner",
+    id: "superowner"
   },
   {
     question: "How to release ETH from my slicer?",
@@ -123,7 +119,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "release",
+    id: "release"
   },
   {
     question: "How to redeem a product I bought?",
@@ -144,7 +140,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "redeem",
+    id: "redeem"
   },
   {
     question: "How to transfer or sell slices?",
@@ -172,7 +168,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "transfer",
+    id: "transfer"
   },
   {
     question: "My slicer doesn't appear in the Explore section",
@@ -193,7 +189,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "transfer",
+    id: "transfer"
   },
   {
     question: "How do slicers make ETH?",
@@ -217,7 +213,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "slicer-earn",
+    id: "slicer-earn"
   },
   {
     question: "What are products?",
@@ -249,7 +245,7 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "products",
+    id: "products"
   },
   {
     question: "What are sponsorships?",
@@ -272,56 +268,55 @@ export const faqsMain = [
         </p>
       </>
     ),
-    id: "sponsorships",
-  },
+    id: "sponsorships"
+  }
 
   // { id:'nice',question: "Can slicers be upgraded?", answer: "Nice" },
 ]
 
 export const faqsNfts = [
-  {
-    question: "Can I use Slice to mint NFTs (collectibles)?",
-    answer: (
-      <>
-        <p>
-          Yes. You can create a collectible asset through Slice by{" "}
-          <Link href="/slice">
-            <a target="_blank" rel="noreferrer">
-              creating a new slicer
-            </a>
-          </Link>{" "}
-          and <b>enabling the collectible asset switch</b>: this makes it
-          possible to edit its information <b>only once</b> after its creation
-        </p>
-        <p>
-          Note: If you wish to <b>disable fractionalization</b> and simulate the
-          behaviour of a NFT (ERC721), <b>set the total slices amount to 1</b>{" "}
-          (the resulting slice will still be an ERC1155 token)
-        </p>
-        {/* <p>
-          Note: Due to how Slice works, slicers&apos; metadata are not stored on
-          IPFS. If you want your collectibles to be truly immutable, check out{" "}
-          <Link href="/#nft-existing">
-            <a>how to use Slice with existing NFTs</a>
-          </Link>
-          .
-        </p> */}
-      </>
-    ),
-    id: "nft-mint",
-  },
+  // {
+  //   question: "Can I use Slice to mint NFTs (collectibles)?",
+  //   answer: (
+  //     <>
+  //       <p>
+  //         Yes. You can create a slicer with immutable metadata by{" "}
+  //         <Link href="/slice">
+  //           <a target="_blank" rel="noreferrer">
+  //             creating a new slicer
+  //           </a>
+  //         </Link>{" "}
+  //         and <b>enabling the immutable metadata switch</b>: this makes it
+  //         possible to edit its information <b>only once</b> after its creation
+  //       </p>
+  //       <p>
+  //         Note: If you wish to <b>disable fractionalization</b> and simulate the
+  //         behaviour of a NFT (ERC721), <b>set the total slices amount to 1</b>{" "}
+  //         (the resulting slice will still be an ERC1155 token)
+  //       </p>
+  //       {/* <p>
+  //         Note: Due to how Slice works, slicers&apos; metadata are not stored on
+  //         IPFS. If you want your collectibles to be truly immutable, check out{" "}
+  //         <Link href="/#nft-existing">
+  //           <a>how to use Slice with existing NFTs</a>
+  //         </Link>
+  //         .
+  //       </p> */}
+  //     </>
+  //   ),
+  //   id: "nft-mint"
+  // },
   {
     question: "Can I create fractionalized NFTs?",
     answer: (
       <>
         <p>
           Yes. Slices are ERC1155, semi-fungible tokens. By specifying 2 or more
-          slices while creating a slicer, you are essentially subdividing it.
+          slices while creating a slicer, you are fractionalizing it.
         </p>
-        <p>You can do this with both collectible and normal assets.</p>
       </>
     ),
-    id: "nice",
+    id: "fractionalized"
   },
   {
     question: "Can I use Slice with existing NFTs?",
@@ -341,8 +336,8 @@ export const faqsNfts = [
         </p>
       </>
     ),
-    id: "nft-existing",
-  },
+    id: "nft-existing"
+  }
 ]
 
 export const faqsGeneral = [
@@ -368,7 +363,7 @@ export const faqsGeneral = [
         </p>
       </>
     ),
-    id: "mission",
+    id: "mission"
   },
   {
     question: "How much does it cost?",
@@ -388,40 +383,7 @@ export const faqsGeneral = [
         </p>
       </>
     ),
-    id: "pricing",
-  },
+    id: "pricing"
+  }
   // { id:'nice',question: "Where can I see the smart contract?", answer: "Slice's smart contract are currently private but will become open source in the next weeks. If you're a developer and are interested in contributing to the project, please reach out.' " },
-  {
-    question: "What are SLCs and what's their purpose?",
-    answer: (
-      <>
-        <p>
-          Whenever you receive ETH from a slicer by triggering a release, you
-          also receive a varying amount of SLC – Slice&apos;s ERC20 token.
-        </p>
-        <p>
-          The amount received depends on the ETH amount released and the SLC
-          tokens in circulation, with a slowly decreasing trend over time.
-        </p>
-        <p>
-          Their use inside the Slice ecosystem will be uncovered soon. For now
-          you can consider them a gift for being one of the first users of
-          Slice!
-        </p>
-        <p>
-          If you want to know as soon as there are news about SLCs, consider{" "}
-          <a
-            className="text-white highlight"
-            href={accounts.discord}
-            target="_blank"
-            rel="noreferrer"
-          >
-            hanging out in our Discord
-          </a>
-          .
-        </p>
-      </>
-    ),
-    id: "slc",
-  },
 ]

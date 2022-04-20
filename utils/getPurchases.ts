@@ -22,27 +22,48 @@ export const getPurchases = async (
       query {
         ${tokensQuery}
       }
-    `,
+    `
   })
   const payeePurchases = data?.payee?.purchases
   let purchasesList: Purchase[] = []
   payeePurchases?.map((p) => {
     const id = p.id.split("-")
-    const slicerId = id[0]
-    const productId = id[1]
-    purchasesList.push({ slicerId, productId, quantity: p.quantity })
+    const slicerId = parseInt(id[0], 16).toString()
+    const productId = parseInt(id[1], 16).toString()
+
+    purchasesList.push({
+      slicerId,
+      productId,
+      quantity: p.quantity,
+      buyerCustomData: []
+    })
   })
   setPurchases(purchasesList)
 }
 
-export const productsToPurchases = (products: ProductCart[]) => {
-  let purchasesList: Purchase[] = []
-  products.map((p) => {
-    purchasesList.push({
-      slicerId: String(p.slicerId),
-      productId: String(p.productId),
-      quantity: String(p.quantity),
-    })
+export const updatePurchases = (
+  cookieCart: ProductCart[],
+  purchases: Purchase[]
+) => {
+  let newPurchases: Purchase[] = []
+  cookieCart.map((p) => {
+    const index = purchases.findIndex(
+      (purchase) =>
+        purchase.slicerId == p.slicerId &&
+        Number(purchase.productId) == p.productId
+    )
+    if (index != -1) {
+      purchases[index].quantity = String(
+        Number(purchases[index].quantity) + Number(p.quantity)
+      )
+    } else {
+      newPurchases.push({
+        slicerId: String(p.slicerId),
+        productId: String(p.productId),
+        quantity: String(p.quantity),
+        buyerCustomData: p.buyerCustomData
+      })
+    }
   })
-  return purchasesList
+  return [...newPurchases, ...purchases]
 }

@@ -10,7 +10,8 @@ import { useCookies } from "react-cookie"
 import useSWR from "swr"
 import { CartList } from ".."
 import { Purchase, useAppContext } from "../context"
-import { productsToPurchases } from "@utils/getPurchases"
+import { updatePurchases } from "@utils/getPurchases"
+import { utils } from "ethers"
 
 type Props = {
   cookieCart: ProductCart[]
@@ -19,15 +20,21 @@ type Props = {
 }
 
 const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
-  const { isConnected, setPurchases, purchases, setModalView, connector } =
-    useAppContext()
+  const {
+    isConnected,
+    setPurchases,
+    purchases,
+    setModalView,
+    connector,
+    account
+  } = useAppContext()
   const [cookies, setCookie, removeCookie] = useCookies(["cart"])
   const [showCartList, setShowCartList] = useState(false)
   const [showCart, setShowCart] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message>({
     message: "",
-    messageStatus: "success",
+    messageStatus: "success"
   })
 
   const { data: ethUsd } = useSWR(
@@ -36,11 +43,12 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
   )
 
   const reducer = (previousValue: number, currentValue: ProductCart) => {
-    const { quantity, price, isUSD } = currentValue
+    const { quantity, price, isUSD, extCallValue } = currentValue
     const productPrice = isUSD
       ? Math.floor((price * 100) / Number(ethUsd?.price)) / 10000
       : Math.floor(price / 10 ** 14) / 10000
-    return previousValue + productPrice * quantity
+    const externalCallEth = utils.formatEther(extCallValue)
+    return previousValue + (productPrice + Number(externalCallEth)) * quantity
   }
   const totalPrice: number = cookieCart?.reduce(reducer, 0) || 0
 
@@ -58,8 +66,8 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
 
   useEffect(() => {
     if (success) {
-      const newPurchases: Purchase[] = productsToPurchases(cookieCart)
-      setPurchases([...newPurchases, ...purchases])
+      const newPurchases = updatePurchases(cookieCart, purchases)
+      setPurchases(newPurchases)
       removeCookie("cart")
     }
   }, [success])
@@ -68,10 +76,9 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     const handleSubmit = (await import("@utils/handleSubmit")).default
     const { PayProducts } = await import("@lib/handlers/chain")
 
-    setLoading(true)
     try {
       await handleSubmit(
-        PayProducts(connector, cookieCart),
+        PayProducts(connector, account, cookieCart),
         setMessage,
         setLoading,
         setSuccess,
@@ -80,7 +87,6 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     } catch (err) {
       console.log(err)
     }
-    setLoading(false)
   }
 
   return (
@@ -88,8 +94,8 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
       {/* Todo: fix errors in console without breaking opacity transition */}
       {/* {showCart && showCartList && ( */}
       <div
-        className={`fixed bottom-0 mb-[80px] sm:mb-[100px] right-[20px] sm:right-[32px]transition-opacity duration-200 ${
-          showCart && showCartList ? "z-20 opacity-100" : "-z-10 opacity-0"
+        className={`fixed bottom-0 mb-[80px] sm:mb-[100px] right-[20px] sm:right-[32px] transition-opacity duration-200 ${
+          showCart && showCartList ? "z-50 opacity-100" : "-z-10 opacity-0"
         }`}
       >
         <CartList
@@ -101,7 +107,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
       {/* } */}
       {(showCart || loading || success) && (
         <div
-          className={`fixed z-30 bottom-0 mb-[20px] sm:mb-[32px] right-[20px] sm:right-[32px] nightwind-prevent-block transition-opacity duration-200`}
+          className={`fixed z-50 bottom-0 mb-[20px] sm:mb-[32px] right-[20px] sm:right-[32px] nightwind-prevent-block transition-opacity duration-200`}
           // ${
           //   showCart || loading || success
           //     ? "z-20 opacity-100"
@@ -120,18 +126,16 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
               {success ? (
                 <p className="px-2 text-sm">Keep buying</p>
               ) : (
-                totalPrice != 0 && (
-                  <>
-                    <Chevron
-                      className={`h-5 transition-transform duration-200 ${
-                        showCartList ? "rotate-90" : ""
-                      } w-7`}
-                    />
-                    <p className="w-full ml-2 text-center">
-                      Ξ {Math.round(totalPrice * 1000) / 1000}
-                    </p>
-                  </>
-                )
+                <>
+                  <Chevron
+                    className={`h-5 transition-transform duration-200 ${
+                      showCartList ? "rotate-90" : ""
+                    } w-7`}
+                  />
+                  <p className="w-full ml-2 text-center">
+                    Ξ {Math.round(totalPrice * 1000) / 1000}
+                  </p>
+                </>
               )}
             </div>
             <div

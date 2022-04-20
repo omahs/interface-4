@@ -1,4 +1,3 @@
-import useQuery from "@utils/subgraphQuery"
 import { useRouter } from "next/dist/client/router"
 import { useEffect, useState } from "react"
 import { ProductsGrid } from ".."
@@ -19,41 +18,36 @@ export type Product = {
     instructions: boolean
     notes: boolean
   }
+  texts: {
+    thanks?: string
+    instructions?: string
+  }
+  allowedAddresses: string[]
 }
 
 type Props = {
   account: string
+  isAllowed: boolean
   slicerId: string
   slicerAddress: string
   products: any
+  blockchainProducts: any
   editMode: boolean
 }
 
 const SlicerProducts = ({
   account,
+  isAllowed,
   slicerId,
   slicerAddress,
   products,
-  editMode,
+  blockchainProducts,
+  editMode
 }: Props) => {
   const [loading, setLoading] = useState(false)
   const [showProducts, setShowProducts] = useState<Product[]>([])
   const [pendingProducts, setPendingProducts] = useState<Product[]>([])
   const router = useRouter()
-
-  const tokensQuery = /* GraphQL */ `
-  products (where: {slicer: "${slicerId}"}) {
-    id
-    price
-    isUSD
-    isInfinite
-    isMultiple
-    availableUnits
-    totalPurchases
-    createdAtTimestamp
-  }`
-  const subgraphData = useQuery(tokensQuery)
-  const blockchainProducts = subgraphData?.products
 
   const handleReload = async () => {
     const { handleCleanup, reload } = await import("@lib/handleCreateProduct")
@@ -84,7 +78,7 @@ const SlicerProducts = ({
         products={showProducts}
         editMode={editMode}
       />
-      {editMode && (
+      {isAllowed && (
         <div className="pt-6">
           <Button label="Add a new product" href={`${slicerId}/products/new`} />
           {(pendingProducts?.length != 0 ||

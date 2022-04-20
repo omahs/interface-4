@@ -1,18 +1,50 @@
 import {
+  AccountBalance,
   ConnectBlock,
   Container,
   DoubleText,
-  SlicersList,
+  SlicersList
 } from "@components/ui"
 import { NextSeo } from "next-seo"
 import {
   defaultDescription,
   defaultTitle,
   longTitle,
-  domain,
+  domain
 } from "@components/common/Head"
+import { useAppContext } from "@components/ui/context"
+import useQuery from "@utils/subgraphQuery"
 
 export default function Profile() {
+  const { account } = useAppContext()
+
+  const tokensQuery = /* GraphQL */ `
+      payee(id: "${account?.toLowerCase()}") {
+        slicers (where: {slices_gt: "0"}){
+          slices
+          slicer {
+            id
+            address
+            slices
+            minimumSlices
+            isImmutable
+            productsModuleBalance
+            protocolFee
+          }
+        }
+        # currencies(where: {toWithdraw_gt: "1"}){
+        #   toWithdraw
+        #   currency {
+        #     id
+        #   }
+        # }
+      }
+    `
+  let subgraphData = useQuery(tokensQuery, [account])
+  const payeeData = subgraphData?.payee
+  const slicers = payeeData?.slicers
+  // const payeeCurrencyData = payeeData?.currencies
+
   return (
     <Container page={true}>
       <NextSeo
@@ -26,9 +58,9 @@ export default function Profile() {
               url: `${domain}/og_image.jpg`,
               width: 1000,
               height: 1000,
-              alt: `${defaultTitle} cover image`,
-            },
-          ],
+              alt: `${defaultTitle} cover image`
+            }
+          ]
         }}
       />
       <ConnectBlock>
@@ -39,8 +71,18 @@ export default function Profile() {
             size="text-4xl sm:text-5xl"
             position="pb-12"
           />
+          {/* <AccountBalance
+            account={account}
+            payeeCurrencyData={payeeCurrencyData}
+          /> */}
+
           <div className="space-y-4 text-left">
-            <SlicersList />
+            <SlicersList
+              account={account}
+              payeeData={payeeData}
+              slicers={slicers}
+              loading={!subgraphData}
+            />
           </div>
         </main>
       </ConnectBlock>

@@ -10,15 +10,17 @@ import {
   FilesList,
   LoadingStep,
   MarkdownBlock,
-  OwnerBlock,
+  OwnerBlock
 } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { ProductCart } from "@lib/handleUpdateCart"
+import getEthFromWei from "@utils/getEthFromWei"
 import formatNumber from "@utils/formatNumber"
-import { useRouter } from "next/dist/client/router"
 import { useCookies } from "react-cookie"
 import { handleConnectMetamask, handleConnectWC } from "@lib/handleConnect"
 import WalletConnect from "@components/icons/WalletConnect"
+import { ethers } from "ethers"
+import getFunctionFromSelector from "@utils/getFunctionFromSelector"
 
 export type View = {
   name: ViewNames
@@ -27,6 +29,7 @@ export type View = {
 }
 type ViewNames =
   | ""
+  | "LOADING_VIEW"
   | "NETWORK_VIEW"
   | "CONNECT_VIEW"
   | "IRREVERSIBLE_VIEW"
@@ -35,6 +38,17 @@ type ViewNames =
   | "CREATE_PRODUCT_CONFIRM_VIEW"
   | "PRODUCT_VIEW"
   | "REDEEM_PRODUCT_VIEW"
+
+export const LOADING_VIEW = () => {
+  return (
+    <>
+      <div className="pb-6 text-center">
+        <DoubleText inactive logoText="Loading..." />
+      </div>
+      <p className="text-lg text-center">🍰 Please wait 🍰</p>
+    </>
+  )
+}
 
 export const NETWORK_VIEW = () => {
   const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
@@ -100,12 +114,12 @@ export const IRREVERSIBLE_VIEW = () => {
       <div className="pb-6 text-center">
         <DoubleText inactive logoText="Be careful" />
       </div>
-      <div className="text-lg text-center">
+      <div className="text-center">
         <p className="pb-4">
-          This action is irreversible, you cannot change the name, description
-          and image of your slicer a second time.
+          You won&apos;t be able to change the name, description and image of
+          your slicer a second time.
         </p>
-        <p className="font-semibold">
+        <p className="font-bold text-yellow-600">
           Make sure the slicer details and image are correct
         </p>
       </div>
@@ -181,13 +195,8 @@ export const CREATE_PRODUCT_CONFIRM_VIEW = (params: any) => {
 }
 
 export const CREATE_PRODUCT_VIEW = (params: any) => {
-  const router = useRouter()
-  const { slicerId, uploadStep, uploadPct, setModalView } = params
-  const processing = uploadStep !== 8 && uploadStep !== 10
-  const toSlicer = () => {
-    setModalView({ name: "" })
-    router.push(`/slicer/${slicerId}`)
-  }
+  const { uploadStep, uploadPct, setModalView } = params
+  const processing = uploadStep !== 8
 
   let uploadState: string
   switch (uploadStep) {
@@ -207,7 +216,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
       uploadState = "Finishing setting up"
       break
     case 6:
-      uploadState = "Waiting from blockchain"
+      uploadState = "Transaction in progress"
       break
     case 7:
       uploadState = "Reverting"
@@ -217,9 +226,6 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
       break
     case 9:
       uploadState = "Finalizing"
-      break
-    case 10:
-      uploadState = "Done, success!"
       break
   }
   return (
@@ -248,28 +254,21 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
           waitingState="Blockchain interaction"
         />
       </div>
-      <p className="max-w-sm py-6 mx-auto text-sm">
-        To make the product immediately appear on the website{" "}
-        <b>do not leave this page until the process has completed</b>
-      </p>
-      <p className="max-w-sm pb-6 mx-auto text-sm">
-        Note: <b>Do not change the gas fee suggested by your wallet</b>
-      </p>
-      <Button
-        label={uploadStep === 8 ? "Create a new product" : "Go to slicer"}
-        loading={processing}
-        onClick={() => (uploadStep === 8 ? router.reload() : toSlicer())}
-      />
-      {uploadStep === 10 && (
-        <div className="flex justify-center pt-8">
-          <p
-            className="font-medium text-blue-600 cursor-pointer hover:underline"
-            onClick={() => router.reload()}
-          >
-            Create a new product
+      <div className="pt-10">
+        {uploadStep === 8 ? (
+          <Button
+            label={"Go back to product"}
+            onClick={() => setModalView({ name: "" })}
+          />
+        ) : (
+          <p className="max-w-sm mx-auto text-sm">
+            To make the product immediately appear on the website{" "}
+            <b className="text-yellow-600">
+              do not leave this page until the process has completed
+            </b>
           </p>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   )
 }
@@ -285,10 +284,16 @@ export const PRODUCT_VIEW = (params: any) => {
     image,
     productPrice,
     isUSD,
+    extAddress,
+    extValue,
+    extCheckSig,
+    extExecSig,
     isInfinite,
-    isMultiple,
+    maxUnits,
     uid,
     creator,
+    texts,
+    allowedAddresses,
     availableUnits,
     totalPurchases,
     purchaseInfo,
@@ -297,7 +302,7 @@ export const PRODUCT_VIEW = (params: any) => {
     editMode,
     purchasedQuantity,
     availabilityColor,
-    preview,
+    preview
   } = params
 
   const cookieCart: ProductCart[] = cookies?.cart
@@ -336,7 +341,7 @@ export const PRODUCT_VIEW = (params: any) => {
                 </p>
                 <ShoppingBag className="w-[18px] h-[18px] text-indigo-600" />
               </>
-            ),
+            )
           }}
           topRight={{
             title: "Product price",
@@ -344,7 +349,7 @@ export const PRODUCT_VIEW = (params: any) => {
               <p className="text-sm font-medium text-black">
                 {productPrice.usd}
               </p>
-            ),
+            )
           }}
           bottomLeft={
             !isInfinite && {
@@ -356,7 +361,7 @@ export const PRODUCT_VIEW = (params: any) => {
                   </p>
                   <Units className={`w-[18px] h-[18px] ${availabilityColor}`} />
                 </>
-              ),
+              )
             }
           }
         />
@@ -374,20 +379,25 @@ export const PRODUCT_VIEW = (params: any) => {
               productId={productId}
               price={price}
               isUSD={isUSD}
+              extAddress={extAddress}
+              extCallValue={extValue}
+              extCheckSig={extCheckSig}
               name={name}
               image={image}
-              isMultiple={isMultiple}
+              maxUnits={Number(maxUnits)}
               availableUnits={isInfinite ? -1 : availableUnits}
               purchasedQuantity={purchasedQuantity}
               uid={uid}
               creator={creator}
+              texts={texts}
+              allowedAddresses={allowedAddresses}
               labelAdd={`Get it for ${productPrice.eth}`}
               labelRemove={productPrice.eth}
               preview={preview}
             />
           </div>
         )}
-        {!editMode && isMultiple && productCart?.quantity && (
+        {!editMode && Number(maxUnits) != 1 && productCart?.quantity && (
           <p className="pt-4 text-sm text-center ">{`Ξ ${
             Math.floor(
               Number(productPrice.eth.substring(1)) *
@@ -396,9 +406,50 @@ export const PRODUCT_VIEW = (params: any) => {
             ) / 1000
           }`}</p>
         )}
-        <p className="pt-6 text-sm text-center mx-auto max-w-[340px]">
-          This product contains <b>{purchaseEl}</b>
-        </p>
+        {extAddress != "0x00000000" &&
+        extAddress != ethers.constants.AddressZero &&
+        (extValue != "0" || extExecSig != "0x00000000") ? (
+          <p className="pt-6 mx-auto text-sm text-center">
+            Interacts with{" "}
+            <a
+              className="font-bold highlight"
+              href={`https://${
+                process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
+              }etherscan.io/address/${extAddress}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {extAddress.replace(
+                extAddress.substring(5, extAddress.length - 3),
+                `\xa0\xa0\xa0\xa0\xa0\xa0`
+              )}
+            </a>{" "}
+            by{" "}
+            {extValue != "0" ? (
+              <>
+                sending <b>{getEthFromWei(extValue)}</b> ETH
+              </>
+            ) : (
+              ""
+            )}
+            {extValue != "0" && extExecSig != "0x00000000" ? " and " : ""}
+            {extExecSig != "0x00000000" ? (
+              <>
+                executing the function{" "}
+                <b className="text-yellow-600">
+                  {getFunctionFromSelector(extExecSig)}
+                </b>
+              </>
+            ) : (
+              ""
+            )}
+          </p>
+        ) : null}
+        {purchaseElArray.length != 0 ? (
+          <p className="pt-6 text-sm text-center mx-auto max-w-[340px]">
+            Contains <b>{purchaseEl}</b>
+          </p>
+        ) : null}
       </div>
     </>
   )
@@ -411,11 +462,13 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
     name,
     image,
     purchasedQuantity,
+    texts,
     decryptedFiles,
-    decryptedTexts,
+    decryptedTexts
   } = params
 
-  const { thanks, notes, instructions } = decryptedTexts
+  const { thanks, instructions } = texts
+  const { notes } = decryptedTexts
 
   return (
     <>
@@ -474,5 +527,6 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
     </>
   )
 }
+// TODO: Do not decrypt thankMessage and instructions
 
 // Todo: Add 'download all' button

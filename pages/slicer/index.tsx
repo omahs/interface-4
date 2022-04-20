@@ -5,7 +5,7 @@ import {
   defaultDescription,
   defaultTitle,
   longTitle,
-  domain,
+  domain
 } from "@components/common/Head"
 import fetcher from "@utils/fetcher"
 
@@ -15,11 +15,11 @@ export type SlicerReduced = {
   tags: string | null
   description: string | null
   image: string | null
-  isCollectible: boolean | null
+  isImmutable: boolean | null
 }
 
 const SlicerGrid = ({
-  data,
+  data
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Container page={true}>
@@ -34,9 +34,9 @@ const SlicerGrid = ({
               url: `${domain}/og_image.jpg`,
               width: 1000,
               height: 1000,
-              alt: `${defaultTitle} cover image`,
-            },
-          ],
+              alt: `${defaultTitle} cover image`
+            }
+          ]
         }}
       />
       <main className="max-w-[420px] mx-auto sm:max-w-screen-lg">
@@ -59,9 +59,9 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 
   return {
     props: {
-      data,
+      data
     },
-    revalidate: 10,
+    revalidate: 10
   }
 }
 

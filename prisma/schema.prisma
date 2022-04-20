@@ -19,7 +19,7 @@ model Slicer {
   address       String?
   image         String?
   tags          String?
-  isCollectible Boolean?
+  isImmutable   Boolean?
   config        Json        @default("{\"sponsors\": true}")
   sponsors      Json        @default("{ }")
   attributes    Json[]
@@ -37,7 +37,9 @@ model Product {
   uid              String
   hash             String
   image            String?
+  texts            Json     @default("{}")
   purchaseInfo     Json     @default("{}")
+  allowedAddresses String[]
   tempProductHash  String?
   slicer           Slicer   @relation(fields: [slicerId], references: [id])
   slicerId         Int      @map(name: "slicer_id")

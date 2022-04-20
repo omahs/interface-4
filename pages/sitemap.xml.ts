@@ -1,5 +1,6 @@
 import { domain } from "@components/common/Head"
-import fetcher from "@utils/fetcher"
+import { sliceCore } from "@lib/initProvider"
+import { defaultProvider } from "@lib/useProvider"
 import { GetServerSideProps } from "next"
 
 function generateSiteMap(totalSlicers) {
@@ -30,11 +31,10 @@ function SiteMap() {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-  const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
+  const totalSlicers = await sliceCore(defaultProvider).supply()
 
   // We generate the XML sitemap with the posts data
-  const sitemap = generateSiteMap(totalSlicers)
+  const sitemap = generateSiteMap(Number(totalSlicers))
 
   res.setHeader("Content-Type", "text/xml")
   // we send the XML to the browser
@@ -42,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   res.end()
 
   return {
-    props: {},
+    props: {}
   }
 }
 

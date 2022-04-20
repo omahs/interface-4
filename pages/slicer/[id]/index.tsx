@@ -1,9 +1,10 @@
+import { useRouter } from "next/dist/client/router"
 import { useEffect, useState } from "react"
 import Head from "next/head"
 import { NextSeo } from "next-seo"
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next"
 import { Message } from "@utils/handleMessage"
-import { useAllowed } from "@lib/useProvider"
+import { defaultProvider, useAllowed } from "@lib/useProvider"
 import { useAppContext } from "@components/ui/context"
 import { domain } from "@components/common/Head"
 import Edit from "@components/icons/Edit"
@@ -21,40 +22,41 @@ import {
   SlicerSponsors
 } from "@components/ui"
 import fetcher from "@utils/fetcher"
-import useQuery from "@utils/subgraphQuery"
 import { BigNumber, ethers } from "ethers"
 import multicall from "@utils/multicall"
+import decimalToHex from "@utils/decimalToHex"
+import formatCalldata from "@utils/formatCalldata"
+import client from "@utils/apollo-client"
+import { gql } from "@apollo/client"
+import { sliceCore } from "@lib/initProvider"
 
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
-  Creator: string
-  "Superowner slices": number
-  "Sliced on": number
-  "Total slices": number
-}
+  display_type: "number" | "date" | undefined
+  trait_type: "Total slices" | "Superowner slices" | "Creator" | "Sliced on"
+  value: string | number
+}[]
 export type SlicerData = {
   name: any
   description: any
   tags: any
   imageUrl: any
+  attributes: SlicerAttributes
 }
 export type AddressAmount = {
   address: string
   amount: number
 }
 
-const initAttributes = {
-  Creator: "",
-  "Superowner slices": 0,
-  "Sliced on": 0,
-  "Total slices": 0
-}
-
 const Id = ({
   slicerInfo,
-  products
+  products,
+  subgraphDataPayees,
+  subgraphDataProducts
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { account } = useAppContext()
+  const router = useRouter()
+  const { view } = router.query
+  const { account, setModalView } = useAppContext()
   const { isAllowed } = useAllowed(slicerInfo?.id)
   const [editMode, setEditMode] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -68,10 +70,9 @@ const Id = ({
     name: slicerInfo?.name,
     description: slicerInfo?.description,
     tags: slicerInfo?.tags,
-    imageUrl: slicerInfo?.image
+    imageUrl: slicerInfo?.image,
+    attributes: slicerInfo?.attributes
   })
-  const [slicerAttributes, setSlicerAttributes] =
-    useState<SlicerAttributes>(initAttributes)
 
   const [newDescription, setNewDescription] = useState(slicer.description)
   const [newTags, setNewTags] = useState(slicer.tags)
@@ -89,57 +90,39 @@ const Id = ({
       ? slicer.name
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
 
+  const totalSlices = Number(
+    slicer?.attributes.filter((el) => el.trait_type === "Total slices")[0].value
+  )
+
   // Todo: For collectibles save image on web3Storage instead of supabase? + Allow indefinite size? Figure it out
-  const editAllowed = !slicerInfo?.isCollectible
+  const editAllowed = !slicerInfo?.isImmutable
     ? isAllowed
-    : slicerAttributes?.Creator === account?.toLowerCase() // only Creator
+    : slicer?.attributes?.filter((el) => el.trait_type === "Creator")[0]
+        .value === account?.toLowerCase() // only Creator
     ? (newName === `Slicer #${slicerInfo?.id}` && // default name, descr & image
         newDescription === "" &&
         newImage.url === "" &&
         slicer.imageUrl === "https://slice.so/slicer_default.png") ||
-      false // slicerAttributes["Total slices"] === account.slices // creator has all slices
+      false // slicer?.attributes["Total slices"] === account.slices // creator has all slices
     : false
-
-  const tokensQuery = /* GraphQL */ `
-  payeeSlicers (
-    where: {slicer: "${slicerInfo?.id}"}, 
-    orderBy: "totalPaid", 
-    orderDirection: "desc"
-  ) {
-    id
-    slices
-    totalPaid
-  }
-`
-  const subgraphData = useQuery(tokensQuery, [slicerInfo?.address])
-
-  useEffect(() => {
-    let attr = initAttributes
-    slicerInfo?.attributes.map((el) => {
-      attr[el.trait_type] = el.value
-    })
-    setSlicerAttributes(attr)
-    setSlicer({
-      name: slicerInfo?.name,
-      description: slicerInfo?.description,
-      tags: slicerInfo?.tags,
-      imageUrl: slicerInfo?.image
-    })
-  }, [slicerInfo])
 
   useEffect(() => {
     setEditMode(false)
   }, [account])
 
   useEffect(() => {
-    if (subgraphData) {
+    if (subgraphDataPayees) {
       const sponsorsList: AddressAmount[] = []
-      subgraphData.payeeSlicers.forEach((el) => {
-        const address = el.id.split("-")[1]
-        const totalPaid = el.totalPaid
-        if (address != slicerInfo?.address && totalPaid && totalPaid != "0") {
+      subgraphDataPayees.payeeSlicers.forEach((el) => {
+        const address = el.id.split("-")[0]
+        const ethSent = el.ethSent
+        if (
+          address != process.env.NEXT_PUBLIC_PRODUCTS_ADDRESS.toLowerCase() &&
+          ethSent &&
+          ethSent != "0"
+        ) {
           const amount = Number(
-            BigNumber.from(totalPaid).div(BigNumber.from(10).pow(15))
+            BigNumber.from(ethSent).div(BigNumber.from(10).pow(15))
           )
           sponsorsList.push({ address, amount })
         }
@@ -147,8 +130,8 @@ const Id = ({
       setSponsors(sponsorsList)
 
       const ownersList: AddressAmount[] = []
-      subgraphData.payeeSlicers.forEach((el) => {
-        const address = el.id.split("-")[1]
+      subgraphDataPayees.payeeSlicers.forEach((el) => {
+        const address = el.id.split("-")[0]
         const slicesOwned = el.slices
         if (slicesOwned != "0") {
           ownersList.push({ address, amount: Number(slicesOwned) })
@@ -159,12 +142,12 @@ const Id = ({
 
       setSponsorLoading(false)
     }
-  }, [subgraphData])
+  }, [subgraphDataPayees])
 
   const getOwnersUnreleased = async (args: string[]) => {
     const result = await multicall(
       slicerInfo?.address,
-      "unreleased(address)",
+      "unreleased(address,address)",
       args
     )
     setUnreleased(result)
@@ -174,12 +157,36 @@ const Id = ({
     if (owners.length != 0) {
       const args = []
       owners.forEach((owner) => {
-        args.push(ethers.utils.hexZeroPad(owner.address, 32).substring(2))
+        const currency = ethers.constants.AddressZero
+        args.push(formatCalldata(owner.address, currency))
       })
 
       getOwnersUnreleased(args)
     }
   }, [owners])
+
+  useEffect(() => {
+    if (view == "owners") {
+      if (unreleased.length != 0) {
+        setModalView({
+          cross: true,
+          name: "OWNERS_VIEW",
+          params: {
+            slicerId: slicerInfo?.id,
+            owners,
+            totalSlices,
+            unreleased,
+            setUnreleased
+          }
+        })
+      } else {
+        setModalView({
+          cross: false,
+          name: "LOADING_VIEW"
+        })
+      }
+    }
+  }, [view, unreleased])
 
   return (
     <Container page={true}>
@@ -265,7 +272,7 @@ const Id = ({
               setMsg={setMsg}
               loading={loading}
               slicerId={slicerInfo?.id}
-              totalSlices={slicerAttributes["Total slices"]}
+              totalSlices={totalSlices}
               owners={owners}
               unreleased={unreleased}
               setUnreleased={setUnreleased}
@@ -273,10 +280,12 @@ const Id = ({
           </div>
           <SlicerProducts
             account={account}
+            isAllowed={isAllowed}
             editMode={editMode}
             slicerId={slicerInfo?.id}
             slicerAddress={slicerInfo?.address}
             products={products}
+            blockchainProducts={subgraphDataProducts}
           />
           <SlicerSponsors
             sponsors={sponsors}
@@ -322,10 +331,9 @@ const Id = ({
 }
 
 export async function getStaticPaths() {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL
-  const { totalSlicers } = await fetcher(`${baseUrl}/api/slicer/total`)
+  const totalSlicers = await sliceCore(defaultProvider).supply()
   // const totalSlicers = 0
-  const paths = [...Array(totalSlicers).keys()].map((slicerId) => {
+  const paths = [...Array(Number(totalSlicers)).keys()].map((slicerId) => {
     const id = String(slicerId)
     return {
       params: {
@@ -334,21 +342,82 @@ export async function getStaticPaths() {
     }
   })
 
-  return { paths, fallback: true }
+  return { paths, fallback: "blocking" }
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const id = context.params.id
-  const hexId = Number(id).toString(16)
+  const hexId = decimalToHex(Number(id))
 
-  const slicerInfo = await fetcher(`${baseUrl}/api/slicer/${hexId}?stats=false`)
-  const products = await fetcher(`${baseUrl}/api/slicer/${id}/products`)
+  /**
+   * TODO
+   * Add condition: or: [{slices_gt: "0"}, {ethSent_gt: "0"}]
+   * Deal with pagination when number of payeeSlicers > 100
+   */
+  const tokensQueryPayees = /* GraphQL */ `
+  payeeSlicers (
+    where: {slicer: "${hexId}"}, 
+    orderBy: "ethSent", 
+    orderDirection: "desc"
+  ) {
+    id
+    slices
+    ethSent
+  }
+`
+
+  const tokensQueryProducts = /* GraphQL */ `
+products (where: {slicer: "${hexId}"}) {
+  id
+  prices {
+    currency {
+      id
+    }
+    price
+    dynamicPricing
+  }
+  isInfinite
+  availableUnits
+  maxUnitsPerBuyer
+  totalPurchases
+  createdAtTimestamp
+  extAddress
+  extValue
+  extCheckSig
+  extExecSig
+}`
+
+  const [
+    slicerInfo,
+    products,
+    { data: subgraphDataPayees },
+    { data: subgraphDataProducts }
+  ] = await Promise.all([
+    fetcher(`${baseUrl}/api/slicer/${hexId}?stats=false`),
+    fetcher(`${baseUrl}/api/slicer/${id}/products`),
+    client.query({
+      query: gql`
+        query {
+          ${tokensQueryPayees}
+        }
+      `
+    }),
+    client.query({
+      query: gql`
+        query {
+          ${tokensQueryProducts}
+        }
+      `
+    })
+  ])
 
   return {
     props: {
       slicerInfo,
-      products
+      products,
+      subgraphDataPayees,
+      subgraphDataProducts: subgraphDataProducts?.products
     },
     revalidate: 10
   }

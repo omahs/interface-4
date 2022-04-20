@@ -15,20 +15,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           ? {
               AND: [
                 {
-                  slicerId: { equals: Number(id) },
+                  slicerId: { equals: Number(id) }
                 },
                 {
-                  productId: { equals: null },
+                  productId: { equals: null }
                 },
                 {
                   createdAt: {
-                    lte: new Date(Date.now() - 1000 * 60 * 60),
-                  },
-                },
-              ],
+                    lte: new Date(Date.now() - 1000 * 60 * 60)
+                  }
+                }
+              ]
             }
           : {
-              slicerId: { equals: Number(id) },
+              slicerId: { equals: Number(id) }
             }
 
       data = await prisma.product.findMany({
@@ -44,7 +44,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           hash: true,
           image: true,
           purchaseInfo: true,
-        },
+          texts: true,
+          allowedAddresses: true
+        }
       })
       // else {
       //   data = await prisma.product.count({
@@ -74,6 +76,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         hash,
         tempProductHash,
         purchaseInfo,
+        texts,
+        allowedAddresses
       } = JSON.parse(req.body)
       const pid = productId ? Number(productId) : null
       data = await CreateProduct(
@@ -87,7 +91,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         tempProductHash,
         image,
         pid,
-        purchaseInfo
+        purchaseInfo,
+        texts,
+        allowedAddresses
       )
     }
 
@@ -98,7 +104,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (req.method === "DELETE") {
       data = await prisma.product.delete({
-        where: { id: Number(productId) },
+        where: { id: Number(productId) }
       })
     }
 

@@ -1,6 +1,9 @@
 import { NewImage } from "pages/slicer/[id]"
 import React, { Dispatch, SetStateAction } from "react"
 import { View } from "@lib/content/modals"
+import { BigNumberish, BytesLike, utils } from "ethers"
+import useSWR from "swr"
+import fetcher from "@utils/fetcher"
 
 type Props = {
   slicerId: number
@@ -8,17 +11,21 @@ type Props = {
   shortDescription: string
   description: string
   newImage: NewImage
-  isMultiple: boolean
+  maxUnits: number
   isLimited: boolean
   units: number
-  ethValue: number
-  usdValue: number
+  ethValue: number | string
+  usdValue: number | string
   isUSD: boolean
   thankMessage: string
   instructions: string
   notes: string
   files: File[]
   setModalView: Dispatch<SetStateAction<View>>
+  externalCallValue: BigNumberish
+  extAddress: string
+  extCheckSig: BytesLike
+  extExecSig: BytesLike
 }
 
 const AddProductFormPreview = ({
@@ -27,7 +34,7 @@ const AddProductFormPreview = ({
   shortDescription,
   description,
   newImage,
-  isMultiple,
+  maxUnits,
   isLimited,
   units,
   ethValue,
@@ -38,14 +45,39 @@ const AddProductFormPreview = ({
   notes,
   files,
   setModalView,
+  externalCallValue,
+  extAddress,
+  extCheckSig,
+  extExecSig
 }: Props) => {
+  const { data: ethUsd } = useSWR(
+    "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT",
+    fetcher
+  )
+
+  const externalCallEth = utils.formatEther(externalCallValue)
+  const externalCallUsd = Number(externalCallEth) * Number(ethUsd?.price)
+  const productPrice = {
+    eth: ethValue
+      ? "Ξ " +
+        Math.floor((Number(ethValue) + Number(externalCallEth)) * 1000) / 1000
+      : "free",
+    usd: usdValue
+      ? "$ " + Math.floor((Number(usdValue) + externalCallUsd) * 100) / 100
+      : "$ 0"
+  }
+
   return (
     <div>
       <hr className="w-20 mx-auto border-gray-300 my-14" />
-      <h3 className="pb-12 font-bold">Preview pages</h3>
+      <h3 className="pb-6 font-bold">Preview</h3>
+      <p className="pb-12">
+        See how the product will appear to buyers before the purchase and after
+        redeeming it.
+      </p>
       <div className="flex flex-wrap justify-around gap-4">
         <a
-          className="underline"
+          className="highlight"
           onClick={() =>
             setModalView({
               name: "PRODUCT_VIEW",
@@ -58,23 +90,25 @@ const AddProductFormPreview = ({
                 shortDescription,
                 description,
                 image: newImage.url,
-                productPrice: {
-                  eth: `Ξ ${
-                    ethValue ? Math.floor(ethValue * 1000) / 1000 : "..."
-                  }`,
-                  usd: `$ ${
-                    usdValue ? Math.floor(usdValue * 100) / 100 : "..."
-                  }`,
+                texts: {
+                  thanks: thankMessage,
+                  instructions: instructions
                 },
+                productPrice,
+                extAddress,
+                extValue: externalCallValue,
+                extCheckSig,
+                extExecSig,
                 isUSD,
+                allowedAddresses: [],
                 isInfinite: !isLimited,
-                isMultiple,
+                maxUnits,
                 availableUnits: units,
-                totalPurchases: 69000000,
+                totalPurchases: 69000,
                 purchaseInfo: {
                   files: files.length != 0,
                   instructions: instructions.length != 0,
-                  notes: notes.length != 0,
+                  notes: notes.length != 0
                 },
                 slicerAddress: "preview",
                 purchasedQuantity: 0,
@@ -83,15 +117,15 @@ const AddProductFormPreview = ({
                     ? units == 0
                       ? "text-red-500"
                       : "text-yellow-600"
-                    : "text-green-600",
-              },
+                    : "text-green-600"
+              }
             })
           }
         >
-          Product
+          Product page
         </a>
         <a
-          className="underline"
+          className="highlight"
           onClick={() =>
             setModalView({
               name: "REDEEM_PRODUCT_VIEW",
@@ -102,13 +136,17 @@ const AddProductFormPreview = ({
                 name: name || "A nice product",
                 image: newImage.url,
                 purchasedQuantity: Number(1),
+                texts: {
+                  thanks: thankMessage,
+                  instructions: instructions
+                },
                 decryptedFiles: files,
-                decryptedTexts: { thanks: thankMessage, notes, instructions },
-              },
+                decryptedTexts: { notes }
+              }
             })
           }
         >
-          Purchase
+          Redeem purchase
         </a>
       </div>
       <hr className="w-20 mx-auto border-gray-300 my-14" />

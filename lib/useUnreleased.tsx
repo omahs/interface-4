@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react"
-import { ethers } from "ethers"
 import multicall from "@utils/multicall"
+import formatCalldata from "@utils/formatCalldata"
 
-const useUnreleased = (slicerAddress: string, addresses: string[]) => {
+const useUnreleased = (
+  slicerAddress: string,
+  addresses: string[],
+  currency: string
+) => {
   const [unreleased, setUnreleased] = useState([])
 
   const getOwnersUnreleased = async (args: string[]) => {
-    const result = await multicall(slicerAddress, "unreleased(address)", args)
+    const result = await multicall(
+      slicerAddress,
+      "unreleased(address,address)",
+      args
+    )
     setUnreleased(result)
   }
 
@@ -15,7 +23,7 @@ const useUnreleased = (slicerAddress: string, addresses: string[]) => {
       const args = []
       addresses.forEach((address) => {
         if (address) {
-          args.push(ethers.utils.hexZeroPad(address, 32).substring(2))
+          args.push(formatCalldata(address, currency))
         }
       })
 

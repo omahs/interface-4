@@ -1,7 +1,7 @@
 import { LogDescription } from "@ethersproject/abi"
-import { Contract } from "ethers"
+import { Contract, ContractTransaction } from "ethers"
 
-const handleLog = async (contract: Contract, call: any) => {
+const handleLog = async (contract: Contract, call: ContractTransaction) => {
   const wait = await call.wait()
   const logs = wait.logs
   let eventLogs: LogDescription[] = []

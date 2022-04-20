@@ -28,7 +28,7 @@ const TransferFormInputBlock = ({
   minimumSlices,
   setAddresses,
   setShares,
-  setTotalShares,
+  setTotalShares
 }: Props) => {
   const [inputCount, setInputCount] = useState(3)
   const [removedCount, setRemovedCount] = useState(0)

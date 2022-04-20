@@ -6,22 +6,35 @@ import handleUpdateCart, { ProductCart } from "@lib/handleUpdateCart"
 import { useCookies } from "react-cookie"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import { useAppContext } from "../context"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import handleRedeemProduct from "@utils/handleRedeemProduct"
 import Spinner from "@components/icons/Spinner"
+import Lock from "@components/icons/Lock"
+import { ExtCall } from "@lib/handlers/chain"
+import { MerkleTree } from "merkletreejs"
+import keccak256 from "keccak256"
+import { ethers, BytesLike } from "ethers"
 
 type Props = {
   productCart: ProductCart
   slicerId: number
   slicerAddress: string
   productId: number
-  price: number
+  price: string
   isUSD: boolean
+  extAddress: string
+  extCallValue: string
+  extCheckSig: string
   name: string
   image: string
-  isMultiple: boolean
+  maxUnits: number
   uid: string
   creator: string
+  texts: {
+    thanks?: string
+    instructions?: string
+  }
+  allowedAddresses: string[]
   availableUnits: number
   purchasedQuantity: number
   labelAdd?: string
@@ -36,87 +49,231 @@ const CartButton = ({
   productId,
   price,
   isUSD,
+  extAddress,
+  extCallValue,
+  extCheckSig,
   name,
-  isMultiple,
+  maxUnits,
   image,
   uid,
   creator,
+  texts,
+  allowedAddresses,
   availableUnits,
   purchasedQuantity,
   labelAdd,
   labelRemove,
-  preview,
+  preview
 }: Props) => {
-  const { setModalView, connector } = useAppContext()
+  const { account, setModalView, isConnected, connector } = useAppContext()
   const [loading, setLoading] = useState(false)
+  const [isUnlocked, setIsUnlocked] = useState(false)
+  const [isLoadingExtCall, setisLoadingExtCall] = useState(false)
+  const [isSuccessExtCall, seSuccessExtCall] = useState(false)
+  const [isFailExtCall, setIsFailExtCall] = useState(false)
   const [cookies, setCookie] = useCookies(["cart"])
-
   const adjustedAvailability = availableUnits - productCart?.quantity
+  let buyerCustomData: any = []
 
-  return purchasedQuantity != 0 ? (
-    <div
-      className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-blue-500 rounded-md hover:text-white nightwind-prevent group-cart hover:bg-blue-600"
-      onClick={() =>
-        handleRedeemProduct(
-          connector,
-          slicerId,
-          productId,
-          name,
-          image,
-          uid,
-          creator,
-          setLoading,
-          setModalView
-        )
+  const handleExtCall = async () => {
+    setisLoadingExtCall(true)
+    try {
+      const call = await ExtCall(
+        connector,
+        extAddress,
+        extCheckSig,
+        slicerId,
+        productId,
+        account,
+        1,
+        [],
+        buyerCustomData
+      )
+      if (Number(call) === 1) {
+        seSuccessExtCall(true)
+      } else {
+        setIsFailExtCall(true)
+        setTimeout(() => {
+          setIsFailExtCall(false)
+        }, 1500)
       }
-    >
-      {labelAdd ? (
-        <p className="mr-2 text-sm font-medium sm:text-base">
-          {`Redeem${purchasedQuantity != 1 ? ` (${purchasedQuantity})` : ""}`}
-        </p>
-      ) : (
-        purchasedQuantity != 1 && (
+    } catch (err) {
+      setIsFailExtCall(true)
+      setTimeout(() => {
+        setIsFailExtCall(false)
+      }, 1500)
+    }
+    setisLoadingExtCall(false)
+  }
+
+  useEffect(() => {
+    seSuccessExtCall(false)
+  }, [account])
+
+  if (account && allowedAddresses.length != 0) {
+    const leafNodes = allowedAddresses.map((addr) => keccak256(addr))
+    const tree = new MerkleTree(leafNodes, keccak256, {
+      sortPairs: true
+    })
+    const proof = tree.getHexProof(keccak256(account.toLowerCase()))
+    if (proof.length != 0) {
+      buyerCustomData = ethers.utils.defaultAbiCoder.encode(
+        ["bytes32[]"],
+        [proof]
+      )
+    }
+  }
+
+  return !productCart && purchasedQuantity != 0 ? (
+    maxUnits == 1 || maxUnits == purchasedQuantity ? (
+      <div
+        className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-blue-500 rounded-md hover:text-white nightwind-prevent group-cart hover:bg-blue-600"
+        onClick={async () =>
+          await handleRedeemProduct(
+            connector,
+            slicerId,
+            productId,
+            name,
+            image,
+            uid,
+            creator,
+            texts,
+            setLoading,
+            setModalView
+          )
+        }
+      >
+        {labelAdd ? (
           <p className="mr-2 text-sm font-medium sm:text-base">
-            {purchasedQuantity}
+            {`Redeem${purchasedQuantity != 1 ? ` (${purchasedQuantity})` : ""}`}
           </p>
-        )
-      )}
-      {loading ? (
-        <Spinner color="text-white nightwind-prevent" />
-      ) : (
-        <ShoppingBag className="w-5 h-5 group-cart-el" />
-      )}
-    </div>
+        ) : (
+          purchasedQuantity != 1 && (
+            <p className="mr-2 text-sm font-medium sm:text-base">
+              {purchasedQuantity}
+            </p>
+          )
+        )}
+        {loading ? (
+          <Spinner color="text-white nightwind-prevent" />
+        ) : (
+          <ShoppingBag className="w-5 h-5 group-cart-el" />
+        )}
+      </div>
+    ) : (
+      <div className="relative z-10 grid items-center justify-center w-full grid-cols-2 overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md nightwind-prevent-block">
+        <div
+          className={`relative z-10 h-8 flex items-center justify-center text-white ${
+            availableUnits != 0
+              ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
+              : "bg-gray-400"
+          }`}
+          onClick={async () =>
+            availableUnits != 0 &&
+            (await handleUpdateCart(
+              cookies,
+              setCookie,
+              productCart,
+              slicerId,
+              slicerAddress,
+              productId,
+              price,
+              isUSD,
+              extCallValue,
+              buyerCustomData,
+              name,
+              1
+            ))
+          }
+        >
+          <Cart className="w-5 h-5 mr-1 group-cart-el" />
+        </div>
+        <div
+          className="relative z-10 flex items-center justify-center h-8 transition-colors duration-150 bg-blue-500 rounded-r-md nightwind-prevent group-cart hover:bg-blue-600"
+          onClick={() =>
+            handleRedeemProduct(
+              connector,
+              slicerId,
+              productId,
+              name,
+              image,
+              uid,
+              creator,
+              texts,
+              setLoading,
+              setModalView
+            )
+          }
+        >
+          {loading ? (
+            <Spinner color="text-white nightwind-prevent" />
+          ) : (
+            <ShoppingBag className="w-5 h-5 group-cart-el" />
+          )}
+        </div>
+      </div>
+    )
   ) : !productCart ? (
-    <div
-      className={`relative z-10 flex items-center justify-center w-full py-2 text-center text-white rounded-md nightwind-prevent ${
-        availableUnits != 0
-          ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
-          : "bg-gray-400"
-      }`}
-      onClick={async () =>
-        !preview &&
-        availableUnits != 0 &&
-        (await handleUpdateCart(
-          cookies,
-          setCookie,
-          productCart,
-          slicerId,
-          slicerAddress,
-          productId,
-          price,
-          isUSD,
-          name,
-          1
-        ))
-      }
-    >
-      {labelAdd && (
-        <p className="mr-2 text-sm font-medium sm:text-base">{labelAdd}</p>
-      )}
-      <Cart className="w-5 h-5 mr-1 group-cart-el" />
-    </div>
-  ) : isMultiple ? (
+    extCheckSig != "0x00000000" && !isSuccessExtCall ? (
+      <div
+        className={`relative z-10 flex items-center justify-center w-full py-2 text-center text-white rounded-md nightwind-prevent group-cart ${
+          isFailExtCall
+            ? "bg-red-500 hover:bg-red-600"
+            : "bg-gray-500 hover:bg-gray-600"
+        } transition-colors duration-150`}
+        onClick={async () =>
+          isConnected
+            ? await handleExtCall()
+            : setModalView({ name: "CONNECT_VIEW", cross: true })
+        }
+        onMouseEnter={() => setIsUnlocked(true)}
+        onMouseLeave={() => setIsUnlocked(false)}
+      >
+        {labelAdd && (
+          <p className="mr-2 text-sm font-medium sm:text-base">{labelAdd}</p>
+        )}
+        {isLoadingExtCall ? (
+          <Spinner color="text-white nightwind-prevent" />
+        ) : (
+          <Lock
+            className="w-5 h-5 mr-1 group-cart-el"
+            isUnlocked={isUnlocked}
+          />
+        )}
+      </div>
+    ) : (
+      <div
+        className={`relative z-10 flex items-center justify-center w-full py-2 text-center text-white rounded-md nightwind-prevent ${
+          availableUnits != 0
+            ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
+            : "bg-gray-400"
+        }`}
+        onClick={async () =>
+          !preview &&
+          availableUnits != 0 &&
+          (await handleUpdateCart(
+            cookies,
+            setCookie,
+            productCart,
+            slicerId,
+            slicerAddress,
+            productId,
+            price,
+            isUSD,
+            extCallValue,
+            buyerCustomData,
+            name,
+            1
+          ))
+        }
+      >
+        {labelAdd && (
+          <p className="mr-2 text-sm font-medium sm:text-base">{labelAdd}</p>
+        )}
+        <Cart className="w-5 h-5 mr-1 group-cart-el" />
+      </div>
+    )
+  ) : maxUnits != 1 ? (
     <div className="relative z-10 grid items-center justify-center w-full grid-cols-3 overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md">
       <div
         className="flex items-center justify-center h-8 text-red-500 transition-colors duration-150 hover:bg-red-500 hover:text-white"
@@ -130,6 +287,8 @@ const CartButton = ({
             productId,
             price,
             isUSD,
+            extCallValue,
+            buyerCustomData,
             name,
             -1
           )
@@ -142,12 +301,14 @@ const CartButton = ({
       </div>
       <div
         className={`flex items-center justify-center h-8 transition-colors duration-150 ${
-          adjustedAvailability != 0
+          adjustedAvailability != 0 &&
+          purchasedQuantity + productCart.quantity < maxUnits
             ? "text-green-500 hover:bg-green-500 hover:text-white"
-            : "text-white bg-gray-400"
+            : "text-white bg-gray-400 cursor-default"
         }`}
         onClick={async () =>
           adjustedAvailability != 0 &&
+          purchasedQuantity + productCart.quantity < maxUnits &&
           (await handleUpdateCart(
             cookies,
             setCookie,
@@ -157,6 +318,8 @@ const CartButton = ({
             productId,
             price,
             isUSD,
+            extCallValue,
+            buyerCustomData,
             name,
             1
           ))
@@ -178,6 +341,8 @@ const CartButton = ({
           productId,
           price,
           isUSD,
+          extCallValue,
+          buyerCustomData,
           name,
           -1
         )

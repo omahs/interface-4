@@ -7,7 +7,7 @@ import {
   FAQs,
   HomeBanner,
   HomeHero,
-  HomeSection,
+  HomeSection
 } from "@components/ui"
 import { useEffect } from "react"
 import { section1, section2, section3, section4 } from "@lib/content/home"
@@ -17,7 +17,7 @@ import {
   defaultDescription,
   defaultTitle,
   longTitle,
-  domain,
+  domain
 } from "@components/common/Head"
 import { animate } from "motion"
 
@@ -32,7 +32,7 @@ const Home = () => {
         easing: "linear",
         duration: 30,
         repeat: Infinity,
-        allowWebkitAcceleration: true,
+        allowWebkitAcceleration: true
       }
     )
   }, [])
@@ -50,9 +50,9 @@ const Home = () => {
               url: `${domain}/og_image.jpg`,
               width: 1000,
               height: 1000,
-              alt: `${defaultTitle} cover image`,
-            },
-          ],
+              alt: `${defaultTitle} cover image`
+            }
+          ]
         }}
       />
       <Container page={true}>

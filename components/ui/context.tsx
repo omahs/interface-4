@@ -3,11 +3,13 @@ import { createContext, useContext, useEffect, useState } from "react"
 import { colorList, darkColorList } from "@utils/colorList"
 import { View } from "@lib/content/modals"
 import { getPurchases } from "@utils/getPurchases"
+import { BytesLike } from "ethers"
 
 export type Purchase = {
   slicerId: string
   productId: string
   quantity: string
+  buyerCustomData: BytesLike
 }
 
 const AppContext = createContext<any>({
@@ -24,7 +26,7 @@ const AppContext = createContext<any>({
   setModalView: () => null,
   setPurchases: () => null,
   shuffleColors: () => null,
-  purchases: [],
+  purchases: []
 })
 
 export function AppWrapper({ children }) {
@@ -80,7 +82,7 @@ export function AppWrapper({ children }) {
         setModalView,
         shuffleColors,
         purchases,
-        setPurchases,
+        setPurchases
       }}
     >
       {children}

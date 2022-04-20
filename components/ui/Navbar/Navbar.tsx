@@ -2,13 +2,13 @@ import dynamic from "next/dynamic"
 import Link from "next/link"
 import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
-import { Button, Container, SlcCounter } from "@components/ui"
+import { Button, Container } from "@components/ui"
 import UserIcon from "@components/icons/UserIcon"
 import { useAppContext } from "@components/ui/context"
 import { useState } from "react"
 
 const DropdownMenu = dynamic(() => import("@components/ui/DropdownMenu"), {
-  ssr: false,
+  ssr: false
 })
 
 const Navbar = () => {
@@ -46,7 +46,7 @@ const Navbar = () => {
               />
             ) : (
               <>
-                <SlcCounter />
+                {/* <SlcCounter /> */}
                 <a
                   onClick={() =>
                     setShowDropdown((showDropdown) => !showDropdown)
