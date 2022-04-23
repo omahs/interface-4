@@ -1,5 +1,5 @@
 const functions = {
-  "0x96238af8": "onProductPurchase",
+  "0xa23fffb9": "onProductPurchase",
   "0x95db9368": "isPurchaseAllowed"
 }
 

@@ -368,7 +368,10 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 `
 
   const tokensQueryProducts = /* GraphQL */ `
-products (where: {slicer: "${hexId}"}) {
+products (where: {
+    slicer: "${hexId}",
+    isRemoved: false
+  }) {
   id
   prices {
     currency {
