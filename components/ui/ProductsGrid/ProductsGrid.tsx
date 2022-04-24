@@ -43,15 +43,17 @@ const ProductsGrid = ({
           )
 
           return (
-            <ProductCard
-              slicerId={slicerId}
-              slicerAddress={slicerAddress}
-              key={key}
-              product={product}
-              chainInfo={chainInfo}
-              editMode={editMode}
-              ethUsd={ethUsd}
-            />
+            chainInfo && (
+              <ProductCard
+                slicerId={slicerId}
+                slicerAddress={slicerAddress}
+                key={key}
+                product={product}
+                chainInfo={chainInfo}
+                editMode={editMode}
+                ethUsd={ethUsd}
+              />
+            )
           )
         })}
       </div>
