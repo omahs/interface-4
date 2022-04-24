@@ -31,11 +31,12 @@ const AddProductFormExternal = ({
   const [ethValue, setEthValue] = useState(0)
   const [copiedRoot, setCopiedRoot] = useState(false)
 
+  const signatureParams = "(uint256,uint256,address,uint256,bytes,bytes)"
   const execSelector = execFunctionSignature
-    ? getSelector(execFunctionSignature)
+    ? getSelector(execFunctionSignature.trim() + signatureParams)
     : "0x00000000"
   const checkSelector = checkFunctionSignature
-    ? getSelector(checkFunctionSignature)
+    ? getSelector(checkFunctionSignature.trim() + signatureParams)
     : "0x00000000"
 
   const copyRoot = async () => {
@@ -83,10 +84,8 @@ const AddProductFormExternal = ({
 
   useEffect(() => {
     if (isContractCall) {
-      setCheckFunctionSignature(
-        "isPurchaseAllowed(uint256,uint256,address,uint256,bytes,bytes)"
-      )
-      setExecFunctionSignature("onProductPurchase(bytes)")
+      setCheckFunctionSignature("isPurchaseAllowed")
+      setExecFunctionSignature("onProductPurchase")
     } else {
       setCheckFunctionSignature("")
       setExecFunctionSignature("")
@@ -164,16 +163,65 @@ const AddProductFormExternal = ({
           </p>
           <div className="relative">
             <Input
-              label="Function signature (exec)"
+              label="Function signature (check)"
               type="string"
-              placeholder="onProductPurchase(bytes)"
+              placeholder="isPurchaseAllowed"
+              className="mt-4"
+              value={checkFunctionSignature}
+              onChange={setCheckFunctionSignature}
+              question={
+                <>
+                  <p>
+                    The signature of the function that checks if a buyer is
+                    eligible for purchase. See{" "}
+                    <a
+                      href="https://github.com/slice-so/genesis-nft/blob/main/contracts/extensions/Purchasable/SlicerPurchasable.sol"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      example
+                    </a>
+                    .
+                  </p>
+                  <p>
+                    Called to enable purchases for a buyer on the slicer store
+                    on Slice website. Returns true if buyer is allowed.
+                  </p>
+                  <p>
+                    Leave blank if there are no checks to be performed from the
+                    Slice interface (the product won&apos;t appear locked)
+                  </p>
+                </>
+              }
+            />
+            <p className="text-blue-600 dark:text-sky-300 absolute text-xs opacity-80 font-black left-0 bottom-[-23px]">
+              {checkSelector}
+            </p>
+            <p className="absolute text-xs opacity-50 left-0 top-[36px]">
+              {signatureParams}
+            </p>
+          </div>
+          <div className="relative pt-4">
+            <Input
+              label="Function signature (on purchase)"
+              type="string"
+              placeholder="onProductPurchase"
+              className="mt-4"
               value={execFunctionSignature}
               onChange={setExecFunctionSignature}
               question={
                 <>
                   <p>
                     The signature of the function that will be executed upon
-                    purchase, on the specified external address.
+                    purchase, on the specified external address. See{" "}
+                    <a
+                      href="https://github.com/slice-so/genesis-nft/blob/main/contracts/extensions/Purchasable/SlicerPurchasable.sol"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      example
+                    </a>
+                    .
                   </p>
                 </>
               }
@@ -181,29 +229,8 @@ const AddProductFormExternal = ({
             <p className="text-blue-600 dark:text-sky-300 absolute text-xs opacity-80 font-black left-0 bottom-[-23px]">
               {execSelector}
             </p>
-          </div>
-          <div className="relative pt-3">
-            <Input
-              label="Function signature (check)"
-              type="string"
-              placeholder="isPurchaseAllowed(uint256,uint256,address,uint256,bytes,bytes)"
-              value={checkFunctionSignature}
-              onChange={setCheckFunctionSignature}
-              question={
-                <>
-                  <p>
-                    The signature of the function that checks if a buyer is
-                    eligible for purchase.{" "}
-                  </p>
-                  <p>
-                    Called to enable purchases for a buyer on the slicer store
-                    on Slice website. Returns true if buyer is allowed.
-                  </p>
-                </>
-              }
-            />
-            <p className="text-blue-600 dark:text-sky-300 absolute text-xs opacity-80 font-black left-0 bottom-[-23px]">
-              {checkSelector}
+            <p className="absolute text-xs opacity-50 left-0 top-[52px]">
+              {signatureParams}
             </p>
           </div>
           <div className="pt-3">
