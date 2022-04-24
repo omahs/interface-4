@@ -235,7 +235,6 @@ export const handleReject = async (
   }
 }
 
-// TODO: Add condition to remove product from db if it has been removed by interacting with the blockchain
 export const handleCleanup = async (
   slicerId: number,
   setLoading: Dispatch<SetStateAction<boolean>>
