@@ -32,7 +32,7 @@ const ProductsGrid = ({
     setIterator(items < products?.length ? items : products?.length)
   }, [items, products])
 
-  return products && products.length != 0 ? (
+  return blockchainProducts && blockchainProducts.length != 0 ? (
     <>
       <h2 className="pb-6">Products</h2>
       <div className="grid items-center justify-center grid-cols-1 gap-8 max-w-[400px] mx-auto sm:max-w-none sm:grid-cols-2">
