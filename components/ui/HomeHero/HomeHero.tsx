@@ -24,10 +24,10 @@ const HomeHero = () => {
         />
       </div>
       <h2 className="py-2 sm:py-4 text-[1.38rem] font-black leading-normal xs:text-2xl sm:!text-3xl">
-        Decentralized stores & payments
+        Decentralized Commerce Protocol
       </h2>
       <h2 className="text-xl font-medium leading-normal sm:!text-xl">
-        with fractionalized NFT royalties
+        Web3 payments, NFT royalties, on-chain storefronts
       </h2>
 
       <div className="flex flex-col items-center justify-center space-y-8 pt-7 ">
