@@ -1,3 +1,4 @@
+import { ClickToComponent } from "click-to-react-component"
 import { ThemeProvider } from "next-themes"
 import Head from "@components/common/Head"
 import { Background, Layout } from "@components/ui"
@@ -9,6 +10,7 @@ import { AppProps } from "next/dist/shared/lib/router/router"
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
+      <ClickToComponent />
       <Head />
       <CookiesProvider>
         <ThemeProvider
