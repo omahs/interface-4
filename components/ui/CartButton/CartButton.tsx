@@ -166,7 +166,7 @@ const CartButton = ({
           className={`relative z-10 h-8 flex items-center justify-center text-white ${
             availableUnits != 0
               ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
-              : "bg-gray-400"
+              : "bg-gray-400 cursor-default"
           }`}
           onClick={async () =>
             availableUnits != 0 &&
@@ -246,7 +246,7 @@ const CartButton = ({
         className={`relative z-10 flex items-center justify-center w-full py-2 text-center text-white rounded-md nightwind-prevent ${
           availableUnits != 0
             ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
-            : "bg-gray-400"
+            : "bg-gray-400 cursor-default"
         }`}
         onClick={async () =>
           !preview &&
