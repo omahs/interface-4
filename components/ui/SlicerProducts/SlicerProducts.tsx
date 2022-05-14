@@ -79,8 +79,15 @@ const SlicerProducts = ({
         editMode={editMode}
       />
       {isAllowed && (
-        <div className="pt-6">
-          <Button label="Add a new product" href={`${slicerId}/products/new`} />
+        <div>
+          {!editMode && (
+            <div className="pt-6">
+              <Button
+                label="Add a new product"
+                href={`${slicerId}/products/new`}
+              />
+            </div>
+          )}
           {(pendingProducts?.length != 0 ||
             blockchainProducts?.length > products?.data?.length) && (
             <div className="pt-12">

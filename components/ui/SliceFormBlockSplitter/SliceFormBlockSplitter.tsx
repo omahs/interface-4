@@ -84,9 +84,6 @@ const SliceFormBlockSplitter = ({
             position="top-[35px] right-[-35px]"
           />
         </div>
-        <p className="col-span-8 pb-2 font-semibold text-center xs:hidden">
-          Add the addresses who will own the slicer
-        </p>
         {[...Array(inputCount)].map((el, key) => {
           const i = key
           return (
@@ -114,7 +111,7 @@ const SliceFormBlockSplitter = ({
         </p>
         <p
           className={`col-span-3 pl-5${
-            totalShares > 1000000000 ? " text-red-500 font-bold" : ""
+            totalShares > 4000000000 ? " text-red-500 font-bold" : ""
           }`}
         >
           {formatNumber(totalShares, 3)}
@@ -126,16 +123,19 @@ const SliceFormBlockSplitter = ({
               <>
                 <p>
                   Accounts with more than the chosen amount of slices will be{" "}
-                  <Link href="/#superowner">
-                    <a className="font-black highlight">
-                      superowners with privileged access
-                    </a>
-                  </Link>{" "}
-                  to this slicer.
+                  <a
+                    className="font-black highlight"
+                    href="/#superowner"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    superowners with privileged access
+                  </a>{" "}
+                  to the slicer.
                 </p>
-                <p>
-                  They can edit the slicer page, add products, access restricted
-                  information, update data on the blockchain, and more.
+                <p className="font-bold">
+                  Superowners can edit slicer metadata and sell products
+                  onchain.
                 </p>
               </>
             }
@@ -176,12 +176,12 @@ const SliceFormBlockSplitter = ({
                 <p>It should be enabled if:</p>
                 <ul>
                   <li>
-                    You&apos;re using the slicer as a <b>typical NFT</b>, whose
-                    metadata should not change once created
+                    <b>The slicer is a collectible asset</b> whose metadata
+                    should not change once created
                   </li>
                   <li>
-                    You want to avoid superowners editing the metadata at their
-                    discretion (useful for community slicers)
+                    Superowners should not be able to edit the metadata at their
+                    discretion (useful for community-owned slicers)
                   </li>
                 </ul>
                 <p>
