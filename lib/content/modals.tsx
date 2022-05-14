@@ -172,10 +172,10 @@ export const CREATE_PRODUCT_CONFIRM_VIEW = (params: any) => {
   return (
     <>
       <div className="pb-6 text-center">
-        <DoubleText inactive logoText="Ready to mint?" />
+        <DoubleText inactive logoText="Ready to create product?" />
         <p className="pt-8">
-          Make sure the information you added is correct, you won&apos;t be able
-          to change all details later.
+          Make sure the information added is correct, you won&apos;t be able to
+          change all details later.
         </p>
       </div>
 
@@ -231,7 +231,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
   return (
     <div className="text-center">
       <div className="pb-6 text-center">
-        <DoubleText inactive logoText="Minting in progress" />
+        <DoubleText inactive logoText="Creating product" />
       </div>
       <p className="pb-8">Please wait until the process is completed</p>
       <div className="grid items-center grid-cols-6 gap-2 px-4">
