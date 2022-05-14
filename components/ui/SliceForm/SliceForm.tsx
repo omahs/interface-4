@@ -125,7 +125,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         hasMinimumShares={hasMinimumShares}
       />
       <div className="py-8">
-        {totalShares > 1000000000 && (
+        {totalShares > 4000000000 && (
           <p className="pt-4 text-red-500">
             <strong>Note:</strong> You can create slicers with up to 1 Billion
             total slices.

@@ -114,7 +114,7 @@ const SliceFormBlockSplitter = ({
         </p>
         <p
           className={`col-span-3 pl-5${
-            totalShares > 1000000000 ? " text-red-500 font-bold" : ""
+            totalShares > 4000000000 ? " text-red-500 font-bold" : ""
           }`}
         >
           {formatNumber(totalShares, 3)}
