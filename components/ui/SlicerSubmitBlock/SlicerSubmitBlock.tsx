@@ -163,9 +163,9 @@ const SlicerSubmitBlock = ({
 
   return (
     <div>
-      <p className="pb-8 mx-auto max-w-screen-xs">
-        <strong>Note:</strong> Edits will appear after around 10 seconds.
-        Refresh the page a couple of times to see them.
+      <p className="pb-8 mx-auto text-sm max-w-screen-xs">
+        Wait a few seconds and refresh the page to make new edits appear after
+        saving
       </p>
       <div className="pb-8">
         <Button

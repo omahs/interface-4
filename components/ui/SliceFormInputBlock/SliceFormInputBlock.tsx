@@ -123,8 +123,8 @@ const SliceFormInputBlock = ({
             type="number"
             placeholder={placeholder}
             min="1"
-            max="1000000000"
-            error={sharesAmount > 1000000000}
+            max="4000000000"
+            error={sharesAmount > 4000000000}
             value={sharesAmount != 0 ? sharesAmount : ""}
             required={address && true}
             onChange={setSharesAmount}

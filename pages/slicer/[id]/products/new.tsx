@@ -106,11 +106,17 @@ export default function NewProduct() {
             <ActionScreen
               highlightTitle="Product added! 🍰"
               helpText={
-                <p className="pb-6">
-                  You can find the new product with ID{" "}
-                  <b>#{eventLog && Number(eventLog[1]._hex)}</b> in the slicer
-                  page.
-                </p>
+                <>
+                  <p className="pb-3">
+                    You can find the new product with ID{" "}
+                    <b>#{eventLog && Number(eventLog[1]._hex)}</b> in the slicer
+                    page.
+                  </p>
+                  <p className="pb-6 text-sm">
+                    Wait a few seconds and refresh the page if you don&apos;t
+                    see it.
+                  </p>
+                </>
               }
               buttonLabel="Go to slicer"
               href={`/slicer/${id}`}

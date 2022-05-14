@@ -166,7 +166,7 @@ const CartButton = ({
           className={`relative z-10 h-8 flex items-center justify-center text-white ${
             availableUnits != 0
               ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
-              : "bg-gray-400"
+              : "bg-gray-400 cursor-default"
           }`}
           onClick={async () =>
             availableUnits != 0 &&
@@ -246,7 +246,7 @@ const CartButton = ({
         className={`relative z-10 flex items-center justify-center w-full py-2 text-center text-white rounded-md nightwind-prevent ${
           availableUnits != 0
             ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
-            : "bg-gray-400"
+            : "bg-gray-400 cursor-default"
         }`}
         onClick={async () =>
           !preview &&
@@ -302,13 +302,14 @@ const CartButton = ({
       <div
         className={`flex items-center justify-center h-8 transition-colors duration-150 ${
           adjustedAvailability != 0 &&
-          purchasedQuantity + productCart.quantity < maxUnits
+          (maxUnits == 0 || purchasedQuantity + productCart.quantity < maxUnits)
             ? "text-green-500 hover:bg-green-500 hover:text-white"
             : "text-white bg-gray-400 cursor-default"
         }`}
         onClick={async () =>
           adjustedAvailability != 0 &&
-          purchasedQuantity + productCart.quantity < maxUnits &&
+          (maxUnits == 0 ||
+            purchasedQuantity + productCart.quantity < maxUnits) &&
           (await handleUpdateCart(
             cookies,
             setCookie,
