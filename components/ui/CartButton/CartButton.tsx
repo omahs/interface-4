@@ -302,13 +302,14 @@ const CartButton = ({
       <div
         className={`flex items-center justify-center h-8 transition-colors duration-150 ${
           adjustedAvailability != 0 &&
-          purchasedQuantity + productCart.quantity < maxUnits
+          (maxUnits == 0 || purchasedQuantity + productCart.quantity < maxUnits)
             ? "text-green-500 hover:bg-green-500 hover:text-white"
             : "text-white bg-gray-400 cursor-default"
         }`}
         onClick={async () =>
           adjustedAvailability != 0 &&
-          purchasedQuantity + productCart.quantity < maxUnits &&
+          (maxUnits == 0 ||
+            purchasedQuantity + productCart.quantity < maxUnits) &&
           (await handleUpdateCart(
             cookies,
             setCookie,
