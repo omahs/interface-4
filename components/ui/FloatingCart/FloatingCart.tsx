@@ -84,6 +84,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
         setSuccess,
         true
       )
+      setModalView({ name: "" })
     } catch (err) {
       console.log(err)
     }
