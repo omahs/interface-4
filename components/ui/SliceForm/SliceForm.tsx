@@ -127,14 +127,15 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
       <div className="py-8">
         {totalShares > 4000000000 && (
           <p className="pt-4 text-red-500">
-            <strong>Note:</strong> You can create slicers with up to 1 Billion
-            total slices.
+            <strong className="text-yellow-600">Note:</strong> you can create
+            slicers with up to 4 Billion total slices.
           </p>
         )}
         {minimumShares ? (
           minimumShares > 0 ? (
             <p className="pt-4">
-              <strong>Note:</strong> This slicer allows up to{" "}
+              <strong className="text-yellow-600">Note:</strong> this slicer
+              allows up to{" "}
               <b>
                 {totalShares / minimumShares > 1000
                   ? `about ${formatNumber(totalShares / minimumShares)}`
@@ -145,29 +146,30 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           ) : null
         ) : null}
         <p className="pt-4">
-          <strong>Note:</strong> minimum and total slices cannot be changed
-          later.
+          <strong className="text-yellow-600">Note:</strong> minimum and total
+          slices cannot be changed later.
         </p>
         {totalShares === 1 && (
           <p className="pt-4">
-            <strong>Note:</strong> You are about to create a non-fractionalized
-            Slicer. That means that there can only be a single owner at any
-            given time which gets all ETH earned by the slicer.
+            <strong className="text-yellow-600">Note:</strong> you are about to
+            create a non-fractionalized Slicer. That means that there can only
+            be a single owner at any given time which gets all ETH earned by the
+            slicer.
           </p>
         )}
         {minimumShares != 0 && totalShares == minimumShares && (
           <p className="pt-4">
-            <strong>Note:</strong> A user would need to own all of the slices to
-            operate this slicer. Superowner slices cannot be changed later, so
-            make sure this is the desired behaviour or reduce them accordingly
-            to your needs.
+            <strong className="text-yellow-600">Note:</strong> a user would need
+            to own all of the slices to operate this slicer. Superowner slices
+            cannot be changed later, so make sure this is the desired behaviour
+            or reduce them accordingly to your needs.
           </p>
         )}
         {process.env.NEXT_PUBLIC_CHAIN_ID === "4" && (
           <p className="pt-4">
-            <strong>Note:</strong> This version of Slice runs on Rinkeby
-            Testnet, so it does not use real ETH. You can get some ETH on
-            Rinkeby{" "}
+            <strong className="text-yellow-600">Note:</strong> this version of
+            Slice runs on Rinkeby Testnet, so it does not use real ETH. You can
+            get some ETH on Rinkeby{" "}
             <a
               href="https://rinkebyfaucet.com/"
               target="_blank"
