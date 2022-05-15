@@ -31,6 +31,17 @@ const Navbar = () => {
               </a>
             </Link>
           </div>
+          {process.env.NEXT_PUBLIC_CHAIN_ID === "4" && (
+            <div className="absolute right-0 flex items-center justify-center w-full h-full">
+              <p
+                className={`px-32 text-xs font-bold text-center text-yellow-600 ${
+                  !isConnected ? "hidden sm:block" : ""
+                }`}
+              >
+                RINKEBY TESTNET
+              </p>
+            </div>
+          )}
           <div className="flex items-center space-x-5 sm:space-x-8">
             <Nightwind size="h-[24px]" />
             {!isConnected ? (
