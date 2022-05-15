@@ -5,10 +5,11 @@ type Props = {
   question: string
   answer: string | JSX.Element
   id: string
+  anchor: string | undefined
 }
 
-const FAQsItem = ({ question, answer, id }: Props) => {
-  const [showAnswer, setShowAnswer] = useState(false)
+const FAQsItem = ({ question, answer, id, anchor }: Props) => {
+  const [showAnswer, setShowAnswer] = useState(anchor == id)
   return (
     <li>
       <div
@@ -39,3 +40,5 @@ const FAQsItem = ({ question, answer, id }: Props) => {
 }
 
 export default FAQsItem
+
+// TODO: Fix react state update - useEffect should be used to handle init state of showAnswer, but at the FAQs component. Preferable to not use at all.
