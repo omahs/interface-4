@@ -252,13 +252,13 @@ export const faqsMain = [
     answer: (
       <>
         <p>
-          Products optionally allow sellers to give text and files to their
+          Products optionally allow sellers to give private texts and files to
           buyers. Their content is automatically encrypted and saved immutably
           on IPFS using Filecoin (via{" "}
           <a href="https://web3.storage/" target="_blank" rel="noreferrer">
             Web3 Storage
           </a>
-          ) and can only be accessed by the buyers.
+          ).
         </p>
         <p>
           The data can only be decrypted via Slice by redeeming the product,
