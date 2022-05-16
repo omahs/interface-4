@@ -27,7 +27,7 @@ const slides = [
         Sells <b>any file or merchandise</b> related to the collectibles.
       </p>
     ),
-    isNFT: true,
+    isNFT: true
   },
   {
     title: "Music artists",
@@ -48,7 +48,7 @@ const slides = [
         Sells <b>audio files</b> (songs or albums), <b>concert tickets</b> and
         merchandise.
       </p>
-    ),
+    )
   },
   {
     title: "Games",
@@ -64,7 +64,7 @@ const slides = [
         Sells <b>games and add-ons</b> as files or coupons, as well as
         merchandise.
       </p>
-    ),
+    )
   },
   {
     title: "Writers",
@@ -79,7 +79,7 @@ const slides = [
       <p>
         Sells <b>ebooks, PDF files or access to exclusive content</b>.
       </p>
-    ),
+    )
   },
   {
     title: "Files",
@@ -98,7 +98,7 @@ const slides = [
       <p>
         <b>Digital files of any kind</b>.
       </p>
-    ),
+    )
   },
   {
     title: "Payments",
@@ -119,7 +119,7 @@ const slides = [
         Payments can be <b>received directly</b> or by selling{" "}
         <b>products, services or files</b> through the store.
       </p>
-    ),
+    )
   },
   {
     title: "Startup & DAO",
@@ -138,11 +138,9 @@ const slides = [
     ),
     contentProduct: (
       <p>
-        Sells <b>the startup products and services</b>, integrated via Slice API
-        (coming soon).
+        Sells <b>the startup products and services</b>.
       </p>
-    ),
-    isFuture: true,
+    )
   },
   {
     title: "Merchandise",
@@ -155,11 +153,10 @@ const slides = [
     ),
     contentProduct: (
       <p>
-        Sells <b>digital and physical objects</b>, by relying on Slice API.
+        Sells <b>digital and physical objects</b>.
       </p>
-    ),
-    isFuture: true,
-  },
+    )
+  }
 ]
 
 export default slides
