@@ -5,7 +5,7 @@ import {
   Slider,
   Slide,
   ButtonBack,
-  ButtonNext,
+  ButtonNext
 } from "pure-react-carousel"
 import Arrow from "@components/icons/Arrow"
 import { CarouselDot } from ".."
@@ -60,11 +60,6 @@ const Carousel = () => {
                     {slide.contentProduct}
                   </div>
                 </div>
-                {slide.isFuture && (
-                  <p className="absolute top-0 left-0 pt-4 -mt-10 text-sm text-gray-500 md:-mt-7">
-                    Coming soon
-                  </p>
-                )}
               </div>
               <div className="relative w-48 h-48 p-8 mx-auto border border-gray-200 shadow-lg md:p-10 sm:w-56 sm:h-56 rounded-xl">
                 {slide.imageSrc ? (
