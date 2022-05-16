@@ -1,8 +1,12 @@
 import { DoubleText, FAQsItem } from ".."
 import { faqsMain, faqsNfts, faqsGeneral } from "@lib/content/faqsContent"
 import { accounts } from "../Social/Social"
+import { useRouter } from "next/router"
 
 const FAQs = () => {
+  const router = useRouter()
+  const anchor = router.asPath.split("#")[1]
+
   return (
     <>
       <div className="pt-12 text-center" id="faq">
@@ -16,6 +20,7 @@ const FAQs = () => {
               question={faq.question}
               answer={faq.answer}
               id={faq.id}
+              anchor={anchor}
             />
           ))}
         </ul>
@@ -27,6 +32,7 @@ const FAQs = () => {
               question={faq.question}
               answer={faq.answer}
               id={faq.id}
+              anchor={anchor}
             />
           ))}
         </ul>
@@ -38,6 +44,7 @@ const FAQs = () => {
               question={faq.question}
               answer={faq.answer}
               id={faq.id}
+              anchor={anchor}
             />
           ))}
         </ul>

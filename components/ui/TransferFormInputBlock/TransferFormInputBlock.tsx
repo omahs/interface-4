@@ -53,12 +53,12 @@ const TransferFormInputBlock = ({
           text={
             <>
               <p>
-                The percentage represents the relative amount of ETH earned by
-                the account from all payments made to the slicer.
+                The percentage represents the relative amount of total slices
+                being transferred.
               </p>
               <p>
-                If it&apos;s green, the account holds more than the minimum
-                slices amount.
+                If the number is green, the transfer will make the receiver a
+                superowner (not considering any amount of slices already owned).
               </p>
             </>
           }
@@ -66,7 +66,7 @@ const TransferFormInputBlock = ({
         />
       </div>
       <p className="col-span-8 pb-2 font-semibold text-center xs:hidden">
-        Add the addresses who will receive the slices
+        Specify the receiver addresses and the slices to transfer
       </p>
       {[...Array(inputCount)].map((el, key) => {
         return (
