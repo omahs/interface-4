@@ -19,7 +19,7 @@ const Navbar = () => {
     <header className="shadow-sm bg-gray-50">
       <Container>
         <nav className="relative px-3 sm:px-6 h-[4.25rem] items-center mx-auto flex justify-between">
-          <div className="flex items-center space-x-7 sm:space-x-10">
+          <div className="relative z-10 flex items-center space-x-7 sm:space-x-10">
             <Link href="/">
               <a className="mb-1" aria-label="Slice logo">
                 <Logo size="w-[24px]" />
@@ -31,7 +31,18 @@ const Navbar = () => {
               </a>
             </Link>
           </div>
-          <div className="flex items-center space-x-5 sm:space-x-8">
+          {process.env.NEXT_PUBLIC_CHAIN_ID === "4" && (
+            <div className="absolute right-0 flex items-center justify-center w-full h-full">
+              <p
+                className={`px-32 text-xs font-bold text-center text-yellow-600 ${
+                  !isConnected ? "hidden sm:block" : ""
+                }`}
+              >
+                RINKEBY TESTNET
+              </p>
+            </div>
+          )}
+          <div className="relative z-10 flex items-center space-x-5 sm:space-x-8">
             <Nightwind size="h-[24px]" />
             {!isConnected ? (
               <Button
