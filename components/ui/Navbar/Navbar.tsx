@@ -19,7 +19,7 @@ const Navbar = () => {
     <header className="shadow-sm bg-gray-50">
       <Container>
         <nav className="relative px-3 sm:px-6 h-[4.25rem] items-center mx-auto flex justify-between">
-          <div className="flex items-center space-x-7 sm:space-x-10">
+          <div className="relative z-10 flex items-center space-x-7 sm:space-x-10">
             <Link href="/">
               <a className="mb-1" aria-label="Slice logo">
                 <Logo size="w-[24px]" />
@@ -42,7 +42,7 @@ const Navbar = () => {
               </p>
             </div>
           )}
-          <div className="flex items-center space-x-5 sm:space-x-8">
+          <div className="relative z-10 flex items-center space-x-5 sm:space-x-8">
             <Nightwind size="h-[24px]" />
             {!isConnected ? (
               <Button
