@@ -248,6 +248,27 @@ export const faqsMain = [
     id: "products"
   },
   {
+    question: "How are texts and files encrypted in products?",
+    answer: (
+      <>
+        <p>
+          Products optionally allow sellers to give private texts and files to
+          buyers. Their content is automatically encrypted and saved immutably
+          on IPFS using Filecoin (via{" "}
+          <a href="https://web3.storage/" target="_blank" rel="noreferrer">
+            Web3 Storage
+          </a>
+          ).
+        </p>
+        <p>
+          The data can only be decrypted via Slice by redeeming the product,
+          using a symmetric key generated only to those who have purchased it.
+        </p>
+      </>
+    ),
+    id: "encryption"
+  },
+  {
     question: "What are sponsorships?",
     answer: (
       <>
