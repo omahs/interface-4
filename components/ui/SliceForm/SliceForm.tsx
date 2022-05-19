@@ -8,6 +8,7 @@ import formatNumber from "@utils/formatNumber"
 import getLog from "@utils/getLog"
 import decimalToHex from "@utils/decimalToHex"
 import { Contract, ContractTransaction } from "ethers"
+import PieChart from "../PieChart"
 
 type Props = {
   success: boolean
@@ -106,89 +107,99 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   }
 
   return (
-    <form
-      className="w-full max-w-screen-sm py-6 mx-auto space-y-4"
-      onSubmit={submit}
-    >
-      <SliceFormBlockSplitter
-        success={success}
-        addresses={addresses}
-        shares={shares}
-        minimumShares={minimumShares}
-        totalShares={totalShares}
-        isImmutable={isImmutable}
-        setAddresses={setAddresses}
-        setShares={setShares}
-        setMinimumShares={setMinimumShares}
-        setTotalShares={setTotalShares}
-        setisImmutable={setisImmutable}
-        hasMinimumShares={hasMinimumShares}
-      />
-      <div className="py-8">
-        {totalShares > 4000000000 && (
-          <p className="pt-4 text-red-500">
-            <strong className="text-yellow-600">Note:</strong> you can create
-            slicers with up to 4 Billion total slices.
-          </p>
-        )}
-        {minimumShares ? (
-          minimumShares > 0 ? (
-            <p className="pt-4">
-              <strong className="text-yellow-600">Note:</strong> this slicer
-              allows up to{" "}
-              <b>
-                {totalShares / minimumShares > 1000
-                  ? `about ${formatNumber(totalShares / minimumShares)}`
-                  : `${totalShares / minimumShares}`.split(".")[0]}
-              </b>{" "}
-              superowners at the same time.
+    <div className="flex">
+      <form
+        className="w-full max-w-screen-sm py-6 mx-auto space-y-4 sm:w-3/5"
+        onSubmit={submit}
+      >
+        <SliceFormBlockSplitter
+          success={success}
+          addresses={addresses}
+          shares={shares}
+          minimumShares={minimumShares}
+          totalShares={totalShares}
+          isImmutable={isImmutable}
+          setAddresses={setAddresses}
+          setShares={setShares}
+          setMinimumShares={setMinimumShares}
+          setTotalShares={setTotalShares}
+          setisImmutable={setisImmutable}
+          hasMinimumShares={hasMinimumShares}
+        />
+        <div className="py-8">
+          {totalShares > 4000000000 && (
+            <p className="pt-4 text-red-500">
+              <strong className="text-yellow-600">Note:</strong> you can create
+              slicers with up to 4 Billion total slices.
             </p>
-          ) : null
-        ) : null}
-        <p className="pt-4">
-          <strong className="text-yellow-600">Note:</strong> minimum and total
-          slices cannot be changed later.
-        </p>
-        {totalShares === 1 && (
+          )}
+          {minimumShares ? (
+            minimumShares > 0 ? (
+              <p className="pt-4">
+                <strong className="text-yellow-600">Note:</strong> this slicer
+                allows up to{" "}
+                <b>
+                  {totalShares / minimumShares > 1000
+                    ? `about ${formatNumber(totalShares / minimumShares)}`
+                    : `${totalShares / minimumShares}`.split(".")[0]}
+                </b>{" "}
+                superowners at the same time.
+              </p>
+            ) : null
+          ) : null}
           <p className="pt-4">
-            <strong className="text-yellow-600">Note:</strong> you are about to
-            create a non-fractionalized Slicer. That means that there can only
-            be a single owner at any given time which gets all ETH earned by the
-            slicer.
+            <strong className="text-yellow-600">Note:</strong> minimum and total
+            slices cannot be changed later.
           </p>
-        )}
-        {minimumShares != 0 && totalShares == minimumShares && (
-          <p className="pt-4">
-            <strong className="text-yellow-600">Note:</strong> a user would need
-            to own all of the slices to operate this slicer. Superowner slices
-            cannot be changed later, so make sure this is the desired behaviour
-            or reduce them accordingly to your needs.
-          </p>
-        )}
-        {process.env.NEXT_PUBLIC_CHAIN_ID === "4" && (
-          <p className="pt-4">
-            <strong className="text-yellow-600">Note:</strong> this version of
-            Slice runs on Rinkeby Testnet, so it does not use real ETH. You can
-            get some ETH on Rinkeby{" "}
-            <a
-              href="https://rinkebyfaucet.com/"
-              target="_blank"
-              rel="noreferrer"
-              className="font-black highlight"
-            >
-              here
-            </a>
-            .
-          </p>
-        )}
+          {totalShares === 1 && (
+            <p className="pt-4">
+              <strong className="text-yellow-600">Note:</strong> you are about
+              to create a non-fractionalized Slicer. That means that there can
+              only be a single owner at any given time which gets all ETH earned
+              by the slicer.
+            </p>
+          )}
+          {minimumShares != 0 && totalShares == minimumShares && (
+            <p className="pt-4">
+              <strong className="text-yellow-600">Note:</strong> a user would
+              need to own all of the slices to operate this slicer. Superowner
+              slices cannot be changed later, so make sure this is the desired
+              behaviour or reduce them accordingly to your needs.
+            </p>
+          )}
+          {process.env.NEXT_PUBLIC_CHAIN_ID === "4" && (
+            <p className="pt-4">
+              <strong className="text-yellow-600">Note:</strong> this version of
+              Slice runs on Rinkeby Testnet, so it does not use real ETH. You
+              can get some ETH on Rinkeby{" "}
+              <a
+                href="https://rinkebyfaucet.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="font-black highlight"
+              >
+                here
+              </a>
+              .
+            </p>
+          )}
+        </div>
+        <div className="py-1">
+          <Button label="Create slicer" type="submit" loading={loadingButton} />
+        </div>
+        <div>
+          <MessageBlock msg={message} />
+        </div>
+      </form>
+      <div className="sm:w-2/5">
+        <PieChart
+          addresses={addresses}
+          shares={shares}
+          minimumShares={minimumShares}
+          totalShares={totalShares}
+        />
       </div>
-      <div className="py-1">
-        <Button label="Create slicer" type="submit" loading={loadingButton} />
-      </div>
-      <div>
-        <MessageBlock msg={message} />
-      </div>
-    </form>
+    </div>
   )
 }
 

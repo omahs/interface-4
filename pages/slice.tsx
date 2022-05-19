@@ -5,6 +5,7 @@ import {
   ConnectBlock,
   Container,
   DoubleText,
+  PieChart,
   SliceForm
 } from "@components/ui"
 import { LogDescription } from "ethers/lib/utils"
@@ -46,36 +47,38 @@ export default function Slice() {
           {!success ? (
             !loading ? (
               <>
-                <DoubleText
-                  inactive
-                  logoText={`Create a Slicer`}
-                  size="text-4xl sm:text-5xl"
-                  position="pb-4 sm:pb-6"
-                />
-                <div className="py-6 mx-auto space-y-4 sm:px-6 max-w-screen-xs">
-                  <p>
-                    Slicers split any payment received to their owners,
-                    proportionally to number of slices held.
+                <div className="sm:text-left">
+                  <DoubleText
+                    inactive
+                    logoText={`Create a Slicer`}
+                    size="text-4xl sm:text-5xl"
+                    position="pb-4 sm:pb-6"
+                  />
+                  <div className="py-6 space-y-4 sm:px-6 max-w-screen-xs sm:pl-0">
+                    <p>
+                      Slicers split any payment received to their owners,
+                      proportionally to number of slices held.
+                    </p>
+                    <p>
+                      Slices are{" "}
+                      <DoubleText
+                        inactive
+                        logoText="tradable, fractionalized NFTs"
+                        size="text-normal"
+                      />{" "}
+                      (ERC1155 tokens) that represent ownership over a slicer.
+                    </p>
+                  </div>
+                  <p className="pt-6 font-semibold text-center sm:text-left text-yellow-600">
+                    Add initial owners and their slices
                   </p>
-                  <p>
-                    Slices are{" "}
-                    <DoubleText
-                      inactive
-                      logoText="tradable, fractionalized NFTs"
-                      size="text-normal"
-                    />{" "}
-                    (ERC1155 tokens) that represent ownership over a slicer.
-                  </p>
+                  <SliceForm
+                    success={success}
+                    setLoading={setLoading}
+                    setSuccess={setSuccess}
+                    setLogs={setLogs}
+                  />
                 </div>
-                <p className="pt-6 font-semibold text-center text-yellow-600">
-                  Add initial owners and their slices
-                </p>
-                <SliceForm
-                  success={success}
-                  setLoading={setLoading}
-                  setSuccess={setSuccess}
-                  setLogs={setLogs}
-                />
               </>
             ) : (
               <ActionScreen
