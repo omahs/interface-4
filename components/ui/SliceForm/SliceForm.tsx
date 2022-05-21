@@ -4,12 +4,12 @@ import { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import MessageBlock from "../MessageBlock"
 import { useAppContext } from "../context"
-import formatNumber from "@utils/formatNumber"
 import getLog from "@utils/getLog"
 import decimalToHex from "@utils/decimalToHex"
 import { Contract, ContractTransaction } from "ethers"
 import PieChart from "../PieChart"
-import DoubleText from "../DoubleText"
+import SliceFormDescription from "../SliceFormDescription"
+import formatNumber from "@utils/formatNumber"
 
 type Props = {
   success: boolean
@@ -114,21 +114,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   return (
     <form className="md:flex" onSubmit={submit}>
       <div className="w-full max-w-screen-sm py-6 mx-auto space-y-4 md:w-3/5">
-        <div className="py-6 mx-auto space-y-4 text-center sm:px-6 max-w-screen-xs md:text-left">
-          <p>
-            Slicers split any payment received to their owners, proportionally
-            to number of slices held.
-          </p>
-          <p>
-            Slices are{" "}
-            <DoubleText
-              inactive
-              logoText="tradable, fractionalized NFTs"
-              size="text-normal"
-            />{" "}
-            (ERC1155 tokens) that represent ownership over a slicer.
-          </p>
-        </div>
+        <SliceFormDescription />
         <p className="font-semibold text-center text-yellow-600">
           Add initial owners and their slices
         </p>
@@ -194,7 +180,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           <MessageBlock msg={message} />
         </div>
       </div>
-      <div className="justify-center md:h-screen md:flex md:flex-col md:w-2/5 md:sticky md:top-0 md:-mt-24">
+      <div className="justify-center md:h-screen md:flex md:flex-col md:w-2/5 md:sticky md:top-0 md:-mt-40">
         <div>
           <PieChart
             addresses={addresses}
@@ -202,7 +188,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
             minimumShares={minimumShares}
             totalShares={totalShares}
           />
-          <div className="w-4/5 pt-8 m-auto">
+          <div className="pt-8 mx-auto">
             <div className="flex justify-around">
               <div>
                 <p className="pb-1 text-lg font-bold">Owners</p>
@@ -210,15 +196,11 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
               </div>
               <div>
                 <p className="pb-1 text-lg font-bold">Superowners 👑</p>
-                {minimumShares ? (
-                  minimumShares > 0 ? (
-                    <p className="text-center">
-                      {shares.filter((n) => n >= minimumShares).length} /{" "}
-                      {allowedSuperOwners}
-                    </p>
-                  ) : (
-                    <p className="text-center"> 0 / 0 </p>
-                  )
+                {minimumShares && minimumShares > 0 ? (
+                  <p className="text-center">
+                    {shares.filter((n) => n >= minimumShares).length} /{" "}
+                    {allowedSuperOwners}
+                  </p>
                 ) : (
                   <p className="text-center"> 0 / 0 </p>
                 )}
@@ -230,6 +212,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
               label="Create slicer"
               type="submit"
               loading={loadingButton}
+              requireConnection
             />
           </div>
         </div>
