@@ -15,6 +15,11 @@ const Navbar = () => {
   const { isConnected, loading, setModalView } = useAppContext()
   const [showDropdown, setShowDropdown] = useState(false)
 
+  const test = () => {
+    // @ts-ignore
+    sa_event("TEST")
+  }
+
   return (
     <header className="shadow-sm bg-gray-50">
       <Container>
@@ -43,7 +48,7 @@ const Navbar = () => {
             </div>
           )}
           <div className="relative z-10 flex items-center space-x-5 sm:space-x-8">
-            <Nightwind size="h-[24px]" />
+            <Nightwind size="h-[24px]" onClick={() => test()} />
             {!isConnected ? (
               <Button
                 className="h-[36px] font-medium rounded-full border-2 shadow-light"
