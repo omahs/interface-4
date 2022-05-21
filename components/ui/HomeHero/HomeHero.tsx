@@ -31,11 +31,9 @@ const HomeHero = () => {
       </h2>
 
       <div className="flex flex-col items-center justify-center pt-10 space-y-8 ">
-        <Button
-          label="Start slicing"
-          href="/slice"
-          onClick={() => sa_event("start_slicing")}
-        />
+        <div onClick={() => sa_event("start_slicing")}>
+          <Button label="Start slicing" href="/slice" />
+        </div>
         {process.env.NEXT_PUBLIC_CHAIN_ID === "1" && (
           <Link href="/slicer/1">
             <a className="highlight">or check out the Slice Genesis slicer</a>
