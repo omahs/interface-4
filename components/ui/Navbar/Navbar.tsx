@@ -16,6 +16,8 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false)
 
   const test = () => {
+    console.log("test")
+
     // @ts-ignore
     sa_event("TEST")
   }
@@ -42,13 +44,14 @@ const Navbar = () => {
                 className={`px-32 text-xs font-bold text-center text-yellow-600 ${
                   !isConnected ? "hidden sm:block" : ""
                 }`}
+                onClick={() => test()}
               >
                 RINKEBY TESTNET
               </p>
             </div>
           )}
           <div className="relative z-10 flex items-center space-x-5 sm:space-x-8">
-            <Nightwind size="h-[24px]" onClick={() => test()} />
+            <Nightwind size="h-[24px]" />
             {!isConnected ? (
               <Button
                 className="h-[36px] font-medium rounded-full border-2 shadow-light"
