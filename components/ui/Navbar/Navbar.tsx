@@ -15,13 +15,6 @@ const Navbar = () => {
   const { isConnected, loading, setModalView } = useAppContext()
   const [showDropdown, setShowDropdown] = useState(false)
 
-  const test = () => {
-    console.log("test")
-
-    // @ts-ignore
-    sa_event("TEST")
-  }
-
   return (
     <header className="shadow-sm bg-gray-50">
       <Container>
@@ -44,7 +37,6 @@ const Navbar = () => {
                 className={`px-32 text-xs font-bold text-center text-yellow-600 ${
                   !isConnected ? "hidden sm:block" : ""
                 }`}
-                onClick={() => test()}
               >
                 RINKEBY TESTNET
               </p>
