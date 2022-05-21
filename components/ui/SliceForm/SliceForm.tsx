@@ -212,6 +212,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
               type="submit"
               loading={loadingButton}
               requireConnection
+              onClick={() => sa_event("slice")}
             />
           </div>
         </div>
