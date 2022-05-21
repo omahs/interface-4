@@ -30,7 +30,7 @@ const PieChart = ({ addresses, shares, minimumShares, totalShares }: Props) => {
         height={20}
         width={20}
         viewBox={"0 0 20 20"}
-        className="w-4/5  max-w-[18rem] h-4/5"
+        className="w-4/5 max-w-[18rem] h-4/5"
       >
         {chartSlices.map((slice, index) => {
           if (!slice || !slice.percentageToRender) return null
@@ -107,7 +107,7 @@ const PieChart = ({ addresses, shares, minimumShares, totalShares }: Props) => {
                 totalShares > 4000000000 ? "text-red-500" : ""
               }`}
             >
-              Total slices
+              Total slices 🍰
             </p>
           </>
         )}
