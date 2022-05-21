@@ -9,6 +9,7 @@ import getLog from "@utils/getLog"
 import decimalToHex from "@utils/decimalToHex"
 import { Contract, ContractTransaction } from "ethers"
 import PieChart from "../PieChart"
+import DoubleText from "../DoubleText"
 
 type Props = {
   success: boolean
@@ -32,6 +33,10 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
 
   const hasMinimumShares =
     shares.filter((share) => share >= minimumShares).length > 0
+  const allowedSuperOwners =
+    totalShares / minimumShares > 1000
+      ? `${formatNumber(totalShares / minimumShares)}`
+      : `${totalShares / minimumShares}`.split(".")[0]
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
@@ -107,11 +112,26 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   }
 
   return (
-    <div className="flex">
-      <form
-        className="w-full max-w-screen-sm py-6 mx-auto space-y-4 sm:w-3/5"
-        onSubmit={submit}
-      >
+    <form className="md:flex" onSubmit={submit}>
+      <div className="w-full max-w-screen-sm py-6 mx-auto space-y-4 md:w-3/5">
+        <div className="py-6 mx-auto space-y-4 text-center sm:px-6 max-w-screen-xs md:text-left">
+          <p>
+            Slicers split any payment received to their owners, proportionally
+            to number of slices held.
+          </p>
+          <p>
+            Slices are{" "}
+            <DoubleText
+              inactive
+              logoText="tradable, fractionalized NFTs"
+              size="text-normal"
+            />{" "}
+            (ERC1155 tokens) that represent ownership over a slicer.
+          </p>
+        </div>
+        <p className="font-semibold text-center text-yellow-600">
+          Add initial owners and their slices
+        </p>
         <SliceFormBlockSplitter
           success={success}
           addresses={addresses}
@@ -133,20 +153,6 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
               slicers with up to 4 Billion total slices.
             </p>
           )}
-          {minimumShares ? (
-            minimumShares > 0 ? (
-              <p className="pt-4">
-                <strong className="text-yellow-600">Note:</strong> this slicer
-                allows up to{" "}
-                <b>
-                  {totalShares / minimumShares > 1000
-                    ? `about ${formatNumber(totalShares / minimumShares)}`
-                    : `${totalShares / minimumShares}`.split(".")[0]}
-                </b>{" "}
-                superowners at the same time.
-              </p>
-            ) : null
-          ) : null}
           <p className="pt-4">
             <strong className="text-yellow-600">Note:</strong> minimum and total
             slices cannot be changed later.
@@ -184,22 +190,51 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
             </p>
           )}
         </div>
-        <div className="py-1">
-          <Button label="Create slicer" type="submit" loading={loadingButton} />
-        </div>
         <div>
           <MessageBlock msg={message} />
         </div>
-      </form>
-      <div className="sm:w-2/5">
-        <PieChart
-          addresses={addresses}
-          shares={shares}
-          minimumShares={minimumShares}
-          totalShares={totalShares}
-        />
       </div>
-    </div>
+      <div className="justify-center md:h-screen md:flex md:flex-col md:w-2/5 md:sticky md:top-0 md:-mt-24">
+        <div>
+          <PieChart
+            addresses={addresses}
+            shares={shares}
+            minimumShares={minimumShares}
+            totalShares={totalShares}
+          />
+          <div className="w-4/5 pt-8 m-auto">
+            <div className="flex justify-around">
+              <div>
+                <p className="pb-1 text-lg font-bold">Owners</p>
+                <p className="text-center">{shares.filter((n) => n).length}</p>
+              </div>
+              <div>
+                <p className="pb-1 text-lg font-bold">Superowners 👑</p>
+                {minimumShares ? (
+                  minimumShares > 0 ? (
+                    <p className="text-center">
+                      {shares.filter((n) => n >= minimumShares).length} /{" "}
+                      {allowedSuperOwners}
+                    </p>
+                  ) : (
+                    <p className="text-center"> 0 / 0 </p>
+                  )
+                ) : (
+                  <p className="text-center"> 0 / 0 </p>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-center py-12 md:pt-8 md:pb-0">
+            <Button
+              label="Create slicer"
+              type="submit"
+              loading={loadingButton}
+            />
+          </div>
+        </div>
+      </div>
+    </form>
   )
 }
 
