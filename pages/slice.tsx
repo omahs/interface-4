@@ -23,7 +23,7 @@ export default function Slice() {
   const eventLog = getLog(logs, "TokenSliced")
 
   return (
-    <Container page={true}>
+    <Container size="max-w-screen-xl pb-12 md:pb-0">
       <NextSeo
         title="Create a new slicer"
         openGraph={{
@@ -46,30 +46,14 @@ export default function Slice() {
           {!success ? (
             !loading ? (
               <>
-                <DoubleText
-                  inactive
-                  logoText={`Create a Slicer`}
-                  size="text-4xl sm:text-5xl"
-                  position="pb-4 sm:pb-6"
-                />
-                <div className="py-6 mx-auto space-y-4 sm:px-6 max-w-screen-xs">
-                  <p>
-                    Slicers split any payment received to their owners,
-                    proportionally to number of slices held.
-                  </p>
-                  <p>
-                    Slices are{" "}
-                    <DoubleText
-                      inactive
-                      logoText="tradable, fractionalized NFTs"
-                      size="text-normal"
-                    />{" "}
-                    (ERC1155 tokens) that represent ownership over a slicer.
-                  </p>
+                <div className="pt-16 text-center sm:pt-20">
+                  <DoubleText
+                    inactive
+                    logoText={`Create a Slicer`}
+                    size="text-4xl sm:text-5xl"
+                    position="pb-4 sm:pb-6"
+                  />
                 </div>
-                <p className="pt-6 font-semibold text-center text-yellow-600">
-                  Add initial owners and their slices
-                </p>
                 <SliceForm
                   success={success}
                   setLoading={setLoading}

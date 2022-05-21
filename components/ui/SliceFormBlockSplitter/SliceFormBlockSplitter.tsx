@@ -38,7 +38,7 @@ const SliceFormBlockSplitter = ({
 }: Props) => {
   const { account } = useAppContext()
   const [initAddress, setInitAddress] = useState("")
-  const [inputCount, setInputCount] = useState(3)
+  const [inputCount, setInputCount] = useState(2)
   const [removedCount, setRemovedCount] = useState(0)
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const SliceFormBlockSplitter = ({
   }, [success])
 
   const resetInputs = () => {
-    setInputCount(3)
+    setInputCount(2)
     setRemovedCount(0)
     setAddresses([initAddress])
     setShares([1000000])
@@ -103,19 +103,20 @@ const SliceFormBlockSplitter = ({
             />
           )
         })}
-        <div className="col-span-1 col-start-1 mx-auto">
+
+        <div className="col-span-1 col-start-1 mx-auto ">
           <Add onClick={() => setInputCount(inputCount + 1)} />
         </div>
-        <p className="col-span-4 py-3 pr-2 text-right xs:col-span-3 xs:col-end-7 md:col-end-9 md:col-span-3">
-          Total slices
-        </p>
-        <p
-          className={`col-span-3 pl-5${
-            totalShares > 4000000000 ? " text-red-500 font-bold" : ""
-          }`}
-        >
-          {formatNumber(totalShares, 3)}
-        </p>
+
+        <div className="col-span-7 py-3 pr-2 text-left text-green-500 xs:col-span-6 md:col-span-6">
+          <p
+            className="inline-block font-semibold opacity-75 cursor-pointer hover:opacity-100"
+            onClick={() => setInputCount(inputCount + 1)}
+          >
+            Add slicer owner
+          </p>
+        </div>
+
         <div className="relative flex items-center justify-end col-span-5 pb-3 xs:col-end-7">
           <p className="pr-1">Superowner slices</p>
           <Question
