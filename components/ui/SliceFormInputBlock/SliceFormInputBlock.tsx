@@ -66,9 +66,8 @@ const SliceFormInputBlock = ({
   }
 
   useEffect(() => {
-    if (index == 0 && signerAddress) {
+    if (index == 0 && address == "" && signerAddress) {
       setAddress(signerAddress)
-      setSharesAmount(1000000)
       resolveEns(connector, signerAddress, setResolvedSignerAddress)
     }
   }, [signerAddress])

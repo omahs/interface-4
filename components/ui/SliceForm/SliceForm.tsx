@@ -132,7 +132,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           setisImmutable={setisImmutable}
           hasMinimumShares={hasMinimumShares}
         />
-        <div className="py-8">
+        <div className="py-8 sm:px-6 ">
           {totalShares > 4000000000 && (
             <p className="pt-4 text-red-500">
               <strong className="text-yellow-600">Note:</strong> you can create
@@ -147,16 +147,15 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
             <p className="pt-4">
               <strong className="text-yellow-600">Note:</strong> you are about
               to create a non-fractionalized Slicer. That means that there can
-              only be a single owner at any given time which gets all ETH earned
-              by the slicer.
+              only be a single owner at any given time.
             </p>
           )}
           {minimumShares != 0 && totalShares == minimumShares && (
             <p className="pt-4">
               <strong className="text-yellow-600">Note:</strong> a user would
-              need to own all of the slices to operate this slicer. Superowner
-              slices cannot be changed later, so make sure this is the desired
-              behaviour or reduce them accordingly to your needs.
+              need to own all of the slices to add products or change metadata
+              of this slicer. Superowner slices cannot be changed later, so make
+              sure this is the desired behaviour.
             </p>
           )}
           {process.env.NEXT_PUBLIC_CHAIN_ID === "4" && (
@@ -180,7 +179,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           <MessageBlock msg={message} />
         </div>
       </div>
-      <div className="justify-center md:h-screen md:flex md:flex-col md:w-2/5 md:sticky md:top-0 md:-mt-40">
+      <div className="justify-center md:h-screen md:flex md:flex-col md:w-2/5 md:sticky md:top-0 md:-mt-24">
         <div>
           <PieChart
             addresses={addresses}

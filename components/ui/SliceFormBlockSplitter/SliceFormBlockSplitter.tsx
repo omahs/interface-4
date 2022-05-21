@@ -193,7 +193,7 @@ const SliceFormBlockSplitter = ({
             }
           />
         </div>
-        <div>
+        <div className="flex">
           <MySwitch enabled={isImmutable} setEnabled={setisImmutable} />
         </div>
       </div>
