@@ -63,6 +63,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 })
               }
               showRecentTransactions={true}
+              coolMode
             >
               <AppWrapper>
                 <Layout>
