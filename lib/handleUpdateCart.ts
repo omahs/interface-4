@@ -30,6 +30,11 @@ const handleUpdateCart = async (
   newQuantity: number
 ) => {
   const newCookies = cookies?.cart || []
+  if (newQuantity > 0) {
+    sa_event("add_product_to_cart")
+  } else {
+    sa_event("remove_product_from_cart")
+  }
   if (newCookies.length != 0 && productCart) {
     const quantity = productCart.quantity + newQuantity
     const index = newCookies.findIndex(

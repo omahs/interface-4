@@ -16,6 +16,7 @@ interface ButtonProps {
   external?: boolean
   disabled?: boolean
   onClick?: any
+  saEventName?: string
 }
 
 const Button: FC<ButtonProps> = (props) => {
@@ -31,6 +32,7 @@ const Button: FC<ButtonProps> = (props) => {
     double = true,
     external = false,
     disabled = false,
+    saEventName = "",
     ...rest
   } = props
 
@@ -54,7 +56,10 @@ const Button: FC<ButtonProps> = (props) => {
   const rootClassName = `px-7 min-w-[150px] focus:outline-none ${className}`
 
   return (
-    <div className="relative inline-block">
+    <div
+      className="relative inline-block"
+      onClick={() => (saEventName ? sa_event(saEventName) : null)}
+    >
       {href ? (
         !external ? (
           <Link href={href} passHref>

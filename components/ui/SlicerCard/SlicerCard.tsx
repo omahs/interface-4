@@ -155,6 +155,7 @@ const SlicerCard = ({
         {!released && unreleasedAmount && Number(unreleasedAmount) != 0 ? (
           <div className="mt-6">
             <BlockchainCall
+              saEventName="withdraw_eth_to_owner"
               label={`Release ${getEthFromWei(unreleasedAmount)} ETH`}
               action={() =>
                 TriggerRelease(
