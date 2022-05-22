@@ -12,6 +12,7 @@ import { CartList } from ".."
 import { Purchase, useAppContext } from "../context"
 import { updatePurchases } from "@utils/getPurchases"
 import { utils } from "ethers"
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 
 type Props = {
   cookieCart: ProductCart[]
@@ -28,6 +29,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     connector,
     account
   } = useAppContext()
+  const addRecentTransaction = useAddRecentTransaction()
   const [cookies, setCookie, removeCookie] = useCookies(["cart"])
   const [showCartList, setShowCartList] = useState(false)
   const [showCart, setShowCart] = useState(false)
@@ -83,7 +85,9 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
         setMessage,
         setLoading,
         setSuccess,
-        true
+        true,
+        addRecentTransaction,
+        "Checkout"
       )
       sa_event("checkout_cart_success")
       setModalView({ name: "" })

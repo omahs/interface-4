@@ -16,6 +16,7 @@ import { FunctionStruct } from "types/typechain/ProductsModule"
 import { ethers } from "ethers"
 import AddProductFormExternal from "../AddProductFormExternal"
 import ethToWei from "@utils/ethToWei"
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 
 type Props = {
   slicerId: number
@@ -41,6 +42,7 @@ const AddProductForm = ({
   setLogs
 }: Props) => {
   const { account, setModalView, connector } = useAppContext()
+  const addRecentTransaction = useAddRecentTransaction()
   const [usdValue, setUsdValue] = useState(0)
   const [ethValue, setEthValue] = useState(0)
   const [name, setName] = useState("")
@@ -133,7 +135,9 @@ const AddProductForm = ({
         setMessage,
         setLoading,
         setSuccess,
-        true
+        true,
+        addRecentTransaction,
+        `Create product | Slicer #${slicerId}`
       )
 
       if (eventLogs) {

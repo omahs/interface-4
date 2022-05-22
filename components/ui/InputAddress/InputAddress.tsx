@@ -18,7 +18,7 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const InputAddress: React.FC<Props> = (props) => {
-  const { connector } = useAppContext()
+  const { provider } = useAppContext()
   const {
     address,
     required,
@@ -40,15 +40,17 @@ const InputAddress: React.FC<Props> = (props) => {
     : null
 
   useEffect(() => {
-    const timeout = setTimeout(
-      () => resolveEns(connector, address, setResolvedAddress),
-      200
-    )
-    return () => {
-      clearTimeout(timeout)
-      setResolvedAddress("")
+    if (provider && address) {
+      const timeout = setTimeout(
+        () => resolveEns(provider, address, setResolvedAddress),
+        200
+      )
+      return () => {
+        clearTimeout(timeout)
+        setResolvedAddress("")
+      }
     }
-  }, [address])
+  }, [provider, address])
 
   return (
     <div className={`relative`}>

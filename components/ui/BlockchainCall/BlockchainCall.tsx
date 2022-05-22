@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useState, useEffect } from "react"
 import Button from "../Button"
 import MessageBlock from "../MessageBlock"
 import { Message } from "@utils/handleMessage"
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 
 type Props = {
   label: string
@@ -11,6 +12,7 @@ type Props = {
   setSuccess: Dispatch<SetStateAction<boolean>>
   setLogs: Dispatch<SetStateAction<LogDescription[]>>
   success?: boolean
+  transactionDescription: string
   mutateUrl?: string
   mutateObj?: object
   confetti?: boolean
@@ -25,9 +27,11 @@ const BlockchainCall = ({
   setLogs,
   mutateUrl,
   mutateObj,
+  transactionDescription,
   confetti = false,
   saEventName = ""
 }: Props) => {
+  const addRecentTransaction = useAddRecentTransaction()
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message>({
     message: "",
@@ -46,7 +50,9 @@ const BlockchainCall = ({
         setMessage,
         setLoading,
         setSuccess,
-        confetti
+        confetti,
+        addRecentTransaction,
+        transactionDescription
       )
       setLogs(eventLog)
       if (saEventName) {

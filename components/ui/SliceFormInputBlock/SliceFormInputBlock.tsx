@@ -37,7 +37,8 @@ const SliceFormInputBlock = ({
   ownedSlices,
   placeholder = "1000000"
 }: Props) => {
-  const { account, connector } = useAppContext()
+  const { account, provider } = useAppContext()
+
   const [visible, setVisible] = useState(true)
   const [address, setAddress] = useState(addresses[index] || "")
   const [resolvedAddress, setResolvedAddress] = useState("")
@@ -68,7 +69,7 @@ const SliceFormInputBlock = ({
   useEffect(() => {
     if (index == 0 && address == "" && signerAddress) {
       setAddress(signerAddress)
-      resolveEns(connector, signerAddress, setResolvedSignerAddress)
+      resolveEns(provider, signerAddress, setResolvedSignerAddress)
     }
   }, [signerAddress])
 

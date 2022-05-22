@@ -11,6 +11,7 @@ import getUnreleasedData from "@utils/getUnreleasedData"
 import TransferFormInputBlock from "../TransferFormInputBlock"
 import TransferFormNotes from "../TransferFormNotes"
 import MySwitch from "../MySwitch"
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 
 type Props = {
   account: string
@@ -30,6 +31,7 @@ const TransferForm = ({
   minimumSlices
 }: Props) => {
   const { connector } = useAppContext()
+  const addRecentTransaction = useAddRecentTransaction()
 
   const [unreleased, setUnreleased] = useState([])
   const [batchMode, setBatchMode] = useState(false)
@@ -69,7 +71,10 @@ const TransferForm = ({
         ),
         setMessage,
         setLoading,
-        setSuccess
+        setSuccess,
+        false,
+        addRecentTransaction,
+        `Transfer slices | Slicer #${slicerId}`
       )
       setLogs(eventLog)
     } else {
@@ -92,7 +97,10 @@ const TransferForm = ({
         ),
         setMessage,
         setLoading,
-        setSuccess
+        setSuccess,
+        false,
+        addRecentTransaction,
+        `Transfer slices (batch) | Slicer #${slicerId}`
       )
       setLogs(eventLog)
     }

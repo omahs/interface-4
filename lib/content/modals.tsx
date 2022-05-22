@@ -1,5 +1,3 @@
-import Arrow from "@components/icons/Arrow"
-import Metamask from "@components/icons/Metamask"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import Units from "@components/icons/Units"
 import {
@@ -17,11 +15,10 @@ import { ProductCart } from "@lib/handleUpdateCart"
 import getEthFromWei from "@utils/getEthFromWei"
 import formatNumber from "@utils/formatNumber"
 import { useCookies } from "react-cookie"
-import { handleConnectMetamask, handleConnectWC } from "@lib/handleConnect"
-import WalletConnect from "@components/icons/WalletConnect"
 import { ethers } from "ethers"
 import getFunctionFromSelector from "@utils/getFunctionFromSelector"
 import { useEffect } from "react"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 export type View = {
   name: ViewNames
@@ -53,6 +50,7 @@ export const LOADING_VIEW = () => {
 
 export const NETWORK_VIEW = () => {
   const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
+
   return (
     <>
       <div className="pb-6 text-center">
@@ -65,49 +63,45 @@ export const NETWORK_VIEW = () => {
         </span>{" "}
         Network
       </p>
+      <div className="flex justify-center pt-6">
+        <ConnectButton
+          accountStatus={{
+            smallScreen: "address",
+            largeScreen: "full"
+          }}
+          chainStatus="full"
+          showBalance={false}
+        />
+      </div>
     </>
   )
 }
 
 export const CONNECT_VIEW = () => {
-  const { connector, setModalView } = useAppContext()
-
+  const { isConnected, setModalView } = useAppContext()
   useEffect(() => {
     sa_event("connect_wallet_open_modal")
   }, [])
 
+  useEffect(() => {
+    if (isConnected) {
+      setModalView({ name: "" })
+      sa_event("connect_wallet_success")
+    }
+  }, [isConnected])
+
   return (
     <>
-      <div className="pb-12 text-center">
-        <DoubleText inactive logoText="Connect wallet" />
+      <div className="pb-6 text-center">
+        <DoubleText inactive logoText="Before moving on" />
       </div>
-      <div className="space-y-6">
-        {window.ethereum && (
-          <div
-            className="flex items-center justify-between max-w-sm p-6 mx-auto transition-all duration-300 ease-out border-2 border-yellow-100 cursor-pointer flex-between hover:scale-105 shadow-base hover:border-yellow-500 rounded-xl group"
-            onClick={async () => await handleConnectMetamask(setModalView)}
-          >
-            <div className="flex items-center">
-              <Metamask className="w-6 h-6" />
-              <p className="ml-6 font-semibold">Metamask</p>
-            </div>
-            <div>
-              <Arrow className="transition-colors duration-300 ease-out group-hover:text-yellow-500" />
-            </div>
-          </div>
-        )}
-        <div
-          className="flex items-center justify-between max-w-sm p-6 mx-auto transition-all duration-300 ease-out border-2 border-blue-100 cursor-pointer flex-between hover:scale-105 shadow-base hover:border-blue-600 rounded-xl group"
-          onClick={async () => await handleConnectWC(connector, setModalView)}
-        >
-          <div className="flex items-center">
-            <WalletConnect className="w-6 h-6" />
-            <p className="ml-6 font-semibold">WalletConnect</p>
-          </div>
-          <div>
-            <Arrow className="transition-colors duration-300 ease-out group-hover:text-blue-600" />
-          </div>
-        </div>
+      <div className="text-center">
+        <p className="pb-6">
+          You need to connect your wallet to complete this action
+        </p>
+      </div>
+      <div className="flex justify-center">
+        <ConnectButton />
       </div>
     </>
   )

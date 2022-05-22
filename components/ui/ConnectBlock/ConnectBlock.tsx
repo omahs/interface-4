@@ -1,5 +1,6 @@
 import { Button } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 import DoubleText from "../DoubleText"
 
 const ConnectBlock = ({ children }) => {
@@ -15,18 +16,9 @@ const ConnectBlock = ({ children }) => {
           size="text-4xl sm:text-5xl"
         />
         <p className="py-10 text-lg">
-          If you don&apos;t have one, you can get a{" "}
-          <a
-            href="https://metamask.io/"
-            target="_blank"
-            rel="noreferrer"
-            className="font-black highlight"
-          >
-            free Metamask wallet
-          </a>{" "}
-          to interact with Slice.
+          You need to connect your wallet to view this page.
         </p>
-        <Button label="Connect" requireConnection />
+        <ConnectButton />
       </div>
     </>
   )

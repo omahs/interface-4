@@ -1,4 +1,5 @@
 import { TriggerRelease } from "@lib/handlers/chain"
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import formatNumber from "@utils/formatNumber"
 import { Message } from "@utils/handleMessage"
 import { BigNumber, ethers } from "ethers"
@@ -28,6 +29,7 @@ const OwnerBlock = ({
   setUnreleased
 }: Props) => {
   const { connector, isConnected, setModalView } = useAppContext()
+  const addRecentTransaction = useAddRecentTransaction()
 
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message>({
@@ -50,7 +52,10 @@ const OwnerBlock = ({
       ),
       setMessage,
       setLoading,
-      setSuccess
+      setSuccess,
+      false,
+      addRecentTransaction,
+      `Release & withdraw ETH | Slicer #${slicerId}`
     )
     setLogs(eventLog)
 
