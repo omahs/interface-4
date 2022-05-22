@@ -14,6 +14,7 @@ type Props = {
   mutateUrl?: string
   mutateObj?: object
   confetti?: boolean
+  saEventName?: string
 }
 
 const BlockchainCall = ({
@@ -25,24 +26,38 @@ const BlockchainCall = ({
   mutateUrl,
   mutateObj,
   confetti = false,
+  saEventName = ""
 }: Props) => {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message>({
     message: "",
-    messageStatus: "success",
+    messageStatus: "success"
   })
 
   const submit = async () => {
-    const handleSubmit = (await import("@utils/handleSubmit")).default
+    try {
+      if (saEventName) {
+        sa_event(saEventName + "_attempt")
+      }
+      const handleSubmit = (await import("@utils/handleSubmit")).default
 
-    const eventLog = await handleSubmit(
-      action(),
-      setMessage,
-      setLoading,
-      setSuccess,
-      confetti
-    )
-    setLogs(eventLog)
+      const eventLog = await handleSubmit(
+        action(),
+        setMessage,
+        setLoading,
+        setSuccess,
+        confetti
+      )
+      setLogs(eventLog)
+      if (saEventName) {
+        sa_event(saEventName + "_success")
+      }
+    } catch (err) {
+      if (saEventName) {
+        sa_event(saEventName + "_fail")
+      }
+      console.log(err)
+    }
   }
 
   useEffect(() => {

@@ -21,6 +21,7 @@ import { handleConnectMetamask, handleConnectWC } from "@lib/handleConnect"
 import WalletConnect from "@components/icons/WalletConnect"
 import { ethers } from "ethers"
 import getFunctionFromSelector from "@utils/getFunctionFromSelector"
+import { useEffect } from "react"
 
 export type View = {
   name: ViewNames
@@ -70,6 +71,11 @@ export const NETWORK_VIEW = () => {
 
 export const CONNECT_VIEW = () => {
   const { connector, setModalView } = useAppContext()
+
+  useEffect(() => {
+    sa_event("connect_wallet_open_modal")
+  }, [])
+
   return (
     <>
       <div className="pb-12 text-center">
@@ -132,6 +138,10 @@ export const IRREVERSIBLE_VIEW = () => {
 
 export const OWNERS_VIEW = (params: any) => {
   const { slicerId, totalSlices, owners, unreleased, setUnreleased } = params
+
+  useEffect(() => {
+    sa_event("owners_open_modal")
+  }, [])
 
   return (
     <>
@@ -315,6 +325,10 @@ export const PRODUCT_VIEW = (params: any) => {
   )
   const purchaseEl = purchaseElArray.join(", ")
 
+  useEffect(() => {
+    sa_event("product_view_open_modal")
+  }, [])
+
   return (
     <>
       <div className="pt-4 pb-12 text-center sm:pb-16">
@@ -469,6 +483,10 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
 
   const { thanks, instructions } = texts
   const { notes } = decryptedTexts
+
+  useEffect(() => {
+    sa_event("redeem_product_success")
+  }, [])
 
   return (
     <>

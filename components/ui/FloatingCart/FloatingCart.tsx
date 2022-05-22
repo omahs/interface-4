@@ -77,6 +77,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     const { PayProducts } = await import("@lib/handlers/chain")
 
     try {
+      sa_event("checkout_cart_attempt")
       await handleSubmit(
         PayProducts(connector, account, cookieCart),
         setMessage,
@@ -84,8 +85,10 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
         setSuccess,
         true
       )
+      sa_event("checkout_cart_success")
       setModalView({ name: "" })
     } catch (err) {
+      sa_event("checkout_cart_fail")
       console.log(err)
     }
   }

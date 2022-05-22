@@ -41,6 +41,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
 
+    sa_event("create_slicer_attempt")
     const fetcher = (await import("@utils/fetcher")).default
     const handleMessage = (await import("@utils/handleMessage")).default
     const launchConfetti = (await import("@utils/launchConfetti")).default
@@ -94,6 +95,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         await fetcher(`${baseUrl}/api/slicer/${hexId}/create`, body)
         setLogs(eventLogs)
         launchConfetti()
+        sa_event("create_slicer_success")
         setSuccess(true)
         setLoading(false)
       } else {
@@ -106,6 +108,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
         )
       }
     } catch (err) {
+      sa_event("create_slicer_fail")
       setloadingButton(false)
       console.log(err)
     }
@@ -212,7 +215,6 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
               type="submit"
               loading={loadingButton}
               requireConnection
-              onClick={() => sa_event("slice")}
             />
           </div>
         </div>

@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useState } from "react"
 const FiltersFloatingMenu = dynamic(
   () => import("@components/ui/FiltersFloatingMenu"),
   {
-    ssr: false,
+    ssr: false
   }
 )
 
@@ -27,7 +27,7 @@ function FiltersMenu({
   setSearchTerm,
   showCollectibles,
   setShowCollectibles,
-  tagsList,
+  tagsList
 }: Props) {
   const [showFilters, setShowFilters] = useState(false)
 
@@ -35,7 +35,10 @@ function FiltersMenu({
     <div className="relative flex justify-end w-full pb-4">
       <button
         className="flex items-center px-6 py-1.5 bg-white border-[1.5px] border-white rounded-md shadow-base hover:bg-gray-100 transition-colors duration-150"
-        onClick={() => setShowFilters((showFilters) => !showFilters)}
+        onClick={() => {
+          sa_event("explore_slicer_open_filter")
+          setShowFilters((showFilters) => !showFilters)
+        }}
       >
         <Sliders className="w-6 h-6" />
         <p className="pl-3">Filters</p>

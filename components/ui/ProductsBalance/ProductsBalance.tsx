@@ -23,6 +23,7 @@ const ProductsBalance = ({ slicerId, productsModuleBalance }: Props) => {
   })
 
   const executeRelease = async () => {
+    sa_event("release_eth_to_slicer_attempt")
     const eventLogs = await handleSubmit(
       releaseEthToSlicer(connector, slicerId),
       setMessage,
@@ -31,12 +32,15 @@ const ProductsBalance = ({ slicerId, productsModuleBalance }: Props) => {
       true
     )
     if (eventLogs) {
+      sa_event("release_eth_to_slicer_success")
       setMessage({
         message: `You have released ${getEthFromWei(
           productsModuleBalance
         )} ETH to the slicer! 🎉 Refresh the page to see the updated balance`,
         messageStatus: "success"
       })
+    } else {
+      sa_event("release_eth_to_slicer_fail")
     }
   }
 
