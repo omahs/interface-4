@@ -22,12 +22,7 @@ const PaySlicer = ({ slicerAddress }: Props) => {
       const value = BigNumber.from(Math.floor(ethValue * 100000)).mul(
         BigNumber.from(10).pow(13)
       )._hex
-      const transactionInfo = await handleSendTransaction(
-        account,
-        slicerAddress,
-        value,
-        connector
-      )
+      await handleSendTransaction(account, slicerAddress, value, connector)
 
       setEthValue(0)
       setUsdValue(0)

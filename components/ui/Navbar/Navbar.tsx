@@ -2,10 +2,10 @@ import dynamic from "next/dynamic"
 import Link from "next/link"
 import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
-import { Button, Container } from "@components/ui"
-import UserIcon from "@components/icons/UserIcon"
+import { Container } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { useState } from "react"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 const DropdownMenu = dynamic(() => import("@components/ui/DropdownMenu"), {
   ssr: false
@@ -31,20 +31,16 @@ const Navbar = () => {
               </a>
             </Link>
           </div>
-          {process.env.NEXT_PUBLIC_CHAIN_ID === "4" && (
-            <div className="absolute right-0 flex items-center justify-center w-full h-full">
-              <p
-                className={`px-32 text-xs font-bold text-center text-yellow-600 ${
-                  !isConnected ? "hidden sm:block" : ""
-                }`}
-              >
-                RINKEBY TESTNET
-              </p>
-            </div>
-          )}
-          <div className="relative z-10 flex items-center space-x-5 sm:space-x-8">
+          <div className="relative z-10 flex items-center space-x-5">
             <Nightwind size="h-[24px]" />
-            {!isConnected ? (
+            <ConnectButton
+              accountStatus={{
+                smallScreen: "avatar",
+                largeScreen: "full"
+              }}
+            />
+            {/* {</div>!isConnected ? (
+            ) : (
               <Button
                 className="h-[36px] font-medium rounded-full border-2 shadow-light"
                 color="border-sky-700 bg-white text-black hover:bg-sky-100"
@@ -55,9 +51,8 @@ const Navbar = () => {
                   setModalView({ name: "CONNECT_VIEW", cross: true })
                 }
               />
-            ) : (
               <>
-                {/* <SlcCounter /> */}
+                <SlcCounter />
                 <a
                   onClick={() =>
                     setShowDropdown((showDropdown) => !showDropdown)
@@ -66,7 +61,7 @@ const Navbar = () => {
                   <UserIcon />
                 </a>
               </>
-            )}
+            )} */}
           </div>
           {showDropdown && (
             <DropdownMenu

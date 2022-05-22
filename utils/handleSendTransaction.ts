@@ -9,7 +9,7 @@ const handleSendTransaction = async (
   const transactionParameters = {
     to,
     from,
-    value,
+    value
   }
   let res
   if (connector.connected) {
@@ -17,7 +17,7 @@ const handleSendTransaction = async (
   } else {
     res = await window.ethereum.request({
       method: "eth_sendTransaction",
-      params: [transactionParameters],
+      params: [transactionParameters]
     })
   }
   return res

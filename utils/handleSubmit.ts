@@ -1,3 +1,4 @@
+import { NewTransaction } from "@rainbow-me/rainbowkit/dist/transactions/transactionStore"
 import { Dispatch, SetStateAction } from "react"
 import { Message } from "./handleMessage"
 
@@ -6,7 +7,9 @@ const handleSubmit = async (
   setMessage: Dispatch<SetStateAction<Message>>,
   setLoading: Dispatch<SetStateAction<boolean>>,
   setSuccess: Dispatch<SetStateAction<boolean>>,
-  confetti = false
+  confetti = false,
+  addRecentTransaction: (transaction: NewTransaction) => void,
+  transactionDescription: string
 ) => {
   const handleMessage = (await import("./handleMessage")).default
   const launchConfetti = (await import("./launchConfetti")).default
@@ -16,6 +19,11 @@ const handleSubmit = async (
   try {
     setLoading(true)
     const [contract, call] = await action
+
+    addRecentTransaction({
+      hash: call.hash,
+      description: transactionDescription
+    })
 
     const eventLogs = await handleLog(contract, call)
     setLoading(false)

@@ -22,6 +22,7 @@ import WalletConnect from "@components/icons/WalletConnect"
 import { ethers } from "ethers"
 import getFunctionFromSelector from "@utils/getFunctionFromSelector"
 import { useEffect } from "react"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 export type View = {
   name: ViewNames
@@ -53,6 +54,7 @@ export const LOADING_VIEW = () => {
 
 export const NETWORK_VIEW = () => {
   const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
+
   return (
     <>
       <div className="pb-6 text-center">
@@ -65,6 +67,16 @@ export const NETWORK_VIEW = () => {
         </span>{" "}
         Network
       </p>
+      <div className="flex justify-center pt-6">
+        <ConnectButton
+          accountStatus={{
+            smallScreen: "address",
+            largeScreen: "full"
+          }}
+          chainStatus="full"
+          showBalance={false}
+        />
+      </div>
     </>
   )
 }
