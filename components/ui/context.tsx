@@ -63,9 +63,9 @@ export function AppWrapper({ children }) {
   }, [])
 
   useEffect(() => {
+    setPurchases(null)
     if (account?.address) {
       setIsConnected(account && true)
-      setPurchases(null)
       getPurchases(account.address, setPurchases)
     } else {
       setIsConnected(false)

@@ -10,7 +10,7 @@ import { Contract, ContractTransaction } from "ethers"
 import PieChart from "../PieChart"
 import SliceFormDescription from "../SliceFormDescription"
 import formatNumber from "@utils/formatNumber"
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
+import { ConnectButton, useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 
 type Props = {
   success: boolean
@@ -20,7 +20,7 @@ type Props = {
 }
 
 const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
-  const { account: creator, connector } = useAppContext()
+  const { account: creator, connector, isConnected } = useAppContext()
   const addRecentTransaction = useAddRecentTransaction()
   const [addresses, setAddresses] = useState([""])
   const [shares, setShares] = useState([1000000])
@@ -214,12 +214,15 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
             </div>
           </div>
           <div className="flex justify-center py-12 md:pt-8 md:pb-0">
-            <Button
-              label="Create slicer"
-              type="submit"
-              loading={loadingButton}
-              requireConnection
-            />
+            {isConnected ? (
+              <Button
+                label="Create slicer"
+                type="submit"
+                loading={loadingButton}
+              />
+            ) : (
+              <ConnectButton />
+            )}
           </div>
         </div>
       </div>
