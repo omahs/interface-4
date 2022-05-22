@@ -221,7 +221,9 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
                 loading={loadingButton}
               />
             ) : (
-              <ConnectButton />
+              <div onClick={() => sa_event("connect_wallet_attempt")}>
+                <ConnectButton />
+              </div>
             )}
           </div>
         </div>

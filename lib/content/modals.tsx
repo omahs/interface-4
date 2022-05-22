@@ -63,7 +63,10 @@ export const NETWORK_VIEW = () => {
         </span>{" "}
         Network
       </p>
-      <div className="flex justify-center pt-6">
+      <div
+        className="flex justify-center pt-6"
+        onClick={() => sa_event("connect_wallet_attempt")}
+      >
         <ConnectButton
           accountStatus={{
             smallScreen: "address",
@@ -100,7 +103,10 @@ export const CONNECT_VIEW = () => {
           You need to connect your wallet to complete this action
         </p>
       </div>
-      <div className="flex justify-center">
+      <div
+        className="flex justify-center"
+        onClick={() => sa_event("connect_wallet_attempt")}
+      >
         <ConnectButton />
       </div>
     </>

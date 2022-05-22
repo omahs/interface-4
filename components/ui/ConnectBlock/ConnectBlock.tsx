@@ -18,7 +18,9 @@ const ConnectBlock = ({ children }) => {
         <p className="py-10 text-lg">
           You need to connect your wallet to view this page.
         </p>
-        <ConnectButton />
+        <div onClick={() => sa_event("connect_wallet_attempt")}>
+          <ConnectButton />
+        </div>
       </div>
     </>
   )
