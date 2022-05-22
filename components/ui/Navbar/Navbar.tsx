@@ -13,7 +13,7 @@ const DropdownMenu = dynamic(() => import("@components/ui/DropdownMenu"), {
 })
 
 const Navbar = () => {
-  const { isConnected, loading, setModalView } = useAppContext()
+  const { isConnected } = useAppContext()
   const [showDropdown, setShowDropdown] = useState(false)
 
   return (
@@ -33,7 +33,7 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="relative z-10 flex items-center space-x-6">
-            <div className="hidden xs:block">
+            <div className={`${isConnected ? "hidden xs:block" : ""}`}>
               <Nightwind size="h-[24px]" />
             </div>
             <ConnectButton
