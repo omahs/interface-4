@@ -6,6 +6,7 @@ import { Container } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { useState } from "react"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
+import UserIcon from "@components/icons/UserIcon"
 
 const DropdownMenu = dynamic(() => import("@components/ui/DropdownMenu"), {
   ssr: false
@@ -31,37 +32,23 @@ const Navbar = () => {
               </a>
             </Link>
           </div>
-          <div className="relative z-10 flex items-center space-x-5">
-            <Nightwind size="h-[24px]" />
+          <div className="relative z-10 flex items-center space-x-6">
+            <div className="hidden xs:block">
+              <Nightwind size="h-[24px]" />
+            </div>
             <ConnectButton
               accountStatus={{
                 smallScreen: "avatar",
                 largeScreen: "full"
               }}
             />
-            {/* {</div>!isConnected ? (
-            ) : (
-              <Button
-                className="h-[36px] font-medium rounded-full border-2 shadow-light"
-                color="border-sky-700 bg-white text-black hover:bg-sky-100"
-                double={false}
-                label="Connect"
-                loading={loading}
-                onClick={() =>
-                  setModalView({ name: "CONNECT_VIEW", cross: true })
-                }
-              />
-              <>
-                <SlcCounter />
-                <a
-                  onClick={() =>
-                    setShowDropdown((showDropdown) => !showDropdown)
-                  }
-                >
-                  <UserIcon />
-                </a>
-              </>
-            )} */}
+            {isConnected && (
+              <a
+                onClick={() => setShowDropdown((showDropdown) => !showDropdown)}
+              >
+                <UserIcon />
+              </a>
+            )}
           </div>
           {showDropdown && (
             <DropdownMenu

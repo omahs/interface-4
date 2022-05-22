@@ -1,5 +1,7 @@
-import Cross from "@components/icons/Cross"
+import { useTheme } from "next-themes"
+import nightwind from "nightwind/helper"
 import Logo from "@components/icons/Logo"
+import Nightwind from "@components/icons/Nightwind"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import WalletConnect from "@walletconnect/client"
 import { Dispatch, SetStateAction } from "react"
@@ -13,6 +15,16 @@ type Props = {
 function DropdownMenu({ showDropdown, setShowDropdown }: Props) {
   const { connector }: { connector: WalletConnect } = useAppContext()
 
+  const { theme, setTheme } = useTheme()
+
+  const toggle = () => {
+    nightwind.beforeTransition()
+    if (theme !== "dark") {
+      setTheme("dark")
+    } else {
+      setTheme("light")
+    }
+  }
   const disconnect = async () => {
     if (connector.connected) {
       await connector.killSession()
@@ -49,13 +61,13 @@ function DropdownMenu({ showDropdown, setShowDropdown }: Props) {
         label="Purchases"
         onClick={() => setShowDropdown(false)}
       />
-      {connector.connected && (
+      <div className="xs:hidden">
         <DropdownMenuElement
-          image={<Cross className="w-5 h-5 text-red-300" />}
-          label="Disconnect"
-          onClick={async () => await disconnect()}
+          image={<Nightwind size="h-5" onClick={null} />}
+          label="Toggle dark mode"
+          onClick={async () => await toggle()}
         />
-      )}
+      </div>
     </div>
   )
 }
