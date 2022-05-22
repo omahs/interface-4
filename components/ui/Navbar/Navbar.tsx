@@ -36,12 +36,14 @@ const Navbar = () => {
             <div className={`${isConnected ? "hidden xs:block" : ""}`}>
               <Nightwind size="h-[24px]" />
             </div>
-            <ConnectButton
-              accountStatus={{
-                smallScreen: "avatar",
-                largeScreen: "full"
-              }}
-            />
+            <div onClick={() => sa_event("connect_wallet_attempt")}>
+              <ConnectButton
+                accountStatus={{
+                  smallScreen: "avatar",
+                  largeScreen: "full"
+                }}
+              />
+            </div>
             {isConnected && (
               <a
                 onClick={() => setShowDropdown((showDropdown) => !showDropdown)}
