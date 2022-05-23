@@ -23,7 +23,7 @@ function FiltersFloatingMenu({
 }: Props) {
   const allTagsEnabled = filterTags.length === totalTags.length
   return (
-    <div className="absolute top-0 right-0 z-20 px-4 py-6 mt-16 space-y-8 text-black transition-opacity duration-200 bg-white nightwind-prevent w-80 rounded-xl shadow-base nightwind-prevent-block">
+    <div className="absolute top-0 right-0 z-20 px-4 py-6 mt-16 space-y-8 text-black transition-opacity duration-200 bg-white border-2 border-gray-200 w-80 rounded-xl shadow-base nightwind-prevent-block">
       <div className="flex flex-wrap items-center justify-end gap-3">
         {totalTags.map((el, key) => {
           const currentTag = tagsList.find((tag) => tag.value == el) || {
