@@ -13,7 +13,7 @@ const FAQsItem = ({ question, answer, id, anchor }: Props) => {
   return (
     <li>
       <div
-        className="flex items-center pt-8 pb-1 border-b-2 border-blue-600 cursor-pointer group"
+        className="flex items-center pt-5 border-b-2 border-blue-600 cursor-pointer group"
         onClick={() => setShowAnswer((showAnswer) => !showAnswer)}
         id={id}
       >
@@ -26,12 +26,12 @@ const FAQsItem = ({ question, answer, id, anchor }: Props) => {
             } `}
           />
         </div>
-        <span className="mt-0 mb-2 text-lg font-semibold leading-relaxed text-black">
+        <span className="mt-0 mb-2 font-semibold leading-relaxed text-black">
           {question}
         </span>
       </div>
       {showAnswer && (
-        <div className="pt-2 xs:ml-8">
+        <div className="px-3 py-2 border-b-2 border-l-2 border-r-2 border-blue-200 rounded-b-sm shadow-inner bg-blue-50 dark:bg-gray-900 xs:pl-8 xs:pr-4">
           {typeof answer == "string" ? <p className="">{answer}</p> : answer}
         </div>
       )}

@@ -120,7 +120,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
     <form className="md:flex" onSubmit={submit}>
       <div className="w-full max-w-screen-sm py-6 mx-auto space-y-4 md:w-3/5">
         <SliceFormDescription />
-        <p className="font-semibold text-center text-yellow-600">
+        <p className="pt-2 font-semibold text-center text-yellow-600">
           Add initial owners and their slices
         </p>
         <SliceFormBlockSplitter
