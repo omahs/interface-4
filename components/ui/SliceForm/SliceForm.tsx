@@ -33,8 +33,6 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   })
   const [loadingButton, setloadingButton] = useState(false)
 
-  const hasMinimumShares =
-    shares.filter((share) => share >= minimumShares).length > 0
   const allowedSuperOwners =
     totalShares / minimumShares > 1000
       ? `${formatNumber(totalShares / minimumShares)}`
@@ -137,7 +135,6 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           setMinimumShares={setMinimumShares}
           setTotalShares={setTotalShares}
           setisImmutable={setisImmutable}
-          hasMinimumShares={hasMinimumShares}
         />
         <div className="py-8 sm:px-6 ">
           {totalShares > 4000000000 && (
