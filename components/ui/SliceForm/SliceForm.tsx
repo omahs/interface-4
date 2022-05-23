@@ -192,7 +192,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
             totalShares={totalShares}
           />
           <div className="pt-8 mx-auto">
-            <div className="flex justify-around">
+            <div className="space-y-3 text-center">
               <div>
                 <p className="pb-1 text-lg font-bold">Owners</p>
                 <p className="text-center">{shares.filter((n) => n).length}</p>
