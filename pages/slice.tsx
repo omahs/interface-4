@@ -42,7 +42,7 @@ export default function Slice() {
               <div className="pt-16 text-center sm:pt-20">
                 <DoubleText
                   inactive
-                  logoText={`Create a Slicer`}
+                  logoText="Create a Slicer"
                   size="text-4xl sm:text-5xl"
                   position="pb-4 sm:pb-6"
                 />
