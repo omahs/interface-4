@@ -33,8 +33,6 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   })
   const [loadingButton, setloadingButton] = useState(false)
 
-  const hasMinimumShares =
-    shares.filter((share) => share >= minimumShares).length > 0
   const allowedSuperOwners =
     totalShares / minimumShares > 1000
       ? `${formatNumber(totalShares / minimumShares)}`
@@ -122,7 +120,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
     <form className="md:flex" onSubmit={submit}>
       <div className="w-full max-w-screen-sm py-6 mx-auto space-y-4 md:w-3/5">
         <SliceFormDescription />
-        <p className="font-semibold text-center text-yellow-600">
+        <p className="pt-2 font-semibold text-center text-yellow-600">
           Add initial owners and their slices
         </p>
         <SliceFormBlockSplitter
@@ -137,7 +135,6 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           setMinimumShares={setMinimumShares}
           setTotalShares={setTotalShares}
           setisImmutable={setisImmutable}
-          hasMinimumShares={hasMinimumShares}
         />
         <div className="py-8 sm:px-6 ">
           {totalShares > 4000000000 && (
@@ -195,7 +192,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
             totalShares={totalShares}
           />
           <div className="pt-8 mx-auto">
-            <div className="flex justify-around">
+            <div className="space-y-3 text-center">
               <div>
                 <p className="pb-1 text-lg font-bold">Owners</p>
                 <p className="text-center">{shares.filter((n) => n).length}</p>
