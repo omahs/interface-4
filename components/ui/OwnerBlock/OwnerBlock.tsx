@@ -28,7 +28,7 @@ const OwnerBlock = ({
   unreleased,
   setUnreleased
 }: Props) => {
-  const { connector, isConnected, setModalView } = useAppContext()
+  const { connector, account, setModalView } = useAppContext()
   const addRecentTransaction = useAddRecentTransaction()
 
   const [loading, setLoading] = useState(false)
@@ -88,7 +88,7 @@ const OwnerBlock = ({
               {!loading ? (
                 <a
                   onClick={() =>
-                    isConnected
+                    account
                       ? submit(owner.address)
                       : setModalView({
                           name: "CONNECT_VIEW",

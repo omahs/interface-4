@@ -20,7 +20,7 @@ type Props = {
 }
 
 const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
-  const { account: creator, connector, isConnected } = useAppContext()
+  const { account: creator, connector } = useAppContext()
   const addRecentTransaction = useAddRecentTransaction()
   const [addresses, setAddresses] = useState([""])
   const [shares, setShares] = useState([1000000])
@@ -211,7 +211,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
             </div>
           </div>
           <div className="flex justify-center py-12 md:pt-8 md:pb-0">
-            {isConnected ? (
+            {creator ? (
               <Button
                 label="Create slicer"
                 type="submit"
