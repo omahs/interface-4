@@ -143,10 +143,6 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
               slicers with up to 4 Billion total slices.
             </p>
           )}
-          <p className="pt-4">
-            <strong className="text-yellow-600">Note:</strong> minimum and total
-            slices cannot be changed later.
-          </p>
           {totalShares === 1 && (
             <p className="pt-4">
               <strong className="text-yellow-600">Note:</strong> you are about
@@ -162,6 +158,10 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
               sure this is the desired behaviour.
             </p>
           )}
+          <p className="pt-4">
+            <strong className="text-yellow-600">Note:</strong> superowner slices
+            and total slices cannot be changed later.
+          </p>
           {process.env.NEXT_PUBLIC_CHAIN_ID === "4" && (
             <p className="pt-4">
               <strong className="text-yellow-600">Note:</strong> this version of
