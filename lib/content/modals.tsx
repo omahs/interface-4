@@ -81,17 +81,17 @@ export const NETWORK_VIEW = () => {
 }
 
 export const CONNECT_VIEW = () => {
-  const { isConnected, setModalView } = useAppContext()
+  const { account, setModalView } = useAppContext()
   useEffect(() => {
     sa_event("connect_wallet_open_modal")
   }, [])
 
   useEffect(() => {
-    if (isConnected) {
-      setModalView({ name: "" })
+    if (account) {
       sa_event("connect_wallet_success")
+      setModalView({ name: "" })
     }
-  }, [isConnected])
+  }, [account])
 
   return (
     <>

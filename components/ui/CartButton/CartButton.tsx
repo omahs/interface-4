@@ -65,7 +65,7 @@ const CartButton = ({
   labelRemove,
   preview
 }: Props) => {
-  const { account, setModalView, isConnected, connector } = useAppContext()
+  const { account, setModalView, connector } = useAppContext()
   const [loading, setLoading] = useState(false)
   const [isUnlocked, setIsUnlocked] = useState(false)
   const [isLoadingExtCall, setisLoadingExtCall] = useState(false)
@@ -222,7 +222,7 @@ const CartButton = ({
             : "bg-gray-500 hover:bg-gray-600"
         } transition-colors duration-150`}
         onClick={async () =>
-          isConnected
+          account
             ? await handleExtCall()
             : setModalView({ name: "CONNECT_VIEW", cross: true })
         }

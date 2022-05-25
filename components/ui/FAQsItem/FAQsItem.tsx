@@ -5,7 +5,7 @@ type Props = {
   question: string
   answer: string | JSX.Element
   id: string
-  anchor: string | undefined
+  anchor?: string
 }
 
 const FAQsItem = ({ question, answer, id, anchor }: Props) => {

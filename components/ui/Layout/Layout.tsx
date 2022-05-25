@@ -17,7 +17,7 @@ const Modal = dynamic(() => import("@components/ui/Modal"), {
 })
 
 export default function Layout({ children }) {
-  const { isConnected, modalView, setModalView } = useAppContext()
+  const { account, modalView, setModalView } = useAppContext()
   const [success, setSuccess] = useState(false)
   const [cookies] = useCookies(["cart"])
 
@@ -27,7 +27,7 @@ export default function Layout({ children }) {
   useEffect(() => {
     // if (process.env.NODE_ENV !== "development") {
     if (
-      isConnected &&
+      account &&
       activeChain &&
       Number(activeChain.id).toString(16) !== process.env.NEXT_PUBLIC_CHAIN_ID
     ) {
@@ -38,7 +38,7 @@ export default function Layout({ children }) {
       }
     }
     // }
-  }, [isConnected, activeChain])
+  }, [account, activeChain])
 
   return (
     <>

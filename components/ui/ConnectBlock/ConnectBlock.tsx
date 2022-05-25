@@ -4,8 +4,8 @@ import { ConnectButton } from "@rainbow-me/rainbowkit"
 import DoubleText from "../DoubleText"
 
 const ConnectBlock = ({ children }) => {
-  const { isConnected } = useAppContext()
-  return isConnected ? (
+  const { account } = useAppContext()
+  return account ? (
     children
   ) : (
     <>

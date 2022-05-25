@@ -15,7 +15,6 @@ export type Purchase = {
 const AppContext = createContext<any>({
   connector: null,
   provider: null,
-  isConnected: false,
   account: "",
   loading: true,
   color1: colorList[0],
@@ -36,7 +35,6 @@ export function AppWrapper({ children }) {
 
   const { data: account } = useAccount()
 
-  const [isConnected, setIsConnected] = useState(false)
   const [color1, setColor1] = useState([])
   const [color2, setColor2] = useState([])
   const [darkColor1, setDarkColor1] = useState([])
@@ -65,10 +63,7 @@ export function AppWrapper({ children }) {
   useEffect(() => {
     setPurchases(null)
     if (account?.address) {
-      setIsConnected(account && true)
       getPurchases(account.address, setPurchases)
-    } else {
-      setIsConnected(false)
     }
   }, [account])
 
@@ -77,7 +72,6 @@ export function AppWrapper({ children }) {
       value={{
         connector: account?.connector,
         provider,
-        isConnected,
         account: account?.address,
         loading,
         color1,

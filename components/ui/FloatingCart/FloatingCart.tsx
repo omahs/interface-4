@@ -9,7 +9,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import useSWR from "swr"
 import { CartList } from ".."
-import { Purchase, useAppContext } from "../context"
+import { useAppContext } from "../context"
 import { updatePurchases } from "@utils/getPurchases"
 import { utils } from "ethers"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
@@ -21,14 +21,8 @@ type Props = {
 }
 
 const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
-  const {
-    isConnected,
-    setPurchases,
-    purchases,
-    setModalView,
-    connector,
-    account
-  } = useAppContext()
+  const { setPurchases, purchases, setModalView, connector, account } =
+    useAppContext()
   const addRecentTransaction = useAddRecentTransaction()
   const [cookies, setCookie, removeCookie] = useCookies(["cart"])
   const [showCartList, setShowCartList] = useState(false)
@@ -151,7 +145,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
                 !loading ? "cursor-pointer hover:bg-green-500" : ""
               } nightwind-prevent`}
               onClick={() =>
-                isConnected
+                account
                   ? !loading
                     ? handleCheckout()
                     : null
@@ -171,7 +165,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
               ) : (
                 <>
                   <p className="pr-2 text-sm ">
-                    {isConnected ? "Checkout" : "Connect"}
+                    {account ? "Checkout" : "Connect"}
                   </p>
                   <ShoppingBag className="w-[18px] h-[18px]" />{" "}
                 </>

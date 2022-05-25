@@ -13,7 +13,7 @@ const DropdownMenu = dynamic(() => import("@components/ui/DropdownMenu"), {
 })
 
 const Navbar = () => {
-  const { isConnected } = useAppContext()
+  const { account } = useAppContext()
   const [showDropdown, setShowDropdown] = useState(false)
 
   return (
@@ -33,7 +33,7 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="relative z-10 flex items-center space-x-6">
-            <div className={`${isConnected ? "hidden xs:block" : ""}`}>
+            <div className={`${account ? "hidden xs:block" : ""}`}>
               <Nightwind size="h-[24px]" />
             </div>
             <div onClick={() => sa_event("connect_wallet_attempt")}>
@@ -44,7 +44,7 @@ const Navbar = () => {
                 }}
               />
             </div>
-            {isConnected && (
+            {account && (
               <a
                 onClick={() => setShowDropdown((showDropdown) => !showDropdown)}
               >

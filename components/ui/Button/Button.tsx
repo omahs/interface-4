@@ -33,7 +33,7 @@ const Button: FC<ButtonProps> = (props) => {
     ...rest
   } = props
 
-  const { color1, color2, isConnected, setModalView } = useAppContext()
+  const { color1, color2 } = useAppContext()
 
   const rootClassName = `px-7 min-w-[150px] focus:outline-none ${className}`
 
