@@ -101,6 +101,71 @@ export const faqsMain = [
     id: "superowner"
   },
   {
+    question: "What can be sold from slicers",
+    answer: (
+      <>
+        <p className="font-bold">Anything.</p>
+        <p>
+          With Slice products everything is efficiently stored on the blockchain
+          (price, purchases, available units, etc). This enables{" "}
+          <b>on-chain inventory management</b>.
+        </p>
+        <p>
+          Purchases are linked to the buyers&apos; addresses, while sellers can
+          track purchases by interacting with our{" "}
+          <a
+            href="https://thegraph.com/explorer/subgraph?id=3Q6UgaBfLwnTtaXtWMpzaXv4PmbfrP8L9N64dmXeo2gb&view=Overview"
+            target="_blank"
+            rel="noreferrer"
+          >
+            subgraph
+          </a>{" "}
+          or directly with the Slice contracts.
+        </p>
+        <p>
+          By changing a few parameters, you can sell any physical or digital
+          item. Let&apos;s look at some examples:
+        </p>
+        <ul>
+          <li>
+            <b>Event Tickets:</b> The ticket is the product itself. Upon
+            entering the venue someone checks the purchase against the address
+            provided (interacting with the subgraph) and validates it.
+          </li>
+          <li>
+            <b>Digital services, subscriptions, apps:</b> In this case it&apos;s
+            the service provider that validates the purchase before providing
+            the service. This could happen automatically or manually.
+          </li>
+          <li>
+            <b>Physical items:</b> In order for the seller to handle
+            fulfillment, a link should be added in the instructions to redeem
+            the product (only visible to buyers). After collecting required
+            info, the items can be delivered.
+          </li>
+          <li>
+            <b>NFTs:</b> It is possible to execute <b>any on-chain logic</b>{" "}
+            during product purchase (requires setting up a custom smart
+            contract). You could use it to mint an NFT, use merkle proof
+            verification for allowlists, or interact with other protocols.
+          </li>
+          <li>
+            <b>A combination of the above:</b> The limit is truly your
+            imagination.
+          </li>
+        </ul>
+        <p>
+          You can get a feeling of how products look by checking out{" "}
+          <a href="/slicer/1" target="_blank" rel="noreferrer">
+            this slicer
+          </a>
+          .
+        </p>
+      </>
+    ),
+    id: "sold"
+  },
+  {
     question: "How to release ETH from my slicer?",
     answer: (
       <>
@@ -267,6 +332,30 @@ export const faqsMain = [
       </>
     ),
     id: "encryption"
+  },
+  {
+    id: "metadata",
+    question: "What are the slicer metadata",
+    answer: (
+      <>
+        <p>
+          The slicer metadata are the name, description, image, tags and all
+          other info related to it.
+        </p>
+        <p>
+          To customize them create a slicer first, then go to its page and click
+          on the pencil near its title (you need to be a superowner to see it).
+          From there you&apos;ll be able to change all information related to
+          it, influencing how it appears online and on nft marketplaces.
+        </p>
+        <p>
+          Note that slicer metadata is stored on Slice servers, not on IPFS.
+          This is because some of the data displayed on nft marketplaces is
+          dynamic (ie ETH received by slicer), and also because slicers
+          generally serve a different purpose than typical NFTs.
+        </p>
+      </>
+    )
   },
   {
     question: "What are sponsorships?",

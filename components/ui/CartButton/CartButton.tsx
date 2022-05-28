@@ -14,6 +14,7 @@ import { ExtCall } from "@lib/handlers/chain"
 import { MerkleTree } from "merkletreejs"
 import keccak256 from "keccak256"
 import { ethers, BytesLike } from "ethers"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 
 type Props = {
   productCart: ProductCart
@@ -215,32 +216,36 @@ const CartButton = ({
     )
   ) : !productCart ? (
     extCheckSig != "0x00000000" && !isSuccessExtCall ? (
-      <div
-        className={`relative z-10 flex items-center justify-center w-full py-2 text-center text-white rounded-md nightwind-prevent group-cart ${
-          isFailExtCall
-            ? "bg-red-500 hover:bg-red-600"
-            : "bg-gray-500 hover:bg-gray-600"
-        } transition-colors duration-150`}
-        onClick={async () =>
-          account
-            ? await handleExtCall()
-            : setModalView({ name: "CONNECT_VIEW", cross: true })
-        }
-        onMouseEnter={() => setIsUnlocked(true)}
-        onMouseLeave={() => setIsUnlocked(false)}
-      >
-        {labelAdd && (
-          <p className="mr-2 text-sm font-medium sm:text-base">{labelAdd}</p>
+      <ConnectButton.Custom>
+        {({ account, openConnectModal }) => (
+          <div
+            className={`relative z-10 flex items-center justify-center w-full py-2 text-center text-white rounded-md nightwind-prevent group-cart ${
+              isFailExtCall
+                ? "bg-red-500 hover:bg-red-600"
+                : "bg-gray-500 hover:bg-gray-600"
+            } transition-colors duration-150`}
+            onClick={
+              account ? async () => await handleExtCall() : openConnectModal
+            }
+            onMouseEnter={() => setIsUnlocked(true)}
+            onMouseLeave={() => setIsUnlocked(false)}
+          >
+            {labelAdd && (
+              <p className="mr-2 text-sm font-medium sm:text-base">
+                {labelAdd}
+              </p>
+            )}
+            {isLoadingExtCall ? (
+              <Spinner color="text-white nightwind-prevent" />
+            ) : (
+              <Lock
+                className="w-5 h-5 mr-1 group-cart-el"
+                isUnlocked={isUnlocked}
+              />
+            )}
+          </div>
         )}
-        {isLoadingExtCall ? (
-          <Spinner color="text-white nightwind-prevent" />
-        ) : (
-          <Lock
-            className="w-5 h-5 mr-1 group-cart-el"
-            isUnlocked={isUnlocked}
-          />
-        )}
-      </div>
+      </ConnectButton.Custom>
     ) : (
       <div
         className={`relative z-10 flex items-center justify-center w-full py-2 text-center text-white rounded-md nightwind-prevent ${

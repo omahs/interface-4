@@ -12,7 +12,7 @@ import { CartList } from ".."
 import { useAppContext } from "../context"
 import { updatePurchases } from "@utils/getPurchases"
 import { utils } from "ethers"
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
+import { ConnectButton, useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 
 type Props = {
   cookieCart: ProductCart[]
@@ -140,37 +140,41 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
                 </>
               )}
             </div>
-            <div
-              className={`flex items-center h-full px-4 text-sm text-white transition-colors duration-150 bg-blue-600 ${
-                !loading ? "cursor-pointer hover:bg-green-500" : ""
-              } nightwind-prevent`}
-              onClick={() =>
-                account
-                  ? !loading
-                    ? handleCheckout()
-                    : null
-                  : setModalView({ name: "CONNECT_VIEW", cross: true })
-              }
-            >
-              {success ? (
-                <Link href="/purchases">
-                  <a className="px-2 text-white hover:text-white">
-                    Go to purchases
-                  </a>
-                </Link>
-              ) : loading ? (
-                <div className="px-4">
-                  <Spinner color="text-white" />
+            <ConnectButton.Custom>
+              {({ account, openConnectModal }) => (
+                <div
+                  className={`flex items-center h-full px-4 text-sm text-white transition-colors duration-150 bg-blue-600 ${
+                    !loading ? "cursor-pointer hover:bg-green-500" : ""
+                  } nightwind-prevent`}
+                  onClick={
+                    account
+                      ? !loading
+                        ? () => handleCheckout()
+                        : null
+                      : openConnectModal
+                  }
+                >
+                  {success ? (
+                    <Link href="/purchases">
+                      <a className="px-2 text-white hover:text-white">
+                        Go to purchases
+                      </a>
+                    </Link>
+                  ) : loading ? (
+                    <div className="px-4">
+                      <Spinner color="text-white" />
+                    </div>
+                  ) : (
+                    <>
+                      <p className="pr-2 text-sm ">
+                        {account ? "Checkout" : "Connect"}
+                      </p>
+                      <ShoppingBag className="w-[18px] h-[18px]" />{" "}
+                    </>
+                  )}
                 </div>
-              ) : (
-                <>
-                  <p className="pr-2 text-sm ">
-                    {account ? "Checkout" : "Connect"}
-                  </p>
-                  <ShoppingBag className="w-[18px] h-[18px]" />{" "}
-                </>
               )}
-            </div>
+            </ConnectButton.Custom>
           </div>
         </div>
       )}
