@@ -93,6 +93,10 @@ const SliceFormBlockSplitter = ({
                   increase/reduce partial ownership that owners may trade in the
                   open market (nft marketplaces).
                 </p>
+                <p>
+                  If the displayed percentage is green, the owner is also a
+                  superowner (see below to learn more).
+                </p>
               </>
             }
             position="top-[35px] right-[-35px]"
