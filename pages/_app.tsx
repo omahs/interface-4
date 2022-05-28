@@ -8,20 +8,20 @@ import { AppProps } from "next/dist/shared/lib/router/router"
 import "../styles/global/styles.scss"
 
 import {
-  apiProvider,
-  configureChains,
   getDefaultWallets,
   RainbowKitProvider,
   lightTheme,
   midnightTheme
 } from "@rainbow-me/rainbowkit"
-import { chain, createClient, WagmiProvider } from "wagmi"
+import { alchemyProvider } from "wagmi/providers/alchemy"
+import { publicProvider } from "wagmi/providers/public"
+import { chain, createClient, configureChains, WagmiConfig } from "wagmi"
 import "@rainbow-me/rainbowkit/styles.css"
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { chains, provider } = configureChains(
     [chain.mainnet, chain.rinkeby],
-    [apiProvider.alchemy(process.env.ALCHEMY_ID), apiProvider.fallback()]
+    [alchemyProvider({ alchemyId: process.env.ALCHEMY_ID }), publicProvider()]
   )
 
   const { connectors } = getDefaultWallets({
@@ -45,7 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           storageKey="nightwind-mode"
           defaultTheme="system"
         >
-          <WagmiProvider client={wagmiClient}>
+          <WagmiConfig client={wagmiClient}>
             <RainbowKitProvider
               chains={chains}
               theme={
@@ -72,7 +72,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 </Layout>
               </AppWrapper>
             </RainbowKitProvider>
-          </WagmiProvider>
+          </WagmiConfig>
         </ThemeProvider>
       </CookiesProvider>
     </>
