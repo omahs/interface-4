@@ -18,8 +18,8 @@ export const initialize = async (connector) => {
     const wcProvider = new WalletConnectProvider({
       rpc: {
         1: "https://eth-mainnet.alchemyapi.io/v2/B59wdqLy61AGhx6UV-ScRCa96t3sdj78",
-        4: "https://eth-rinkeby.alchemyapi.io/v2/wbmuZNbuiaab8Bc_ivuDkgJAOVxartLH",
-      },
+        4: "https://eth-rinkeby.alchemyapi.io/v2/wbmuZNbuiaab8Bc_ivuDkgJAOVxartLH"
+      }
     })
     await wcProvider.enable()
     provider = new ethers.providers.Web3Provider(wcProvider)
@@ -33,23 +33,27 @@ export const initialize = async (connector) => {
 }
 
 export const useAllowed = (slicerId: number) => {
-  const { account } = useAppContext()
+  const { account, provider } = useAppContext()
   const [access, setAccess] = useState({ isAllowed: false, loading: false })
   const getAllowed = async () => {
     setAccess({ isAllowed: false, loading: true })
-    if (slicerId != null && account) {
-      const slicerContract = await slicer(slicerId, defaultProvider)
+    if (slicerId && slicerId != NaN && account) {
+      const slicerContract = await slicer(slicerId, provider)
+
       const isPayeeAllowed: boolean = await slicerContract.isPayeeAllowed(
         account
       )
+
       setAccess({ isAllowed: isPayeeAllowed, loading: false })
     } else {
       setAccess({ isAllowed: false, loading: false })
     }
   }
   useEffect(() => {
-    getAllowed()
-  }, [account])
+    if (account) {
+      getAllowed()
+    }
+  }, [slicerId, account])
   return access
 }
 
@@ -57,7 +61,7 @@ const useProvider = (setLoading: Dispatch<SetStateAction<boolean>>) => {
   const [connector] = useState(
     new WalletConnect({
       bridge: "https://bridge.walletconnect.org", // Required
-      qrcodeModal: QRCodeModal,
+      qrcodeModal: QRCodeModal
     })
   )
 
@@ -77,7 +81,7 @@ const useProvider = (setLoading: Dispatch<SetStateAction<boolean>>) => {
       const accounts = await provider.listAccounts()
 
       const chainIdRequest = await window.ethereum.request({
-        method: "eth_chainId",
+        method: "eth_chainId"
       })
       updateConnection(accounts, chainIdRequest)
     }
