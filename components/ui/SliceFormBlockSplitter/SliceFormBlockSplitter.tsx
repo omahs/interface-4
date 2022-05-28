@@ -69,19 +69,29 @@ const SliceFormBlockSplitter = ({
                 <p>
                   Slices 🍰 represent ownership over a slicer and its earnings.
                 </p>
-                {totalShares ? (
-                  <p>
-                    With the current setup,{" "}
-                    <b>
-                      1 Slice ={" "}
-                      {Math.floor((1 / totalShares) * 1000000000) / 10000000}%
-                    </b>{" "}
-                    of total slicer ownership
-                  </p>
-                ) : null}
                 <p>
-                  If the displayed percentage is green, the owner is also a
-                  superowner (see below to learn more).
+                  The total number of slices defines the{" "}
+                  <b>minimum divisible unit of ownership</b>.{" "}
+                  {totalShares ? (
+                    <>
+                      With the current setup,{" "}
+                      <b>
+                        1 Slice ={" "}
+                        {Math.floor((1 / totalShares) * 1000000000) / 10000000}%
+                      </b>{" "}
+                      of ownership.
+                    </>
+                  ) : (
+                    <>
+                      If a slicer has 100 slices, <b>1 Slice = 1%</b> of
+                      ownership.
+                    </>
+                  )}
+                </p>
+                <p>
+                  There is no right or wrong amount, the only effect is to
+                  increase/reduce partial ownership that owners may trade in the
+                  open market (nft marketplaces).
                 </p>
               </>
             }
