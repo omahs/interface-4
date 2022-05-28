@@ -1,5 +1,5 @@
 import { TriggerRelease } from "@lib/handlers/chain"
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
+import { ConnectButton, useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import formatNumber from "@utils/formatNumber"
 import { Message } from "@utils/handleMessage"
 import { BigNumber, ethers } from "ethers"
@@ -28,7 +28,7 @@ const OwnerBlock = ({
   unreleased,
   setUnreleased
 }: Props) => {
-  const { connector, account, setModalView } = useAppContext()
+  const { connector } = useAppContext()
   const addRecentTransaction = useAddRecentTransaction()
 
   const [loading, setLoading] = useState(false)
@@ -86,19 +86,18 @@ const OwnerBlock = ({
           unreleasedAmount ? (
             <p className="text-sm font-medium text-gray-400">
               {!loading ? (
-                <a
-                  onClick={() =>
-                    account
-                      ? submit(owner.address)
-                      : setModalView({
-                          name: "CONNECT_VIEW",
-                          cross: true
-                        })
-                  }
-                >
-                  Release {unreleasedAmount == "0.00" ? "~0" : unreleasedAmount}{" "}
-                  Ξ
-                </a>
+                <ConnectButton.Custom>
+                  {({ account, openConnectModal }) => (
+                    <a
+                      onClick={
+                        account ? () => submit(owner.address) : openConnectModal
+                      }
+                    >
+                      Release{" "}
+                      {unreleasedAmount == "0.00" ? "~0" : unreleasedAmount} Ξ
+                    </a>
+                  )}
+                </ConnectButton.Custom>
               ) : (
                 "Releasing..."
               )}

@@ -211,17 +211,23 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
             </div>
           </div>
           <div className="flex justify-center py-12 md:pt-8 md:pb-0">
-            {creator ? (
-              <Button
-                label="Create slicer"
-                type="submit"
-                loading={loadingButton}
-              />
-            ) : (
-              <div onClick={() => sa_event("connect_wallet_attempt")}>
-                <ConnectButton />
-              </div>
-            )}
+            <ConnectButton.Custom>
+              {({ account, chain, openConnectModal, mounted }) =>
+                !mounted || !account || !chain ? (
+                  <Button
+                    label="Connect wallet"
+                    onClick={openConnectModal}
+                    type="button"
+                  />
+                ) : (
+                  <Button
+                    label="Create slicer"
+                    type="submit"
+                    loading={loadingButton}
+                  />
+                )
+              }
+            </ConnectButton.Custom>
           </div>
         </div>
       </div>
