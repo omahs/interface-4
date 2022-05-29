@@ -36,7 +36,7 @@ const SliceFormDescription = () => {
                   Then on your slicer page you&apos;ll find a button that says{" "}
                   <b>Add product</b>. That&apos;s where you can set up your
                   product on sale, and once the process is completed it will
-                  appear on your slicer page among its products.
+                  appear among the slicer products.
                 </p>
                 <p>
                   To learn more, check out{" "}

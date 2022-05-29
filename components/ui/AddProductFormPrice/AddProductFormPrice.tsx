@@ -123,8 +123,8 @@ const AddProductFormPrice = ({
               <b>protects against changes in ETH value over time.</b>
             </p>
             <p>
-              <b>Note:</b> Products with dynamic pricing have a higher
-              transaction fee for the buyer.
+              <b>Note:</b> Products with dynamic pricing have a slightly higher
+              gas fee for the buyer.
             </p>
             {/* <p>
               <b>Note:</b> As a creator, you can enable/disable dynamic pricing
