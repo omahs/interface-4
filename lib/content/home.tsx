@@ -34,7 +34,7 @@ export const section2 = (
     </p>
     <p>
       <b>Owners can transfer/sell slices anytime</b> (also on NFT marketplaces)
-      and the slicer will adapt subsequent payments based on new ownership
+      and the slicer will always split payments based on current ownership
       distribution.
     </p>
   </>
