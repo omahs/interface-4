@@ -5,7 +5,7 @@ import { accounts } from "@components/ui/Social/Social"
 import Script from "next/script"
 
 export const defaultTitle = "Slice"
-export const longTitle = "Slice – The decentralized slicing protocol"
+export const longTitle = "Slice – The decentralized commerce protocol"
 export const defaultDescription =
   "Decentralized payments infrastructure for real world applications, products and services."
 export const domain = process.env.NEXT_PUBLIC_APP_URL

@@ -59,6 +59,7 @@ const AddProductFormGeneral = ({
       <div className="relative">
         <Input
           label="Name*"
+          placeholder="What are you selling?"
           type="string"
           value={name}
           onChange={setName}

@@ -40,7 +40,6 @@ const Home = () => {
   return (
     <>
       <NextSeo
-        title="The decentralized slicing protocol"
         openGraph={{
           title: longTitle,
           description: defaultDescription,
@@ -67,12 +66,15 @@ const Home = () => {
               }
               side="right"
             />
-            <HomeSection text={section3} image={<HomeDecentralized />} />
             <HomeSection
+              text={section3}
+              image={<HomeEth size="w-32 sm:w-36" />}
+            />
+            {/* <HomeSection
               text={section4}
               image={<HomeEth size="w-32 sm:w-36" />}
               side="right"
-            />
+            /> */}
           </div>
         </main>
         <Examples />
@@ -108,8 +110,6 @@ export default Home
  *    - add detailed section in slicer page (stats & stuff for payees only)
  *    - transfer page (select box to choose slicer)
  *    - optimize subgraph queries (products + payeeslicer) in slicer/[id], if possible
- *    - Add ENS profile image support for avatar -> https://www.npmjs.com/package/@davatar/react / spec https://gist.github.com/Arachnid/9db60bd75277969ee1689c8742b75182
- *
  *
  * OTHER
  * - Handle ERC20

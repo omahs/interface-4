@@ -13,11 +13,14 @@ const Banner = ({
   title,
   inverted,
   color = "text-white bg-gray-800",
-  id,
+  id
 }: Props) => {
   return (
     <>
-      <div className={`relative px-2 py-24 text-center ${color}`} id={id}>
+      <div
+        className={`relative px-2 py-24 sm:py-32 text-center ${color}`}
+        id={id}
+      >
         {title && (
           <div className="pb-8 sm:pb-12">
             <DoubleText
