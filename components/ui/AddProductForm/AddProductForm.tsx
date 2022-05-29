@@ -177,6 +177,14 @@ const AddProductForm = ({
 
   return (
     <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>
+      <p>
+        Products can be used to sell any physical or digital item, or to execute
+        custom on-chain logic.
+      </p>
+      <p>Create one by setting up the info below.</p>
+      <div>
+        <hr className="w-20 mx-auto border-gray-300 my-14" />
+      </div>
       <AddProductFormGeneral
         slicerId={slicerId}
         newImage={newImage}
