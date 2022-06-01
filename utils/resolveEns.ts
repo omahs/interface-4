@@ -1,17 +1,14 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import WalletConnect from "@walletconnect/client"
+import { ethers } from "ethers"
 
 const resolveEns = async (
-  connector: WalletConnect,
+  provider: ethers.providers.BaseProvider,
   address: string,
   setAddress: Dispatch<SetStateAction<string>>
 ) => {
-  const { initialize } = await import("@lib/useProvider")
-
   if (address) {
     try {
-      const { provider } = await initialize(connector)
-
       const resolved =
         address.substring(address.length - 4) !== ".eth"
           ? await provider.lookupAddress(address)
@@ -26,10 +23,13 @@ const resolveEns = async (
   }
 }
 
-export const useEns = (connector: WalletConnect, address: string) => {
+export const useEns = (
+  provider: ethers.providers.BaseProvider,
+  address: string
+) => {
   const [resolvedAddress, setResolvedAddress] = useState("")
   useEffect(() => {
-    resolveEns(connector, address, setResolvedAddress)
+    resolveEns(provider, address, setResolvedAddress)
   }, [address])
   return !resolvedAddress || resolvedAddress == "Invalid ENS name"
     ? null

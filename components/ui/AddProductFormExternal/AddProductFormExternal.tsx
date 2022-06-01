@@ -115,7 +115,7 @@ const AddProductFormExternal = ({
     <>
       <h2 className="pb-6">External call</h2>
       <p className="pb-3">
-        Send ETH to an external address or execute logic on a smart contract
+        Send ETH to an external address and/or execute logic on a smart contract
         upon each purchase.
       </p>
       <div>

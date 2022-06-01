@@ -2,11 +2,9 @@ import { FC } from "react"
 import Spinner from "@components/icons/Spinner"
 import Link from "next/link"
 import { useAppContext } from "@components/ui/context"
-import Logo from "@components/icons/Logo"
 
 interface ButtonProps {
   loading?: boolean
-  requireConnection?: boolean
   double?: boolean
   className?: string
   color?: string
@@ -16,6 +14,7 @@ interface ButtonProps {
   external?: boolean
   disabled?: boolean
   onClick?: any
+  saEventName?: string
 }
 
 const Button: FC<ButtonProps> = (props) => {
@@ -27,40 +26,28 @@ const Button: FC<ButtonProps> = (props) => {
     href,
     onClick,
     loading = false,
-    requireConnection = false,
     double = true,
     external = false,
     disabled = false,
+    saEventName = "",
     ...rest
   } = props
 
-  const { color1, color2, isConnected, setModalView } = useAppContext()
-  const innerText =
-    requireConnection && !isConnected ? (
-      <>
-        <p>{label}</p>
-        <div className="mb-1 ml-3">
-          <Logo
-            size="w-[17px]"
-            margin="mt-[3px] ml-[5px]"
-            interactive={false}
-          />
-        </div>
-      </>
-    ) : (
-      <p>{label}</p>
-    )
+  const { color1, color2 } = useAppContext()
 
   const rootClassName = `px-7 min-w-[150px] focus:outline-none ${className}`
 
   return (
-    <div className="relative inline-block">
+    <div
+      className="relative inline-block"
+      onClick={() => (saEventName ? sa_event(saEventName) : null)}
+    >
       {href ? (
         !external ? (
           <Link href={href} passHref>
             <button className={`peer relative z-10 ${rootClassName} ${color}`}>
               <div className="flex items-center justify-center">
-                {innerText}
+                <p>{label}</p>
               </div>
             </button>
           </Link>
@@ -68,7 +55,7 @@ const Button: FC<ButtonProps> = (props) => {
           <a href={href} target="_blank" rel="noreferrer">
             <button className={`peer relative z-10 ${rootClassName} ${color}`}>
               <div className="flex items-center justify-center">
-                {innerText}
+                <p>{label}</p>
               </div>
             </button>
           </a>
@@ -79,13 +66,7 @@ const Button: FC<ButtonProps> = (props) => {
             disabled ? "text-white bg-gray-600 cursor-wait" : color
           }`}
           type={type}
-          onClick={
-            !disabled && !loading
-              ? requireConnection && !isConnected
-                ? () => setModalView({ name: "CONNECT_VIEW", cross: true })
-                : onClick
-              : null
-          }
+          onClick={!disabled && !loading ? onClick : null}
           disabled={disabled}
         >
           {loading ? (
@@ -93,7 +74,9 @@ const Button: FC<ButtonProps> = (props) => {
               <Spinner color="text-white nightwind-prevent" />
             </div>
           ) : (
-            <div className="flex items-center justify-center">{innerText}</div>
+            <div className="flex items-center justify-center">
+              <p>{label}</p>
+            </div>
           )}
         </button>
       )}
@@ -108,7 +91,7 @@ const Button: FC<ButtonProps> = (props) => {
           }`}
         >
           <div className="relative flex items-center justify-center -z-10">
-            {innerText}
+            <p>{label}</p>
           </div>
         </div>
       )}

@@ -1,5 +1,6 @@
 import Arrow from "@components/icons/Arrow"
 import { releaseEthToSlicer } from "@lib/handlers/chain"
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import getEthFromWei from "@utils/getEthFromWei"
 import { Message } from "@utils/handleMessage"
 import handleSubmit from "@utils/handleSubmit"
@@ -14,6 +15,7 @@ type Props = {
 
 const ProductsBalance = ({ slicerId, productsModuleBalance }: Props) => {
   const { connector } = useAppContext()
+  const addRecentTransaction = useAddRecentTransaction()
 
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -23,20 +25,26 @@ const ProductsBalance = ({ slicerId, productsModuleBalance }: Props) => {
   })
 
   const executeRelease = async () => {
+    sa_event("release_eth_to_slicer_attempt")
     const eventLogs = await handleSubmit(
       releaseEthToSlicer(connector, slicerId),
       setMessage,
       setLoading,
       setSuccess,
-      true
+      true,
+      addRecentTransaction,
+      `Release store earnings | Slicer #${slicerId}`
     )
     if (eventLogs) {
+      sa_event("release_eth_to_slicer_success")
       setMessage({
         message: `You have released ${getEthFromWei(
           productsModuleBalance
         )} ETH to the slicer! 🎉 Refresh the page to see the updated balance`,
         messageStatus: "success"
       })
+    } else {
+      sa_event("release_eth_to_slicer_fail")
     }
   }
 

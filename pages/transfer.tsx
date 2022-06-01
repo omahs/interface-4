@@ -27,7 +27,7 @@ const Transfer = () => {
   const hexId = decimalToHex(Number(id))
 
   const tokensQuery = /* GraphQL */ `
-      payeeSlicer(id: "${account.toLowerCase()}-${hexId}") {
+      payeeSlicer(id: "${account?.toLowerCase()}-${hexId}") {
         slices
         slicer {
           address

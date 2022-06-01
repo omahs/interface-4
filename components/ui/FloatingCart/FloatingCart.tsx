@@ -9,9 +9,10 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import useSWR from "swr"
 import { CartList } from ".."
-import { Purchase, useAppContext } from "../context"
+import { useAppContext } from "../context"
 import { updatePurchases } from "@utils/getPurchases"
 import { utils } from "ethers"
+import { ConnectButton, useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 
 type Props = {
   cookieCart: ProductCart[]
@@ -20,14 +21,9 @@ type Props = {
 }
 
 const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
-  const {
-    isConnected,
-    setPurchases,
-    purchases,
-    setModalView,
-    connector,
-    account
-  } = useAppContext()
+  const { setPurchases, purchases, setModalView, connector, account } =
+    useAppContext()
+  const addRecentTransaction = useAddRecentTransaction()
   const [cookies, setCookie, removeCookie] = useCookies(["cart"])
   const [showCartList, setShowCartList] = useState(false)
   const [showCart, setShowCart] = useState(false)
@@ -77,15 +73,20 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     const { PayProducts } = await import("@lib/handlers/chain")
 
     try {
+      sa_event("checkout_cart_attempt")
       await handleSubmit(
         PayProducts(connector, account, cookieCart),
         setMessage,
         setLoading,
         setSuccess,
-        true
+        true,
+        addRecentTransaction,
+        "Checkout"
       )
+      sa_event("checkout_cart_success")
       setModalView({ name: "" })
     } catch (err) {
+      sa_event("checkout_cart_fail")
       console.log(err)
     }
   }
@@ -139,37 +140,41 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
                 </>
               )}
             </div>
-            <div
-              className={`flex items-center h-full px-4 text-sm text-white transition-colors duration-150 bg-blue-600 ${
-                !loading ? "cursor-pointer hover:bg-green-500" : ""
-              } nightwind-prevent`}
-              onClick={() =>
-                isConnected
-                  ? !loading
-                    ? handleCheckout()
-                    : null
-                  : setModalView({ name: "CONNECT_VIEW", cross: true })
-              }
-            >
-              {success ? (
-                <Link href="/purchases">
-                  <a className="px-2 text-white hover:text-white">
-                    Go to purchases
-                  </a>
-                </Link>
-              ) : loading ? (
-                <div className="px-4">
-                  <Spinner color="text-white" />
+            <ConnectButton.Custom>
+              {({ account, openConnectModal }) => (
+                <div
+                  className={`flex items-center h-full px-4 text-sm text-white transition-colors duration-150 bg-blue-600 ${
+                    !loading ? "cursor-pointer hover:bg-green-500" : ""
+                  } nightwind-prevent`}
+                  onClick={
+                    account
+                      ? !loading
+                        ? () => handleCheckout()
+                        : null
+                      : openConnectModal
+                  }
+                >
+                  {success ? (
+                    <Link href="/purchases">
+                      <a className="px-2 text-white hover:text-white">
+                        Go to purchases
+                      </a>
+                    </Link>
+                  ) : loading ? (
+                    <div className="px-4">
+                      <Spinner color="text-white" />
+                    </div>
+                  ) : (
+                    <>
+                      <p className="pr-2 text-sm ">
+                        {account ? "Checkout" : "Connect"}
+                      </p>
+                      <ShoppingBag className="w-[18px] h-[18px]" />{" "}
+                    </>
+                  )}
                 </div>
-              ) : (
-                <>
-                  <p className="pr-2 text-sm ">
-                    {isConnected ? "Checkout" : "Connect"}
-                  </p>
-                  <ShoppingBag className="w-[18px] h-[18px]" />{" "}
-                </>
               )}
-            </div>
+            </ConnectButton.Custom>
           </div>
         </div>
       )}

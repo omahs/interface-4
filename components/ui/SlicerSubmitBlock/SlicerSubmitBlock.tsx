@@ -55,7 +55,7 @@ const SlicerSubmitBlock = ({
     fetcher
   )
 
-  const { account, setModalView } = useAppContext()
+  const { account, provider, setModalView } = useAppContext()
   const [preventSubmit, setPreventSubmit] = useState(false)
   const [tempStorageUrl, setTempStorageUrl] = useState("")
 
@@ -76,7 +76,6 @@ const SlicerSubmitBlock = ({
   const save = async () => {
     const { mutate } = await import("swr")
     const handleMessage = (await import("@utils/handleMessage")).default
-    const { defaultProvider } = await import("@lib/useProvider")
     const slicerContract = (await import("@lib/initProvider")).slicer
     const supabaseUpload = (await import("@utils/supabaseUpload")).default
 
@@ -89,7 +88,7 @@ const SlicerSubmitBlock = ({
       attributes: slicer.attributes
     }
     try {
-      const contract = await slicerContract(slicerInfo?.id, defaultProvider)
+      const contract = await slicerContract(slicerInfo?.id, provider)
       const isPayeeAllowed = await contract.isPayeeAllowed(account)
       if (!isPayeeAllowed) {
         throw Error("Payee is not allowed")

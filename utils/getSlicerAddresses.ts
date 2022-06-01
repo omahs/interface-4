@@ -1,8 +1,12 @@
-const getSlicerAddresses = async (slicerIds: number[]) => {
-  const { sliceCore } = await import("@lib/initProvider")
-  const { defaultProvider } = await import("@lib/useProvider")
+import { ethers } from "ethers"
 
-  const sliceCorecontract = sliceCore(defaultProvider)
+const getSlicerAddresses = async (
+  provider: ethers.providers.BaseProvider,
+  slicerIds: number[]
+) => {
+  const { sliceCore } = await import("@lib/initProvider")
+
+  const sliceCorecontract = sliceCore(provider)
   let slicerAddresses = []
 
   slicerIds.forEach(async (slicerId) => {

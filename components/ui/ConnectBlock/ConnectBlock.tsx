@@ -1,10 +1,11 @@
 import { Button } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
 import DoubleText from "../DoubleText"
 
 const ConnectBlock = ({ children }) => {
-  const { isConnected } = useAppContext()
-  return isConnected ? (
+  const { account } = useAppContext()
+  return account ? (
     children
   ) : (
     <>
@@ -15,18 +16,11 @@ const ConnectBlock = ({ children }) => {
           size="text-4xl sm:text-5xl"
         />
         <p className="py-10 text-lg">
-          If you don&apos;t have one, you can get a{" "}
-          <a
-            href="https://metamask.io/"
-            target="_blank"
-            rel="noreferrer"
-            className="font-black highlight"
-          >
-            free Metamask wallet
-          </a>{" "}
-          to interact with Slice.
+          You need to connect your wallet to view this page.
         </p>
-        <Button label="Connect" requireConnection />
+        <div onClick={() => sa_event("connect_wallet_attempt")}>
+          <ConnectButton />
+        </div>
       </div>
     </>
   )

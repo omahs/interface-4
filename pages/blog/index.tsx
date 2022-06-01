@@ -19,9 +19,9 @@ export default function Blog({ allPosts }) {
                 url: `${domain}/og_image.jpg`,
                 width: 1000,
                 height: 1000,
-                alt: `${defaultTitle} cover image`,
-              },
-            ],
+                alt: `${defaultTitle} cover image`
+              }
+            ]
           }}
         />
 
@@ -29,7 +29,7 @@ export default function Blog({ allPosts }) {
           <h1 className="pb-20 text-center">
             <DoubleText
               inactive
-              logoText={`Slice blog`}
+              logoText="Slice blog"
               size="text-5xl sm:text-6xl"
             />
           </h1>
@@ -62,6 +62,6 @@ export async function getStaticProps() {
   const allPosts = getAllPosts(["title", "subtitle", "slug", "date"])
 
   return {
-    props: { allPosts },
+    props: { allPosts }
   }
 }

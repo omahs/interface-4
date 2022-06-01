@@ -1,5 +1,6 @@
 import Arrow from "@components/icons/Arrow"
 import { Withdraw } from "@lib/handlers/chain"
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import getEthFromWei from "@utils/getEthFromWei"
 import getLog from "@utils/getLog"
 import { Message } from "@utils/handleMessage"
@@ -16,6 +17,7 @@ type Props = {
 
 const AccountBalance = ({ account, payeeCurrencyData }: Props) => {
   const { connector } = useAppContext()
+  const addRecentTransaction = useAddRecentTransaction()
 
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -33,7 +35,9 @@ const AccountBalance = ({ account, payeeCurrencyData }: Props) => {
       setMessage,
       setLoading,
       setSuccess,
-      true
+      true,
+      addRecentTransaction,
+      "Withdraw ETH"
     )
     if (eventLogs) {
       const eventLog = getLog(eventLogs, "Withdrawn")
