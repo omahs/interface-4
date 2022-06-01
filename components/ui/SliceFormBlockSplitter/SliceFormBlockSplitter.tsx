@@ -1,10 +1,7 @@
-import Link from "next/link"
 import { useEffect, useState, Dispatch, SetStateAction } from "react"
 import { Input, SliceFormInputBlock, Question } from "@components/ui"
 import Add from "@components/icons/Add"
 import { useAppContext } from "@components/ui/context"
-import DoubleText from "../DoubleText"
-import formatNumber from "@utils/formatNumber"
 import MySwitch from "../MySwitch"
 
 type Props = {
@@ -19,7 +16,6 @@ type Props = {
   setMinimumShares: Dispatch<SetStateAction<number>>
   setTotalShares: Dispatch<SetStateAction<number>>
   setisImmutable: Dispatch<SetStateAction<boolean>>
-  hasMinimumShares: boolean
 }
 
 const SliceFormBlockSplitter = ({
@@ -33,12 +29,11 @@ const SliceFormBlockSplitter = ({
   setShares,
   setMinimumShares,
   setTotalShares,
-  setisImmutable,
-  hasMinimumShares
+  setisImmutable
 }: Props) => {
   const { account } = useAppContext()
   const [initAddress, setInitAddress] = useState("")
-  const [inputCount, setInputCount] = useState(3)
+  const [inputCount, setInputCount] = useState(2)
   const [removedCount, setRemovedCount] = useState(0)
 
   useEffect(() => {
@@ -52,7 +47,7 @@ const SliceFormBlockSplitter = ({
   }, [success])
 
   const resetInputs = () => {
-    setInputCount(3)
+    setInputCount(2)
     setRemovedCount(0)
     setAddresses([initAddress])
     setShares([1000000])
@@ -72,12 +67,35 @@ const SliceFormBlockSplitter = ({
             text={
               <>
                 <p>
-                  The percentage represents the relative amount of ETH earned by
-                  the account from all payments made to the slicer.
+                  Slices 🍰 represent ownership over a slicer and its earnings.
                 </p>
                 <p>
-                  If it&apos;s green, the account holds more than the minimum
-                  slices amount.
+                  The total number of slices defines the{" "}
+                  <b>minimum divisible unit of ownership</b>.{" "}
+                  {totalShares ? (
+                    <>
+                      With the current setup,{" "}
+                      <b>
+                        1 Slice ={" "}
+                        {Math.floor((1 / totalShares) * 1000000000) / 10000000}%
+                      </b>{" "}
+                      of ownership.
+                    </>
+                  ) : (
+                    <>
+                      If a slicer has 100 slices, <b>1 Slice = 1%</b> of
+                      ownership.
+                    </>
+                  )}
+                </p>
+                <p>
+                  There is no right or wrong amount, the only effect is to
+                  increase/reduce partial ownership that owners may trade in the
+                  open market (nft marketplaces).
+                </p>
+                <p>
+                  If the displayed percentage is green, the owner is also a
+                  superowner (see below to learn more).
                 </p>
               </>
             }
@@ -103,19 +121,20 @@ const SliceFormBlockSplitter = ({
             />
           )
         })}
-        <div className="col-span-1 col-start-1 mx-auto">
+
+        <div className="col-span-1 col-start-1 mx-auto ">
           <Add onClick={() => setInputCount(inputCount + 1)} />
         </div>
-        <p className="col-span-4 py-3 pr-2 text-right xs:col-span-3 xs:col-end-7 md:col-end-9 md:col-span-3">
-          Total slices
-        </p>
-        <p
-          className={`col-span-3 pl-5${
-            totalShares > 4000000000 ? " text-red-500 font-bold" : ""
-          }`}
-        >
-          {formatNumber(totalShares, 3)}
-        </p>
+
+        <div className="col-span-7 py-3 pr-2 text-left text-green-500 xs:col-span-6 md:col-span-6">
+          <p
+            className="inline-block font-semibold opacity-75 cursor-pointer hover:opacity-100"
+            onClick={() => setInputCount(inputCount + 1)}
+          >
+            Add slicer owner
+          </p>
+        </div>
+
         <div className="relative flex items-center justify-end col-span-5 pb-3 xs:col-end-7">
           <p className="pr-1">Superowner slices</p>
           <Question
@@ -134,8 +153,8 @@ const SliceFormBlockSplitter = ({
                   to the slicer.
                 </p>
                 <p className="font-bold">
-                  Superowners can edit slicer metadata and sell products
-                  onchain.
+                  Only superowners can edit slicer metadata and sell products
+                  from the decentralized store.
                 </p>
               </>
             }
@@ -169,15 +188,14 @@ const SliceFormBlockSplitter = ({
             text={
               <>
                 <p>
-                  If enabled, as a creator you will be able to set the metadata{" "}
-                  <b>only once</b> after creating the slicer, thus making it
-                  immutable.
+                  Makes the metadata (name, description, image, etc.) be
+                  editable <b>only once</b> after creating the slicer.
                 </p>
-                <p>It should be enabled if:</p>
+                <p>Consider enabling it if:</p>
                 <ul>
                   <li>
-                    <b>The slicer is a collectible asset</b> whose metadata
-                    should not change once created
+                    The slicer represents a <b>collectible asset</b> whose
+                    metadata should not change once created
                   </li>
                   <li>
                     Superowners should not be able to edit the metadata at their
@@ -192,7 +210,7 @@ const SliceFormBlockSplitter = ({
             }
           />
         </div>
-        <div>
+        <div className="flex">
           <MySwitch enabled={isImmutable} setEnabled={setisImmutable} />
         </div>
       </div>

@@ -26,7 +26,7 @@ const AddProductFormPurchases = ({
     <>
       <h2 className="pb-6">Purchase info</h2>
       <p className="pb-3">
-        Customize what buyers will see after buying the product.
+        Customize what buyers see after buying the product.
       </p>
       <div>
         <Textarea

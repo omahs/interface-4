@@ -16,6 +16,7 @@ import { FunctionStruct } from "types/typechain/ProductsModule"
 import { ethers } from "ethers"
 import AddProductFormExternal from "../AddProductFormExternal"
 import ethToWei from "@utils/ethToWei"
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 
 type Props = {
   slicerId: number
@@ -41,6 +42,7 @@ const AddProductForm = ({
   setLogs
 }: Props) => {
   const { account, setModalView, connector } = useAppContext()
+  const addRecentTransaction = useAddRecentTransaction()
   const [usdValue, setUsdValue] = useState(0)
   const [ethValue, setEthValue] = useState(0)
   const [name, setName] = useState("")
@@ -77,6 +79,7 @@ const AddProductForm = ({
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
 
+    sa_event("create_product_attempt")
     const { beforeCreate, handleReject, handleSuccess } = await import(
       "@lib/handleCreateProduct"
     )
@@ -132,15 +135,19 @@ const AddProductForm = ({
         setMessage,
         setLoading,
         setSuccess,
-        true
+        true,
+        addRecentTransaction,
+        `Create product | Slicer #${slicerId}`
       )
 
       if (eventLogs) {
+        sa_event("create_product_success")
         setLogs(eventLogs)
         setUploadStep(9)
         await handleSuccess(slicerId, newProduct.id, eventLogs)
         setModalView({ name: "" })
       } else {
+        sa_event("create_product_fail")
         setUploadStep(7)
         await handleReject(
           slicerId,
@@ -170,6 +177,14 @@ const AddProductForm = ({
 
   return (
     <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>
+      <p>
+        Products can be used to sell any physical or digital item, or to execute
+        custom on-chain logic.
+      </p>
+      <p>Create one by setting up the info below.</p>
+      <div>
+        <hr className="w-20 mx-auto border-gray-300 my-14" />
+      </div>
       <AddProductFormGeneral
         slicerId={slicerId}
         newImage={newImage}

@@ -2,17 +2,18 @@ import dynamic from "next/dynamic"
 import Link from "next/link"
 import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
-import { Button, Container } from "@components/ui"
-import UserIcon from "@components/icons/UserIcon"
+import { Container } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { useState } from "react"
+import { ConnectButton } from "@rainbow-me/rainbowkit"
+import UserIcon from "@components/icons/UserIcon"
 
 const DropdownMenu = dynamic(() => import("@components/ui/DropdownMenu"), {
   ssr: false
 })
 
 const Navbar = () => {
-  const { isConnected, loading, setModalView } = useAppContext()
+  const { account } = useAppContext()
   const [showDropdown, setShowDropdown] = useState(false)
 
   return (
@@ -31,41 +32,24 @@ const Navbar = () => {
               </a>
             </Link>
           </div>
-          {process.env.NEXT_PUBLIC_CHAIN_ID === "4" && (
-            <div className="absolute right-0 flex items-center justify-center w-full h-full">
-              <p
-                className={`px-32 text-xs font-bold text-center text-yellow-600 ${
-                  !isConnected ? "hidden sm:block" : ""
-                }`}
-              >
-                RINKEBY TESTNET
-              </p>
+          <div className="relative z-10 flex items-center space-x-6">
+            <div className={`${account ? "hidden xs:block" : ""}`}>
+              <Nightwind size="h-[24px]" />
             </div>
-          )}
-          <div className="relative z-10 flex items-center space-x-5 sm:space-x-8">
-            <Nightwind size="h-[24px]" />
-            {!isConnected ? (
-              <Button
-                className="h-[36px] font-medium rounded-full border-2 shadow-light"
-                color="border-sky-700 bg-white text-black hover:bg-sky-100"
-                double={false}
-                label="Connect"
-                loading={loading}
-                onClick={() =>
-                  setModalView({ name: "CONNECT_VIEW", cross: true })
-                }
+            <div onClick={() => sa_event("connect_wallet_attempt")}>
+              <ConnectButton
+                accountStatus={{
+                  smallScreen: "avatar",
+                  largeScreen: "full"
+                }}
               />
-            ) : (
-              <>
-                {/* <SlcCounter /> */}
-                <a
-                  onClick={() =>
-                    setShowDropdown((showDropdown) => !showDropdown)
-                  }
-                >
-                  <UserIcon />
-                </a>
-              </>
+            </div>
+            {account && (
+              <a
+                onClick={() => setShowDropdown((showDropdown) => !showDropdown)}
+              >
+                <UserIcon />
+              </a>
             )}
           </div>
           {showDropdown && (

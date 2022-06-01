@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useState, useEffect } from "react"
 import Button from "../Button"
 import MessageBlock from "../MessageBlock"
 import { Message } from "@utils/handleMessage"
+import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 
 type Props = {
   label: string
@@ -11,9 +12,11 @@ type Props = {
   setSuccess: Dispatch<SetStateAction<boolean>>
   setLogs: Dispatch<SetStateAction<LogDescription[]>>
   success?: boolean
+  transactionDescription: string
   mutateUrl?: string
   mutateObj?: object
   confetti?: boolean
+  saEventName?: string
 }
 
 const BlockchainCall = ({
@@ -24,25 +27,43 @@ const BlockchainCall = ({
   setLogs,
   mutateUrl,
   mutateObj,
+  transactionDescription,
   confetti = false,
+  saEventName = ""
 }: Props) => {
+  const addRecentTransaction = useAddRecentTransaction()
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message>({
     message: "",
-    messageStatus: "success",
+    messageStatus: "success"
   })
 
   const submit = async () => {
-    const handleSubmit = (await import("@utils/handleSubmit")).default
+    try {
+      if (saEventName) {
+        sa_event(saEventName + "_attempt")
+      }
+      const handleSubmit = (await import("@utils/handleSubmit")).default
 
-    const eventLog = await handleSubmit(
-      action(),
-      setMessage,
-      setLoading,
-      setSuccess,
-      confetti
-    )
-    setLogs(eventLog)
+      const eventLog = await handleSubmit(
+        action(),
+        setMessage,
+        setLoading,
+        setSuccess,
+        confetti,
+        addRecentTransaction,
+        transactionDescription
+      )
+      setLogs(eventLog)
+      if (saEventName) {
+        sa_event(saEventName + "_success")
+      }
+    } catch (err) {
+      if (saEventName) {
+        sa_event(saEventName + "_fail")
+      }
+      console.log(err)
+    }
   }
 
   useEffect(() => {

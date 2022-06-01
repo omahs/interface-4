@@ -1,9 +1,9 @@
-import useProvider from "@lib/useProvider"
 import { createContext, useContext, useEffect, useState } from "react"
 import { colorList, darkColorList } from "@utils/colorList"
 import { View } from "@lib/content/modals"
 import { getPurchases } from "@utils/getPurchases"
 import { BytesLike } from "ethers"
+import { useAccount, useProvider } from "wagmi"
 
 export type Purchase = {
   slicerId: string
@@ -14,8 +14,7 @@ export type Purchase = {
 
 const AppContext = createContext<any>({
   connector: null,
-  isConnected: false,
-  chainId: "",
+  provider: null,
   account: "",
   loading: true,
   color1: colorList[0],
@@ -32,7 +31,9 @@ const AppContext = createContext<any>({
 export function AppWrapper({ children }) {
   const [loading, setLoading] = useState(true)
   const [modalView, setModalView] = useState<View>({ name: "" })
-  const { connector, isConnected, chainId, account } = useProvider(setLoading)
+  const provider = useProvider()
+
+  const { data: account } = useAccount()
 
   const [color1, setColor1] = useState([])
   const [color2, setColor2] = useState([])
@@ -60,19 +61,18 @@ export function AppWrapper({ children }) {
   }, [])
 
   useEffect(() => {
-    if (account) {
-      setPurchases(null)
-      getPurchases(account, setPurchases)
+    setPurchases(null)
+    if (account?.address) {
+      getPurchases(account.address, setPurchases)
     }
   }, [account])
 
   return (
     <AppContext.Provider
       value={{
-        connector,
-        isConnected,
-        chainId,
-        account,
+        connector: account?.connector,
+        provider,
+        account: account?.address,
         loading,
         color1,
         color2,

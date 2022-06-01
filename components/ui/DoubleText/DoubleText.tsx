@@ -3,7 +3,8 @@ import Link from "next/link"
 import { useAppContext } from "@components/ui/context"
 
 interface Props {
-  logoText?: string
+  logoText?: string | JSX.Element
+  altLogoText?: string | JSX.Element
   size?: string
   position?: string
   inactive?: boolean
@@ -13,15 +14,14 @@ interface Props {
 
 const DoubleText: FC<Props> = ({
   logoText,
+  altLogoText,
   size,
   position,
   inactive,
   inverted,
-  color,
+  color
 }) => {
   const { color1, color2, darkColor1, darkColor2 } = useAppContext()
-  const text = logoText || "Slice"
-
   return (
     <span
       className={`inline-block relative ${inactive ? "" : "group "}${
@@ -36,7 +36,7 @@ const DoubleText: FC<Props> = ({
             size || "text-2xl md:text-3xl"
           }`}
         >
-          {text}
+          {logoText}
         </span>
       ) : (
         <Link href="/">
@@ -45,7 +45,7 @@ const DoubleText: FC<Props> = ({
               inverted ? "text-white" : "text-black"
             } relative z-10 !font-black ${size || "text-2xl md:text-3xl"}`}
           >
-            {text}
+            {logoText}
           </a>
         </Link>
       )}
@@ -63,7 +63,7 @@ const DoubleText: FC<Props> = ({
         }`}
         style={{ marginTop: "0.1em", marginBottom: 0 }}
       >
-        {text}
+        {altLogoText || logoText}
       </span>
     </span>
   )
