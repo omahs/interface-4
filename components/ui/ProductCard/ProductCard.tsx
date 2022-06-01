@@ -246,14 +246,14 @@ const ProductCard = ({
       >
         <div>
           <div className="flex items-center justify-between">
-            <div className="flex flex-wrap items-center mr-28">
+            <div className="flex flex-wrap items-center mt-1.5 mr-28">
               <p className="mr-2 font-medium">{name}</p>
               <p className="h-5 mt-1 text-xs font-normal text-gray-500">
                 #{productId}
               </p>
             </div>
           </div>
-          <div className="absolute top-0 right-0 flex items-center justify-center w-24 h-[56px] my-auto mr-5">
+          <div className="absolute top-0 right-0 flex items-center justify-center w-24 h-[68px] my-auto mr-5">
             <div
               className="absolute w-full h-full"
               onClick={() => (chainInfo ? handleOnClick() : null)}
