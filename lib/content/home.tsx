@@ -14,10 +14,10 @@ export const section1 = (
       <DoubleText logoText="slices 🍰" size="text-normal" inactive />
     </p>
     <p>
-      At the same time each slicer is also a{" "}
-      <b>decentralized store from where owners can sell anything.</b>
+      At the same time each slicer is a{" "}
+      <b>decentralized store from where owners can sell anything</b>, enabling
+      trustless commerce at the blockchain layer.
     </p>
-    <p>They enable trustless commerce at the blockchain layer.</p>
   </>
 )
 
@@ -33,7 +33,7 @@ export const section2 = (
       earnings.
     </p>
     <p>
-      <b>Owners can transfer/sell slices anytime</b> (also on NFT marketplaces)
+      <b>Owners can transfer/sell slices anytime</b> (even on NFT marketplaces)
       and the slicer will always split payments based on current ownership
       distribution.
     </p>
@@ -52,8 +52,8 @@ export const section3 = (
     </p>
     <p>
       Tickets for events, physical items, merch, digital files, professional
-      services, NFTs, even interact with other contracts. The best part?{" "}
-      <b>It&apos;s all on-chain.</b>
+      services, NFTs, handle allowlists, even interact with other contracts. The
+      best part? <b>It&apos;s all on-chain.</b>
     </p>
     <Link href="/slice">
       <a className="inline-flex items-center group highlight">
