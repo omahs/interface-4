@@ -1,4 +1,5 @@
 import CarouselFiles from "@components/icons/CarouselFiles"
+import CarouselEvents from "@components/icons/CarouselEvents"
 import CarouselGames from "@components/icons/CarouselGames"
 import CarouselMerchandise from "@components/icons/CarouselMerchandise"
 import CarouselMusic from "@components/icons/CarouselMusic"
@@ -59,11 +60,11 @@ const slides = [
     contentExamples: (
       <li>
         <a
-          href="https://slicedao.notion.site/Songwriters-collaboration-Slicer-example-47d6e642113c498ea381c37fb81cbba1"
+          href="https://slicedao.notion.site/Music-project-IRL-NFT-Slicer-example-c5548f68f7e44783bf5a9624d6bf6858"
           target="_blank"
           rel="noreferrer"
         >
-          Songwriters collaboration
+          Music project (IRL + NFT)
         </a>
       </li>
     )
@@ -90,6 +91,17 @@ const slides = [
         </li>
         <li>Accept payments in ETH or ERC20 (including your own)</li>
       </>
+    ),
+    contentExamples: (
+      <li>
+        <a
+          href="https://slicedao.notion.site/Game-project-with-NFTs-Slicer-example-701d7d67130645f58285fae12132e754"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Game project with NFTs
+        </a>
+      </li>
     )
   },
   {
@@ -118,85 +130,88 @@ const slides = [
           target="_blank"
           rel="noreferrer"
         >
-          Authors collaborating on a book
+          Sell books on-chain and split ownership between authors
         </a>
       </li>
     )
   },
   {
     title: "Events",
-    imageContent: (color: string) => CarouselFiles(color),
+    imageContent: (color: string) => CarouselEvents(color),
     contentSlicer: (
       <p>
-        Used to <b>split payments between owners</b>.
-      </p>
-    ),
-    contentSlice: (
-      <p>
-        Represent the <b>right to redeem any due ETH</b>.
+        Related to an <b>IRL event like a conference, party or concert</b>,
+        initially owned by the organizers.
       </p>
     ),
     contentStore: (
-      <p>
-        <b>Digital files of any kind</b>.
-      </p>
-    )
-  },
-  {
-    title: "Payments",
-    imageContent: (color: string) => CarouselPayments(color),
-    contentSlicer: (
-      <p>
-        Related to a <b>specific project or team</b> and used to{" "}
-        <b>split payments between owners</b>.
-      </p>
-    ),
-    contentSlice: (
-      <p>
-        Represent the <b>right to redeem any due ETH</b>.
-      </p>
-    ),
-    contentStore: (
-      <p>
-        Payments can be <b>received directly</b> or by selling{" "}
-        <b>products, services or files</b> through the store.
-      </p>
-    )
-  },
-  {
-    title: "Startup & DAO",
-    imageContent: (color: string) => CarouselStartups(color),
-    contentSlicer: (
-      <p>
-        Represents <b>company/DAO structure</b>, collects and{" "}
-        <b>split payments</b>.
-      </p>
-    ),
-    contentSlice: (
-      <p>
-        Can be given to individuals / community members to involve them in the
-        project.
-      </p>
-    ),
-    contentStore: (
-      <p>
-        Sells <b>the startup products and services</b>.
-      </p>
+      <>
+        <li>
+          Sell tiered tickets, pass to special events, merch, food and drinks to
+          be consumed at the venue
+        </li>
+        <li>
+          Manage entrance by interacting with the Slice subgraph or contracts
+        </li>
+        <li>Accept payments in ETH or ERC20 (including your own)</li>
+      </>
     )
   },
   {
     title: "Merchandise",
     imageContent: (color: string) => CarouselMerchandise(color),
-    contentSlicer: <p>Related to an entity, project, collectible or meme.</p>,
-    contentSlice: (
+    contentSlicer: (
       <p>
-        Represent the <b>right to redeem any due ETH</b>.
+        Related to a <b>project that sells physical items on the d-store</b>,
+        initially owned by the store manager.
       </p>
     ),
     contentStore: (
+      <>
+        <li>Sell t-shirts, hoodies and other physical items on the d-store</li>
+        <li>
+          Couple sales with complimentary NFTs that can be automatically minted
+          to the buyer
+        </li>
+        <li>Collect delivery info and handle order fulfilment in any way</li>
+        <li>Accept payments in ETH or ERC20 (including your own)</li>
+      </>
+    )
+  },
+  {
+    title: "Services",
+    imageContent: (color: string) => CarouselPayments(color),
+    contentSlicer: (
       <p>
-        Sells <b>digital and physical objects</b>.
+        Related to <b>professional services offered by a group of people</b>,
+        mainly used to split payments between owners.
       </p>
+    ),
+    contentStore: (
+      <>
+        <li>
+          Sell access to digital applications or service packages on the d-store
+        </li>
+        <li>Payments for custom services can be sent directly to the slicer</li>
+        <li>Accept payments in ETH or ERC20 (including your own)</li>
+      </>
+    )
+  },
+  {
+    title: "Startups & DAOs",
+    imageContent: (color: string) => CarouselStartups(color),
+    contentSlicer: (
+      <p>
+        Represents <b>company/DAO that offers services or products</b>,
+        initially owned by project treasury.
+      </p>
+    ),
+    contentStore: (
+      <>
+        <li>Use slices to handle payout distribution</li>
+        <li>Sell digital products and services on the d-store.</li>
+        <li>Accept payments in ETH or ERC20 (including your own)</li>
+      </>
     )
   }
 ]
