@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { colorList, darkColorList } from "@utils/colorList"
+import { darkColorList } from "@utils/colorList"
 import {
   CarouselProvider,
   Slider,
@@ -41,24 +41,30 @@ const Carousel = () => {
                     >
                       Slicer
                     </p>
-                    {slide.contentSlicer}
+                    <div className="prose">{slide.contentSlicer}</div>
                   </div>
                   <div>
                     <p
-                      className={`pb-2 text-sm uppercase tracking-wide font-medium ${darkColorList[key][2]}`}
+                      className={`text-sm uppercase tracking-wide font-medium ${darkColorList[key][2]}`}
                     >
-                      Slices
+                      d-store
                     </p>
-                    {slide.contentSlice}
+                    <div className="prose">
+                      <ul>{slide.contentStore}</ul>
+                    </div>
                   </div>
-                  <div>
-                    <p
-                      className={`pb-2 text-sm uppercase tracking-wide font-medium ${darkColorList[key][2]}`}
-                    >
-                      Products store
-                    </p>
-                    {slide.contentProduct}
-                  </div>
+                  {slide.contentExamples && (
+                    <div>
+                      <p
+                        className={`text-sm uppercase tracking-wide font-medium ${darkColorList[key][2]}`}
+                      >
+                        examples
+                      </p>
+                      <div className="prose">
+                        <ul>{slide.contentExamples}</ul>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="relative w-48 h-48 p-8 mx-auto border border-gray-200 shadow-lg md:p-10 sm:w-56 sm:h-56 rounded-xl">
@@ -85,7 +91,7 @@ const Carousel = () => {
                   )
                 ) : (
                   <div className="relative flex items-center justify-center w-full h-full">
-                    {slide.imageContent(colorList[key][2])}
+                    {slide.imageContent(darkColorList[key][2])}
                   </div>
                 )}
               </div>
@@ -110,6 +116,16 @@ const Carousel = () => {
           <CarouselDot key={key} index={key} title={slide.title} />
         ))}
       </div>
+      <p className="pt-12">
+        <a
+          className="highlight"
+          href="https://slicedao.notion.site/Slicer-examples-668ffdc77037498d9818b40d8213ade4"
+          target="_blank"
+          rel="noreferrer"
+        >
+          See more examples
+        </a>
+      </p>
     </CarouselProvider>
   )
 }

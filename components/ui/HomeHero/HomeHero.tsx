@@ -80,7 +80,7 @@ const HomeHero = () => {
         {process.env.NEXT_PUBLIC_CHAIN_ID === "1" && (
           <div onClick={() => sa_event("homepage_secondary_button_click")}>
             <Link href="/slicer/1">
-              <a className="highlight">or check out an example slicer</a>
+              <a className="highlight">or check out an existing one</a>
             </Link>
           </div>
         )}
