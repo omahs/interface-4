@@ -9,45 +9,63 @@ import punk6721 from "public/punk6721.png"
 
 const slides = [
   {
-    title: "NFTs (Collectibles)",
+    title: "NFTs",
     imageSrc: punk6721,
     contentSlicer: (
       <p>
-        The slicer <b>represents one or more collectible assets</b>, by owning
-        them or being itself a collectible.
+        Represents the <b>NFT project and its ecosystem</b>, initially owned by
+        its creators.
       </p>
     ),
-    contentSlice: (
-      <p>
-        Represent the <b>ownership</b> over those assets.
-      </p>
+    contentStore: (
+      <>
+        <li>Handle NFT mints, free claims and allowlists</li>
+        <li>
+          Sell or token-gate tickets to events, merch or anything related to the
+          project
+        </li>
+        <li>Accept payments in ETH or ERC20 (including your own)</li>
+      </>
     ),
-    contentProduct: (
-      <p>
-        Sells <b>any file or merchandise</b> related to the collectibles.
-      </p>
+    contentExamples: (
+      <li>
+        <a href="https://slice.so/slicer/1" target="_blank" rel="noreferrer">
+          Slice Genesis slicer
+        </a>
+      </li>
     ),
     isNFT: true
   },
   {
-    title: "Music artists",
+    title: "Music",
     imageContent: (color: string) => CarouselMusic(color),
     contentSlicer: (
       <p>
-        Related to a <b>song, album or project</b>. Owned by the band or group
-        of people that made it.
+        Related to a <b>song, album or music NFT project</b>, initally owned by
+        those involved in its production and eventually shared with fans and
+        community members.
       </p>
     ),
-    contentSlice: (
-      <p>
-        Represent <b>royalties</b>.
-      </p>
+    contentStore: (
+      <>
+        <li>Handle NFT mints, free claims and allowlists</li>
+        <li>
+          Sell songs, albums, concert tickets, merch or anything related to the
+          project
+        </li>
+        <li>Accept payments in ETH or ERC20 (including your own)</li>
+      </>
     ),
-    contentProduct: (
-      <p>
-        Sells <b>audio files</b> (songs or albums), <b>concert tickets</b> and
-        merchandise.
-      </p>
+    contentExamples: (
+      <li>
+        <a
+          href="https://slicedao.notion.site/Songwriters-collaboration-Slicer-example-47d6e642113c498ea381c37fb81cbba1"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Songwriters collaboration
+        </a>
+      </li>
     )
   },
   {
@@ -55,15 +73,23 @@ const slides = [
     imageContent: (color: string) => CarouselGames(color),
     contentSlicer: (
       <p>
-        Related to the <b>games and the universe surrounding them</b>.
+        Related to a <b>game and the universe surrounding it</b>, initially
+        owned by its creators.
       </p>
     ),
-    contentSlice: <p>Represent ownership over the games.</p>,
-    contentProduct: (
-      <p>
-        Sells <b>games and add-ons</b> as files or coupons, as well as
-        merchandise.
-      </p>
+    contentStore: (
+      <>
+        <li>Sell game either as a one-time purchase or monthly subscription</li>
+        <li>
+          Sell add-ons, skins, exclusive content, merch and NFTs related to the
+          game
+        </li>
+        <li>
+          Allow anyone to create custom skins to be used in-game, while taking a
+          fee out of each purchase
+        </li>
+        <li>Accept payments in ETH or ERC20 (including your own)</li>
+      </>
     )
   },
   {
@@ -71,18 +97,34 @@ const slides = [
     imageContent: (color: string) => CarouselWriters(color),
     contentSlicer: (
       <p>
-        Related to a <b>book, series or project</b>.
+        Related to a <b>book, series or project</b>, initially owned by the
+        author.
       </p>
     ),
-    contentSlice: <p>Represent ownership over the content.</p>,
-    contentProduct: (
-      <p>
-        Sells <b>ebooks, PDF files or access to exclusive content</b>.
-      </p>
+    contentStore: (
+      <>
+        <li>
+          Sell books, ebooks or articles either as one-time purchases or monthly
+          subscription
+        </li>
+        <li>Give access to exclusive content related to the project</li>
+        <li>Accept payments in ETH or ERC20 (including your own)</li>
+      </>
+    ),
+    contentExamples: (
+      <li>
+        <a
+          href="https://slicedao.notion.site/Authors-collaborating-on-books-Slicer-example-27e735a8f44c487c9c6469e222fb8c14"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Authors collaborating on a book
+        </a>
+      </li>
     )
   },
   {
-    title: "Files",
+    title: "Events",
     imageContent: (color: string) => CarouselFiles(color),
     contentSlicer: (
       <p>
@@ -94,7 +136,7 @@ const slides = [
         Represent the <b>right to redeem any due ETH</b>.
       </p>
     ),
-    contentProduct: (
+    contentStore: (
       <p>
         <b>Digital files of any kind</b>.
       </p>
@@ -114,7 +156,7 @@ const slides = [
         Represent the <b>right to redeem any due ETH</b>.
       </p>
     ),
-    contentProduct: (
+    contentStore: (
       <p>
         Payments can be <b>received directly</b> or by selling{" "}
         <b>products, services or files</b> through the store.
@@ -136,7 +178,7 @@ const slides = [
         project.
       </p>
     ),
-    contentProduct: (
+    contentStore: (
       <p>
         Sells <b>the startup products and services</b>.
       </p>
@@ -151,7 +193,7 @@ const slides = [
         Represent the <b>right to redeem any due ETH</b>.
       </p>
     ),
-    contentProduct: (
+    contentStore: (
       <p>
         Sells <b>digital and physical objects</b>.
       </p>
