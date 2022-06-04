@@ -24,18 +24,18 @@ export const section1 = (
 export const section2 = (
   <>
     <h1>
-      <DoubleText inactive logoText="Dynamic splitting" size="text-normal" />
+      <DoubleText inactive logoText="Dynamic ownership" size="text-normal" />
     </h1>
     <p>
       Slices are ERC1155{" "}
       <DoubleText inactive logoText="Semi-Fungible Tokens" size="text-normal" />{" "}
       (fractionalized NFTs) that represent ownership over a slicer and its
-      earnings.
+      earnings, much like
+      <DoubleText inactive logoText="tradable royalties" size="text-normal" />.
     </p>
     <p>
       <b>Owners can transfer/sell slices anytime</b> (even on NFT marketplaces)
-      and the slicer will always split payments based on current ownership
-      distribution.
+      and any subsequent payment will be split accordingly.
     </p>
   </>
 )
@@ -47,7 +47,7 @@ export const section3 = (
       <DoubleText inactive logoText="d-stores" size="text-normal" />
     </h1>
     <p>
-      Each Slicer comes with its own{" "}
+      Each slicer comes with its own{" "}
       <b>decentralized store that can sell anything and accept any currency</b>.
     </p>
     <p>
