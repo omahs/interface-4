@@ -1,55 +1,39 @@
 import Link from "next/link"
-import { DoubleText } from "@components/ui"
-import { accounts } from "@components/ui/Social/Social"
 
 export const faqsMain = [
   {
-    question: "What's the difference between slicers and slices?",
+    question: "What's the difference between slicers and slices",
     answer: (
       <>
         <p>
-          <b>
-            Slicers are smart contracts which represent a specific entity,
-            project or asset
-          </b>{" "}
-          (anything really). They are made up of one or more slices, and their
-          main purpose is to <b>split any ETH they receive</b> to the owner of
-          those slices.
+          <b>Slicers</b> are:
+          <ol>
+            <li>
+              Smart contracts which split any payment they receive to their
+              owners
+            </li>
+            <li>
+              Decentralized stores (d-stores) from which it&apos;s possible to
+              sell anything, directly on-chain.
+            </li>
+          </ol>
         </p>
         <p>
-          <b>Slices</b> are ERC1155 tokens used to{" "}
-          <b>subdivide the ownership of a slicer</b>, which can also be seen as
-          the slicer&apos;s royalties. Their total amount is defined when a
-          slicer is created and cannot be changed later. Owners can{" "}
-          <Link href="/#transfer">
-            <a>transfer them like any other ERC1155 token</a>
-          </Link>
-          , or even sell them on a NFT marketplace like{" "}
-          <a
-            href="https://opensea.io/collection/slice-so"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Opensea
-          </a>
-          .
+          <b>Slices</b> are ERC1155 tokens which represent{" "}
+          <b>the ownership over a slicer</b>. By owning 10% of the slices of a
+          slicer, you get 10% of ownership of the slicer and its earnings.
         </p>
       </>
     ),
     id: "difference"
   },
   {
-    question: "What can slicers be used for?",
+    question: "What can slicers be used for",
     answer: (
       <>
         <p>
-          Slicers are ideal to split payments between multiple owners, or to
-          represent anything that needs to have an objective value. Each slicer
-          also comes with a{" "}
-          <Link href="/#products">
-            <a>decentralized product store</a>
-          </Link>{" "}
-          that opens up limitless possibilities.
+          Slicers can be used to split payments dynamically between multiple
+          owners, or to sell anything in a decentralized manner.
         </p>
         <p>Generally you may want to either:</p>
         <ul>
@@ -57,44 +41,39 @@ export const faqsMain = [
             Create a slicer for your own entity, project or asset – and
             eventually create products to sell
           </li>
-          <li>
-            Buy slices of a slicer you like or support to earn income from it
-          </li>
+          <li>Buy slices of a slicer you like or support</li>
           <li>
             Buy enough slices of a slicer in order to become a{" "}
             <Link href="/#superowner">
               <a>superowner</a>
             </Link>{" "}
-            and be able to do add new products
+            to do add new products
           </li>
         </ul>
-        {/* <p>
-          <Link href="/">
-            <a>Here are some inspirations</a>
-          </Link>
-          , but don&apos;t be afraid to experiment.
-        </p> */}
       </>
     ),
     id: "usefulness"
   },
   {
-    question: "What is a superowner?",
+    question: "What is a superowner",
     answer: (
       <>
         <p>
-          Anyone holding at least the minimum amount of slices (specified during
-          the creation of the slicer) is a superowner.
+          Anyone holding at least the amount of superowner slices (specified
+          during the creation of the slicer).
         </p>
         <p>Superowners have privileged access to a slicer, allowing them to:</p>
         <ul>
-          <li>Edit the name, description, image (and other metadata)</li>
-          <li>Add new products</li>
+          <li>
+            Edit the name, description, image and other metadata that defines
+            how the slicer appears online
+          </li>
+          <li>Add new products on the d-store</li>
         </ul>
         <p>
           It is up to the slicer creator to decide how many can eventually
-          become superowners, by setting the <i>minimum slices</i> amount. The
-          lower it is, the higher the number of potential superowners.
+          become superowners, by setting the <i>superowner slices</i> amount.
+          The lower it is, the higher the number of potential superowners.
         </p>
       </>
     ),
@@ -166,7 +145,28 @@ export const faqsMain = [
     id: "sold"
   },
   {
-    question: "How to release ETH from my slicer?",
+    question: "How to redeem a product I bought",
+    answer: (
+      <>
+        <p>
+          Once you buy a product, you can <i>redeem a purchase</i> to receive
+          the contents of a product or see any additional instruction.
+        </p>
+        <p>
+          You can redeem a purchase from{" "}
+          <Link href="/purchases">
+            <a>Your purchases</a>
+          </Link>{" "}
+          and clicking on the <b>Redeem</b> button of a specific product.
+          Alternatively, you can also do so directly from a slicer page by
+          clicking on the blue button with the shopping bag icon.
+        </p>
+      </>
+    ),
+    id: "redeem"
+  },
+  {
+    question: "How to release ETH from my slicer",
     answer: (
       <>
         <p>
@@ -175,7 +175,7 @@ export const faqsMain = [
           <Link href="/profile">
             <a>Your slicers</a>
           </Link>{" "}
-          section and triggering a release with the apposite button.
+          and triggering a release with the apposite button.
         </p>
         <p>
           You will also trigger an automatic release whenever you perform a
@@ -187,28 +187,7 @@ export const faqsMain = [
     id: "release"
   },
   {
-    question: "How to redeem a product I bought?",
-    answer: (
-      <>
-        <p>
-          Once you buy a product, you can <i>redeem a purchase</i> to receive
-          the contents of a product.
-        </p>
-        <p>
-          You can redeem a purchase from the{" "}
-          <Link href="/purchases">
-            <a>Purchases</a>
-          </Link>{" "}
-          section and clicking on the <b>Redeem</b> button of a specific
-          product. Alternatively, you can also do so directly from a slicer page
-          by clicking on the blue button with the shopping bag icon.
-        </p>
-      </>
-    ),
-    id: "redeem"
-  },
-  {
-    question: "How to transfer or sell slices?",
+    question: "How to transfer or sell slices",
     answer: (
       <>
         <p>
@@ -246,7 +225,7 @@ export const faqsMain = [
             <a>Your slicers</a>
           </Link>
           . The slicer should now be in the Explore section (if you don&apos;t
-          see it refresh the page a couple of times).
+          see it refresh the page or wait some seconds).
         </p>
         <p>
           Note that if you pick the <b>Private</b> tag for a slicer, it will be
@@ -257,13 +236,13 @@ export const faqsMain = [
     id: "transfer"
   },
   {
-    question: "How do slicers make ETH?",
+    question: "How do slicers earn money",
     answer: (
       <>
-        <p>There are two main ways for a slicer to earn ETH:</p>
+        <p>There are two main ways for a slicer to earn ETH or other tokens:</p>
         <ul>
-          <li>Selling products</li>
-          <li>Sponsorships (direct payments)</li>
+          <li>Direct payments</li>
+          <li>Selling products on d-stores</li>
         </ul>
         <p>
           Note: You can check the total amount of ETH earned by a slicer on
@@ -281,45 +260,36 @@ export const faqsMain = [
     id: "slicer-earn"
   },
   {
-    question: "What are products?",
+    question: "What are products",
     answer: (
       <>
         <p>
           Each slicers comes with a <b>decentralized store</b> from where you
-          can sell products. All ETH earned end up to the slicer, which can then
-          be claimed by its owners.
+          can sell anything. All payments end up to the slicer by default, which
+          are then split among its owners.
         </p>
-        <p>Products are:</p>
-        <ul>
-          <li>
-            <b>Immutable</b>: their content is saved on the public IPFS network
-            using Filecoin, through{" "}
-            <a href="https://web3.storage/" target="_blank" rel="noreferrer">
-              Web3 Storage
-            </a>
-            .
-          </li>
-          <li>
-            <b>Encrypted</b>: Only buyers can decrypt them (not even Slice can).
-          </li>
-        </ul>
         <p>
-          Initially products can include{" "}
-          <b>instructions, notes and files of any kind</b>. In the future more
-          options will become available.
+          First of all, products are not NFTs themselves. They are a new
+          primitive that is used to handle on-chain inventory and store
+          non-transferable purchases.
+        </p>
+        <p>
+          Products can be used to represent anything — tickets, physical items,
+          files, services, NFTs or a combination of those — it&apos;s the seller
+          that decides what each product is related to.
         </p>
       </>
     ),
     id: "products"
   },
   {
-    question: "How are texts and files encrypted in products?",
+    question: "How are texts and files encrypted in products",
     answer: (
       <>
         <p>
-          Products optionally allow sellers to give private texts and files to
-          buyers. Their content is automatically encrypted and saved immutably
-          on IPFS using Filecoin (via{" "}
+          Sellers have the option to give private texts and files to buyers.
+          Their content is automatically encrypted and saved immutably on IPFS
+          using Filecoin (via{" "}
           <a href="https://web3.storage/" target="_blank" rel="noreferrer">
             Web3 Storage
           </a>
@@ -335,7 +305,7 @@ export const faqsMain = [
   },
   {
     id: "metadata",
-    question: "What are the slicer metadata",
+    question: "What's in the slicer metadata",
     answer: (
       <>
         <p>
@@ -358,7 +328,7 @@ export const faqsMain = [
     )
   },
   {
-    question: "What are sponsorships?",
+    question: "What are sponsorships",
     answer: (
       <>
         <p>
@@ -373,127 +343,160 @@ export const faqsMain = [
           <i>sponsorships</i> section of its page.
         </p>
         <p>
-          Note: Sponsorships may be handled differently in the future and may
-          give access to more advantages over time.
+          Note: Sponsorships are an experimental part of Slice and may be
+          handled differently in the future.
         </p>
       </>
     ),
     id: "sponsorships"
-  }
-
-  // { id:'nice',question: "Can slicers be upgraded?", answer: "Nice" },
-]
-
-export const faqsNfts = [
-  // {
-  //   question: "Can I use Slice to mint NFTs (collectibles)?",
-  //   answer: (
-  //     <>
-  //       <p>
-  //         Yes. You can create a slicer with immutable metadata by{" "}
-  //         <Link href="/slice">
-  //           <a target="_blank" rel="noreferrer">
-  //             creating a new slicer
-  //           </a>
-  //         </Link>{" "}
-  //         and <b>enabling the immutable metadata switch</b>: this makes it
-  //         possible to edit its information <b>only once</b> after its creation
-  //       </p>
-  //       <p>
-  //         Note: If you wish to <b>disable fractionalization</b> and simulate the
-  //         behaviour of a NFT (ERC721), <b>set the total slices amount to 1</b>{" "}
-  //         (the resulting slice will still be an ERC1155 token)
-  //       </p>
-  //       {/* <p>
-  //         Note: Due to how Slice works, slicers&apos; metadata are not stored on
-  //         IPFS. If you want your collectibles to be truly immutable, check out{" "}
-  //         <Link href="/#nft-existing">
-  //           <a>how to use Slice with existing NFTs</a>
-  //         </Link>
-  //         .
-  //       </p> */}
-  //     </>
-  //   ),
-  //   id: "nft-mint"
-  // },
-  {
-    question: "Can I create fractionalized NFTs?",
-    answer: (
-      <>
-        <p>
-          Yes. Slices are ERC1155, semi-fungible tokens. By specifying 2 or more
-          slices while creating a slicer, you are fractionalizing it.
-        </p>
-      </>
-    ),
-    id: "fractionalized"
   },
   {
-    question: "Can I use Slice with existing NFTs?",
+    question: "How to redeem physical items or tickets from product purchases",
     answer: (
       <>
         <p>
-          Very soon. If you want to get posted on upcoming features, consider{" "}
-          <a
-            className="text-white highlight"
-            href={accounts.discord}
-            target="_blank"
-            rel="noreferrer"
-          >
-            hanging out in our Discord
-          </a>
+          Tickets (and purchases in general) are linked to the buyer’s address
+          and are not transferable. Anyone can always verify if an address has
+          purchased a product by interacting with Slice subgraph or contracts.
+        </p>
+        <p>
+          Redeeming physical items generally requires{" "}
+          <b>verifying ownership of the buyer&apos;s address</b> by following
+          instructions provided by the seller. You can find them by redeeming
+          the related product in{" "}
+          <Link href="/purchases">
+            <a className="highlight">Your purchases</a>
+          </Link>
           .
         </p>
-      </>
-    ),
-    id: "nft-existing"
-  }
-]
-
-export const faqsGeneral = [
-  {
-    question: "What's the point of Slice?",
-    answer: (
-      <>
         <p>
-          Originally, the aim of this project was to conceive a special kind of
-          NFTs whose value could be estimated using objective, public data. This
-          would allow their use in many real-world applications, where a
-          parallel to their actual value is required.
-        </p>
-        <p>
-          With slicers, this objective value is the income they generate. By
-          knowing how much ETH a slicer has generated, it is possible to
-          establish a base value for its slices.
-        </p>
-        <p>
-          The idea then gradually evolved into its current form, where slicers
-          can also act as decentralized stores. Products are what will
-          ultimately enable the use of slicers in several different ways.
+          This step tipically requires to sign a message to verify wallet
+          ownership either upon entering the venue or anytime earlier on a third
+          party website, such as the seller&apos;s.
         </p>
       </>
     ),
-    id: "mission"
+    id: "redeem"
   },
   {
-    question: "How much does it cost?",
+    question: "How much does Slice cost",
     answer: (
       <>
         <p>
-          Slice is and will remain entirely <b>free to use</b>, you only have to
-          pay the blockchain transaction fee to interact with slicers. This
-          website is essentially a way to interact with Slice&apos;s smart
-          contracts.
+          The Slice protocol is <b>free to use</b>, users only have to pay the
+          transaction fees to interact with the blockchain. This website is just
+          an interface to the Slice&apos;s smart contracts.
         </p>
         <p>
-          Whenever a slicer receives a payment (either selling a product or
-          through sponsorships) it automatically gives a 2.5% protocol fee to
-          Slice. This fee is used to improve the services surrounding slicers
-          and keep adding new features to the ecosystem.
+          Whenever a slicer owner withdraws earnings from slicers, a{" "}
+          <b>2.5% membership fee</b> is given to the Slice DAO which helps
+          funding the development and maintainment of the protocol. In exchange,{" "}
+          <b>you receive a corresponding amount of SLX governance tokens</b>{" "}
+          which effectively represent your stake of ownership in the DAO and
+          your right to vote on future protocol developments.
+        </p>
+        <p>
+          In the future, this will result in Slice being{" "}
+          <b>owned and governed by its own users</b>.
         </p>
       </>
     ),
     id: "pricing"
   }
-  // { id:'nice',question: "Where can I see the smart contract?", answer: "Slice's smart contract are currently private but will become open source in the next weeks. If you're a developer and are interested in contributing to the project, please reach out.' " },
+
+  // { id:'nice',question: "Can slicers be upgraded", answer: "Nice" },
 ]
+
+// export const faqsNfts = [
+// {
+//   question: "Can I use Slice to mint NFTs (collectibles)",
+//   answer: (
+//     <>
+//       <p>
+//         Yes. You can create a slicer with immutable metadata by{" "}
+//         <Link href="/slice">
+//           <a target="_blank" rel="noreferrer">
+//             creating a new slicer
+//           </a>
+//         </Link>{" "}
+//         and <b>enabling the immutable metadata switch</b>: this makes it
+//         possible to edit its information <b>only once</b> after its creation
+//       </p>
+//       <p>
+//         Note: If you wish to <b>disable fractionalization</b> and simulate the
+//         behaviour of a NFT (ERC721), <b>set the total slices amount to 1</b>{" "}
+//         (the resulting slice will still be an ERC1155 token)
+//       </p>
+//       {/* <p>
+//         Note: Due to how Slice works, slicers&apos; metadata are not stored on
+//         IPFS. If you want your collectibles to be truly immutable, check out{" "}
+//         <Link href="/#nft-existing">
+//           <a>how to use Slice with existing NFTs</a>
+//         </Link>
+//         .
+//       </p> */}
+//     </>
+//   ),
+//   id: "nft-mint"
+// },
+//   {
+//     question: "Can I create fractionalized NFTs",
+//     answer: (
+//       <>
+//         <p>
+//           Yes. Slices are ERC1155, semi-fungible tokens. By specifying 2 or more
+//           slices while creating a slicer, you are fractionalizing it.
+//         </p>
+//       </>
+//     ),
+//     id: "fractionalized"
+//   },
+//   {
+//     question: "Can I use Slice with existing NFTs",
+//     answer: (
+//       <>
+//         <p>
+//           Very soon. If you want to get posted on upcoming features, consider{" "}
+//           <a
+//             className="text-white highlight"
+//             href={accounts.discord}
+//             target="_blank"
+//             rel="noreferrer"
+//           >
+//             hanging out in our Discord
+//           </a>
+//           .
+//         </p>
+//       </>
+//     ),
+//     id: "nft-existing"
+//   }
+// ]
+
+// export const faqsGeneral = [
+//   {
+//     question: "What's the point of Slice",
+//     answer: (
+//       <>
+//         <p>
+//           Originally, the aim of this project was to conceive a special kind of
+//           NFTs whose value could be estimated using objective, public data. This
+//           would allow their use in many real-world applications, where a
+//           parallel to their actual value is required.
+//         </p>
+//         <p>
+//           With slicers, this objective value is the income they generate. By
+//           knowing how much ETH a slicer has generated, it is possible to
+//           establish a base value for its slices.
+//         </p>
+//         <p>
+//           The idea then gradually evolved into its current form, where slicers
+//           can also act as decentralized stores. Products are what will
+//           ultimately enable the use of slicers in several different ways.
+//         </p>
+//       </>
+//     ),
+//     id: "mission"
+//   }
+//   // { id:'nice',question: "Where can I see the smart contract", answer: "Slice's smart contract are currently private but will become open source in the next weeks. If you're a developer and are interested in contributing to the project, please reach out.' " },
+// ]
