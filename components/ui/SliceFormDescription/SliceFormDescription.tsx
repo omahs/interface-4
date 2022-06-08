@@ -42,7 +42,7 @@ const SliceFormDescription = () => {
                   To learn more, check out{" "}
                   <a href="/#sold" target="_blank" rel="noreferrer">
                     what can be sold from slicers
-                  </a>
+                  </a>{" "}
                   in the full FAQ list.
                 </p>
                 <p className="font-bold">
