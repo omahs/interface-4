@@ -130,7 +130,7 @@ const slides = [
           target="_blank"
           rel="noreferrer"
         >
-          Sell books on-chain and split ownership between authors
+          Sell co-owned books on-chain
         </a>
       </li>
     )
