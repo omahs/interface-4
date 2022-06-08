@@ -1,5 +1,6 @@
 import { useAppContext } from "../context"
-import { useEns } from "@utils/resolveEns"
+import resolveEns from "@utils/resolveEns"
+import { useEffect, useState } from "react"
 
 type Props = {
   address: string
@@ -7,12 +8,16 @@ type Props = {
 }
 
 const ResolvedAddress = ({ address, href }: Props) => {
-  const { connector } = useAppContext()
-  const resolvedAddress = useEns(connector, address)
+  const { provider } = useAppContext()
+  const [resolvedAddress, setResolvedAddress] = useState("")
   const addressReduced = address.replace(
     address.substring(5, address.length - 3),
     `\xa0\xa0\xa0\xa0\xa0\xa0`
   )
+
+  useEffect(() => {
+    resolveEns(provider, address, setResolvedAddress)
+  }, [])
 
   return (
     <a
