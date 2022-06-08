@@ -56,7 +56,7 @@ const SliceFormDescription = () => {
           />
           <FAQsItem
             id="single"
-            question="Creating a slicer for one person"
+            question="Creating a slicer with one owner"
             answer={
               <>
                 <p>
