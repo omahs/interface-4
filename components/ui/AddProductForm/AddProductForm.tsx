@@ -179,7 +179,7 @@ const AddProductForm = ({
     <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>
       <p>
         Products can be used to sell any physical or digital item, or to execute
-        custom on-chain logic.
+        custom on-chain logic upon purchase (such as minting an NFT).
       </p>
       <p>Create one by setting up the info below.</p>
       <div>

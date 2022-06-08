@@ -1,5 +1,5 @@
 import { DoubleText, FAQsItem } from ".."
-import { faqsMain, faqsNfts, faqsGeneral } from "@lib/content/faqsContent"
+import { faqsMain } from "@lib/content/faqsContent"
 import { accounts } from "../Social/Social"
 import { useRouter } from "next/router"
 
@@ -24,7 +24,7 @@ const FAQs = () => {
             />
           ))}
         </ul>
-        <h2 className="font-bold">NFTs (collectibles)</h2>
+        {/* <h2 className="font-bold">NFTs (collectibles)</h2>
         <ul className="max-w-screen-sm pt-6 pb-16 mx-auto prose text-left">
           {faqsNfts.map((faq, key) => (
             <FAQsItem
@@ -47,7 +47,7 @@ const FAQs = () => {
               anchor={anchor}
             />
           ))}
-        </ul>
+        </ul> */}
         <p className="text-sm">
           Still have questions? Get in touch on{" "}
           <a

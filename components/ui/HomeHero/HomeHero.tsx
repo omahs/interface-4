@@ -75,7 +75,7 @@ const HomeHero = () => {
         addresses
       </p>
 
-      <div className="flex flex-col items-center justify-center pt-10 space-y-8 ">
+      <div className="flex flex-col items-center justify-center pt-10 space-y-8">
         <Button label="Create slicer" href="/slice" />
         {process.env.NEXT_PUBLIC_CHAIN_ID === "1" && (
           <div onClick={() => sa_event("homepage_secondary_button_click")}>
