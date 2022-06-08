@@ -159,7 +159,7 @@ const slides = [
     contentExamples: (
       <li>
         <a
-          href="https://www.notion.so/slicedao/Tickets-and-items-sale-for-events-Slicer-Example-ca8115fd91ea412a983e2ed92d53afdc"
+          href="https://slicedao.notion.site/Tickets-and-items-sale-for-events-Slicer-Example-ca8115fd91ea412a983e2ed92d53afdc"
           target="_blank"
           rel="noreferrer"
         >
@@ -191,7 +191,7 @@ const slides = [
     contentExamples: (
       <li>
         <a
-          href="https://www.notion.so/slicedao/Merch-Squad-Storefront-Slicer-Example-c049bb31bce2418286e6e732c2e9df75"
+          href="https://slicedao.notion.site/Merch-Squad-Storefront-Slicer-Example-c049bb31bce2418286e6e732c2e9df75"
           target="_blank"
           rel="noreferrer"
         >
