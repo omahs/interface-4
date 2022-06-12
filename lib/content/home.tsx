@@ -30,7 +30,7 @@ export const section2 = (
       Slices are ERC1155{" "}
       <DoubleText inactive logoText="Semi-Fungible Tokens" size="text-normal" />{" "}
       (fractionalized NFTs) that represent ownership over a slicer and its
-      earnings, much like
+      earnings, much like{" "}
       <DoubleText inactive logoText="tradable royalties" size="text-normal" />.
     </p>
     <p>

@@ -16,7 +16,6 @@ const AppContext = createContext<any>({
   connector: null,
   provider: null,
   account: "",
-  loading: true,
   color1: colorList[0],
   color2: colorList[1],
   darkColor1: darkColorList[0],
@@ -29,7 +28,6 @@ const AppContext = createContext<any>({
 })
 
 export function AppWrapper({ children }) {
-  const [loading, setLoading] = useState(true)
   const [modalView, setModalView] = useState<View>({ name: "" })
   const provider = useProvider()
 
@@ -73,7 +71,6 @@ export function AppWrapper({ children }) {
         connector: account?.connector,
         provider,
         account: account?.address,
-        loading,
         color1,
         color2,
         darkColor1,
