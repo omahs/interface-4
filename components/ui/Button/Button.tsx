@@ -6,6 +6,7 @@ import { useAppContext } from "@components/ui/context"
 interface ButtonProps {
   loading?: boolean
   double?: boolean
+  wrapperClassName?: string
   className?: string
   color?: string
   type?: "button" | "submit" | "reset"
@@ -19,6 +20,7 @@ interface ButtonProps {
 
 const Button: FC<ButtonProps> = (props) => {
   const {
+    wrapperClassName,
     className = "h-[40px] font-bold tracking-wide rounded-sm overflow-hidden border-white border-[3px] nightwind-prevent",
     color = "text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700",
     type,
@@ -39,7 +41,7 @@ const Button: FC<ButtonProps> = (props) => {
 
   return (
     <div
-      className="relative inline-block"
+      className={`relative inline-block ${wrapperClassName}`}
       onClick={() => (saEventName ? sa_event(saEventName) : null)}
     >
       {href ? (

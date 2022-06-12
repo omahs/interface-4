@@ -14,7 +14,7 @@ module.exports = {
     "./utils/**/*.ts",
     "./lib/**/*.ts",
     "./lib/**/*.tsx",
-    "./styles/jit-hack.txt",
+    "./styles/jit-hack.txt"
   ],
 
   theme: {
@@ -22,44 +22,44 @@ module.exports = {
       colorClasses: ["gradient", "placeholder"],
       typography: {
         strong: {
-          color: colors.white,
-        },
+          color: colors.white
+        }
       },
       colors: {
         white: "#0F1115",
         black: "gray.50",
         sky: {
-          50: "#001928",
-        },
-      },
+          50: "#001928"
+        }
+      }
     },
     extend: {
       screens: {
-        xs: "560px",
+        xs: "560px"
       },
       colors: {
-        gray: colors.coolGray,
+        gray: colors.gray,
         sky: colors.sky,
         cyan: colors.cyan,
         random1: {
           300: "var(--color1)",
-          600: "var(--darkColor1)",
+          600: "var(--darkColor1)"
         },
         random2: {
           300: "var(--color2)",
-          600: "var(--darkColor2)",
-        },
+          600: "var(--darkColor2)"
+        }
       },
       zIndex: {
-        "-10": "-10",
+        "-10": "-10"
       },
       rotate: {
-        "-20": "-20deg",
+        "-20": "-20deg"
       },
       animation: {
         "spin-slow": "spin 30s linear infinite",
         "ping-slow": "ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite",
-        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite"
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -68,43 +68,43 @@ module.exports = {
             a: {
               textDecorationColor: "var(--darkColor2)",
               textDecorationThickness: "2px",
-              textUnderlineOffset: "1px",
+              textUnderlineOffset: "1px"
             },
             h1: {
               color: theme("colors.black"),
-              fontWeight: "900",
+              fontWeight: "900"
             },
             h2: {
               color: theme("colors.black"),
-              fontWeight: "900",
+              fontWeight: "900"
             },
             h3: {
               color: theme("colors.black"),
-              fontSize: "1.12em",
+              fontSize: "1.12em"
             },
             blockquote: {
-              borderLeftColor: theme("colors.random2.600"),
+              borderLeftColor: theme("colors.random2.600")
             },
             "blockquote p:first-of-type::before": false,
             "blockquote p:last-of-type::after": false,
             strong: {
-              fontWeight: "900",
+              fontWeight: "900"
             },
             img: {
-              borderRadius: "0.75rem",
-            },
-          },
-        },
-      }),
-    },
+              borderRadius: "0.75rem"
+            }
+          }
+        }
+      })
+    }
   },
   variants: {
-    nightwind: ["group-hover", "focus", "disabled"],
+    nightwind: ["group-hover", "focus", "disabled"]
   },
 
   plugins: [
     require("@tailwindcss/forms"),
     require("@tailwindcss/typography"),
-    require("nightwind"),
-  ],
+    require("nightwind")
+  ]
 }
