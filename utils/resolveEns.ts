@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import WalletConnect from "@walletconnect/client"
 import { ethers } from "ethers"
 
 const resolveEns = async (

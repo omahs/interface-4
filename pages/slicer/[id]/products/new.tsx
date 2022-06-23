@@ -31,6 +31,7 @@ export default function NewProduct() {
   const [success, setSuccess] = useState(false)
   const [logs, setLogs] = useState<LogDescription[]>()
   const eventLog = getLog(logs, "ProductAdded")
+  const productId = eventLog && Number(eventLog[1]._hex)
 
   useEffect(() => {
     if (uploadStep != 0) {
@@ -108,9 +109,8 @@ export default function NewProduct() {
               helpText={
                 <>
                   <p className="pb-3">
-                    You can find the new product with ID{" "}
-                    <b>#{eventLog && Number(eventLog[1]._hex)}</b> in the slicer
-                    page.
+                    You can find the new product with ID <b>#{productId}</b> in
+                    the slicer page.
                   </p>
                   <p className="pb-6 text-sm">
                     Wait a few seconds and refresh the page if you don&apos;t

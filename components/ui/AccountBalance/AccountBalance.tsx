@@ -7,7 +7,7 @@ import { Message } from "@utils/handleMessage"
 import handleSubmit from "@utils/handleSubmit"
 import { ethers, utils } from "ethers"
 import { useState } from "react"
-import { useAppContext } from "../context"
+import { useSigner } from "wagmi"
 import MessageBlock from "../MessageBlock"
 
 type Props = {
@@ -16,7 +16,7 @@ type Props = {
 }
 
 const AccountBalance = ({ account, payeeCurrencyData }: Props) => {
-  const { connector } = useAppContext()
+  const { data: signer } = useSigner()
   const addRecentTransaction = useAddRecentTransaction()
 
   const [loading, setLoading] = useState(false)
@@ -31,7 +31,7 @@ const AccountBalance = ({ account, payeeCurrencyData }: Props) => {
 
   const executeWithdraw = async () => {
     const eventLogs = await handleSubmit(
-      Withdraw(connector, account, ethers.constants.AddressZero),
+      Withdraw(signer, account, ethers.constants.AddressZero),
       setMessage,
       setLoading,
       setSuccess,

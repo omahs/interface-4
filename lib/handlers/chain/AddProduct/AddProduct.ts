@@ -1,18 +1,16 @@
-import WalletConnect from "@walletconnect/client"
+import { Signer } from "ethers"
 import {
   FunctionStruct,
   ProductParamsStruct
 } from "types/typechain/ProductsModule"
 
 const AddProduct = async (
-  connector: WalletConnect,
+  signer: Signer,
   slicerId: number,
   productParams: ProductParamsStruct,
   externalCall: FunctionStruct
 ) => {
-  const { initialize } = await import("@lib/useProvider")
   const { productsModule } = await import("@lib/initProvider")
-  const { signer } = await initialize(connector)
   const contract = productsModule(signer)
 
   try {
