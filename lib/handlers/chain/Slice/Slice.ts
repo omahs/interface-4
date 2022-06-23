@@ -1,7 +1,7 @@
-import WalletConnect from "@walletconnect/client"
+import { Signer } from "ethers"
 
 const Slice = async (
-  connector: WalletConnect,
+  signer: Signer,
   payees: {
     account: string
     shares: number
@@ -13,10 +13,7 @@ const Slice = async (
   isImmutable: boolean,
   isControlled: boolean
 ) => {
-  const { initialize } = await import("@lib/useProvider")
   const { sliceCore } = await import("@lib/initProvider")
-
-  const { signer } = await initialize(connector)
   const contract = sliceCore(signer)
 
   try {
@@ -29,6 +26,7 @@ const Slice = async (
       isImmutable,
       isControlled
     )
+
     return [contract, call]
   } catch (err) {
     throw err

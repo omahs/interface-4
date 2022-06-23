@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Button, CardImage } from ".."
 import { useAppContext } from "../context"
 import handleRedeemProduct from "@utils/handleRedeemProduct"
+import { useSigner } from "wagmi"
 
 export type RedeemData = {
   quantity: number
@@ -34,13 +35,14 @@ const ProductPurchaseCard = ({
   purchaseInfo,
   texts
 }: Props) => {
-  const { setModalView, connector } = useAppContext()
+  const { setModalView } = useAppContext()
+  const { data: signer } = useSigner()
   const [loading, setLoading] = useState(false)
 
   return (
     <div className="sm:flex">
       <CardImage
-        href={`/slicer/${slicerId}`}
+        href={`/slicer/${slicerId}?product=${productId}`}
         name={name}
         imageUrl={image}
         product
@@ -72,7 +74,7 @@ const ProductPurchaseCard = ({
             disabled={!name}
             onClick={() =>
               handleRedeemProduct(
-                connector,
+                signer,
                 slicerId,
                 productId,
                 name,

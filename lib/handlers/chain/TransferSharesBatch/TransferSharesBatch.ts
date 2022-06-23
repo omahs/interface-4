@@ -1,17 +1,15 @@
-import WalletConnect from "@walletconnect/client"
+import { Signer } from "ethers"
 
 const TransferSharesBatch = async (
-  connector: WalletConnect,
+  signer: Signer,
   from: string,
   slicerId: number,
   accounts: string[],
   shares: number[],
   toRelease: boolean
 ) => {
-  const { initialize } = await import("@lib/useProvider")
   const { sliceCore } = await import("@lib/initProvider")
 
-  const { signer } = await initialize(connector)
   const contract = sliceCore(signer)
 
   try {

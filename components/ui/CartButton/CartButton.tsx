@@ -13,8 +13,9 @@ import Lock from "@components/icons/Lock"
 import { ExtCall } from "@lib/handlers/chain"
 import { MerkleTree } from "merkletreejs"
 import keccak256 from "keccak256"
-import { ethers, BytesLike } from "ethers"
+import { ethers } from "ethers"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
+import { useProvider, useSigner } from "wagmi"
 
 type Props = {
   productCart: ProductCart
@@ -66,7 +67,9 @@ const CartButton = ({
   labelRemove,
   preview
 }: Props) => {
-  const { account, setModalView, connector } = useAppContext()
+  const { account, setModalView } = useAppContext()
+  const provider = useProvider()
+  const { data: signer } = useSigner()
   const [loading, setLoading] = useState(false)
   const [isUnlocked, setIsUnlocked] = useState(false)
   const [isLoadingExtCall, setisLoadingExtCall] = useState(false)
@@ -80,7 +83,7 @@ const CartButton = ({
     setisLoadingExtCall(true)
     try {
       const call = await ExtCall(
-        connector,
+        provider,
         extAddress,
         extCheckSig,
         slicerId,
@@ -131,7 +134,7 @@ const CartButton = ({
         className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-blue-500 rounded-md hover:text-white nightwind-prevent group-cart hover:bg-blue-600"
         onClick={async () =>
           await handleRedeemProduct(
-            connector,
+            signer,
             slicerId,
             productId,
             name,
@@ -193,7 +196,7 @@ const CartButton = ({
           className="relative z-10 flex items-center justify-center h-8 transition-colors duration-150 bg-blue-500 rounded-r-md nightwind-prevent group-cart hover:bg-blue-600"
           onClick={() =>
             handleRedeemProduct(
-              connector,
+              signer,
               slicerId,
               productId,
               name,

@@ -10,11 +10,11 @@ import getLog from "@utils/getLog"
 import Arrow from "@components/icons/Arrow"
 import { CardImage, CopyAddress } from ".."
 import UserVerified from "@components/icons/UserVerified"
-import { useAppContext } from "../context"
 import Immutable from "@components/icons/Immutable"
 import { ethers } from "ethers"
 import getEthFromWei from "@utils/getEthFromWei"
 import ProductsBalance from "../ProductsBalance"
+import { useSigner } from "wagmi"
 
 type SlicerInfo = {
   name: string
@@ -47,7 +47,7 @@ const SlicerCard = ({
   productsModuleBalance,
   unreleasedAmount
 }: Props) => {
-  const { connector } = useAppContext()
+  const { data: signer } = useSigner()
 
   const hexId = Number(slicerId).toString(16)
   const { data: slicerInfo } = useSWR(
@@ -160,7 +160,7 @@ const SlicerCard = ({
               label={`Release ${getEthFromWei(unreleasedAmount)} ETH`}
               action={() =>
                 TriggerRelease(
-                  connector,
+                  signer,
                   slicerId,
                   account,
                   ethers.constants.AddressZero,

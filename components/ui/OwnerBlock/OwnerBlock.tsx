@@ -6,7 +6,7 @@ import { BigNumber, ethers } from "ethers"
 import { LogDescription } from "ethers/lib/utils"
 import { AddressAmount } from "pages/slicer/[id]"
 import { Dispatch, SetStateAction, useState } from "react"
-import { useAppContext } from "../context"
+import { useSigner } from "wagmi"
 import ResolvedAddress from "../ResolvedAddress"
 
 type Props = {
@@ -28,8 +28,8 @@ const OwnerBlock = ({
   unreleased,
   setUnreleased
 }: Props) => {
-  const { connector } = useAppContext()
   const addRecentTransaction = useAddRecentTransaction()
+  const { data: signer } = useSigner()
 
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<Message>({
@@ -44,7 +44,7 @@ const OwnerBlock = ({
 
     const eventLog = await handleSubmit(
       TriggerRelease(
-        connector,
+        signer,
         slicerId,
         ownerAddress,
         ethers.constants.AddressZero,

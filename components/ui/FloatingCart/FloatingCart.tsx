@@ -13,6 +13,7 @@ import { useAppContext } from "../context"
 import { updatePurchases } from "@utils/getPurchases"
 import { utils } from "ethers"
 import { ConnectButton, useAddRecentTransaction } from "@rainbow-me/rainbowkit"
+import { useSigner } from "wagmi"
 
 type Props = {
   cookieCart: ProductCart[]
@@ -21,8 +22,8 @@ type Props = {
 }
 
 const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
-  const { setPurchases, purchases, setModalView, connector, account } =
-    useAppContext()
+  const { setPurchases, purchases, setModalView, account } = useAppContext()
+  const { data: signer } = useSigner()
   const addRecentTransaction = useAddRecentTransaction()
   const [cookies, setCookie, removeCookie] = useCookies(["cart"])
   const [showCartList, setShowCartList] = useState(false)
@@ -75,7 +76,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     try {
       sa_event("checkout_cart_attempt")
       await handleSubmit(
-        PayProducts(connector, account, cookieCart),
+        PayProducts(signer, account, cookieCart),
         setMessage,
         setLoading,
         setSuccess,
