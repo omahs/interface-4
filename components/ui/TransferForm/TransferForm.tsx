@@ -5,13 +5,13 @@ import { LogDescription } from "ethers/lib/utils"
 import MessageBlock from "../MessageBlock"
 import { mutate } from "swr"
 import getLog from "@utils/getLog"
-import { useAppContext } from "../context"
 import getEthFromWei from "@utils/getEthFromWei"
 import getUnreleasedData from "@utils/getUnreleasedData"
 import TransferFormInputBlock from "../TransferFormInputBlock"
 import TransferFormNotes from "../TransferFormNotes"
 import MySwitch from "../MySwitch"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
+import { useSigner } from "wagmi"
 
 type Props = {
   account: string
@@ -30,7 +30,7 @@ const TransferForm = ({
   totalSlices,
   minimumSlices
 }: Props) => {
-  const { connector } = useAppContext()
+  const { data: signer } = useSigner()
   const addRecentTransaction = useAddRecentTransaction()
 
   const [unreleased, setUnreleased] = useState([])
@@ -62,7 +62,7 @@ const TransferForm = ({
 
       const eventLog = await handleSubmit(
         TransferShares(
-          connector,
+          signer,
           account,
           addresses[0],
           Number(slicerId),
@@ -88,7 +88,7 @@ const TransferForm = ({
 
       const eventLog = await handleSubmit(
         TransferSharesBatch(
-          connector,
+          signer,
           account,
           Number(slicerId),
           cleanedAddresses,

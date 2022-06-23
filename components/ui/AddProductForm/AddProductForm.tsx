@@ -17,6 +17,7 @@ import { ethers } from "ethers"
 import AddProductFormExternal from "../AddProductFormExternal"
 import ethToWei from "@utils/ethToWei"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
+import { useSigner } from "wagmi"
 
 type Props = {
   slicerId: number
@@ -41,7 +42,8 @@ const AddProductForm = ({
   setSuccess,
   setLogs
 }: Props) => {
-  const { account, setModalView, connector } = useAppContext()
+  const { account, setModalView } = useAppContext()
+  const { data: signer } = useSigner()
   const addRecentTransaction = useAddRecentTransaction()
   const [usdValue, setUsdValue] = useState(0)
   const [ethValue, setEthValue] = useState(0)
@@ -131,7 +133,7 @@ const AddProductForm = ({
       }
 
       const eventLogs = await handleSubmit(
-        AddProduct(connector, slicerId, productParams, externalCall),
+        AddProduct(signer, slicerId, productParams, externalCall),
         setMessage,
         setLoading,
         setSuccess,

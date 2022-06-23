@@ -1,16 +1,13 @@
-import WalletConnect from "@walletconnect/client"
+import { Signer } from "ethers"
 
 const TriggerRelease = async (
-  connector: WalletConnect,
+  signer: Signer,
   slicerId: number,
   account: string,
   currency: string,
   toWithdraw: boolean
 ) => {
-  const { initialize } = await import("@lib/useProvider")
   const { slicer } = await import("@lib/initProvider")
-
-  const { signer } = await initialize(connector)
   const contract = await slicer(slicerId, signer)
 
   try {

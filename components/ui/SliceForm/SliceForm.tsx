@@ -11,6 +11,7 @@ import PieChart from "../PieChart"
 import SliceFormDescription from "../SliceFormDescription"
 import formatNumber from "@utils/formatNumber"
 import { ConnectButton, useAddRecentTransaction } from "@rainbow-me/rainbowkit"
+import { useSigner } from "wagmi"
 
 type Props = {
   success: boolean
@@ -20,7 +21,7 @@ type Props = {
 }
 
 const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
-  const { account: creator, connector } = useAppContext()
+  const { account: creator } = useAppContext()
   const addRecentTransaction = useAddRecentTransaction()
   const [addresses, setAddresses] = useState([""])
   const [shares, setShares] = useState([1000000])
@@ -32,6 +33,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
     messageStatus: "success"
   })
   const [loadingButton, setloadingButton] = useState(false)
+  const { data: signer } = useSigner()
 
   const allowedSuperOwners =
     totalShares / minimumShares > 1000
@@ -65,7 +67,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
     try {
       if (cleanedShares.length == cleanedAddresses.length) {
         const [contract, call] = (await Slice(
-          connector,
+          signer,
           payees,
           minimumShares,
           [],

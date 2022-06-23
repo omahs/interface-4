@@ -46,7 +46,7 @@ const CartList = ({ cookieCart, ethUsd, setCookie }: Props) => {
             subLabel={`Ξ ${productPrice + +Number(externalCallEth)}${
               quantity != 1 ? ` x ${quantity}` : ""
             }`}
-            href={`/slicer/${slicerId}`}
+            href={`/slicer/${slicerId}?product=${productId}`}
             remove={() => handleRemove()}
           />
         )

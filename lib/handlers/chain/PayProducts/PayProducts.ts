@@ -1,6 +1,5 @@
-import WalletConnect from "@walletconnect/client"
 import { PurchaseParamsStruct } from "types/typechain/ProductsModule"
-import { BigNumber, BytesLike, ethers } from "ethers"
+import { BigNumber, BytesLike, ethers, Signer } from "ethers"
 
 export type PayProductData = {
   slicerId: string
@@ -13,14 +12,12 @@ export type PayProductData = {
 }
 
 const PayProducts = async (
-  connector: WalletConnect,
+  signer: Signer,
   buyer: string,
   productData: PayProductData[]
 ) => {
-  const { initialize } = await import("@lib/useProvider")
   const { productsModule, chainlink } = await import("@lib/initProvider")
 
-  const { signer } = await initialize(connector)
   const contract = productsModule(signer)
   const priceFeed = await chainlink(signer).latestRoundData()
   const currency = ethers.constants.AddressZero
@@ -63,8 +60,11 @@ const PayProducts = async (
     const call = await contract.payProducts(buyer, purchaseParams, {
       value: totalPrice
     })
+
     return [contract, call]
   } catch (err) {
+    console.log(err)
+
     throw err
   }
 }
