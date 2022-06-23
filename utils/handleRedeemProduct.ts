@@ -1,9 +1,9 @@
-import WalletConnect from "@walletconnect/client"
 import { Dispatch, SetStateAction } from "react"
 import { View } from "@lib/content/modals"
+import { Signer } from "ethers"
 
 const handleRedeemProduct = async (
-  connector: WalletConnect,
+  signer: Signer,
   slicerId: number,
   productId: number,
   name: string,
@@ -30,7 +30,7 @@ const handleRedeemProduct = async (
 
     setLoading(true)
 
-    const redeemed = await redeemProduct(connector, slicerId, productId)
+    const redeemed = await redeemProduct(signer, slicerId, productId)
 
     if (redeemed[1] != "0x") {
       const purchaseHash = CID.parse(

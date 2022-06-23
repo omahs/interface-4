@@ -5,7 +5,7 @@ import getEthFromWei from "@utils/getEthFromWei"
 import { Message } from "@utils/handleMessage"
 import handleSubmit from "@utils/handleSubmit"
 import { useState } from "react"
-import { useAppContext } from "../context"
+import { useSigner } from "wagmi"
 import MessageBlock from "../MessageBlock"
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 }
 
 const ProductsBalance = ({ slicerId, productsModuleBalance }: Props) => {
-  const { connector } = useAppContext()
+  const { data: signer } = useSigner()
   const addRecentTransaction = useAddRecentTransaction()
 
   const [loading, setLoading] = useState(false)
@@ -27,7 +27,7 @@ const ProductsBalance = ({ slicerId, productsModuleBalance }: Props) => {
   const executeRelease = async () => {
     sa_event("release_eth_to_slicer_attempt")
     const eventLogs = await handleSubmit(
-      releaseEthToSlicer(connector, slicerId),
+      releaseEthToSlicer(signer, slicerId),
       setMessage,
       setLoading,
       setSuccess,

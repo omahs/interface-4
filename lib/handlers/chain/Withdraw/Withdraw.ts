@@ -1,14 +1,7 @@
-import WalletConnect from "@walletconnect/client"
+import { Signer } from "ethers"
 
-const Withdraw = async (
-  connector: WalletConnect,
-  account: string,
-  currency: string
-) => {
-  const { initialize } = await import("@lib/useProvider")
+const Withdraw = async (signer: Signer, account: string, currency: string) => {
   const { fundsModule } = await import("@lib/initProvider")
-
-  const { signer } = await initialize(connector)
   const contract = fundsModule(signer)
 
   try {
