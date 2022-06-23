@@ -411,15 +411,20 @@ export const PRODUCT_VIEW = (params: any) => {
             />
           </div>
         )}
-        {!editMode && Number(maxUnits) != 1 && productCart?.quantity && (
-          <p className="pt-4 text-sm text-center ">{`Ξ ${
-            Math.floor(
-              Number(productPrice.eth.substring(1)) *
-                productCart?.quantity *
-                1000
-            ) / 1000
-          }`}</p>
-        )}
+        {!editMode &&
+          productPrice.eth != "free" &&
+          Number(maxUnits) != 1 &&
+          productCart?.quantity && (
+            <p className="pt-4 text-sm text-center ">
+              {`Ξ ${
+                Math.floor(
+                  Number(productPrice.eth.substring(1)) *
+                    productCart?.quantity *
+                    1000
+                ) / 1000
+              }`}
+            </p>
+          )}
         {extAddress != "0x00000000" &&
         extAddress != ethers.constants.AddressZero &&
         (extValue != "0" || extExecSig != "0x00000000") ? (
