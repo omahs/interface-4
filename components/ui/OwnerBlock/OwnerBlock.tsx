@@ -48,7 +48,7 @@ const OwnerBlock = ({
         slicerId,
         ownerAddress,
         ethers.constants.AddressZero,
-        false
+        true
       ),
       setMessage,
       setLoading,
