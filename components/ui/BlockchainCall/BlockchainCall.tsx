@@ -5,6 +5,7 @@ import Button from "../Button"
 import MessageBlock from "../MessageBlock"
 import { Message } from "@utils/handleMessage"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
+import saEvent from "@utils/saEvent"
 
 type Props = {
   label: string
@@ -41,7 +42,7 @@ const BlockchainCall = ({
   const submit = async () => {
     try {
       if (saEventName) {
-        sa_event(saEventName + "_attempt")
+        saEvent(saEventName + "_attempt")
       }
       const handleSubmit = (await import("@utils/handleSubmit")).default
 
@@ -56,11 +57,11 @@ const BlockchainCall = ({
       )
       setLogs(eventLog)
       if (saEventName) {
-        sa_event(saEventName + "_success")
+        saEvent(saEventName + "_success")
       }
     } catch (err) {
       if (saEventName) {
-        sa_event(saEventName + "_fail")
+        saEvent(saEventName + "_fail")
       }
       console.log(err)
     }

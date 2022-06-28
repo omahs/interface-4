@@ -1,6 +1,7 @@
 import { Button } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
+import saEvent from "@utils/saEvent"
 import DoubleText from "../DoubleText"
 
 const ConnectBlock = ({ children }) => {
@@ -18,7 +19,7 @@ const ConnectBlock = ({ children }) => {
         <p className="py-10 text-lg">
           You need to connect your wallet to view this page.
         </p>
-        <div onClick={() => sa_event("connect_wallet_attempt")}>
+        <div onClick={() => saEvent("connect_wallet_attempt")}>
           <ConnectButton />
         </div>
       </div>

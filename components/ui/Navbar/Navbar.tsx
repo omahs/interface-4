@@ -7,6 +7,7 @@ import { useAppContext } from "@components/ui/context"
 import { useState } from "react"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import UserIcon from "@components/icons/UserIcon"
+import saEvent from "@utils/saEvent"
 
 const DropdownMenu = dynamic(() => import("@components/ui/DropdownMenu"), {
   ssr: false
@@ -36,7 +37,7 @@ const Navbar = () => {
             <div className={`${account ? "hidden xs:block" : ""}`}>
               <Nightwind size="h-[24px]" />
             </div>
-            <div onClick={() => sa_event("connect_wallet_attempt")}>
+            <div onClick={() => saEvent("connect_wallet_attempt")}>
               <ConnectButton
                 accountStatus={{
                   smallScreen: "avatar",

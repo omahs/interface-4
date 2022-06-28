@@ -4,6 +4,7 @@ import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import getEthFromWei from "@utils/getEthFromWei"
 import { Message } from "@utils/handleMessage"
 import handleSubmit from "@utils/handleSubmit"
+import saEvent from "@utils/saEvent"
 import { useState } from "react"
 import { useSigner } from "wagmi"
 import MessageBlock from "../MessageBlock"
@@ -25,7 +26,7 @@ const ProductsBalance = ({ slicerId, productsModuleBalance }: Props) => {
   })
 
   const executeRelease = async () => {
-    sa_event("release_eth_to_slicer_attempt")
+    saEvent("release_eth_to_slicer_attempt")
     const eventLogs = await handleSubmit(
       releaseEthToSlicer(signer, slicerId),
       setMessage,
@@ -36,7 +37,7 @@ const ProductsBalance = ({ slicerId, productsModuleBalance }: Props) => {
       `Release store earnings | Slicer #${slicerId}`
     )
     if (eventLogs) {
-      sa_event("release_eth_to_slicer_success")
+      saEvent("release_eth_to_slicer_success")
       setMessage({
         message: `You have released ${getEthFromWei(
           productsModuleBalance
@@ -44,7 +45,7 @@ const ProductsBalance = ({ slicerId, productsModuleBalance }: Props) => {
         messageStatus: "success"
       })
     } else {
-      sa_event("release_eth_to_slicer_fail")
+      saEvent("release_eth_to_slicer_fail")
     }
   }
 

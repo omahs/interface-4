@@ -2,6 +2,7 @@ import dynamic from "next/dynamic"
 import Sliders from "@components/icons/Sliders"
 import { TagElement } from "@lib/content/tagsList"
 import { Dispatch, SetStateAction, useState } from "react"
+import saEvent from "@utils/saEvent"
 
 const FiltersFloatingMenu = dynamic(
   () => import("@components/ui/FiltersFloatingMenu"),
@@ -36,7 +37,7 @@ function FiltersMenu({
       <button
         className="flex items-center px-6 py-1.5 bg-white border-[1.5px] border-gray-200 rounded-md shadow-base hover:bg-gray-100 transition-colors duration-150"
         onClick={() => {
-          sa_event("explore_slicer_open_filter")
+          saEvent("explore_slicer_open_filter")
           setShowFilters((showFilters) => !showFilters)
         }}
       >

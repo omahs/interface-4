@@ -18,6 +18,7 @@ import AddProductFormExternal from "../AddProductFormExternal"
 import ethToWei from "@utils/ethToWei"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { useSigner } from "wagmi"
+import saEvent from "@utils/saEvent"
 
 type Props = {
   slicerId: number
@@ -81,7 +82,7 @@ const AddProductForm = ({
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
 
-    sa_event("create_product_attempt")
+    saEvent("create_product_attempt")
     const { beforeCreate, handleReject, handleSuccess } = await import(
       "@lib/handleCreateProduct"
     )
@@ -143,13 +144,13 @@ const AddProductForm = ({
       )
 
       if (eventLogs) {
-        sa_event("create_product_success")
+        saEvent("create_product_success")
         setLogs(eventLogs)
         setUploadStep(9)
         await handleSuccess(slicerId, newProduct.id, eventLogs)
         setModalView({ name: "" })
       } else {
-        sa_event("create_product_fail")
+        saEvent("create_product_fail")
         setUploadStep(7)
         await handleReject(
           slicerId,
