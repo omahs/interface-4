@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Button, DoubleText } from "@components/ui"
 import { useEffect, useState } from "react"
+import saEvent from "@utils/saEvent"
 
 const HomeHero = () => {
   const [dynamicText, setDynamicText] = useState("ecentralized ")
@@ -78,7 +79,7 @@ const HomeHero = () => {
       <div className="flex flex-col items-center justify-center pt-10 space-y-8">
         <Button label="Create slicer" href="/slice" />
         {process.env.NEXT_PUBLIC_CHAIN_ID === "1" && (
-          <div onClick={() => sa_event("homepage_secondary_button_click")}>
+          <div onClick={() => saEvent("homepage_secondary_button_click")}>
             <Link href="/slicer/1">
               <a className="highlight">or check out an existing one</a>
             </Link>

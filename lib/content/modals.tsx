@@ -19,6 +19,7 @@ import { ethers } from "ethers"
 import getFunctionFromSelector from "@utils/getFunctionFromSelector"
 import { useEffect } from "react"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
+import saEvent from "@utils/saEvent"
 
 export type View = {
   name: ViewNames
@@ -65,7 +66,7 @@ export const NETWORK_VIEW = () => {
       </p>
       <div
         className="flex justify-center pt-6"
-        onClick={() => sa_event("connect_wallet_attempt")}
+        onClick={() => saEvent("connect_wallet_attempt")}
       >
         <ConnectButton
           accountStatus={{
@@ -83,12 +84,12 @@ export const NETWORK_VIEW = () => {
 export const CONNECT_VIEW = () => {
   const { account, setModalView } = useAppContext()
   useEffect(() => {
-    sa_event("connect_wallet_open_modal")
+    saEvent("connect_wallet_open_modal")
   }, [])
 
   useEffect(() => {
     if (account) {
-      sa_event("connect_wallet_success")
+      saEvent("connect_wallet_success")
       setModalView({ name: "" })
     }
   }, [account])
@@ -105,7 +106,7 @@ export const CONNECT_VIEW = () => {
       </div>
       <div
         className="flex justify-center"
-        onClick={() => sa_event("connect_wallet_attempt")}
+        onClick={() => saEvent("connect_wallet_attempt")}
       >
         <ConnectButton />
       </div>
@@ -140,7 +141,7 @@ export const OWNERS_VIEW = (params: any) => {
   const { slicerId, totalSlices, owners, unreleased, setUnreleased } = params
 
   useEffect(() => {
-    sa_event("owners_open_modal")
+    saEvent("owners_open_modal")
   }, [])
 
   return (
@@ -326,7 +327,7 @@ export const PRODUCT_VIEW = (params: any) => {
   const purchaseEl = purchaseElArray.join(", ")
 
   useEffect(() => {
-    sa_event("product_view_open_modal")
+    saEvent("product_view_open_modal")
   }, [])
 
   return (
@@ -490,7 +491,7 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
   const { notes } = decryptedTexts
 
   useEffect(() => {
-    sa_event("redeem_product_success")
+    saEvent("redeem_product_success")
   }, [])
 
   return (
