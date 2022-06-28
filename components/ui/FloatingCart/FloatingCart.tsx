@@ -14,6 +14,7 @@ import { updatePurchases } from "@utils/getPurchases"
 import { utils } from "ethers"
 import { ConnectButton, useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { useSigner } from "wagmi"
+import saEvent from "@utils/saEvent"
 
 type Props = {
   cookieCart: ProductCart[]
@@ -74,7 +75,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     const { PayProducts } = await import("@lib/handlers/chain")
 
     try {
-      sa_event("checkout_cart_attempt")
+      saEvent("checkout_cart_attempt")
       await handleSubmit(
         PayProducts(signer, account, cookieCart),
         setMessage,
@@ -84,10 +85,10 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
         addRecentTransaction,
         "Checkout"
       )
-      sa_event("checkout_cart_success")
+      saEvent("checkout_cart_success")
       setModalView({ name: "" })
     } catch (err) {
-      sa_event("checkout_cart_fail")
+      saEvent("checkout_cart_fail")
       console.log(err)
     }
   }

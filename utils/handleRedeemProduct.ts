@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react"
 import { View } from "@lib/content/modals"
 import { Signer } from "ethers"
+import saEvent from "./saEvent"
 
 const handleRedeemProduct = async (
   signer: Signer,
@@ -18,7 +19,7 @@ const handleRedeemProduct = async (
   setModalView: Dispatch<SetStateAction<View>>
 ) => {
   try {
-    sa_event("redeem_product_attempt")
+    saEvent("redeem_product_attempt")
     const { CID } = await import("multiformats/cid")
     const { base16 } = await import("multiformats/bases/base16")
     const redeemProduct = (await import("@lib/handlers/chain/redeemProduct"))
@@ -64,7 +65,7 @@ const handleRedeemProduct = async (
       }
     })
   } catch (err) {
-    sa_event("redeem_product_fail")
+    saEvent("redeem_product_fail")
     console.log(err)
   }
   setLoading(false)
