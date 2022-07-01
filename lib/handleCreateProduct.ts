@@ -179,6 +179,10 @@ export const handleSuccess = async (
     })
   }
   await fetcher(`/api/slicer/${slicerId}/products`, putBody)
+
+  setTimeout(async () => {
+    await fetcher(`/api/slicer/${slicerId}/refresh`)
+  }, 1000)
 }
 
 export const handleReject = async (
@@ -350,7 +354,9 @@ export const reload = async (
     if (products.filter((p) => p.productId === productId).length == 0) {
       if (timeHasElapsed(blockchainProducts[i].createdAtTimestamp)) {
         const hash = "f" + blockchainProducts[i].data.substring(2)
+        // TODO: Figure out why data sometimes is '0x'
         const dataHash = CID.parse(hash, base16.decoder).toV1().toString()
+
         const {
           name,
           shortDescription,

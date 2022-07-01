@@ -121,6 +121,7 @@ const SlicerSubmitBlock = ({
         setLoading(false)
       } else {
         await updateDb(newInfo)
+        await fetcher(`/api/slicer/${slicerInfo.id}/refresh`)
         setEditMode(false)
         setLoading(false)
       }
@@ -162,10 +163,6 @@ const SlicerSubmitBlock = ({
 
   return (
     <div>
-      <p className="pb-8 mx-auto text-sm max-w-screen-xs">
-        Wait a few seconds and refresh the page to make new edits appear after
-        saving
-      </p>
       <div className="pb-8">
         <Button
           label="Save"
