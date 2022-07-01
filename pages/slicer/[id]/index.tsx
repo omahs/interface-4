@@ -422,7 +422,7 @@ products (where: {
       subgraphDataPayees,
       subgraphDataProducts: subgraphDataProducts?.products
     },
-    revalidate: 10
+    revalidate: 300
   }
 }
 
@@ -431,3 +431,22 @@ export default Id
 // TODO
 // - retrieve account.slices in editAllowed condition
 // - Clean stuff
+
+/**  
+Product created on interface - OK
+  - Present on backend, not subgraph
+  - Subgraph is indicized on revalidate
+
+  Product created on interface, successful and user has left create page
+    - Present on backend, not subgraph
+    - Handle reload condition?
+
+Product created on interface, not successful and user has left create page
+  - Present on backend, not subgraph
+  - Product will never appear (no productId)
+  - Handle cleanup condition?
+
+Product created on contracts
+  - Present on subgraph, not on backend
+  - Handle reload condition?
+*/
