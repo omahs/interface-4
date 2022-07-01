@@ -9,7 +9,6 @@ import {
   HomeHero,
   HomeSection
 } from "@components/ui"
-import { useEffect } from "react"
 import { section1, section2, section3, section4 } from "@lib/content/home"
 import HomeDecentralized from "@components/icons/HomeDecentralized"
 import { NextSeo } from "next-seo"
@@ -37,9 +36,9 @@ const Home = () => {
     return () => controls.stop()
   })
 
-  useEffect(() => {
-    animate(
-      ".spin-fixed",
+  inView("#spin-logo", () => {
+    const controls = animate(
+      ".spin-el1",
       { transform: "rotate(360deg)" },
       {
         easing: "linear",
@@ -48,7 +47,9 @@ const Home = () => {
         allowWebkitAcceleration: true
       }
     )
-  }, [])
+
+    return () => controls.stop()
+  })
 
   return (
     <>
