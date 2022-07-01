@@ -1,5 +1,3 @@
-import { Crypto } from "@peculiar/webcrypto"
-
 export const generateKey = async (password: string, salt: string) => {
   const crypto: Crypto = new Crypto()
   let enc = new TextEncoder()
