@@ -12,7 +12,7 @@ const Logo = ({ single = false, ...props }) => {
         viewBox="0 0 493 487"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={`${props.spin ? "spin-el" : ""} relative z-10 ${
+        className={`${props.spin ? "spin-fixed" : ""} relative z-10 ${
           props.interactive ? "peer" : ""
         } ${props.className ? props.className : ""}`}
       >
@@ -33,7 +33,7 @@ const Logo = ({ single = false, ...props }) => {
           xmlns="http://www.w3.org/2000/svg"
           className={`${
             props.spin
-              ? "spin-el drop-shadow-random-strong"
+              ? "spin-fixed drop-shadow-random-strong"
               : "drop-shadow-random"
           } space-y-60 absolute top-0 left-0 ${size} ${margin} transition-all duration-150 peer-hover:mt-0 peer-hover:ml-0 peer-hover:mr-0`}
         >

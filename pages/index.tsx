@@ -19,14 +19,27 @@ import {
   longTitle,
   domain
 } from "@components/common/Head"
-import { animate } from "motion"
+import { inView, animate } from "motion"
 
 const Home = () => {
-  useEffect(() => {
-    const spinElements = document.querySelectorAll(".spin-el")
+  inView(".spin-el", ({ target }) => {
+    const controls = animate(
+      target,
+      { transform: "rotate(360deg)" },
+      {
+        easing: "linear",
+        duration: 30,
+        repeat: Infinity,
+        allowWebkitAcceleration: true
+      }
+    )
 
+    return () => controls.stop()
+  })
+
+  useEffect(() => {
     animate(
-      spinElements,
+      ".spin-fixed",
       { transform: "rotate(360deg)" },
       {
         easing: "linear",
@@ -57,7 +70,7 @@ const Home = () => {
       <Container page={true}>
         <main className="max-w-screen-lg pb-10 mx-auto text-center">
           <HomeHero />
-          <div className="space-y-28 sm:space-y-44">
+          <div className="space-y-28 sm:space-y-52">
             <HomeSection text={section1} image={<HomeCake />} />
             <HomeSection
               text={section2}
