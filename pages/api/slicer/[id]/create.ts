@@ -4,6 +4,7 @@ import { Slicer } from "@prisma/client"
 import prisma from "@lib/prisma"
 import { defaultProvider } from "lib/useProvider"
 import { domain } from "@components/common/Head"
+import fetcher from "@utils/fetcher"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -16,6 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         minimumShares,
         creator
       } = JSON.parse(req.body)
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL
 
       // Endpoint assumes passed id is hex
       const decimalId = parseInt(String(id), 16)
@@ -61,6 +63,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           await prisma.slicer.create({
             data: slicerInfo
           })
+
+          // On-demand ISR
+          const pathToRevalidate1 = `slicer`
+          const pathToRevalidate2 = `slicer/${decimalId}`
+          await fetcher(
+            `${baseUrl}/api/revalidate?secret=${process.env.SECRET_REVALIDATE_TOKEN}&path=${pathToRevalidate1}`
+          )
+          await fetcher(
+            `${baseUrl}/api/revalidate?secret=${process.env.SECRET_REVALIDATE_TOKEN}&path=${pathToRevalidate2}`
+          )
         } else {
           res.status(500).json({ message: "Slicer already exists" })
         }
