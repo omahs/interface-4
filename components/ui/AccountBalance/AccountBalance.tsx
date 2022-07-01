@@ -30,6 +30,7 @@ const AccountBalance = ({ account, payeeCurrencyData }: Props) => {
   const balance = payeeCurrencyData && payeeCurrencyData[0]?.toWithdraw
 
   const executeWithdraw = async () => {
+    setLoading(true)
     const eventLogs = await handleSubmit(
       Withdraw(signer, account, ethers.constants.AddressZero),
       setMessage,
@@ -72,7 +73,7 @@ const AccountBalance = ({ account, payeeCurrencyData }: Props) => {
               <div className="w-5 h-5 ml-1 transition-transform duration-150 group-hover:translate-x-1">
                 <Arrow />
               </div>
-            </a>{" "}
+            </a>
           </>
         ) : (
           <p>Withdrawing ...</p>
