@@ -242,7 +242,7 @@ const ProductCard = ({
             )
           }
         }
-        onClick={() => (chainInfo ? handleOnClick() : null)}
+        onClick={() => handleOnClick()}
       >
         <div>
           <div className="flex items-center justify-between">
@@ -256,7 +256,7 @@ const ProductCard = ({
           <div className="absolute top-0 right-0 flex items-center justify-center w-24 h-[68px] my-auto mr-5">
             <div
               className="absolute w-full h-full"
-              onClick={() => (chainInfo ? handleOnClick() : null)}
+              onClick={() => handleOnClick()}
             />
             {chainInfo && !editMode && (
               <CartButton

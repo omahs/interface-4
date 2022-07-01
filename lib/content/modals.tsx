@@ -385,7 +385,7 @@ export const PRODUCT_VIEW = (params: any) => {
             <MarkdownBlock content={description} />
           </div>
         </div>
-        {!editMode && (
+        {extAddress && !editMode && (
           <div className="mx-auto cursor-pointer w-60">
             <CartButton
               slicerId={slicerId}
@@ -426,7 +426,8 @@ export const PRODUCT_VIEW = (params: any) => {
               }`}
             </p>
           )}
-        {extAddress != "0x00000000" &&
+        {extAddress &&
+        extAddress != "0x00000000" &&
         extAddress != ethers.constants.AddressZero &&
         (extValue != "0" || extExecSig != "0x00000000") ? (
           <p className="pt-6 mx-auto text-sm text-center">
@@ -465,7 +466,7 @@ export const PRODUCT_VIEW = (params: any) => {
             )}
           </p>
         ) : null}
-        {purchaseElArray.length != 0 ? (
+        {purchaseElArray && purchaseElArray.length != 0 ? (
           <p className="pt-6 text-sm text-center mx-auto max-w-[340px]">
             Contains <b>{purchaseEl}</b>
           </p>
