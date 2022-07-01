@@ -82,3 +82,4 @@ function MyApp({ Component, pageProps }: AppProps) {
 export default MyApp
 
 // TODO: Add dark mode to rainbowKit
+// TODO: Wait for rainbow to add chainId to <ConnectButton />

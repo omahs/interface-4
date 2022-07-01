@@ -19,6 +19,7 @@
     "@mailchimp/mailchimp_marketing": "^3.0.74",
     "@mdx-js/loader": "^2.1.2",
     "@next/mdx": "^12.2.0",
+    "@peculiar/webcrypto": "^1.4.0",
     "@prisma/client": "^4.0.0",
     "@rainbow-me/rainbowkit": "^0.4.1",
     "@supabase/supabase-js": "^1.35.4",
