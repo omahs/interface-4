@@ -238,6 +238,9 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
     case 9:
       uploadState = "Finalizing"
       break
+    case 10:
+      uploadState = "Almost done"
+      break
   }
   return (
     <div className="text-center">

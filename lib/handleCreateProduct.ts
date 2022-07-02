@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react"
 import { NewImage } from "pages/slicer/[id]"
 import { LogDescription } from "@ethersproject/abi"
 import decimalToHex from "@utils/decimalToHex"
+import { View } from "./content/modals"
 // import { mutate } from "swr"
 
 export const beforeCreate = async (
@@ -161,7 +162,8 @@ export const beforeCreate = async (
 export const handleSuccess = async (
   slicerId: number,
   id: string,
-  eventLogs: LogDescription[]
+  eventLogs: LogDescription[],
+  setModalView: Dispatch<SetStateAction<View>>
 ) => {
   const fetcher = (await import("@utils/fetcher")).default
   const getLog = (await import("@utils/getLog")).default
@@ -182,7 +184,8 @@ export const handleSuccess = async (
 
   setTimeout(async () => {
     await fetcher(`/api/slicer/${slicerId}/refresh`)
-  }, 1000)
+    setModalView({ name: "" })
+  }, 3500)
 }
 
 export const handleReject = async (
