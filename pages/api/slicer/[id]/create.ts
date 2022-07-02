@@ -66,13 +66,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
           // On-demand ISR
           const pathToRevalidate1 = `slicer`
-          const pathToRevalidate2 = `slicer/${decimalId}`
           await fetcher(
             `${baseUrl}/api/revalidate?secret=${process.env.SECRET_REVALIDATE_TOKEN}&path=${pathToRevalidate1}`
           )
-          await fetcher(
-            `${baseUrl}/api/revalidate?secret=${process.env.SECRET_REVALIDATE_TOKEN}&path=${pathToRevalidate2}`
-          )
+
+          setTimeout(async () => {
+            const pathToRevalidate2 = `slicer/${decimalId}`
+            await fetcher(
+              `${baseUrl}/api/revalidate?secret=${process.env.SECRET_REVALIDATE_TOKEN}&path=${pathToRevalidate2}`
+            )
+          }, 3500)
         } else {
           res.status(500).json({ message: "Slicer already exists" })
         }
