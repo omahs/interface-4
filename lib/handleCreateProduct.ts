@@ -3,6 +3,7 @@ import { NewImage } from "pages/slicer/[id]"
 import { LogDescription } from "@ethersproject/abi"
 import decimalToHex from "@utils/decimalToHex"
 import { View } from "./content/modals"
+import timeout from "@utils/timeout"
 // import { mutate } from "swr"
 
 export const beforeCreate = async (
@@ -162,9 +163,7 @@ export const beforeCreate = async (
 export const handleSuccess = async (
   slicerId: number,
   id: string,
-  eventLogs: LogDescription[],
-  setModalView: Dispatch<SetStateAction<View>>,
-  setSuccess: Dispatch<SetStateAction<boolean>>
+  eventLogs: LogDescription[]
 ) => {
   const fetcher = (await import("@utils/fetcher")).default
   const getLog = (await import("@utils/getLog")).default
@@ -182,12 +181,8 @@ export const handleSuccess = async (
     })
   }
   await fetcher(`/api/slicer/${slicerId}/products`, putBody)
-
-  setTimeout(async () => {
-    await fetcher(`/api/slicer/${slicerId}/refresh`)
-    setSuccess(true)
-    setModalView({ name: "" })
-  }, 3500)
+  await timeout(3500)
+  await fetcher(`/api/slicer/${slicerId}/refresh`)
 }
 
 export const handleReject = async (
