@@ -163,7 +163,8 @@ export const handleSuccess = async (
   slicerId: number,
   id: string,
   eventLogs: LogDescription[],
-  setModalView: Dispatch<SetStateAction<View>>
+  setModalView: Dispatch<SetStateAction<View>>,
+  setSuccess: Dispatch<SetStateAction<boolean>>
 ) => {
   const fetcher = (await import("@utils/fetcher")).default
   const getLog = (await import("@utils/getLog")).default
@@ -184,6 +185,7 @@ export const handleSuccess = async (
 
   setTimeout(async () => {
     await fetcher(`/api/slicer/${slicerId}/refresh`)
+    setSuccess(true)
     setModalView({ name: "" })
   }, 3500)
 }
