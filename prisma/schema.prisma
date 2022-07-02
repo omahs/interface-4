@@ -41,6 +41,7 @@ model Product {
   purchaseInfo     Json     @default("{}")
   allowedAddresses String[]
   tempProductHash  String?
+  isRemoved        Boolean  @default(false)
   slicer           Slicer   @relation(fields: [slicerId], references: [id])
   slicerId         Int      @map(name: "slicer_id")
   
