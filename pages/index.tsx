@@ -20,6 +20,7 @@ import {
 } from "@components/common/Head"
 import { inView, animate } from "motion"
 import { useEffect } from "react"
+import { useElementInViewport } from "@utils/useElementInViewport"
 
 const Home = () => {
   useEffect(() => {
@@ -35,7 +36,7 @@ const Home = () => {
         }
       )
 
-      return () => controls.stop()
+      // return () => controls.stop()
     })
 
     inView("#spin-logo", () => {
@@ -50,7 +51,7 @@ const Home = () => {
         }
       )
 
-      return () => controls.stop()
+      // return () => controls.stop()
     })
   }, [])
 
