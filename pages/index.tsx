@@ -39,20 +39,20 @@ const Home = () => {
       // return () => controls.stop()
     })
 
-    inView("#spin-logo", () => {
-      const controls = animate(
-        ".spin-el1",
-        { transform: "rotate(360deg)" },
-        {
-          easing: "linear",
-          duration: 30,
-          repeat: Infinity,
-          allowWebkitAcceleration: true
-        }
-      )
+    // inView("#spin-logo", () => {
+    //   const controls = animate(
+    //     ".spin-el1",
+    //     { transform: "rotate(360deg)" },
+    //     {
+    //       easing: "linear",
+    //       duration: 30,
+    //       repeat: Infinity,
+    //       allowWebkitAcceleration: true
+    //     }
+    //   )
 
-      // return () => controls.stop()
-    })
+    // return () => controls.stop()
+    // })
   }, [])
 
   return (
