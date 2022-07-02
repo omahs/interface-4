@@ -11,7 +11,6 @@ type Props = {
   ethValue: number
   usdValue: number
   isUSD: boolean
-  loading: boolean
   setIsMultiple: Dispatch<SetStateAction<boolean>>
   setIsLimited: Dispatch<SetStateAction<boolean>>
   setUnits: Dispatch<SetStateAction<number>>
@@ -30,7 +29,6 @@ const AddProductFormPrice = ({
   ethValue,
   usdValue,
   isUSD,
-  loading,
   setIsMultiple,
   setIsLimited,
   setUnits,
@@ -106,7 +104,6 @@ const AddProductFormPrice = ({
         setEthValue={setEthValue}
         usdValue={usdValue}
         setUsdValue={setUsdValue}
-        loading={loading}
         label="Price per unit"
       />
       <InputSwitch

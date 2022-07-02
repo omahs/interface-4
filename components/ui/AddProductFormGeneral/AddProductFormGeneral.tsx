@@ -17,7 +17,6 @@ type Props = {
   description: string
   shortDescription: string
   newImage: NewImage
-  loading: boolean
   setName: Dispatch<SetStateAction<string>>
   setDescription: Dispatch<SetStateAction<string>>
   setShortDescription: Dispatch<SetStateAction<string>>
@@ -31,7 +30,6 @@ const AddProductFormGeneral = ({
   shortDescription,
   description,
   newImage,
-  loading,
   setName,
   setShortDescription,
   setDescription,
@@ -102,7 +100,7 @@ const AddProductFormGeneral = ({
         upload={true}
         msg={msg}
         setMsg={setMsg}
-        loading={loading}
+        loading={false}
         maxHeight="max-h-[250px]"
         product
       />

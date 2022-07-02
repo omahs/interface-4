@@ -5,8 +5,8 @@ import { Message } from "./handleMessage"
 const handleSubmit = async (
   action: Promise<any>,
   setMessage: Dispatch<SetStateAction<Message>>,
-  setLoading: Dispatch<SetStateAction<boolean>>,
-  setSuccess: Dispatch<SetStateAction<boolean>>,
+  setLoading: Dispatch<SetStateAction<boolean>> | null,
+  setSuccess: Dispatch<SetStateAction<boolean>> | null,
   confetti = false,
   addRecentTransaction: (transaction: NewTransaction) => void,
   transactionDescription: string
@@ -18,7 +18,7 @@ const handleSubmit = async (
   setMessage({ message: "", messageStatus: "success" })
   try {
     const [contract, call] = await action
-    setLoading(true)
+    setLoading && setLoading(true)
 
     addRecentTransaction({
       hash: call.hash,
@@ -26,15 +26,16 @@ const handleSubmit = async (
     })
 
     const eventLogs = await handleLog(contract, call)
-    setLoading(false)
+    setLoading && setLoading(false)
 
-    setSuccess(true)
+    setSuccess && setSuccess(true)
+
     if (confetti) {
       launchConfetti()
     }
     return eventLogs
   } catch (err) {
-    setLoading(false)
+    setLoading && setLoading(false)
     const message = err.data?.message
       ?.split("reverted with reason string '")[1]
       ?.slice(0, -1)

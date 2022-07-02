@@ -25,7 +25,6 @@ export default function NewProduct() {
   const router = useRouter()
   const { id } = router.query
   const { isAllowed, loading } = useAllowed(Number(id))
-  const [loadingForm, setLoadingForm] = useState(false)
   const [uploadStep, setUploadStep] = useState(0)
   const [uploadPct, setUploadPct] = useState(0)
   const [success, setSuccess] = useState(false)
@@ -76,33 +75,22 @@ export default function NewProduct() {
           </main>
         ) : isAllowed ? (
           !success ? (
-            !loadingForm ? (
-              <main className="max-w-[420px] mx-auto sm:max-w-screen-md">
-                <DoubleText
-                  inactive
-                  logoText="Add product"
-                  size="text-4xl sm:text-5xl"
-                  position="pb-4 sm:pb-8"
-                />
-                <AddProductForm
-                  slicerId={Number(id)}
-                  success={success}
-                  loading={loadingForm}
-                  setLoading={setLoadingForm}
-                  uploadStep={uploadStep}
-                  setUploadStep={setUploadStep}
-                  setUploadPct={setUploadPct}
-                  setSuccess={setSuccess}
-                  setLogs={setLogs}
-                />
-              </main>
-            ) : (
-              <ActionScreen
-                text="Adding product ..."
-                helpText="Please wait while the blockchain does its thing"
-                loading
+            <main className="max-w-[420px] mx-auto sm:max-w-screen-md">
+              <DoubleText
+                inactive
+                logoText="Add product"
+                size="text-4xl sm:text-5xl"
+                position="pb-4 sm:pb-8"
               />
-            )
+              <AddProductForm
+                slicerId={Number(id)}
+                uploadStep={uploadStep}
+                setUploadStep={setUploadStep}
+                setUploadPct={setUploadPct}
+                setSuccess={setSuccess}
+                setLogs={setLogs}
+              />
+            </main>
           ) : (
             <ActionScreen
               highlightTitle="Product added! 🍰"
@@ -122,8 +110,8 @@ export default function NewProduct() {
               href={`/slicer/${id}`}
               buttonLabelSecondary="Create new product"
               onClickSecondary={() => setSuccess(false)}
-              external
-              targetBlank={false}
+              // external
+              // targetBlank={false}
             />
           )
         ) : (
