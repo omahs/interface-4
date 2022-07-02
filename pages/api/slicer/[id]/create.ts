@@ -5,6 +5,7 @@ import prisma from "@lib/prisma"
 import { defaultProvider } from "lib/useProvider"
 import { domain } from "@components/common/Head"
 import fetcher from "@utils/fetcher"
+import timeout from "@utils/timeout"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -70,6 +71,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           await fetcher(
             `${baseUrl}/api/revalidate?secret=${process.env.SECRET_REVALIDATE_TOKEN}&path=${pathToRevalidate1}`
           )
+          await timeout(3500)
           await fetcher(
             `${baseUrl}/api/revalidate?secret=${process.env.SECRET_REVALIDATE_TOKEN}&path=${pathToRevalidate2}`
           )
@@ -79,7 +81,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       } else {
         res.status(404).json({ message: "Slicer does not exist" })
       }
-      res.status(200).json({ message: "Slicer created" })
+      res.status(200).send({ message: "Slicer created" })
     }
   } catch (err) {
     res.status(500).send(err.message)
