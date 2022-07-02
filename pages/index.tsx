@@ -19,36 +19,40 @@ import {
   domain
 } from "@components/common/Head"
 import { inView, animate } from "motion"
+import { useEffect } from "react"
 
-inView(".spin-el", ({ target }) => {
-  const controls = animate(
-    target,
-    { transform: "rotate(360deg)" },
-    {
-      easing: "linear",
-      duration: 30,
-      repeat: Infinity,
-      allowWebkitAcceleration: true
-    }
-  )
+const Home = () => {
+  useEffect(() => {
+    inView(".spin-el", ({ target }) => {
+      const controls = animate(
+        target,
+        { transform: "rotate(360deg)" },
+        {
+          easing: "linear",
+          duration: 30,
+          repeat: Infinity,
+          allowWebkitAcceleration: true
+        }
+      )
 
-  return () => controls.stop()
-})
+      return () => controls.stop()
+    })
 
-inView("#spin-logo", () => {
-  const controls = animate(
-    ".spin-el1",
-    { transform: "rotate(360deg)" },
-    {
-      easing: "linear",
-      duration: 30,
-      repeat: Infinity,
-      allowWebkitAcceleration: true
-    }
-  )
+    inView("#spin-logo", () => {
+      const controls = animate(
+        ".spin-el1",
+        { transform: "rotate(360deg)" },
+        {
+          easing: "linear",
+          duration: 30,
+          repeat: Infinity,
+          allowWebkitAcceleration: true
+        }
+      )
 
-  return () => controls.stop()
-})
+      return () => controls.stop()
+    })
+  }, [])
 
 const Home = () => {
   return (
