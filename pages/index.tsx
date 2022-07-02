@@ -54,6 +54,7 @@ const Home = () => {
     })
   }, [])
 
+const Home = () => {
   return (
     <>
       <NextSeo
