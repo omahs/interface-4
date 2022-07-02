@@ -44,10 +44,11 @@ const SlicerProducts = ({
   blockchainProducts,
   editMode
 }: Props) => {
-  const [loading, setLoading] = useState(false)
   const [showProducts, setShowProducts] = useState<Product[]>([])
   const [pendingProducts, setPendingProducts] = useState<Product[]>([])
   const [subgraphRefresh, setSubgraphRefresh] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [successRefresh, setSuccessRefresh] = useState(false)
   const router = useRouter()
 
   const handleReload = async () => {
@@ -66,10 +67,18 @@ const SlicerProducts = ({
   }
 
   const refreshProducts = async () => {
+    setLoading(true)
     const fetcher = (await import("@utils/fetcher")).default
     await fetcher(`/api/slicer/${slicerId}/refresh`)
-    router.reload()
+    setSuccessRefresh(true)
+    setLoading(false)
   }
+
+  useEffect(() => {
+    if (successRefresh) {
+      router.reload()
+    }
+  }, [successRefresh])
 
   useEffect(() => {
     const productsToShow = products?.data?.filter(
@@ -77,10 +86,10 @@ const SlicerProducts = ({
     )
     setShowProducts(productsToShow)
     setSubgraphRefresh(
-      productsToShow.filter(
+      productsToShow?.filter(
         (product: Product) =>
           !blockchainProducts?.find(
-            (p) => p.id.split("-").pop() == product.productId
+            (p) => p.id.split("-").pop() == product?.productId
           )
       ).length != 0
     )
