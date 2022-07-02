@@ -113,7 +113,7 @@ const Id = ({
   useEffect(() => {
     if (subgraphDataPayees) {
       const sponsorsList: AddressAmount[] = []
-      subgraphDataPayees.payeeSlicers.forEach((el) => {
+      subgraphDataPayees.forEach((el) => {
         const address = el.id.split("-")[0]
         const ethSent = el.ethSent
         if (
@@ -130,7 +130,7 @@ const Id = ({
       setSponsors(sponsorsList)
 
       const ownersList: AddressAmount[] = []
-      subgraphDataPayees.payeeSlicers.forEach((el) => {
+      subgraphDataPayees.forEach((el) => {
         const address = el.id.split("-")[0]
         const slicesOwned = el.slices
         if (slicesOwned != "0") {
@@ -355,61 +355,49 @@ export async function getStaticProps(context: GetStaticPropsContext) {
    * Add condition: or: [{slices_gt: "0"}, {ethSent_gt: "0"}]
    * Deal with pagination when number of payeeSlicers > 100
    */
-  const tokensQueryPayees = /* GraphQL */ `
-  payeeSlicers (
-    where: {slicer: "${hexId}"}, 
-    orderBy: "ethSent", 
-    orderDirection: "desc"
-  ) {
-    id
-    slices
-    ethSent
-  }
+  const tokensQuery = /* GraphQL */ `
+  slicer(id: "${hexId}") {
+    payees(
+      orderBy: "ethSent", 
+      orderDirection: "desc"
+    ) {
+      id
+      slices
+      ethSent
+    }
+    products (
+      where: {
+        isRemoved: false
+      }
+    ) {
+      id
+      prices {
+        currency {
+          id
+        }
+        price
+        dynamicPricing
+      }
+      isInfinite
+      availableUnits
+      maxUnitsPerBuyer
+      totalPurchases
+      createdAtTimestamp
+      extAddress
+      extValue
+      extCheckSig
+      extExecSig
+    }
+  } 
 `
 
-  const tokensQueryProducts = /* GraphQL */ `
-products (where: {
-    slicer: "${hexId}",
-    isRemoved: false
-  }) {
-  id
-  prices {
-    currency {
-      id
-    }
-    price
-    dynamicPricing
-  }
-  isInfinite
-  availableUnits
-  maxUnitsPerBuyer
-  totalPurchases
-  createdAtTimestamp
-  extAddress
-  extValue
-  extCheckSig
-  extExecSig
-}`
-
-  const [
-    slicerInfo,
-    products,
-    { data: subgraphDataPayees },
-    { data: subgraphDataProducts }
-  ] = await Promise.all([
+  const [slicerInfo, products, { data: subgraphData }] = await Promise.all([
     fetcher(`${baseUrl}/api/slicer/${hexId}?stats=false`),
     fetcher(`${baseUrl}/api/slicer/${id}/products`),
     client.query({
       query: gql`
         query {
-          ${tokensQueryPayees}
-        }
-      `
-    }),
-    client.query({
-      query: gql`
-        query {
-          ${tokensQueryProducts}
+          ${tokensQuery}
         }
       `
     })
@@ -419,8 +407,8 @@ products (where: {
     props: {
       slicerInfo,
       products,
-      subgraphDataPayees,
-      subgraphDataProducts: subgraphDataProducts?.products
+      subgraphDataPayees: subgraphData?.slicer?.payees,
+      subgraphDataProducts: subgraphData?.slicer?.products
     },
     revalidate: 300
   }

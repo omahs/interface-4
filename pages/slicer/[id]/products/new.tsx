@@ -122,6 +122,8 @@ export default function NewProduct() {
               href={`/slicer/${id}`}
               buttonLabelSecondary="Create new product"
               onClickSecondary={() => setSuccess(false)}
+              external
+              targetBlank={false}
             />
           )
         ) : (
