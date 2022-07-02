@@ -27,6 +27,7 @@ const ProductsBalance = ({ slicerId, productsModuleBalance }: Props) => {
 
   const executeRelease = async () => {
     saEvent("release_eth_to_slicer_attempt")
+    setLoading(true)
     const eventLogs = await handleSubmit(
       releaseEthToSlicer(signer, slicerId),
       setMessage,

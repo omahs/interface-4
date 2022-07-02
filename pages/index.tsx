@@ -9,7 +9,6 @@ import {
   HomeHero,
   HomeSection
 } from "@components/ui"
-import { useEffect } from "react"
 import { section1, section2, section3, section4 } from "@lib/content/home"
 import HomeDecentralized from "@components/icons/HomeDecentralized"
 import { NextSeo } from "next-seo"
@@ -19,14 +18,12 @@ import {
   longTitle,
   domain
 } from "@components/common/Head"
-import { animate } from "motion"
+import { inView, animate } from "motion"
 
 const Home = () => {
-  useEffect(() => {
-    const spinElements = document.querySelectorAll(".spin-el")
-
-    animate(
-      spinElements,
+  inView(".spin-el", ({ target }) => {
+    const controls = animate(
+      target,
       { transform: "rotate(360deg)" },
       {
         easing: "linear",
@@ -35,7 +32,24 @@ const Home = () => {
         allowWebkitAcceleration: true
       }
     )
-  }, [])
+
+    return () => controls.stop()
+  })
+
+  inView("#spin-logo", () => {
+    const controls = animate(
+      ".spin-el1",
+      { transform: "rotate(360deg)" },
+      {
+        easing: "linear",
+        duration: 30,
+        repeat: Infinity,
+        allowWebkitAcceleration: true
+      }
+    )
+
+    return () => controls.stop()
+  })
 
   return (
     <>
@@ -57,7 +71,7 @@ const Home = () => {
       <Container page={true}>
         <main className="max-w-screen-lg pb-10 mx-auto text-center">
           <HomeHero />
-          <div className="space-y-28 sm:space-y-44">
+          <div className="space-y-28 sm:space-y-52">
             <HomeSection text={section1} image={<HomeCake />} />
             <HomeSection
               text={section2}

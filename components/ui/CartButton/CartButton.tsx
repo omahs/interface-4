@@ -159,7 +159,7 @@ const CartButton = ({
           )
         )}
         {loading ? (
-          <Spinner color="text-white nightwind-prevent" />
+          <Spinner color="text-inherit" />
         ) : (
           <ShoppingBag className="w-5 h-5 group-cart-el" />
         )}
@@ -193,7 +193,7 @@ const CartButton = ({
           <Cart className="w-5 h-5 mr-1 group-cart-el" />
         </div>
         <div
-          className="relative z-10 flex items-center justify-center h-8 transition-colors duration-150 bg-blue-500 rounded-r-md nightwind-prevent group-cart hover:bg-blue-600"
+          className="relative z-10 flex items-center justify-center h-8 text-white transition-colors duration-150 bg-blue-500 rounded-r-md nightwind-prevent group-cart hover:bg-blue-600"
           onClick={() =>
             handleRedeemProduct(
               signer,
@@ -210,7 +210,7 @@ const CartButton = ({
           }
         >
           {loading ? (
-            <Spinner color="text-white nightwind-prevent" />
+            <Spinner color="text-inherit" />
           ) : (
             <ShoppingBag className="w-5 h-5 group-cart-el" />
           )}

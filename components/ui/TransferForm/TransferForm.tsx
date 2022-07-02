@@ -53,6 +53,7 @@ const TransferForm = ({
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
+    setLoading(true)
 
     if (!batchMode) {
       const handleSubmit = (await import("@utils/handleSubmit")).default
