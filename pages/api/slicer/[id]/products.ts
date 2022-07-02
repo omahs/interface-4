@@ -18,6 +18,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                   slicerId: { equals: Number(id) }
                 },
                 {
+                  isRemoved: { equals: false }
+                },
+                {
                   productId: { equals: null }
                 },
                 {
@@ -28,7 +31,14 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
               ]
             }
           : {
-              slicerId: { equals: Number(id) }
+              AND: [
+                {
+                  slicerId: { equals: Number(id) }
+                },
+                {
+                  isRemoved: { equals: false }
+                }
+              ]
             }
 
       data = await prisma.product.findMany({
