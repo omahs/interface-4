@@ -16,6 +16,7 @@ const AppContext = createContext<any>({
   connector: null,
   provider: null,
   account: "",
+  isConnected: false,
   color1: colorList[0],
   color2: colorList[1],
   darkColor1: darkColorList[0],
@@ -28,10 +29,11 @@ const AppContext = createContext<any>({
 })
 
 export function AppWrapper({ children }) {
+  const [isConnected, setIsConnected] = useState(false)
   const [modalView, setModalView] = useState<View>({ name: "" })
   const provider = useProvider()
 
-  const { data: account } = useAccount()
+  const { address, connector } = useAccount()
 
   const [color1, setColor1] = useState([])
   const [color2, setColor2] = useState([])
@@ -60,17 +62,19 @@ export function AppWrapper({ children }) {
 
   useEffect(() => {
     setPurchases(null)
-    if (account?.address) {
-      getPurchases(account.address, setPurchases)
+    setIsConnected(address && true)
+    if (address) {
+      getPurchases(address, setPurchases)
     }
-  }, [account])
+  }, [address])
 
   return (
     <AppContext.Provider
       value={{
-        connector: account?.connector,
+        connector,
         provider,
-        account: account?.address,
+        account: address,
+        isConnected,
         color1,
         color2,
         darkColor1,

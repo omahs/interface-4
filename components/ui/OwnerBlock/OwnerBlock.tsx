@@ -42,6 +42,7 @@ const OwnerBlock = ({
   const submit = async (ownerAddress: string) => {
     const handleSubmit = (await import("@utils/handleSubmit")).default
 
+    setLoading(true)
     const eventLog = await handleSubmit(
       TriggerRelease(
         signer,

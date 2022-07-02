@@ -22,14 +22,14 @@ export default function Layout({ children }) {
   const [cookies] = useCookies(["cart"])
 
   const cookieCart: ProductCart[] = cookies?.cart
-  const { activeChain } = useNetwork()
+  const { chain } = useNetwork()
 
   useEffect(() => {
     // if (process.env.NODE_ENV !== "development") {
     if (
       account &&
-      activeChain &&
-      Number(activeChain.id).toString(16) !== process.env.NEXT_PUBLIC_CHAIN_ID
+      chain &&
+      Number(chain.id).toString(16) !== process.env.NEXT_PUBLIC_CHAIN_ID
     ) {
       setModalView({ cross: false, name: "NETWORK_VIEW" })
     } else {
@@ -38,7 +38,7 @@ export default function Layout({ children }) {
       }
     }
     // }
-  }, [account, activeChain])
+  }, [account, chain])
 
   return (
     <>

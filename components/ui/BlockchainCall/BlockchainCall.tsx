@@ -46,6 +46,7 @@ const BlockchainCall = ({
       }
       const handleSubmit = (await import("@utils/handleSubmit")).default
 
+      setLoading(true)
       const eventLog = await handleSubmit(
         action(),
         setMessage,

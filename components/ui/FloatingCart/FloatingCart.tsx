@@ -76,6 +76,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
 
     try {
       saEvent("checkout_cart_attempt")
+      setLoading(true)
       await handleSubmit(
         PayProducts(signer, account, cookieCart),
         setMessage,

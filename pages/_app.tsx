@@ -18,10 +18,15 @@ import { publicProvider } from "wagmi/providers/public"
 import { chain, createClient, configureChains, WagmiConfig } from "wagmi"
 import "@rainbow-me/rainbowkit/styles.css"
 
-const { chains, provider } = configureChains(
-  [chain.mainnet, chain.rinkeby],
-  [alchemyProvider({ alchemyId: process.env.ALCHEMY_ID }), publicProvider()]
-)
+const defaultChains =
+  process.env.CHAIN_ID === "1"
+    ? [chain.mainnet, chain.rinkeby]
+    : [chain.rinkeby, chain.mainnet]
+
+const { chains, provider } = configureChains(defaultChains, [
+  alchemyProvider({ alchemyId: process.env.ALCHEMY_ID }),
+  publicProvider()
+])
 
 const { connectors } = getDefaultWallets({
   appName: "Slice",
@@ -82,3 +87,4 @@ function MyApp({ Component, pageProps }: AppProps) {
 export default MyApp
 
 // TODO: Add dark mode to rainbowKit
+// TODO: Wait for rainbow to add chainId to <ConnectButton />

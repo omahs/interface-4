@@ -7,7 +7,7 @@ export interface Props {
 }
 
 const Background: FC<Props> = (props) => {
-  const { className, children, ...rest } = props
+  const { className, ...rest } = props
   const rootClassName = cn(
     {},
     className,

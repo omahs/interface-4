@@ -147,8 +147,10 @@ const AddProductForm = ({
         saEvent("create_product_success")
         setLogs(eventLogs)
         setUploadStep(9)
-        await handleSuccess(slicerId, newProduct.id, eventLogs)
-        setModalView({ name: "" })
+        setTimeout(() => {
+          setUploadStep(10)
+        }, 3000)
+        await handleSuccess(slicerId, newProduct.id, eventLogs, setModalView)
       } else {
         saEvent("create_product_fail")
         setUploadStep(7)
