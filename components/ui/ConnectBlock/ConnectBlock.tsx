@@ -5,8 +5,8 @@ import saEvent from "@utils/saEvent"
 import DoubleText from "../DoubleText"
 
 const ConnectBlock = ({ children }) => {
-  const { account } = useAppContext()
-  return account ? (
+  const { isConnected } = useAppContext()
+  return isConnected ? (
     children
   ) : (
     <>
