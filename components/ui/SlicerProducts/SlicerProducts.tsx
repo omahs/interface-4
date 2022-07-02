@@ -48,10 +48,10 @@ const SlicerProducts = ({
   const [pendingProducts, setPendingProducts] = useState<Product[]>([])
   const [subgraphRefresh, setSubgraphRefresh] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [successRefresh, setSuccessRefresh] = useState(false)
   const router = useRouter()
 
   const handleReload = async () => {
+    const fetcher = (await import("@utils/fetcher")).default
     const { handleCleanup, reload } = await import("@lib/handleCreateProduct")
 
     try {
@@ -60,6 +60,7 @@ const SlicerProducts = ({
       } else {
         await reload(Number(slicerId), setLoading)
       }
+      await fetcher(`/api/slicer/${slicerId}/refresh`)
     } catch (err) {
       console.log(err)
     }
@@ -69,16 +70,14 @@ const SlicerProducts = ({
   const refreshProducts = async () => {
     setLoading(true)
     const fetcher = (await import("@utils/fetcher")).default
-    await fetcher(`/api/slicer/${slicerId}/refresh`)
-    setSuccessRefresh(true)
-    setLoading(false)
-  }
-
-  useEffect(() => {
-    if (successRefresh) {
-      router.reload()
+    try {
+      await fetcher(`/api/slicer/${slicerId}/refresh`)
+    } catch (err) {
+      console.log(err)
     }
-  }, [successRefresh])
+    setLoading(false)
+    router.reload()
+  }
 
   useEffect(() => {
     const productsToShow = products?.data?.filter(

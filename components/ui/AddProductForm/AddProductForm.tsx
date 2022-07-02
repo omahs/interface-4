@@ -22,10 +22,7 @@ import saEvent from "@utils/saEvent"
 
 type Props = {
   slicerId: number
-  success: boolean
-  loading: boolean
   uploadStep: number
-  setLoading: Dispatch<SetStateAction<boolean>>
   setUploadStep: Dispatch<SetStateAction<number>>
   setUploadPct: Dispatch<SetStateAction<number>>
   setSuccess: Dispatch<SetStateAction<boolean>>
@@ -34,9 +31,6 @@ type Props = {
 
 const AddProductForm = ({
   slicerId,
-  success,
-  loading,
-  setLoading,
   uploadStep,
   setUploadStep,
   setUploadPct,
@@ -136,8 +130,8 @@ const AddProductForm = ({
       const eventLogs = await handleSubmit(
         AddProduct(signer, slicerId, productParams, externalCall),
         setMessage,
-        setLoading,
-        setSuccess,
+        null,
+        null,
         true,
         addRecentTransaction,
         `Create product | Slicer #${slicerId}`
@@ -150,7 +144,13 @@ const AddProductForm = ({
         setTimeout(() => {
           setUploadStep(10)
         }, 3000)
-        await handleSuccess(slicerId, newProduct.id, eventLogs, setModalView)
+        await handleSuccess(
+          slicerId,
+          newProduct.id,
+          eventLogs,
+          setModalView,
+          setSuccess
+        )
       } else {
         saEvent("create_product_fail")
         setUploadStep(7)
@@ -169,7 +169,6 @@ const AddProductForm = ({
         messageStatus: "error"
       })
     }
-    setLoading(false)
   }
 
   useEffect(() => {
@@ -197,7 +196,6 @@ const AddProductForm = ({
         name={name}
         shortDescription={shortDescription}
         description={description}
-        loading={loading}
         setName={setName}
         setDescription={setDescription}
         setShortDescription={setShortDescription}
@@ -211,7 +209,6 @@ const AddProductForm = ({
         ethValue={ethValue}
         usdValue={usdValue}
         isUSD={isUSD}
-        loading={loading}
         setIsMultiple={setIsMultiple}
         setIsLimited={setIsLimited}
         setUnits={setUnits}

@@ -399,7 +399,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
         query {
           ${tokensQuery}
         }
-      `
+      `,
+      fetchPolicy: "no-cache"
     })
   ])
 
