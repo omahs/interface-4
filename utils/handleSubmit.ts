@@ -17,8 +17,8 @@ const handleSubmit = async (
 
   setMessage({ message: "", messageStatus: "success" })
   try {
-    setLoading(true)
     const [contract, call] = await action
+    setLoading(true)
 
     addRecentTransaction({
       hash: call.hash,

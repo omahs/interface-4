@@ -2,7 +2,7 @@ import { useState } from "react"
 import QuestionMark from "@components/icons/QuestionMark"
 
 type Props = {
-  text: string | object
+  text: string | JSX.Element
   position?: string
 }
 

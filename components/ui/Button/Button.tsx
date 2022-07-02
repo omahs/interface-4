@@ -14,6 +14,7 @@ interface ButtonProps {
   label?: string | JSX.Element
   href?: string
   external?: boolean
+  targetBlank?: boolean
   disabled?: boolean
   onClick?: any
   saEventName?: string
@@ -31,6 +32,7 @@ const Button: FC<ButtonProps> = (props) => {
     loading = false,
     double = true,
     external = false,
+    targetBlank = true,
     disabled = false,
     saEventName = "",
     ...rest
@@ -54,8 +56,16 @@ const Button: FC<ButtonProps> = (props) => {
               </div>
             </button>
           </Link>
-        ) : (
+        ) : targetBlank ? (
           <a href={href} target="_blank" rel="noreferrer">
+            <button className={`peer relative z-10 ${rootClassName} ${color}`}>
+              <div className="flex items-center justify-center">
+                <p>{label}</p>
+              </div>
+            </button>
+          </a>
+        ) : (
+          <a href={href}>
             <button className={`peer relative z-10 ${rootClassName} ${color}`}>
               <div className="flex items-center justify-center">
                 <p>{label}</p>

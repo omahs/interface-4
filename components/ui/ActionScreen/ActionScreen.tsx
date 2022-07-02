@@ -10,6 +10,8 @@ export interface ActionScreenProps {
   helpText?: JSX.Element | string
   href?: string
   loading?: boolean
+  external?: boolean
+  targetBlank?: boolean
   buttonLabel?: string
   buttonLabelSecondary?: string
   onClick?: any
@@ -24,6 +26,8 @@ const ActionScreen: FC<ActionScreenProps> = ({
   title = "",
   helpText = "",
   href = "",
+  external = false,
+  targetBlank = true,
   loading = false,
   onClick = () => null,
   onClickSecondary = () => null
@@ -54,7 +58,12 @@ const ActionScreen: FC<ActionScreenProps> = ({
           {(buttonLabel || loading) && loading ? (
             <Button loading />
           ) : href ? (
-            <Button label={buttonLabel} href={href} />
+            <Button
+              label={buttonLabel}
+              href={href}
+              external={external}
+              targetBlank={targetBlank}
+            />
           ) : (
             <Button label={buttonLabel} onClick={onClick} />
           )}
