@@ -33,11 +33,11 @@ export const initialize = async (connector) => {
 }
 
 export const useAllowed = (slicerId: number) => {
-  const { account, provider } = useAppContext()
+  const { account, provider, isConnected } = useAppContext()
   const [access, setAccess] = useState({ isAllowed: false, loading: false })
   const getAllowed = async () => {
     setAccess({ isAllowed: false, loading: true })
-    if (slicerId && slicerId != NaN && account) {
+    if (slicerId && slicerId != NaN && account && isConnected) {
       const slicerContract = await slicer(slicerId, provider)
 
       const isPayeeAllowed: boolean = await slicerContract.isPayeeAllowed(

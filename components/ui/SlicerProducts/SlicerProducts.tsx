@@ -153,4 +153,6 @@ const SlicerProducts = ({
 
 export default SlicerProducts
 
-// Todo?: Make pendingSlicer section appear only if 15 minutes have elapsed
+// TODO: Make pendingSlicer section appear only if 15 minutes have elapsed
+
+// TODO: Detect removed products for refresh/reload button
