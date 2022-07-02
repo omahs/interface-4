@@ -20,37 +20,37 @@ import {
 } from "@components/common/Head"
 import { inView, animate } from "motion"
 
+inView(".spin-el", ({ target }) => {
+  const controls = animate(
+    target,
+    { transform: "rotate(360deg)" },
+    {
+      easing: "linear",
+      duration: 30,
+      repeat: Infinity,
+      allowWebkitAcceleration: true
+    }
+  )
+
+  return () => controls.stop()
+})
+
+inView("#spin-logo", () => {
+  const controls = animate(
+    ".spin-el1",
+    { transform: "rotate(360deg)" },
+    {
+      easing: "linear",
+      duration: 30,
+      repeat: Infinity,
+      allowWebkitAcceleration: true
+    }
+  )
+
+  return () => controls.stop()
+})
+
 const Home = () => {
-  inView(".spin-el", ({ target }) => {
-    const controls = animate(
-      target,
-      { transform: "rotate(360deg)" },
-      {
-        easing: "linear",
-        duration: 30,
-        repeat: Infinity,
-        allowWebkitAcceleration: true
-      }
-    )
-
-    return () => controls.stop()
-  })
-
-  inView("#spin-logo", () => {
-    const controls = animate(
-      ".spin-el1",
-      { transform: "rotate(360deg)" },
-      {
-        easing: "linear",
-        duration: 30,
-        repeat: Infinity,
-        allowWebkitAcceleration: true
-      }
-    )
-
-    return () => controls.stop()
-  })
-
   return (
     <>
       <NextSeo
