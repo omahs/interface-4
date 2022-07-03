@@ -16,7 +16,7 @@ const JbPayerForm = ({ params, setParams }: Props) => {
   const [projectId, setProjectId] = useState(0)
   const [memo, setMemo] = useState("Sent from Slice 🍰")
   const [mintTokens, setMintTokens] = useState(false)
-  const [preferUnstakedTokens, setPreferUnstakedTokens] = useState(false)
+  const [preferStakedTokens, setPreferStakedTokens] = useState(false)
 
   const [ownerAddress, setOwnerAddress] = useState(account || "")
   const [resolvedOwnerAddress, setResolvedOwnerAddress] = useState("")
@@ -41,10 +41,8 @@ const JbPayerForm = ({ params, setParams }: Props) => {
 
   useEffect(() => {
     const initParams = params
-
-    // AddToBalance preferred to avoid ERC20 being minted to Slice {fundsModule}
     const preferAddToBalance = !mintTokens
-    const preferClaimedTokens = !preferUnstakedTokens
+    const preferClaimedTokens = !preferStakedTokens
 
     setParams({
       projectId: Number(projectId),
@@ -56,7 +54,7 @@ const JbPayerForm = ({ params, setParams }: Props) => {
       directory: initParams.directory,
       owner
     })
-  }, [projectId, mintTokens, beneficiary, preferUnstakedTokens, memo, owner])
+  }, [projectId, mintTokens, beneficiary, preferStakedTokens, memo, owner])
 
   return (
     <div className="space-y-7">
@@ -107,10 +105,10 @@ const JbPayerForm = ({ params, setParams }: Props) => {
           </div>
 
           <div className="flex justify-end pt-4">
-            <p className="pr-2">Prefer unstaked tokens</p>
+            <p className="pr-2">Mint staked tokens</p>
             <MySwitch
-              enabled={preferUnstakedTokens}
-              setEnabled={setPreferUnstakedTokens}
+              enabled={preferStakedTokens}
+              setEnabled={setPreferStakedTokens}
             />
           </div>
         </>
