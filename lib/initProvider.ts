@@ -3,11 +3,16 @@ import SliceCoreContract from "artifacts/contracts/SliceCore.sol/SliceCore.json"
 import ProductsModuleContract from "artifacts/contracts/ProductsModule.sol/ProductsModule.json"
 import FundsModuleContract from "artifacts/contracts/FundsModule.sol/FundsModule.json"
 import SlicerContract from "artifacts/contracts/Slicer.sol/Slicer.json"
+import jbPayerContract from "artifacts/contracts/JBETHERC20ProjectPayerTokensReceiverCloneDeployer.sol/JBETHERC20ProjectPayerTokensReceiverCloneDeployer.json"
 import ChainlinkContract from "artifacts/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol/AggregatorV3Interface.json"
 import { SliceCore } from "../types/typechain/SliceCore"
 import { ProductsModule } from "../types/typechain/ProductsModule"
 import { FundsModule } from "../types/typechain/FundsModule"
 import { Slicer } from "../types/typechain/Slicer"
+import { JBETHERC20ProjectPayerTokensReceiverCloneDeployer } from "../types/typechain/JBETHERC20ProjectPayerTokensReceiverCloneDeployer"
+import addresses from "../addresses.json"
+
+const env = process.env.NEXT_PUBLIC_CHAIN_ID === "1" ? "mainnet" : "testnet"
 
 export const sliceCore = (signer: ethers.Signer | ethers.providers.Provider) =>
   new ethers.Contract(
@@ -42,6 +47,17 @@ export const slicer = async (
     SlicerContract.abi,
     signer
   ) as Slicer
+}
+
+export const jbCloner = async (
+  signer: ethers.Signer | ethers.providers.Provider
+) => {
+  const jbClonerAddress = addresses[env].DeployCloneFactory
+  return new ethers.Contract(
+    jbClonerAddress,
+    jbPayerContract.abi,
+    signer
+  ) as JBETHERC20ProjectPayerTokensReceiverCloneDeployer
 }
 
 export const chainlink = (signer: ethers.Signer | ethers.providers.Provider) =>
