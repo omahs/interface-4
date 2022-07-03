@@ -7,9 +7,9 @@ export default function Purchases() {
   return (
     <Container page={true} size="max-w-screen-sm">
       <NextSeo
-        title="Create JB project payer"
+        title="Create JB payer"
         openGraph={{
-          title: `Create JB project payer | ${defaultTitle}`,
+          title: `Create JB payer | ${defaultTitle}`,
           description:
             "Send slicer earnings directly to a JB treasury by deploying a JB payer contract and giving slices to it.",
           url: domain,
@@ -29,7 +29,7 @@ export default function Purchases() {
       <main className="max-w-[420px] mx-auto sm:max-w-screen-md">
         <DoubleText
           inactive
-          logoText="Create JB project payer"
+          logoText="Create JB payer"
           size="text-4xl sm:text-5xl"
           position="pb-12"
         />
