@@ -99,6 +99,9 @@ const JbPayerForm = () => {
                   }
                 </ConnectButton.Custom>
               </div>
+              <p className="pt-6 font-semibold text-center text-yellow-600">
+                Only compatible with V2 treasuries
+              </p>
               <MessageBlock msg={message} />
             </form>
           </>
