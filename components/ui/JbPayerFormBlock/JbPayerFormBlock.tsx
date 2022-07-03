@@ -59,7 +59,7 @@ const JbPayerForm = ({ params, setParams }: Props) => {
   }, [projectId, mintTokens, beneficiary, preferUnstakedTokens, memo, owner])
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-7">
       <div>
         <Input
           label="Project Id"
@@ -70,7 +70,7 @@ const JbPayerForm = ({ params, setParams }: Props) => {
           placeholder="Your Juicebox V2 Project ID"
         />
       </div>
-      <div className="pb-3">
+      <div>
         <InputAddress
           label="Owner address"
           address={ownerAddress}
@@ -94,7 +94,7 @@ const JbPayerForm = ({ params, setParams }: Props) => {
       </div>
       {mintTokens && (
         <>
-          <div className="pb-3">
+          <div>
             <InputAddress
               label="Beneficiary"
               address={beneficiaryAddress}
