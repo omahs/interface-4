@@ -409,7 +409,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       slicerInfo,
       products,
       subgraphDataPayees: subgraphData?.slicer?.payees,
-      subgraphDataProducts: subgraphData?.slicer?.products
+      subgraphDataProducts: subgraphData?.slicer?.products,
+      key: slicerInfo.id
     },
     revalidate: 300
   }
