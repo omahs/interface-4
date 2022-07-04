@@ -91,7 +91,8 @@ const Id = ({
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
 
   const totalSlices = Number(
-    slicer?.attributes.filter((el) => el.trait_type === "Total slices")[0].value
+    slicer?.attributes.filter((el) => el.trait_type === "Total slices")[0]
+      ?.value
   )
 
   // Todo: For collectibles save image on web3Storage instead of supabase? + Allow indefinite size? Figure it out
@@ -408,8 +409,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
     props: {
       slicerInfo,
       products,
-      subgraphDataPayees: subgraphData?.slicer?.payees,
-      subgraphDataProducts: subgraphData?.slicer?.products,
+      subgraphDataPayees: subgraphData?.slicer?.payees || null,
+      subgraphDataProducts: subgraphData?.slicer?.products || null,
       key: slicerInfo.id
     },
     revalidate: 300
