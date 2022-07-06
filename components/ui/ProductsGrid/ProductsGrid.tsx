@@ -10,6 +10,8 @@ type Props = {
   products: Product[]
   editMode: boolean
   blockchainProducts: any
+  productQuery: string | undefined
+  isProductQueryValid: boolean
 }
 
 const ProductsGrid = ({
@@ -17,7 +19,9 @@ const ProductsGrid = ({
   slicerAddress,
   products,
   editMode,
-  blockchainProducts
+  blockchainProducts,
+  productQuery,
+  isProductQueryValid
 }: Props) => {
   const increment = 6
   const [visibleItems, setVisibleItems] = useState(increment)
@@ -35,6 +39,8 @@ const ProductsGrid = ({
           const chainInfo = blockchainProducts?.find(
             (p) => p.id.split("-").pop() == product?.productId
           )
+          const displayProductMetadata =
+            isProductQueryValid && Number(productQuery) == product?.productId
 
           return (
             <ProductCard
@@ -45,6 +51,7 @@ const ProductsGrid = ({
               chainInfo={chainInfo}
               editMode={editMode}
               ethUsd={ethUsd}
+              displayProductMetadata={displayProductMetadata}
             />
           )
         })}
