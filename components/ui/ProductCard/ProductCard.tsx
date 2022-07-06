@@ -1,9 +1,11 @@
-import { useRouter } from "next/dist/client/router"
+import { domain } from "@components/common/Head"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import Units from "@components/icons/Units"
 import { ProductCart } from "@lib/handleUpdateCart"
 import formatNumber from "@utils/formatNumber"
 import { ethers, utils } from "ethers"
+import { NextSeo } from "next-seo"
+import Head from "next/head"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import { Card, CartButton } from ".."
@@ -20,6 +22,7 @@ type Props = {
     price: string
   }
   editMode: boolean
+  displayProductMetadata: boolean
 }
 
 const ProductCard = ({
@@ -28,10 +31,9 @@ const ProductCard = ({
   product,
   chainInfo,
   ethUsd,
-  editMode
+  editMode,
+  displayProductMetadata
 }: Props) => {
-  const router = useRouter()
-  const { product: p } = router.query
   const [cookies] = useCookies(["cart"])
   const { setModalView, purchases } = useAppContext()
   const {
@@ -188,109 +190,135 @@ const ProductCard = ({
   }, [price, ethUsd])
 
   useEffect(() => {
-    if (Number(p) != NaN && Number(p) == productId) {
+    if (displayProductMetadata) {
       handleOnClick()
     }
-  }, [p])
+  }, [displayProductMetadata])
 
   return (
-    <div className="h-full">
-      <Card
-        product
-        containerClassName="h-full cursor-pointer"
-        cardClassName="group h-full overflow-hidden transition-all duration-1000 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025]"
-        className="rounded-none"
-        name={name}
-        image={image}
-        size="h-52"
-        topLeft={{
-          title: "Purchases",
-          content: (
-            <>
-              {totalPurchases && (
-                <p className="mr-2 text-indigo-600">
-                  {formatNumber(totalPurchases)}
-                </p>
-              )}
-              <ShoppingBag className="w-[18px] h-[18px] text-indigo-600" />
-            </>
-          )
-        }}
-        topRight={{
-          title: "Product price",
-          content: (
-            <p
-              className={`text-sm capitalize font-medium text-black${
-                chainInfo && !ethPrice ? " text-green-600" : ""
-              }`}
-            >
-              {productPrice.eth}
-            </p>
-          )
-        }}
-        bottomLeft={
-          chainInfo &&
-          !isInfinite && {
-            title: "Available units",
+    <>
+      {displayProductMetadata && (
+        <>
+          <NextSeo
+            title={`${name} | Product #${productId} | Slicer #${slicerId}`}
+            openGraph={{
+              title: `${name} | Product #${productId} | Slicer #${slicerId}`,
+              description: shortDescription || description,
+              url: `${domain}/slicer/${slicerId}?product=${productId}`,
+              images: [
+                {
+                  url: image || `${domain}/product_default.png`,
+                  alt: `${name} cover image`
+                }
+              ]
+            }}
+          />
+          <Head>
+            <meta
+              name="twitter:image"
+              content={image || `${domain}/product_default.png`}
+            />
+          </Head>
+        </>
+      )}
+      <div className="h-full">
+        <Card
+          product
+          containerClassName="h-full cursor-pointer"
+          cardClassName="group h-full overflow-hidden transition-all duration-1000 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025]"
+          className="rounded-none"
+          name={name}
+          image={image}
+          size="h-52"
+          topLeft={{
+            title: "Purchases",
             content: (
               <>
-                <p className={`mr-2 ${availabilityColor}`}>
-                  {formatNumber(availableUnits)}
-                </p>
-                <Units className={`w-[18px] h-[18px] ${availabilityColor}`} />
+                {totalPurchases && (
+                  <p className="mr-2 text-indigo-600">
+                    {formatNumber(totalPurchases)}
+                  </p>
+                )}
+                <ShoppingBag className="w-[18px] h-[18px] text-indigo-600" />
               </>
             )
-          }
-        }
-        onClick={() => handleOnClick()}
-      >
-        <div>
-          <div className="flex items-center justify-between">
-            <div className="flex flex-wrap items-center mt-1.5 mr-28">
-              <p className="mr-2 font-medium">{name}</p>
-              <p className="h-5 mt-1 text-xs font-normal text-gray-500">
-                #{productId}
+          }}
+          topRight={{
+            title: "Product price",
+            content: (
+              <p
+                className={`text-sm capitalize font-medium text-black${
+                  chainInfo && !ethPrice ? " text-green-600" : ""
+                }`}
+              >
+                {productPrice.eth}
               </p>
+            )
+          }}
+          bottomLeft={
+            chainInfo &&
+            !isInfinite && {
+              title: "Available units",
+              content: (
+                <>
+                  <p className={`mr-2 ${availabilityColor}`}>
+                    {formatNumber(availableUnits)}
+                  </p>
+                  <Units className={`w-[18px] h-[18px] ${availabilityColor}`} />
+                </>
+              )
+            }
+          }
+          onClick={() => handleOnClick()}
+        >
+          <div>
+            <div className="flex items-center justify-between">
+              <div className="flex flex-wrap items-center mt-1.5 mr-28">
+                <p className="mr-2 font-medium">{name}</p>
+                <p className="h-5 mt-1 text-xs font-normal text-gray-500">
+                  #{productId}
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="absolute top-0 right-0 flex items-center justify-center w-24 h-[68px] my-auto mr-5">
-            <div
-              className="absolute w-full h-full"
-              onClick={() => handleOnClick()}
-            />
-            {chainInfo && !editMode && (
-              <CartButton
-                slicerId={slicerId}
-                productCart={productCart}
-                slicerAddress={slicerAddress}
-                productId={productId}
-                price={price}
-                isUSD={isUSD}
-                extAddress={extAddress}
-                extCallValue={extValue}
-                extCheckSig={extCheckSig}
-                image={image}
-                name={name}
-                maxUnits={Number(maxUnits)}
-                availableUnits={isInfinite ? -1 : availableUnits}
-                purchasedQuantity={purchasedQuantity}
-                uid={uid}
-                creator={creator}
-                texts={texts}
-                allowedAddresses={allowedAddresses}
+            <div className="absolute top-0 right-0 flex items-center justify-center w-24 h-[68px] my-auto mr-5">
+              <div
+                className="absolute w-full h-full"
+                onClick={() => handleOnClick()}
               />
+              {chainInfo && !editMode && (
+                <CartButton
+                  slicerId={slicerId}
+                  productCart={productCart}
+                  slicerAddress={slicerAddress}
+                  productId={productId}
+                  price={price}
+                  isUSD={isUSD}
+                  extAddress={extAddress}
+                  extCallValue={extValue}
+                  extCheckSig={extCheckSig}
+                  image={image}
+                  name={name}
+                  maxUnits={Number(maxUnits)}
+                  availableUnits={isInfinite ? -1 : availableUnits}
+                  purchasedQuantity={purchasedQuantity}
+                  uid={uid}
+                  creator={creator}
+                  texts={texts}
+                  allowedAddresses={allowedAddresses}
+                />
+              )}
+            </div>
+            {shortDescription && (
+              <div>
+                <p className="pt-6 overflow-hidden text-gray-500 overflow-ellipsis">
+                  {shortDescription}
+                </p>
+              </div>
             )}
           </div>
-          {shortDescription && (
-            <div>
-              <p className="pt-6 overflow-hidden text-gray-500 overflow-ellipsis">
-                {shortDescription}
-              </p>
-            </div>
-          )}
-        </div>
-      </Card>
-    </div>
+        </Card>
+      </div>
+    </>
   )
 }
 

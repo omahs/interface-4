@@ -17,9 +17,12 @@ import formatNumber from "@utils/formatNumber"
 import { useCookies } from "react-cookie"
 import { ethers } from "ethers"
 import getFunctionFromSelector from "@utils/getFunctionFromSelector"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import saEvent from "@utils/saEvent"
+import Share from "@components/icons/Share"
+import { domain } from "@components/common/Head"
+import copyText from "@utils/copyText"
 
 export type View = {
   name: ViewNames
@@ -319,6 +322,7 @@ export const PRODUCT_VIEW = (params: any) => {
     preview
   } = params
 
+  const [isCopied, setIsCopied] = useState(false)
   const cookieCart: ProductCart[] = cookies?.cart
   const productCart: ProductCart = cookieCart?.find(
     (product) =>
@@ -335,6 +339,20 @@ export const PRODUCT_VIEW = (params: any) => {
 
   return (
     <>
+      <div
+        className="absolute top-[24px] left-[24px] hover:text-blue-600 flex cursor-pointer items-center text-gray-700"
+        onClick={async () =>
+          await copyText(
+            `${domain}/slicer/${slicerId}?product=${productId}`,
+            setIsCopied
+          )
+        }
+      >
+        <Share />
+        <p className="pt-0.5 pl-2 text-sm font-semibold">
+          {isCopied ? "Link copied! 🍰" : "Share"}
+        </p>
+      </div>
       <div className="pt-4 pb-12 text-center sm:pb-16">
         <DoubleText inactive logoText={name} size="text-3xl sm:text-4xl" />
         {shortDescription && (
