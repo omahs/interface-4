@@ -22,7 +22,7 @@ type Props = {
     price: string
   }
   editMode: boolean
-  displayProductMetadata: boolean
+  displayProduct: boolean
 }
 
 const ProductCard = ({
@@ -32,7 +32,7 @@ const ProductCard = ({
   chainInfo,
   ethUsd,
   editMode,
-  displayProductMetadata
+  displayProduct
 }: Props) => {
   const [cookies] = useCookies(["cart"])
   const { setModalView, purchases } = useAppContext()
@@ -190,14 +190,14 @@ const ProductCard = ({
   }, [price, ethUsd])
 
   useEffect(() => {
-    if (displayProductMetadata) {
+    if (displayProduct) {
       handleOnClick()
     }
-  }, [displayProductMetadata])
+  }, [displayProduct])
 
   return (
     <>
-      {displayProductMetadata && (
+      {/* {displayProduct && (
         <>
           <NextSeo
             title={`${name} | Product #${productId} | Slicer #${slicerId}`}
@@ -220,7 +220,7 @@ const ProductCard = ({
             />
           </Head>
         </>
-      )}
+      )} */}
       <div className="h-full">
         <Card
           product
