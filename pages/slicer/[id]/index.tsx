@@ -55,7 +55,7 @@ const Id = ({
   subgraphDataProducts
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter()
-  const { product: productQuery, view } = router.query
+  const { view } = router.query
   const { account, setModalView } = useAppContext()
   const { isAllowed } = useAllowed(slicerInfo?.id)
   const [editMode, setEditMode] = useState(false)
@@ -106,10 +106,6 @@ const Id = ({
         slicer.imageUrl === "https://slice.so/slicer_default.png") ||
       false // slicer?.attributes["Total slices"] === account.slices // creator has all slices
     : false
-
-  const productQueryData = products?.data?.find(
-    (p) => p.productId == Number(productQuery)
-  )
 
   useEffect(() => {
     setEditMode(false)
@@ -197,7 +193,7 @@ const Id = ({
     <Container page={true}>
       {slicerInfo?.id !== null ? (
         <main className="w-full max-w-screen-sm mx-auto space-y-8 sm:space-y-10">
-          {!productQueryData && slicer.name != undefined && (
+          {slicer.name != undefined && (
             <>
               <NextSeo
                 title={pageTitle}
@@ -291,8 +287,6 @@ const Id = ({
             slicerAddress={slicerInfo?.address}
             products={products}
             blockchainProducts={subgraphDataProducts}
-            productQuery={String(productQuery)}
-            isProductQueryValid={productQueryData && true}
           />
           <SlicerSponsors
             sponsors={sponsors}

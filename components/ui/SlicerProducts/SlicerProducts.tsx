@@ -33,8 +33,6 @@ type Props = {
   products: any
   blockchainProducts: any
   editMode: boolean
-  productQuery: string | undefined
-  isProductQueryValid: boolean
 }
 
 const SlicerProducts = ({
@@ -44,9 +42,7 @@ const SlicerProducts = ({
   slicerAddress,
   products,
   blockchainProducts,
-  editMode,
-  productQuery,
-  isProductQueryValid
+  editMode
 }: Props) => {
   const [showProducts, setShowProducts] = useState<Product[]>([])
   const [pendingProducts, setPendingProducts] = useState<Product[]>([])
@@ -107,8 +103,6 @@ const SlicerProducts = ({
         blockchainProducts={blockchainProducts}
         products={showProducts}
         editMode={editMode}
-        productQuery={productQuery}
-        isProductQueryValid={isProductQueryValid}
       />
       {isAllowed && (
         <div>
