@@ -1,4 +1,5 @@
 import fetcher from "@utils/fetcher"
+import { useRouter } from "next/router"
 import { useState } from "react"
 import useSWR from "swr"
 import { ProductCard } from ".."
@@ -10,8 +11,6 @@ type Props = {
   products: Product[]
   editMode: boolean
   blockchainProducts: any
-  productQuery: string | undefined
-  isProductQueryValid: boolean
 }
 
 const ProductsGrid = ({
@@ -19,16 +18,20 @@ const ProductsGrid = ({
   slicerAddress,
   products,
   editMode,
-  blockchainProducts,
-  productQuery,
-  isProductQueryValid
+  blockchainProducts
 }: Props) => {
+  const router = useRouter()
+  const { product: productQuery } = router.query
   const increment = 6
   const [visibleItems, setVisibleItems] = useState(increment)
 
   const { data: ethUsd } = useSWR(
     "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT",
     fetcher
+  )
+
+  const productQueryData = products?.find(
+    (p) => p.productId == Number(productQuery)
   )
 
   return blockchainProducts && blockchainProducts.length != 0 ? (
@@ -39,8 +42,8 @@ const ProductsGrid = ({
           const chainInfo = blockchainProducts?.find(
             (p) => p.id.split("-").pop() == product?.productId
           )
-          const displayProductMetadata =
-            isProductQueryValid && Number(productQuery) == product?.productId
+          const displayProduct =
+            productQueryData && Number(productQuery) == product?.productId
 
           return (
             <ProductCard
@@ -51,7 +54,7 @@ const ProductsGrid = ({
               chainInfo={chainInfo}
               editMode={editMode}
               ethUsd={ethUsd}
-              displayProductMetadata={displayProductMetadata}
+              displayProduct={displayProduct}
             />
           )
         })}
