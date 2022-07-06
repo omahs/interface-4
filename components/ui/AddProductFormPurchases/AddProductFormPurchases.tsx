@@ -34,6 +34,7 @@ const AddProductFormPurchases = ({
           placeholder="Thank you for buying our product! ❤️"
           value={thankMessage}
           onChange={setThankMessage}
+          rows={4}
         />
       </div>
       <div>
@@ -42,6 +43,7 @@ const AddProductFormPurchases = ({
           placeholder="How can buyers redeem or use the product?"
           value={instructions}
           onChange={setInstructions}
+          rows={4}
         />
       </div>
       <div>
@@ -58,6 +60,7 @@ const AddProductFormPurchases = ({
           placeholder="Additional notes"
           value={notes}
           onChange={setNotes}
+          rows={4}
         />
       </div>
       <div className="py-6">
