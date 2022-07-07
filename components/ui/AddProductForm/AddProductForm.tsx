@@ -55,14 +55,8 @@ const AddProductForm = ({
   const [isFree, setIsFree] = useState(false)
   const [units, setUnits] = useState(0)
   const [maxUnits, setMaxUnits] = useState(1)
-  const [allowedAddresses, setAllowedAddresses] = useState([])
-  const [externalCall, setExternalCall] = useState<FunctionStruct>({
-    data: [],
-    value: 0,
-    externalAddress: ethers.constants.AddressZero,
-    checkFunctionSignature: "0x00000000",
-    execFunctionSignature: "0x00000000"
-  })
+
+  const [purchaseHookParams, setPurchaseHookParams] = useState<any>({})
   const [thankMessage, setThankMessage] = useState("")
   const [instructions, setInstructions] = useState("")
   const [notes, setNotes] = useState("")
@@ -72,6 +66,14 @@ const AddProductForm = ({
     messageStatus: "success"
   })
   const submitEl = useRef(null)
+
+  const externalCall = purchaseHookParams?.externalCall || {
+    data: [],
+    value: 0,
+    externalAddress: ethers.constants.AddressZero,
+    checkFunctionSignature: "0x00000000",
+    execFunctionSignature: "0x00000000"
+  }
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
@@ -91,7 +93,7 @@ const AddProductForm = ({
           name,
           shortDescription,
           description,
-          allowedAddresses,
+          purchaseHookParams,
           newImage,
           files,
           thankMessage,
@@ -214,9 +216,8 @@ const AddProductForm = ({
         setIsUSD={setIsUSD}
       />
       <AddProductFormExternal
-        allowedAddresses={allowedAddresses}
-        setExternalCall={setExternalCall}
-        setAllowedAddresses={setAllowedAddresses}
+        params={purchaseHookParams}
+        setParams={setPurchaseHookParams}
       />
       <AddProductFormPurchases
         thankMessage={thankMessage}

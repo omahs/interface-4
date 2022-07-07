@@ -1,28 +1,28 @@
-import React, { Dispatch, SetStateAction, useState } from "react"
-import { FunctionStruct } from "types/typechain/ProductsModule"
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { CardText } from "../"
 import purchaseHooks from "@components/hooks/purchaseHooks"
 
 type Props = {
-  allowedAddresses: string[]
-  setExternalCall: Dispatch<SetStateAction<FunctionStruct>>
-  setAllowedAddresses: Dispatch<SetStateAction<string[]>>
+  params: any
+  setParams: Dispatch<SetStateAction<any>>
 }
 
-const AddProductFormExternal = ({
-  allowedAddresses,
-  setExternalCall,
-  setAllowedAddresses
-}: Props) => {
+const AddProductFormExternal = ({ params, setParams }: Props) => {
   const [selectedHook, setSelectedHook] = useState(undefined)
 
-  const HookComponent = selectedHook && purchaseHooks[selectedHook].component
+  const HookComponent =
+    selectedHook != undefined && purchaseHooks[selectedHook].Component
+
+  useEffect(() => {
+    setParams({})
+  }, [selectedHook])
 
   return (
     <>
       <h2 className="pb-6">Purchase hook</h2>
       <p className="pb-3">
-        Add on-chain logic to purchases with pre-configured or custom hooks.
+        Add optional on-chain logic to purchases with pre-configured or custom
+        hooks.
       </p>
       <div className="space-y-3">
         {purchaseHooks.map((hook, i) => {
@@ -41,23 +41,14 @@ const AddProductFormExternal = ({
           )
         })}
       </div>
-      {selectedHook ? (
+      {selectedHook != undefined && (
         <>
           <p className="pt-6 pb-3 font-semibold text-yellow-600">
             {purchaseHooks[selectedHook].description}
           </p>
-          {/* TODO: Review condition */}
-          {selectedHook === 3 ? (
-            <HookComponent
-              allowedAddresses={allowedAddresses}
-              setExternalCall={setExternalCall}
-              setAllowedAddresses={setAllowedAddresses}
-            />
-          ) : (
-            <HookComponent />
-          )}
+          <HookComponent params={params} setParams={setParams} />
         </>
-      ) : null}
+      )}
       <div>
         <hr className="w-20 mx-auto border-gray-300 my-14" />
       </div>

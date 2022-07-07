@@ -12,7 +12,7 @@ export const beforeCreate = async (
   name: string,
   shortDescription: string,
   description: string,
-  allowedAddresses: string[],
+  purchaseHookParams: { allowedAddresses?: string[] },
   newImage: NewImage,
   purchaseFiles: File[],
   thanks: string,
@@ -27,6 +27,7 @@ export const beforeCreate = async (
   const web3Storage = (await import("./web3Storage")).default
   const { encryptFiles, importKey } = await import("@utils/crypto")
   let purchaseDataCID: string
+  let allowedAddresses = []
 
   const uid = Math.random().toString().substring(2)
   const purchaseInfo = {
@@ -47,7 +48,11 @@ export const beforeCreate = async (
     }
   }
 
-  if (allowedAddresses.length != 0) {
+  if (
+    purchaseHookParams?.allowedAddresses &&
+    purchaseHookParams?.allowedAddresses?.length != 0
+  ) {
+    allowedAddresses = purchaseHookParams?.allowedAddresses
     allowedAddresses.forEach((address) => {
       if (!address.match(/^0x[a-f0-9]{40}$/)) {
         throw Error(`Allowlisted address ${address} is not valid`)
