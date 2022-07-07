@@ -10,19 +10,21 @@ import {
   InputAddress,
   Textarea
 } from "@components/ui"
-import { FunctionStruct } from "types/typechain/ProductsModule"
+import { Hook } from "../purchaseHooks"
+import timeout from "@utils/timeout"
 
 type Props = {
-  allowedAddresses: string[]
-  setExternalCall: Dispatch<SetStateAction<FunctionStruct>>
-  setAllowedAddresses: Dispatch<SetStateAction<string[]>>
+  setParams: Dispatch<SetStateAction<any>>
 }
 
-const ExistingHook = ({
-  allowedAddresses,
-  setExternalCall,
-  setAllowedAddresses
-}: Props) => {
+const label = "Existing hook"
+
+const description =
+  "Send ETH to an external address and/or execute on-chain logic by linking it to an existing hook."
+
+const Component = ({ setParams }: Props) => {
+  const [allowedAddresses, setAllowedAddresses] = useState([])
+
   const [data, setData] = useState([])
   const [address, setAddress] = useState("")
   const [resolvedAddress, setResolvedAddress] = useState("")
@@ -53,9 +55,8 @@ const ExistingHook = ({
 
     await navigator.clipboard.writeText(hexRoot)
     setCopiedRoot(true)
-    setTimeout(() => {
-      setCopiedRoot(false)
-    }, 2000)
+    await timeout(2000)
+    setCopiedRoot(false)
   }
 
   useEffect(() => {
@@ -70,12 +71,15 @@ const ExistingHook = ({
     const ethToWei = BigNumber.from((ethValue * 10 ** 9).toFixed(0)).mul(
       decimals
     )
-    setExternalCall({
-      data,
-      value: ethToWei,
-      externalAddress,
-      checkFunctionSignature: checkSelector,
-      execFunctionSignature: execSelector
+    setParams({
+      allowedAddresses,
+      externalCall: {
+        data,
+        value: ethToWei,
+        externalAddress,
+        checkFunctionSignature: checkSelector,
+        execFunctionSignature: execSelector
+      }
     })
   }, [
     data,
@@ -84,7 +88,8 @@ const ExistingHook = ({
     address,
     resolvedAddress,
     checkSelector,
-    execSelector
+    execSelector,
+    allowedAddresses
   ])
 
   useEffect(() => {
@@ -136,15 +141,21 @@ const ExistingHook = ({
         />
       </div>
       {isPayable && (
-        <div className="pb-3">
-          <InputPrice
-            ethValue={ethValue}
-            setEthValue={setEthValue}
-            usdValue={usdValue}
-            setUsdValue={setUsdValue}
-            label="Value per unit"
-          />
-        </div>
+        <>
+          <div className="pb-3">
+            <InputPrice
+              ethValue={ethValue}
+              setEthValue={setEthValue}
+              usdValue={usdValue}
+              setUsdValue={setUsdValue}
+              label="Value per unit"
+            />
+          </div>
+
+          <p className="text-yellow-600">
+            <b>The sent value will be added to the unit product price.</b>
+          </p>
+        </>
       )}
       <div>
         <InputSwitch
@@ -155,12 +166,6 @@ const ExistingHook = ({
       </div>
       {isContractCall && (
         <>
-          <p className="pb-3 text-yellow-600">
-            <b>
-              This section is for advanced users. Enable it only if you know
-              what you&apos;re doing
-            </b>
-          </p>
           <div className="relative">
             <Input
               label="Function signature (check)"
@@ -246,12 +251,6 @@ const ExistingHook = ({
                 Specify the addresses that will be able to buy the product,
                 checked using merkle proof verification.{" "}
               </p>
-              <p>
-                <b className="text-yellow-600">
-                  Note that the logic to handle the allowlist needs to be
-                  included in the external smart contract.
-                </b>
-              </p>
               <div className="pt-4">
                 <Textarea
                   label="Addresses list (no ENS)"
@@ -280,13 +279,10 @@ const ExistingHook = ({
           )}
         </>
       )}
-      {ethValue != 0 && (
-        <p className="text-yellow-600">
-          <b>The sent value will be added to the unit product price.</b>
-        </p>
-      )}
     </>
   )
 }
 
-export default ExistingHook
+const hook: Hook = { label, description, Component }
+
+export default hook
