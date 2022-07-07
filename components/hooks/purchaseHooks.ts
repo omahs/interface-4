@@ -4,9 +4,14 @@ export type Hook = {
   label: string
   description: string
   Component: (args: any) => JSX.Element
-  factoryAddress?: string
+  factoryAddress?: { [chainId: number]: string }
 }
 
-const purchaseHooks: Hook[] = Object.values(hooks)
+export const defaultPurchaseHooks: Hook[] = [
+  hooks.ERC20TokenGate,
+  hooks.Allowlist,
+  hooks.SendETH,
+  hooks.ExistingHook
+]
 
-export default purchaseHooks
+export const purchaseHooks: Hook[] = Object.values(hooks)

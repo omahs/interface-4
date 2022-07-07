@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { CardText } from "../"
-import purchaseHooks from "@components/hooks/purchaseHooks"
+import { defaultPurchaseHooks } from "@components/hooks/purchaseHooks"
 
 type Props = {
   params: any
@@ -11,7 +11,7 @@ const AddProductFormExternal = ({ params, setParams }: Props) => {
   const [selectedHook, setSelectedHook] = useState(undefined)
 
   const HookComponent =
-    selectedHook != undefined && purchaseHooks[selectedHook].Component
+    selectedHook != undefined && defaultPurchaseHooks[selectedHook].Component
 
   useEffect(() => {
     setParams({})
@@ -25,7 +25,7 @@ const AddProductFormExternal = ({ params, setParams }: Props) => {
         hooks.
       </p>
       <div className="space-y-3">
-        {purchaseHooks.map((hook, i) => {
+        {defaultPurchaseHooks.map((hook, i) => {
           const { label } = hook
           const isActive = selectedHook == i
 
@@ -44,7 +44,7 @@ const AddProductFormExternal = ({ params, setParams }: Props) => {
       {selectedHook != undefined && (
         <>
           <p className="pt-6 pb-3 font-semibold text-yellow-600">
-            {purchaseHooks[selectedHook].description}
+            {defaultPurchaseHooks[selectedHook].description}
           </p>
           <HookComponent params={params} setParams={setParams} />
         </>
