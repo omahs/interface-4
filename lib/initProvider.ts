@@ -1,4 +1,4 @@
-import { ethers } from "ethers"
+import { ContractInterface, ethers } from "ethers"
 import SliceCoreContract from "artifacts/contracts/SliceCore.sol/SliceCore.json"
 import ProductsModuleContract from "artifacts/contracts/ProductsModule.sol/ProductsModule.json"
 import FundsModuleContract from "artifacts/contracts/FundsModule.sol/FundsModule.json"
@@ -47,6 +47,14 @@ export const slicer = async (
     SlicerContract.abi,
     signer
   ) as Slicer
+}
+
+export const cloner = async (
+  clonerAddress: string,
+  abi: ContractInterface,
+  signer: ethers.Signer | ethers.providers.Provider
+) => {
+  return new ethers.Contract(clonerAddress, abi, signer)
 }
 
 export const jbCloner = async (
