@@ -1,12 +1,8 @@
 import { Input, InputAddress } from "@components/ui"
 import { BigNumber } from "ethers"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import {
-  defaultCheckSelector,
-  defaultExecSelector,
-  Hook
-} from "../purchaseHooks"
-import factoryInterface from "./interface.json"
+import { useEffect, useState } from "react"
+import { defaultExternalCall, Hook, HookProps } from "../purchaseHooks"
+import clonerInterface from "./clonerInterface.json"
 
 const label = "ERC20 token-gate"
 
@@ -18,27 +14,17 @@ const factoryAddresses = {
   4: "0xfbe8feE9e3f0fb7d8271e7c88Cc3d7B575265564"
 }
 
-type Props = {
-  setParams: Dispatch<SetStateAction<any>>
-}
-
-const Component = ({ setParams }: Props) => {
+const Component = ({ setParams }: HookProps) => {
   const [address, setAddress] = useState("")
   const [resolvedAddress, setResolvedAddress] = useState("")
   const [gateAmount, setGateAmount] = useState(0)
 
   useEffect(() => {
     setParams({
-      externalCall: {
-        data: [],
-        value: 0,
-        externalAddress: "",
-        checkFunctionSignature: defaultCheckSelector,
-        execFunctionSignature: defaultExecSelector
-      },
+      externalCall: defaultExternalCall,
       deploy: {
         factoryAddresses,
-        abi: factoryInterface.abi,
+        abi: clonerInterface.abi,
         args: [address, BigNumber.from(10).pow(18).mul(33)]
       }
     })
