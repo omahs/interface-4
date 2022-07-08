@@ -55,6 +55,8 @@ export const useAllowed = (slicerId: number) => {
     }
   }, [slicerId, account])
   return access
+
+  // TODO: Fix this, sometimes it stops working
 }
 
 const useProvider = (setLoading: Dispatch<SetStateAction<boolean>>) => {

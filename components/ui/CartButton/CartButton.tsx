@@ -126,6 +126,8 @@ const CartButton = ({
         [proof]
       )
     }
+
+    // TODO: Fix proof generation when allowedAddresses.length == 1
   }
 
   return !productCart && purchasedQuantity != 0 ? (

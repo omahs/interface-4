@@ -19,7 +19,6 @@ import ethToWei from "@utils/ethToWei"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { useSigner } from "wagmi"
 import saEvent from "@utils/saEvent"
-import clone from "@lib/handlers/chain/clone"
 
 type Props = {
   slicerId: number
@@ -85,7 +84,7 @@ const AddProductForm = ({
     const { beforeCreate, handleReject, handleSuccess } = await import(
       "@lib/handleCreateProduct"
     )
-    const { AddProduct } = await import("@lib/handlers/chain")
+    const { AddProduct, clone } = await import("@lib/handlers/chain")
     const handleSubmit = (await import("@utils/handleSubmit")).default
 
     const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
@@ -112,13 +111,16 @@ const AddProductForm = ({
       if (purchaseHookParams?.deploy != undefined) {
         const { factoryAddresses, abi, args } = purchaseHookParams.deploy
         const deployParams = { slicerId, args }
-
-        const hookAddress = await clone(
+        const [hookAddress, , call] = await clone(
           factoryAddresses[chainId],
           abi,
           signer,
           deployParams
         )
+        addRecentTransaction({
+          hash: call.hash,
+          description: "Deploy purchase hook"
+        })
         if (hookAddress) {
           externalCallParams.externalAddress = hookAddress
           setCloneAddress(hookAddress)
@@ -136,9 +138,7 @@ const AddProductForm = ({
           throw new Error("Transaction not successful")
         }
       }
-
       setUploadStep(7)
-
       // Create product on smart contract
       const weiValue = ethToWei(ethValue)
       const productPrice = isUSD ? Math.floor(usdValue * 100) : weiValue
