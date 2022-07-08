@@ -9,6 +9,7 @@ type Props = {
 
 const AddProductFormExternal = ({ params, setParams }: Props) => {
   const [selectedHook, setSelectedHook] = useState(undefined)
+  const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
 
   const HookComponent =
     selectedHook != undefined && defaultPurchaseHooks[selectedHook].Component
@@ -28,16 +29,19 @@ const AddProductFormExternal = ({ params, setParams }: Props) => {
         {defaultPurchaseHooks.map((hook, i) => {
           const { label } = hook
           const isActive = selectedHook == i
+          const isFactory = hook.factoryAddresses != undefined
 
           return (
-            <div
-              key={i}
-              onClick={() =>
-                isActive ? setSelectedHook(undefined) : setSelectedHook(i)
-              }
-            >
-              <CardText label={label} isActive={isActive} />
-            </div>
+            (!isFactory || (isFactory && hook.factoryAddresses[chainId])) && (
+              <div
+                key={i}
+                onClick={() =>
+                  isActive ? setSelectedHook(undefined) : setSelectedHook(i)
+                }
+              >
+                <CardText label={label} isActive={isActive} />
+              </div>
+            )
           )
         })}
       </div>
