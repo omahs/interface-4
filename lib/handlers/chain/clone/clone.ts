@@ -1,6 +1,4 @@
-import { ContractInterface, Signer } from "ethers"
-import addresses from "addresses.json"
-import { cloner } from "@lib/initProvider"
+import { ContractInterface, ethers, Signer } from "ethers"
 
 export type DeployParamsClone = {
   slicerId: number
@@ -13,19 +11,18 @@ const clone = async (
   signer: Signer,
   deployParams: DeployParamsClone
 ) => {
-  const env = process.env.NEXT_PUBLIC_CHAIN_ID === "1" ? "mainnet" : "testnet"
-  const productsModule = addresses[env].ProductsModule
+  const productsModule = process.env.NEXT_PUBLIC_PRODUCTS_ADDRESS
 
   const { slicerId, args } = deployParams
 
   try {
-    const contract = await cloner(clonerAddress, abi, signer)
+    const contract = new ethers.Contract(clonerAddress, abi, signer)
 
     const call = await contract.clone(productsModule, slicerId, ...args)
     const wait = await call.wait()
     const cloneAddress = wait.events[0].address
 
-    return cloneAddress
+    return [cloneAddress, contract, call]
   } catch (err) {
     console.log(err)
   }
