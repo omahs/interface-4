@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react"
-import { defaultExternalCall, Hook, HookProps } from "../purchaseHooks"
+import {
+  defaultExternalCall,
+  emptyExternalCall,
+  Hook,
+  HookProps
+} from "../purchaseHooks"
 import clonerInterface from "./clonerInterface.json"
 import { Textarea } from "@components/ui"
 import calculateRoot from "@utils/calculateRoot"
@@ -37,7 +42,7 @@ const Component = ({ setParams }: HookProps) => {
         }
       })
     } else {
-      setParams({})
+      setParams({ externalCall: emptyExternalCall })
     }
   }, [allowedAddressesText])
 

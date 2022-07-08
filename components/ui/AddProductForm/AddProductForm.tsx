@@ -19,6 +19,7 @@ import ethToWei from "@utils/ethToWei"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { useSigner } from "wagmi"
 import saEvent from "@utils/saEvent"
+import { emptyExternalCall, Params } from "@components/hooks/purchaseHooks"
 
 type Props = {
   slicerId: number
@@ -58,7 +59,9 @@ const AddProductForm = ({
   const [units, setUnits] = useState(0)
   const [maxUnits, setMaxUnits] = useState(1)
 
-  const [purchaseHookParams, setPurchaseHookParams] = useState<any>({})
+  const [purchaseHookParams, setPurchaseHookParams] = useState<Params>({
+    externalCall: emptyExternalCall
+  })
   const [thankMessage, setThankMessage] = useState("")
   const [instructions, setInstructions] = useState("")
   const [notes, setNotes] = useState("")
@@ -69,13 +72,7 @@ const AddProductForm = ({
   })
   const submitEl = useRef(null)
 
-  const externalCall: FunctionStruct = purchaseHookParams?.externalCall || {
-    data: [],
-    value: 0,
-    externalAddress: ethers.constants.AddressZero,
-    checkFunctionSignature: "0x00000000",
-    execFunctionSignature: "0x00000000"
-  }
+  const externalCall = purchaseHookParams.externalCall
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
@@ -88,7 +85,6 @@ const AddProductForm = ({
     const handleSubmit = (await import("@utils/handleSubmit")).default
 
     const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
-    let externalCallParams = externalCall
 
     try {
       const { image, newProduct, data, purchaseDataCID, purchaseData } =
@@ -122,7 +118,7 @@ const AddProductForm = ({
           description: "Deploy purchase hook"
         })
         if (hookAddress) {
-          externalCallParams.externalAddress = hookAddress
+          externalCall.externalAddress = hookAddress
           setCloneAddress(hookAddress)
         } else {
           saEvent("create_product_fail")
@@ -163,7 +159,7 @@ const AddProductForm = ({
         isInfinite: !isLimited
       }
       const eventLogs = await handleSubmit(
-        AddProduct(signer, slicerId, productParams, externalCallParams),
+        AddProduct(signer, slicerId, productParams, externalCall),
         setMessage,
         null,
         null,

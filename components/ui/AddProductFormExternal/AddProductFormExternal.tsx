@@ -1,10 +1,14 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { CardText } from "../"
-import { defaultPurchaseHooks } from "@components/hooks/purchaseHooks"
+import {
+  defaultPurchaseHooks,
+  emptyExternalCall,
+  Params
+} from "@components/hooks/purchaseHooks"
 
 type Props = {
-  params: any
-  setParams: Dispatch<SetStateAction<any>>
+  params: Params
+  setParams: Dispatch<SetStateAction<Params>>
 }
 
 const AddProductFormExternal = ({ params, setParams }: Props) => {
@@ -16,7 +20,7 @@ const AddProductFormExternal = ({ params, setParams }: Props) => {
   const HookComponent = selectedHook != undefined && displayedHook.Component
 
   useEffect(() => {
-    setParams({})
+    setParams({ externalCall: emptyExternalCall })
   }, [selectedHook])
 
   return (
@@ -52,7 +56,7 @@ const AddProductFormExternal = ({ params, setParams }: Props) => {
           <HookComponent params={params} setParams={setParams} />
           {displayedHook.factoryAddresses &&
             displayedHook.factoryAddresses[chainId] && (
-              <p className="text-yellow-600 font-semibold pt-6">
+              <p className="pt-6 font-semibold text-yellow-600">
                 Deploying this purchase hook requires an additional on-chain
                 transaction
               </p>
