@@ -45,7 +45,7 @@ const TransferFormInputSingle = ({
 
   return (
     <>
-      <div className="pb-1">
+      <div>
         <InputAddress
           label="Receiver address"
           address={firstAddress}
