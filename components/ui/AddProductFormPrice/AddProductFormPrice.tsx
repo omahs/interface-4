@@ -134,9 +134,7 @@ const AddProductFormPrice = ({
       />
       {isFree ? (
         <p className="text-yellow-600">
-          <b>
-            If a price is not specified this product can be purchased for free
-          </b>
+          <b>If a price is not set this product can be purchased for free</b>
         </p>
       ) : null}
       <div>

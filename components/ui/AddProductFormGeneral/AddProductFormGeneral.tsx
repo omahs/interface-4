@@ -88,6 +88,7 @@ const AddProductFormGeneral = ({
           placeholder="Describe the product to customers. What will they get for buying it?"
           value={description}
           onChange={setDescription}
+          rows={5}
           required
         />
       </div>
@@ -101,7 +102,7 @@ const AddProductFormGeneral = ({
         msg={msg}
         setMsg={setMsg}
         loading={false}
-        maxHeight="max-h-[250px]"
+        maxHeight="max-h-[260px] sm:max-h-[320px]"
         product
       />
       <p className="pt-3 text-yellow-600">
