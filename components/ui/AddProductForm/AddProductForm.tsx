@@ -19,6 +19,7 @@ import ethToWei from "@utils/ethToWei"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { useSigner } from "wagmi"
 import saEvent from "@utils/saEvent"
+import { emptyExternalCall, Params } from "@components/hooks/purchaseHooks"
 
 type Props = {
   slicerId: number
@@ -27,6 +28,7 @@ type Props = {
   setUploadPct: Dispatch<SetStateAction<number>>
   setSuccess: Dispatch<SetStateAction<boolean>>
   setLogs: Dispatch<SetStateAction<LogDescription[]>>
+  setCloneAddress: Dispatch<SetStateAction<string>>
 }
 
 const AddProductForm = ({
@@ -35,7 +37,8 @@ const AddProductForm = ({
   setUploadStep,
   setUploadPct,
   setSuccess,
-  setLogs
+  setLogs,
+  setCloneAddress
 }: Props) => {
   const { account, setModalView } = useAppContext()
   const { data: signer } = useSigner()
@@ -55,13 +58,9 @@ const AddProductForm = ({
   const [isFree, setIsFree] = useState(false)
   const [units, setUnits] = useState(0)
   const [maxUnits, setMaxUnits] = useState(1)
-  const [allowedAddresses, setAllowedAddresses] = useState([])
-  const [externalCall, setExternalCall] = useState<FunctionStruct>({
-    data: [],
-    value: 0,
-    externalAddress: ethers.constants.AddressZero,
-    checkFunctionSignature: "0x00000000",
-    execFunctionSignature: "0x00000000"
+
+  const [purchaseHookParams, setPurchaseHookParams] = useState<Params>({
+    externalCall: emptyExternalCall
   })
   const [thankMessage, setThankMessage] = useState("")
   const [instructions, setInstructions] = useState("")
@@ -73,6 +72,8 @@ const AddProductForm = ({
   })
   const submitEl = useRef(null)
 
+  const externalCall = purchaseHookParams.externalCall
+
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
 
@@ -80,8 +81,10 @@ const AddProductForm = ({
     const { beforeCreate, handleReject, handleSuccess } = await import(
       "@lib/handleCreateProduct"
     )
-    const { AddProduct } = await import("@lib/handlers/chain")
+    const { AddProduct, clone } = await import("@lib/handlers/chain")
     const handleSubmit = (await import("@utils/handleSubmit")).default
+
+    const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
 
     try {
       const { image, newProduct, data, purchaseDataCID, purchaseData } =
@@ -91,7 +94,7 @@ const AddProductForm = ({
           name,
           shortDescription,
           description,
-          allowedAddresses,
+          purchaseHookParams,
           newImage,
           files,
           thankMessage,
@@ -101,10 +104,40 @@ const AddProductForm = ({
           setUploadPct
         )
 
+      if (purchaseHookParams?.deploy != undefined) {
+        const { factoryAddresses, abi, args } = purchaseHookParams.deploy
+        const deployParams = { slicerId, args }
+        const [hookAddress, , call] = await clone(
+          factoryAddresses[chainId],
+          abi,
+          signer,
+          deployParams
+        )
+        addRecentTransaction({
+          hash: call.hash,
+          description: "Deploy purchase hook"
+        })
+        if (hookAddress) {
+          externalCall.externalAddress = hookAddress
+          setCloneAddress(hookAddress)
+        } else {
+          saEvent("create_product_fail")
+          setUploadStep(8)
+          await handleReject(
+            slicerId,
+            image,
+            data,
+            purchaseDataCID,
+            newProduct.id
+          )
+          setUploadStep(9)
+          throw new Error("Transaction not successful")
+        }
+      }
+      setUploadStep(7)
       // Create product on smart contract
       const weiValue = ethToWei(ethValue)
       const productPrice = isUSD ? Math.floor(usdValue * 100) : weiValue
-
       const currencyPrices =
         productPrice != 0
           ? [
@@ -115,7 +148,6 @@ const AddProductForm = ({
               }
             ]
           : []
-
       const productParams: ProductParamsStruct = {
         subSlicerProducts: [],
         currencyPrices,
@@ -126,7 +158,6 @@ const AddProductForm = ({
         maxUnitsPerBuyer: maxUnits,
         isInfinite: !isLimited
       }
-
       const eventLogs = await handleSubmit(
         AddProduct(signer, slicerId, productParams, externalCall),
         setMessage,
@@ -136,20 +167,19 @@ const AddProductForm = ({
         addRecentTransaction,
         `Create product | Slicer #${slicerId}`
       )
-
       if (eventLogs) {
         saEvent("create_product_success")
         setLogs(eventLogs)
-        setUploadStep(9)
+        setUploadStep(10)
         setTimeout(() => {
-          setUploadStep(10)
+          setUploadStep(11)
         }, 3000)
         await handleSuccess(slicerId, newProduct.id, eventLogs)
         setSuccess(true)
         setModalView({ name: "" })
       } else {
         saEvent("create_product_fail")
-        setUploadStep(7)
+        setUploadStep(8)
         await handleReject(
           slicerId,
           image,
@@ -157,7 +187,7 @@ const AddProductForm = ({
           purchaseDataCID,
           newProduct.id
         )
-        setUploadStep(8)
+        setUploadStep(9)
       }
     } catch (err) {
       setMessage({
@@ -176,7 +206,7 @@ const AddProductForm = ({
   }, [isMultiple])
 
   return (
-    <form className="w-full max-w-sm py-6 mx-auto space-y-6" onSubmit={submit}>
+    <form className="w-full py-6 mx-auto space-y-6" onSubmit={submit}>
       <p>
         Products can be used to sell any physical or digital item, or to execute
         custom on-chain logic upon purchase (such as minting an NFT).
@@ -214,9 +244,8 @@ const AddProductForm = ({
         setIsUSD={setIsUSD}
       />
       <AddProductFormExternal
-        allowedAddresses={allowedAddresses}
-        setExternalCall={setExternalCall}
-        setAllowedAddresses={setAllowedAddresses}
+        params={purchaseHookParams}
+        setParams={setPurchaseHookParams}
       />
       <AddProductFormPurchases
         thankMessage={thankMessage}

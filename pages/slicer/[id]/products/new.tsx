@@ -27,6 +27,7 @@ export default function NewProduct() {
   const { isAllowed, loading } = useAllowed(Number(id))
   const [uploadStep, setUploadStep] = useState(0)
   const [uploadPct, setUploadPct] = useState(0)
+  const [cloneAddress, setCloneAddress] = useState("")
   const [success, setSuccess] = useState(false)
   const [logs, setLogs] = useState<LogDescription[]>()
   const eventLog = getLog(logs, "ProductAdded")
@@ -37,13 +38,13 @@ export default function NewProduct() {
       setModalView({
         cross: false,
         name: `CREATE_PRODUCT_VIEW`,
-        params: { uploadStep, uploadPct, setModalView }
+        params: { uploadStep, uploadPct, setModalView, cloneAddress }
       })
     }
   }, [loading, uploadStep])
 
   return (
-    <Container page={true}>
+    <Container page={true} size="max-w-screen-xs">
       <NextSeo
         title="Add product"
         openGraph={{
@@ -89,6 +90,7 @@ export default function NewProduct() {
                 setUploadPct={setUploadPct}
                 setSuccess={setSuccess}
                 setLogs={setLogs}
+                setCloneAddress={setCloneAddress}
               />
             </main>
           ) : (

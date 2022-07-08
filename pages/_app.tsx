@@ -19,7 +19,7 @@ import { chain, createClient, configureChains, WagmiConfig } from "wagmi"
 import "@rainbow-me/rainbowkit/styles.css"
 
 const defaultChains =
-  process.env.CHAIN_ID === "1"
+  process.env.NEXT_PUBLIC_CHAIN_ID === "1"
     ? [chain.mainnet, chain.rinkeby]
     : [chain.rinkeby, chain.mainnet]
 
