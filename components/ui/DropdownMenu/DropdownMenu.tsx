@@ -3,18 +3,14 @@ import nightwind from "nightwind/helper"
 import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
 import ShoppingBag from "@components/icons/ShoppingBag"
-import WalletConnect from "@walletconnect/client"
 import { Dispatch, SetStateAction } from "react"
 import { DropdownMenuElement } from ".."
-import { useAppContext } from "../context"
 type Props = {
   showDropdown: boolean
   setShowDropdown: Dispatch<SetStateAction<boolean>>
 }
 
 function DropdownMenu({ showDropdown, setShowDropdown }: Props) {
-  const { connector }: { connector: WalletConnect } = useAppContext()
-
   const { theme, setTheme } = useTheme()
 
   const toggle = () => {
@@ -23,15 +19,6 @@ function DropdownMenu({ showDropdown, setShowDropdown }: Props) {
       setTheme("dark")
     } else {
       setTheme("light")
-    }
-  }
-  const disconnect = async () => {
-    if (connector.connected) {
-      await connector.killSession()
-      setShowDropdown(false)
-    } else {
-      // TODO: Add metamask disconnect flow
-      setShowDropdown(false)
     }
   }
 
@@ -65,7 +52,7 @@ function DropdownMenu({ showDropdown, setShowDropdown }: Props) {
         <DropdownMenuElement
           image={<Nightwind size="h-5" onClick={null} />}
           label="Toggle dark mode"
-          onClick={async () => await toggle()}
+          onClick={() => toggle()}
         />
       </div>
     </div>

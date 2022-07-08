@@ -11,10 +11,12 @@ import Input from "../Input/Input"
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   address: string
-  label?: string
-  onChange?: (...args: any[]) => any
   resolvedAddress: string
   setResolvedAddress: Dispatch<SetStateAction<string>>
+  label?: string
+  onChange?: (...args: any[]) => any
+  placeholder?: string
+  resolve?: boolean
 }
 
 const InputAddress: React.FC<Props> = (props) => {
@@ -23,6 +25,7 @@ const InputAddress: React.FC<Props> = (props) => {
     address,
     required,
     label,
+    placeholder = "0x… / slice-so.eth",
     onChange,
     resolvedAddress,
     setResolvedAddress,
@@ -53,11 +56,11 @@ const InputAddress: React.FC<Props> = (props) => {
   }, [provider, address])
 
   return (
-    <div className={`relative`}>
+    <div className="relative pb-2">
       <Input
         type="string"
         value={address}
-        placeholder="0x… / slice-so.eth"
+        placeholder={placeholder}
         label={label}
         required={required}
         error={resolvedAddress === "Invalid ENS name"}
@@ -69,7 +72,7 @@ const InputAddress: React.FC<Props> = (props) => {
             resolvedAddress === "Invalid ENS name"
               ? "text-red-500"
               : "text-blue-600 dark:text-sky-300"
-          } absolute text-xs opacity-80 font-black left-0 bottom-[-23px]
+          } absolute text-xs opacity-80 font-black left-0 bottom-[-8x]
           }`}
         >
           {addressReduced}
