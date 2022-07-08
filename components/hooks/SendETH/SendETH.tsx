@@ -59,6 +59,7 @@ const Component = ({ setParams }: Props) => {
           usdValue={usdValue}
           setUsdValue={setUsdValue}
           label="Value per unit"
+          required
         />
       </div>
 
