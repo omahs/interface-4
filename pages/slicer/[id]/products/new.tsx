@@ -43,7 +43,7 @@ export default function NewProduct() {
   }, [loading, uploadStep])
 
   return (
-    <Container page={true}>
+    <Container page={true} size="max-w-screen-xs">
       <NextSeo
         title="Add product"
         openGraph={{
