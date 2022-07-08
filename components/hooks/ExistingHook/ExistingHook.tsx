@@ -47,12 +47,7 @@ const Component = ({ setParams }: Props) => {
     : "0x00000000"
 
   const copyRoot = async () => {
-    const leafNodes = allowedAddresses.map((addr) => keccak256(addr))
-    const tree = new MerkleTree(leafNodes, keccak256, {
-      sortPairs: true
-    })
-    const hexRoot = tree.getHexRoot()
-
+    const hexRoot = calculateRoot(allowedAddresses)
     await navigator.clipboard.writeText(hexRoot)
     setCopiedRoot(true)
     await timeout(2000)
