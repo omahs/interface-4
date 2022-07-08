@@ -209,8 +209,8 @@ export const CREATE_PRODUCT_CONFIRM_VIEW = (params: any) => {
 }
 
 export const CREATE_PRODUCT_VIEW = (params: any) => {
-  const { uploadStep, uploadPct, setModalView } = params
-  const processing = uploadStep !== 8
+  const { uploadStep, uploadPct, setModalView, cloneAddress } = params
+  const processing = uploadStep !== 9
 
   let uploadState: string
   switch (uploadStep) {
@@ -230,18 +230,21 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
       uploadState = "Finishing setting up"
       break
     case 6:
-      uploadState = "Transaction in progress"
+      uploadState = "Deploying purchase hook ..."
       break
     case 7:
-      uploadState = "Reverting"
+      uploadState = "Transaction in progress ..."
       break
     case 8:
-      uploadState = "Done, reverted!"
+      uploadState = "Reverting"
       break
     case 9:
-      uploadState = "Finalizing"
+      uploadState = "Done, reverted!"
       break
     case 10:
+      uploadState = "Finalizing"
+      break
+    case 11:
       uploadState = "Almost done"
       break
   }
@@ -259,20 +262,38 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
         />
         <LoadingStep
           nullCondition={uploadStep < 3}
-          initCondition={uploadStep < 6}
+          initCondition={uploadStep < 7}
           uploadState={uploadState}
           waitingState="File upload"
-          endState="Done"
+          endState={
+            cloneAddress ? (
+              <>
+                Hook deployed!{" "}
+                <a
+                  href={`https://${
+                    process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
+                  }etherscan.io/address/${cloneAddress}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="highlight"
+                >
+                  See on Etherscan
+                </a>
+              </>
+            ) : (
+              "Done"
+            )
+          }
         />
         <LoadingStep
-          nullCondition={uploadStep < 6}
+          nullCondition={uploadStep < 7}
           initCondition={processing}
           uploadState={uploadState}
           waitingState="Blockchain interaction"
         />
       </div>
       <div className="pt-10">
-        {uploadStep === 8 ? (
+        {uploadStep === 9 ? (
           <Button
             label={"Go back to product"}
             onClick={() => setModalView({ name: "" })}

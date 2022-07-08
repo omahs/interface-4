@@ -8,11 +8,12 @@ type Props = {
 }
 
 const AddProductFormExternal = ({ params, setParams }: Props) => {
-  const [selectedHook, setSelectedHook] = useState(undefined)
   const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
+  const [selectedHook, setSelectedHook] = useState(undefined)
+  const displayedHook =
+    selectedHook != undefined && defaultPurchaseHooks[selectedHook]
 
-  const HookComponent =
-    selectedHook != undefined && defaultPurchaseHooks[selectedHook].Component
+  const HookComponent = selectedHook != undefined && displayedHook.Component
 
   useEffect(() => {
     setParams({})
@@ -47,10 +48,15 @@ const AddProductFormExternal = ({ params, setParams }: Props) => {
       </div>
       {selectedHook != undefined && (
         <>
-          <p className="pt-6 pb-3 font-semibold text-yellow-600">
-            {defaultPurchaseHooks[selectedHook].description}
-          </p>
+          <p className="pt-6 pb-3 font-semibold">{displayedHook.description}</p>
           <HookComponent params={params} setParams={setParams} />
+          {displayedHook.factoryAddresses &&
+            displayedHook.factoryAddresses[chainId] && (
+              <p className="text-yellow-600 font-semibold pt-6">
+                Deploying this purchase hook requires an additional on-chain
+                transaction
+              </p>
+            )}
         </>
       )}
       <div>

@@ -19,6 +19,7 @@ import ethToWei from "@utils/ethToWei"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { useSigner } from "wagmi"
 import saEvent from "@utils/saEvent"
+import clone from "@lib/handlers/chain/clone"
 
 type Props = {
   slicerId: number
@@ -27,6 +28,7 @@ type Props = {
   setUploadPct: Dispatch<SetStateAction<number>>
   setSuccess: Dispatch<SetStateAction<boolean>>
   setLogs: Dispatch<SetStateAction<LogDescription[]>>
+  setCloneAddress: Dispatch<SetStateAction<string>>
 }
 
 const AddProductForm = ({
@@ -35,7 +37,8 @@ const AddProductForm = ({
   setUploadStep,
   setUploadPct,
   setSuccess,
-  setLogs
+  setLogs,
+  setCloneAddress
 }: Props) => {
   const { account, setModalView } = useAppContext()
   const { data: signer } = useSigner()
@@ -67,7 +70,7 @@ const AddProductForm = ({
   })
   const submitEl = useRef(null)
 
-  const externalCall = purchaseHookParams?.externalCall || {
+  const externalCall: FunctionStruct = purchaseHookParams?.externalCall || {
     data: [],
     value: 0,
     externalAddress: ethers.constants.AddressZero,
@@ -84,6 +87,9 @@ const AddProductForm = ({
     )
     const { AddProduct } = await import("@lib/handlers/chain")
     const handleSubmit = (await import("@utils/handleSubmit")).default
+
+    const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
+    let externalCallParams = externalCall
 
     try {
       const { image, newProduct, data, purchaseDataCID, purchaseData } =
@@ -103,10 +109,39 @@ const AddProductForm = ({
           setUploadPct
         )
 
+      if (purchaseHookParams?.deploy != undefined) {
+        const { factoryAddresses, abi, args } = purchaseHookParams.deploy
+        const deployParams = { slicerId, args }
+
+        const hookAddress = await clone(
+          factoryAddresses[chainId],
+          abi,
+          signer,
+          deployParams
+        )
+        if (hookAddress) {
+          externalCallParams.externalAddress = hookAddress
+          setCloneAddress(hookAddress)
+        } else {
+          saEvent("create_product_fail")
+          setUploadStep(8)
+          await handleReject(
+            slicerId,
+            image,
+            data,
+            purchaseDataCID,
+            newProduct.id
+          )
+          setUploadStep(9)
+          throw new Error("Transaction not successful")
+        }
+      }
+
+      setUploadStep(7)
+
       // Create product on smart contract
       const weiValue = ethToWei(ethValue)
       const productPrice = isUSD ? Math.floor(usdValue * 100) : weiValue
-
       const currencyPrices =
         productPrice != 0
           ? [
@@ -117,7 +152,6 @@ const AddProductForm = ({
               }
             ]
           : []
-
       const productParams: ProductParamsStruct = {
         subSlicerProducts: [],
         currencyPrices,
@@ -128,9 +162,8 @@ const AddProductForm = ({
         maxUnitsPerBuyer: maxUnits,
         isInfinite: !isLimited
       }
-
       const eventLogs = await handleSubmit(
-        AddProduct(signer, slicerId, productParams, externalCall),
+        AddProduct(signer, slicerId, productParams, externalCallParams),
         setMessage,
         null,
         null,
@@ -138,20 +171,19 @@ const AddProductForm = ({
         addRecentTransaction,
         `Create product | Slicer #${slicerId}`
       )
-
       if (eventLogs) {
         saEvent("create_product_success")
         setLogs(eventLogs)
-        setUploadStep(9)
+        setUploadStep(10)
         setTimeout(() => {
-          setUploadStep(10)
+          setUploadStep(11)
         }, 3000)
         await handleSuccess(slicerId, newProduct.id, eventLogs)
         setSuccess(true)
         setModalView({ name: "" })
       } else {
         saEvent("create_product_fail")
-        setUploadStep(7)
+        setUploadStep(8)
         await handleReject(
           slicerId,
           image,
@@ -159,7 +191,7 @@ const AddProductForm = ({
           purchaseDataCID,
           newProduct.id
         )
-        setUploadStep(8)
+        setUploadStep(9)
       }
     } catch (err) {
       setMessage({

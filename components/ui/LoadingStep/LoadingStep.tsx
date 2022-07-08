@@ -4,7 +4,7 @@ import Check from "@components/icons/Check"
 type Props = {
   initCondition: boolean
   uploadState: string
-  endState?: string
+  endState?: string | JSX.Element
   nullCondition?: boolean
   waitingState?: string
 }
@@ -14,7 +14,7 @@ const LoadingStep = ({
   uploadState,
   endState = uploadState,
   nullCondition = false,
-  waitingState = "Waiting...",
+  waitingState = "Waiting..."
 }: Props) => {
   return (
     <>
