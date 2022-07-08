@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react"
 import * as hooks from "./index"
 
 export type Hook = {
@@ -7,12 +8,23 @@ export type Hook = {
   factoryAddresses?: { [chainId: number]: string }
 }
 
+export type HookProps = {
+  setParams: Dispatch<SetStateAction<any>>
+}
+
 export const defaultCheckSelector = "0x95db9368"
 export const defaultExecSelector = "0xa23fffb9"
+export const defaultExternalCall = {
+  data: [],
+  value: 0,
+  externalAddress: "",
+  checkFunctionSignature: defaultCheckSelector,
+  execFunctionSignature: defaultExecSelector
+}
 
 export const defaultPurchaseHooks: Hook[] = [
-  hooks.ERC20Gate,
-  hooks.Allowlist,
+  hooks.ERC20Gated,
+  hooks.Allowlisted,
   hooks.SendETH,
   hooks.ExistingHook
 ]

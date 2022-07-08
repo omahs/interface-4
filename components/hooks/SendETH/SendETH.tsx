@@ -1,17 +1,13 @@
 import { InputAddress, InputPrice } from "@components/ui"
 import { ethers, BigNumber } from "ethers"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { Hook } from "../purchaseHooks"
+import { useEffect, useState } from "react"
+import { Hook, HookProps } from "../purchaseHooks"
 
 const label = "Send ETH to address"
 
 const description = "Send ETH to an external address"
 
-type Props = {
-  setParams: Dispatch<SetStateAction<any>>
-}
-
-const Component = ({ setParams }: Props) => {
+const Component = ({ setParams }: HookProps) => {
   const [address, setAddress] = useState("")
   const [resolvedAddress, setResolvedAddress] = useState("")
   const [usdValue, setUsdValue] = useState(0)

@@ -1,8 +1,6 @@
 import getSelector from "@utils/getSelector"
 import { BigNumber, ethers } from "ethers"
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { MerkleTree } from "merkletreejs"
-import keccak256 from "keccak256"
+import React, { useEffect, useState } from "react"
 import {
   Input,
   InputPrice,
@@ -10,19 +8,16 @@ import {
   InputAddress,
   Textarea
 } from "@components/ui"
-import { Hook } from "../purchaseHooks"
+import { Hook, HookProps } from "../purchaseHooks"
 import timeout from "@utils/timeout"
-
-type Props = {
-  setParams: Dispatch<SetStateAction<any>>
-}
+import calculateRoot from "@utils/calculateRoot"
 
 const label = "Existing hook"
 
 const description =
   "Send ETH to an external address and/or execute on-chain logic by linking it to an existing hook."
 
-const Component = ({ setParams }: Props) => {
+const Component = ({ setParams }: HookProps) => {
   const [allowedAddresses, setAllowedAddresses] = useState([])
 
   const [data, setData] = useState([])

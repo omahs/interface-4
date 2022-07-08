@@ -1,4 +1,4 @@
-export { default as ERC20Gate } from "./ERC20Gate"
+export { default as ERC20Gated } from "./ERC20Gated"
 export { default as ExistingHook } from "./ExistingHook"
 export { default as SendETH } from "./SendETH"
-export { default as Allowlist } from "./Allowlist"
+export { default as Allowlisted } from "./Allowlisted"
