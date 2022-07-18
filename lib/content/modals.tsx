@@ -40,6 +40,7 @@ type ViewNames =
   | "CREATE_PRODUCT_CONFIRM_VIEW"
   | "PRODUCT_VIEW"
   | "REDEEM_PRODUCT_VIEW"
+  | "FINGERPRINTING_VIEW"
 
 export const LOADING_VIEW = () => {
   return (
@@ -591,6 +592,20 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
           </div>
         )}
       </div>
+    </>
+  )
+}
+
+export const FINGERPRINTING_VIEW = () => {
+  return (
+    <>
+      <div className="pb-6 text-center">
+        <DoubleText inactive logoText="Oops, shield detected" />
+      </div>
+      <p className="text-center">
+        Make sure Fingerprinting protection isn&apos;t enabled in your browser,
+        if you are a Brave user turn off shields and try again.
+      </p>
     </>
   )
 }
