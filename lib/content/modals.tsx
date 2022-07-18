@@ -602,10 +602,16 @@ export const FINGERPRINTING_VIEW = () => {
       <div className="pb-6 text-center">
         <DoubleText inactive logoText="Oops, shield detected" />
       </div>
-      <p className="text-center">
-        Make sure Fingerprinting protection isn&apos;t enabled in your browser,
-        if you are a Brave user turn off shields and try again.
-      </p>
+      <div className="space-y-6 text-center">
+        <p>
+          Make sure fingerprinting protection isn&apos;t enabled in your
+          browser, if you are a Brave user turn off shields and try again.
+        </p>
+        <p className="font-semibold text-yellow-600">
+          Note: copy your progress before allowing fingerprinting, as the page
+          will be reloaded and any unsaved progress will be lost.
+        </p>
+      </div>
     </>
   )
 }
