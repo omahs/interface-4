@@ -5,6 +5,7 @@ import fetcher from "@utils/fetcher"
 import { Message } from "@utils/handleMessage"
 import { useAppContext } from "../context"
 import { Button, MessageBlock } from "@components/ui"
+import openFingerprintingModal from "@utils/openFingerprintingModal"
 
 type Props = {
   editMode: boolean
@@ -138,6 +139,7 @@ const SlicerSubmitBlock = ({
         },
         setMsg
       )
+      openFingerprintingModal(err, setModalView)
     }
   }
 

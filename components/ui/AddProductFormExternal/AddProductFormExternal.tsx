@@ -32,12 +32,11 @@ const AddProductFormExternal = ({ params, setParams }: Props) => {
       </p>
       <div className="space-y-3">
         {defaultPurchaseHooks.map((hook, i) => {
-          const { label } = hook
+          const { label, factoryAddresses } = hook
           const isActive = selectedHook == i
-          const isFactory = hook.factoryAddresses != undefined
 
           return (
-            (!isFactory || (isFactory && hook.factoryAddresses[chainId])) && (
+            (!factoryAddresses || factoryAddresses[chainId]) && (
               <div
                 key={i}
                 onClick={() =>
