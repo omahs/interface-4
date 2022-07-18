@@ -32,28 +32,57 @@ export const initialize = async (connector) => {
   return { provider, signer }
 }
 
-export const useAllowed = (slicerId: number) => {
+export const useAllowed = (slicerInfo: any) => {
   const { account, provider, isConnected } = useAppContext()
-  const [access, setAccess] = useState({ isAllowed: false, loading: false })
-  const getAllowed = async () => {
-    setAccess({ isAllowed: false, loading: true })
-    if (slicerId && slicerId != NaN && account && isConnected) {
-      const slicerContract = await slicer(slicerId, provider)
+  const [access, setAccess] = useState({ isAllowed: "", loading: false })
+  const { id: slicerId, config, attributes } = slicerInfo
 
+  const getProductAllowed = async () => {
+    setAccess({ isAllowed: "", loading: true })
+    const slicerContract = await slicer(slicerInfo, provider)
+
+    const isPayeeAllowed: boolean = await slicerContract.isPayeeAllowed(account)
+    setAccess({ isAllowed: isPayeeAllowed ? "product" : "", loading: false })
+  }
+
+  const getAllowed = async () => {
+    setAccess({ isAllowed: "", loading: true })
+    if (
+      config?.creatorOnly &&
+      attributes?.filter((el) => el.trait_type === "Creator")[0].value ===
+        account?.toLowerCase()
+    ) {
+      setAccess({ isAllowed: "metadata", loading: false })
+    } else {
+      const slicerContract = await slicer(slicerId, provider)
       const isPayeeAllowed: boolean = await slicerContract.isPayeeAllowed(
         account
       )
 
-      setAccess({ isAllowed: isPayeeAllowed, loading: false })
-    } else {
-      setAccess({ isAllowed: false, loading: false })
+      if (isPayeeAllowed) {
+        setAccess({
+          isAllowed: config?.creatorOnly
+            ? access.isAllowed == "metadata"
+              ? "full"
+              : "product"
+            : "full",
+          loading: false
+        })
+      }
     }
   }
+
   useEffect(() => {
-    if (account) {
-      getAllowed()
+    if (slicerInfo) {
+      if (slicerId && slicerId != NaN && isConnected && account) {
+        getAllowed()
+      } else if (typeof slicerInfo == "number") {
+        getProductAllowed()
+      } else {
+        setAccess({ isAllowed: "", loading: false })
+      }
     }
-  }, [slicerId, account])
+  }, [slicerInfo, isConnected, account])
   return access
 }
 
