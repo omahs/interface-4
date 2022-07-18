@@ -20,6 +20,7 @@ import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { useSigner } from "wagmi"
 import saEvent from "@utils/saEvent"
 import { emptyExternalCall, Params } from "@components/hooks/purchaseHooks"
+import openFingerprintingModal from "@utils/openFingerprintingModal"
 
 type Props = {
   slicerId: number
@@ -194,6 +195,7 @@ const AddProductForm = ({
         message: err.message,
         messageStatus: "error"
       })
+      openFingerprintingModal(err, setModalView)
     }
   }
 

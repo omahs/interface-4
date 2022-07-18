@@ -62,6 +62,6 @@ const Component = ({ setParams }: HookProps) => {
   )
 }
 
-const hook: Hook = { label, description, Component }
+const hook: Hook = { label, description, Component, factoryAddresses }
 
 export default hook
