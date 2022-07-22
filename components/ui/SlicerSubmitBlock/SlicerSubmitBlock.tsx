@@ -115,17 +115,14 @@ const SlicerSubmitBlock = ({
           imageUrl: newFilePath,
           attributes: slicer.attributes
         }
-        await updateDb(newInfo)
-        mutate(`/api/slicer/${hexId}?stats=false`)
         setNewImage({ url: "", file: undefined })
-        setEditMode(false)
-        setLoading(false)
-      } else {
-        await updateDb(newInfo)
-        await fetcher(`/api/slicer/${slicerInfo.id}/refresh`)
-        setEditMode(false)
-        setLoading(false)
       }
+
+      await updateDb(newInfo)
+      mutate(`/api/slicer/${hexId}?stats=false`)
+      await fetcher(`/api/slicer/${slicerInfo.id}/refresh`)
+      setEditMode(false)
+      setLoading(false)
     } catch (err) {
       console.log(err.message)
       setLoading(false)
