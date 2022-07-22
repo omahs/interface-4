@@ -89,11 +89,21 @@ const SlicerSubmitBlock = ({
       attributes: slicer.attributes
     }
     try {
-      const contract = await slicerContract(slicerInfo?.id, provider)
-      const isPayeeAllowed = await contract.isPayeeAllowed(account)
+      let isPayeeAllowed: boolean
+
+      if (slicerInfo?.config?.creatorMetadata) {
+        isPayeeAllowed =
+          newInfo.attributes.filter((el) => el.trait_type === "Creator")[0]
+            .value === account?.toLowerCase()
+      } else {
+        const contract = await slicerContract(slicerInfo?.id, provider)
+        isPayeeAllowed = await contract.isPayeeAllowed(account)
+      }
+
       if (!isPayeeAllowed) {
         throw Error("Payee is not allowed")
       }
+
       if (newImage.url) {
         setTempImageUrl(newImage.url)
 
@@ -115,17 +125,14 @@ const SlicerSubmitBlock = ({
           imageUrl: newFilePath,
           attributes: slicer.attributes
         }
-        await updateDb(newInfo)
-        mutate(`/api/slicer/${hexId}?stats=false`)
         setNewImage({ url: "", file: undefined })
-        setEditMode(false)
-        setLoading(false)
-      } else {
-        await updateDb(newInfo)
-        await fetcher(`/api/slicer/${slicerInfo.id}/refresh`)
-        setEditMode(false)
-        setLoading(false)
       }
+
+      await updateDb(newInfo)
+      mutate(`/api/slicer/${hexId}?stats=false`)
+      await fetcher(`/api/slicer/${slicerInfo.id}/refresh`)
+      setEditMode(false)
+      setLoading(false)
     } catch (err) {
       console.log(err.message)
       setLoading(false)
