@@ -89,11 +89,21 @@ const SlicerSubmitBlock = ({
       attributes: slicer.attributes
     }
     try {
-      const contract = await slicerContract(slicerInfo?.id, provider)
-      const isPayeeAllowed = await contract.isPayeeAllowed(account)
+      let isPayeeAllowed: boolean
+
+      if (slicerInfo?.config?.creatorMetadata) {
+        isPayeeAllowed =
+          newInfo.attributes.filter((el) => el.trait_type === "Creator")[0]
+            .value === account?.toLowerCase()
+      } else {
+        const contract = await slicerContract(slicerInfo?.id, provider)
+        isPayeeAllowed = await contract.isPayeeAllowed(account)
+      }
+
       if (!isPayeeAllowed) {
         throw Error("Payee is not allowed")
       }
+
       if (newImage.url) {
         setTempImageUrl(newImage.url)
 
