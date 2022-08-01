@@ -4,7 +4,7 @@ Slice frontend application.
 
 - Mainnet: https://slice.so
 - Rinkeby: https://testnet.slice.so
-- Development (staging): https://dev.slice.so
+- Development (staging branch): https://dev.slice.so
 
 ## Development
 
@@ -69,7 +69,7 @@ Follow these steps to create a web3Storage key
 
 #### Supabase
 
-Slice uses [Supabase](https://supabase.com) as its database and storage solution. The database is used for optimization purposes and to store slicers metadata, product metadata, list reverted products, as well as to support interface-only features such as likes.
+Slice uses [Supabase](https://supabase.com) as its database and storage solution. The database is used for optimizing performance and to store slicers metadata, product metadata, list reverted products, as well as to support interface-only features.
 
 > The database represents the source of truth when it comes to slicer metadata.
 
@@ -94,7 +94,7 @@ Follow these steps to set up your db and storage:
 5. Link the database to your app
 
    - Click on **settings** on the left sidebar and select **database** under project settings
-   - Copy the `connection string` at the bottom of the page and paste it into **DATABASE_URL** in your `.env` file
+   - Copy the `connection string` at the bottom of the page and paste it into **DATABASE_URL** in your `.env`, and add the string `?pgbouncer=true` at the end
    - Substitute **\[YOUR-PASSWORD]** in the string with your project password
 
 6. Navigate to the root directory and run the following command in your terminal to initiate your db
@@ -103,11 +103,7 @@ Follow these steps to set up your db and storage:
       npx prisma generate && npx prisma migrate deploy
    ```
 
-7. Add the string `?pgbouncer=true` at the end of the **DATABASE_URL** in your `.env` file
-
-> The interface uses incremental static regeneration to populate the db, so once you start the app you will see any slicer that other devs have created in their own local environments, without their images or metadata.
-
-> Products generation for a slicer can only be triggered by a superowner, so you won't be able to see any products created in other slicers by default.
+> The interface uses incremental static regeneration to populate the db, so once you start the app you will see any slicer that other devs have created in their own local environments, but without their images or metadata.
 
 ### Usage
 
