@@ -25,7 +25,7 @@ const Component = ({ setParams }: HookProps) => {
       deploy: {
         factoryAddresses,
         abi: clonerInterface.abi,
-        args: [address, BigNumber.from(10).pow(18).mul(33)]
+        args: [address, BigNumber.from(10).pow(18).mul(gateAmount)]
       }
     })
   }, [address, gateAmount])
