@@ -225,7 +225,7 @@ const ProductCard = ({
         <Card
           product
           containerClassName="h-full cursor-pointer"
-          cardClassName="group h-full overflow-hidden transition-all duration-1000 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025]"
+          cardClassName="group h-full overflow-hidden transition-all duration-300 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025]"
           className="rounded-none"
           name={name}
           image={image}
