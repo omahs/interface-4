@@ -34,6 +34,7 @@ const PurchasesList = () => {
       actionScreenText="You haven't purchased anything yet"
       actionScreenHref="/slicer"
       actionScreenButtonLabel="Browse slicers"
+      wrapperClassName="space-y-20 sm:space-y-28"
     >
       <>
         {[...Array(iterator)].map((el, key) => {
@@ -74,9 +75,6 @@ const PurchasesList = () => {
                 purchaseInfo={purchaseInfo}
                 texts={texts}
               />
-              {i + 1 != iterator && (
-                <hr className="w-20 mx-auto my-16 border-gray-300" />
-              )}
             </div>
           )
         })}
