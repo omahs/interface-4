@@ -1,23 +1,21 @@
-import { Input, InputAddress } from "@components/ui"
-import { BigNumber } from "ethers"
+import { InputAddress } from "@components/ui"
 import { useEffect, useState } from "react"
 import { defaultExternalCall, Hook, HookProps } from "../purchaseHooks"
 import clonerInterface from "./clonerInterface.json"
 
-const label = "ERC20 token-gate"
+const label = "ERC721 NFT-gate"
 
 const description =
-  "Allow purchases only from buyers with the specified amount of ERC20 tokens"
+  "Allow purchases only from buyers with at least 1 NFT of the specified collection"
 
 const factoryAddresses = {
-  1: "0x06981DDb5a7D9B74465a12c6880938C3de54746E",
-  4: "0xfbe8feE9e3f0fb7d8271e7c88Cc3d7B575265564"
+  1: "0x7AA23E00283d20976d942c510c0821A04f7010Bc",
+  4: "0xC98b1Ec9bD4Cc0B4A6C0D32Dd4b2b39b43098856"
 }
 
 const Component = ({ setParams }: HookProps) => {
   const [address, setAddress] = useState("")
   const [resolvedAddress, setResolvedAddress] = useState("")
-  const [gateAmount, setGateAmount] = useState(0)
 
   useEffect(() => {
     setParams({
@@ -25,30 +23,21 @@ const Component = ({ setParams }: HookProps) => {
       deploy: {
         factoryAddresses,
         abi: clonerInterface.abi,
-        args: [address, BigNumber.from(10).pow(18).mul(gateAmount)]
+        args: [address]
       }
     })
-  }, [address, gateAmount])
+  }, [address])
 
   return (
     <>
       <div>
         <InputAddress
-          label="ERC20 contract address"
+          label="ERC721 contract address"
           address={address}
           onChange={setAddress}
           resolvedAddress={resolvedAddress}
           setResolvedAddress={setResolvedAddress}
           placeholder="0x…"
-          required
-        />
-      </div>
-      <div>
-        <Input
-          type="number"
-          label="Token gate amount (mul by 10^18)"
-          value={gateAmount}
-          onChange={setGateAmount}
           required
         />
       </div>
