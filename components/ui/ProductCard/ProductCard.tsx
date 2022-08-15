@@ -37,6 +37,7 @@ const ProductCard = ({
   const [cookies] = useCookies(["cart"])
   const { setModalView, purchases } = useAppContext()
   const {
+    id: dbId,
     productId,
     name,
     shortDescription,
@@ -49,13 +50,14 @@ const ProductCard = ({
     texts,
     allowedAddresses
   } = product || {
+    id: NaN,
     productId: NaN,
     name: "",
     shortDescription: "",
     description: "",
     hash: "",
     image: "",
-    purchaseInfo: "",
+    purchaseInfo: {},
     uid: "",
     creator: "",
     texts: {
@@ -143,6 +145,7 @@ const ProductCard = ({
       name: "PRODUCT_VIEW",
       cross: true,
       params: {
+        dbId,
         slicerId,
         productId,
         name,
@@ -305,6 +308,8 @@ const ProductCard = ({
                   creator={creator}
                   texts={texts}
                   allowedAddresses={allowedAddresses}
+                  shortcodes={purchaseInfo?.shortcodes}
+                  dbId={dbId}
                 />
               )}
             </div>
