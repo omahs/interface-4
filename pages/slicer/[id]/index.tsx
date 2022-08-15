@@ -332,8 +332,8 @@ const Id = ({
 }
 
 export async function getStaticPaths() {
-  const totalSlicers = await sliceCore(defaultProvider).supply()
-  // const totalSlicers = 0
+  // const totalSlicers = await sliceCore(defaultProvider).supply()
+  const totalSlicers = 0
   const paths = [...Array(Number(totalSlicers)).keys()].map((slicerId) => {
     const id = String(slicerId)
     return {
