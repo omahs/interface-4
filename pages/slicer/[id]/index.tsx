@@ -352,19 +352,20 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const hexId = decimalToHex(Number(id))
 
   /**
-   * TODO
-   * Add condition: or: [{slices_gt: "0"}, {ethSent_gt: "0"}]
+   * TODO:
    * Deal with pagination when number of payeeSlicers > 100
    */
   const tokensQuery = /* GraphQL */ `
   slicer(id: "${hexId}") {
     payees(
-      orderBy: "ethSent", 
+      where: {
+        slices_gt: "0"
+      },
+      orderBy: "slices", 
       orderDirection: "desc"
     ) {
       id
       slices
-      ethSent
     }
     products (
       where: {
@@ -378,6 +379,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
         }
         price
         dynamicPricing
+        externalAddress
       }
       isInfinite
       availableUnits

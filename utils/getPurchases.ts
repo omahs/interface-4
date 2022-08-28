@@ -13,7 +13,7 @@ export const getPurchases = async (
     payee (id: "${buyer.toLowerCase()}") {
       purchases (orderBy: "lastPurchasedAtTimestamp", orderDirection: "desc") {
         id
-        quantity
+        totalQuantity
       }
     }`
 
