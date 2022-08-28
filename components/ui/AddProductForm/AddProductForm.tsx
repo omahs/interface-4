@@ -154,19 +154,23 @@ const AddProductForm = ({
               {
                 currency: ethers.constants.AddressZero,
                 value: productPrice,
-                dynamicPricing: isUSD
+                dynamicPricing: isUSD,
+                externalAddress: ethers.constants.AddressZero
               }
             ]
           : []
+
       const productParams: ProductParamsStruct = {
-        subSlicerProducts: [],
-        currencyPrices,
-        data,
-        purchaseData,
-        availableUnits: units,
         isFree,
         maxUnitsPerBuyer: maxUnits,
-        isInfinite: !isLimited
+        isInfinite: !isLimited,
+        availableUnits: units,
+        data,
+        purchaseData,
+        subSlicerProducts: [],
+        currencyPrices,
+        isExternalCallPaymentRelative: false,
+        isExternalCallPreferredToken: false
       }
       const eventLogs = await handleSubmit(
         AddProduct(signer, slicerId, productParams, externalCall),

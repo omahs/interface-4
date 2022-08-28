@@ -537,8 +537,11 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
     accountCodes
   } = params
 
-  const { thanks, instructions } = texts
-  const { notes } = decryptedTexts
+  const { thanks, instructions } = texts || {
+    thanks: undefined,
+    instructions: undefined
+  }
+  const { notes } = decryptedTexts || { nodes: undefined }
 
   const decodedInstructions = useDecodeShortcode(
     account,

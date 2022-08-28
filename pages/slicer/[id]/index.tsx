@@ -85,6 +85,7 @@ const Id = ({
   const [sponsors, setSponsors] = useState<AddressAmount[]>([])
   const [owners, setOwners] = useState<AddressAmount[]>([])
   const [unreleased, setUnreleased] = useState([])
+  const [editAllowed, setEditAllowed] = useState(false)
   const pageTitle =
     slicer.name === `Slicer #${slicerInfo?.id}`
       ? slicer.name
@@ -96,39 +97,52 @@ const Id = ({
   )
 
   // Todo: For collectibles save image on web3Storage instead of supabase? + Allow indefinite size? Figure it out
-  const editAllowed = !slicerInfo?.isImmutable
-    ? isAllowed == "metadata" || isAllowed == "full"
-    : slicer?.attributes?.filter((el) => el.trait_type === "Creator")[0]
-        .value === account?.toLowerCase() // only Creator
-    ? (newName === `Slicer #${slicerInfo?.id}` && // default name, descr & image
-        newDescription === "" &&
-        newImage.url === "" &&
-        slicer.imageUrl === "https://slice.so/slicer_default.png") ||
-      false // slicer?.attributes["Total slices"] === account.slices // creator has all slices
-    : false
+  // const editAllowed = !slicerInfo?.isImmutable
+  //   ? isAllowed == "metadata" || isAllowed == "full"
+  //   : slicer?.attributes?.filter((el) => el.trait_type === "Creator")[0]
+  //       .value === account?.toLowerCase() // only Creator
+  //   ? (newName === `Slicer #${slicerInfo?.id}` && // default name, descr & image
+  //       newDescription === "" &&
+  //       newImage.url === "" &&
+  //       slicer.imageUrl === "https://slice.so/slicer_default.png") ||
+  //     false // slicer?.attributes["Total slices"] === account.slices // creator has all slices
+  //   : false
 
   useEffect(() => {
     setEditMode(false)
+    setEditAllowed(
+      !slicerInfo?.isImmutable
+        ? isAllowed == "metadata" || isAllowed == "full"
+        : slicer?.attributes?.filter((el) => el.trait_type === "Creator")[0]
+            .value === account?.toLowerCase() // only Creator
+        ? (newName === `Slicer #${slicerInfo?.id}` && // default name, descr & image
+            newDescription === "" &&
+            newImage.url === "" &&
+            slicer.imageUrl === "https://slice.so/slicer_default.png") ||
+          false // slicer?.attributes["Total slices"] === account.slices // creator has all slices
+        : false
+    )
   }, [account])
 
   useEffect(() => {
     if (subgraphDataPayees) {
-      const sponsorsList: AddressAmount[] = []
-      subgraphDataPayees.forEach((el) => {
-        const address = el.id.split("-")[0]
-        const ethSent = el.ethSent
-        if (
-          address != process.env.NEXT_PUBLIC_PRODUCTS_ADDRESS.toLowerCase() &&
-          ethSent &&
-          ethSent != "0"
-        ) {
-          const amount = Number(
-            BigNumber.from(ethSent).div(BigNumber.from(10).pow(15))
-          )
-          sponsorsList.push({ address, amount })
-        }
-      })
-      setSponsors(sponsorsList)
+      // const sponsorsList: AddressAmount[] = []
+      // subgraphDataPayees.forEach((el) => {
+      //   const address = el.id.split("-")[0]
+      //   const ethSent = el.ethSent
+      //   if (
+      //     address != process.env.NEXT_PUBLIC_PRODUCTS_ADDRESS.toLowerCase() &&
+      //     ethSent &&
+      //     ethSent != "0"
+      //   ) {
+      //     const amount = Number(
+      //       BigNumber.from(ethSent).div(BigNumber.from(10).pow(15))
+      //     )
+      //     sponsorsList.push({ address, amount })
+      //   }
+      // })
+      // setSponsors(sponsorsList)
+      // TODO: Handle sponsorsList using Alchemy API
 
       const ownersList: AddressAmount[] = []
       subgraphDataPayees.forEach((el) => {
@@ -352,19 +366,20 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   const hexId = decimalToHex(Number(id))
 
   /**
-   * TODO
-   * Add condition: or: [{slices_gt: "0"}, {ethSent_gt: "0"}]
+   * TODO:
    * Deal with pagination when number of payeeSlicers > 100
    */
   const tokensQuery = /* GraphQL */ `
   slicer(id: "${hexId}") {
     payees(
-      orderBy: "ethSent", 
+      where: {
+        slices_gt: "0"
+      },
+      orderBy: "slices", 
       orderDirection: "desc"
     ) {
       id
       slices
-      ethSent
     }
     products (
       where: {
@@ -378,6 +393,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
         }
         price
         dynamicPricing
+        externalAddress
       }
       isInfinite
       availableUnits
