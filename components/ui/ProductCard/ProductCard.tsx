@@ -135,7 +135,7 @@ const ProductCard = ({
         p.slicerId === String(slicerId) &&
         p.productId === String(productId)
       ) {
-        setPurchasedQuantity(Number(p.quantity))
+        setPurchasedQuantity(Number(p.totalQuantity))
       }
     })
   }, [purchases])
