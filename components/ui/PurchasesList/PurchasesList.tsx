@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import useSWR from "swr"
 
 const PurchasesList = () => {
-  const { purchases } = useAppContext()
+  const { account, purchases } = useAppContext()
   const [purchaseQuery, setPurchaseQuery] = useState("")
   const [iterator, setIterator] = useState(0)
 
@@ -49,6 +49,7 @@ const PurchasesList = () => {
 
           const slicerId = purchase?.slicerId
           const productId = purchase?.productId
+          const dbId = purchaseDataEl?.id
           const name = purchaseDataEl?.name
           const hash = purchaseDataEl?.hash
           const image = purchaseDataEl?.image
@@ -65,15 +66,20 @@ const PurchasesList = () => {
           return (
             <div className="mt-3" key={key}>
               <ProductPurchaseCard
+                dbId={dbId}
+                account={account}
                 slicerId={slicerId}
                 productId={productId}
-                name={name}
+                name={
+                  index != -1 ? name : `Product ${slicerId} / #${productId}`
+                }
                 hash={hash}
                 image={image}
                 uid={uid}
                 creator={creator}
                 purchaseInfo={purchaseInfo}
                 texts={texts}
+                shortcodes={purchaseDataEl?.purchaseInfo?.shortcodes || []}
               />
             </div>
           )

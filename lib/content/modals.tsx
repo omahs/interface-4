@@ -23,6 +23,7 @@ import saEvent from "@utils/saEvent"
 import Share from "@components/icons/Share"
 import { domain } from "@components/common/Head"
 import copyText from "@utils/copyText"
+import useDecodeShortcode from "@utils/useDecodeShortcode"
 
 export type View = {
   name: ViewNames
@@ -315,6 +316,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
 export const PRODUCT_VIEW = (params: any) => {
   const [cookies] = useCookies(["cart"])
   const {
+    dbId,
     slicerId,
     productId,
     name,
@@ -450,8 +452,10 @@ export const PRODUCT_VIEW = (params: any) => {
               texts={texts}
               allowedAddresses={allowedAddresses}
               labelAdd={`Get it for ${productPrice.eth}`}
-              labelRemove={productPrice.eth}
+              labelRemove={productPrice.eth != "free" && productPrice.eth}
               preview={preview}
+              shortcodes={purchaseInfo?.shortcodes}
+              dbId={dbId}
             />
           </div>
         )}
@@ -520,6 +524,7 @@ export const PRODUCT_VIEW = (params: any) => {
 }
 
 export const REDEEM_PRODUCT_VIEW = (params: any) => {
+  const { account } = useAppContext()
   const {
     slicerId,
     productId,
@@ -528,11 +533,24 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
     purchasedQuantity,
     texts,
     decryptedFiles,
-    decryptedTexts
+    decryptedTexts,
+    accountCodes
   } = params
 
-  const { thanks, instructions } = texts
-  const { notes } = decryptedTexts
+  const { thanks, instructions } = texts || {
+    thanks: undefined,
+    instructions: undefined
+  }
+  const { notes } = decryptedTexts || { nodes: undefined }
+
+  const decodedInstructions = useDecodeShortcode(
+    account,
+    purchasedQuantity,
+    slicerId,
+    productId,
+    instructions,
+    accountCodes
+  )
 
   useEffect(() => {
     saEvent("redeem_product_success")
@@ -568,7 +586,7 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
           <div className="py-8">
             <h3 className="pb-4">Instructions</h3>
             <div>
-              <MarkdownBlock content={instructions} />
+              <MarkdownBlock content={decodedInstructions} />
             </div>
           </div>
         )}

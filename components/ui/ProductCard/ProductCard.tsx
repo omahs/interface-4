@@ -37,6 +37,7 @@ const ProductCard = ({
   const [cookies] = useCookies(["cart"])
   const { setModalView, purchases } = useAppContext()
   const {
+    id: dbId,
     productId,
     name,
     shortDescription,
@@ -49,13 +50,14 @@ const ProductCard = ({
     texts,
     allowedAddresses
   } = product || {
+    id: NaN,
     productId: NaN,
     name: "",
     shortDescription: "",
     description: "",
     hash: "",
     image: "",
-    purchaseInfo: "",
+    purchaseInfo: {},
     uid: "",
     creator: "",
     texts: {
@@ -133,7 +135,7 @@ const ProductCard = ({
         p.slicerId === String(slicerId) &&
         p.productId === String(productId)
       ) {
-        setPurchasedQuantity(Number(p.quantity))
+        setPurchasedQuantity(Number(p.totalQuantity))
       }
     })
   }, [purchases])
@@ -143,6 +145,7 @@ const ProductCard = ({
       name: "PRODUCT_VIEW",
       cross: true,
       params: {
+        dbId,
         slicerId,
         productId,
         name,
@@ -225,7 +228,7 @@ const ProductCard = ({
         <Card
           product
           containerClassName="h-full cursor-pointer"
-          cardClassName="group h-full overflow-hidden transition-all duration-1000 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025]"
+          cardClassName="group h-full overflow-hidden transition-all duration-300 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025]"
           className="rounded-none"
           name={name}
           image={image}
@@ -299,12 +302,16 @@ const ProductCard = ({
                   image={image}
                   name={name}
                   maxUnits={Number(maxUnits)}
-                  availableUnits={isInfinite ? -1 : availableUnits}
+                  availableUnits={
+                    purchases != null ? (isInfinite ? -1 : availableUnits) : 0
+                  }
                   purchasedQuantity={purchasedQuantity}
                   uid={uid}
                   creator={creator}
                   texts={texts}
                   allowedAddresses={allowedAddresses}
+                  shortcodes={purchaseInfo?.shortcodes}
+                  dbId={dbId}
                 />
               )}
             </div>
