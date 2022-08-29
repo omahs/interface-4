@@ -25,11 +25,30 @@ const PaySlicer = ({
   const value = BigNumber.from(Math.floor(ethValue * 100000)).mul(
     BigNumber.from(10).pow(13)
   )._hex
-  const { data, isIdle, isError, isLoading, isSuccess, sendTransaction } =
+  const { data, isIdle, isError, isLoading, sendTransaction } =
     useSendTransaction({
       request: {
         to: slicerAddress,
         value
+      },
+      onSuccess(data) {
+        let newSponsorsList = sponsorsList ? [...sponsorsList] : []
+
+        const index = newSponsorsList.findIndex((el) => el.address == data.from)
+
+        if (index == -1) {
+          newSponsorsList.push({ address: data.from, amount: ethValue })
+        } else {
+          newSponsorsList[index].amount += Number(ethValue)
+        }
+
+        setSponsorsList(newSponsorsList.sort((a, b) => b.amount - a.amount))
+        setEthValue(0)
+        setUsdValue(0)
+
+        setTimeout(() => {
+          fetcher(`/api/slicer/${slicerId}/refresh`)
+        }, 15000)
       }
     })
 
@@ -41,28 +60,6 @@ const PaySlicer = ({
       })
     }
   }, [data])
-
-  useEffect(() => {
-    if (!isLoading && isSuccess) {
-      let newSponsorsList = sponsorsList ? [...sponsorsList] : []
-
-      const index = newSponsorsList.findIndex((el) => el.address == data.from)
-
-      if (index == -1) {
-        newSponsorsList.push({ address: data.from, amount: ethValue })
-      } else {
-        newSponsorsList[index].amount += Number(ethValue)
-      }
-
-      setSponsorsList(newSponsorsList.sort((a, b) => b.amount - a.amount))
-      setEthValue(0)
-      setUsdValue(0)
-
-      setTimeout(() => {
-        fetcher(`/api/slicer/${slicerId}/refresh`)
-      }, 3500)
-    }
-  }, [isLoading, isSuccess])
 
   return (
     <InputPrice
@@ -79,3 +76,5 @@ const PaySlicer = ({
 }
 
 export default PaySlicer
+
+// TODO: Figure out why onSuccess is triggered when tx is sent, not when it's successful
