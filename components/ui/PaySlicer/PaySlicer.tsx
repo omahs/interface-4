@@ -1,14 +1,24 @@
-import { useEffect, useState } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import InputPrice from "../InputPrice"
 import { useSendTransaction } from "wagmi"
 import { BigNumber } from "ethers"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
+import { AddressAmount } from "pages/slicer/[id]"
+import fetcher from "@utils/fetcher"
 
 type Props = {
+  slicerId: string
   slicerAddress: string
+  sponsorsList: AddressAmount[]
+  setSponsorsList: Dispatch<SetStateAction<AddressAmount[]>>
 }
 
-const PaySlicer = ({ slicerAddress }: Props) => {
+const PaySlicer = ({
+  slicerId,
+  slicerAddress,
+  sponsorsList,
+  setSponsorsList
+}: Props) => {
   const addRecentTransaction = useAddRecentTransaction()
   const [usdValue, setUsdValue] = useState(0)
   const [ethValue, setEthValue] = useState(0)
@@ -34,8 +44,23 @@ const PaySlicer = ({ slicerAddress }: Props) => {
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
+      let newSponsorsList = sponsorsList ? [...sponsorsList] : []
+
+      const index = newSponsorsList.findIndex((el) => el.address == data.from)
+
+      if (index == -1) {
+        newSponsorsList.push({ address: data.from, amount: ethValue })
+      } else {
+        newSponsorsList[index].amount += Number(ethValue)
+      }
+
+      setSponsorsList(newSponsorsList.sort((a, b) => b.amount - a.amount))
       setEthValue(0)
       setUsdValue(0)
+
+      setTimeout(() => {
+        fetcher(`/api/slicer/${slicerId}/refresh`)
+      }, 3500)
     }
   }, [isLoading, isSuccess])
 
