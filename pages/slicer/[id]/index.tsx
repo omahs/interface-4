@@ -456,7 +456,7 @@ export default Id
 // TODO
 // - retrieve account.slices in editAllowed condition
 // - Clean stuff
-
+//
 /**  
 Product created on interface - OK
   - Present on backend, not subgraph
