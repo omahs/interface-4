@@ -22,7 +22,7 @@ import {
   SlicerSponsors
 } from "@components/ui"
 import fetcher from "@utils/fetcher"
-import { BigNumber, ethers } from "ethers"
+import { ethers } from "ethers"
 import multicall from "@utils/multicall"
 import decimalToHex from "@utils/decimalToHex"
 import formatCalldata from "@utils/formatCalldata"
@@ -77,6 +77,7 @@ const Id = ({
   const [newDescription, setNewDescription] = useState(slicer.description)
   const [newTags, setNewTags] = useState(slicer.tags)
   const [newName, setNewName] = useState(slicer.name)
+  const [sponsorsList, setSponsorsList] = useState(sponsors)
   const [newImage, setNewImage] = useState<NewImage>({
     url: "",
     file: undefined
@@ -271,7 +272,8 @@ const Id = ({
             blockchainProducts={subgraphDataProducts}
           />
           <SlicerSponsors
-            sponsors={sponsors}
+            sponsorsList={sponsorsList}
+            setSponsorsList={setSponsorsList}
             slicerId={slicerInfo?.id}
             slicerAddress={slicerInfo?.address}
             sponsorData={slicerInfo?.sponsors}
@@ -414,7 +416,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 
   if (sponsorsBody) {
     const transfersQuery = await fetcher(
-      `https://eth-mainnet.alchemyapi.io/v2/${process.env.ALCHEMY_ID}`,
+      process.env.NEXT_PUBLIC_NETWORK_URL,
       sponsorsBody
     )
     const transfers: {
@@ -422,20 +424,18 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       value: number
     }[] = transfersQuery?.result?.transfers
 
-    if (transfers) {
-      sponsors = transfers
-        .reduce((prev, curr) => {
-          const { from: address, value: amount } = curr
-          const index = prev.findIndex((el) => el.address == address)
-          if (index == -1) {
-            prev.push({ address, amount })
-          } else {
-            prev[index].amount += amount
-          }
-          return prev
-        }, [])
-        .sort((a, b) => b.amount - a.amount)
-    }
+    sponsors = transfers
+      .reduce((prev, curr) => {
+        const { from: address, value: amount } = curr
+        const index = prev.findIndex((el) => el.address == address)
+        if (index == -1) {
+          prev.push({ address, amount })
+        } else {
+          prev[index].amount += amount
+        }
+        return prev
+      }, [])
+      .sort((a, b) => b.amount - a.amount)
   }
 
   return {
@@ -452,26 +452,3 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 }
 
 export default Id
-
-// TODO
-// - retrieve account.slices in editAllowed condition
-// - Clean stuff
-//
-/**  
-Product created on interface - OK
-  - Present on backend, not subgraph
-  - Subgraph is indicized on revalidate
-
-  Product created on interface, successful and user has left create page
-    - Present on backend, not subgraph
-    - Handle reload condition?
-
-Product created on interface, not successful and user has left create page
-  - Present on backend, not subgraph
-  - Product will never appear (no productId)
-  - Handle cleanup condition?
-
-Product created on contracts
-  - Present on subgraph, not on backend
-  - Handle reload condition?
-*/
