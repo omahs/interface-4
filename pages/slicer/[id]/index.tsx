@@ -423,19 +423,20 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       from: string
       value: number
     }[] = transfersQuery?.result?.transfers
-
-    sponsors = transfers
-      .reduce((prev, curr) => {
-        const { from: address, value: amount } = curr
-        const index = prev.findIndex((el) => el.address == address)
-        if (index == -1) {
-          prev.push({ address, amount })
-        } else {
-          prev[index].amount += amount
-        }
-        return prev
-      }, [])
-      .sort((a, b) => b.amount - a.amount)
+    if (transfers) {
+      sponsors = transfers
+        .reduce((prev, curr) => {
+          const { from: address, value: amount } = curr
+          const index = prev.findIndex((el) => el.address == address)
+          if (index == -1) {
+            prev.push({ address, amount })
+          } else {
+            prev[index].amount += amount
+          }
+          return prev
+        }, [])
+        .sort((a, b) => b.amount - a.amount)
+    }
   }
 
   return {
