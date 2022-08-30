@@ -1,43 +1,45 @@
 import { PaySlicer, SponsorListItem } from "@components/ui"
 import { AddressAmount } from "pages/slicer/[id]"
-import { useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import ListLayout from "../ListLayout"
 
 type Props = {
-  sponsors: AddressAmount[]
   slicerId: string
   slicerAddress: string
   sponsorData: object
   editMode: boolean
   tag: string
+  sponsorsList: AddressAmount[]
+  setSponsorsList: Dispatch<SetStateAction<AddressAmount[]>>
 }
 
 const SlicerSponsors = ({
   slicerId,
   sponsorData,
-  sponsors,
   slicerAddress,
   editMode,
-  tag
+  tag,
+  sponsorsList,
+  setSponsorsList
 }: Props) => {
   const [iterator, setIterator] = useState(0)
 
   return (
     <div className="max-w-sm mx-auto">
-      {sponsors && sponsors.length != 0 && (
+      {sponsorsList && sponsorsList.length != 0 && (
         <>
           <div className="pt-8 text-center">
             <h2 className="pb-12">
               {tag === "Charity" ? "Donors" : "Sponsors"}
             </h2>
             <ListLayout
-              elementsArray={sponsors}
+              elementsArray={sponsorsList}
               setIterator={setIterator}
               itemsIncrement={10}
             >
               <ul className="space-y-5">
                 {[...Array(iterator)].map((el, key) => {
-                  const sponsor = sponsors[Number(key)]
+                  const sponsor = sponsorsList[Number(key)]
                   return (
                     <SponsorListItem
                       slicerId={slicerId}
@@ -66,7 +68,12 @@ const SlicerSponsors = ({
               </p>
             )}
           </div>
-          <PaySlicer slicerAddress={slicerAddress} />
+          <PaySlicer
+            slicerId={slicerId}
+            slicerAddress={slicerAddress}
+            sponsorsList={sponsorsList}
+            setSponsorsList={setSponsorsList}
+          />
         </div>
       )}
     </div>
