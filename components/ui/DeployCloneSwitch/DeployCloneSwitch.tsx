@@ -26,7 +26,7 @@ const DeployCloneSwitch = ({
     deployments?.cloner[chainId] && (
       <div className="pt-4">
         <InputSwitch
-          label="Deploy as immutable clone"
+          label="Deploy as clone"
           questionText={
             <>
               <p>
@@ -35,7 +35,7 @@ const DeployCloneSwitch = ({
                 purchase for buyers.
               </p>
               <p>
-                The cost increase for each buyer is of ~5k gas, or 0.0001 ETH (${" "}
+                The cost increase for each buyer is ~5k gas, or 0.0001 ETH (${" "}
                 {Math.floor(0.01 * Number(data?.price)) / 100}) with a gas price
                 of 20 gwei.
               </p>
