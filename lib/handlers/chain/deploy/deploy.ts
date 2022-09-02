@@ -5,8 +5,8 @@ export type DeployParamsClone = {
   args: any[]
 }
 
-const clone = async (
-  clonerAddress: string,
+const deploy = async (
+  factoryAddress: string,
   abi: ContractInterface,
   signer: Signer,
   deployParams: DeployParamsClone
@@ -16,16 +16,16 @@ const clone = async (
   const { slicerId, args } = deployParams
 
   try {
-    const contract = new ethers.Contract(clonerAddress, abi, signer)
+    const contract = new ethers.Contract(factoryAddress, abi, signer)
 
-    const call = await contract.clone(productsModule, slicerId, ...args)
+    const call = await contract.deploy(productsModule, slicerId, ...args)
     const wait = await call.wait()
-    const cloneAddress = wait.events[0].address
+    const contractAddress = wait.events[0].args[0]
 
-    return [cloneAddress, contract, call]
+    return [contractAddress, contract, call]
   } catch (err) {
     throw Error()
   }
 }
 
-export default clone
+export default deploy
