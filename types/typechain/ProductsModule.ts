@@ -142,22 +142,24 @@ export interface ProductsModuleInterface extends utils.Interface {
   functions: {
     "_togglePause()": FunctionFragment;
     "addProduct(uint256,((uint128,uint32)[],(uint248,bool,address,address)[],bytes,bytes,uint32,uint8,bool,bool,bool,bool),(bytes,uint256,address,bytes4,bytes4))": FunctionFragment;
+    "availableUnits(uint256,uint256)": FunctionFragment;
     "ethBalance(uint256)": FunctionFragment;
     "initialize()": FunctionFragment;
+    "isProductOwner(uint256,uint256,address)": FunctionFragment;
     "owner()": FunctionFragment;
     "paused()": FunctionFragment;
     "payProducts(address,(uint128,uint32,address,uint32,bytes)[])": FunctionFragment;
     "productPrice(uint256,uint256,address,uint256)": FunctionFragment;
     "proxiableUUID()": FunctionFragment;
     "releaseEthToSlicer(uint256)": FunctionFragment;
-    "removeProduct(uint256,uint32)": FunctionFragment;
+    "removeProduct(uint256,uint256)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "setProductInfo(uint256,uint32,uint8,bool,bool,uint32,(uint248,bool,address,address)[])": FunctionFragment;
+    "setProductInfo(uint256,uint256,uint8,bool,bool,uint32,(uint248,bool,address,address)[])": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "upgradeTo(address)": FunctionFragment;
     "upgradeToAndCall(address,bytes)": FunctionFragment;
-    "validatePurchase(uint256,uint32)": FunctionFragment;
-    "validatePurchaseUnits(address,uint256,uint32)": FunctionFragment;
+    "validatePurchase(uint256,uint256)": FunctionFragment;
+    "validatePurchaseUnits(address,uint256,uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -169,12 +171,20 @@ export interface ProductsModuleInterface extends utils.Interface {
     values: [BigNumberish, ProductParamsStruct, FunctionStruct]
   ): string;
   encodeFunctionData(
+    functionFragment: "availableUnits",
+    values: [BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "ethBalance",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isProductOwner",
+    values: [BigNumberish, BigNumberish, string]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
@@ -237,8 +247,16 @@ export interface ProductsModuleInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "addProduct", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "availableUnits",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "ethBalance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "isProductOwner",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
   decodeFunctionResult(
@@ -488,6 +506,14 @@ export interface ProductsModule extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    availableUnits(
+      slicerId: BigNumberish,
+      productId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, boolean] & { units: BigNumber; isInfinite: boolean }
+    >;
+
     ethBalance(
       slicerId: BigNumberish,
       overrides?: CallOverrides
@@ -496,6 +522,13 @@ export interface ProductsModule extends BaseContract {
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    isProductOwner(
+      slicerId: BigNumberish,
+      productId: BigNumberish,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<[boolean] & { isAllowed: boolean }>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -586,6 +619,12 @@ export interface ProductsModule extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  availableUnits(
+    slicerId: BigNumberish,
+    productId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<[BigNumber, boolean] & { units: BigNumber; isInfinite: boolean }>;
+
   ethBalance(
     slicerId: BigNumberish,
     overrides?: CallOverrides
@@ -594,6 +633,13 @@ export interface ProductsModule extends BaseContract {
   initialize(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  isProductOwner(
+    slicerId: BigNumberish,
+    productId: BigNumberish,
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -682,12 +728,27 @@ export interface ProductsModule extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    availableUnits(
+      slicerId: BigNumberish,
+      productId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<
+      [BigNumber, boolean] & { units: BigNumber; isInfinite: boolean }
+    >;
+
     ethBalance(
       slicerId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     initialize(overrides?: CallOverrides): Promise<void>;
+
+    isProductOwner(
+      slicerId: BigNumberish,
+      productId: BigNumberish,
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -908,6 +969,12 @@ export interface ProductsModule extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    availableUnits(
+      slicerId: BigNumberish,
+      productId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     ethBalance(
       slicerId: BigNumberish,
       overrides?: CallOverrides
@@ -915,6 +982,13 @@ export interface ProductsModule extends BaseContract {
 
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    isProductOwner(
+      slicerId: BigNumberish,
+      productId: BigNumberish,
+      account: string,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1005,6 +1079,12 @@ export interface ProductsModule extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    availableUnits(
+      slicerId: BigNumberish,
+      productId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     ethBalance(
       slicerId: BigNumberish,
       overrides?: CallOverrides
@@ -1012,6 +1092,13 @@ export interface ProductsModule extends BaseContract {
 
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    isProductOwner(
+      slicerId: BigNumberish,
+      productId: BigNumberish,
+      account: string,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
