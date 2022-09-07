@@ -3,14 +3,14 @@ import { CardText, DeployCloneSwitch } from "../"
 import {
   defaultPurchaseHooks,
   emptyExternalCall,
-  Params
+  HookParams
 } from "@components/hooks/purchaseHooks"
 
 type Props = {
   clonePurchaseHook: boolean
   setClonePurchaseHook: Dispatch<SetStateAction<boolean>>
-  params: Params
-  setParams: Dispatch<SetStateAction<Params>>
+  params: HookParams
+  setParams: Dispatch<SetStateAction<HookParams>>
 }
 
 const AddProductFormExternal = ({

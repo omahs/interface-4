@@ -2,6 +2,7 @@ import { useState, Dispatch, SetStateAction, useEffect, useRef } from "react"
 import {
   Button,
   MessageBlock,
+  AddProductFormAvailability,
   AddProductFormPrice,
   AddProductFormGeneral,
   AddProductFormPurchases,
@@ -18,10 +19,11 @@ import ethToWei from "@utils/ethToWei"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { useSigner } from "wagmi"
 import saEvent from "@utils/saEvent"
-import { emptyExternalCall, Params } from "@components/hooks/purchaseHooks"
+import { emptyExternalCall, HookParams } from "@components/hooks/purchaseHooks"
 import openFingerprintingModal from "@utils/openFingerprintingModal"
 import { ReducedShortcode } from "@utils/useDecodeShortcode"
 import { deploy } from "@lib/handlers/chain"
+import { StrategyParams } from "@components/priceStrategies/strategies"
 
 type Props = {
   slicerId: number
@@ -61,8 +63,9 @@ const AddProductForm = ({
   const [units, setUnits] = useState(0)
   const [maxUnits, setMaxUnits] = useState(1)
 
+  const [priceParams, setPriceParams] = useState<StrategyParams>()
   const [customShortcodes, setCustomShortcodes] = useState<ReducedShortcode>({})
-  const [purchaseHookParams, setPurchaseHookParams] = useState<Params>({
+  const [purchaseHookParams, setPurchaseHookParams] = useState<HookParams>({
     externalCall: emptyExternalCall
   })
   const [clonePurchaseHook, setClonePurchaseHook] = useState(false)
@@ -255,22 +258,26 @@ const AddProductForm = ({
         setDescription={setDescription}
         setShortDescription={setShortDescription}
       />
-      <AddProductFormPrice
+      <AddProductFormAvailability
         isMultiple={isMultiple}
         isLimited={isLimited}
-        isFree={isFree}
         units={units}
         maxUnits={maxUnits}
-        ethValue={ethValue}
-        usdValue={usdValue}
-        isUSD={isUSD}
         setIsMultiple={setIsMultiple}
         setIsLimited={setIsLimited}
         setUnits={setUnits}
         setMaxUnits={setMaxUnits}
+      />
+      <AddProductFormPrice
+        isFree={isFree}
+        ethValue={ethValue}
+        usdValue={usdValue}
+        isUSD={isUSD}
         setEthValue={setEthValue}
         setUsdValue={setUsdValue}
         setIsUSD={setIsUSD}
+        isLimited={isLimited}
+        setPriceParams={setPriceParams}
       />
       <AddProductFormExternal
         clonePurchaseHook={clonePurchaseHook}
