@@ -1,5 +1,5 @@
 import { InputAddress } from "@components/ui"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Strategy, StrategyProps } from "../strategies"
 
 const label = "Custom"
@@ -7,6 +7,22 @@ const label = "Custom"
 const Component = ({ setPriceParams }: StrategyProps) => {
   const [address, setAddress] = useState("")
   const [resolvedAddress, setResolvedAddress] = useState("")
+
+  useEffect(() => {
+    if (
+      address &&
+      resolvedAddress != "" &&
+      resolvedAddress != "Invalid ENS name"
+    ) {
+      setPriceParams({
+        address: resolvedAddress || address
+      })
+    }
+
+    return () => {
+      setPriceParams(undefined)
+    }
+  }, [address, resolvedAddress])
 
   return (
     <>
