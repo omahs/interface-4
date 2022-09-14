@@ -173,7 +173,8 @@ const AddProductForm = ({
                 currency: ethers.constants.AddressZero,
                 value: productPrice,
                 dynamicPricing: isUSD,
-                externalAddress: ethers.constants.AddressZero
+                externalAddress:
+                  priceParams?.address || ethers.constants.AddressZero
               }
             ]
           : []
