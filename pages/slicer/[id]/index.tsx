@@ -111,7 +111,7 @@ const Id = ({
           false // slicer?.attributes["Total slices"] === account.slices // creator has all slices
         : false
     )
-  }, [account])
+  }, [account, isAllowed])
 
   useEffect(() => {
     if (subgraphDataPayees) {
