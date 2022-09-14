@@ -13,8 +13,9 @@ export type StrategyProps = {
 }
 
 export type StrategyParams = {
-  strategy: { address: string; abi: ContractInterface }
-  args: any[]
+  address: string
+  abi?: ContractInterface
+  args?: any[]
 }
 
 export const strategiesList: Strategy[] = [
