@@ -25,15 +25,17 @@ const Component = ({ setPriceParams, isLimited }: StrategyProps) => {
   const [timeFactor, setTimeFactor] = useState(0)
 
   useEffect(() => {
-    setPriceParams({
-      strategy: strategy[rate],
-      args: [toWad(targetPrice), toWad(priceDecayPercent), toWad(timeFactor)]
-    })
+    if (isLimited) {
+      setPriceParams({
+        strategy: strategy[rate],
+        args: [toWad(targetPrice), toWad(priceDecayPercent), toWad(timeFactor)]
+      })
+    }
 
     return () => {
       setPriceParams(undefined)
     }
-  }, [targetPrice, priceDecayPercent, timeFactor, setPriceParams])
+  }, [isLimited, targetPrice, priceDecayPercent, timeFactor, setPriceParams])
 
   useEffect(() => {
     setTimeFactor(0)
@@ -54,98 +56,97 @@ const Component = ({ setPriceParams, isLimited }: StrategyProps) => {
         .
       </p>
 
-      <div className="grid grid-cols-2 gap-2 pt-3 pb-6">
-        <CardBasic
-          label="Linear"
-          isActive={rate == "Linear"}
-          setisActive={setRate}
-        />
-        <CardBasic
-          label="Logistic"
-          isActive={rate == "Logistic"}
-          setisActive={setRate}
-        />
-      </div>
-      <div>
-        <InputPrice
-          disabled={!isLimited}
-          ethValue={targetPrice}
-          setEthValue={setTargetPrice}
-          usdValue={targetPriceUsd}
-          setUsdValue={setTargetPriceUsd}
-          label="Target price"
-          question={
-            <>
-              <p>Target price for the product if sold on pace.</p>
-            </>
-          }
-          required
-        />
-      </div>
-      <div>
-        <Input
-          disabled={!isLimited}
-          type="number"
-          label="Price decay (%)"
-          placeholder={"10"}
-          min={0.01}
-          max={99.99}
-          step={0.01}
-          question={
-            <>
-              <p>The daily percent price decay, with no sales.</p>
-            </>
-          }
-          value={priceDecayPercent || ""}
-          onChange={setPriceDecayPercent}
-          required
-        />
-      </div>
-      <div>
-        {rate == "Linear" ? (
-          <Input
-            disabled={!isLimited}
-            type="number"
-            label="Daily units to be sold"
-            placeholder={"2"}
-            min={0.01}
-            step={0.01}
-            value={timeFactor || ""}
-            onChange={setTimeFactor}
-            question={
-              <>
-                <p>The number of units to target selling in 1 day</p>
-              </>
-            }
-            required
-          />
-        ) : (
-          <Input
-            disabled={!isLimited}
-            type="number"
-            label="Time scale"
-            placeholder={"0.001"}
-            min={0.0001}
-            step={0.0001}
-            value={timeFactor || ""}
-            onChange={setTimeFactor}
-            question={
-              <>
-                <p>
-                  Time scale controls the steepness of the logistic curve, which
-                  affects how quickly the curve&apos;s asymptote is reached.
-                </p>
-              </>
-            }
-            required
-          />
-        )}
-      </div>
-      {!isLimited && (
+      {!isLimited ? (
         <p className="pt-4 text-yellow-600">
-          You need to enable <strong>limited availability</strong> to use a
-          VRGDA strategy.
+          Enable <strong>limited availability</strong> to use a VRGDA strategy.
         </p>
+      ) : (
+        <>
+          <div className="grid grid-cols-2 gap-2 pt-3 pb-6">
+            <CardBasic
+              label="Linear"
+              isActive={rate == "Linear"}
+              setisActive={setRate}
+            />
+            <CardBasic
+              label="Logistic"
+              isActive={rate == "Logistic"}
+              setisActive={setRate}
+            />
+          </div>
+          <div>
+            <InputPrice
+              ethValue={targetPrice}
+              setEthValue={setTargetPrice}
+              usdValue={targetPriceUsd}
+              setUsdValue={setTargetPriceUsd}
+              label="Target price"
+              question={
+                <>
+                  <p>Target price for the product if sold on pace.</p>
+                </>
+              }
+              required
+            />
+          </div>
+          <div>
+            <Input
+              type="number"
+              label="Price decay (%)"
+              placeholder={"10"}
+              min={0.01}
+              max={99.99}
+              step={0.01}
+              question={
+                <>
+                  <p>The daily percent price decay, with no sales.</p>
+                </>
+              }
+              value={priceDecayPercent || ""}
+              onChange={setPriceDecayPercent}
+              required
+            />
+          </div>
+          <div>
+            {rate == "Linear" ? (
+              <Input
+                type="number"
+                label="Daily units to be sold"
+                placeholder={"2"}
+                min={0.01}
+                step={0.01}
+                value={timeFactor || ""}
+                onChange={setTimeFactor}
+                question={
+                  <>
+                    <p>The number of units to target selling in 1 day</p>
+                  </>
+                }
+                required
+              />
+            ) : (
+              <Input
+                type="number"
+                label="Time scale"
+                placeholder={"0.001"}
+                min={0.0001}
+                step={0.0001}
+                value={timeFactor || ""}
+                onChange={setTimeFactor}
+                question={
+                  <>
+                    <p>
+                      Time scale controls the steepness of the logistic curve,
+                      which affects how quickly the curve&apos;s asymptote is
+                      reached.
+                    </p>
+                  </>
+                }
+                required
+              />
+            )}
+          </div>
+        </>
       )}
     </>
   )

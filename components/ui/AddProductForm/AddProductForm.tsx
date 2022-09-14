@@ -206,7 +206,7 @@ const AddProductForm = ({
         setTimeout(() => {
           setUploadStep(11)
         }, 3000)
-        await handleSuccess(slicerId, newProduct.id, eventLogs)
+        await handleSuccess(slicerId, newProduct.id, eventLogs, priceParams)
         setSuccess(true)
         setModalView({ name: "" })
       } else {
