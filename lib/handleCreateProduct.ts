@@ -172,7 +172,8 @@ export const handleSuccess = async (
   slicerId: number,
   id: string,
   eventLogs: LogDescription[],
-  priceParams: StrategyParams
+  priceParams: StrategyParams,
+  setUploadStep: Dispatch<SetStateAction<number>>
 ) => {
   const fetcher = (await import("@utils/fetcher")).default
   const getLog = (await import("@utils/getLog")).default
@@ -190,7 +191,9 @@ export const handleSuccess = async (
     })
   }
   await fetcher(`/api/slicer/${slicerId}/products`, putBody)
-  if (priceParams) {
+  // TODO: Check this works
+  if (priceParams?.address && priceParams?.abi) {
+    setUploadStep(8)
   } else {
     await timeout(3500)
   }

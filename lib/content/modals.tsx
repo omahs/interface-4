@@ -211,8 +211,9 @@ export const CREATE_PRODUCT_CONFIRM_VIEW = (params: any) => {
 }
 
 export const CREATE_PRODUCT_VIEW = (params: any) => {
-  const { uploadStep, uploadPct, setModalView, cloneAddress } = params
-  const processing = uploadStep !== 9
+  const { uploadStep, uploadPct, setModalView, cloneAddress, isCustomPriced } =
+    params
+  const processing = uploadStep !== 10
 
   let uploadState: string
   switch (uploadStep) {
@@ -238,15 +239,18 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
       uploadState = "Transaction in progress ..."
       break
     case 8:
-      uploadState = "Reverting"
+      uploadState = "Configuring pricing strategy ..."
       break
     case 9:
-      uploadState = "Done, reverted!"
+      uploadState = "Reverting"
       break
     case 10:
-      uploadState = "Finalizing"
+      uploadState = "Done, reverted!"
       break
     case 11:
+      uploadState = "Finalizing"
+      break
+    case 12:
       uploadState = "Almost done"
       break
   }
@@ -289,13 +293,22 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
         />
         <LoadingStep
           nullCondition={uploadStep < 7}
-          initCondition={processing}
+          initCondition={isCustomPriced ? uploadStep < 8 : processing}
           uploadState={uploadState}
           waitingState="Blockchain interaction"
+          endState={isCustomPriced && "Done"}
         />
+        {isCustomPriced && (
+          <LoadingStep
+            nullCondition={uploadStep < 8}
+            initCondition={processing}
+            uploadState={uploadState}
+            waitingState="Pricing configuration"
+          />
+        )}
       </div>
       <div className="pt-10">
-        {uploadStep === 9 ? (
+        {uploadStep === 10 ? (
           <Button
             label={"Go back to product"}
             onClick={() => setModalView({ name: "" })}

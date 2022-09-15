@@ -33,6 +33,8 @@ type Props = {
   setSuccess: Dispatch<SetStateAction<boolean>>
   setLogs: Dispatch<SetStateAction<LogDescription[]>>
   setCloneAddress: Dispatch<SetStateAction<string>>
+  priceParams: StrategyParams
+  setPriceParams: Dispatch<SetStateAction<StrategyParams>>
 }
 
 const AddProductForm = ({
@@ -42,7 +44,9 @@ const AddProductForm = ({
   setUploadPct,
   setSuccess,
   setLogs,
-  setCloneAddress
+  setCloneAddress,
+  priceParams,
+  setPriceParams
 }: Props) => {
   const { account, setModalView } = useAppContext()
   const { data: signer } = useSigner()
@@ -63,7 +67,6 @@ const AddProductForm = ({
   const [units, setUnits] = useState(0)
   const [maxUnits, setMaxUnits] = useState(1)
 
-  const [priceParams, setPriceParams] = useState<StrategyParams>()
   const [customShortcodes, setCustomShortcodes] = useState<ReducedShortcode>({})
   const [purchaseHookParams, setPurchaseHookParams] = useState<HookParams>({
     externalCall: emptyExternalCall
@@ -203,11 +206,17 @@ const AddProductForm = ({
       if (eventLogs) {
         saEvent("create_product_success")
         setLogs(eventLogs)
-        setUploadStep(10)
+        setUploadStep(11)
         setTimeout(() => {
-          setUploadStep(11)
+          setUploadStep(12)
         }, 3000)
-        await handleSuccess(slicerId, newProduct.id, eventLogs, priceParams)
+        await handleSuccess(
+          slicerId,
+          newProduct.id,
+          eventLogs,
+          priceParams,
+          setUploadStep
+        )
         setSuccess(true)
         setModalView({ name: "" })
       } else {
@@ -215,10 +224,10 @@ const AddProductForm = ({
       }
     } catch (err) {
       saEvent("create_product_fail")
-      setUploadStep(8)
+      setUploadStep(9)
 
       await handleReject(slicerId, image, data, purchaseDataCID, newProduct.id)
-      setUploadStep(9)
+      setUploadStep(10)
       setCloneAddress("")
       if (err.message) {
         setMessage({
