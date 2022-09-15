@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import InputPrice from "../InputPrice"
-import { useSendTransaction } from "wagmi"
+import { useSendTransaction, usePrepareSendTransaction } from "wagmi"
 import { BigNumber } from "ethers"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { AddressAmount } from "pages/slicer/[id]"
@@ -25,12 +25,11 @@ const PaySlicer = ({
   const value = BigNumber.from(Math.floor(ethValue * 100000)).mul(
     BigNumber.from(10).pow(13)
   )._hex
+  const { config } = usePrepareSendTransaction({
+    request: { to: slicerAddress, value }
+  })
   const { data, isIdle, isError, isLoading, sendTransaction } =
-    useSendTransaction({
-      request: {
-        to: slicerAddress,
-        value
-      },
+    useSendTransaction(config, {
       onSuccess(data) {
         let newSponsorsList = sponsorsList ? [...sponsorsList] : []
 
