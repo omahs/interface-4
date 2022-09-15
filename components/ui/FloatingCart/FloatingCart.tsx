@@ -129,7 +129,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
               }
             >
               {success ? (
-                <p className="px-2 text-sm">Close</p>
+                <p className="mx-auto text-sm">Close</p>
               ) : (
                 <>
                   <Chevron

@@ -4,6 +4,7 @@ import { LogDescription } from "@ethersproject/abi"
 import decimalToHex from "@utils/decimalToHex"
 import timeout from "@utils/timeout"
 import { StrategyParams } from "@components/priceStrategies/strategies"
+import { ethers, Signer } from "ethers"
 // import { mutate } from "swr"
 
 export const beforeCreate = async (
@@ -168,7 +169,8 @@ export const beforeCreate = async (
   }
 }
 
-export const useHandleSuccess = async (
+export const handleSuccess = async (
+  signer: Signer,
   slicerId: number,
   id: string,
   eventLogs: LogDescription[],
@@ -177,7 +179,6 @@ export const useHandleSuccess = async (
 ) => {
   const fetcher = (await import("@utils/fetcher")).default
   const getLog = (await import("@utils/getLog")).default
-  const { useContractWrite, usePrepareContractWrite } = await import("wagmi")
 
   const eventLog = getLog(eventLogs, "ProductAdded")
   const productId = Number(eventLog[1]._hex)
@@ -192,16 +193,24 @@ export const useHandleSuccess = async (
     })
   }
   await fetcher(`/api/slicer/${slicerId}/products`, putBody)
-  // TODO: Check this works
   if (priceParams?.address && priceParams?.abi) {
+    const launchConfetti = (await import("utils/launchConfetti")).default
     setUploadStep(8)
-    const { config } = usePrepareContractWrite({
-      addressOrName: priceParams.address,
-      contractInterface: priceParams.abi,
-      functionName: "setProductPrice",
-      args: priceParams.args
-    })
-    const { data, isLoading, isSuccess, write } = useContractWrite(config)
+    const contract = new ethers.Contract(
+      priceParams.address,
+      priceParams.abi,
+      signer
+    )
+
+    const tx = await contract.setProductPrice(
+      slicerId,
+      productId,
+      ethers.constants.AddressZero,
+      ...priceParams.args
+    )
+    await tx.wait()
+    launchConfetti()
+    setUploadStep(12)
   } else {
     await timeout(3500)
   }
