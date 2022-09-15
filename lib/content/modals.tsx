@@ -314,11 +314,8 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
             onClick={() => setModalView({ name: "" })}
           />
         ) : (
-          <p className="max-w-sm mx-auto text-sm">
-            To make the product immediately appear on the website{" "}
-            <b className="text-yellow-600">
-              do not leave this page until the process has completed
-            </b>
+          <p className="max-w-sm mx-auto text-sm font-bold text-yellow-600">
+            Do not leave this page until the process has completed
           </p>
         )}
       </div>
