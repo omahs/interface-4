@@ -327,7 +327,7 @@ const ProductCard = ({
                             ethers.constants.AddressZero
                           ].ethPrice,
                           16
-                        )
+                        ).toString()
                       : price
                   }
                   isUSD={externalAddress ? false : isUSD}
