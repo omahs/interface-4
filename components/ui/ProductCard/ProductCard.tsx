@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import { Card, CartButton } from ".."
 import { Purchase, useAppContext } from "../context"
+import { ExternalPrices } from "../ProductsGrid/ProductsGrid"
 import { Product } from "../SlicerProducts/SlicerProducts"
 
 type Props = {
@@ -23,6 +24,7 @@ type Props = {
   }
   editMode: boolean
   displayProduct: boolean
+  externalPrices: ExternalPrices
 }
 
 const ProductCard = ({
@@ -32,7 +34,8 @@ const ProductCard = ({
   chainInfo,
   ethUsd,
   editMode,
-  displayProduct
+  displayProduct,
+  externalPrices
 }: Props) => {
   const [cookies] = useCookies(["cart"])
   const { setModalView, purchases } = useAppContext()
@@ -70,8 +73,13 @@ const ProductCard = ({
   const ethPrice = prices?.find(
     (price) => price.currency.id == ethers.constants.AddressZero
   )
-  const isUSD = ethPrice?.dynamicPricing
   const price = ethPrice?.price
+  const isUSD = ethPrice?.dynamicPricing
+  const externalAddress = ethPrice?.externalAddress
+  const isCustomPriced =
+    externalAddress &&
+    externalAddress != "0x00000000" &&
+    externalAddress != ethers.constants.AddressZero
 
   // TODO Refactor this to handle  multiple currencies
 
@@ -84,7 +92,13 @@ const ProductCard = ({
   const extCheckSig = chainInfo?.extCheckSig
   const extExecSig = chainInfo?.extExecSig
 
-  const totalPrice = price && extValue && Number(price) + Number(extValue)
+  const totalPrice = isCustomPriced
+    ? externalPrices[productId] &&
+      parseInt(
+        externalPrices[productId][ethers.constants.AddressZero].ethPrice,
+        16
+      ) + Number(extValue)
+    : (price ? Number(price) : 0) + (extValue ? Number(extValue) : 0)
   const externalCallEth = extValue && utils.formatEther(extValue)
   const externalCallUsd =
     externalCallEth && Number(externalCallEth) * Number(ethUsd?.price) * 100
@@ -94,18 +108,29 @@ const ProductCard = ({
   const [convertedEthUsd, setConvertedEthUsd] = useState(0)
   const [purchasedQuantity, setPurchasedQuantity] = useState(0)
 
+  const formattedEthPrice = totalPrice
+    ? `Ξ ${Math.floor(totalPrice / 10 ** 14) / 10000}`
+    : "free"
+  const formattedUsdPrice = convertedEthUsd ? `Ξ ${convertedEthUsd}` : "free"
+
   const productPrice = chainInfo
-    ? ethPrice && extValue
-      ? {
-          eth: `Ξ ${
-            isUSD ? convertedEthUsd : Math.floor(totalPrice / 10 ** 14) / 10000
-          }`,
-          usd: `$ ${
-            isUSD
-              ? formatNumber((Number(price) + externalCallUsd) / 100)
-              : convertedEthUsd
-          }`
-        }
+    ? ethPrice || extValue
+      ? isCustomPriced
+        ? externalPrices && externalPrices[productId]
+          ? {
+              eth: formattedEthPrice,
+              usd: `$ ${convertedEthUsd}`
+            }
+          : {
+              eth: "Ξ ...",
+              usd: "$ ..."
+            }
+        : {
+            eth: isUSD ? `Ξ ${convertedEthUsd}` : formattedEthPrice,
+            usd: isUSD
+              ? `$ ${formatNumber((Number(price) + externalCallUsd) / 100)}`
+              : formattedUsdPrice
+          }
       : {
           eth: "free",
           usd: "$ 0"
@@ -114,6 +139,7 @@ const ProductCard = ({
         eth: "Ξ ...",
         usd: "$ ..."
       }
+
   const cookieCart: ProductCart[] = cookies?.cart
   const productCart: ProductCart = cookieCart?.find(
     (product) =>
@@ -251,7 +277,7 @@ const ProductCard = ({
             content: (
               <p
                 className={`text-sm capitalize font-medium text-black${
-                  chainInfo && !ethPrice ? " text-green-600" : ""
+                  chainInfo && !totalPrice ? " text-green-600" : ""
                 }`}
               >
                 {productPrice.eth}
@@ -294,8 +320,17 @@ const ProductCard = ({
                   productCart={productCart}
                   slicerAddress={slicerAddress}
                   productId={productId}
-                  price={price}
-                  isUSD={isUSD}
+                  price={
+                    externalAddress && externalPrices[productId]
+                      ? parseInt(
+                          externalPrices[productId][
+                            ethers.constants.AddressZero
+                          ].ethPrice,
+                          16
+                        )
+                      : price
+                  }
+                  isUSD={externalAddress ? false : isUSD}
                   extAddress={extAddress}
                   extCallValue={extValue}
                   extCheckSig={extCheckSig}

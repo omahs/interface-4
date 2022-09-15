@@ -1,9 +1,21 @@
+import useExternalPrices from "@lib/useExternalPrices"
 import fetcher from "@utils/fetcher"
+import multicall from "@utils/multicall"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import useSWR from "swr"
 import { ProductCard } from ".."
+import { useAppContext } from "../context"
 import { Product } from "../SlicerProducts/SlicerProducts"
+
+export type ExternalPrices = {
+  [productId: string]: {
+    [currency: string]: {
+      ethPrice: string
+      currencyPrice: string
+    }
+  }
+}
 
 type Props = {
   slicerId: number
@@ -20,6 +32,7 @@ const ProductsGrid = ({
   editMode,
   blockchainProducts
 }: Props) => {
+  const { account } = useAppContext()
   const router = useRouter()
   const { product: productQuery } = router.query
   const increment = 6
@@ -32,6 +45,11 @@ const ProductsGrid = ({
 
   const productQueryData = products?.find(
     (p) => p.productId == Number(productQuery)
+  )
+
+  const externalPrices: ExternalPrices = useExternalPrices(
+    account,
+    blockchainProducts
   )
 
   return blockchainProducts && blockchainProducts.length != 0 ? (
@@ -55,6 +73,7 @@ const ProductsGrid = ({
               editMode={editMode}
               ethUsd={ethUsd}
               displayProduct={displayProduct}
+              externalPrices={externalPrices}
             />
           )
         })}
