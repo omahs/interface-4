@@ -20,16 +20,18 @@ const strategy = {
 const Component = ({ setPriceParams, isLimited }: StrategyProps) => {
   const [rate, setRate] = useState<"Linear" | "Logistic">("Linear")
   const [targetPrice, setTargetPrice] = useState(0)
-  const [targetPriceUsd, setTargetPriceUsd] = useState(0)
   const [priceDecayPercent, setPriceDecayPercent] = useState(0)
   const [timeFactor, setTimeFactor] = useState(0)
 
   useEffect(() => {
     if (isLimited) {
-      setPriceParams({
-        strategy: strategy[rate],
-        args: [toWad(targetPrice), toWad(priceDecayPercent), toWad(timeFactor)]
-      })
+      const newPriceParams = strategy[rate]
+      newPriceParams["args"] = [
+        toWad(targetPrice),
+        toWad(priceDecayPercent),
+        toWad(timeFactor)
+      ]
+      setPriceParams(newPriceParams)
     }
 
     return () => {
@@ -75,17 +77,19 @@ const Component = ({ setPriceParams, isLimited }: StrategyProps) => {
             />
           </div>
           <div>
-            <InputPrice
-              ethValue={targetPrice}
-              setEthValue={setTargetPrice}
-              usdValue={targetPriceUsd}
-              setUsdValue={setTargetPriceUsd}
-              label="Target price"
+            <Input
+              type="number"
+              label="Target price (ETH)"
+              placeholder={"0.01"}
+              min={0.001}
+              step={0.001}
               question={
                 <>
                   <p>Target price for the product if sold on pace.</p>
                 </>
               }
+              value={targetPrice || ""}
+              onChange={setTargetPrice}
               required
             />
           </div>
