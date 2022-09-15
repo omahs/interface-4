@@ -28,7 +28,7 @@ const Component = ({ setPriceParams, isLimited }: StrategyProps) => {
       const newPriceParams = strategy[rate]
       newPriceParams["args"] = [
         toWad(targetPrice),
-        toWad(priceDecayPercent),
+        toWad(priceDecayPercent / 100),
         toWad(timeFactor)
       ]
       setPriceParams(newPriceParams)
