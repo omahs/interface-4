@@ -168,7 +168,7 @@ export const beforeCreate = async (
   }
 }
 
-export const handleSuccess = async (
+export const useHandleSuccess = async (
   slicerId: number,
   id: string,
   eventLogs: LogDescription[],
@@ -177,6 +177,7 @@ export const handleSuccess = async (
 ) => {
   const fetcher = (await import("@utils/fetcher")).default
   const getLog = (await import("@utils/getLog")).default
+  const { useContractWrite, usePrepareContractWrite } = await import("wagmi")
 
   const eventLog = getLog(eventLogs, "ProductAdded")
   const productId = Number(eventLog[1]._hex)
@@ -194,6 +195,13 @@ export const handleSuccess = async (
   // TODO: Check this works
   if (priceParams?.address && priceParams?.abi) {
     setUploadStep(8)
+    const { config } = usePrepareContractWrite({
+      addressOrName: priceParams.address,
+      contractInterface: priceParams.abi,
+      functionName: "setProductPrice",
+      args: priceParams.args
+    })
+    const { data, isLoading, isSuccess, write } = useContractWrite(config)
   } else {
     await timeout(3500)
   }
