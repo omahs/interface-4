@@ -1,6 +1,5 @@
 import useExternalPrices from "@lib/useExternalPrices"
 import fetcher from "@utils/fetcher"
-import multicall from "@utils/multicall"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import useSWR from "swr"
@@ -91,4 +90,4 @@ const ProductsGrid = ({
 
 export default ProductsGrid
 
-// TODO: Remove `displayProduct` logic when product page is done
+// TODO: Remove `displayProduct` open modal logic when product page is done

@@ -4,13 +4,12 @@ import formatCalldata from "@utils/formatCalldata"
 import { ethers } from "ethers"
 
 export const getExternalPrices = async (
-  addresses: string[],
   args: string[],
   ids: [number, number][]
 ) => {
   const returnedPrices = {}
   const result = await multicall(
-    addresses,
+    process.env.NEXT_PUBLIC_PRODUCTS_ADDRESS,
     "productPrice(uint256,uint256,address,uint256,address,bytes)",
     args,
     false
@@ -38,7 +37,6 @@ const useExternalPrices = (account: string, products: any) => {
 
   useEffect(() => {
     const ids = []
-    const addresses = []
     const args = []
 
     if (products) {
@@ -50,7 +48,6 @@ const useExternalPrices = (account: string, products: any) => {
         ) {
           const [slicerId, productId] = product.id.split("-")
           ids.push([Number(slicerId), Number(productId)])
-          addresses.push(product.prices[0].externalAddress)
           args.push(
             formatCalldata(
               slicerId,
@@ -66,7 +63,7 @@ const useExternalPrices = (account: string, products: any) => {
     }
     const intervalId = setInterval(async () => {
       if (args.length != 0) {
-        setPrices(await getExternalPrices(addresses, args, ids))
+        setPrices(await getExternalPrices(args, ids))
       }
     }, 24000)
 

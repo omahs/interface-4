@@ -470,4 +470,4 @@ export const reload = async (
   setLoading(false)
 }
 
-// TODO: Fix reload, productIDs are wrong
+// TODO: Verify reload and cleanup work as intended

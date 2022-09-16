@@ -79,8 +79,6 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     const handleSubmit = (await import("@utils/handleSubmit")).default
     const { PayProducts } = await import("@lib/handlers/chain")
 
-    // TODO: Updated dynamic price with useExternalPrices before submitting
-
     try {
       saEvent("checkout_cart_attempt")
       setLoading(true)
@@ -93,12 +91,10 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
       if (dynamicItems.length != 0) {
         setLoadingState("Updating prices")
         const ids: [number, number][] = []
-        const externalAddresses: string[] = []
         const args = []
 
         dynamicItems.forEach((el) => {
           const { slicerId, productId, quantity } = el
-          externalAddresses.push(el.externalAddress)
           ids.push([slicerId, productId])
           args.push(
             formatCalldata(
@@ -112,11 +108,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
           )
         })
 
-        const dynamicPrices = await getExternalPrices(
-          externalAddresses,
-          args,
-          ids
-        )
+        const dynamicPrices = await getExternalPrices(args, ids)
 
         Object.entries(dynamicPrices).forEach(([slicerId, productVal]) => {
           Object.entries(productVal).forEach(([productId, currencyVal]) => {
@@ -152,8 +144,6 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
   }
   return (
     <>
-      {/* Todo: fix errors in console without breaking opacity transition */}
-      {/* {showCart && showCartList && ( */}
       <div
         className={`fixed bottom-0 mb-[80px] sm:mb-[100px] right-[20px] sm:right-[32px] transition-opacity duration-200 ${
           showCart && showCartList ? "z-50 opacity-100" : "-z-10 opacity-0"
@@ -167,15 +157,9 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
           />
         )}
       </div>
-      {/* } */}
       {(showCart || loading || success) && (
         <div
           className={`fixed z-50 bottom-0 mb-[20px] sm:mb-[32px] right-[20px] sm:right-[32px] nightwind-prevent-block transition-opacity duration-200`}
-          // ${
-          //   showCart || loading || success
-          //     ? "z-20 opacity-100"
-          //     : "-z-10 opacity-0"
-          // }
         >
           <div className="flex h-12 pl-3 overflow-hidden font-medium text-black bg-white border-2 border-transparent rounded-full shadow-base">
             <div

@@ -29,27 +29,31 @@ const PaySlicer = ({
     request: { to: slicerAddress, value }
   })
   const { data, isIdle, isError, isLoading, sendTransaction } =
-    useSendTransaction(config, {
-      onSuccess(data) {
-        let newSponsorsList = sponsorsList ? [...sponsorsList] : []
+    useSendTransaction(
+      config
+      // TODO: FIX THIS
+      //   , {
+      //   onSuccess(data) {
+      //     let newSponsorsList = sponsorsList ? [...sponsorsList] : []
 
-        const index = newSponsorsList.findIndex((el) => el.address == data.from)
+      //     const index = newSponsorsList.findIndex((el) => el.address == data.from)
 
-        if (index == -1) {
-          newSponsorsList.push({ address: data.from, amount: ethValue })
-        } else {
-          newSponsorsList[index].amount += Number(ethValue)
-        }
+      //     if (index == -1) {
+      //       newSponsorsList.push({ address: data.from, amount: ethValue })
+      //     } else {
+      //       newSponsorsList[index].amount += Number(ethValue)
+      //     }
 
-        setSponsorsList(newSponsorsList.sort((a, b) => b.amount - a.amount))
-        setEthValue(0)
-        setUsdValue(0)
+      //     setSponsorsList(newSponsorsList.sort((a, b) => b.amount - a.amount))
+      //     setEthValue(0)
+      //     setUsdValue(0)
 
-        setTimeout(() => {
-          fetcher(`/api/slicer/${slicerId}/refresh`)
-        }, 15000)
-      }
-    })
+      //     setTimeout(() => {
+      //       fetcher(`/api/slicer/${slicerId}/refresh`)
+      //     }, 15000)
+      //   }
+      // }
+    )
 
   useEffect(() => {
     if (data?.hash) {

@@ -59,5 +59,3 @@ const ListCard = ({
 }
 
 export default ListCard
-
-// todo: fix link bubble up conflicting with remove()

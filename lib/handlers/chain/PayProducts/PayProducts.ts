@@ -61,4 +61,3 @@ const PayProducts = async (
 export default PayProducts
 
 // TODO: Update so currency can be passed here
-// TODO: calculate price here when price edits are possible

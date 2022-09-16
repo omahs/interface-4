@@ -685,6 +685,5 @@ export const FINGERPRINTING_VIEW = () => {
     </>
   )
 }
-// TODO: Do not decrypt thankMessage and instructions
 
 // Todo: Add 'download all' button

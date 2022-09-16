@@ -385,5 +385,3 @@ const ProductCard = ({
 }
 
 export default ProductCard
-
-// Todo: solve absolute element not covering the whole card when content doesn't reach the end
