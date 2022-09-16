@@ -40,7 +40,8 @@ const multicall = async (
     }
   })
 
-  const results = await Promise.all(promises)
+  const results = await Promise.all(promises.map((p) => p.catch(() => "")))
+
   return results
 }
 

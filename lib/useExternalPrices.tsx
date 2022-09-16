@@ -16,15 +16,17 @@ export const getExternalPrices = async (
   )
 
   ids.forEach(([slicerId, productId], i) => {
-    const [ethPrice, currencyPrice] = [
-      result[i].slice(2, 66),
-      result[i].slice(66)
-    ]
-    if (!returnedPrices[slicerId]) returnedPrices[slicerId] = {}
-    returnedPrices[slicerId][productId] = {
-      [ethers.constants.AddressZero]: {
-        ethPrice,
-        currencyPrice
+    if (result[i]) {
+      const [ethPrice, currencyPrice] = [
+        result[i].slice(2, 66),
+        result[i].slice(66)
+      ]
+      if (!returnedPrices[slicerId]) returnedPrices[slicerId] = {}
+      returnedPrices[slicerId][productId] = {
+        [ethers.constants.AddressZero]: {
+          ethPrice,
+          currencyPrice
+        }
       }
     }
   })
