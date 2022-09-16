@@ -1,20 +1,11 @@
 import { PurchaseParamsStruct } from "types/typechain/ProductsModule"
-import { BigNumber, BytesLike, ethers, Signer } from "ethers"
-
-export type PayProductData = {
-  slicerId: string
-  productId: number
-  quantity: number
-  price: number
-  isUSD: boolean
-  extCallValue: number
-  buyerCustomData: BytesLike
-}
+import { BigNumber, ethers, Signer } from "ethers"
+import { ProductCart } from "@lib/handleUpdateCart"
 
 const PayProducts = async (
   signer: Signer,
   buyer: string,
-  productData: PayProductData[]
+  productData: ProductCart[]
 ) => {
   const { productsModule, chainlink } = await import("@lib/initProvider")
 
@@ -72,4 +63,4 @@ const PayProducts = async (
 export default PayProducts
 
 // TODO: Update so currency can be passed here
-// todo?: calculate price here when price edits are possible
+// TODO: calculate price here when price edits are possible

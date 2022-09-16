@@ -200,7 +200,10 @@ const ProductCard = ({
         price,
         editMode,
         purchasedQuantity,
-        availabilityColor
+        availabilityColor,
+        externalAddress,
+        externalPrices,
+        isCustomPriced
       }
     })
   }
@@ -357,6 +360,7 @@ const ProductCard = ({
                   allowedAddresses={allowedAddresses}
                   shortcodes={purchaseInfo?.shortcodes}
                   dbId={dbId}
+                  isCustomPriced={isCustomPriced}
                 />
               )}
             </div>

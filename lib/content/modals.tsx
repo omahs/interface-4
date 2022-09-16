@@ -24,6 +24,7 @@ import Share from "@components/icons/Share"
 import { domain } from "@components/common/Head"
 import copyText from "@utils/copyText"
 import useDecodeShortcode from "@utils/useDecodeShortcode"
+import Bolt from "@components/icons/Bolt"
 
 export type View = {
   name: ViewNames
@@ -353,7 +354,10 @@ export const PRODUCT_VIEW = (params: any) => {
     editMode,
     purchasedQuantity,
     availabilityColor,
-    preview
+    preview,
+    externalAddress,
+    externalPrices,
+    isCustomPriced
   } = params
 
   const [isCopied, setIsCopied] = useState(false)
@@ -416,9 +420,16 @@ export const PRODUCT_VIEW = (params: any) => {
           topRight={{
             title: "Product price",
             content: (
-              <p className="text-sm font-medium text-black">
-                {productPrice.usd}
-              </p>
+              <div className="flex items-center justify-center">
+                {isCustomPriced && (
+                  <div className="w-5 h-5 mr-2 -ml-1 text-yellow-500 animate-pulse">
+                    <Bolt />
+                  </div>
+                )}
+                <p className="text-sm font-medium text-black">
+                  {productPrice.usd}
+                </p>
+              </div>
             )
           }}
           bottomLeft={
@@ -447,8 +458,16 @@ export const PRODUCT_VIEW = (params: any) => {
               productCart={productCart}
               slicerAddress={slicerAddress}
               productId={productId}
-              price={price}
-              isUSD={isUSD}
+              price={
+                externalAddress && externalPrices[productId]
+                  ? parseInt(
+                      externalPrices[productId][ethers.constants.AddressZero]
+                        .ethPrice,
+                      16
+                    ).toString()
+                  : price
+              }
+              isUSD={externalAddress ? false : isUSD}
               extAddress={extAddress}
               extCallValue={extValue}
               extCheckSig={extCheckSig}
@@ -466,6 +485,7 @@ export const PRODUCT_VIEW = (params: any) => {
               preview={preview}
               shortcodes={purchaseInfo?.shortcodes}
               dbId={dbId}
+              isCustomPriced={isCustomPriced}
             />
           </div>
         )}
@@ -483,6 +503,25 @@ export const PRODUCT_VIEW = (params: any) => {
               }`}
             </p>
           )}
+        {isCustomPriced && (
+          <p className="pt-6 mx-auto text-sm text-center">
+            Price dynamically calculated from{" "}
+            <a
+              className="font-bold highlight"
+              href={`https://${
+                process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
+              }etherscan.io/address/${externalAddress}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {externalAddress.replace(
+                externalAddress.substring(5, externalAddress.length - 3),
+                `\xa0\xa0\xa0\xa0\xa0\xa0`
+              )}
+            </a>
+          </p>
+          // TODO: Specify strategy, if known
+        )}
         {extAddress &&
         extAddress != "0x00000000" &&
         extAddress != ethers.constants.AddressZero &&

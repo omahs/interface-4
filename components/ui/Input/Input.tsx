@@ -41,7 +41,7 @@ const Input: React.FC<Props> = (props) => {
     ...rest
   } = props
 
-  const rootClassName = `peer py-2 pl-5 w-full appearance-none transition-all duration-150 rounded-t-sm ${
+  const rootClassName = `peer py-2 pl-5 w-full appearance-none rounded-t-sm ${
     !prefix && !error ? "shadow-light-focusable" : ""
   } ease-in-out pr-3 border-t-0 border-r-0 border-l-0 border-b-[3px] focus:outline-none ${className} ${
     error
@@ -83,7 +83,7 @@ const Input: React.FC<Props> = (props) => {
       >
         {onClick && (
           <div
-            className={`relative text-sm font-medium group flex items-center justify-center px-5 transition-colors duration-150 text-white nightwind-prevent ${
+            className={`relative text-sm font-medium group flex items-center justify-center px-5 text-white nightwind-prevent ${
               error
                 ? "cursor-pointer shadow-error bg-red-500"
                 : `bg-blue-600 ${
@@ -126,7 +126,7 @@ const Input: React.FC<Props> = (props) => {
         ></input>
         {prefix && (
           <div
-            className={`flex transition duration-150 items-center justify-center px-5 text-gray-600 bg-gray-200 dark:bg-gray-700 border-b-[3px] ${
+            className={`flex items-center justify-center px-5 text-gray-600 bg-gray-200 dark:bg-gray-700 border-b-[3px] ${
               error
                 ? "border-red-400 peer-focus:border-red-400 dark:peer-focus:border-red-500 shadow-error"
                 : !disabled && !loading

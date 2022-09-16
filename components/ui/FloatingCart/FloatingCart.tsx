@@ -75,6 +75,8 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     const handleSubmit = (await import("@utils/handleSubmit")).default
     const { PayProducts } = await import("@lib/handlers/chain")
 
+    // TODO: Updated dynamic price with useExternalPrices before submitting
+
     try {
       saEvent("checkout_cart_attempt")
       setLoading(true)
@@ -149,7 +151,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
             <ConnectButton.Custom>
               {({ account, openConnectModal }) => (
                 <div
-                  className={`flex items-center h-full px-4 text-sm text-white transition-colors duration-150 bg-blue-600 ${
+                  className={`flex items-center h-full px-4 text-sm text-white bg-blue-600 ${
                     !loading ? "cursor-pointer hover:bg-green-500" : ""
                   } nightwind-prevent`}
                   onClick={

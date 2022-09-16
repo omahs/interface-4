@@ -12,6 +12,7 @@ export type ProductCart = {
   extCallValue: number
   buyerCustomData: BytesLike
   name: string
+  isCustomPriced: boolean
 }
 
 const handleUpdateCart = async (
@@ -28,7 +29,8 @@ const handleUpdateCart = async (
   extCallValue: string,
   buyerCustomData: BytesLike,
   name: string,
-  newQuantity: number
+  newQuantity: number,
+  isCustomPriced: boolean
 ) => {
   const newCookies = cookies?.cart || []
   if (newQuantity > 0) {
@@ -52,7 +54,8 @@ const handleUpdateCart = async (
         isUSD,
         extCallValue,
         buyerCustomData,
-        name
+        name,
+        isCustomPriced
       }
     } else {
       newCookies.splice(index, 1)
@@ -68,7 +71,8 @@ const handleUpdateCart = async (
       isUSD,
       extCallValue,
       buyerCustomData,
-      name
+      name,
+      isCustomPriced
     })
   }
   setCookie("cart", newCookies)

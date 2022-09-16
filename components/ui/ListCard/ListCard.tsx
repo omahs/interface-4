@@ -1,22 +1,38 @@
 import Link from "next/link"
 import Delete from "@components/icons/Delete"
 import React from "react"
+import Bolt from "@components/icons/Bolt"
 
 type Props = {
   label: string
   sideLabel: string
   subLabel: string
+  isCustomPriced: boolean
   href?: string
   remove?: () => void
 }
 
-const ListCard = ({ label, sideLabel, subLabel, href, remove }: Props) => {
+const ListCard = ({
+  label,
+  sideLabel,
+  subLabel,
+  href,
+  remove,
+  isCustomPriced
+}: Props) => {
   const content = (
     <div className="grid items-center h-16 grid-cols-5 pl-4 pr-2 bg-white border border-gray-100 shadow-base rounded-xl">
       <div className="flex justify-center text-xs text-center">{sideLabel}</div>
       <div className="col-span-3 px-1 ml-2 text-left">
         <p className="text-sm font-medium truncate sm:text-base">{label}</p>
-        <p className="text-sm text-gray-400">{subLabel}</p>
+        <div className="flex items-center">
+          <p className="text-sm text-gray-400">{subLabel}</p>
+          {isCustomPriced && (
+            <div className="w-4 h-4 ml-2 text-yellow-500 animate-pulse">
+              <Bolt />
+            </div>
+          )}
+        </div>
       </div>
       <div className="flex justify-center">
         <Delete
