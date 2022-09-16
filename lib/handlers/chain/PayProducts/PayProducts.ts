@@ -29,14 +29,12 @@ const PayProducts = async (
         buyerCustomData
       } = product
       const currentPrice = totalPrice || 0
-      const weiPrice = isUSD
+      const productPrice = isUSD
         ? BigNumber.from(price)
             .mul(BigNumber.from(10).pow(24))
             .div(ethUsd)
             .add(extCallValue)
         : BigNumber.from(price).add(extCallValue)
-
-      const productPrice = weiPrice.mul(quantity)
 
       purchaseParams.push({
         slicerId,

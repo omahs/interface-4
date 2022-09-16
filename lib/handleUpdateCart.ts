@@ -57,9 +57,9 @@ const handleUpdateCart = async (
         slicerAddress,
         productId,
         quantity,
-        price: price || "0",
+        price: price ? String(Number(price) * quantity) : "0",
         isUSD,
-        extCallValue,
+        extCallValue: String(Number(extCallValue) * quantity),
         buyerCustomData,
         name,
         externalAddress: formattedAddress
@@ -74,9 +74,9 @@ const handleUpdateCart = async (
       slicerAddress,
       productId,
       quantity,
-      price: price || "0",
+      price: price ? String(Number(price) * quantity) : "0",
       isUSD,
-      extCallValue,
+      extCallValue: String(Number(extCallValue) * quantity),
       buyerCustomData,
       name,
       externalAddress: formattedAddress

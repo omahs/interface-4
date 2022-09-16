@@ -25,8 +25,8 @@ const CartList = ({ cookieCart, ethUsd, setCookie }: Props) => {
           externalAddress
         } = product
         const productPrice = isUSD
-          ? Math.floor((price * 100) / Number(ethUsd?.price)) / 10000
-          : Math.floor(price / 10 ** 14) / 10000
+          ? Math.floor((Number(price) * 100) / Number(ethUsd?.price)) / 10000
+          : Math.floor(Number(price) / 10 ** 14) / 10000
         const externalCallEth = utils.formatEther(extCallValue)
 
         const index = cookieCart.findIndex(
@@ -40,15 +40,18 @@ const CartList = ({ cookieCart, ethUsd, setCookie }: Props) => {
           setCookie("cart", newCookies)
         }
 
+        const formattedPrice =
+          Math.floor((Number(productPrice) + Number(externalCallEth)) * 10000) /
+          10000
+
         return (
           <ListCard
             key={key}
             label={name}
             sideLabel={`${slicerId} / #${productId}`}
-            subLabel={`Ξ ${
-              Math.floor((productPrice + Number(externalCallEth)) * 10000) /
-              10000
-            }${quantity != 1 ? ` x ${quantity}` : ""}`}
+            subLabel={`Ξ ${formattedPrice}${
+              quantity != 1 ? ` (${quantity})` : ""
+            }`}
             href={`/slicer/${slicerId}?product=${productId}`}
             remove={() => handleRemove()}
             externalAddress={externalAddress}

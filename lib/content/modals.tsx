@@ -459,15 +459,18 @@ export const PRODUCT_VIEW = (params: any) => {
               slicerAddress={slicerAddress}
               productId={productId}
               price={
-                externalAddress && externalPrices[productId]
+                isCustomPriced &&
+                externalPrices[slicerId] &&
+                externalPrices[slicerId][productId]
                   ? parseInt(
-                      externalPrices[productId][ethers.constants.AddressZero]
-                        .ethPrice,
+                      externalPrices[slicerId][productId][
+                        ethers.constants.AddressZero
+                      ].ethPrice,
                       16
                     ).toString()
                   : price
               }
-              isUSD={externalAddress ? false : isUSD}
+              isUSD={isCustomPriced ? false : isUSD}
               extAddress={extAddress}
               extCallValue={extValue}
               extCheckSig={extCheckSig}

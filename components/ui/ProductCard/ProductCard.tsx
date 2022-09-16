@@ -338,7 +338,7 @@ const ProductCard = ({
                   slicerAddress={slicerAddress}
                   productId={productId}
                   price={
-                    externalAddress &&
+                    isCustomPriced &&
                     externalPrices[slicerId] &&
                     externalPrices[slicerId][productId]
                       ? parseInt(
@@ -349,7 +349,7 @@ const ProductCard = ({
                         ).toString()
                       : price
                   }
-                  isUSD={externalAddress ? false : isUSD}
+                  isUSD={isCustomPriced ? false : isUSD}
                   extAddress={extAddress}
                   extCallValue={extValue}
                   extCheckSig={extCheckSig}

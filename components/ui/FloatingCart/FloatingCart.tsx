@@ -34,6 +34,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
   const [showCartList, setShowCartList] = useState(false)
   const [showCart, setShowCart] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [loadingState, setLoadingState] = useState("")
   const [message, setMessage] = useState<Message>({
     message: "",
     messageStatus: "success"
@@ -45,12 +46,12 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
   )
 
   const reducer = (previousValue: number, currentValue: ProductCart) => {
-    const { quantity, price, isUSD, extCallValue } = currentValue
+    const { price, isUSD, extCallValue } = currentValue
     const productPrice = isUSD
       ? Math.floor((Number(price) * 100) / Number(ethUsd?.price)) / 10000
       : Math.floor(Number(price) / 10 ** 14) / 10000
     const externalCallEth = utils.formatEther(extCallValue)
-    return previousValue + (productPrice + Number(externalCallEth)) * quantity
+    return previousValue + Number(productPrice) + Number(externalCallEth)
   }
   const totalPrice: number = cookieCart?.reduce(reducer, 0) || 0
 
@@ -83,52 +84,55 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     try {
       saEvent("checkout_cart_attempt")
       setLoading(true)
+      const updatedCart = cookieCart
 
       const dynamicItems = cookieCart.filter(
         (el) => el.externalAddress != ethers.constants.AddressZero
       )
 
-      const ids: [number, number][] = []
-      const externalAddresses: string[] = []
-      const args = []
+      if (dynamicItems.length != 0) {
+        setLoadingState("Updating prices")
+        const ids: [number, number][] = []
+        const externalAddresses: string[] = []
+        const args = []
 
-      const updatedCart = cookieCart
-
-      dynamicItems.forEach((el) => {
-        const { slicerId, productId, quantity } = el
-        externalAddresses.push(el.externalAddress)
-        ids.push([slicerId, productId])
-        args.push(
-          formatCalldata(
-            decimalToHex(slicerId),
-            decimalToHex(productId),
-            ethers.constants.AddressZero,
-            decimalToHex(quantity),
-            account,
-            "0x"
+        dynamicItems.forEach((el) => {
+          const { slicerId, productId, quantity } = el
+          externalAddresses.push(el.externalAddress)
+          ids.push([slicerId, productId])
+          args.push(
+            formatCalldata(
+              decimalToHex(slicerId),
+              decimalToHex(productId),
+              ethers.constants.AddressZero,
+              decimalToHex(quantity),
+              account,
+              "0x"
+            )
           )
-        )
-      })
-
-      const dynamicPrices = await getExternalPrices(
-        externalAddresses,
-        args,
-        ids
-      )
-
-      Object.entries(dynamicPrices).forEach(([slicerId, productVal]) => {
-        Object.entries(productVal).forEach(([productId, currencyVal]) => {
-          const ethPrice = currencyVal[ethers.constants.AddressZero].ethPrice
-          const index = updatedCart.findIndex(
-            (el) =>
-              el.slicerId == Number(slicerId) &&
-              el.productId == Number(productId)
-          )
-          updatedCart[index].price = parseInt(ethPrice, 16).toString()
         })
-      })
 
-      setCookie("cart", updatedCart)
+        const dynamicPrices = await getExternalPrices(
+          externalAddresses,
+          args,
+          ids
+        )
+
+        Object.entries(dynamicPrices).forEach(([slicerId, productVal]) => {
+          Object.entries(productVal).forEach(([productId, currencyVal]) => {
+            const ethPrice = currencyVal[ethers.constants.AddressZero].ethPrice
+            const index = updatedCart.findIndex(
+              (el) =>
+                el.slicerId == Number(slicerId) &&
+                el.productId == Number(productId)
+            )
+            updatedCart[index].price = "0x" + ethPrice
+          })
+        })
+
+        setCookie("cart", updatedCart)
+        setLoadingState("")
+      }
 
       await handleSubmit(
         PayProducts(signer, account, updatedCart),
@@ -146,7 +150,6 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
       console.log(err)
     }
   }
-
   return (
     <>
       {/* Todo: fix errors in console without breaking opacity transition */}
@@ -203,7 +206,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
             <ConnectButton.Custom>
               {({ account, openConnectModal }) => (
                 <div
-                  className={`flex items-center h-full px-4 text-sm text-white bg-blue-600 ${
+                  className={`flex items-center h-full min-w-[80px] px-6 text-sm text-white bg-blue-600 ${
                     !loading ? "cursor-pointer hover:bg-green-500" : ""
                   } nightwind-prevent`}
                   onClick={
@@ -216,12 +219,15 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
                 >
                   {success ? (
                     <Link href="/purchases">
-                      <a className="px-2 text-white hover:text-white">
+                      <a className="text-white hover:text-white">
                         Go to purchases
                       </a>
                     </Link>
                   ) : loading ? (
-                    <div className="px-4">
+                    <div className="flex items-center justify-center w-full">
+                      {loadingState && (
+                        <p className="pr-4 text-sm">{loadingState}</p>
+                      )}
                       <Spinner color="text-white" />
                     </div>
                   ) : (
@@ -229,7 +235,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
                       <p className="pr-2 text-sm ">
                         {account ? "Checkout" : "Connect"}
                       </p>
-                      <ShoppingBag className="w-[18px] h-[18px]" />{" "}
+                      <ShoppingBag className="w-[18px] h-[18px]" />
                     </>
                   )}
                 </div>
