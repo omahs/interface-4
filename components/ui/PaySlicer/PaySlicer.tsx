@@ -5,6 +5,7 @@ import { BigNumber } from "ethers"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { AddressAmount } from "pages/slicer/[id]"
 import fetcher from "@utils/fetcher"
+import { useAppContext } from "../context"
 
 type Props = {
   slicerId: string
@@ -19,6 +20,7 @@ const PaySlicer = ({
   sponsorsList,
   setSponsorsList
 }: Props) => {
+  const { account } = useAppContext()
   const addRecentTransaction = useAddRecentTransaction()
   const [usdValue, setUsdValue] = useState(0)
   const [ethValue, setEthValue] = useState(0)
@@ -28,32 +30,28 @@ const PaySlicer = ({
   const { config } = usePrepareSendTransaction({
     request: { to: slicerAddress, value }
   })
-  const { data, isIdle, isError, isLoading, sendTransaction } =
-    useSendTransaction(
-      config
-      // TODO: FIX THIS
-      //   , {
-      //   onSuccess(data) {
-      //     let newSponsorsList = sponsorsList ? [...sponsorsList] : []
+  const { data, isLoading, sendTransaction } = useSendTransaction({
+    ...config,
+    onSettled() {
+      let newSponsorsList = sponsorsList ? [...sponsorsList] : []
 
-      //     const index = newSponsorsList.findIndex((el) => el.address == data.from)
+      const index = newSponsorsList.findIndex((el) => el.address == account)
 
-      //     if (index == -1) {
-      //       newSponsorsList.push({ address: data.from, amount: ethValue })
-      //     } else {
-      //       newSponsorsList[index].amount += Number(ethValue)
-      //     }
+      if (index == -1) {
+        newSponsorsList.push({ address: account, amount: ethValue })
+      } else {
+        newSponsorsList[index].amount += Number(ethValue)
+      }
 
-      //     setSponsorsList(newSponsorsList.sort((a, b) => b.amount - a.amount))
-      //     setEthValue(0)
-      //     setUsdValue(0)
+      setSponsorsList(newSponsorsList.sort((a, b) => b.amount - a.amount))
+      setEthValue(0)
+      setUsdValue(0)
 
-      //     setTimeout(() => {
-      //       fetcher(`/api/slicer/${slicerId}/refresh`)
-      //     }, 15000)
-      //   }
-      // }
-    )
+      setTimeout(() => {
+        fetcher(`/api/slicer/${slicerId}/refresh`)
+      }, 15000)
+    }
+  })
 
   useEffect(() => {
     if (data?.hash) {
@@ -79,5 +77,3 @@ const PaySlicer = ({
 }
 
 export default PaySlicer
-
-// TODO: Figure out why onSuccess is triggered when tx is sent, not when it's successful
