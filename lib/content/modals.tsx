@@ -485,7 +485,7 @@ export const PRODUCT_VIEW = (params: any) => {
               preview={preview}
               shortcodes={purchaseInfo?.shortcodes}
               dbId={dbId}
-              isCustomPriced={isCustomPriced}
+              externalAddress={externalAddress}
             />
           </div>
         )}

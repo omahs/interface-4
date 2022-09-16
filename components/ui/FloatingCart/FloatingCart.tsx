@@ -11,11 +11,14 @@ import useSWR from "swr"
 import { CartList } from ".."
 import { useAppContext } from "../context"
 import { updatePurchases } from "@utils/getPurchases"
-import { utils } from "ethers"
+import { ethers, utils } from "ethers"
 import { ConnectButton, useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { useSigner } from "wagmi"
 import saEvent from "@utils/saEvent"
 import Cross from "@components/icons/Cross"
+import { getExternalPrices } from "@lib/useExternalPrices"
+import formatCalldata from "@utils/formatCalldata"
+import decimalToHex from "@utils/decimalToHex"
 
 type Props = {
   cookieCart: ProductCart[]
@@ -44,8 +47,8 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
   const reducer = (previousValue: number, currentValue: ProductCart) => {
     const { quantity, price, isUSD, extCallValue } = currentValue
     const productPrice = isUSD
-      ? Math.floor((price * 100) / Number(ethUsd?.price)) / 10000
-      : Math.floor(price / 10 ** 14) / 10000
+      ? Math.floor((Number(price) * 100) / Number(ethUsd?.price)) / 10000
+      : Math.floor(Number(price) / 10 ** 14) / 10000
     const externalCallEth = utils.formatEther(extCallValue)
     return previousValue + (productPrice + Number(externalCallEth)) * quantity
   }
@@ -80,8 +83,55 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     try {
       saEvent("checkout_cart_attempt")
       setLoading(true)
+
+      const dynamicItems = cookieCart.filter(
+        (el) => el.externalAddress != ethers.constants.AddressZero
+      )
+
+      const ids: [number, number][] = []
+      const externalAddresses: string[] = []
+      const args = []
+
+      const updatedCart = cookieCart
+
+      dynamicItems.forEach((el) => {
+        const { slicerId, productId, quantity } = el
+        externalAddresses.push(el.externalAddress)
+        ids.push([slicerId, productId])
+        args.push(
+          formatCalldata(
+            decimalToHex(slicerId),
+            decimalToHex(productId),
+            ethers.constants.AddressZero,
+            decimalToHex(quantity),
+            account,
+            "0x"
+          )
+        )
+      })
+
+      const dynamicPrices = await getExternalPrices(
+        externalAddresses,
+        args,
+        ids
+      )
+
+      Object.entries(dynamicPrices).forEach(([slicerId, productVal]) => {
+        Object.entries(productVal).forEach(([productId, currencyVal]) => {
+          const ethPrice = currencyVal[ethers.constants.AddressZero].ethPrice
+          const index = updatedCart.findIndex(
+            (el) =>
+              el.slicerId == Number(slicerId) &&
+              el.productId == Number(productId)
+          )
+          updatedCart[index].price = parseInt(ethPrice, 16).toString()
+        })
+      })
+
+      setCookie("cart", updatedCart)
+
       await handleSubmit(
-        PayProducts(signer, account, cookieCart),
+        PayProducts(signer, account, updatedCart),
         setMessage,
         setLoading,
         setSuccess,
@@ -106,11 +156,13 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
           showCart && showCartList ? "z-50 opacity-100" : "-z-10 opacity-0"
         }`}
       >
-        <CartList
-          cookieCart={cookieCart}
-          ethUsd={ethUsd}
-          setCookie={setCookie}
-        />
+        {showCartList && (
+          <CartList
+            cookieCart={cookieCart}
+            ethUsd={ethUsd}
+            setCookie={setCookie}
+          />
+        )}
       </div>
       {/* } */}
       {(showCart || loading || success) && (

@@ -44,7 +44,7 @@ type Props = {
   labelRemove?: string
   preview?: boolean
   shortcodes?: string[]
-  isCustomPriced: boolean
+  externalAddress?: string
 }
 
 const CartButton = ({
@@ -71,7 +71,7 @@ const CartButton = ({
   labelRemove,
   preview,
   shortcodes,
-  isCustomPriced
+  externalAddress
 }: Props) => {
   const { account, setModalView } = useAppContext()
   const provider = useProvider()
@@ -198,7 +198,7 @@ const CartButton = ({
               buyerCustomData,
               name,
               1,
-              isCustomPriced
+              externalAddress
             ))
           }
         >
@@ -287,7 +287,7 @@ const CartButton = ({
             buyerCustomData,
             name,
             1,
-            isCustomPriced
+            externalAddress
           ))
         }
       >
@@ -315,7 +315,7 @@ const CartButton = ({
             buyerCustomData,
             name,
             -1,
-            isCustomPriced
+            externalAddress
           )
         }
       >
@@ -348,7 +348,7 @@ const CartButton = ({
             buyerCustomData,
             name,
             1,
-            isCustomPriced
+            externalAddress
           ))
         }
       >
@@ -372,7 +372,7 @@ const CartButton = ({
           buyerCustomData,
           name,
           -1,
-          isCustomPriced
+          externalAddress
         )
       }
     >

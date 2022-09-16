@@ -3,40 +3,41 @@ import multicall from "@utils/multicall"
 import formatCalldata from "@utils/formatCalldata"
 import { ethers } from "ethers"
 
+export const getExternalPrices = async (
+  addresses: string[],
+  args: string[],
+  ids: [number, number][]
+) => {
+  const returnedPrices = {}
+  const result = await multicall(
+    addresses,
+    "productPrice(uint256,uint256,address,uint256,address,bytes)",
+    args,
+    false
+  )
+
+  ids.forEach(([slicerId, productId], i) => {
+    const [ethPrice, currencyPrice] = [
+      result[i].slice(2, 66),
+      result[i].slice(66)
+    ]
+    if (!returnedPrices[slicerId]) returnedPrices[slicerId] = {}
+    returnedPrices[slicerId][productId] = {
+      [ethers.constants.AddressZero]: {
+        ethPrice,
+        currencyPrice
+      }
+    }
+  })
+
+  return returnedPrices
+}
+
 const useExternalPrices = (account: string, products: any) => {
   const [prices, setPrices] = useState({})
 
-  const getExternalPrices = async (
-    addresses: string[],
-    args: string[],
-    productIds: number[]
-  ) => {
-    const returnedPrices = {}
-    const result = await multicall(
-      addresses,
-      "productPrice(uint256,uint256,address,uint256,address,bytes)",
-      args,
-      false
-    )
-
-    productIds.forEach((productId, i) => {
-      const [ethPrice, currencyPrice] = [
-        result[i].slice(2, 66),
-        result[i].slice(66)
-      ]
-      returnedPrices[productId] = {
-        [ethers.constants.AddressZero]: {
-          ethPrice,
-          currencyPrice
-        }
-      }
-    })
-
-    setPrices(returnedPrices)
-  }
-
   useEffect(() => {
-    const productIds = []
+    const ids = []
     const addresses = []
     const args = []
 
@@ -48,7 +49,7 @@ const useExternalPrices = (account: string, products: any) => {
           product.prices[0].externalAddress != ethers.constants.AddressZero
         ) {
           const [slicerId, productId] = product.id.split("-")
-          productIds.push(Number(productId))
+          ids.push([Number(slicerId), Number(productId)])
           addresses.push(product.prices[0].externalAddress)
           args.push(
             formatCalldata(
@@ -65,7 +66,7 @@ const useExternalPrices = (account: string, products: any) => {
     }
     const intervalId = setInterval(async () => {
       if (args.length != 0) {
-        getExternalPrices(addresses, args, productIds)
+        setPrices(await getExternalPrices(addresses, args, ids))
       }
     }, 24000)
 

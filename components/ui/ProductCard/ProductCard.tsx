@@ -96,9 +96,11 @@ const ProductCard = ({
   const extExecSig = chainInfo?.extExecSig
 
   const totalPrice = isCustomPriced
-    ? externalPrices[productId] &&
+    ? externalPrices[slicerId] &&
+      externalPrices[slicerId][productId] &&
       parseInt(
-        externalPrices[productId][ethers.constants.AddressZero].ethPrice,
+        externalPrices[slicerId][productId][ethers.constants.AddressZero]
+          .ethPrice,
         16
       ) + Number(extValue)
     : (price ? Number(price) : 0) + (extValue ? Number(extValue) : 0)
@@ -119,7 +121,9 @@ const ProductCard = ({
   const productPrice = chainInfo
     ? ethPrice || extValue
       ? isCustomPriced
-        ? externalPrices && externalPrices[productId]
+        ? externalPrices &&
+          externalPrices[slicerId] &&
+          externalPrices[slicerId][productId]
           ? {
               eth: formattedEthPrice,
               usd: `$ ${convertedEthUsd}`
@@ -334,9 +338,11 @@ const ProductCard = ({
                   slicerAddress={slicerAddress}
                   productId={productId}
                   price={
-                    externalAddress && externalPrices[productId]
+                    externalAddress &&
+                    externalPrices[slicerId] &&
+                    externalPrices[slicerId][productId]
                       ? parseInt(
-                          externalPrices[productId][
+                          externalPrices[slicerId][productId][
                             ethers.constants.AddressZero
                           ].ethPrice,
                           16
@@ -360,7 +366,7 @@ const ProductCard = ({
                   allowedAddresses={allowedAddresses}
                   shortcodes={purchaseInfo?.shortcodes}
                   dbId={dbId}
-                  isCustomPriced={isCustomPriced}
+                  externalAddress={externalAddress}
                 />
               )}
             </div>

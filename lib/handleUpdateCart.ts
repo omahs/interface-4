@@ -1,18 +1,18 @@
 import saEvent from "@utils/saEvent"
-import { BytesLike } from "ethers"
+import { BytesLike, ethers } from "ethers"
 import { CookieSetOptions } from "universal-cookie"
 
 export type ProductCart = {
-  slicerId: string
+  slicerId: number
   slicerAddress: string
   productId: number
   quantity: number
-  price: number
+  price: string
   isUSD: boolean
   extCallValue: number
   buyerCustomData: BytesLike
   name: string
-  isCustomPriced: boolean
+  externalAddress: string
 }
 
 const handleUpdateCart = async (
@@ -30,9 +30,16 @@ const handleUpdateCart = async (
   buyerCustomData: BytesLike,
   name: string,
   newQuantity: number,
-  isCustomPriced: boolean
+  externalAddress?: string
 ) => {
   const newCookies = cookies?.cart || []
+  const formattedAddress =
+    externalAddress &&
+    externalAddress != "0x00000000" &&
+    externalAddress != ethers.constants.AddressZero
+      ? externalAddress
+      : ethers.constants.AddressZero
+
   if (newQuantity > 0) {
     saEvent("add_product_to_cart")
   } else {
@@ -55,7 +62,7 @@ const handleUpdateCart = async (
         extCallValue,
         buyerCustomData,
         name,
-        isCustomPriced
+        externalAddress: formattedAddress
       }
     } else {
       newCookies.splice(index, 1)
@@ -72,7 +79,7 @@ const handleUpdateCart = async (
       extCallValue,
       buyerCustomData,
       name,
-      isCustomPriced
+      externalAddress: formattedAddress
     })
   }
   setCookie("cart", newCookies)
