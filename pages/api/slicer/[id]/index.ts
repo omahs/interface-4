@@ -124,6 +124,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             `
           })
 
+          // TODO: Switch this query from subgraph to Alchemy tokenAPI
+
           const totalReceived = getEthFromWei(data.slicer.ethReceived, true)
 
           slicerInfo.attributes.push({
