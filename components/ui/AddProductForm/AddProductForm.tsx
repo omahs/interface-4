@@ -207,9 +207,10 @@ const AddProductForm = ({
       if (eventLogs) {
         saEvent("create_product_success")
         setLogs(eventLogs)
-        setUploadStep(11)
 
         if (!isCustomPriced) {
+          setUploadStep(11)
+
           setTimeout(() => {
             setUploadStep(12)
           }, 3000)
