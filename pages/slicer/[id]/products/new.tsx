@@ -45,7 +45,7 @@ export default function NewProduct() {
           uploadPct,
           setModalView,
           cloneAddress,
-          isCustomPriced: priceParams?.abi != undefined
+          strategyLabel: priceParams?.label
         }
       })
     }

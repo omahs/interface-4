@@ -1,36 +1,41 @@
-import { CardBasic, Input, InputPrice } from "@components/ui"
+import { CardBasic, Input } from "@components/ui"
 import toWad from "@utils/toWad"
 import { useEffect, useState } from "react"
-import { Strategy, StrategyProps } from "../strategies"
-import linearVrgdaInterface from "./LinearVRGDAPrices.json"
+import {
+  strategiesList,
+  Strategy,
+  StrategyParams,
+  StrategyProps
+} from "../strategies"
+
+type VRGDAStrategyProps = StrategyProps & {
+  isLimited: boolean
+}
 
 const label = "VRGDA"
 
-const strategy = {
-  Linear: {
-    address: "",
-    abi: linearVrgdaInterface.abi
-  },
-  Logistic: {
-    address: "",
-    abi: linearVrgdaInterface.abi
-  }
-}
-
-const Component = ({ setPriceParams, isLimited }: StrategyProps) => {
+const Component = ({ setPriceParams, isLimited }: VRGDAStrategyProps) => {
   const [rate, setRate] = useState<"Linear" | "Logistic">("Linear")
   const [targetPrice, setTargetPrice] = useState(0)
   const [priceDecayPercent, setPriceDecayPercent] = useState(0)
   const [timeFactor, setTimeFactor] = useState(0)
+  const strategy = strategiesList[rate + label]
 
   useEffect(() => {
     if (isLimited) {
-      const newPriceParams = strategy[rate]
-      newPriceParams["args"] = [
-        toWad(targetPrice),
-        toWad(priceDecayPercent / 100),
-        toWad(timeFactor)
-      ]
+      const { label, abi, deployments } = strategy
+
+      let newPriceParams: StrategyParams = {
+        label,
+        address: deployments[process.env.NEXT_PUBLIC_CHAIN_ID],
+        abi,
+        args: [
+          toWad(targetPrice),
+          toWad(priceDecayPercent / 100),
+          toWad(timeFactor)
+        ]
+      }
+
       setPriceParams(newPriceParams)
     }
 

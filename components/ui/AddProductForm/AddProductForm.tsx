@@ -169,7 +169,7 @@ const AddProductForm = ({
       // Create product on smart contract
       const weiValue = ethToWei(ethValue)
       const productPrice = isUSD ? Math.floor(usdValue * 100) : weiValue
-      const isCustomPriced = priceParams?.abi != undefined
+      const isStrategyConfigurable = priceParams?.abi != undefined
       const currencyPrices =
         productPrice != 0 || priceParams?.address
           ? [
@@ -184,7 +184,7 @@ const AddProductForm = ({
           : []
 
       const productParams: ProductParamsStruct = {
-        isFree: isCustomPriced ? false : isFree,
+        isFree: priceParams?.address ? false : isFree,
         maxUnitsPerBuyer: maxUnits,
         isInfinite: !isLimited,
         availableUnits: units,
@@ -200,7 +200,7 @@ const AddProductForm = ({
         setMessage,
         null,
         null,
-        !isCustomPriced,
+        !isStrategyConfigurable,
         addRecentTransaction,
         `Create product | Slicer #${slicerId}`
       )
@@ -208,7 +208,7 @@ const AddProductForm = ({
         saEvent("create_product_success")
         setLogs(eventLogs)
 
-        if (!isCustomPriced) {
+        if (!isStrategyConfigurable) {
           setUploadStep(11)
 
           setTimeout(() => {

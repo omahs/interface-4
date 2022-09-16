@@ -25,6 +25,7 @@ import { domain } from "@components/common/Head"
 import copyText from "@utils/copyText"
 import useDecodeShortcode from "@utils/useDecodeShortcode"
 import Bolt from "@components/icons/Bolt"
+import { strategiesList } from "@components/priceStrategies/strategies"
 
 export type View = {
   name: ViewNames
@@ -212,7 +213,7 @@ export const CREATE_PRODUCT_CONFIRM_VIEW = (params: any) => {
 }
 
 export const CREATE_PRODUCT_VIEW = (params: any) => {
-  const { uploadStep, uploadPct, setModalView, cloneAddress, isCustomPriced } =
+  const { uploadStep, uploadPct, setModalView, cloneAddress, strategyLabel } =
     params
   const processing = uploadStep !== 10
 
@@ -240,7 +241,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
       uploadState = "Transaction in progress ..."
       break
     case 8:
-      uploadState = "Configuring pricing strategy ..."
+      uploadState = `Configuring ${strategyLabel} ...`
       break
     case 9:
       uploadState = "Reverting"
@@ -294,17 +295,17 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
         />
         <LoadingStep
           nullCondition={uploadStep < 7}
-          initCondition={isCustomPriced ? uploadStep < 8 : processing}
+          initCondition={strategyLabel ? uploadStep < 8 : processing}
           uploadState={uploadState}
           waitingState="Blockchain interaction"
-          endState={isCustomPriced && "Done"}
+          endState={strategyLabel && "Done"}
         />
-        {isCustomPriced && (
+        {strategyLabel && (
           <LoadingStep
             nullCondition={uploadStep < 8}
             initCondition={processing}
             uploadState={uploadState}
-            waitingState="Pricing configuration"
+            waitingState="Pricing strategy"
           />
         )}
       </div>
@@ -370,6 +371,12 @@ export const PRODUCT_VIEW = (params: any) => {
     (el) => purchaseInfo[el] == true
   )
   const purchaseEl = purchaseElArray.join(", ")
+
+  const strategy = Object.values(strategiesList).find(
+    (val) =>
+      String(val.deployments[process.env.NEXT_PUBLIC_CHAIN_ID]).toLowerCase() ==
+      externalAddress
+  )
 
   useEffect(() => {
     saEvent("product_view_open_modal")
@@ -521,9 +528,9 @@ export const PRODUCT_VIEW = (params: any) => {
                 externalAddress.substring(5, externalAddress.length - 3),
                 `\xa0\xa0\xa0\xa0\xa0\xa0`
               )}
-            </a>
+            </a>{" "}
+            {strategy && `(${strategy.label})`}
           </p>
-          // TODO: Specify strategy, if known
         )}
         {extAddress &&
         extAddress != "0x00000000" &&

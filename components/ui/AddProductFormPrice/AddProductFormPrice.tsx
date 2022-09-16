@@ -1,7 +1,7 @@
 import { useState, Dispatch, SetStateAction } from "react"
 import { InputPrice, InputSwitch, CardBasic } from "@components/ui"
 import {
-  strategiesList,
+  strategiesRender,
   Strategy
 } from "@components/priceStrategies/strategies"
 
@@ -29,21 +29,23 @@ const AddProductFormPrice = ({
   setPriceParams
 }: Props) => {
   const [priceStrategy, setPriceStrategy] = useState<Strategy>(
-    strategiesList[0]
+    strategiesRender[0]
   )
 
   const StrategyComponent =
     priceStrategy != undefined && priceStrategy.Component
 
   const handleSetStrategy = (label: string) => {
-    setPriceStrategy(strategiesList.find((strategy) => strategy.label == label))
+    setPriceStrategy(
+      strategiesRender.find((strategy) => strategy.label == label)
+    )
   }
 
   return (
     <>
       <h2 className="pb-6">Pricing strategy</h2>
       <div className="grid grid-cols-2 gap-2 pt-3 pb-6 sm:grid-cols-3">
-        {strategiesList.map((strategy, i) => (
+        {strategiesRender.map((strategy, i) => (
           <CardBasic
             key={i}
             label={strategy.label}
