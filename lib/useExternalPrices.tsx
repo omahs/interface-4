@@ -67,7 +67,7 @@ const useExternalPrices = (account: string, products: any) => {
       if (args.length != 0) {
         getExternalPrices(addresses, args, productIds)
       }
-    }, 12000)
+    }, 24000)
 
     return () => {
       clearInterval(intervalId)

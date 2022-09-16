@@ -1,5 +1,8 @@
 import { domain } from "@components/common/Head"
+import Bolt from "@components/icons/Bolt"
+import Chevron from "@components/icons/Chevron"
 import ShoppingBag from "@components/icons/ShoppingBag"
+import SinWave from "@components/icons/SinWave"
 import Units from "@components/icons/Units"
 import { ProductCart } from "@lib/handleUpdateCart"
 import formatNumber from "@utils/formatNumber"
@@ -275,13 +278,20 @@ const ProductCard = ({
           topRight={{
             title: "Product price",
             content: (
-              <p
-                className={`text-sm capitalize font-medium text-black${
-                  chainInfo && !totalPrice ? " text-green-600" : ""
-                }`}
-              >
-                {productPrice.eth}
-              </p>
+              <div className="flex items-center justify-center">
+                {isCustomPriced && (
+                  <div className="w-5 h-5 mr-2 -ml-1 text-yellow-500 animate-pulse">
+                    <Bolt />
+                  </div>
+                )}
+                <p
+                  className={`text-sm capitalize font-medium text-black${
+                    chainInfo && !totalPrice ? " text-green-600" : ""
+                  }`}
+                >
+                  {productPrice.eth}
+                </p>
+              </div>
             )
           }}
           bottomLeft={

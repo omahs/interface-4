@@ -15,6 +15,7 @@ import { utils } from "ethers"
 import { ConnectButton, useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { useSigner } from "wagmi"
 import saEvent from "@utils/saEvent"
+import Cross from "@components/icons/Cross"
 
 type Props = {
   cookieCart: ProductCart[]
@@ -121,7 +122,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
         >
           <div className="flex h-12 pl-3 overflow-hidden font-medium text-black bg-white border-2 border-transparent rounded-full shadow-base">
             <div
-              className="flex items-center pl-2 pr-4 min-w-[100px] cursor-pointer group"
+              className="flex items-center pl-2 pr-4 cursor-pointer group"
               onClick={() =>
                 success
                   ? setSuccess(false)
@@ -129,7 +130,9 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
               }
             >
               {success ? (
-                <p className="mx-auto text-sm">Close</p>
+                <div className="mx-auto">
+                  <Cross />
+                </div>
               ) : (
                 <>
                   <Chevron
