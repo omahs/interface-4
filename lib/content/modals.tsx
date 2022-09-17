@@ -458,47 +458,49 @@ export const PRODUCT_VIEW = (params: any) => {
             <MarkdownBlock content={description} />
           </div>
         </div>
-        {extAddress && !editMode && (
-          <div className="mx-auto cursor-pointer w-60">
-            <CartButton
-              slicerId={slicerId}
-              productCart={productCart}
-              slicerAddress={slicerAddress}
-              productId={productId}
-              price={
-                isCustomPriced &&
-                externalPrices[slicerId] &&
-                externalPrices[slicerId][productId]
-                  ? parseInt(
-                      externalPrices[slicerId][productId][
-                        ethers.constants.AddressZero
-                      ].ethPrice,
-                      16
-                    ).toString()
-                  : price
-              }
-              isUSD={isCustomPriced ? false : isUSD}
-              extAddress={extAddress}
-              extCallValue={extValue}
-              extCheckSig={extCheckSig}
-              name={name}
-              image={image}
-              maxUnits={Number(maxUnits)}
-              availableUnits={isInfinite ? -1 : availableUnits}
-              purchasedQuantity={purchasedQuantity}
-              uid={uid}
-              creator={creator}
-              texts={texts}
-              allowedAddresses={allowedAddresses}
-              labelAdd={`Get it for ${productPrice.eth}`}
-              labelRemove={productPrice.eth != "free" && productPrice.eth}
-              preview={preview}
-              shortcodes={purchaseInfo?.shortcodes}
-              dbId={dbId}
-              externalAddress={externalAddress}
-            />
-          </div>
-        )}
+        {extAddress &&
+          (!isCustomPriced || externalPrices[slicerId][productId]) &&
+          !editMode && (
+            <div className="mx-auto cursor-pointer w-60">
+              <CartButton
+                slicerId={slicerId}
+                productCart={productCart}
+                slicerAddress={slicerAddress}
+                productId={productId}
+                price={
+                  isCustomPriced &&
+                  externalPrices[slicerId] &&
+                  externalPrices[slicerId][productId]
+                    ? parseInt(
+                        externalPrices[slicerId][productId][
+                          ethers.constants.AddressZero
+                        ].ethPrice,
+                        16
+                      ).toString()
+                    : price
+                }
+                isUSD={isCustomPriced ? false : isUSD}
+                extAddress={extAddress}
+                extCallValue={extValue}
+                extCheckSig={extCheckSig}
+                name={name}
+                image={image}
+                maxUnits={Number(maxUnits)}
+                availableUnits={isInfinite ? -1 : availableUnits}
+                purchasedQuantity={purchasedQuantity}
+                uid={uid}
+                creator={creator}
+                texts={texts}
+                allowedAddresses={allowedAddresses}
+                labelAdd={`Get it for ${productPrice.eth}`}
+                labelRemove={productPrice.eth != "free" && productPrice.eth}
+                preview={preview}
+                shortcodes={purchaseInfo?.shortcodes}
+                dbId={dbId}
+                externalAddress={externalAddress}
+              />
+            </div>
+          )}
         {!editMode &&
           productPrice.eth != "free" &&
           Number(maxUnits) != 1 &&
@@ -513,7 +515,7 @@ export const PRODUCT_VIEW = (params: any) => {
               }`}
             </p>
           )}
-        {isCustomPriced && (
+        {isCustomPriced && externalPrices[slicerId][productId] && (
           <p className="pt-6 mx-auto text-sm text-center">
             Price dynamically calculated from{" "}
             <a

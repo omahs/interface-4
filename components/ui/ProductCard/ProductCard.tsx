@@ -325,44 +325,46 @@ const ProductCard = ({
                 className="absolute w-full h-full"
                 onClick={() => handleOnClick()}
               />
-              {chainInfo && !editMode && (
-                <CartButton
-                  slicerId={slicerId}
-                  productCart={productCart}
-                  slicerAddress={slicerAddress}
-                  productId={productId}
-                  price={
-                    isCustomPriced &&
-                    externalPrices[slicerId] &&
-                    externalPrices[slicerId][productId]
-                      ? parseInt(
-                          externalPrices[slicerId][productId][
-                            ethers.constants.AddressZero
-                          ].ethPrice,
-                          16
-                        ).toString()
-                      : price
-                  }
-                  isUSD={isCustomPriced ? false : isUSD}
-                  extAddress={extAddress}
-                  extCallValue={extValue}
-                  extCheckSig={extCheckSig}
-                  image={image}
-                  name={name}
-                  maxUnits={Number(maxUnits)}
-                  availableUnits={
-                    purchases != null ? (isInfinite ? -1 : availableUnits) : 0
-                  }
-                  purchasedQuantity={purchasedQuantity}
-                  uid={uid}
-                  creator={creator}
-                  texts={texts}
-                  allowedAddresses={allowedAddresses}
-                  shortcodes={purchaseInfo?.shortcodes}
-                  dbId={dbId}
-                  externalAddress={externalAddress}
-                />
-              )}
+              {chainInfo &&
+                (!isCustomPriced || externalPrices[slicerId][productId]) &&
+                !editMode && (
+                  <CartButton
+                    slicerId={slicerId}
+                    productCart={productCart}
+                    slicerAddress={slicerAddress}
+                    productId={productId}
+                    price={
+                      isCustomPriced &&
+                      externalPrices[slicerId] &&
+                      externalPrices[slicerId][productId]
+                        ? parseInt(
+                            externalPrices[slicerId][productId][
+                              ethers.constants.AddressZero
+                            ].ethPrice,
+                            16
+                          ).toString()
+                        : price
+                    }
+                    isUSD={isCustomPriced ? false : isUSD}
+                    extAddress={extAddress}
+                    extCallValue={extValue}
+                    extCheckSig={extCheckSig}
+                    image={image}
+                    name={name}
+                    maxUnits={Number(maxUnits)}
+                    availableUnits={
+                      purchases != null ? (isInfinite ? -1 : availableUnits) : 0
+                    }
+                    purchasedQuantity={purchasedQuantity}
+                    uid={uid}
+                    creator={creator}
+                    texts={texts}
+                    allowedAddresses={allowedAddresses}
+                    shortcodes={purchaseInfo?.shortcodes}
+                    dbId={dbId}
+                    externalAddress={externalAddress}
+                  />
+                )}
             </div>
             {shortDescription && (
               <div>
