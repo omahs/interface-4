@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import multicall from "@utils/multicall"
 import formatCalldata from "@utils/formatCalldata"
 import { ethers } from "ethers"
+import { BlockchainProduct } from "pages/slicer/[id]"
 
 export const getExternalPrices = async (
   args: string[],
@@ -34,43 +35,61 @@ export const getExternalPrices = async (
   return returnedPrices
 }
 
+const formatArgs = (
+  account: string,
+  blockchainProducts: BlockchainProduct[]
+) => {
+  const ids = []
+  const args = []
+
+  if (blockchainProducts) {
+    blockchainProducts.forEach((product) => {
+      if (
+        product.prices.length != 0 &&
+        product.prices[0].externalAddress != "0x00000000" &&
+        product.prices[0].externalAddress != ethers.constants.AddressZero
+      ) {
+        const [slicerId, productId] = product.id.split("-")
+        ids.push([Number(slicerId), Number(productId)])
+        args.push(
+          formatCalldata(
+            slicerId,
+            productId,
+            ethers.constants.AddressZero,
+            "0x1",
+            account || ethers.constants.AddressZero,
+            "0x"
+          )
+        )
+      }
+    })
+  }
+
+  return [ids, args]
+}
+
 const useExternalPrices = (account: string, products: any) => {
   const [prices, setPrices] = useState({})
 
   useEffect(() => {
-    const ids = []
-    const args = []
+    const [ids, args] = formatArgs(account, products)
 
-    if (products) {
-      products.forEach((product) => {
-        if (
-          product.prices.length != 0 &&
-          product.prices[0].externalAddress != "0x00000000" &&
-          product.prices[0].externalAddress != ethers.constants.AddressZero
-        ) {
-          const [slicerId, productId] = product.id.split("-")
-          ids.push([Number(slicerId), Number(productId)])
-          args.push(
-            formatCalldata(
-              slicerId,
-              productId,
-              ethers.constants.AddressZero,
-              "0x1",
-              account || ethers.constants.AddressZero,
-              "0x"
-            )
-          )
-        }
-      })
+    const getPrices = async () => {
+      setPrices(await getExternalPrices(args, ids))
     }
-    const intervalId = setInterval(async () => {
-      if (args.length != 0) {
-        setPrices(await getExternalPrices(args, ids))
-      }
-    }, 24000)
 
-    return () => {
-      clearInterval(intervalId)
+    if (args.length != 0) {
+      if (Object.keys(prices).length == 0) {
+        getPrices()
+      }
+
+      const intervalId = setInterval(() => {
+        getPrices()
+      }, 24000)
+
+      return () => {
+        clearInterval(intervalId)
+      }
     }
   }, [products])
 
@@ -78,3 +97,5 @@ const useExternalPrices = (account: string, products: any) => {
 }
 
 export default useExternalPrices
+
+// TODO: FIX cart button not disappearing in products with invalid dynamic price (not here)
