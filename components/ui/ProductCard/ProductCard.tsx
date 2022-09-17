@@ -1,14 +1,10 @@
-import { domain } from "@components/common/Head"
 import Bolt from "@components/icons/Bolt"
-import Chevron from "@components/icons/Chevron"
 import ShoppingBag from "@components/icons/ShoppingBag"
-import SinWave from "@components/icons/SinWave"
 import Units from "@components/icons/Units"
 import { ProductCart } from "@lib/handleUpdateCart"
 import formatNumber from "@utils/formatNumber"
 import { ethers, utils } from "ethers"
-import { NextSeo } from "next-seo"
-import Head from "next/head"
+import { BlockchainProduct } from "pages/slicer/[id]"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import { Card, CartButton } from ".."
@@ -20,7 +16,7 @@ type Props = {
   slicerId: number
   slicerAddress: string
   product: Product
-  chainInfo: any
+  chainInfo: BlockchainProduct
   ethUsd: {
     symbol: string
     price: string
@@ -88,8 +84,8 @@ const ProductCard = ({
 
   const isInfinite = chainInfo?.isInfinite
   const maxUnits = chainInfo?.maxUnitsPerBuyer
-  const availableUnits = chainInfo?.availableUnits
-  const totalPurchases = chainInfo?.totalPurchases
+  const availableUnits = Number(chainInfo?.availableUnits)
+  const totalPurchases = Number(chainInfo?.totalPurchases)
   const extAddress = chainInfo?.extAddress
   const extValue = chainInfo?.extValue
   const extCheckSig = chainInfo?.extCheckSig
@@ -116,7 +112,7 @@ const ProductCard = ({
   const formattedEthPrice = totalPrice
     ? `Ξ ${Math.floor(totalPrice / 10 ** 14) / 10000}`
     : "free"
-  const formattedUsdPrice = convertedEthUsd ? `Ξ ${convertedEthUsd}` : "free"
+  const formattedUsdPrice = convertedEthUsd ? `$ ${convertedEthUsd}` : "$ 0"
 
   const productPrice = chainInfo
     ? ethPrice || extValue
@@ -273,11 +269,9 @@ const ProductCard = ({
             title: "Purchases",
             content: (
               <>
-                {totalPurchases && (
-                  <p className="mr-2 text-indigo-600">
-                    {formatNumber(totalPurchases)}
-                  </p>
-                )}
+                <p className="mr-2 text-indigo-600">
+                  {formatNumber(totalPurchases)}
+                </p>
                 <ShoppingBag className="w-[18px] h-[18px] text-indigo-600" />
               </>
             )

@@ -1,6 +1,7 @@
 import useExternalPrices from "@lib/useExternalPrices"
 import fetcher from "@utils/fetcher"
 import { useRouter } from "next/router"
+import { BlockchainProduct } from "pages/slicer/[id]"
 import { useState } from "react"
 import useSWR from "swr"
 import { ProductCard } from ".."
@@ -21,7 +22,7 @@ type Props = {
   slicerAddress: string
   products: Product[]
   editMode: boolean
-  blockchainProducts: any
+  blockchainProducts: BlockchainProduct[]
 }
 
 const ProductsGrid = ({
@@ -57,7 +58,7 @@ const ProductsGrid = ({
       <div className="grid items-center justify-center grid-cols-1 gap-8 max-w-[400px] mx-auto sm:max-w-none sm:grid-cols-2">
         {products.slice(0, visibleItems).map((product) => {
           const chainInfo = blockchainProducts?.find(
-            (p) => p.id.split("-").pop() == product?.productId
+            (p) => Number(p.id.split("-").pop()) == product?.productId
           )
           const displayProduct =
             productQueryData && Number(productQuery) == product?.productId

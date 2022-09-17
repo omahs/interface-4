@@ -39,6 +39,9 @@ const Component = ({ setPriceParams, isLimited }: VRGDAStrategyProps) => {
       setPriceParams(newPriceParams)
     }
 
+    // TODO: FIX LOGISTIC PARAMS (price too high, doesn't correspond)
+    // TODO: ADD VRGDA GRAPH
+
     return () => {
       setPriceParams(undefined)
     }
