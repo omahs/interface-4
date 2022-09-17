@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect } from "react"
 import { Input, InputSwitch } from "@components/ui"
 import { StrategyParams } from "@components/priceStrategies/strategies"
 
@@ -25,6 +25,12 @@ const AddProductFormAvailability = ({
   setUnits,
   setMaxUnits
 }: Props) => {
+  useEffect(() => {
+    if (!isLimited) {
+      setUnits(0)
+    }
+  }, [isLimited])
+
   return (
     <>
       <h2 className="pb-6">Availability</h2>

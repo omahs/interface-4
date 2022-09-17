@@ -1,4 +1,5 @@
-import { CardBasic, Input } from "@components/ui"
+import { CardBasic, ChartVRGDASchedule, Input } from "@components/ui"
+import formatNumber from "@utils/formatNumber"
 import toWad from "@utils/toWad"
 import { useEffect, useState } from "react"
 import {
@@ -44,9 +45,6 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
 
       setPriceParams(newPriceParams)
     }
-
-    // TODO: FIX LOGISTIC PARAMS (price too high, doesn't correspond)
-    // TODO: ADD VRGDA GRAPH
 
     return () => {
       setPriceParams(undefined)
@@ -146,9 +144,9 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
               <Input
                 type="number"
                 label="Time scale (days)"
-                helpText={`After how many days 46% of the available units (${(
-                  units * 0.46
-                ).toFixed(2)}) should be sold?`}
+                helpText={`After how many days ${formatNumber(
+                  Math.floor(units * 46) / 100
+                )} units (46% of total) should be sold?`}
                 placeholder={"420"}
                 min={0.1}
                 max={100000}
@@ -168,6 +166,42 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
               />
             )}
           </div>
+          <ChartVRGDASchedule
+            rate={rate}
+            units={units}
+            timeFactor={timeFactor}
+          />
+          <p className="pt-12">
+            {rate == "Linear" ? (
+              <>
+                You plan to sell <b>{formatNumber(units)} units</b> in{" "}
+                <b>
+                  {timeFactor != 0
+                    ? formatNumber(Math.floor((100 * units) / timeFactor) / 100)
+                    : "..."}{" "}
+                  days
+                </b>{" "}
+                with a target price of{" "}
+                <b>{targetPrice != 0 ? targetPrice : "..."} ETH</b>.
+              </>
+            ) : (
+              <>
+                You plan to sell{" "}
+                <b>
+                  {formatNumber(Math.floor(units * 46) / 100)} out of{" "}
+                  {formatNumber(units)} units
+                </b>{" "}
+                in{" "}
+                <b>{timeFactor != 0 ? formatNumber(timeFactor) : "..."} days</b>{" "}
+                with a target price of{" "}
+                <b>{targetPrice != 0 ? targetPrice : "..."} ETH</b>.
+              </>
+            )}
+          </p>
+          <p>
+            The price will be higher than the target if you&apos;re ahead of the
+            sale schedule, and lower if you fall behind.
+          </p>
         </>
       )}
     </>
