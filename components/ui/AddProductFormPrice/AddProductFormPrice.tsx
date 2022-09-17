@@ -44,7 +44,7 @@ const AddProductFormPrice = ({
   return (
     <>
       <h2 className="pb-6">Pricing strategy</h2>
-      <div className="grid grid-cols-2 gap-2 pt-3 pb-6 sm:grid-cols-3">
+      <div className="grid grid-cols-3 gap-2 pt-3 pb-6 sm:grid-cols-3">
         {strategiesRender.map((strategy, i) => (
           <CardBasic
             key={i}
@@ -97,7 +97,7 @@ const AddProductFormPrice = ({
         <StrategyComponent setPriceParams={setPriceParams} units={units} />
       )}
       <div>
-        <hr className="w-20 mx-auto border-gray-300 my-14" />
+        <hr className="w-20 mx-auto border-gray-300 my-16" />
       </div>
     </>
   )

@@ -69,7 +69,7 @@ const AddProductFormPreview = ({
 
   return (
     <div>
-      <hr className="w-20 mx-auto border-gray-300 my-14" />
+      <hr className="w-20 mx-auto border-gray-300 my-16" />
       <h3 className="pb-6 font-bold">Preview</h3>
       <p className="pb-12">
         See how the product will appear to buyers before the purchase and after
@@ -149,7 +149,7 @@ const AddProductFormPreview = ({
           Redeem purchase
         </a>
       </div>
-      <hr className="w-20 mx-auto border-gray-300 my-14" />
+      <hr className="w-20 mx-auto border-gray-300 my-16" />
     </div>
   )
 }

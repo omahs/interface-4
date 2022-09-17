@@ -262,7 +262,7 @@ const AddProductForm = ({
       </p>
       <p>Create one by setting up the info below.</p>
       <div>
-        <hr className="w-20 mx-auto border-gray-300 my-14" />
+        <hr className="w-20 mx-auto border-gray-300 my-16" />
       </div>
       <AddProductFormGeneral
         slicerId={slicerId}

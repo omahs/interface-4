@@ -98,7 +98,7 @@ const AddProductFormAvailability = ({
         )}
       </div>
       <div>
-        <hr className="w-20 mx-auto border-gray-300 my-14" />
+        <hr className="w-20 mx-auto border-gray-300 my-16" />
       </div>
     </>
   )
