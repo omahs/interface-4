@@ -10,7 +10,7 @@ type Props = {
   ethValue: number
   usdValue: number
   isUSD: boolean
-  isLimited: boolean
+  units: number
   setEthValue: Dispatch<SetStateAction<number>>
   setUsdValue: Dispatch<SetStateAction<number>>
   setIsUSD: Dispatch<SetStateAction<boolean>>
@@ -22,7 +22,7 @@ const AddProductFormPrice = ({
   ethValue,
   usdValue,
   isUSD,
-  isLimited,
+  units,
   setEthValue,
   setUsdValue,
   setIsUSD,
@@ -94,10 +94,7 @@ const AddProductFormPrice = ({
           ) : null}
         </>
       ) : (
-        <StrategyComponent
-          setPriceParams={setPriceParams}
-          isLimited={isLimited}
-        />
+        <StrategyComponent setPriceParams={setPriceParams} units={units} />
       )}
       <div>
         <hr className="w-20 mx-auto border-gray-300 my-14" />

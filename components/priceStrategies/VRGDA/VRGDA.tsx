@@ -9,12 +9,12 @@ import {
 } from "../strategies"
 
 type VRGDAStrategyProps = StrategyProps & {
-  isLimited: boolean
+  units: number
 }
 
 const label = "VRGDA"
 
-const Component = ({ setPriceParams, isLimited }: VRGDAStrategyProps) => {
+const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
   const [rate, setRate] = useState<"Linear" | "Logistic">("Linear")
   const [targetPrice, setTargetPrice] = useState(0)
   const [priceDecayPercent, setPriceDecayPercent] = useState(0)
@@ -22,7 +22,7 @@ const Component = ({ setPriceParams, isLimited }: VRGDAStrategyProps) => {
   const strategy = strategiesList[rate + label]
 
   useEffect(() => {
-    if (isLimited) {
+    if (units != 0) {
       const { label, abi, deployments } = strategy
 
       let newPriceParams: StrategyParams = {
@@ -32,7 +32,13 @@ const Component = ({ setPriceParams, isLimited }: VRGDAStrategyProps) => {
         args: [
           toWad(targetPrice),
           toWad(priceDecayPercent / 100),
-          toWad(timeFactor)
+          toWad(
+            rate == "Linear"
+              ? timeFactor
+              : timeFactor != 0
+              ? Math.floor(100000 / timeFactor) / 100000
+              : 0
+          )
         ]
       }
 
@@ -45,7 +51,7 @@ const Component = ({ setPriceParams, isLimited }: VRGDAStrategyProps) => {
     return () => {
       setPriceParams(undefined)
     }
-  }, [isLimited, targetPrice, priceDecayPercent, timeFactor, setPriceParams])
+  }, [units, targetPrice, priceDecayPercent, timeFactor, setPriceParams])
 
   useEffect(() => {
     setTimeFactor(0)
@@ -66,7 +72,7 @@ const Component = ({ setPriceParams, isLimited }: VRGDAStrategyProps) => {
         .
       </p>
 
-      {!isLimited ? (
+      {units == 0 ? (
         <p className="pt-4 text-yellow-600">
           Enable <strong>limited availability</strong> to use a VRGDA strategy.
         </p>
@@ -139,10 +145,14 @@ const Component = ({ setPriceParams, isLimited }: VRGDAStrategyProps) => {
             ) : (
               <Input
                 type="number"
-                label="Time scale"
-                placeholder={"0.001"}
-                min={0.0001}
-                step={0.0001}
+                label="Time scale (days)"
+                helpText={`After how many days 46% of the available units (${(
+                  units * 0.46
+                ).toFixed(2)}) should be sold?`}
+                placeholder={"420"}
+                min={0.1}
+                max={100000}
+                step={0.1}
                 value={timeFactor || ""}
                 onChange={setTimeFactor}
                 question={

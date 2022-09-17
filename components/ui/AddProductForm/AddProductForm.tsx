@@ -293,7 +293,7 @@ const AddProductForm = ({
         setEthValue={setEthValue}
         setUsdValue={setUsdValue}
         setIsUSD={setIsUSD}
-        isLimited={isLimited}
+        units={units}
         setPriceParams={setPriceParams}
       />
       <AddProductFormExternal
