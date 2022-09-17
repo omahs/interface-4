@@ -199,8 +199,8 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
             )}
           </p>
           <p>
-            The price will be higher than the target if you&apos;re ahead of the
-            sale schedule, and lower if you fall behind.
+            The price will be higher than the target when ahead of the sale
+            schedule, and lower if behind.
           </p>
         </>
       )}
