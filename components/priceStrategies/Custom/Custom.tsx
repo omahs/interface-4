@@ -15,6 +15,7 @@ const Component = ({ setPriceParams }: StrategyProps) => {
       resolvedAddress != "Invalid ENS name"
     ) {
       setPriceParams({
+        label: "",
         address: resolvedAddress || address
       })
     }
