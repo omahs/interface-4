@@ -6,6 +6,7 @@ import { Question } from ".."
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   className?: string
   label?: string
+  helpText?: string
   prefix?: string
   after?: string
   error?: boolean
@@ -24,6 +25,7 @@ const Input: React.FC<Props> = (props) => {
   const {
     className,
     label,
+    helpText,
     prefix = "",
     after,
     children,
@@ -59,19 +61,24 @@ const Input: React.FC<Props> = (props) => {
   }
 
   return (
-    <label>
+    <label className="text-left">
       {label && (
         <>
-          <div className="relative flex items-center pb-2">
-            <p
-              className={`text-sm font-semibold text-left pr-1 ${
-                inverted ? "text-gray-200" : "text-gray-700"
-              }`}
-            >
-              {label}
-            </p>
-            {question && (
-              <Question position={questionPosition} text={question} />
+          <div className="pb-2">
+            <div className="relative flex items-center">
+              <p
+                className={`text-sm font-semibold pr-1 ${
+                  inverted ? "text-gray-200" : "text-gray-700"
+                }`}
+              >
+                {label}
+              </p>
+              {question && (
+                <Question position={questionPosition} text={question} />
+              )}
+            </div>
+            {helpText && (
+              <p className="pb-2 text-sm text-gray-600">{helpText}</p>
             )}
           </div>
         </>
