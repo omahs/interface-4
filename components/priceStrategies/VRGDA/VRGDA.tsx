@@ -174,7 +174,7 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
           <p className="pt-12">
             {rate == "Linear" ? (
               <>
-                You plan to sell <b>{formatNumber(units)} units</b> in{" "}
+                You plan to sell <b>{formatNumber(Number(units))} units</b> in{" "}
                 <b>
                   {timeFactor != 0
                     ? formatNumber(Math.floor((100 * units) / timeFactor) / 100)
