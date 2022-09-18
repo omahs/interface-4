@@ -88,7 +88,7 @@ const ChartVRGDASchedule = ({ rate, units, timeFactor }: Props) => {
           <p
             className={`absolute top-0 left-0 mt-7 text-sm text-black min-w-[40px] ml-6 text-left xs:text-right xs:-ml-7 xs:mt-10`}
           >
-            {formatNumber(units)}
+            {formatNumber(Number(units))}
           </p>
           {rate == "Linear" ? (
             <>
@@ -111,7 +111,7 @@ const ChartVRGDASchedule = ({ rate, units, timeFactor }: Props) => {
               </p>
               {isDataFilled && (
                 <p className="absolute bottom-0 left-0 w-32 -ml-4 text-sm text-center text-black xs:ml-1 -mb-7">
-                  {formatNumber(timeFactor)} days
+                  {formatNumber(Number(timeFactor))} days
                 </p>
               )}
             </>

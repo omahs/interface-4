@@ -189,18 +189,21 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
                 You plan to sell{" "}
                 <b>
                   {formatNumber(Math.floor(units * 46) / 100)} out of{" "}
-                  {formatNumber(units)} units
+                  {formatNumber(Number(units))} units
                 </b>{" "}
                 in{" "}
-                <b>{timeFactor != 0 ? formatNumber(timeFactor) : "..."} days</b>{" "}
+                <b>
+                  {timeFactor != 0 ? formatNumber(Number(timeFactor)) : "..."}{" "}
+                  days
+                </b>{" "}
                 with a target price of{" "}
                 <b>{targetPrice != 0 ? targetPrice : "..."} ETH</b>.
               </>
             )}
           </p>
           <p>
-            The price will be higher than the target when ahead of the sale
-            schedule, and lower if behind.
+            The product will cost more than the target price when ahead of the
+            sale schedule, and less if behind.
           </p>
         </>
       )}
