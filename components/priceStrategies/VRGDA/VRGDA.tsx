@@ -204,6 +204,10 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
           <p>
             The product will cost more than the target price when ahead of the
             sale schedule, and less if behind.
+            {/* MAKE SURE THIS IS CORRECT BEFORE ADDING IT */}
+            {/* The price will decrease daily by{" "}
+            <b>{priceDecayPercent != 0 || "..."}% </b> for each unit behind
+            schedule. */}
           </p>
         </>
       )}
