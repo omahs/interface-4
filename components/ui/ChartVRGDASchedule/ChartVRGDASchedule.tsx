@@ -65,6 +65,15 @@ const ChartVRGDASchedule = ({ rate, units, timeFactor }: Props) => {
                   stroke-dasharray="6 6"
                 />
                 <line
+                  x1="108"
+                  y1="301"
+                  x2="1"
+                  y2="301"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-dasharray="6 6"
+                />
+                <line
                   x1="939.001"
                   y1="57.0037"
                   x2="0.000732422"
@@ -87,7 +96,7 @@ const ChartVRGDASchedule = ({ rate, units, timeFactor }: Props) => {
             Sales
           </p>
           <p
-            className={`absolute top-0 left-0 mt-7 text-sm text-black min-w-[40px] ml-6 text-left xs:text-right xs:-ml-7 xs:mt-10`}
+            className={`absolute top-0 left-0 mt-7 text-sm text-black min-w-[40px] ml-5 text-left xs:text-right xs:-ml-7 xs:mt-10`}
           >
             {formatNumber(Number(units))}
           </p>
@@ -109,6 +118,12 @@ const ChartVRGDASchedule = ({ rate, units, timeFactor }: Props) => {
             <>
               <p className="absolute bottom-0 right-0 mr-2 text-sm -mb-7">
                 Time
+              </p>
+
+              <p
+                className={`absolute top-0 left-0 mt-[138px] text-sm text-black min-w-[40px] ml-5 text-left xs:text-right xs:-ml-7 xs:mt-[148px]`}
+              >
+                {formatNumber(Math.floor(units * 46) / 100)}
               </p>
               {isDataFilled && (
                 <p className="absolute bottom-0 left-0 w-32 -ml-1 text-sm text-center text-black xs:ml-4 -mb-7">
