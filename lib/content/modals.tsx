@@ -418,7 +418,7 @@ export const PRODUCT_VIEW = (params: any) => {
             content: (
               <>
                 <p className="mr-2 text-indigo-600">
-                  {formatNumber(totalPurchases)}
+                  {totalPurchases ? formatNumber(totalPurchases) : 0}
                 </p>
                 <ShoppingBag className="w-[18px] h-[18px] text-indigo-600" />
               </>
@@ -440,6 +440,7 @@ export const PRODUCT_VIEW = (params: any) => {
             )
           }}
           bottomLeft={
+            extAddress &&
             !isInfinite && {
               title: "Available units",
               content: (
