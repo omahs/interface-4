@@ -258,7 +258,7 @@ const AddProductForm = ({
     <form className="w-full py-6 mx-auto space-y-6" onSubmit={submit}>
       <p>
         Products can be used to sell anything, including executing custom
-        on-chain logic upon purchase (such as minting an NFT).
+        on-chain logic upon purchase (such as minting NFTs).
       </p>
       <div>
         <hr className="w-20 mx-auto my-16 border-gray-300" />

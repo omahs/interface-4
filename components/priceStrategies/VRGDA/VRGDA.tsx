@@ -92,7 +92,8 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
             <Input
               type="number"
               label="Target price (ETH)"
-              placeholder={"0.01"}
+              helpText="How much should the product cost if sales are on schedule?"
+              placeholder={"0.1"}
               min={0.001}
               step={0.001}
               question={
@@ -108,7 +109,8 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
           <div>
             <Input
               type="number"
-              label="Price decay (%)"
+              label="Daily price decay (%)"
+              helpText="How much should the price drop in 1 day if there are no sales?"
               placeholder={"10"}
               min={0.01}
               max={99.99}
