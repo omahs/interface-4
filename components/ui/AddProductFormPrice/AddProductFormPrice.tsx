@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from "react"
+import { useState, Dispatch, SetStateAction, useEffect } from "react"
 import { InputPrice, InputSwitch, CardBasic } from "@components/ui"
 import {
   strategiesRender,
@@ -40,6 +40,13 @@ const AddProductFormPrice = ({
       strategiesRender.find((strategy) => strategy.label == label)
     )
   }
+
+  useEffect(() => {
+    if (priceStrategy.label != "Standard") {
+      setEthValue(0)
+      setUsdValue(0)
+    }
+  }, [priceStrategy])
 
   return (
     <>
@@ -97,7 +104,7 @@ const AddProductFormPrice = ({
         <StrategyComponent setPriceParams={setPriceParams} units={units} />
       )}
       <div>
-        <hr className="w-20 mx-auto border-gray-300 my-16" />
+        <hr className="w-20 mx-auto my-16 border-gray-300" />
       </div>
     </>
   )

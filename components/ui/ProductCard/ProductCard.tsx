@@ -270,7 +270,7 @@ const ProductCard = ({
             content: (
               <>
                 <p className="mr-2 text-indigo-600">
-                  {formatNumber(totalPurchases)}
+                  {totalPurchases ? formatNumber(totalPurchases) : 0}
                 </p>
                 <ShoppingBag className="w-[18px] h-[18px] text-indigo-600" />
               </>
@@ -326,7 +326,9 @@ const ProductCard = ({
                 onClick={() => handleOnClick()}
               />
               {chainInfo &&
-                (!isCustomPriced || externalPrices[slicerId][productId]) &&
+                (!isCustomPriced ||
+                  (externalPrices[slicerId] &&
+                    externalPrices[slicerId][productId])) &&
                 !editMode && (
                   <CartButton
                     slicerId={slicerId}
