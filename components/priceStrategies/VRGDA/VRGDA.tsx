@@ -92,7 +92,8 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
             <Input
               type="number"
               label="Target price (ETH)"
-              placeholder={"0.01"}
+              helpText="How much should the product cost if sales are on schedule?"
+              placeholder={"0.1"}
               min={0.001}
               step={0.001}
               question={
@@ -108,7 +109,8 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
           <div>
             <Input
               type="number"
-              label="Price decay (%)"
+              label="Daily price decay (%)"
+              helpText="How much should the price drop in 1 day if there are no sales?"
               placeholder={"10"}
               min={0.01}
               max={99.99}
@@ -116,6 +118,11 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
               question={
                 <>
                   <p>The daily percent price decay, with no sales.</p>
+                  <p>
+                    A high percentage causes significant price variations, while
+                    low values reduce deviation from target price based on time
+                    and sales.
+                  </p>
                 </>
               }
               value={priceDecayPercent || ""}
@@ -202,13 +209,35 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
             )}
           </p>
           <p>
-            The product will cost more than the target price when ahead of the
-            sale schedule, and less if behind.
+            Sales will earn more than the target price when ahead of the
+            schedule, and less if behind.
             {/* MAKE SURE THIS IS CORRECT BEFORE ADDING IT */}
-            {/* The price will decrease daily by{" "}
-            <b>{priceDecayPercent != 0 || "..."}% </b> for each unit behind
-            schedule. */}
           </p>
+          {rate == "Linear" ? (
+            <p>
+              Price will decrease{" "}
+              <b>
+                daily by{" "}
+                {priceDecayPercent != 0 && timeFactor != 0
+                  ? formatNumber(
+                      Math.floor((priceDecayPercent * 100) / timeFactor) / 100
+                    ) + "% "
+                  : "... "}{" "}
+                for each unit
+              </b>{" "}
+              behind schedule, or increase by the same amount if ahead.
+            </p>
+          ) : (
+            <p>
+              Price will decrease{" "}
+              <b>
+                daily by{" "}
+                {priceDecayPercent != 0 ? priceDecayPercent + "% " : "..."}
+              </b>{" "}
+              if there are no sales.
+            </p>
+          )}
+          {/* TODO: How to write this for logistic VRGDA? */}
         </>
       )}
     </>

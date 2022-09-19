@@ -257,12 +257,11 @@ const AddProductForm = ({
   return (
     <form className="w-full py-6 mx-auto space-y-6" onSubmit={submit}>
       <p>
-        Products can be used to sell any physical or digital item, or to execute
-        custom on-chain logic upon purchase (such as minting an NFT).
+        Products can be used to sell anything, including executing custom
+        on-chain logic upon purchase (such as minting NFTs).
       </p>
-      <p>Create one by setting up the info below.</p>
       <div>
-        <hr className="w-20 mx-auto border-gray-300 my-16" />
+        <hr className="w-20 mx-auto my-16 border-gray-300" />
       </div>
       <AddProductFormGeneral
         slicerId={slicerId}
@@ -323,7 +322,7 @@ const AddProductForm = ({
         newImage={newImage}
         maxUnits={Number(maxUnits)}
         isLimited={isLimited}
-        units={units}
+        units={Number(units)}
         ethValue={ethValue}
         usdValue={usdValue}
         isUSD={isUSD}
@@ -336,6 +335,15 @@ const AddProductForm = ({
         extAddress={externalCall?.externalAddress}
         extCheckSig={externalCall?.checkFunctionSignature}
         extExecSig={externalCall?.execFunctionSignature}
+        externalAddress={priceParams?.address}
+        targetPrice={
+          priceParams?.args &&
+          Number(
+            ethers.BigNumber.from(priceParams.args[0]).div(
+              ethers.BigNumber.from(10).pow(15)
+            )
+          ) / 1000
+        }
       />
       <div className="pb-1">
         <Button
