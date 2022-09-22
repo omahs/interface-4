@@ -116,6 +116,7 @@ const Component = ({ setParams }: HookProps) => {
       <div>
         <InputAddress
           label="External address"
+          placeholder="0x…"
           address={address}
           onChange={setAddress}
           required={isPayable || isContractCall}

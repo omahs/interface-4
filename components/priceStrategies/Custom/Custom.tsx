@@ -42,6 +42,7 @@ const Component = ({ setPriceParams }: StrategyProps) => {
       <div>
         <InputAddress
           label="Contract address"
+          placeholder="0x…"
           address={address}
           onChange={setAddress}
           required
