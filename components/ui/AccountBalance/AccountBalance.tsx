@@ -1,5 +1,4 @@
 import Arrow from "@components/icons/Arrow"
-import { Withdraw } from "@lib/handlers/chain"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import getEthFromWei from "@utils/getEthFromWei"
 import getLog from "@utils/getLog"
@@ -31,28 +30,28 @@ const AccountBalance = ({ account, payeeCurrencyData }: Props) => {
 
   const executeWithdraw = async () => {
     setLoading(true)
-    const eventLogs = await handleSubmit(
-      Withdraw(signer, account, ethers.constants.AddressZero),
-      setMessage,
-      setLoading,
-      setSuccess,
-      true,
-      addRecentTransaction,
-      "Withdraw ETH"
-    )
-    if (eventLogs) {
-      const eventLog = getLog(eventLogs, "Withdrawn")
-      const withdrawnEth = eventLog[2]._hex
-      const protocolPaidEth = eventLog[3]._hex
-      setMessage({
-        message: `You have withdrawn ${Number(
-          utils.formatEther(withdrawnEth)
-        ).toFixed(3)} ETH + ${Number(
-          utils.formatEther(protocolPaidEth)
-        ).toFixed(3)} ETH converted to SLX! 🎉`,
-        messageStatus: "success"
-      })
-    }
+    // const eventLogs = await handleSubmit(
+    //   Withdraw(signer, account, ethers.constants.AddressZero),
+    //   setMessage,
+    //   setLoading,
+    //   setSuccess,
+    //   true,
+    //   addRecentTransaction,
+    //   "Withdraw ETH"
+    // )
+    // if (eventLogs) {
+    //   const eventLog = getLog(eventLogs, "Withdrawn")
+    //   const withdrawnEth = eventLog[2]._hex
+    //   const protocolPaidEth = eventLog[3]._hex
+    //   setMessage({
+    //     message: `You have withdrawn ${Number(
+    //       utils.formatEther(withdrawnEth)
+    //     ).toFixed(3)} ETH + ${Number(
+    //       utils.formatEther(protocolPaidEth)
+    //     ).toFixed(3)} ETH converted to SLX! 🎉`,
+    //     messageStatus: "success"
+    //   })
+    // }
   }
 
   // TODO: update withdraw balance in parent component after withdrawing
