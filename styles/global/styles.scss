@@ -4,6 +4,28 @@
 @import "./base.scss";
 @import "./fonts.scss";
 @import "../home.scss";
+@import "../dashboard.scss";
 @import "pure-react-carousel/dist/react-carousel.es.css";
 
 @tailwind utilities;
+
+.fade-out {
+  z-index: -10;
+  animation: fadeOut 8s ease-out;
+  opacity: 0;
+}
+
+@keyframes fadeOut {
+  0% {
+    z-index: 10;
+    opacity: 1;
+  }
+  80% {
+    z-index: 10;
+    opacity: 0.75;
+  }
+  100% {
+    z-index: 10;
+    opacity: 0;
+  }
+}
