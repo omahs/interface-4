@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { ethers } from "ethers"
 import fetcher from "./fetcher"
+import { Currency as DbCurrency } from "@prisma/client"
 
 export type Currency = {
   id: string
@@ -23,13 +24,21 @@ export type TokenMetadata = {
 }
 
 const getDbCurrencies = async (currenciesAddresses: String[]) => {
-  const dbCurrencies = await fetcher("/api/currencies", {
+  const dbCurrencies: DbCurrency[] = await fetcher("/api/currencies", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ currencies: currenciesAddresses })
   })
 
   return dbCurrencies
+}
+
+const createOrUpdateCurrencies = (currencies) => {
+  fetcher("/api/currencies/createOrUpdate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ currencies: currencies })
+  })
 }
 
 const getAlchemyMetadata = async (currency: string): Promise<TokenMetadata> => {
@@ -58,7 +67,10 @@ const getEthMetadata = async (): Promise<TokenMetadata> => {
   return { name: "Ethereum", symbol: "ETH", logo: "" }
 }
 
-const getCurrenciesMetadata = async (currencies, dbCurrencies) => {
+const getCurrenciesMetadata = async (
+  currencies: Currency[],
+  dbCurrencies: DbCurrency[]
+) => {
   const requests = []
   currencies.forEach(async (currency) => {
     const address = currency?.id.split("-")[1]
@@ -95,7 +107,7 @@ const getCurrenciesMetadata = async (currencies, dbCurrencies) => {
   return formattedMetadata
 }
 
-const getQuotes = async (metadata, currencies) => {
+const getQuotes = async (metadata, currencies: Currency[]) => {
   // metadata could be either dbCurrencies ot metadata taken from alchemy API
   const formattedData = {}
 
@@ -129,14 +141,6 @@ const getQuotes = async (metadata, currencies) => {
   })
 
   return formattedData
-}
-
-const createOrUpdateCurrencies = (currencies) => {
-  fetcher("/api/currencies/createOrUpdate", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ currencies: currencies })
-  })
 }
 
 export default function useCurrenciesData(
