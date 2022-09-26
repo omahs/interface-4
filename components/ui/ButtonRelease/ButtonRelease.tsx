@@ -27,6 +27,7 @@ const ButtonRelease = ({
   const { account } = useAppContext()
 
   const symbol = unreleasedAmount.symbol || "???"
+  console.log(unreleasedAmount)
 
   const { config, error } = usePrepareContractWrite({
     addressOrName: slicerAddress,
@@ -36,11 +37,13 @@ const ButtonRelease = ({
   })
   const { writeAsync } = useContractWrite(config)
 
-  console.log(unreleasedAmount.symbol)
+  const amount =
+    Math.floor(Number(formatEther(unreleasedAmount.amount)) * 1000) / 1000
 
   return (
+    // amount != 0 && (
     <Button
-      label={`Release ${formatEther(unreleasedAmount.amount)} ${symbol}`}
+      label={`Release ${amount} ${symbol}`}
       loading={loading}
       onClick={async () =>
         await executeTransaction(
@@ -51,6 +54,7 @@ const ButtonRelease = ({
         )
       }
     />
+    // )
   )
 }
 
