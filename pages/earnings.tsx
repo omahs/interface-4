@@ -39,7 +39,11 @@ export default function Earnings({ slxRate }) {
       }
     `
   let subgraphData = useQuery(tokensQuery, [account])
-  const currenciesData = useCurrenciesData(subgraphData, account)
+  const { currenciesData, currenciesDataDb } = useCurrenciesData(
+    subgraphData,
+    account
+  )
+  // TODO: Use currenciesDataDb to show data earlier?
 
   useEffect(() => {
     setCurrencies(currenciesData)
