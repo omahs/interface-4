@@ -1,26 +1,17 @@
 import Link from "next/link"
-import fetcher from "@utils/fetcher"
-import useSWR from "swr"
-import { releaseEthToSlicer, TriggerRelease } from "lib/handlers/chain"
-import BlockchainCall from "../BlockchainCall"
-import { useEffect, useState } from "react"
-import { LogDescription } from "ethers/lib/utils"
+import { useState } from "react"
+import { formatEther } from "ethers/lib/utils"
 import formatNumber from "@utils/formatNumber"
-import getLog from "@utils/getLog"
 import Arrow from "@components/icons/Arrow"
-import { ReleaseCard, CardImage, CopyAddress, InputCheckbox } from ".."
+import { ReleaseCard, CardImage, CopyAddress } from ".."
 import UserVerified from "@components/icons/UserVerified"
 import Immutable from "@components/icons/Immutable"
-import { BigNumber, ethers } from "ethers"
-import getEthFromWei from "@utils/getEthFromWei"
 import ProductsBalance from "../ProductsBalance"
-import { useSigner } from "wagmi"
-import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { NewTransaction } from "@rainbow-me/rainbowkit/dist/transactions/transactionStore"
-import { Currency } from "@prisma/client"
 import { SlicerReduced } from "pages/slicer"
 import { UnreleasedAmount } from "../SlicersList/SlicersList"
 import QuestionMark from "@components/icons/QuestionMark"
+import { useAppContext } from "../context"
 
 type Props = {
   slicerId: number
@@ -49,20 +40,23 @@ const SlicerCard = ({
   unreleasedAmounts,
   dbData
 }: Props) => {
+  const { setModalView } = useAppContext()
   const { name, image } = dbData || {}
   const [updatedUnreleasedAmounts, setUpdatedUnreleasedAmounts] =
     useState<UnreleasedAmount[]>()
-  const [ethReleased, setEthReleased] = useState("")
   const slicerLink = `/slicer/${slicerId}`
   const slicerName = name || `Slicer #${slicerId}`
   const slicePercentage = Math.floor((shares / totalSlices) * 10000) / 100
-
-  const [withdraw, setWithdraw] = useState(false)
-  const [released, setReleased] = useState(false)
-  const [success, setSuccess] = useState(false)
-  const [logs, setLogs] = useState<LogDescription[]>()
+  const currencyShown = 1
 
   const unreleasedData = updatedUnreleasedAmounts || unreleasedAmounts
+  const unreleasedFormatted = unreleasedData
+    ?.filter((el) => Number(el.amount) != 0)
+    .sort(
+      (a, b) =>
+        Number(formatEther(b.amount)) * (b.quote || 0) -
+        Number(formatEther(a.amount)) * (a.quote || 0)
+    )
 
   return (
     <div className="sm:flex">
@@ -143,64 +137,45 @@ const SlicerCard = ({
             setUpdatedUnreleasedAmounts={setUpdatedUnreleasedAmounts}
           />
         </div>
-        {dbData && unreleasedData && (
+        {dbData && unreleasedFormatted.length != 0 && (
           <div className="mt-5">
             <div className="flex items-center gap-1 pb-1 text-sm text-gray-500">
-              <p>Release or withdraw</p> <QuestionMark className="w-4 h-4" />
+              <p>Release | Withdraw</p> <QuestionMark className="w-4 h-4" />
             </div>
             <ul>
-              {unreleasedData.map(
-                (unreleasedAmount, i) =>
-                  Number(unreleasedAmount?.amount) != 0 && (
-                    <li key={i}>
-                      <ReleaseCard
-                        slicerAddress={slicerAddress}
-                        unreleasedAmount={unreleasedAmount}
-                        addRecentTransaction={addRecentTransaction}
-                      />
-                      {i != unreleasedData.length - 1 && (
+              {unreleasedFormatted
+                .slice(0, currencyShown)
+                .map((unreleasedAmount, i) => (
+                  <li key={i}>
+                    <ReleaseCard
+                      slicerAddress={slicerAddress}
+                      unreleasedAmount={unreleasedAmount}
+                      addRecentTransaction={addRecentTransaction}
+                    />
+                    {i < currencyShown - 1 &&
+                      i < unreleasedFormatted.length - 1 && (
                         <hr className="border-gray-200" />
                       )}
-                    </li>
-                  )
-              )}
+                  </li>
+                ))}
             </ul>
-            <p className="pt-2 text-sm text-right underline">See all</p>
+            {unreleasedFormatted.length > currencyShown && (
+              <p className="pt-2 text-sm text-right">
+                <a
+                  className="highlight"
+                  onClick={() =>
+                    setModalView({
+                      cross: true,
+                      name: "RELEASE_SLICER_CURRENCIES_VIEW",
+                      params: { slicerAddress, unreleasedFormatted }
+                    })
+                  }
+                >
+                  See all
+                </a>
+              </p>
+            )}
           </div>
-        )}
-
-        {/* {!released && unreleasedAmount && Number(unreleasedAmount) != 0 ? (
-          <div className="mt-6">
-            <BlockchainCall
-              transactionDescription={`Release ETH | Slicer #${slicerId}`}
-              saEventName="withdraw_eth_to_owner"
-              label={`Release ${getEthFromWei(unreleasedAmount)} ETH`}
-              action={() =>
-                TriggerRelease(
-                  signer,
-                  slicerId,
-                  account,
-                  ethers.constants.AddressZero,
-                  false
-                )
-              }
-              success={success}
-              setSuccess={setSuccess}
-              setLogs={setLogs}
-              mutateUrl={`/api/account/${account}/unreleased`}
-              mutateObj={{ unreleased: 0 }}
-            />
-          </div>
-        ) : null} */}
-        {ethReleased != "" && (
-          <p className="pt-4 text-sm text-green-500">
-            You have released{" "}
-            <span className="font-medium">{ethReleased} ETH</span>, check{" "}
-            <Link href="/earnings">
-              <a className="text-green-500 underline">your earnings</a>
-            </Link>{" "}
-            to withdraw them!
-          </p>
         )}
       </div>
     </div>
