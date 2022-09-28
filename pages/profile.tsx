@@ -18,6 +18,7 @@ import Slicer from "artifacts/contracts/Slicer.sol/Slicer.json"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import useSWR from "swr"
 import fetcher from "@utils/fetcher"
+import useCurrenciesData from "@utils/useCurrenciesData"
 
 export default function Profile() {
   const { account } = useAppContext()
