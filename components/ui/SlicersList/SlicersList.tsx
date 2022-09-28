@@ -5,8 +5,13 @@ import { BigNumber, BigNumberish } from "ethers"
 import { SlicerReduced } from "pages/slicer"
 import { useState } from "react"
 
+export type UnreleasedAmount = {
+  currency: any
+  amount: BigNumber
+  symbol: string
+}
+
 type Props = {
-  account: string
   payeeData: any
   slicers: any
   loading: boolean
@@ -16,7 +21,6 @@ type Props = {
 }
 
 const SlicersList = ({
-  account,
   payeeData,
   slicers,
   loading,
@@ -52,7 +56,7 @@ const SlicersList = ({
           const productsModuleBalance = slicer?.productsModuleBalance
           const isAllowed = Number(ownedShares) >= Number(slicer?.minimumSlices)
           const currencies = slicer?.currencies
-          const unreleasedAmounts = unreleasedDataCopy
+          const unreleasedAmounts: UnreleasedAmount[] = unreleasedDataCopy
             ?.splice(0, currencies.length)
             .map((amount, i) => {
               const currencyAddress = currencies[i].id.split("-")[0]
@@ -72,7 +76,6 @@ const SlicersList = ({
               <SlicerCard
                 slicerAddress={slicerAddress}
                 slicerId={slicerId}
-                account={account}
                 shares={ownedShares}
                 totalSlices={totalSlices}
                 protocolFee={Number(protocolFee)}

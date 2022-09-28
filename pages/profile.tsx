@@ -122,7 +122,6 @@ export default function Profile() {
 
           <div className="space-y-4 text-left">
             <SlicersList
-              account={account}
               payeeData={payeeData}
               slicers={orderedSlicers}
               loading={!subgraphData}
