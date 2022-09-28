@@ -27,7 +27,6 @@ const SlicersList = ({
   const [iterator, setIterator] = useState(0)
   const unreleasedDataCopy = unreleasedData && [...unreleasedData]
   const { slicerData, currencyData } = dbData || {}
-  console.log(slicerData)
 
   return (
     <ListLayout
@@ -67,7 +66,6 @@ const SlicersList = ({
               }
             })
           const dbData = slicerData?.find((el) => el.id == slicerId)
-          console.log(dbData)
 
           return (
             <div className="mt-3" key={key}>

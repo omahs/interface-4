@@ -31,15 +31,15 @@ export const ethMetadata = {
   address: ethers.constants.AddressZero
 }
 
-const createOrUpdateCurrencies = (currencies) => {
-  fetcher("/api/currencies/createOrUpdate", {
+export const createOrUpdateCurrencies = (currencies) => {
+  fetcher(`${process.env.NEXT_PUBLIC_APP_URL}/api/currencies/createOrUpdate`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ currencies: currencies })
   })
 }
 
-const getAlchemyMetadata = async (
+export const getAlchemyMetadata = async (
   currencyAddress: string
 ): Promise<TokenMetadata> => {
   // Get currency metadata from alchemy API, it only accepts one address per request
@@ -63,7 +63,7 @@ const getAlchemyMetadata = async (
   return response.result
 }
 
-const getCurrenciesMetadata = async (
+export const getCurrenciesMetadata = async (
   dbCurrencies: DbCurrency[],
   currencyAddresses: string[]
 ) => {
@@ -105,13 +105,16 @@ const getCurrenciesMetadata = async (
 
 // metadata could be either dbCurrencies ot metadata taken from alchemy API
 export const getQuotes = async (
-  tokens: { symbol: string; address?: string }[]
+  tokens: { symbol: string; address: string }[]
 ) => {
-  const response = await fetcher("/api/getQuotes", {
-    method: "POST",
-    headers: { Accept: "application/json" },
-    body: JSON.stringify({ tokens })
-  })
+  const response = await fetcher(
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/getQuotes`,
+    {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: JSON.stringify({ tokens })
+    }
+  )
 
   return response
 }
@@ -181,7 +184,7 @@ export default function useCurrenciesData(
         dbCurrencies,
         currencyAddresses
       )
-      const quotes = await getQuotes(dbCurrencies)
+      const quotes = await getQuotes(metadata)
       if (Object.keys(quotes).length && metadata.length) {
         currencies?.forEach((currency, index) => {
           const currencyMetadata = metadata[index]
