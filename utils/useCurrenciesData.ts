@@ -21,16 +21,14 @@ export type TokenMetadata = {
   name: string
   symbol: string
   logo: any
+  address: string
 }
 
-const getDbCurrencies = async (currenciesAddresses: String[]) => {
-  const dbCurrencies: DbCurrency[] = await fetcher("/api/currencies", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ currencies: currenciesAddresses })
-  })
-
-  return dbCurrencies
+export const ethMetadata = {
+  name: "Ethereum",
+  symbol: "ETH",
+  logo: "",
+  address: ethers.constants.AddressZero
 }
 
 const createOrUpdateCurrencies = (currencies) => {
@@ -41,7 +39,9 @@ const createOrUpdateCurrencies = (currencies) => {
   })
 }
 
-const getAlchemyMetadata = async (currency: string): Promise<TokenMetadata> => {
+const getAlchemyMetadata = async (
+  currencyAddress: string
+): Promise<TokenMetadata> => {
   // Get currency metadata from alchemy API, it only accepts one address per request
   const alchemyUrl = process.env.NEXT_PUBLIC_NETWORK_URL
   const headers = {
@@ -52,7 +52,7 @@ const getAlchemyMetadata = async (currency: string): Promise<TokenMetadata> => {
     id: 1,
     jsonrpc: "2.0",
     method: "alchemy_getTokenMetadata",
-    params: [currency]
+    params: [currencyAddress]
   }
   const response = await fetcher(alchemyUrl, {
     method: "POST",
@@ -63,18 +63,12 @@ const getAlchemyMetadata = async (currency: string): Promise<TokenMetadata> => {
   return response.result
 }
 
-const getEthMetadata = async (): Promise<TokenMetadata> => {
-  return { name: "Ethereum", symbol: "ETH", logo: "" }
-}
-
 const getCurrenciesMetadata = async (
-  currencies: Currency[],
-  dbCurrencies: DbCurrency[]
+  dbCurrencies: DbCurrency[],
+  currencyAddresses: string[]
 ) => {
   const requests = []
-  currencies.forEach(async (currency) => {
-    const address = currency?.id.split("-")[1]
-
+  currencyAddresses.forEach(async (address) => {
     // check if requested currency is present inside the DB
     const dbCurrency = dbCurrencies.find((c) => c.address === address)
     if (dbCurrency) {
@@ -82,12 +76,13 @@ const getCurrenciesMetadata = async (
       requests.push({
         name: dbCurrency.name,
         symbol: dbCurrency.symbol,
-        logo: dbCurrency.logo
+        logo: dbCurrency.logo,
+        address: dbCurrency.address
       })
     } else {
       if (address === ethers.constants.AddressZero) {
         // if ETH push eth metadata
-        requests.push(getEthMetadata())
+        requests.push(ethMetadata)
       } else {
         // if not present search for the currency on alchemy
         requests.push(getAlchemyMetadata(address))
@@ -96,73 +91,46 @@ const getCurrenciesMetadata = async (
   })
 
   const metadata = await Promise.all(requests)
-  const formattedMetadata = metadata.map((m) => {
+  const formattedMetadata = metadata.map((m, i) => {
     return {
       name: m?.name || "",
       symbol: m?.symbol || "",
-      logo: m?.logo || ""
+      logo: m?.logo || "",
+      address: m?.address || currencyAddresses[i]
     }
   })
 
   return formattedMetadata
 }
 
-const getQuotes = async (metadata, currencies: Currency[]) => {
-  // metadata could be either dbCurrencies ot metadata taken from alchemy API
-  const formattedData = {}
-
+// metadata could be either dbCurrencies ot metadata taken from alchemy API
+export const getQuotes = async (
+  tokens: { symbol: string; address?: string }[]
+) => {
   const response = await fetcher("/api/getQuotes", {
     method: "POST",
     headers: { Accept: "application/json" },
-    body: JSON.stringify({ tokens: metadata })
+    body: JSON.stringify({ tokens })
   })
 
-  metadata.forEach((currencyMetadata, index) => {
-    const results = response.data[currencyMetadata.symbol] // array of currencies with the same key
-    const currencyAddress =
-      currencyMetadata?.address || currencies[index].id.split("-")[1]
-
-    if (currencyAddress === ethers.constants.AddressZero) {
-      // if it's ETH take the first value of the array
-      formattedData[currencyMetadata.symbol] = results[0]?.quote?.USD?.price
-    } else {
-      results?.forEach((result) => {
-        // check if the currency found by symbol has the correct address,
-        // otherwise it's not the same currency
-        const price =
-          result.platform?.token_address?.toLowerCase() ===
-          currencyAddress.toLowerCase()
-            ? result.quote?.USD.price
-            : 0
-
-        formattedData[currencyMetadata.symbol] = price
-      })
-    }
-  })
-
-  return formattedData
+  return response
 }
 
+// Custom hook, takes as param a list of currencies from the subgraph
+// and ads symbol, name, logo and quote
 export default function useCurrenciesData(
   subgraphData: {
     payee: {
       currencies: Currency[]
     }
   },
+  dbCurrencies: DbCurrency[],
   account: string
-): { currenciesData: Currency[]; currenciesDataDb: DbCurrency[] } {
-  // Custom hook, takes as param a list of currencies from the subgraph
-  // and ads symbol, name, logo and quote
-
-  const currencies = subgraphData?.payee?.currencies
-
-  const [currenciesDataDb, setCurrenciesDataDb] = useState<DbCurrency[]>()
+): Currency[] {
   const [currenciesData, setCurrenciesData] = useState<Currency[]>()
 
   const getData = async () => {
-    const currenciesAddresses = currencies.map((c) => c.id.split("-")[1])
-    const dbCurrencies = await getDbCurrencies(currenciesAddresses)
-    setCurrenciesDataDb(dbCurrencies)
+    const currencies = subgraphData?.payee?.currencies
     let formattedData: Currency[] = []
 
     // Case in which all the requested currencies are known
@@ -181,7 +149,7 @@ export default function useCurrenciesData(
       let quotes = {}
       // if there are tokens to be updated, get quotes from coin market cap
       if (quotesToBeUpdated.length) {
-        quotes = await getQuotes(dbCurrencies, currencies)
+        quotes = await getQuotes(dbCurrencies)
       }
 
       // format data
@@ -208,8 +176,12 @@ export default function useCurrenciesData(
     } else {
       // Case in which one or more currencies are unknown
       // so are needed metadata from alchemy and quotes from coin market cap
-      const metadata = await getCurrenciesMetadata(currencies, dbCurrencies)
-      const quotes = await getQuotes(metadata, currencies)
+      const currencyAddresses = currencies.map((el) => el.id.split("-")[1])
+      const metadata = await getCurrenciesMetadata(
+        dbCurrencies,
+        currencyAddresses
+      )
+      const quotes = await getQuotes(dbCurrencies)
       if (Object.keys(quotes).length && metadata.length) {
         currencies?.forEach((currency, index) => {
           const currencyMetadata = metadata[index]
@@ -232,14 +204,14 @@ export default function useCurrenciesData(
 
   useEffect(() => {
     if (subgraphData) {
-      // Handle unexisting payee
+      // Handle unexisting payee -> stop loading state
       if (!subgraphData.payee) {
         setCurrenciesData([])
-      } else {
+      } else if (dbCurrencies) {
         getData()
       }
     }
-  }, [subgraphData])
+  }, [subgraphData, dbCurrencies])
 
   // Cleanup on account change
   useEffect(() => {
@@ -248,7 +220,7 @@ export default function useCurrenciesData(
     }
   }, [account])
 
-  return { currenciesData, currenciesDataDb }
+  return currenciesData
 }
 
 ///////////////////////////// DEV //////////////////////
