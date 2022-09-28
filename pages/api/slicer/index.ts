@@ -39,6 +39,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
               currencyData,
               currencyAddresses
             )
+            const quotes = await getQuotes(metadata)
             const missingCurrencies = metadata.filter(
               (el) =>
                 currencyData.findIndex((curr) => curr.address == el.address) ==
@@ -53,7 +54,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
                   name,
                   symbol,
                   logo,
-                  quote: null,
+                  quote: quotes[symbol],
                   cmcId: null,
                   createdAt: undefined,
                   updatedAt: undefined

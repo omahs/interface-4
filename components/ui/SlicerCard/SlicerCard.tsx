@@ -8,7 +8,7 @@ import { LogDescription } from "ethers/lib/utils"
 import formatNumber from "@utils/formatNumber"
 import getLog from "@utils/getLog"
 import Arrow from "@components/icons/Arrow"
-import { ButtonRelease, CardImage, CopyAddress, InputCheckbox } from ".."
+import { ReleaseCard, CardImage, CopyAddress, InputCheckbox } from ".."
 import UserVerified from "@components/icons/UserVerified"
 import Immutable from "@components/icons/Immutable"
 import { BigNumber, ethers } from "ethers"
@@ -50,7 +50,8 @@ const SlicerCard = ({
   dbData
 }: Props) => {
   const { name, image } = dbData || {}
-  const [updatedUnreleasedAmounts, setUpdatedUnreleasedAmounts] = useState()
+  const [updatedUnreleasedAmounts, setUpdatedUnreleasedAmounts] =
+    useState<UnreleasedAmount[]>()
   const [ethReleased, setEthReleased] = useState("")
   const slicerLink = `/slicer/${slicerId}`
   const slicerName = name || `Slicer #${slicerId}`
@@ -106,7 +107,7 @@ const SlicerCard = ({
         }}
         imageUrl={image}
       />
-      <div className="pt-4 sm:pt-1 sm:ml-6 md:ml-14">
+      <div className="flex-grow pt-4 sm:pt-1 sm:ml-6 md:ml-14">
         <div>
           <Link href={slicerLink}>
             <a className="flex items-center">
@@ -143,24 +144,28 @@ const SlicerCard = ({
           />
         </div>
         {dbData && unreleasedData && (
-          <div className="inline-block p-3 mt-3 space-y-3 bg-gray-100 rounded-sm">
-            <div className="flex justify-between text-sm">
-              <div className="flex items-center gap-1">
-                <p>Release</p> <QuestionMark className="w-4 h-4" />
-              </div>
-              <div className="flex items-center gap-1">
-                <p>+ Withdraw</p> <QuestionMark className="w-4 h-4" />
-              </div>
+          <div className="mt-5">
+            <div className="flex items-center gap-1 pb-1 text-sm text-gray-500">
+              <p>Release or withdraw</p> <QuestionMark className="w-4 h-4" />
             </div>
-            {unreleasedData.map((unreleasedAmount, i) => (
-              <ButtonRelease
-                slicerAddress={slicerAddress}
-                unreleasedAmount={unreleasedAmount}
-                addRecentTransaction={addRecentTransaction}
-                key={i}
-              />
-            ))}
-            <p className="text-sm underline">See all</p>
+            <ul>
+              {unreleasedData.map(
+                (unreleasedAmount, i) =>
+                  Number(unreleasedAmount?.amount) != 0 && (
+                    <li key={i}>
+                      <ReleaseCard
+                        slicerAddress={slicerAddress}
+                        unreleasedAmount={unreleasedAmount}
+                        addRecentTransaction={addRecentTransaction}
+                      />
+                      {i != unreleasedData.length - 1 && (
+                        <hr className="border-gray-200" />
+                      )}
+                    </li>
+                  )
+              )}
+            </ul>
+            <p className="pt-2 text-sm text-right underline">See all</p>
           </div>
         )}
 

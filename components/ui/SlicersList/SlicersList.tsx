@@ -9,6 +9,7 @@ export type UnreleasedAmount = {
   currency: any
   amount: BigNumber
   symbol: string
+  quote: number
 }
 
 type Props = {
@@ -56,19 +57,23 @@ const SlicersList = ({
           const productsModuleBalance = slicer?.productsModuleBalance
           const isAllowed = Number(ownedShares) >= Number(slicer?.minimumSlices)
           const currencies = slicer?.currencies
-          const unreleasedAmounts: UnreleasedAmount[] = unreleasedDataCopy
-            ?.splice(0, currencies.length)
-            .map((amount, i) => {
-              const currencyAddress = currencies[i].id.split("-")[0]
-
-              return {
-                currency: currencyAddress,
-                amount: amount as BigNumber,
-                symbol: currencyData?.find(
+          const unreleasedAmounts: UnreleasedAmount[] =
+            currencies &&
+            unreleasedDataCopy
+              ?.splice(0, currencies.length)
+              .map((amount, i) => {
+                const currencyAddress = currencies[i].id.split("-")[0]
+                const data = currencyData?.find(
                   (currency) => currency.address == currencyAddress
-                )?.symbol
-              }
-            })
+                )
+
+                return {
+                  currency: currencyAddress,
+                  amount: amount as BigNumber,
+                  symbol: data?.symbol,
+                  quote: data?.quote
+                }
+              })
           const dbData = slicerData?.find((el) => el.id == slicerId)
 
           return (

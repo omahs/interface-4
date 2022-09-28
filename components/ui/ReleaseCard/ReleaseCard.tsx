@@ -61,7 +61,7 @@ const ReleaseCard = ({
       </div>
       <div className="flex items-center text-sm">
         <Button
-          className="h-[36px] font-semibold rounded-l-md nightwind-prevent text-center w-[5.5rem] focus:outline-none"
+          className="h-[34px] font-semibold rounded-l-md nightwind-prevent text-center w-[5.5rem] focus:outline-none"
           label="Release"
           loading={releaseLoading || releaseWithdrawLoading}
           onClick={async () =>
@@ -75,7 +75,7 @@ const ReleaseCard = ({
           double={false}
         />
         <Button
-          className="h-[36px] font-semibold rounded-r-md nightwind-prevent w-14 focus:outline-none"
+          className="h-[34px] font-semibold rounded-r-md nightwind-prevent w-14 focus:outline-none"
           color={`text-white border-l border-gray-200 ${
             releaseLoading
               ? "bg-gray-600 cursor-default"
