@@ -53,7 +53,7 @@ const ReleaseCard = ({
   const toWithdrawUsd = quote ? (amountToRelease * quote).toFixed(2) : 0
 
   return (
-    <div className="flex items-center justify-between max-w-[420px] py-2">
+    <div className="flex items-center justify-between py-2">
       {!status ? (
         <>
           <div>

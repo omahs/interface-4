@@ -147,7 +147,7 @@ const SlicerCard = ({
               onMouseEnter={() => setShow(true)}
               onMouseLeave={() => setShow(false)}
             >
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1 cursor-default">
                 <p>Release | Withdraw</p> <QuestionMark className="w-4 h-4" />
               </div>
               <div
@@ -156,15 +156,13 @@ const SlicerCard = ({
                 }prose-sm text-left absolute p-5 w-[22rem] z-10 xs:w-96 bg-white shadow-xl bottom-0 left-0 sm:-ml-28 md:-ml-8 lg:ml-0 mb-8 rounded-md overflow-hidden border border-blue-600 border-opacity-50`}
               >
                 <p>
-                  <b>Release</b> means sending the profits from a slicer to your{" "}
+                  <b>Release</b> is the process of sending profits from a slicer
+                  to your{" "}
                   <Link href="/earnings">
-                    <a className="highlight">earnings balance</a>
+                    <a className="highlight">earnings vault</a>
+                    {/* <a className="highlight">funds</a> */}
                   </Link>
-                  .
-                </p>
-                <p>
-                  <b>Withdraw</b> is the process of sending earnings from your
-                  earnings balance to your wallet.
+                  , which can then be <b>withdrawn</b> to your wallet.
                 </p>
                 <p>
                   In general, multiple slicers should be released before
@@ -175,7 +173,7 @@ const SlicerCard = ({
                   withdraw a currency at the same time.
                 </p>
                 <p>
-                  <b>Note</b>: When withdrawing you&apos;re sending 2.5% to{" "}
+                  <b>Note</b>: Withdrawing sends 2.5% of the amount to{" "}
                   <a
                     href="https://juicebox.money/p/slice"
                     className="highlight"
@@ -184,9 +182,8 @@ const SlicerCard = ({
                   >
                     Slice DAO
                   </a>{" "}
-                  to fund protocol development. For any ETH withdrawn,
-                  you&apos;ll receive in exchange SLX governance tokens at
-                  current emission rate.
+                  to fund protocol development. When withdrawing ETH, you get a
+                  proportional amount of SLX governance tokens.
                 </p>
               </div>
             </div>

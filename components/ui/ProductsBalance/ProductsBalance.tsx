@@ -82,11 +82,12 @@ const ProductsBalance = ({
             >
               <p>
                 ETH earnings coming from product purchases require an additional
-                step before being able to release them.
+                step before being released.
               </p>
               <p>
-                Click <b>Send to slicer</b> to direct the outstanding balance to
-                your slicer, automatically distributing it to its owners.
+                <b>Send to slicer</b> directs the outstanding balance to your
+                slicer, automatically distributing it to its owners. You will
+                see your ETH balance updated once the transaction goes through.
               </p>
               <p>
                 <b>Note:</b> This step is not necessary with ERC20 purchases.
