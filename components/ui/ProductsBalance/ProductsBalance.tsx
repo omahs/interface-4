@@ -1,4 +1,5 @@
 import Arrow from "@components/icons/Arrow"
+import QuestionMark from "@components/icons/QuestionMark"
 import { releaseEthToSlicer } from "@lib/handlers/chain"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import getEthFromWei from "@utils/getEthFromWei"
@@ -25,6 +26,7 @@ const ProductsBalance = ({
   const { data: signer } = useSigner()
   const addRecentTransaction = useAddRecentTransaction()
 
+  const [show, setShow] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const executeRelease = async () => {
@@ -48,7 +50,8 @@ const ProductsBalance = ({
         amount: BigNumber.from(productsModuleBalance).add(
           unreleasedAmounts[0].amount
         ),
-        symbol: "ETH"
+        symbol: "ETH",
+        quote: unreleasedAmounts[0].quote
       }
       setUpdatedUnreleasedAmounts(newAmounts)
     } else {
@@ -56,8 +59,8 @@ const ProductsBalance = ({
     }
   }
 
-  return productsModuleBalance && productsModuleBalance.length > 1 ? (
-    <div className="flex items-center mt-2 text-sm">
+  return productsModuleBalance?.length > 1 ? (
+    <div className="relative flex flex-wrap items-center text-sm">
       {!loading ? (
         <>
           <p>
@@ -66,8 +69,32 @@ const ProductsBalance = ({
               {getEthFromWei(productsModuleBalance)} ETH
             </span>
           </p>
+          <div
+            className="inline-block pt-3 mx-2 mb-3"
+            onMouseEnter={() => setShow(true)}
+            onMouseLeave={() => setShow(false)}
+          >
+            <QuestionMark className="w-4 h-4" />
+            <div
+              className={`${
+                !show ? "hidden " : ""
+              }prose-sm text-left absolute p-5 w-[22rem] z-10 xs:w-96 bg-white shadow-xl bottom-0 left-0 sm:-ml-28 md:-ml-8 lg:ml-0 mb-10 rounded-md overflow-hidden border border-blue-600 border-opacity-50`}
+            >
+              <p>
+                ETH earnings coming from product purchases require an additional
+                step before being able to release them.
+              </p>
+              <p>
+                Click <b>Send to slicer</b> to direct the outstanding balance to
+                your slicer, automatically distributing it to its owners.
+              </p>
+              <p>
+                <b>Note:</b> This step is not necessary with ERC20 purchases.
+              </p>
+            </div>
+          </div>
           <a
-            className="flex items-center ml-3 group"
+            className="flex items-center group"
             onClick={() => executeRelease()}
           >
             <p>Send to slicer</p>

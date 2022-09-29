@@ -40,6 +40,7 @@ const SlicerCard = ({
   unreleasedAmounts,
   dbData
 }: Props) => {
+  const [show, setShow] = useState(false)
   const { setModalView } = useAppContext()
   const { name, image } = dbData || {}
   const [updatedUnreleasedAmounts, setUpdatedUnreleasedAmounts] =
@@ -138,9 +139,56 @@ const SlicerCard = ({
           />
         </div>
         {dbData && unreleasedFormatted.length != 0 && (
-          <div className="mt-5">
-            <div className="flex items-center gap-1 pb-1 text-sm text-gray-500">
-              <p>Release | Withdraw</p> <QuestionMark className="w-4 h-4" />
+          <div>
+            <div
+              className={`relative inline-block pt-3 pb-1 text-sm text-gray-500 ${
+                productsModuleBalance?.length > 1 ? "-mt-3" : ""
+              }`}
+              onMouseEnter={() => setShow(true)}
+              onMouseLeave={() => setShow(false)}
+            >
+              <div className="flex items-center gap-1">
+                <p>Release | Withdraw</p> <QuestionMark className="w-4 h-4" />
+              </div>
+              <div
+                className={`${
+                  !show ? "hidden " : ""
+                }prose-sm text-left absolute p-5 w-[22rem] z-10 xs:w-96 bg-white shadow-xl bottom-0 left-0 sm:-ml-28 md:-ml-8 lg:ml-0 mb-8 rounded-md overflow-hidden border border-blue-600 border-opacity-50`}
+              >
+                <p>
+                  <b>Release</b> means sending the profits from a slicer to your{" "}
+                  <Link href="/earnings">
+                    <a className="highlight">earnings balance</a>
+                  </Link>
+                  .
+                </p>
+                <p>
+                  <b>Withdraw</b> is the process of sending earnings from your
+                  earnings balance to your wallet.
+                </p>
+                <p>
+                  In general, multiple slicers should be released before
+                  withdrawing a currency.
+                </p>
+                <p>
+                  By clicking the button on the right, you can release and
+                  withdraw a currency at the same time.
+                </p>
+                <p>
+                  <b>Note</b>: When withdrawing you&apos;re sending 2.5% to{" "}
+                  <a
+                    href="https://juicebox.money/p/slice"
+                    className="highlight"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Slice DAO
+                  </a>{" "}
+                  to fund protocol development. For any ETH withdrawn,
+                  you&apos;ll receive in exchange SLX governance tokens at
+                  current emission rate.
+                </p>
+              </div>
             </div>
             <ul>
               {unreleasedFormatted
