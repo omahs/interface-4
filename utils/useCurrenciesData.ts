@@ -150,17 +150,19 @@ export default function useCurrenciesData(
     }
   },
   account: string
-): Currency[] {
+): { currenciesData: Currency[]; currenciesDataDb: DbCurrency[] } {
   // Custom hook, takes as param a list of currencies from the subgraph
   // and ads symbol, name, logo and quote
 
   const currencies = subgraphData?.payee?.currencies
 
+  const [currenciesDataDb, setCurrenciesDataDb] = useState<DbCurrency[]>()
   const [currenciesData, setCurrenciesData] = useState<Currency[]>()
 
   const getData = async () => {
     const currenciesAddresses = currencies.map((c) => c.id.split("-")[1])
     const dbCurrencies = await getDbCurrencies(currenciesAddresses)
+    setCurrenciesDataDb(dbCurrencies)
     let formattedData: Currency[] = []
 
     // Case in which all the requested currencies are known
@@ -246,7 +248,7 @@ export default function useCurrenciesData(
     }
   }, [account])
 
-  return currenciesData
+  return { currenciesData, currenciesDataDb }
 }
 
 ///////////////////////////// DEV //////////////////////
