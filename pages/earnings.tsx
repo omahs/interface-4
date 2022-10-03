@@ -1,3 +1,4 @@
+import { useRouter } from "next/router"
 import {
   ConnectBlock,
   Container,
@@ -24,11 +25,15 @@ import JBFundingCycles from "artifacts/contracts/JBFundingCycles.sol/JBFundingCy
 import constants from "../constants.json"
 
 export default function Earnings({ slxRate }) {
+  const router = useRouter()
   const { account } = useAppContext()
   const [currencies, setCurrencies] = useState<Currency[]>()
+  const { address } = router.query
+
+  const wallet = router.isReady ? address || account : null
 
   const tokensQuery = /* GraphQL */ `
-      payee(id: "${account?.toLowerCase()}") {
+      payee(id: "${wallet?.toLowerCase()}") {
         currencies {
           id
           withdrawn
@@ -38,13 +43,13 @@ export default function Earnings({ slxRate }) {
         }
       }
     `
-  let subgraphData = useQuery(tokensQuery, [account])
+  let subgraphData = useQuery(tokensQuery, [wallet])
   const { currenciesData, currenciesDataDb } = useCurrenciesData(
     subgraphData,
-    account
+    wallet
   )
-  // TODO: Use currenciesDataDb to show data earlier?
 
+  // TODO: Use currenciesDataDb to show data earlier?
   useEffect(() => {
     setCurrencies(currenciesData)
   }, [currenciesData])
@@ -69,16 +74,29 @@ export default function Earnings({ slxRate }) {
       />
       <ConnectBlock>
         <main className="sm:mx-auto sm:max-w-screen-md">
-          <DoubleText
-            inactive
-            logoText="My earnings"
-            size="text-3xl sm:text-5xl"
-            position="pb-16 sm:pb-20"
-          />
+          <div className="pb-16 sm:pb-20">
+            <DoubleText
+              inactive
+              logoText="Earnings"
+              size="text-3xl sm:text-5xl"
+            />
+            <p className="pt-6 text-sm text-gray-500 ">
+              <a
+                className="highlight"
+                target="_blank"
+                rel="noreferrer"
+                href={`https://${
+                  process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
+                }etherscan.io/address/${wallet}`}
+              >
+                {wallet.replace(wallet.substring(5, wallet.length - 3), `___`)}
+              </a>
+            </p>
+          </div>
           <TotalBalance currencies={currencies} slxRate={slxRate} />
           <ToWithdrawList
             currencies={currencies}
-            account={account}
+            account={wallet}
             setCurrencies={setCurrencies}
           />
         </main>
