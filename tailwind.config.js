@@ -41,6 +41,13 @@ module.exports = {
         gray: colors.gray,
         sky: colors.sky,
         cyan: colors.cyan,
+        yellow: colors.yellow,
+        slate: {
+          400: "#000000",
+          500: "#000000",
+          800: "#e4e4e4",
+          900: "#a4a4a4"
+        },
         random1: {
           300: "var(--color1)",
           600: "var(--darkColor1)"
@@ -64,6 +71,39 @@ module.exports = {
       },
       typography: (theme) => ({
         DEFAULT: {
+          css: {
+            color: theme("colors.black"),
+            a: {
+              textDecorationColor: "var(--darkColor2)",
+              textDecorationThickness: "2px",
+              textUnderlineOffset: "1px"
+            },
+            h1: {
+              color: theme("colors.black"),
+              fontWeight: "900"
+            },
+            h2: {
+              color: theme("colors.black"),
+              fontWeight: "900"
+            },
+            h3: {
+              color: theme("colors.black"),
+              fontSize: "1.12em"
+            },
+            blockquote: {
+              borderLeftColor: theme("colors.random2.600")
+            },
+            "blockquote p:first-of-type::before": false,
+            "blockquote p:last-of-type::after": false,
+            strong: {
+              fontWeight: "900"
+            },
+            img: {
+              borderRadius: "0.75rem"
+            }
+          }
+        },
+        sm: {
           css: {
             color: theme("colors.black"),
             a: {

@@ -14,8 +14,9 @@ export const graphQuery = async (
         query {
           ${tokensQuery}
         }
-      `,
+      `
     })
+
     setData(data)
   } catch (err) {
     console.log("Error fetching data: ", err)

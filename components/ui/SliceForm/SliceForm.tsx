@@ -59,16 +59,14 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
 
     setloadingButton(true)
 
-    const payees: Payee[] = []
-    for (let i = 0; i < cleanedAddresses.length; i++) {
-      const account = cleanedAddresses[i]
-      const shares = cleanedShares[i]
-
-      payees.push({ account, shares, transfersAllowedWhileLocked: false })
-    }
-
     try {
       if (cleanedShares.length == cleanedAddresses.length) {
+        const payees = cleanedAddresses.map((account, i) => ({
+          account,
+          shares: cleanedShares[i],
+          transfersAllowedWhileLocked: false
+        }))
+
         const [contract, call] = (await Slice(
           signer,
           payees,
