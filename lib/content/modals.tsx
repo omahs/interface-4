@@ -460,7 +460,9 @@ export const PRODUCT_VIEW = (params: any) => {
           </div>
         </div>
         {extAddress &&
-          (!isCustomPriced || externalPrices[slicerId][productId]) &&
+          (!isCustomPriced ||
+            (externalPrices[slicerId] &&
+              externalPrices[slicerId][productId])) &&
           !editMode && (
             <div className="mx-auto cursor-pointer w-60">
               <CartButton
@@ -516,25 +518,27 @@ export const PRODUCT_VIEW = (params: any) => {
               }`}
             </p>
           )}
-        {isCustomPriced && externalPrices[slicerId][productId] && (
-          <p className="pt-6 mx-auto text-sm text-center">
-            Price dynamically calculated from{" "}
-            <a
-              className="font-bold highlight"
-              href={`https://${
-                process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
-              }etherscan.io/address/${externalAddress}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {externalAddress.replace(
-                externalAddress.substring(5, externalAddress.length - 3),
-                `\xa0\xa0\xa0\xa0\xa0\xa0`
-              )}
-            </a>{" "}
-            {strategy && `(${strategy.label})`}
-          </p>
-        )}
+        {isCustomPriced &&
+          externalPrices[slicerId] &&
+          externalPrices[slicerId][productId] && (
+            <p className="pt-6 mx-auto text-sm text-center">
+              Price dynamically calculated from{" "}
+              <a
+                className="font-bold highlight"
+                href={`https://${
+                  process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
+                }etherscan.io/address/${externalAddress}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {externalAddress.replace(
+                  externalAddress.substring(5, externalAddress.length - 3),
+                  `\xa0\xa0\xa0\xa0\xa0\xa0`
+                )}
+              </a>{" "}
+              {strategy && `(${strategy.label})`}
+            </p>
+          )}
         {extAddress &&
         extAddress != "0x00000000" &&
         extAddress != ethers.constants.AddressZero &&

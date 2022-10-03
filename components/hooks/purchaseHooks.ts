@@ -24,7 +24,7 @@ export type HookParams = {
 
 export type Hook = {
   label: string
-  description: string
+  description: string | JSX.Element
   Component: (args: any) => JSX.Element
   deployments?: Deployments
 }

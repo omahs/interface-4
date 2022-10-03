@@ -153,7 +153,7 @@ const SlicerCard = ({
         {!released && unreleasedAmount && Number(unreleasedAmount) != 0 ? (
           <div className="mt-6">
             <BlockchainCall
-              transactionDescription={`Release & withdraw ETH | Slicer #${slicerId}`}
+              transactionDescription={`Release ETH | Slicer #${slicerId}`}
               saEventName="withdraw_eth_to_owner"
               label={`Release ${getEthFromWei(unreleasedAmount)} ETH`}
               action={() =>
@@ -162,7 +162,7 @@ const SlicerCard = ({
                   slicerId,
                   account,
                   ethers.constants.AddressZero,
-                  true
+                  false
                 )
               }
               success={success}
@@ -175,13 +175,12 @@ const SlicerCard = ({
         ) : null}
         {ethReleased != "" && (
           <p className="pt-4 text-sm text-green-500">
-            You received{" "}
-            <span className="font-medium">
-              {((Number(ethReleased) * (1000 - protocolFee)) / 1000).toFixed(4)}{" "}
-              ETH + {((Number(ethReleased) * protocolFee) / 1000).toFixed(4)}{" "}
-              ETH in SLX
-            </span>
-            ! 🎉
+            You have released{" "}
+            <span className="font-medium">{ethReleased} ETH</span>, check{" "}
+            <Link href="/earnings">
+              <a className="text-green-500 underline">your earnings</a>
+            </Link>{" "}
+            to withdraw them!
           </p>
         )}
       </div>
