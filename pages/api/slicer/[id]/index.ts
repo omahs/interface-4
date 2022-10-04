@@ -114,15 +114,30 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           })
         }
         if (stats !== "false") {
-          // const { data } = await client.query({
-          //   query: gql`
-          //     query Slicers {
-          //       slicer(id: "${hexId}") {
-          //         ethReceived
-          //       }
-          //     }
-          //   `
-          // })
+          // Fetch subgraph data
+          const { data } = await client.query({
+            query: gql`
+              query Slicers {
+                slicer(id: "${hexId}") {
+                  slices
+                }
+              }
+            `
+          })
+
+          // Update total slices
+          if (slicerInfo?.attributes[0]["value"] != data.slicer.slices) {
+            slicerInfo.attributes[0] = {
+              display_type: "number",
+              trait_type: "Total slices",
+              value: data.slicer.slices
+            }
+            await prisma.slicer.update({
+              where: { id: Number(decimalId) },
+              data: { attributes: slicerInfo.attributes }
+            })
+          }
+
           // // TODO: Switch this query from subgraph to Alchemy tokenAPI
           // const totalReceived = getEthFromWei(data.slicer.ethReceived, true)
           // slicerInfo.attributes.push({
