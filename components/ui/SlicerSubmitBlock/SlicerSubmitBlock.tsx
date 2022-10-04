@@ -86,7 +86,8 @@ const SlicerSubmitBlock = ({
       tags: newTags,
       description: newDescription,
       imageUrl: slicer.imageUrl,
-      attributes: slicer.attributes
+      attributes: slicer.attributes,
+      totalSlices: slicer.totalSlices
     }
     try {
       let isPayeeAllowed: boolean
@@ -123,7 +124,8 @@ const SlicerSubmitBlock = ({
           tags: newTags,
           description: newDescription,
           imageUrl: newFilePath,
-          attributes: slicer.attributes
+          attributes: slicer.attributes,
+          totalSlices: slicer.totalSlices
         }
         setNewImage({ url: "", file: undefined })
       }
