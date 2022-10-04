@@ -89,7 +89,7 @@ export default function Earnings({ slxRate }) {
                   process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
                 }etherscan.io/address/${wallet}`}
               >
-                {wallet.replace(wallet.substring(5, wallet.length - 3), `___`)}
+                {wallet?.replace(wallet.substring(5, wallet.length - 3), `___`)}
               </a>
             </p>
           </div>
