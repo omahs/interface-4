@@ -37,11 +37,12 @@ export type SlicerAttributes = {
   value: string | number
 }[]
 export type SlicerData = {
-  name: any
-  description: any
-  tags: any
-  imageUrl: any
+  name: string
+  description: string
+  tags: string
+  imageUrl: string
   attributes: SlicerAttributes
+  totalSlices: number
 }
 export type AddressAmount = {
   address: string
@@ -90,7 +91,8 @@ const Id = ({
     description: slicerInfo?.description,
     tags: slicerInfo?.tags,
     imageUrl: slicerInfo?.image,
-    attributes: slicerInfo?.attributes
+    attributes: slicerInfo?.attributes,
+    totalSlices: slicerInfo?.totalSlices
   })
 
   const [newDescription, setNewDescription] = useState(slicer.description)
@@ -110,10 +112,7 @@ const Id = ({
       ? slicer.name
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
 
-  const totalSlices = Number(
-    slicer?.attributes.filter((el) => el.trait_type === "Total slices")[0]
-      ?.value
-  )
+  const totalSlices = slicerInfo.totalSlices
 
   useEffect(() => {
     setEditMode(false)
@@ -359,6 +358,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
    */
   const tokensQuery = /* GraphQL */ `
   slicer(id: "${hexId}") {
+    slices
     payees(
       where: {
         slices_gt: "0"
@@ -408,6 +408,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       fetchPolicy: "no-cache"
     })
   ])
+
+  slicerInfo.totalSlices = Number(subgraphData?.slicer?.slices) || null
 
   let sponsors: AddressAmount[]
   const sponsorsBody =
