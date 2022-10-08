@@ -67,7 +67,7 @@ export const NETWORK_VIEW = () => {
       <p className="text-lg text-center">
         Connect to the{" "}
         <span className="font-black">
-          {chainId === "4" ? "Rinkeby" : "Ethereum Mainnet"}
+          {chainId === "5" ? "Goerli" : "Ethereum Mainnet"}
         </span>{" "}
         Network
       </p>
@@ -279,7 +279,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
                 Hook deployed!{" "}
                 <a
                   href={`https://${
-                    process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
+                    process.env.NEXT_PUBLIC_CHAIN_ID === "5" ? "goerli." : ""
                   }etherscan.io/address/${cloneAddress}`}
                   target="_blank"
                   rel="noreferrer"
@@ -526,7 +526,7 @@ export const PRODUCT_VIEW = (params: any) => {
               <a
                 className="font-bold highlight"
                 href={`https://${
-                  process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
+                  process.env.NEXT_PUBLIC_CHAIN_ID === "5" ? "goerli." : ""
                 }etherscan.io/address/${externalAddress}`}
                 target="_blank"
                 rel="noreferrer"
@@ -548,7 +548,7 @@ export const PRODUCT_VIEW = (params: any) => {
             <a
               className="font-bold highlight"
               href={`https://${
-                process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
+                process.env.NEXT_PUBLIC_CHAIN_ID === "5" ? "goerli." : ""
               }etherscan.io/address/${extAddress}`}
               target="_blank"
               rel="noreferrer"
