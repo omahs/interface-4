@@ -168,10 +168,10 @@ const AddProductForm = ({
       setUploadStep(7)
       // Create product on smart contract
       const weiValue = ethToWei(ethValue)
-      const productPrice = isUSD ? Math.floor(usdValue * 100) : weiValue
+      const productPrice = isUSD ? Math.floor(usdValue * 1000000) : weiValue
       const isStrategyConfigurable = priceParams?.abi != undefined
       const currencyPrices =
-        productPrice != 0 || priceParams?.address
+        Number(productPrice) != 0 || priceParams?.address
           ? [
               {
                 currency: ethers.constants.AddressZero,
