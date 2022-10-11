@@ -25,7 +25,7 @@ const ResolvedAddress = ({ address, href }: Props) => {
       href={
         href ||
         `https://${
-          process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
+          process.env.NEXT_PUBLIC_CHAIN_ID === "5" ? "goerli." : ""
         }etherscan.io/address/${address}`
       }
       target="_blank"

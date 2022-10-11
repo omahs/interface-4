@@ -167,13 +167,13 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
             <strong>Note:</strong> superowner slices and total slices cannot be
             changed later.
           </p>
-          {process.env.NEXT_PUBLIC_CHAIN_ID === "4" && (
+          {process.env.NEXT_PUBLIC_CHAIN_ID === "5" && (
             <p>
-              <strong>Note:</strong> this version of Slice runs on Rinkeby
+              <strong>Note:</strong> this version of Slice runs on Goerli
               Testnet, so it does not use real ETH. You can get some ETH on
-              Rinkeby{" "}
+              Goerli{" "}
               <a
-                href="https://rinkebyfaucet.com/"
+                href="https://faucet.paradigm.xyz/"
                 target="_blank"
                 rel="noreferrer"
                 className="font-black highlight"

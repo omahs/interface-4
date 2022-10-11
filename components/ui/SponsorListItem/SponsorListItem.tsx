@@ -92,7 +92,7 @@ const SponsorListItem = ({ slicerId, sponsor, sponsorLink }: Props) => {
                     link ||
                     sponsorLink ||
                     `https://${
-                      process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
+                      process.env.NEXT_PUBLIC_CHAIN_ID === "5" ? "goerli." : ""
                     }etherscan.io/address/${address}`
                   }
                 />

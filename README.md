@@ -3,7 +3,7 @@
 Slice frontend application.
 
 - Mainnet: https://slice.so
-- Rinkeby: https://testnet.slice.so
+- Goerli: https://testnet.slice.so
 - Development (staging branch): https://dev.slice.so
 
 ## Development
@@ -24,7 +24,7 @@ Slice frontend application.
 
 ### Setup
 
-`Slice-interface` relies on a number of services for development. A separate set of contracts on Rinkeby was appositely created for development purposes.
+`Slice-interface` relies on a number of services for development. A separate set of contracts on Goerli was appositely created for development purposes.
 
 The following sections describe how to set up each service for local
 development.
@@ -45,7 +45,7 @@ Slice uses [Alchemy](https://www.alchemy.com) to connect to an Ethereum network
 Follow these steps to create an Alchemy key:
 
 1. Create an account on [Alchemy](https://www.alchemy.com)
-2. Create a new App, specifying Rinkeby as network
+2. Create a new App, specifying Goerli as network
 3. Enter the app and click on **View Key**
 4. Copy the HTTP key and paste it into the **NEXT_PUBLIC_NETWORK_URL** in your `.env` file
 
