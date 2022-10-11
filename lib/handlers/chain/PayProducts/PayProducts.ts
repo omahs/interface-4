@@ -7,13 +7,23 @@ const PayProducts = async (
   buyer: string,
   productData: ProductCart[]
 ) => {
-  const { productsModule, chainlink } = await import("@lib/initProvider")
+  const { productsModule, priceFeedAddress, priceFeed, chainlink } =
+    await import("@lib/initProvider")
 
   const contract = productsModule(signer)
-  const priceFeed = await chainlink(signer).latestRoundData()
+
+  // chainlink is used in testnet environment where uniswap pool is inactive
+  const quote = priceFeedAddress
+    ? await priceFeed(signer).getQuote(
+        10000,
+        "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6",
+        "0x2f3a40a3db8a7e3d09b0adfefbce4f6f81927557",
+        1800
+      )
+    : await chainlink(signer).latestRoundData()
   const currency = ethers.constants.AddressZero
 
-  const ethUsd = Number(priceFeed[1])
+  const ethUsd = priceFeedAddress ? quote : Number(quote[1])
   let totalPrice: BigNumber
   let purchaseParams: PurchaseParamsStruct[] = []
 

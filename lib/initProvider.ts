@@ -4,6 +4,7 @@ import ProductsModuleContract from "artifacts/contracts/ProductsModule.sol/Produ
 import FundsModuleContract from "artifacts/contracts/FundsModule.sol/FundsModule.json"
 import SlicerContract from "artifacts/contracts/Slicer.sol/Slicer.json"
 import jbPayerContract from "artifacts/contracts/JBETHERC20ProjectPayerTokensReceiverCloneDeployer.sol/JBETHERC20ProjectPayerTokensReceiverCloneDeployer.json"
+import PriceFeedContract from "artifacts/contracts/PriceFeed.sol/PriceFeed.json"
 import ChainlinkContract from "artifacts/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol/AggregatorV3Interface.json"
 import { SliceCore } from "../types/typechain/SliceCore"
 import { ProductsModule } from "../types/typechain/ProductsModule"
@@ -12,15 +13,18 @@ import { Slicer } from "../types/typechain/Slicer"
 import { JBETHERC20ProjectPayerTokensReceiverCloneDeployer } from "../types/typechain/JBETHERC20ProjectPayerTokensReceiverCloneDeployer"
 import constants from "../constants.json"
 
-const {
+export const {
   SliceCore: sliceCoreAddress,
   ProductsModule: productsModuleAddress,
   FundsModule: fundsModuleAddress,
   ChainlinkFeed: chainlinkFeedAddress,
+  PriceFeed: priceFeedAddress,
   DeployCloneFactory: deployCloneFactoryAddress
 } = constants[process.env.NEXT_PUBLIC_CHAIN_ID][
   process.env.NEXT_PUBLIC_ENVIRONMENT
 ].addresses
+
+console.log(priceFeedAddress)
 
 export const sliceCore = (signer: ethers.Signer | ethers.providers.Provider) =>
   new ethers.Contract(
@@ -69,5 +73,8 @@ export const jbCloner = async (
 
 export const chainlink = (signer: ethers.Signer | ethers.providers.Provider) =>
   new ethers.Contract(chainlinkFeedAddress, ChainlinkContract.abi, signer)
+
+export const priceFeed = (signer: ethers.Signer | ethers.providers.Provider) =>
+  new ethers.Contract(priceFeedAddress, PriceFeedContract.abi, signer)
 
 // export const gasPrice = { gasPrice: 1000000000 }

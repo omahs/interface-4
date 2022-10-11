@@ -86,7 +86,7 @@ export default function Earnings({ slxRate }) {
                 target="_blank"
                 rel="noreferrer"
                 href={`https://${
-                  process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
+                  process.env.NEXT_PUBLIC_CHAIN_ID === "5" ? "goerli." : ""
                 }etherscan.io/address/${wallet}`}
               >
                 {wallet?.replace(wallet.substring(5, wallet.length - 3), `___`)}
