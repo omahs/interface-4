@@ -114,6 +114,8 @@ const Id = ({
 
   const totalSlices = slicerInfo.totalSlices
 
+  console.log({ slicerInfo, products })
+
   useEffect(() => {
     setEditMode(false)
     // TODO: For collectibles save image on web3Storage instead of supabase? + Allow indefinite size? Figure it out
@@ -333,8 +335,8 @@ const Id = ({
 }
 
 export async function getStaticPaths() {
-  // const totalSlicers = await sliceCore(defaultProvider).supply()
-  const totalSlicers = 0
+  const totalSlicers = await sliceCore(defaultProvider).supply()
+  // const totalSlicers = 0
   const paths = [...Array(Number(totalSlicers)).keys()].map((slicerId) => {
     const id = String(slicerId)
     return {
