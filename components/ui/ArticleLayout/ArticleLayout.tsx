@@ -52,7 +52,7 @@ export default function Article({
             content={
               coverImage
                 ? `${domain}/blog/${coverImage}`
-                : `${domain}/twitter_card.jpg`
+                : `${domain}/twitter_card.png`
             }
           />
         </Head>
