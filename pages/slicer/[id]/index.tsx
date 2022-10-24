@@ -33,7 +33,12 @@ import { sliceCore } from "@lib/initProvider"
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
   display_type: "number" | "date" | undefined
-  trait_type: "Total slices" | "Superowner slices" | "Creator" | "Sliced on"
+  trait_type:
+    | "Total slices"
+    | "Superowner slices"
+    | "Creator"
+    | "Controller"
+    | "Sliced on"
   value: string | number
 }[]
 export type SlicerData = {
@@ -118,19 +123,28 @@ const Id = ({
 
   useEffect(() => {
     setEditMode(false)
+
+    const controller = slicer?.attributes?.find(
+      (el) => el.trait_type === "Controller"
+    )?.value
+    const creator = slicer?.attributes?.find(
+      (el) => el.trait_type === "Creator"
+    ).value
+
+    const isEditAllowed = controller
+      ? controller === account?.toLowerCase()
+      : !slicerInfo?.isImmutable
+      ? isAllowed == "metadata" || isAllowed == "full"
+      : creator === account?.toLowerCase() // only Creator
+      ? (newName === `Slicer #${slicerInfo?.id}` && // default name, descr & image
+          newDescription === "" &&
+          newImage.url === "" &&
+          slicer.imageUrl === "https://slice.so/slicer_default.png") ||
+        false // slicer?.attributes["Total slices"] === account.slices // creator has all slices
+      : false
+    setEditAllowed(isEditAllowed)
+
     // TODO: For collectibles save image on web3Storage instead of supabase? + Allow indefinite size? Figure it out
-    setEditAllowed(
-      !slicerInfo?.isImmutable
-        ? isAllowed == "metadata" || isAllowed == "full"
-        : slicer?.attributes?.filter((el) => el.trait_type === "Creator")[0]
-            .value === account?.toLowerCase() // only Creator
-        ? (newName === `Slicer #${slicerInfo?.id}` && // default name, descr & image
-            newDescription === "" &&
-            newImage.url === "" &&
-            slicer.imageUrl === "https://slice.so/slicer_default.png") ||
-          false // slicer?.attributes["Total slices"] === account.slices // creator has all slices
-        : false
-    )
   }, [account, isAllowed])
 
   useEffect(() => {
