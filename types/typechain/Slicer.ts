@@ -32,15 +32,29 @@ export interface SlicerInterface extends utils.Interface {
     "_updatePayees(address,address,bool,uint256,uint256)": FunctionFragment;
     "_updatePayeesReslice(address[],int32[],uint32)": FunctionFragment;
     "acceptsCurrency(address)": FunctionFragment;
+    "baseFee()": FunctionFragment;
     "batchReleaseAccounts(address[],address,bool)": FunctionFragment;
+    "creator()": FunctionFragment;
+    "customFee()": FunctionFragment;
+    "customFeeActive()": FunctionFragment;
+    "flags()": FunctionFragment;
+    "fundsModule()": FunctionFragment;
     "getFee()": FunctionFragment;
+    "getFeeForAccount(address)": FunctionFragment;
     "isPayeeAllowed(address)": FunctionFragment;
+    "minimumShares()": FunctionFragment;
     "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "onERC1155Received(address,address,uint256,uint256,bytes)": FunctionFragment;
     "onERC721Received(address,address,uint256,bytes)": FunctionFragment;
+    "productsModule()": FunctionFragment;
     "release(address,address,bool)": FunctionFragment;
+    "releaseTimelock()": FunctionFragment;
+    "sliceCore()": FunctionFragment;
+    "slicerId()": FunctionFragment;
     "slicerInfo()": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
+    "totalReleased(address)": FunctionFragment;
+    "totalShares()": FunctionFragment;
     "unreleased(address,address)": FunctionFragment;
   };
 
@@ -99,14 +113,34 @@ export interface SlicerInterface extends utils.Interface {
     functionFragment: "acceptsCurrency",
     values: [string]
   ): string;
+  encodeFunctionData(functionFragment: "baseFee", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "batchReleaseAccounts",
     values: [string[], string, boolean]
   ): string;
+  encodeFunctionData(functionFragment: "creator", values?: undefined): string;
+  encodeFunctionData(functionFragment: "customFee", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "customFeeActive",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "flags", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "fundsModule",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "getFee", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "getFeeForAccount",
+    values: [string]
+  ): string;
   encodeFunctionData(
     functionFragment: "isPayeeAllowed",
     values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "minimumShares",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "onERC1155BatchReceived",
@@ -121,9 +155,19 @@ export interface SlicerInterface extends utils.Interface {
     values: [string, string, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "productsModule",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "release",
     values: [string, string, boolean]
   ): string;
+  encodeFunctionData(
+    functionFragment: "releaseTimelock",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "sliceCore", values?: undefined): string;
+  encodeFunctionData(functionFragment: "slicerId", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "slicerInfo",
     values?: undefined
@@ -131,6 +175,14 @@ export interface SlicerInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "supportsInterface",
     values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalReleased",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalShares",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "unreleased",
@@ -185,13 +237,33 @@ export interface SlicerInterface extends utils.Interface {
     functionFragment: "acceptsCurrency",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "baseFee", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "batchReleaseAccounts",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "creator", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "customFee", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "customFeeActive",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "flags", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "fundsModule",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "getFee", data: BytesLike): Result;
   decodeFunctionResult(
+    functionFragment: "getFeeForAccount",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "isPayeeAllowed",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "minimumShares",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -206,10 +278,28 @@ export interface SlicerInterface extends utils.Interface {
     functionFragment: "onERC721Received",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "productsModule",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "release", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "releaseTimelock",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "sliceCore", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "slicerId", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "slicerInfo", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "supportsInterface",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalReleased",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalShares",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "unreleased", data: BytesLike): Result;
@@ -221,6 +311,7 @@ export interface SlicerInterface extends utils.Interface {
     "ERC1155BatchReceived(address,address,uint256[],uint256[])": EventFragment;
     "ERC1155Received(address,address,uint256,uint256)": EventFragment;
     "ERC721Received(address,address,uint256)": EventFragment;
+    "Initialized(uint8)": EventFragment;
     "Released(address,address,uint256,uint256)": EventFragment;
   };
 
@@ -230,6 +321,7 @@ export interface SlicerInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "ERC1155BatchReceived"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC1155Received"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721Received"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Released"): EventFragment;
 }
 
@@ -285,6 +377,10 @@ export type ERC721ReceivedEvent = TypedEvent<
 >;
 
 export type ERC721ReceivedEventFilter = TypedEventFilter<ERC721ReceivedEvent>;
+
+export type InitializedEvent = TypedEvent<[number], { version: number }>;
+
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export type ReleasedEvent = TypedEvent<
   [string, string, BigNumber, BigNumber],
@@ -376,13 +472,13 @@ export interface Slicer extends BaseContract {
     ): Promise<ContractTransaction>;
 
     _setCustomFee(
-      customFeeActive: boolean,
-      customFee: BigNumberish,
+      customFeeActive_: boolean,
+      customFee_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     _setTotalShares(
-      totalShares: BigNumberish,
+      totalShares_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -407,6 +503,8 @@ export interface Slicer extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    baseFee(overrides?: CallOverrides): Promise<[number]>;
+
     batchReleaseAccounts(
       accounts: string[],
       currency: string,
@@ -414,7 +512,22 @@ export interface Slicer extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    creator(overrides?: CallOverrides): Promise<[string]>;
+
+    customFee(overrides?: CallOverrides): Promise<[number]>;
+
+    customFeeActive(overrides?: CallOverrides): Promise<[boolean]>;
+
+    flags(overrides?: CallOverrides): Promise<[number]>;
+
+    fundsModule(overrides?: CallOverrides): Promise<[string]>;
+
     getFee(
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { fee: BigNumber }>;
+
+    getFeeForAccount(
+      account: string,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { fee: BigNumber }>;
 
@@ -422,6 +535,8 @@ export interface Slicer extends BaseContract {
       payee: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    minimumShares(overrides?: CallOverrides): Promise<[number]>;
 
     onERC1155BatchReceived(
       arg0: string,
@@ -449,12 +564,20 @@ export interface Slicer extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    productsModule(overrides?: CallOverrides): Promise<[string]>;
+
     release(
       account: string,
       currency: string,
       withdraw: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    releaseTimelock(overrides?: CallOverrides): Promise<[number]>;
+
+    sliceCore(overrides?: CallOverrides): Promise<[string]>;
+
+    slicerId(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     slicerInfo(
       overrides?: CallOverrides
@@ -469,14 +592,10 @@ export interface Slicer extends BaseContract {
         boolean,
         string[]
       ] & {
-        tokenId: BigNumber;
-        minimumShares: BigNumber;
-        creator: string;
         isImmutable: boolean;
         currenciesControlled: boolean;
         productsControlled: boolean;
         acceptsAllCurrencies: boolean;
-        currencies: string[];
       }
     >;
 
@@ -484,6 +603,13 @@ export interface Slicer extends BaseContract {
       interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    totalReleased(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
+    totalShares(overrides?: CallOverrides): Promise<[number]>;
 
     unreleased(
       account: string,
@@ -542,13 +668,13 @@ export interface Slicer extends BaseContract {
   ): Promise<ContractTransaction>;
 
   _setCustomFee(
-    customFeeActive: boolean,
-    customFee: BigNumberish,
+    customFeeActive_: boolean,
+    customFee_: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   _setTotalShares(
-    totalShares: BigNumberish,
+    totalShares_: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -573,6 +699,8 @@ export interface Slicer extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  baseFee(overrides?: CallOverrides): Promise<number>;
+
   batchReleaseAccounts(
     accounts: string[],
     currency: string,
@@ -580,9 +708,26 @@ export interface Slicer extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  creator(overrides?: CallOverrides): Promise<string>;
+
+  customFee(overrides?: CallOverrides): Promise<number>;
+
+  customFeeActive(overrides?: CallOverrides): Promise<boolean>;
+
+  flags(overrides?: CallOverrides): Promise<number>;
+
+  fundsModule(overrides?: CallOverrides): Promise<string>;
+
   getFee(overrides?: CallOverrides): Promise<BigNumber>;
 
+  getFeeForAccount(
+    account: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   isPayeeAllowed(payee: string, overrides?: CallOverrides): Promise<boolean>;
+
+  minimumShares(overrides?: CallOverrides): Promise<number>;
 
   onERC1155BatchReceived(
     arg0: string,
@@ -610,12 +755,20 @@ export interface Slicer extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  productsModule(overrides?: CallOverrides): Promise<string>;
+
   release(
     account: string,
     currency: string,
     withdraw: boolean,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  releaseTimelock(overrides?: CallOverrides): Promise<number>;
+
+  sliceCore(overrides?: CallOverrides): Promise<string>;
+
+  slicerId(overrides?: CallOverrides): Promise<BigNumber>;
 
   slicerInfo(
     overrides?: CallOverrides
@@ -630,14 +783,10 @@ export interface Slicer extends BaseContract {
       boolean,
       string[]
     ] & {
-      tokenId: BigNumber;
-      minimumShares: BigNumber;
-      creator: string;
       isImmutable: boolean;
       currenciesControlled: boolean;
       productsControlled: boolean;
       acceptsAllCurrencies: boolean;
-      currencies: string[];
     }
   >;
 
@@ -645,6 +794,10 @@ export interface Slicer extends BaseContract {
     interfaceId: BytesLike,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  totalReleased(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  totalShares(overrides?: CallOverrides): Promise<number>;
 
   unreleased(
     account: string,
@@ -705,13 +858,13 @@ export interface Slicer extends BaseContract {
     ): Promise<void>;
 
     _setCustomFee(
-      customFeeActive: boolean,
-      customFee: BigNumberish,
+      customFeeActive_: boolean,
+      customFee_: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     _setTotalShares(
-      totalShares: BigNumberish,
+      totalShares_: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -736,6 +889,8 @@ export interface Slicer extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    baseFee(overrides?: CallOverrides): Promise<number>;
+
     batchReleaseAccounts(
       accounts: string[],
       currency: string,
@@ -743,9 +898,26 @@ export interface Slicer extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    creator(overrides?: CallOverrides): Promise<string>;
+
+    customFee(overrides?: CallOverrides): Promise<number>;
+
+    customFeeActive(overrides?: CallOverrides): Promise<boolean>;
+
+    flags(overrides?: CallOverrides): Promise<number>;
+
+    fundsModule(overrides?: CallOverrides): Promise<string>;
+
     getFee(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getFeeForAccount(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     isPayeeAllowed(payee: string, overrides?: CallOverrides): Promise<boolean>;
+
+    minimumShares(overrides?: CallOverrides): Promise<number>;
 
     onERC1155BatchReceived(
       arg0: string,
@@ -773,12 +945,20 @@ export interface Slicer extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
+    productsModule(overrides?: CallOverrides): Promise<string>;
+
     release(
       account: string,
       currency: string,
       withdraw: boolean,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    releaseTimelock(overrides?: CallOverrides): Promise<number>;
+
+    sliceCore(overrides?: CallOverrides): Promise<string>;
+
+    slicerId(overrides?: CallOverrides): Promise<BigNumber>;
 
     slicerInfo(
       overrides?: CallOverrides
@@ -793,14 +973,10 @@ export interface Slicer extends BaseContract {
         boolean,
         string[]
       ] & {
-        tokenId: BigNumber;
-        minimumShares: BigNumber;
-        creator: string;
         isImmutable: boolean;
         currenciesControlled: boolean;
         productsControlled: boolean;
         acceptsAllCurrencies: boolean;
-        currencies: string[];
       }
     >;
 
@@ -808,6 +984,10 @@ export interface Slicer extends BaseContract {
       interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    totalReleased(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalShares(overrides?: CallOverrides): Promise<number>;
 
     unreleased(
       account: string,
@@ -875,6 +1055,9 @@ export interface Slicer extends BaseContract {
       tokenId?: null
     ): ERC721ReceivedEventFilter;
 
+    "Initialized(uint8)"(version?: null): InitializedEventFilter;
+    Initialized(version?: null): InitializedEventFilter;
+
     "Released(address,address,uint256,uint256)"(
       payee?: string | null,
       currency?: string | null,
@@ -940,13 +1123,13 @@ export interface Slicer extends BaseContract {
     ): Promise<BigNumber>;
 
     _setCustomFee(
-      customFeeActive: boolean,
-      customFee: BigNumberish,
+      customFeeActive_: boolean,
+      customFee_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     _setTotalShares(
-      totalShares: BigNumberish,
+      totalShares_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -971,6 +1154,8 @@ export interface Slicer extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    baseFee(overrides?: CallOverrides): Promise<BigNumber>;
+
     batchReleaseAccounts(
       accounts: string[],
       currency: string,
@@ -978,12 +1163,29 @@ export interface Slicer extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    creator(overrides?: CallOverrides): Promise<BigNumber>;
+
+    customFee(overrides?: CallOverrides): Promise<BigNumber>;
+
+    customFeeActive(overrides?: CallOverrides): Promise<BigNumber>;
+
+    flags(overrides?: CallOverrides): Promise<BigNumber>;
+
+    fundsModule(overrides?: CallOverrides): Promise<BigNumber>;
+
     getFee(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getFeeForAccount(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     isPayeeAllowed(
       payee: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    minimumShares(overrides?: CallOverrides): Promise<BigNumber>;
 
     onERC1155BatchReceived(
       arg0: string,
@@ -1011,6 +1213,8 @@ export interface Slicer extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    productsModule(overrides?: CallOverrides): Promise<BigNumber>;
+
     release(
       account: string,
       currency: string,
@@ -1018,12 +1222,22 @@ export interface Slicer extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    releaseTimelock(overrides?: CallOverrides): Promise<BigNumber>;
+
+    sliceCore(overrides?: CallOverrides): Promise<BigNumber>;
+
+    slicerId(overrides?: CallOverrides): Promise<BigNumber>;
+
     slicerInfo(overrides?: CallOverrides): Promise<BigNumber>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    totalReleased(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
     unreleased(
       account: string,
@@ -1083,13 +1297,13 @@ export interface Slicer extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     _setCustomFee(
-      customFeeActive: boolean,
-      customFee: BigNumberish,
+      customFeeActive_: boolean,
+      customFee_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     _setTotalShares(
-      totalShares: BigNumberish,
+      totalShares_: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1114,6 +1328,8 @@ export interface Slicer extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    baseFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     batchReleaseAccounts(
       accounts: string[],
       currency: string,
@@ -1121,12 +1337,29 @@ export interface Slicer extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    creator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    customFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    customFeeActive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    flags(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    fundsModule(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     getFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getFeeForAccount(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     isPayeeAllowed(
       payee: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    minimumShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     onERC1155BatchReceived(
       arg0: string,
@@ -1154,6 +1387,8 @@ export interface Slicer extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    productsModule(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     release(
       account: string,
       currency: string,
@@ -1161,12 +1396,25 @@ export interface Slicer extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    releaseTimelock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    sliceCore(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    slicerId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     slicerInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     supportsInterface(
       interfaceId: BytesLike,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    totalReleased(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    totalShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     unreleased(
       account: string,
