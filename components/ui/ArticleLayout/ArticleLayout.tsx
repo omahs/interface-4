@@ -15,7 +15,7 @@ export default function Article({
   authorLink,
   ogImage,
   coverImage,
-  children,
+  children
 }) {
   useEffect(() => {
     const script = document.createElement("script")
@@ -41,9 +41,9 @@ export default function Article({
                 url: ogImage
                   ? `${domain}/blog/${ogImage}`
                   : `${domain}/og_image.jpg`,
-                alt: `${slug} blog post cover image`,
-              },
-            ],
+                alt: `${slug} blog post cover image`
+              }
+            ]
           }}
         />
         <Head>

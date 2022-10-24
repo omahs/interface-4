@@ -33,15 +33,21 @@ import { sliceCore } from "@lib/initProvider"
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
   display_type: "number" | "date" | undefined
-  trait_type: "Total slices" | "Superowner slices" | "Creator" | "Sliced on"
+  trait_type:
+    | "Total slices"
+    | "Superowner slices"
+    | "Creator"
+    | "Controller"
+    | "Sliced on"
   value: string | number
 }[]
 export type SlicerData = {
-  name: any
-  description: any
-  tags: any
-  imageUrl: any
+  name: string
+  description: string
+  tags: string
+  imageUrl: string
   attributes: SlicerAttributes
+  totalSlices: number
 }
 export type AddressAmount = {
   address: string
@@ -90,7 +96,8 @@ const Id = ({
     description: slicerInfo?.description,
     tags: slicerInfo?.tags,
     imageUrl: slicerInfo?.image,
-    attributes: slicerInfo?.attributes
+    attributes: slicerInfo?.attributes,
+    totalSlices: slicerInfo?.totalSlices
   })
 
   const [newDescription, setNewDescription] = useState(slicer.description)
@@ -110,26 +117,34 @@ const Id = ({
       ? slicer.name
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
 
-  const totalSlices = Number(
-    slicer?.attributes.filter((el) => el.trait_type === "Total slices")[0]
-      ?.value
-  )
+  const totalSlices = slicerInfo.totalSlices
+
+  console.log({ slicerInfo, products })
 
   useEffect(() => {
     setEditMode(false)
+
+    const controller = slicer?.attributes?.find(
+      (el) => el.trait_type === "Controller"
+    )?.value
+    const creator = slicer?.attributes?.find(
+      (el) => el.trait_type === "Creator"
+    ).value
+
+    const isEditAllowed = controller
+      ? controller === account?.toLowerCase()
+      : !slicerInfo?.isImmutable
+      ? isAllowed == "metadata" || isAllowed == "full"
+      : creator === account?.toLowerCase() // only Creator
+      ? (newName === `Slicer #${slicerInfo?.id}` && // default name, descr & image
+          newDescription === "" &&
+          newImage.url === "" &&
+          slicer.imageUrl === "https://slice.so/slicer_default.png") ||
+        false // slicer?.attributes["Total slices"] === account.slices // creator has all slices
+      : false
+    setEditAllowed(isEditAllowed)
+
     // TODO: For collectibles save image on web3Storage instead of supabase? + Allow indefinite size? Figure it out
-    setEditAllowed(
-      !slicerInfo?.isImmutable
-        ? isAllowed == "metadata" || isAllowed == "full"
-        : slicer?.attributes?.filter((el) => el.trait_type === "Creator")[0]
-            .value === account?.toLowerCase() // only Creator
-        ? (newName === `Slicer #${slicerInfo?.id}` && // default name, descr & image
-            newDescription === "" &&
-            newImage.url === "" &&
-            slicer.imageUrl === "https://slice.so/slicer_default.png") ||
-          false // slicer?.attributes["Total slices"] === account.slices // creator has all slices
-        : false
-    )
   }, [account, isAllowed])
 
   useEffect(() => {
@@ -359,6 +374,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
    */
   const tokensQuery = /* GraphQL */ `
   slicer(id: "${hexId}") {
+    slices
     payees(
       where: {
         slices_gt: "0"
@@ -408,6 +424,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
       fetchPolicy: "no-cache"
     })
   ])
+
+  slicerInfo.totalSlices = Number(subgraphData?.slicer?.slices) || null
 
   let sponsors: AddressAmount[]
   const sponsorsBody =

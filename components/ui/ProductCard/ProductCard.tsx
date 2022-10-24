@@ -354,9 +354,7 @@ const ProductCard = ({
                     image={image}
                     name={name}
                     maxUnits={Number(maxUnits)}
-                    availableUnits={
-                      purchases != null ? (isInfinite ? -1 : availableUnits) : 0
-                    }
+                    availableUnits={isInfinite ? -1 : availableUnits}
                     purchasedQuantity={purchasedQuantity}
                     uid={uid}
                     creator={creator}

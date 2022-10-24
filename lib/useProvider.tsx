@@ -18,7 +18,7 @@ export const initialize = async (connector) => {
     const wcProvider = new WalletConnectProvider({
       rpc: {
         1: "https://eth-mainnet.alchemyapi.io/v2/B59wdqLy61AGhx6UV-ScRCa96t3sdj78",
-        4: "https://eth-rinkeby.alchemyapi.io/v2/wbmuZNbuiaab8Bc_ivuDkgJAOVxartLH"
+        5: "https://eth-goerli.g.alchemy.com/v2/A3L2vNB6e_XJ8cHnXHZBInTe6wquJLGb"
       }
     })
     await wcProvider.enable()

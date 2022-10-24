@@ -25,7 +25,7 @@ The exported object will need to have:
 - `component`: The component to be rendered on page
 - `label`: Text inside the hook card
 - `description`: Short description of the hook
-- `factoryAddresses`: List of deployments for each chainId (1 for ETH mainnet, 4 for Rinkeby)
+- `factoryAddresses`: List of deployments for each chainId (1 for ETH mainnet, 5 for Goerli)
 
 > Hint: keep the component minimal and use the existing ones as reference, like [ERC20Gated](ERC20Gated/ERC20Gated.tsx) or [Allowlisted](Allowlisted/Allowlisted.tsx)
 

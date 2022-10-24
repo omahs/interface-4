@@ -126,7 +126,7 @@ const JbPayerForm = () => {
                 The project payer address is{" "}
                 <a
                   href={`https://${
-                    process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "rinkeby." : ""
+                    process.env.NEXT_PUBLIC_CHAIN_ID === "5" ? "goerli." : ""
                   }etherscan.io/address/${contractAddress}`}
                   target="_blank"
                   rel="noreferrer"

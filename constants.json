@@ -10,6 +10,7 @@
         "FundsModule": "0x6bcA3Dfd6c2b146dcdd460174dE95Fd1e26960BC",
         "SlicerManager": "0x3e3E34f43a88EF99d448800B5d0579c6360a32b6",
         "ChainlinkFeed": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+        "PriceFeed": "0xf2E8176c0b67232b20205f4dfbCeC3e74bca471F",
         "DeployFactory": "0x3497b05B7466431FfA3DE7bF3cC037c083062f18",
         "DeployCloneFactory": "0x76dad5968ab456b5a36698a252b30488a1a4f767",
         "JBDirectory": "0xCc8f7a89d89c2AB3559f484E0C656423E979ac9C",
@@ -28,6 +29,7 @@
         "FundsModule": "0xA5e1B2822e7ad11D14C217a513CC0D5dDd7d011b",
         "SlicerManager": "0x6043dF8F929B681871f9A4208795e4C55163c976",
         "ChainlinkFeed": "0x8A753747A1Fa494EC906cE90E9f37563A8AF630e",
+        "PriceFeed": "",
         "DeployFactory": "0x472129986fd939e4f93A41422816Ea1382C4F7A0",
         "DeployCloneFactory": "0x3991cb7d214Ffb94ad792a45D329d2bCF977961B",
         "JBDirectory": "0x1A9b04A9617ba5C9b7EBfF9668C30F41db6fC21a",
@@ -44,10 +46,47 @@
         "FundsModule": "0x093190b8c22D37871eaB814486C62303c1aE5d14",
         "SlicerManager": "0x2371683b6b67Fa952B5a2cE4898b17EB4905BAEa",
         "ChainlinkFeed": "0x8A753747A1Fa494EC906cE90E9f37563A8AF630e",
+        "PriceFeed": "",
         "DeployFactory": "0x472129986fd939e4f93A41422816Ea1382C4F7A0",
         "DeployCloneFactory": "0x3991cb7d214Ffb94ad792a45D329d2bCF977961B",
         "JBDirectory": "0x1A9b04A9617ba5C9b7EBfF9668C30F41db6fC21a",
         "JBFundingCycles": "0x234985c467E90483bA42fB2C7C2f71A1874D805D"
+      }
+    }
+  },
+  "5": {
+    "staging": {
+      "constants": {
+        "JBProjectId": "1"
+      },
+      "addresses": {
+        "SliceCore": "0xAE38a794E839D045460839ABe288a8e5C28B0fc6",
+        "ProductsModule": "0x0FD0d9aa44a05Ee158DDf6F01d7dcF503388781d",
+        "FundsModule": "0x5Cef0380cE0aD3DAEefef8bDb85dBDeD7965adf9",
+        "SlicerManager": "0x61bCd1ED11fC03C958A847A6687b1875f5eAcaaf",
+        "ChainlinkFeed": "0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e",
+        "PriceFeed": "",
+        "DeployFactory": "",
+        "DeployCloneFactory": "",
+        "JBDirectory": "0x3eb8d0Dc5dFe594619264eAe44e98e913F3F4D20",
+        "JBFundingCycles": "0x49aF5Bb531e9de95C4aC41ADC570A84b2276ffc5"
+      }
+    },
+    "testnet": {
+      "constants": {
+        "JBProjectId": "1"
+      },
+      "addresses": {
+        "SliceCore": "0x115978100953D0Aa6f2f8865d11Dc5888f728370",
+        "ProductsModule": "0xcA6b9D59849EC880e82210e9cb8237E1d0cAA69e",
+        "FundsModule": "0x8bf3585b3740a2Da2190f911eA8Bc84Dd7972dD6",
+        "SlicerManager": "0xbd778C62531C11e88Fd6bcE7a1F0a5b955818498",
+        "ChainlinkFeed": "0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e",
+        "PriceFeed": "",
+        "DeployFactory": "",
+        "DeployCloneFactory": "",
+        "JBDirectory": "0x3eb8d0Dc5dFe594619264eAe44e98e913F3F4D20",
+        "JBFundingCycles": "0x49aF5Bb531e9de95C4aC41ADC570A84b2276ffc5"
       }
     }
   }

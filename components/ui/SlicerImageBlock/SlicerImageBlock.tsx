@@ -171,8 +171,10 @@ const SlicerImageBlock = ({
           <a
             className="flex highlight"
             href={`https://${
-              process.env.NEXT_PUBLIC_CHAIN_ID === "4" ? "testnets." : ""
-            }opensea.io/assets/${
+              process.env.NEXT_PUBLIC_CHAIN_ID === "5"
+                ? "testnets.opensea.io/assets/goerli/"
+                : "opensea.io/assets/"
+            }${
               constants[process.env.NEXT_PUBLIC_CHAIN_ID][
                 process.env.NEXT_PUBLIC_ENVIRONMENT
               ].addresses.SliceCore

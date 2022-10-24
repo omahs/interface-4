@@ -7,13 +7,23 @@ const PayProducts = async (
   buyer: string,
   productData: ProductCart[]
 ) => {
-  const { productsModule, chainlink } = await import("@lib/initProvider")
+  const { productsModule, priceFeedAddress, priceFeed, chainlink } =
+    await import("@lib/initProvider")
 
   const contract = productsModule(signer)
-  const priceFeed = await chainlink(signer).latestRoundData()
+
+  // chainlink is used in testnet environment where uniswap pool is inactive
+  const quote = priceFeedAddress
+    ? await priceFeed(signer).getQuote(
+        ethers.BigNumber.from(10).pow(18), // 1 eth
+        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", // ETH
+        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", // USDC
+        1800 // TWAP Interval
+      )
+    : await chainlink(signer).latestRoundData()
   const currency = ethers.constants.AddressZero
 
-  const ethUsd = Number(priceFeed[1])
+  const ethUsd = priceFeedAddress ? quote : Number(quote[1])
   let totalPrice: BigNumber
   let purchaseParams: PurchaseParamsStruct[] = []
 
@@ -37,6 +47,7 @@ const PayProducts = async (
         : BigNumber.from(price).add(extCallValue)
 
       purchaseParams.push({
+        buyer,
         slicerId,
         quantity,
         currency,
@@ -46,7 +57,7 @@ const PayProducts = async (
       totalPrice = BigNumber.from(currentPrice).add(productPrice)
     })
 
-    const call = await contract.payProducts(buyer, purchaseParams, {
+    const call = await contract.payProducts(purchaseParams, {
       value: totalPrice
     })
 

@@ -7,7 +7,7 @@ import client from "@utils/apollo-client"
 import { gql } from "@apollo/client"
 import { domain } from "@components/common/Head"
 import getEthFromWei from "@utils/getEthFromWei"
-import { BigNumber, utils } from "ethers"
+import { BigNumber, ethers, utils } from "ethers"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id, stats } = req.query
@@ -37,6 +37,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                   slices
                   minimumSlices
                   isImmutable
+                  controller{
+                    id
+                  }
                   creator{
                     id
                   }
@@ -46,10 +49,40 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             `
           })
           const creatorAddress = data.slicer.creator.id
+          const controllerAddress = data.slicer.controller.id
           // const creatorAddressFormatted = creatorAddress.replace(
           //   creatorAddress.substring(5, creatorAddress.length - 3),
           //   "___"
           // )
+
+          const attributes = [
+            {
+              display_type: "number",
+              trait_type: "Total slices",
+              value: data.slicer.slices
+            },
+            {
+              display_type: "number",
+              trait_type: "Superowner slices",
+              value: data.slicer.minimumSlices
+            },
+            {
+              trait_type: "Creator",
+              value: creatorAddress
+              // value: creatorAddressFormatted,
+            },
+            {
+              display_type: "date",
+              trait_type: "Sliced on",
+              value: data.slicer.createdAtTimestamp
+            }
+          ]
+          if (controllerAddress != ethers.constants.AddressZero) {
+            attributes.splice(3, 0, {
+              trait_type: "Controller",
+              value: controllerAddress
+            })
+          }
 
           slicerInfo = {
             id: Number(decimalId),
@@ -60,28 +93,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             address: data.slicer.address,
             image: "https://slice.so/slicer_default.png",
             isImmutable: data.slicer.isImmutable,
-            attributes: [
-              {
-                display_type: "number",
-                trait_type: "Total slices",
-                value: data.slicer.slices
-              },
-              {
-                display_type: "number",
-                trait_type: "Superowner slices",
-                value: data.slicer.minimumSlices
-              },
-              {
-                trait_type: "Creator",
-                value: creatorAddress
-                // value: creatorAddressFormatted,
-              },
-              {
-                display_type: "date",
-                trait_type: "Sliced on",
-                value: data.slicer.createdAtTimestamp
-              }
-            ],
+            attributes,
             config: { sponsors: true },
             sponsors: {}
           }
@@ -89,7 +101,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             data: slicerInfo
           })
         }
-        if (slicerInfo?.attributes?.length == 3) {
+
+        if (
+          slicerInfo?.attributes.findIndex(
+            (attr) => attr["trait_type"] == "Sliced on"
+          ) == -1
+        ) {
           const attributes = slicerInfo.attributes
 
           const { data } = await client.query({
@@ -113,16 +130,32 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             data: { attributes }
           })
         }
+
         if (stats !== "false") {
-          // const { data } = await client.query({
-          //   query: gql`
-          //     query Slicers {
-          //       slicer(id: "${hexId}") {
-          //         ethReceived
-          //       }
-          //     }
-          //   `
-          // })
+          // Fetch subgraph data
+          const { data } = await client.query({
+            query: gql`
+              query Slicers {
+                slicer(id: "${hexId}") {
+                  slices
+                }
+              }
+            `
+          })
+
+          // Update total slices
+          if (slicerInfo?.attributes[0]["value"] != data.slicer.slices) {
+            slicerInfo.attributes[0] = {
+              display_type: "number",
+              trait_type: "Total slices",
+              value: data.slicer.slices
+            }
+            await prisma.slicer.update({
+              where: { id: Number(decimalId) },
+              data: { attributes: slicerInfo.attributes }
+            })
+          }
+
           // // TODO: Switch this query from subgraph to Alchemy tokenAPI
           // const totalReceived = getEthFromWei(data.slicer.ethReceived, true)
           // slicerInfo.attributes.push({
