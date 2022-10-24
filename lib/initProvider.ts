@@ -24,8 +24,6 @@ export const {
   process.env.NEXT_PUBLIC_ENVIRONMENT
 ].addresses
 
-console.log(priceFeedAddress)
-
 export const sliceCore = (signer: ethers.Signer | ethers.providers.Provider) =>
   new ethers.Contract(
     sliceCoreAddress,
