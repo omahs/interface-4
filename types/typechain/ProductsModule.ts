@@ -116,6 +116,7 @@ export type PriceStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
 };
 
 export type PurchaseParamsStruct = {
+  buyer: string;
   slicerId: BigNumberish;
   quantity: BigNumberish;
   currency: string;
@@ -124,12 +125,14 @@ export type PurchaseParamsStruct = {
 };
 
 export type PurchaseParamsStructOutput = [
+  string,
   BigNumber,
   number,
   string,
   number,
   string
 ] & {
+  buyer: string;
   slicerId: BigNumber;
   quantity: number;
   currency: string;
@@ -144,17 +147,20 @@ export interface ProductsModuleInterface extends utils.Interface {
     "addProduct(uint256,((uint128,uint32)[],(uint248,bool,address,address)[],bytes,bytes,uint32,uint8,bool,bool,bool,bool),(bytes,uint256,address,bytes4,bytes4))": FunctionFragment;
     "availableUnits(uint256,uint256)": FunctionFragment;
     "ethBalance(uint256)": FunctionFragment;
+    "fundsModule()": FunctionFragment;
     "initialize()": FunctionFragment;
     "isProductOwner(uint256,uint256,address)": FunctionFragment;
     "owner()": FunctionFragment;
     "paused()": FunctionFragment;
-    "payProducts(address,(uint128,uint32,address,uint32,bytes)[])": FunctionFragment;
+    "payProducts((address,uint128,uint32,address,uint32,bytes)[])": FunctionFragment;
+    "priceFeed()": FunctionFragment;
     "productPrice(uint256,uint256,address,uint256,address,bytes)": FunctionFragment;
     "proxiableUUID()": FunctionFragment;
     "releaseEthToSlicer(uint256)": FunctionFragment;
     "removeProduct(uint256,uint256)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "setProductInfo(uint256,uint256,uint8,bool,bool,uint32,(uint248,bool,address,address)[])": FunctionFragment;
+    "sliceCore()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "upgradeTo(address)": FunctionFragment;
     "upgradeToAndCall(address,bytes)": FunctionFragment;
@@ -179,6 +185,10 @@ export interface ProductsModuleInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "fundsModule",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "initialize",
     values?: undefined
   ): string;
@@ -190,8 +200,9 @@ export interface ProductsModuleInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "payProducts",
-    values: [string, PurchaseParamsStruct[]]
+    values: [PurchaseParamsStruct[]]
   ): string;
+  encodeFunctionData(functionFragment: "priceFeed", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "productPrice",
     values: [
@@ -231,6 +242,7 @@ export interface ProductsModuleInterface extends utils.Interface {
       CurrencyPriceStruct[]
     ]
   ): string;
+  encodeFunctionData(functionFragment: "sliceCore", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [string]
@@ -259,6 +271,10 @@ export interface ProductsModuleInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "ethBalance", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "fundsModule",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isProductOwner",
@@ -270,6 +286,7 @@ export interface ProductsModuleInterface extends utils.Interface {
     functionFragment: "payProducts",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "priceFeed", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "productPrice",
     data: BytesLike
@@ -294,6 +311,7 @@ export interface ProductsModuleInterface extends utils.Interface {
     functionFragment: "setProductInfo",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "sliceCore", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
@@ -317,6 +335,7 @@ export interface ProductsModuleInterface extends utils.Interface {
     "BeaconUpgraded(address)": EventFragment;
     "ERC1155ListingChanged(uint256,address,uint256,uint256)": EventFragment;
     "ERC721ListingChanged(uint256,address,uint256,bool)": EventFragment;
+    "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Paused(address)": EventFragment;
     "ProductAdded(uint256,uint256,uint256,address,tuple,tuple)": EventFragment;
@@ -332,6 +351,7 @@ export interface ProductsModuleInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "BeaconUpgraded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC1155ListingChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ERC721ListingChanged"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ProductAdded"): EventFragment;
@@ -379,6 +399,10 @@ export type ERC721ListingChangedEvent = TypedEvent<
 
 export type ERC721ListingChangedEventFilter =
   TypedEventFilter<ERC721ListingChangedEvent>;
+
+export type InitializedEvent = TypedEvent<[number], { version: number }>;
+
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export type OwnershipTransferredEvent = TypedEvent<
   [string, string],
@@ -526,6 +550,8 @@ export interface ProductsModule extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    fundsModule(overrides?: CallOverrides): Promise<[string]>;
+
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -542,10 +568,11 @@ export interface ProductsModule extends BaseContract {
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     payProducts(
-      buyer: string,
       purchases: PurchaseParamsStruct[],
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    priceFeed(overrides?: CallOverrides): Promise<[string]>;
 
     productPrice(
       slicerId: BigNumberish,
@@ -584,6 +611,8 @@ export interface ProductsModule extends BaseContract {
       currencyPrices: CurrencyPriceStruct[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    sliceCore(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
       newOwner: string,
@@ -639,6 +668,8 @@ export interface ProductsModule extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  fundsModule(overrides?: CallOverrides): Promise<string>;
+
   initialize(
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -655,10 +686,11 @@ export interface ProductsModule extends BaseContract {
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   payProducts(
-    buyer: string,
     purchases: PurchaseParamsStruct[],
     overrides?: PayableOverrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  priceFeed(overrides?: CallOverrides): Promise<string>;
 
   productPrice(
     slicerId: BigNumberish,
@@ -697,6 +729,8 @@ export interface ProductsModule extends BaseContract {
     currencyPrices: CurrencyPriceStruct[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  sliceCore(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
     newOwner: string,
@@ -752,6 +786,8 @@ export interface ProductsModule extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    fundsModule(overrides?: CallOverrides): Promise<string>;
+
     initialize(overrides?: CallOverrides): Promise<void>;
 
     isProductOwner(
@@ -766,10 +802,11 @@ export interface ProductsModule extends BaseContract {
     paused(overrides?: CallOverrides): Promise<boolean>;
 
     payProducts(
-      buyer: string,
       purchases: PurchaseParamsStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
+
+    priceFeed(overrides?: CallOverrides): Promise<string>;
 
     productPrice(
       slicerId: BigNumberish,
@@ -806,6 +843,8 @@ export interface ProductsModule extends BaseContract {
       currencyPrices: CurrencyPriceStruct[],
       overrides?: CallOverrides
     ): Promise<void>;
+
+    sliceCore(overrides?: CallOverrides): Promise<string>;
 
     transferOwnership(
       newOwner: string,
@@ -879,6 +918,9 @@ export interface ProductsModule extends BaseContract {
       tokenId?: BigNumberish | null,
       isActive?: null
     ): ERC721ListingChangedEventFilter;
+
+    "Initialized(uint8)"(version?: null): InitializedEventFilter;
+    Initialized(version?: null): InitializedEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
@@ -993,6 +1035,8 @@ export interface ProductsModule extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    fundsModule(overrides?: CallOverrides): Promise<BigNumber>;
+
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -1009,10 +1053,11 @@ export interface ProductsModule extends BaseContract {
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     payProducts(
-      buyer: string,
       purchases: PurchaseParamsStruct[],
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    priceFeed(overrides?: CallOverrides): Promise<BigNumber>;
 
     productPrice(
       slicerId: BigNumberish,
@@ -1051,6 +1096,8 @@ export interface ProductsModule extends BaseContract {
       currencyPrices: CurrencyPriceStruct[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    sliceCore(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
@@ -1105,6 +1152,8 @@ export interface ProductsModule extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    fundsModule(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     initialize(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -1121,10 +1170,11 @@ export interface ProductsModule extends BaseContract {
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     payProducts(
-      buyer: string,
       purchases: PurchaseParamsStruct[],
       overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    priceFeed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     productPrice(
       slicerId: BigNumberish,
@@ -1163,6 +1213,8 @@ export interface ProductsModule extends BaseContract {
       currencyPrices: CurrencyPriceStruct[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    sliceCore(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,

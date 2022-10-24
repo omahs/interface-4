@@ -21,7 +21,9 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface FundsModuleInterface extends utils.Interface {
   contractName: "FundsModule";
   functions: {
-    "balance(address,address)": FunctionFragment;
+    "JBProjectId()": FunctionFragment;
+    "JBTerminal()": FunctionFragment;
+    "balances(address,address)": FunctionFragment;
     "batchReleaseSlicers(address[],address,address,bool)": FunctionFragment;
     "batchWithdraw(address,address[])": FunctionFragment;
     "depositEth(address,uint256)": FunctionFragment;
@@ -30,6 +32,7 @@ export interface FundsModuleInterface extends utils.Interface {
     "owner()": FunctionFragment;
     "proxiableUUID()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
+    "sliceCore()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "upgradeTo(address)": FunctionFragment;
     "upgradeToAndCall(address,bytes)": FunctionFragment;
@@ -38,7 +41,15 @@ export interface FundsModuleInterface extends utils.Interface {
   };
 
   encodeFunctionData(
-    functionFragment: "balance",
+    functionFragment: "JBProjectId",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "JBTerminal",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "balances",
     values: [string, string]
   ): string;
   encodeFunctionData(
@@ -70,6 +81,7 @@ export interface FundsModuleInterface extends utils.Interface {
     functionFragment: "renounceOwnership",
     values?: undefined
   ): string;
+  encodeFunctionData(functionFragment: "sliceCore", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [string]
@@ -88,7 +100,12 @@ export interface FundsModuleInterface extends utils.Interface {
     values: [BigNumberish, string, string, BigNumberish, BigNumberish]
   ): string;
 
-  decodeFunctionResult(functionFragment: "balance", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "JBProjectId",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "JBTerminal", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "balances", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "batchReleaseSlicers",
     data: BytesLike
@@ -112,6 +129,7 @@ export interface FundsModuleInterface extends utils.Interface {
     functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "sliceCore", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
@@ -131,6 +149,7 @@ export interface FundsModuleInterface extends utils.Interface {
     "AdminChanged(address,address)": EventFragment;
     "BeaconUpgraded(address)": EventFragment;
     "Deposited(address,address,uint256,uint256)": EventFragment;
+    "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Upgraded(address)": EventFragment;
     "Withdrawn(address,address,uint256,uint256)": EventFragment;
@@ -139,6 +158,7 @@ export interface FundsModuleInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "AdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "BeaconUpgraded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Deposited"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Upgraded"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Withdrawn"): EventFragment;
@@ -166,6 +186,10 @@ export type DepositedEvent = TypedEvent<
 >;
 
 export type DepositedEventFilter = TypedEventFilter<DepositedEvent>;
+
+export type InitializedEvent = TypedEvent<[number], { version: number }>;
+
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export type OwnershipTransferredEvent = TypedEvent<
   [string, string],
@@ -219,15 +243,16 @@ export interface FundsModule extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    balance(
-      account: string,
-      currency: string,
+    JBProjectId(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    JBTerminal(overrides?: CallOverrides): Promise<[string]>;
+
+    balances(
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber] & {
-        accountBalance: BigNumber;
-        protocolPayment: BigNumber;
-      }
+      [BigNumber, BigNumber] & { account: BigNumber; protocol: BigNumber }
     >;
 
     batchReleaseSlicers(
@@ -271,6 +296,8 @@ export interface FundsModule extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    sliceCore(overrides?: CallOverrides): Promise<[string]>;
+
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -303,15 +330,16 @@ export interface FundsModule extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  balance(
-    account: string,
-    currency: string,
+  JBProjectId(overrides?: CallOverrides): Promise<BigNumber>;
+
+  JBTerminal(overrides?: CallOverrides): Promise<string>;
+
+  balances(
+    arg0: string,
+    arg1: string,
     overrides?: CallOverrides
   ): Promise<
-    [BigNumber, BigNumber] & {
-      accountBalance: BigNumber;
-      protocolPayment: BigNumber;
-    }
+    [BigNumber, BigNumber] & { account: BigNumber; protocol: BigNumber }
   >;
 
   batchReleaseSlicers(
@@ -355,6 +383,8 @@ export interface FundsModule extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  sliceCore(overrides?: CallOverrides): Promise<string>;
+
   transferOwnership(
     newOwner: string,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -387,15 +417,16 @@ export interface FundsModule extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    balance(
-      account: string,
-      currency: string,
+    JBProjectId(overrides?: CallOverrides): Promise<BigNumber>;
+
+    JBTerminal(overrides?: CallOverrides): Promise<string>;
+
+    balances(
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber] & {
-        accountBalance: BigNumber;
-        protocolPayment: BigNumber;
-      }
+      [BigNumber, BigNumber] & { account: BigNumber; protocol: BigNumber }
     >;
 
     batchReleaseSlicers(
@@ -434,6 +465,8 @@ export interface FundsModule extends BaseContract {
     proxiableUUID(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
+
+    sliceCore(overrides?: CallOverrides): Promise<string>;
 
     transferOwnership(
       newOwner: string,
@@ -495,6 +528,9 @@ export interface FundsModule extends BaseContract {
       protocolAmount?: null
     ): DepositedEventFilter;
 
+    "Initialized(uint8)"(version?: null): InitializedEventFilter;
+    Initialized(version?: null): InitializedEventFilter;
+
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
       newOwner?: string | null
@@ -522,9 +558,13 @@ export interface FundsModule extends BaseContract {
   };
 
   estimateGas: {
-    balance(
-      account: string,
-      currency: string,
+    JBProjectId(overrides?: CallOverrides): Promise<BigNumber>;
+
+    JBTerminal(overrides?: CallOverrides): Promise<BigNumber>;
+
+    balances(
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -569,6 +609,8 @@ export interface FundsModule extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    sliceCore(overrides?: CallOverrides): Promise<BigNumber>;
+
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -602,9 +644,13 @@ export interface FundsModule extends BaseContract {
   };
 
   populateTransaction: {
-    balance(
-      account: string,
-      currency: string,
+    JBProjectId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    JBTerminal(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    balances(
+      arg0: string,
+      arg1: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -648,6 +694,8 @@ export interface FundsModule extends BaseContract {
     renounceOwnership(
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    sliceCore(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,

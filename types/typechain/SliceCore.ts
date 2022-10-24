@@ -86,6 +86,8 @@ export interface SliceCoreInterface extends utils.Interface {
     "setRoyalty(uint256,bool,bool,uint256)": FunctionFragment;
     "slice(((address,uint32,bool)[],uint256,address[],uint256,uint40,address,uint8,uint8))": FunctionFragment;
     "slicerBatchTransfer(address,address[],uint256,uint256[],bool)": FunctionFragment;
+    "slicerManager()": FunctionFragment;
+    "slicerVersion()": FunctionFragment;
     "slicers(uint256)": FunctionFragment;
     "supply()": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
@@ -179,6 +181,14 @@ export interface SliceCoreInterface extends utils.Interface {
     values: [string, string[], BigNumberish, BigNumberish[], boolean]
   ): string;
   encodeFunctionData(
+    functionFragment: "slicerManager",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "slicerVersion",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "slicers",
     values: [BigNumberish]
   ): string;
@@ -263,6 +273,14 @@ export interface SliceCoreInterface extends utils.Interface {
     functionFragment: "slicerBatchTransfer",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "slicerManager",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "slicerVersion",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "slicers", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "supply", data: BytesLike): Result;
   decodeFunctionResult(
@@ -288,6 +306,7 @@ export interface SliceCoreInterface extends utils.Interface {
     "AdminChanged(address,address)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
     "BeaconUpgraded(address)": EventFragment;
+    "Initialized(uint8)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Paused(address)": EventFragment;
     "RoyaltySet(uint256,bool,bool,uint256)": EventFragment;
@@ -304,6 +323,7 @@ export interface SliceCoreInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "AdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "BeaconUpgraded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoyaltySet"): EventFragment;
@@ -334,6 +354,10 @@ export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
 export type BeaconUpgradedEvent = TypedEvent<[string], { beacon: string }>;
 
 export type BeaconUpgradedEventFilter = TypedEventFilter<BeaconUpgradedEvent>;
+
+export type InitializedEvent = TypedEvent<[number], { version: number }>;
+
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export type OwnershipTransferredEvent = TypedEvent<
   [string, string],
@@ -576,6 +600,10 @@ export interface SliceCore extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    slicerManager(overrides?: CallOverrides): Promise<[string]>;
+
+    slicerVersion(overrides?: CallOverrides): Promise<[number]>;
+
     slicers(id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
 
     supply(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -730,6 +758,10 @@ export interface SliceCore extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  slicerManager(overrides?: CallOverrides): Promise<string>;
+
+  slicerVersion(overrides?: CallOverrides): Promise<number>;
+
   slicers(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   supply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -869,6 +901,10 @@ export interface SliceCore extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    slicerManager(overrides?: CallOverrides): Promise<string>;
+
+    slicerVersion(overrides?: CallOverrides): Promise<number>;
+
     slicers(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
     supply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -927,6 +963,9 @@ export interface SliceCore extends BaseContract {
       beacon?: string | null
     ): BeaconUpgradedEventFilter;
     BeaconUpgraded(beacon?: string | null): BeaconUpgradedEventFilter;
+
+    "Initialized(uint8)"(version?: null): InitializedEventFilter;
+    Initialized(version?: null): InitializedEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
@@ -1149,6 +1188,10 @@ export interface SliceCore extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    slicerManager(overrides?: CallOverrides): Promise<BigNumber>;
+
+    slicerVersion(overrides?: CallOverrides): Promise<BigNumber>;
+
     slicers(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     supply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1307,6 +1350,10 @@ export interface SliceCore extends BaseContract {
       toRelease: boolean,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    slicerManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    slicerVersion(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     slicers(
       id: BigNumberish,
