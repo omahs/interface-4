@@ -10,7 +10,7 @@
         "FundsModule": "0x6bcA3Dfd6c2b146dcdd460174dE95Fd1e26960BC",
         "SlicerManager": "0x3e3E34f43a88EF99d448800B5d0579c6360a32b6",
         "ChainlinkFeed": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
-        "PriceFeed": "",
+        "PriceFeed": "0xf2E8176c0b67232b20205f4dfbCeC3e74bca471F",
         "DeployFactory": "0x3497b05B7466431FfA3DE7bF3cC037c083062f18",
         "DeployCloneFactory": "0x76dad5968ab456b5a36698a252b30488a1a4f767",
         "JBDirectory": "0xCc8f7a89d89c2AB3559f484E0C656423E979ac9C",

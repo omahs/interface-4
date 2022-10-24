@@ -15,10 +15,10 @@ const PayProducts = async (
   // chainlink is used in testnet environment where uniswap pool is inactive
   const quote = priceFeedAddress
     ? await priceFeed(signer).getQuote(
-        10000,
-        "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6",
-        "0x2f3a40a3db8a7e3d09b0adfefbce4f6f81927557",
-        1800
+        ethers.BigNumber.from(10).pow(18), // 1 eth
+        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", // ETH
+        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", // USDC
+        1800 // TWAP Interval
       )
     : await chainlink(signer).latestRoundData()
   const currency = ethers.constants.AddressZero
