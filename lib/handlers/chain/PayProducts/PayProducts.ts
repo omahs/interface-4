@@ -47,6 +47,7 @@ const PayProducts = async (
         : BigNumber.from(price).add(extCallValue)
 
       purchaseParams.push({
+        buyer,
         slicerId,
         quantity,
         currency,
@@ -56,7 +57,7 @@ const PayProducts = async (
       totalPrice = BigNumber.from(currentPrice).add(productPrice)
     })
 
-    const call = await contract.payProducts(buyer, purchaseParams, {
+    const call = await contract.payProducts(purchaseParams, {
       value: totalPrice
     })
 
