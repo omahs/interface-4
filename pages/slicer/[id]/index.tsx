@@ -119,8 +119,6 @@ const Id = ({
 
   const totalSlices = slicerInfo.totalSlices
 
-  console.log({ slicerInfo, products })
-
   useEffect(() => {
     setEditMode(false)
 
