@@ -140,9 +140,11 @@ const SlicerImageBlock = ({
       {!product && (
         <div className="flex justify-between pt-5">
           <div className="flex">
-            <p className="pr-3">{formatNumber(totalSlices)} 🍰</p>
+            <p className="pr-3">
+              {totalSlices ? formatNumber(totalSlices) : "No slices"} 🍰
+            </p>
             <p>
-              {owners.length != 0 ? (
+              {owners.length != 0 && (
                 <a
                   className="highlight"
                   onClick={() =>
@@ -161,10 +163,6 @@ const SlicerImageBlock = ({
                 >
                   See owners
                 </a>
-              ) : (
-                <span className="font-medium text-gray-600 cursor-wait">
-                  See owners
-                </span>
               )}
             </p>
           </div>
