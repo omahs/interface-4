@@ -127,7 +127,7 @@ const Id = ({
     )?.value
     const creator = slicer?.attributes?.find(
       (el) => el.trait_type === "Creator"
-    ).value
+    )?.value
 
     const isEditAllowed = controller
       ? controller === account?.toLowerCase()
