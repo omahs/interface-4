@@ -19,9 +19,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     if (req.method === "GET") {
-      const slicerExists: boolean = await sliceCore(defaultProvider).exists(
-        decimalId
-      )
+      const slicerExists: boolean =
+        (await sliceCore(defaultProvider).slicers(decimalId)) !=
+        ethers.constants.AddressZero
       let slicerInfo: Slicer
 
       if (slicerExists) {
