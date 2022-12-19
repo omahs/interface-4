@@ -38,10 +38,11 @@ const PayProducts = async (
         extCallValue,
         buyerCustomData
       } = product
+
       const currentPrice = totalPrice || 0
       const productPrice = isUSD
         ? BigNumber.from(price)
-            .mul(BigNumber.from(10).pow(24))
+            .mul(BigNumber.from(10).pow(priceFeedAddress ? 18 : 24))
             .div(ethUsd)
             .add(extCallValue)
         : BigNumber.from(price).add(extCallValue)

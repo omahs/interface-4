@@ -2,6 +2,7 @@ import { CookieSetOptions } from "universal-cookie"
 import { ProductCart } from "@lib/handleUpdateCart"
 import { ListCard } from ".."
 import { utils } from "ethers"
+import { priceFeedAddress } from "@lib/initProvider"
 
 type Props = {
   cookieCart: ProductCart[]
@@ -25,7 +26,14 @@ const CartList = ({ cookieCart, ethUsd, setCookie }: Props) => {
           externalAddress
         } = product
         const productPrice = isUSD
-          ? Math.floor((Number(price) * 100) / Number(ethUsd?.price)) / 10000
+          ? Math.floor(
+              (Number(price) * 100) /
+                Number(
+                  priceFeedAddress
+                    ? Number(ethUsd?.price) * 10000
+                    : ethUsd?.price
+                )
+            ) / 10000
           : Math.floor(Number(price) / 10 ** 14) / 10000
         const externalCallEth = utils.formatEther(extCallValue)
 

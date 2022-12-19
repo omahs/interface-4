@@ -19,6 +19,7 @@ import Cross from "@components/icons/Cross"
 import { getExternalPrices } from "@lib/useExternalPrices"
 import formatCalldata from "@utils/formatCalldata"
 import decimalToHex from "@utils/decimalToHex"
+import { priceFeedAddress } from "@lib/initProvider"
 
 type Props = {
   cookieCart: ProductCart[]
@@ -48,7 +49,12 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
   const reducer = (previousValue: number, currentValue: ProductCart) => {
     const { price, isUSD, extCallValue } = currentValue
     const productPrice = isUSD
-      ? Math.floor((Number(price) * 100) / Number(ethUsd?.price)) / 10000
+      ? Math.floor(
+          (Number(price) * 100) /
+            Number(
+              priceFeedAddress ? Number(ethUsd?.price) * 10000 : ethUsd?.price
+            )
+        ) / 10000
       : Math.floor(Number(price) / 10 ** 14) / 10000
     const externalCallEth = utils.formatEther(extCallValue)
     return previousValue + Number(productPrice) + Number(externalCallEth)
