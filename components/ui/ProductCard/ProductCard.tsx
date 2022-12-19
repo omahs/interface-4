@@ -2,6 +2,7 @@ import Bolt from "@components/icons/Bolt"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import Units from "@components/icons/Units"
 import { ProductCart } from "@lib/handleUpdateCart"
+import { priceFeedAddress } from "@lib/initProvider"
 import formatNumber from "@utils/formatNumber"
 import { ethers, utils } from "ethers"
 import { BlockchainProduct } from "pages/slicer/[id]"
@@ -68,6 +69,9 @@ const ProductCard = ({
     },
     allowedAddresses: []
   }
+  const ethUsdFormatted = priceFeedAddress
+    ? Number(ethUsd?.price) * 10000
+    : ethUsd?.price
   const prices = chainInfo?.prices
   const ethPrice = prices?.find(
     (price) => price.currency.id == ethers.constants.AddressZero
@@ -102,7 +106,7 @@ const ProductCard = ({
     : (price ? Number(price) : 0) + (extValue ? Number(extValue) : 0)
   const externalCallEth = extValue && utils.formatEther(extValue)
   const externalCallUsd =
-    externalCallEth && Number(externalCallEth) * Number(ethUsd?.price) * 100
+    externalCallEth && Number(externalCallEth) * Number(ethUsdFormatted) * 100
 
   // const createdAtTimestamp = chainInfo?.createdAtTimestamp
 
@@ -131,7 +135,10 @@ const ProductCard = ({
         : {
             eth: isUSD ? `Ξ ${convertedEthUsd}` : formattedEthPrice,
             usd: isUSD
-              ? `$ ${formatNumber((Number(price) + externalCallUsd) / 100)}`
+              ? `$ ${formatNumber(
+                  (Number(price) + externalCallUsd) /
+                    (priceFeedAddress ? 1e6 : 100)
+                )}`
               : formattedUsdPrice
           }
       : {
@@ -210,17 +217,18 @@ const ProductCard = ({
 
   useEffect(() => {
     if (totalPrice && ethUsd) {
+      let convertedPrice: number
       if (isUSD) {
-        const convertedPrice =
+        convertedPrice =
           Math.floor(
-            ((Number(price) + externalCallUsd) * 100) / Number(ethUsd?.price)
+            ((Number(price) + externalCallUsd) * 100) / Number(ethUsdFormatted)
           ) / 10000
         setConvertedEthUsd(convertedPrice)
       } else {
-        const convertedPrice =
-          Math.floor((totalPrice / 10 ** 16) * Number(ethUsd?.price)) / 100
-        setConvertedEthUsd(convertedPrice)
+        convertedPrice =
+          Math.floor((totalPrice / 10 ** 16) * Number(ethUsdFormatted)) / 100
       }
+      setConvertedEthUsd(convertedPrice)
     }
   }, [price, ethUsd])
 
