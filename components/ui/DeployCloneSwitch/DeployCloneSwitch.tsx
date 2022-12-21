@@ -1,8 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react"
 import { InputSwitch } from ".."
 import { Deployments } from "@components/hooks/purchaseHooks"
-import useSWR from "swr"
-import fetcher from "@utils/fetcher"
+import useEthUsd, { formatEthUsd } from "@utils/useEthUsd"
 
 type Props = {
   deployments: Deployments
@@ -15,10 +14,8 @@ const DeployCloneSwitch = ({
   clonePurchaseHook,
   setClonePurchaseHook
 }: Props) => {
-  const { data } = useSWR(
-    "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT",
-    fetcher
-  )
+  const calldata = useEthUsd()
+  const ethUsd = formatEthUsd(calldata)
   const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
 
   return (
@@ -36,8 +33,7 @@ const DeployCloneSwitch = ({
               </p>
               <p>
                 The cost increase for each buyer is ~5k gas, so 0.0001 ETH (${" "}
-                {Math.floor(0.01 * Number(data?.price)) / 100}) with a gas price
-                of 20 gwei.
+                {Math.floor(0.01 * ethUsd) / 100}) with a gas price of 20 gwei.
               </p>
             </>
           }

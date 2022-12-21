@@ -64,11 +64,11 @@ const ToWithdrawList = ({ currencies, account, setCurrencies }: Props) => {
       : "Batch withdraw"
   const addRecentTransaction = useAddRecentTransaction()
   const { config, error } = usePrepareContractWrite({
-    addressOrName:
+    address:
       constants[process.env.NEXT_PUBLIC_CHAIN_ID][
         process.env.NEXT_PUBLIC_ENVIRONMENT
       ].addresses.FundsModule,
-    contractInterface: FundsModuleContract.abi,
+    abi: FundsModuleContract.abi,
     functionName:
       toWithdrawAddresses?.length === 1 || selectedTokens?.length === 1
         ? "withdraw"
