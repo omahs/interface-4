@@ -3,11 +3,9 @@ import Chevron from "@components/icons/Chevron"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import Spinner from "@components/icons/Spinner"
 import { ProductCart } from "@lib/handleUpdateCart"
-import fetcher from "@utils/fetcher"
 import { Message } from "@utils/handleMessage"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
-import useSWR from "swr"
 import { CartList } from ".."
 import { useAppContext } from "../context"
 import { updatePurchases } from "@utils/getPurchases"
@@ -20,6 +18,7 @@ import { getExternalPrices } from "@lib/useExternalPrices"
 import formatCalldata from "@utils/formatCalldata"
 import decimalToHex from "@utils/decimalToHex"
 import { priceFeedAddress } from "@lib/initProvider"
+import useEthUsd, { formatEthUsd } from "@utils/useEthUsd"
 
 type Props = {
   cookieCart: ProductCart[]
@@ -41,19 +40,15 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     messageStatus: "success"
   })
 
-  const { data: ethUsd } = useSWR(
-    "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT",
-    fetcher
-  )
+  const calldata = useEthUsd()
+  const ethUsd = formatEthUsd(calldata)
 
   const reducer = (previousValue: number, currentValue: ProductCart) => {
     const { price, isUSD, extCallValue } = currentValue
     const productPrice = isUSD
       ? Math.floor(
           (Number(price) * 100) /
-            Number(
-              priceFeedAddress ? Number(ethUsd?.price) * 10000 : ethUsd?.price
-            )
+            Number(priceFeedAddress ? ethUsd * 10000 : ethUsd)
         ) / 10000
       : Math.floor(Number(price) / 10 ** 14) / 10000
     const externalCallEth = utils.formatEther(extCallValue)

@@ -1,7 +1,6 @@
 import { Input } from "@components/ui"
-import fetcher from "@utils/fetcher"
+import useEthUsd, { formatEthUsd } from "@utils/useEthUsd"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import useSWR from "swr"
 
 type Props = {
   ethValue: number
@@ -34,10 +33,8 @@ const InputPrice = ({
   question,
   action
 }: Props) => {
-  const { data } = useSWR(
-    "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT",
-    fetcher
-  )
+  const calldata = useEthUsd()
+  const ethUsd = formatEthUsd(calldata)
   const [isEth, setIsEth] = useState(true)
 
   const currency = isEth ? "Ξ" : "$"
@@ -46,10 +43,10 @@ const InputPrice = ({
   const handleChange = (value) => {
     if (isEth) {
       setEthValue(value)
-      setUsdValue(value * Number(data?.price))
+      setUsdValue(value * ethUsd)
     } else {
       setUsdValue(value)
-      setEthValue(value / Number(data?.price))
+      setEthValue(value / ethUsd)
     }
   }
 
