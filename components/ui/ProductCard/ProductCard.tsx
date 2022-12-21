@@ -18,10 +18,7 @@ type Props = {
   slicerAddress: string
   product: Product
   chainInfo: BlockchainProduct
-  ethUsd: {
-    symbol: string
-    price: string
-  }
+  ethUsd: number
   editMode: boolean
   displayProduct: boolean
   externalPrices: ExternalPrices
@@ -69,9 +66,7 @@ const ProductCard = ({
     },
     allowedAddresses: []
   }
-  const ethUsdFormatted = priceFeedAddress
-    ? Number(ethUsd?.price) * 10000
-    : ethUsd?.price
+  const ethUsdFormatted = priceFeedAddress ? ethUsd * 10000 : ethUsd
   const prices = chainInfo?.prices
   const ethPrice = prices?.find(
     (price) => price.currency.id == ethers.constants.AddressZero

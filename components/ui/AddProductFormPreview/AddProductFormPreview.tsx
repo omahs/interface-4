@@ -2,8 +2,7 @@ import { NewImage } from "pages/slicer/[id]"
 import React, { Dispatch, SetStateAction } from "react"
 import { View } from "@lib/content/modals"
 import { BigNumberish, BytesLike, ethers, utils } from "ethers"
-import useSWR from "swr"
-import fetcher from "@utils/fetcher"
+import useEthUsd, { formatEthUsd } from "@utils/useEthUsd"
 
 type Props = {
   slicerId: number
@@ -54,19 +53,14 @@ const AddProductFormPreview = ({
   externalAddress,
   targetPrice
 }: Props) => {
-  const { data: ethUsd } = useSWR(
-    "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT",
-    fetcher
-  )
-
+  const calldata = useEthUsd()
+  const ethUsd = formatEthUsd(calldata)
   const val = targetPrice || ethValue
 
-  const usdVal = targetPrice
-    ? Number(targetPrice) * Number(ethUsd?.price)
-    : usdValue
+  const usdVal = targetPrice ? Number(targetPrice) * ethUsd : usdValue
 
   const externalCallEth = utils.formatEther(externalCallValue)
-  const externalCallUsd = Number(externalCallEth) * Number(ethUsd?.price)
+  const externalCallUsd = Number(externalCallEth) * ethUsd
   const productPrice = {
     eth: val
       ? "Ξ " + Math.floor((Number(val) + Number(externalCallEth)) * 1000) / 1000

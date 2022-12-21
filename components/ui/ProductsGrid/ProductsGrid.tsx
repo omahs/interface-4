@@ -1,9 +1,8 @@
 import useExternalPrices from "@lib/useExternalPrices"
-import fetcher from "@utils/fetcher"
+import useEthUsd, { formatEthUsd } from "@utils/useEthUsd"
 import { useRouter } from "next/router"
 import { BlockchainProduct } from "pages/slicer/[id]"
 import { useState } from "react"
-import useSWR from "swr"
 import { ProductCard } from ".."
 import { useAppContext } from "../context"
 import { Product } from "../SlicerProducts/SlicerProducts"
@@ -38,10 +37,8 @@ const ProductsGrid = ({
   const increment = 6
   const [visibleItems, setVisibleItems] = useState(increment)
 
-  const { data: ethUsd } = useSWR(
-    "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT",
-    fetcher
-  )
+  const calldata = useEthUsd()
+  const ethUsd = formatEthUsd(calldata)
 
   const productQueryData = products?.find(
     (p) => p.productId == Number(productQuery)

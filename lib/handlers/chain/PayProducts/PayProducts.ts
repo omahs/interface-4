@@ -1,6 +1,7 @@
 import { PurchaseParamsStruct } from "types/typechain/ProductsModule"
 import { BigNumber, ethers, Signer } from "ethers"
 import { ProductCart } from "@lib/handleUpdateCart"
+import { quoteParams } from "@utils/useEthUsd"
 
 const PayProducts = async (
   signer: Signer,
@@ -14,12 +15,7 @@ const PayProducts = async (
 
   // chainlink is used in testnet environment where uniswap pool is inactive
   const quote = priceFeedAddress
-    ? await priceFeed(signer).getQuote(
-        ethers.BigNumber.from(10).pow(18), // 1 eth
-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", // ETH
-        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", // USDC
-        1800 // TWAP Interval
-      )
+    ? await priceFeed(signer).getQuote(...quoteParams)
     : await chainlink(signer).latestRoundData()
   const currency = ethers.constants.AddressZero
 
