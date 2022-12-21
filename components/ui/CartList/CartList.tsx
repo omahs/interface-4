@@ -6,7 +6,7 @@ import { priceFeedAddress } from "@lib/initProvider"
 
 type Props = {
   cookieCart: ProductCart[]
-  ethUsd: { symbol: string; price: number }
+  ethUsd: number
   setCookie: (name: "cart", value: any, options?: CookieSetOptions) => void
 }
 
@@ -28,11 +28,7 @@ const CartList = ({ cookieCart, ethUsd, setCookie }: Props) => {
         const productPrice = isUSD
           ? Math.floor(
               (Number(price) * 100) /
-                Number(
-                  priceFeedAddress
-                    ? Number(ethUsd?.price) * 10000
-                    : ethUsd?.price
-                )
+                Number(priceFeedAddress ? ethUsd * 10000 : ethUsd)
             ) / 10000
           : Math.floor(Number(price) / 10 ** 14) / 10000
         const externalCallEth = utils.formatEther(extCallValue)
