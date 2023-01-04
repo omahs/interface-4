@@ -6,7 +6,7 @@ import clonerInterface from "./abi/cloner.json"
 import factoryInterface from "./abi/factory.json"
 import deployments from "./deployments.json"
 
-const label = "NFT Mint (ERC721A)"
+const label = "Mint NFT (ERC721A)"
 
 const description =
   "Deploys an ERC721A contract which efficiently mints 1 NFT for each unit purchased."
@@ -67,8 +67,8 @@ const Component = ({ setParams }: HookProps) => {
               result, all NFT will share the same metadata.
             </p>
             <p>
-              If disabled, the provided token URI is used for all NFTs. As a
-              result, all NFT will share the same metadata.
+              A <b>Qm...</b> CID will become <b>ipfs://Qm.../[tokenId]</b> if
+              concatenation is enabled, or <b>ipfs://Qm...</b> if disabled.
             </p>
           </>
         }
@@ -81,6 +81,35 @@ const Component = ({ setParams }: HookProps) => {
           value={uri}
           onChange={setUri}
           placeholder="Qm..."
+          question={
+            <>
+              <p>
+                This is the IPFS hash containing the metadata of your NFT
+                collection.
+              </p>
+              <p>
+                You can create it on services like{" "}
+                <a
+                  href="https://nft.storage/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="highlight"
+                >
+                  nft.storage
+                </a>{" "}
+                or{" "}
+                <a
+                  href="https://www.pinata.cloud/</p>"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="highlight"
+                >
+                  pinata.cloud
+                </a>
+                .
+              </p>
+            </>
+          }
         />
       </div>
     </>
