@@ -29,10 +29,10 @@ const DeployCloneSwitch = ({
               <p>
                 Deploying the hook as an immutable clone allows you to reduce
                 the cost of deployment, but slightly increases the purchase cost
-                for buyers.
+                for buyers (as well as operational costs if relevant).
               </p>
               <p>
-                The cost increase for each buyer is ~5k gas, so 0.0001 ETH (${" "}
+                The cost increase in purchases is ~5k gas, so 0.0001 ETH (${" "}
                 {Math.floor(0.01 * ethUsd) / 100}) with a gas price of 20 gwei.
               </p>
             </>
