@@ -14,12 +14,17 @@ const description =
 const Component = ({ setParams }: HookProps) => {
   const [name, setName] = useState("")
   const [symbol, setSymbol] = useState("")
+  const [isRoyalty, setIsRoyalty] = useState(false)
+  const [royaltyFraction, setRoyaltyFraction] = useState(10)
   const [uri, setUri] = useState("")
   const [isBaseUri, setIsBaseUri] = useState(false)
 
   useEffect(() => {
     setParams({
-      externalCall: defaultExternalCall,
+      externalCall: {
+        ...defaultExternalCall,
+        checkFunctionSignature: "0x00000000"
+      },
       deploy: {
         deployments,
         abi: {
@@ -29,6 +34,7 @@ const Component = ({ setParams }: HookProps) => {
         args: [
           name,
           symbol,
+          isRoyalty ? royaltyFraction * 100 : 0,
           isBaseUri ? `ipfs://${uri}/` : "",
           isBaseUri ? "" : `ipfs://${uri}`
         ]
@@ -44,6 +50,7 @@ const Component = ({ setParams }: HookProps) => {
           value={name}
           onChange={setName}
           placeholder="My NFT collection"
+          required
         />
       </div>
       <div>
@@ -52,8 +59,43 @@ const Component = ({ setParams }: HookProps) => {
           value={symbol}
           onChange={setSymbol}
           placeholder="MYNFT"
+          required
         />
       </div>
+      <InputSwitch
+        label="Enable on-chain royalties"
+        questionText={
+          <>
+            <p>
+              Defines how much royalty is owed to the contract owner, following
+              ERC2981 standard.
+            </p>
+            <p>
+              Note that ERC2981 is a way to signal royalty information, and does
+              not enforce its payment. In NFT marketplaces that don&apos;t
+              support the standard, such as Opensea, the contract owner will
+              need to set up the royalties manually on their website.
+            </p>
+          </>
+        }
+        enabled={isRoyalty}
+        setEnabled={setIsRoyalty}
+      />
+      {isRoyalty && (
+        <div>
+          <Input
+            type="number"
+            label="Royalty (%)"
+            value={royaltyFraction}
+            onChange={setRoyaltyFraction}
+            step={0.1}
+            max={100}
+            min={0}
+            placeholder="10"
+            required
+          />
+        </div>
+      )}
       <InputSwitch
         label="Concatenated URI"
         questionText={
@@ -75,42 +117,52 @@ const Component = ({ setParams }: HookProps) => {
         enabled={isBaseUri}
         setEnabled={setIsBaseUri}
       />
-      <div>
-        <Input
-          label="Token URI"
-          value={uri}
-          onChange={setUri}
-          placeholder="Qm..."
-          question={
-            <>
-              <p>
-                This is the IPFS hash containing the metadata of your NFT
-                collection.
-              </p>
-              <p>
-                You can create it on services like{" "}
-                <a
-                  href="https://nft.storage/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="highlight"
-                >
-                  nft.storage
-                </a>{" "}
-                or{" "}
-                <a
-                  href="https://www.pinata.cloud/</p>"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="highlight"
-                >
-                  pinata.cloud
-                </a>
-                .
-              </p>
-            </>
-          }
-        />
+      <div className="flex items-center !mt-0">
+        <span className="flex-grow">
+          <Input
+            label="Token URI"
+            prefix="ipfs://"
+            after="/{tokenId}"
+            value={uri}
+            onChange={setUri}
+            required
+            placeholder="Qm..."
+            question={
+              <>
+                <p>
+                  This is the IPFS hash containing the metadata of your NFT
+                  collection.
+                </p>
+                <p>
+                  You can create it on services like{" "}
+                  <a
+                    href="https://nft.storage/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="highlight"
+                  >
+                    nft.storage
+                  </a>{" "}
+                  or{" "}
+                  <a
+                    href="https://www.pinata.cloud/</p>"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="highlight"
+                  >
+                    pinata.cloud
+                  </a>
+                  .
+                </p>
+              </>
+            }
+          />
+        </span>
+        {isBaseUri && (
+          <p className="flex-grow-0 mt-8 ml-2 text-sm text-gray-500 sm:ml-4">
+            / {"{tokenId}"}
+          </p>
+        )}
       </div>
     </>
   )
