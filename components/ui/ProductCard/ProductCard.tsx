@@ -131,8 +131,10 @@ const ProductCard = ({
             eth: isUSD ? `Ξ ${convertedEthUsd}` : formattedEthPrice,
             usd: isUSD
               ? `$ ${formatNumber(
-                  (Number(price) + externalCallUsd) /
-                    (priceFeedAddress ? 1e6 : 100)
+                  Math.round(
+                    (Number(price) + externalCallUsd) /
+                      (priceFeedAddress ? 1e4 : 1)
+                  ) / 100
                 )}`
               : formattedUsdPrice
           }
