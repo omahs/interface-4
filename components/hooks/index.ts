@@ -1,5 +1,6 @@
 export { default as ERC20Gated } from "./ERC20Gated"
 export { default as ERC721Gated } from "./ERC721Gated"
+export { default as ERC721AMint } from "./ERC721Mint"
 export { default as ExistingHook } from "./ExistingHook"
 export { default as SendETH } from "./SendETH"
 export { default as Allowlisted } from "./Allowlisted"
