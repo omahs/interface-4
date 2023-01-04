@@ -43,7 +43,7 @@ const Component = ({ setParams }: HookProps) => {
           label="Name"
           value={name}
           onChange={setName}
-          placeholder="My contract"
+          placeholder="My NFT collection"
         />
       </div>
       <div>
@@ -51,7 +51,7 @@ const Component = ({ setParams }: HookProps) => {
           label="Symbol"
           value={symbol}
           onChange={setSymbol}
-          placeholder="MYCONTRACT"
+          placeholder="MYNFT"
         />
       </div>
       <InputSwitch
