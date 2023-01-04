@@ -51,9 +51,9 @@ export const emptyExternalCall = {
 }
 
 export const defaultPurchaseHooks: Hook[] = [
+  hooks.ERC721AMint,
   hooks.ERC20Gated,
   hooks.ERC721Gated,
-  hooks.ERC721AMint,
   hooks.Allowlisted,
   hooks.SendETH,
   hooks.ExistingHook
