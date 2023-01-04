@@ -109,7 +109,7 @@ const ProductCard = ({
   const [purchasedQuantity, setPurchasedQuantity] = useState(0)
 
   const formattedEthPrice = totalPrice
-    ? `Ξ ${Math.floor(totalPrice / 10 ** 14) / 10000}`
+    ? `Ξ ${Math.round(totalPrice / 10 ** 15) / 1000}`
     : "free"
   const formattedUsdPrice = convertedEthUsd ? `$ ${convertedEthUsd}` : "$ 0"
 
@@ -217,9 +217,9 @@ const ProductCard = ({
       let convertedPrice: number
       if (isUSD) {
         convertedPrice =
-          Math.floor(
-            ((Number(price) + externalCallUsd) * 100) / Number(ethUsdFormatted)
-          ) / 10000
+          Math.round(
+            ((Number(price) + externalCallUsd) * 10) / Number(ethUsdFormatted)
+          ) / 1000
         setConvertedEthUsd(convertedPrice)
       } else {
         convertedPrice =

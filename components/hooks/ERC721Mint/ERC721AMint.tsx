@@ -63,7 +63,7 @@ const Component = ({ setParams }: HookProps) => {
         />
       </div>
       <InputSwitch
-        label="Enable on-chain royalties"
+        label="On-chain royalties"
         questionText={
           <>
             <p>
