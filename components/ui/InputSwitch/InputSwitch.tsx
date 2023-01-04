@@ -13,7 +13,7 @@ type Props = {
 export default function InputSwitch({
   label,
   questionText,
-  position,
+  position = "bottom-[10px] right-0",
   enabled,
   setEnabled
 }: Props) {
