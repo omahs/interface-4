@@ -39,6 +39,8 @@ const PayProducts = async (
       const productPrice = isUSD
         ? BigNumber.from(price)
             .mul(BigNumber.from(10).pow(priceFeedAddress ? 18 : 24))
+            .mul(102) // 2% overpayment to compensate for price fluctuations (repaid to buyer during tx)
+            .div(100)
             .div(ethUsd)
             .add(extCallValue)
         : BigNumber.from(price).add(extCallValue)
