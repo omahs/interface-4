@@ -111,7 +111,9 @@ const ProductCard = ({
   const formattedEthPrice = totalPrice
     ? `Ξ ${Math.round(totalPrice / 10 ** 15) / 1000}`
     : "free"
-  const formattedUsdPrice = convertedEthUsd ? `$ ${convertedEthUsd}` : "$ 0"
+  const formattedUsdPrice = convertedEthUsd
+    ? `$ ${formatNumber(Math.round(convertedEthUsd / 100) / 100)}`
+    : "$ 0"
 
   const productPrice = chainInfo
     ? ethPrice || extValue
@@ -218,10 +220,7 @@ const ProductCard = ({
       let convertedPrice: number
       if (isUSD) {
         convertedPrice =
-          Math.round(
-            ((Number(price) + externalCallUsd) * 10) / Number(ethUsdFormatted)
-          ) / 1000
-        setConvertedEthUsd(convertedPrice)
+          Math.round((totalPrice * 10) / Number(ethUsdFormatted)) / 1000
       } else {
         convertedPrice =
           Math.floor((totalPrice / 10 ** 16) * Number(ethUsdFormatted)) / 100
