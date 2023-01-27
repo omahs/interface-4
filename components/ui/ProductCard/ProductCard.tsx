@@ -8,7 +8,7 @@ import { ethers, utils } from "ethers"
 import { BlockchainProduct } from "pages/slicer/[id]"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
-import { Card, CartButton } from ".."
+import { Card, CartButton, DeleteButton } from ".."
 import { Purchase, useAppContext } from "../context"
 import { ExternalPrices } from "../ProductsGrid/ProductsGrid"
 import { Product } from "../SlicerProducts/SlicerProducts"
@@ -35,7 +35,7 @@ const ProductCard = ({
   externalPrices
 }: Props) => {
   const [cookies] = useCookies(["cart"])
-  const { setModalView, purchases } = useAppContext()
+  const { account, setModalView, purchases } = useAppContext()
   const {
     id: dbId,
     productId,
@@ -178,6 +178,7 @@ const ProductCard = ({
       name: "PRODUCT_VIEW",
       cross: true,
       params: {
+        account,
         dbId,
         slicerId,
         productId,
@@ -334,7 +335,7 @@ const ProductCard = ({
                 (!isCustomPriced ||
                   (externalPrices[slicerId] &&
                     externalPrices[slicerId][productId])) &&
-                !editMode && (
+                (!editMode ? (
                   <CartButton
                     slicerId={slicerId}
                     productCart={productCart}
@@ -369,7 +370,11 @@ const ProductCard = ({
                     dbId={dbId}
                     externalAddress={externalAddress}
                   />
-                )}
+                ) : (
+                  account == creator && (
+                    <DeleteButton slicerId={slicerId} productId={productId} />
+                  )
+                ))}
             </div>
             {shortDescription && (
               <div>

@@ -38,6 +38,8 @@ const executeTransaction = async (
     if (setData) {
       setData(waitData)
     }
+    setLoading(false)
+    return waitData
   } catch (err) {}
   setLoading(false)
 }
