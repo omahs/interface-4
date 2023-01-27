@@ -8,7 +8,7 @@ import { ethers, utils } from "ethers"
 import { BlockchainProduct } from "pages/slicer/[id]"
 import { useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
-import { Card, CartButton } from ".."
+import { Card, CartButton, DeleteButton } from ".."
 import { Purchase, useAppContext } from "../context"
 import { ExternalPrices } from "../ProductsGrid/ProductsGrid"
 import { Product } from "../SlicerProducts/SlicerProducts"
@@ -35,7 +35,7 @@ const ProductCard = ({
   externalPrices
 }: Props) => {
   const [cookies] = useCookies(["cart"])
-  const { setModalView, purchases } = useAppContext()
+  const { account, setModalView, purchases } = useAppContext()
   const {
     id: dbId,
     productId,
@@ -111,7 +111,9 @@ const ProductCard = ({
   const formattedEthPrice = totalPrice
     ? `Ξ ${Math.round(totalPrice / 10 ** 15) / 1000}`
     : "free"
-  const formattedUsdPrice = convertedEthUsd ? `$ ${convertedEthUsd}` : "$ 0"
+  const formattedUsdPrice = convertedEthUsd
+    ? `$ ${formatNumber(Math.round(convertedEthUsd / 100) / 100)}`
+    : "$ 0"
 
   const productPrice = chainInfo
     ? ethPrice || extValue
@@ -178,6 +180,7 @@ const ProductCard = ({
       name: "PRODUCT_VIEW",
       cross: true,
       params: {
+        account,
         dbId,
         slicerId,
         productId,
@@ -217,10 +220,7 @@ const ProductCard = ({
       let convertedPrice: number
       if (isUSD) {
         convertedPrice =
-          Math.round(
-            ((Number(price) + externalCallUsd) * 10) / Number(ethUsdFormatted)
-          ) / 1000
-        setConvertedEthUsd(convertedPrice)
+          Math.round((totalPrice * 10) / Number(ethUsdFormatted)) / 1000
       } else {
         convertedPrice =
           Math.floor((totalPrice / 10 ** 16) * Number(ethUsdFormatted)) / 100
@@ -334,7 +334,7 @@ const ProductCard = ({
                 (!isCustomPriced ||
                   (externalPrices[slicerId] &&
                     externalPrices[slicerId][productId])) &&
-                !editMode && (
+                (!editMode ? (
                   <CartButton
                     slicerId={slicerId}
                     productCart={productCart}
@@ -369,7 +369,11 @@ const ProductCard = ({
                     dbId={dbId}
                     externalAddress={externalAddress}
                   />
-                )}
+                ) : (
+                  account == creator && (
+                    <DeleteButton slicerId={slicerId} productId={productId} />
+                  )
+                ))}
             </div>
             {shortDescription && (
               <div>

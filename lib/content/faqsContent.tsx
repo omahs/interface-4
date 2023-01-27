@@ -383,21 +383,22 @@ export const faqsMain = [
     answer: (
       <>
         <p>
-          The Slice protocol is <b>free to use</b>, users only have to pay the
+          The Slice protocol is <b>free</b>, users only have to pay the
           transaction fees to interact with the blockchain. This website is just
           an interface to the Slice&apos;s smart contracts.
         </p>
         <p>
           Whenever a slicer owner withdraws earnings from slicers, a{" "}
-          <b>2.5% membership fee</b> is given to the Slice DAO which helps
-          funding the development and maintainment of the protocol. In exchange,{" "}
-          <b>you receive a corresponding amount of SLX governance tokens</b>{" "}
-          which effectively represent your stake of ownership in the DAO and
-          your right to vote on future protocol developments.
+          <b>2.5% SLX cashback fee</b> is given to the Slice DAO which helps
+          funding the development of the protocol.
         </p>
         <p>
-          In the future, this will result in Slice being{" "}
-          <b>owned and governed by its own users</b>.
+          In exchange, users receive <b>SLX governance tokens</b> which
+          represent the right to vote on how the protocol will evolve.
+        </p>
+        <p>
+          This will result in Slice being eventually{" "}
+          <b>owned and governed by its users</b>.
         </p>
       </>
     ),

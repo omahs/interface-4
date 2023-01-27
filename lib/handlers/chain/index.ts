@@ -1,6 +1,7 @@
 export { default as AddProduct } from "./AddProduct"
 export { default as clone } from "./clone"
 export { default as cloneProjectPayer } from "./cloneProjectPayer"
+export { default as RemoveProduct } from "./RemoveProduct"
 export { default as deploy } from "./deploy"
 export { default as ExtCall } from "./ExtCall"
 export { default as GetERC20Balance } from "./GetERC20Balance"

@@ -67,14 +67,14 @@ const Component = ({ setParams }: HookProps) => {
         questionText={
           <>
             <p>
-              Defines how much royalty is owed to the contract owner, following
-              ERC2981 standard.
+              Defines owner royalties of secondary sales on marketplaces that
+              support the ERC2981 standard.
             </p>
             <p>
               Note that ERC2981 is a way to signal royalty information, and does
               not enforce its payment. In NFT marketplaces that don&apos;t
               support the standard, such as Opensea, the contract owner will
-              need to set up the royalties manually on their website.
+              need to set up royalties manually on their website.
             </p>
           </>
         }
@@ -97,20 +97,18 @@ const Component = ({ setParams }: HookProps) => {
         </div>
       )}
       <InputSwitch
-        label="Concatenated URI"
+        label="Variable metadata"
         questionText={
           <>
+            <p>If disabled, all NFTs will have the same metadata.</p>
             <p>
-              If enabled, the provided token URI is concatenated with the
-              tokenId. As a result, each NFT can have unique metadata.
+              If enabled, the tokenId is appended to the provided CID. As a
+              result, each NFT can have unique metadata (useful for
+              collections).
             </p>
             <p>
-              If disabled, the provided token URI is used for all NFTs. As a
-              result, all NFT will share the same metadata.
-            </p>
-            <p>
-              A <b>Qm...</b> CID will become <b>ipfs://Qm.../[tokenId]</b> if
-              concatenation is enabled, or <b>ipfs://Qm...</b> if disabled.
+              So a <b>Qm...</b> CID will become <b>ipfs://Qm.../[tokenId]</b>{" "}
+              when enabled, or <b>ipfs://Qm...</b> when disabled.
             </p>
           </>
         }
