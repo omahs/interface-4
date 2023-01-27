@@ -50,7 +50,7 @@ const AddProductFormPrice = ({
 
   return (
     <>
-      <h2 className="pb-6">Pricing strategy</h2>
+      <h2 className="pb-6">Pricing</h2>
       <div className="grid grid-cols-3 gap-2 pt-3 pb-6 sm:grid-cols-3">
         {strategiesRender.map((strategy, i) => (
           <CardBasic
