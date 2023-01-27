@@ -23,17 +23,13 @@ const DeployCloneSwitch = ({
     deployments?.cloner[chainId] && (
       <div className="pt-4">
         <InputSwitch
-          label="Deploy as clone"
+          label="Clone (efficient deploy)"
           questionText={
             <>
               <p>
-                Deploying the hook as an immutable clone allows you to reduce
-                the cost of deployment, but slightly increases the purchase cost
-                for buyers (as well as operational costs if relevant).
-              </p>
-              <p>
-                The cost increase in purchases is ~5k gas, so 0.0001 ETH (${" "}
-                {Math.floor(0.01 * ethUsd) / 100}) with a gas price of 20 gwei.
+                If enabled cuts deployment costs significantly, but increases
+                price of purchase and other operations of about ~5k gas ($
+                {Math.floor(0.01 * ethUsd) / 100} with a gas price of 20 gwei).
               </p>
             </>
           }
