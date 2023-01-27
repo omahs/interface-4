@@ -40,11 +40,8 @@ const AddProductFormExternal = ({
 
   return (
     <>
-      <h2 className="pb-6">Purchase hook</h2>
-      <p className="pb-3">
-        Add optional on-chain logic to purchases with pre-configured or custom
-        hooks.
-      </p>
+      <h2 className="pb-6">On-chain action</h2>
+      <p className="pb-3">Execute on-chain logic when product is purchased.</p>
       <div className="space-y-3">
         {defaultPurchaseHooks.map((hook, i) => {
           const { label, deployments } = hook
@@ -85,7 +82,7 @@ const AddProductFormExternal = ({
         </>
       )}
       <div>
-        <hr className="w-20 mx-auto border-gray-300 my-16" />
+        <hr className="w-20 mx-auto my-16 border-gray-300" />
       </div>
     </>
   )

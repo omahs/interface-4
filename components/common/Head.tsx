@@ -5,9 +5,10 @@ import { accounts } from "@components/ui/Social/Social"
 import Script from "next/script"
 
 export const defaultTitle = "Slice"
-export const longTitle = "Slice – The decentralized commerce protocol"
+export const longTitle =
+  "Slice – The decentralized infrastructure for commerce and payments"
 export const defaultDescription =
-  "The decentralized payments infrastructure for projects, teams and communities. Split payments and sell NFTs, tickets, merch and more on d-stores."
+  "The decentralized commerce protocol for projects, teams, DAOs and communities. Split payments and sell NFTs, tickets, merch and more on d-stores."
 export const domain = process.env.NEXT_PUBLIC_APP_URL
 const twitterAccount = accounts.twitter.split("twitter.com/").pop()
 

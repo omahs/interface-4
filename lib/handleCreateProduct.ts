@@ -295,7 +295,7 @@ export const handleCleanup = async (
     const dataHash =
       "0x" + CID.parse(product.hash)?.toString(base16).substring(1)
 
-    // // Distinguish between minted / not minted product
+    // // Distinguish between created / inexistent product
     const tokensQuery = /* GraphQL */ `
       products(where: {
         slicer: "${hexId}",
@@ -313,7 +313,7 @@ export const handleCleanup = async (
     `
     })
 
-    if (data.products.length != 0 /* minted */) {
+    if (data.products.length != 0 /* created */) {
       // Update productId and remove hash
       const productId = data.products[0].id.split("-").pop()
       const putBody = {
@@ -325,7 +325,7 @@ export const handleCleanup = async (
         })
       }
       await fetcher(`/api/slicer/${slicerId}/products`, putBody)
-    } /* not minted */ else {
+    } /* not created */ else {
       await handleReject(
         slicerId,
         product.image,
@@ -351,7 +351,7 @@ export const reload = async (
   const hexId = decimalToHex(slicerId)
   setLoading(true)
 
-  // Get all missing minted products on prisma
+  // Get all missing created products on prisma
   const { data: products } = await fetcher(`/api/slicer/${slicerId}/products`)
 
   const tokensQuery = /* GraphQL */ `
