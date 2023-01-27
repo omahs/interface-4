@@ -60,11 +60,11 @@ export const NETWORK_VIEW = () => {
   const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
 
   return (
-    <>
-      <div className="pb-6 text-center">
+    <div className="text-center">
+      <div className="pb-6">
         <DoubleText inactive logoText="Pick the right chain" />
       </div>
-      <p className="text-lg text-center">
+      <p className="text-lg">
         Connect to the{" "}
         <span className="font-black">
           {chainId === "5" ? "Goerli" : "Ethereum Mainnet"}
@@ -84,7 +84,19 @@ export const NETWORK_VIEW = () => {
           showBalance={false}
         />
       </div>
-    </>
+
+      <p className="pt-6 text-gray-600">
+        Or go to{" "}
+        <a
+          href={`https://${chainId === "5" ? "" : "testnet."}slice.so`}
+          target="_blank"
+          rel="noreferrer"
+          className="highlight"
+        >
+          Slice {chainId === "5" ? "Mainnet" : "Goerli"}
+        </a>
+      </p>
+    </div>
   )
 }
 

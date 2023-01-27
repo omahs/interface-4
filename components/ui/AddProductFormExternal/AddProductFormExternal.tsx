@@ -40,7 +40,7 @@ const AddProductFormExternal = ({
 
   return (
     <>
-      <h2 className="pb-6">Onchain action</h2>
+      <h2 className="pb-6">On-chain action</h2>
       <p className="pb-3">Execute on-chain logic when product is purchased.</p>
       <div className="space-y-3">
         {defaultPurchaseHooks.map((hook, i) => {
