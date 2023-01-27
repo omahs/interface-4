@@ -94,7 +94,7 @@ export const NETWORK_VIEW = () => {
           rel="noreferrer"
           className="highlight"
         >
-          Slice {chainId === "5" ? "Mainnet" : "Goerli"}
+          Slice {chainId === "5" ? "Mainnet" : "Goerli (testnet)"}
         </a>
       </p>
     </div>
