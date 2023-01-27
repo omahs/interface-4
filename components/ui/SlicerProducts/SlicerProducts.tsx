@@ -1,4 +1,4 @@
-import { ReducedShortcode } from "@utils/useDecodeShortcode"
+import decimalToHex from "@utils/decimalToHex"
 import { useRouter } from "next/dist/client/router"
 import { BlockchainProduct } from "pages/slicer/[id]"
 import { useEffect, useState } from "react"
@@ -52,6 +52,16 @@ const SlicerProducts = ({
   const [subgraphRefresh, setSubgraphRefresh] = useState(false)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const productsToShow =
+    products && products?.data?.filter((p: Product) => p.productId != null)
+  const missingProducts = productsToShow?.filter(
+    (product: Product) =>
+      !blockchainProducts?.find(
+        (p) => Number(p.id.split("-").pop()) == product?.productId
+      )
+  )
+
+  const hexSlicerId = decimalToHex(Number(slicerId))
 
   const handleReload = async () => {
     const fetcher = (await import("@utils/fetcher")).default
@@ -73,6 +83,43 @@ const SlicerProducts = ({
   const refreshProducts = async () => {
     setLoading(true)
     const fetcher = (await import("@utils/fetcher")).default
+    const client = (await import("@utils/apollo-client")).default
+    const { gql } = await import("@apollo/client")
+
+    const ids = missingProducts.map(
+      (p) => `"${hexSlicerId}-${decimalToHex(Number(p.productId))}"`
+    )
+    const tokensQuery = /* GraphQL */ `
+      products (
+        where: {
+          id_in: [${ids}]
+        }
+      ) {
+        id
+        isRemoved
+      }
+    `
+
+    const { data: subgraphData } = await client.query({
+      query: gql`
+        query {
+          ${tokensQuery}
+        }
+      `,
+      fetchPolicy: "no-cache"
+    })
+
+    for (let i = 0; i < subgraphData?.products.length; i++) {
+      const { id, isRemoved } = subgraphData.products[i]
+      if (isRemoved) {
+        const productId = Number(id.split("-").pop())
+
+        await fetcher(`/api/slicer/${slicerId}/product/${productId}/remove`, {
+          method: "DELETE"
+        })
+      }
+    }
+
     try {
       await fetcher(`/api/slicer/${slicerId}/refresh`)
     } catch (err) {
@@ -83,18 +130,8 @@ const SlicerProducts = ({
   }
 
   useEffect(() => {
-    const productsToShow = products?.data?.filter(
-      (p: Product) => p.productId != null
-    )
     setShowProducts(productsToShow)
-    setSubgraphRefresh(
-      productsToShow?.filter(
-        (product: Product) =>
-          !blockchainProducts?.find(
-            (p) => Number(p.id.split("-").pop()) == product?.productId
-          )
-      ).length != 0
-    )
+    setSubgraphRefresh(missingProducts.length != 0)
     setPendingProducts(products?.data?.filter((p: Product) => !p.productId))
   }, [products])
 

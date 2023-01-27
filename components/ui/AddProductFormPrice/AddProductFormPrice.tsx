@@ -50,7 +50,7 @@ const AddProductFormPrice = ({
 
   return (
     <>
-      <h2 className="pb-6">Pricing strategy</h2>
+      <h2 className="pb-6">Pricing</h2>
       <div className="grid grid-cols-3 gap-2 pt-3 pb-6 sm:grid-cols-3">
         {strategiesRender.map((strategy, i) => (
           <CardBasic
@@ -77,10 +77,8 @@ const AddProductFormPrice = ({
                 <p>
                   If enabled, the buyer will pay in ETH the corresponding USD
                   value set
-                  {usdValue && usdValue != 0 && (
-                    <b> ${Number(usdValue).toFixed(2)}</b>
-                  )}
-                  . It&apos;s like setting the product price in USD and thus{" "}
+                  {usdValue != 0 && <b> ${Number(usdValue).toFixed(2)}</b>}.
+                  It&apos;s like setting the product price in USD and thus{" "}
                   <b>protects against changes in ETH value over time.</b>
                 </p>
                 <p>

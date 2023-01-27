@@ -4,6 +4,7 @@ import {
   Button,
   CardImage,
   CartButton,
+  DeleteButton,
   DoubleText,
   FilesList,
   LoadingStep,
@@ -60,11 +61,11 @@ export const NETWORK_VIEW = () => {
   const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
 
   return (
-    <>
-      <div className="pb-6 text-center">
+    <div className="text-center">
+      <div className="pb-6">
         <DoubleText inactive logoText="Pick the right chain" />
       </div>
-      <p className="text-lg text-center">
+      <p className="text-lg">
         Connect to the{" "}
         <span className="font-black">
           {chainId === "5" ? "Goerli" : "Ethereum Mainnet"}
@@ -84,7 +85,19 @@ export const NETWORK_VIEW = () => {
           showBalance={false}
         />
       </div>
-    </>
+
+      <p className="pt-6 text-gray-600">
+        Or go to{" "}
+        <a
+          href={`https://${chainId === "5" ? "" : "testnet."}slice.so`}
+          target="_blank"
+          rel="noreferrer"
+          className="highlight"
+        >
+          Slice {chainId === "5" ? "Mainnet" : "Goerli (testnet)"}
+        </a>
+      </p>
+    </div>
   )
 }
 
@@ -328,6 +341,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
 export const PRODUCT_VIEW = (params: any) => {
   const [cookies] = useCookies(["cart"])
   const {
+    account,
     dbId,
     slicerId,
     productId,
@@ -462,48 +476,56 @@ export const PRODUCT_VIEW = (params: any) => {
         {extAddress &&
           (!isCustomPriced ||
             (externalPrices[slicerId] &&
-              externalPrices[slicerId][productId])) &&
-          !editMode && (
-            <div className="mx-auto cursor-pointer w-60">
-              <CartButton
-                slicerId={slicerId}
-                productCart={productCart}
-                slicerAddress={slicerAddress}
-                productId={productId}
-                price={
-                  isCustomPriced &&
-                  externalPrices[slicerId] &&
-                  externalPrices[slicerId][productId]
-                    ? parseInt(
-                        externalPrices[slicerId][productId][
-                          ethers.constants.AddressZero
-                        ].ethPrice,
-                        16
-                      ).toString()
-                    : price
-                }
-                isUSD={isCustomPriced ? false : isUSD}
-                extAddress={extAddress}
-                extCallValue={extValue}
-                extCheckSig={extCheckSig}
-                name={name}
-                image={image}
-                maxUnits={Number(maxUnits)}
-                availableUnits={isInfinite ? -1 : availableUnits}
-                purchasedQuantity={purchasedQuantity}
-                uid={uid}
-                creator={creator}
-                texts={texts}
-                allowedAddresses={allowedAddresses}
-                labelAdd={`Get it for ${productPrice.eth}`}
-                labelRemove={productPrice.eth != "free" && productPrice.eth}
-                preview={preview}
-                shortcodes={purchaseInfo?.shortcodes}
-                dbId={dbId}
-                externalAddress={externalAddress}
-              />
-            </div>
+              externalPrices[slicerId][productId])) && (
+            <>
+              <div className="mx-auto cursor-pointer w-60">
+                {!editMode ? (
+                  <CartButton
+                    slicerId={slicerId}
+                    productCart={productCart}
+                    slicerAddress={slicerAddress}
+                    productId={productId}
+                    price={
+                      isCustomPriced &&
+                      externalPrices[slicerId] &&
+                      externalPrices[slicerId][productId]
+                        ? parseInt(
+                            externalPrices[slicerId][productId][
+                              ethers.constants.AddressZero
+                            ].ethPrice,
+                            16
+                          ).toString()
+                        : price
+                    }
+                    isUSD={isCustomPriced ? false : isUSD}
+                    extAddress={extAddress}
+                    extCallValue={extValue}
+                    extCheckSig={extCheckSig}
+                    name={name}
+                    image={image}
+                    maxUnits={Number(maxUnits)}
+                    availableUnits={isInfinite ? -1 : availableUnits}
+                    purchasedQuantity={purchasedQuantity}
+                    uid={uid}
+                    creator={creator}
+                    texts={texts}
+                    allowedAddresses={allowedAddresses}
+                    labelAdd={`Get it for ${productPrice.eth}`}
+                    labelRemove={productPrice.eth != "free" && productPrice.eth}
+                    preview={preview}
+                    shortcodes={purchaseInfo?.shortcodes}
+                    dbId={dbId}
+                    externalAddress={externalAddress}
+                  />
+                ) : (
+                  account == creator && (
+                    <DeleteButton slicerId={slicerId} productId={productId} />
+                  )
+                )}
+              </div>
+            </>
           )}
+
         {!editMode &&
           productPrice.eth != "free" &&
           Number(maxUnits) != 1 &&
@@ -569,7 +591,7 @@ export const PRODUCT_VIEW = (params: any) => {
             {extValue != "0" && extExecSig != "0x00000000" ? " and " : ""}
             {extExecSig != "0x00000000" ? (
               <>
-                executing the function{" "}
+                executing{" "}
                 <b className="text-yellow-600">
                   {getFunctionFromSelector(extExecSig)}
                 </b>

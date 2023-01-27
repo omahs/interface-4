@@ -64,7 +64,7 @@ const InputPrice = ({
         {action ? (
           <Input
             type="number"
-            placeholder={isEth ? "0.01" : "100"}
+            placeholder={isEth ? "0.1" : "100"}
             min={0}
             step={isEth ? 0.001 : 0.01}
             label={label}
@@ -83,7 +83,7 @@ const InputPrice = ({
         ) : (
           <Input
             type="number"
-            placeholder={isEth ? "0.01" : "100"}
+            placeholder={isEth ? "0.1" : "100"}
             min={0}
             step={isEth ? 0.001 : 0.01}
             label={label}
