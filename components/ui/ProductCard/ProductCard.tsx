@@ -112,7 +112,7 @@ const ProductCard = ({
     ? `Ξ ${Math.round(totalPrice / 10 ** 15) / 1000}`
     : "free"
   const formattedUsdPrice = convertedEthUsd
-    ? `$ ${formatNumber(Math.round(convertedEthUsd / 100) / 100)}`
+    ? `$ ${formatNumber(Math.round(convertedEthUsd / 1e4))}`
     : "free"
 
   const productPrice = chainInfo
@@ -135,8 +135,8 @@ const ProductCard = ({
               ? `$ ${formatNumber(
                   Math.round(
                     (Number(price) + externalCallUsd) /
-                      (priceFeedAddress ? 1e4 : 1)
-                  ) / 100
+                      (priceFeedAddress ? 1e6 : 100)
+                  )
                 )}`
               : formattedUsdPrice
           }
