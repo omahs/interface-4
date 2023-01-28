@@ -29,7 +29,7 @@ const handleUpdateCart = async (
   extCallValue: string,
   buyerCustomData: BytesLike,
   name: string,
-  newQuantity: number,
+  quantity: number,
   externalAddress?: string
 ) => {
   const newCookies = cookies?.cart || []
@@ -40,18 +40,14 @@ const handleUpdateCart = async (
       ? externalAddress
       : ethers.constants.AddressZero
 
-  if (newQuantity > 0) {
-    saEvent("add_product_to_cart")
-  } else {
-    saEvent("remove_product_from_cart")
-  }
+  saEvent("update_cart")
+
   if (newCookies.length != 0 && productCart) {
-    const quantity = productCart.quantity + newQuantity
     const index = newCookies.findIndex(
       (p: ProductCart) =>
         p.productId == productId && p.slicerAddress == slicerAddress
     )
-    if (quantity > 0) {
+    if (quantity != 0) {
       newCookies[index] = {
         slicerId,
         slicerAddress,
@@ -67,8 +63,7 @@ const handleUpdateCart = async (
     } else {
       newCookies.splice(index, 1)
     }
-  } else if (newQuantity > 0) {
-    const quantity = newQuantity
+  } else if (quantity != 0) {
     newCookies.push({
       slicerId,
       slicerAddress,

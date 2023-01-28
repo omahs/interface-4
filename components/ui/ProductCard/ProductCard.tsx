@@ -113,7 +113,7 @@ const ProductCard = ({
     : "free"
   const formattedUsdPrice = convertedEthUsd
     ? `$ ${formatNumber(Math.round(convertedEthUsd / 100) / 100)}`
-    : "$ 0"
+    : "free"
 
   const productPrice = chainInfo
     ? ethPrice || extValue
@@ -142,7 +142,7 @@ const ProductCard = ({
           }
       : {
           eth: "free",
-          usd: "$ 0"
+          usd: "free"
         }
     : {
         eth: "Ξ ...",
@@ -292,10 +292,10 @@ const ProductCard = ({
                 )}
                 <p
                   className={`text-sm capitalize font-medium text-black${
-                    chainInfo && !totalPrice ? " text-green-600" : ""
+                    productPrice.usd == "free" ? " text-green-600" : ""
                   }`}
                 >
-                  {productPrice.eth}
+                  {productPrice.usd}
                 </p>
               </div>
             )
@@ -334,7 +334,7 @@ const ProductCard = ({
                 </p>
               </div>
             )}
-            <div className="absolute bottom-0 w-full px-5 pb-5 transform -translate-x-1/2 left-1/2">
+            <div className="absolute bottom-0 w-full px-5 mb-5 transform -translate-x-1/2 left-1/2">
               {chainInfo &&
                 (!isCustomPriced ||
                   (externalPrices[slicerId] &&
@@ -364,6 +364,7 @@ const ProductCard = ({
                     image={image}
                     name={name}
                     maxUnits={Number(maxUnits)}
+                    labelAdd={productPrice?.eth != "free" && productPrice.eth}
                     availableUnits={isInfinite ? -1 : availableUnits}
                     purchasedQuantity={purchasedQuantity}
                     uid={uid}

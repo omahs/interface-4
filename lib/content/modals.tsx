@@ -447,7 +447,11 @@ export const PRODUCT_VIEW = (params: any) => {
                     <Bolt />
                   </div>
                 )}
-                <p className="text-sm font-medium text-black">
+                <p
+                  className={`text-sm capitalize font-medium text-black${
+                    productPrice.usd == "free" ? " text-green-600" : ""
+                  }`}
+                >
                   {productPrice.usd}
                 </p>
               </div>
@@ -510,7 +514,7 @@ export const PRODUCT_VIEW = (params: any) => {
                     creator={creator}
                     texts={texts}
                     allowedAddresses={allowedAddresses}
-                    labelAdd={`Get it for ${productPrice.eth}`}
+                    labelAdd={productPrice?.eth != "free" && productPrice.eth}
                     labelRemove={productPrice.eth != "free" && productPrice.eth}
                     preview={preview}
                     shortcodes={purchaseInfo?.shortcodes}
