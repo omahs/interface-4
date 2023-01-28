@@ -49,7 +49,7 @@ const Card = ({
         product={product}
         onClick={onClick}
       />
-      <div className="relative w-full px-5 py-4 text-left">
+      <div className="relative flex-grow w-full px-5 py-4 text-left">
         {onClick && (
           <div
             className="absolute w-full h-full mt-[-1rem] ml-[-1.25rem]"

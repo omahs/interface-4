@@ -261,11 +261,11 @@ const ProductCard = ({
           </Head>
         </>
       )} */}
-      <div className="h-full">
+      <div className="relative h-full">
         <Card
           product
           containerClassName="h-full cursor-pointer"
-          cardClassName="group h-full overflow-hidden transition-all duration-300 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025]"
+          cardClassName="flex flex-col group h-full overflow-hidden transition-all duration-300 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025] mb-11"
           className="rounded-none"
           name={name}
           image={image}
@@ -316,20 +316,25 @@ const ProductCard = ({
           }
           onClick={() => handleOnClick()}
         >
-          <div>
+          <div className="h-full">
             <div className="flex items-center justify-between">
-              <div className="flex flex-wrap items-center mt-1.5 mr-28">
-                <p className="mr-2 font-medium">{name}</p>
-                <p className="h-5 mt-1 text-xs font-normal text-gray-500">
-                  #{productId}
+              <div className="mt-1.5">
+                <p className="font-medium">
+                  {name}{" "}
+                  <span className="text-xs font-normal text-gray-500">
+                    #{productId}
+                  </span>
                 </p>
               </div>
             </div>
-            <div className="absolute top-0 right-0 flex items-center justify-center w-24 h-[68px] my-auto mr-5">
-              <div
-                className="absolute w-full h-full"
-                onClick={() => handleOnClick()}
-              />
+            {shortDescription && (
+              <div>
+                <p className="py-3 overflow-hidden text-gray-500 overflow-ellipsis">
+                  {shortDescription}
+                </p>
+              </div>
+            )}
+            <div className="absolute bottom-0 w-full px-5 pb-5 transform -translate-x-1/2 left-1/2">
               {chainInfo &&
                 (!isCustomPriced ||
                   (externalPrices[slicerId] &&
@@ -375,13 +380,6 @@ const ProductCard = ({
                   )
                 ))}
             </div>
-            {shortDescription && (
-              <div>
-                <p className="pt-6 overflow-hidden text-gray-500 overflow-ellipsis">
-                  {shortDescription}
-                </p>
-              </div>
-            )}
           </div>
         </Card>
       </div>

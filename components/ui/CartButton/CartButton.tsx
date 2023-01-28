@@ -176,9 +176,9 @@ const CartButton = ({
         )}
       </div>
     ) : (
-      <div className="relative z-10 grid items-center justify-center w-full grid-cols-2 overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md nightwind-prevent-block">
+      <div className="relative z-10 flex items-center justify-center w-full overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md nightwind-prevent-block">
         <div
-          className={`relative z-10 h-8 flex items-center justify-center text-white ${
+          className={`relative z-10 h-8 flex flex-grow items-center justify-center text-white ${
             availableUnits != 0
               ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
               : "bg-gray-400 cursor-default"
@@ -205,7 +205,7 @@ const CartButton = ({
           <Cart className="w-5 h-5 mr-1 group-cart-el" />
         </div>
         <div
-          className="relative z-10 flex items-center justify-center h-8 text-white transition-colors duration-150 bg-blue-500 rounded-r-md nightwind-prevent group-cart hover:bg-blue-600"
+          className="relative z-10 flex items-center justify-center w-20 h-8 text-white transition-colors duration-150 bg-blue-500 rounded-r-md nightwind-prevent group-cart hover:bg-blue-600"
           onClick={() =>
             handleRedeemProduct(
               account,

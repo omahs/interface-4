@@ -410,18 +410,6 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   } 
 `
 
-  // {slicer(id: "0xb") {
-  //   slices
-
-  //   products (
-  //     where: {
-  //       isRemoved: true
-  //     }
-  //   ) {
-  //     id
-  //   }
-  // }}
-
   const [slicerInfo, products, { data: subgraphData }] = await Promise.all([
     fetcher(`${baseUrl}/api/slicer/${hexId}?stats=false`),
     fetcher(`${baseUrl}/api/slicer/${id}/products`),
