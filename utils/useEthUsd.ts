@@ -13,12 +13,6 @@ export const quoteParams = [
   1800 // TWAP Interval
 ]
 
-export const formatEthUsd = (calldata?: any) => {
-  return calldata?.data && priceFeedAddress
-    ? Number(calldata?.data) / 1e6
-    : calldata?.data && Number(calldata?.data[1]) / 1e8
-}
-
 export default function useEthUsd() {
   const params = priceFeedAddress
     ? {
@@ -36,5 +30,9 @@ export default function useEthUsd() {
         watch: true
       }
 
-  return useContractRead(params)
+  const calldata = useContractRead(params)
+
+  return calldata?.data && priceFeedAddress
+    ? Number(calldata?.data) / 1e6
+    : calldata?.data && Number(calldata?.data[1]) / 1e8
 }

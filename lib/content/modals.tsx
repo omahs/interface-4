@@ -1,6 +1,8 @@
 import ShoppingBag from "@components/icons/ShoppingBag"
 import Units from "@components/icons/Units"
 import {
+  AddProductFormAvailability,
+  AddProductFormPrice,
   Button,
   CardImage,
   CartButton,
@@ -14,7 +16,7 @@ import {
 import { useAppContext } from "@components/ui/context"
 import { ProductCart } from "@lib/handleUpdateCart"
 import getEthFromWei from "@utils/getEthFromWei"
-import formatNumber from "@utils/formatNumber"
+import formatNumber, { formatNumberWithUnit } from "@utils/formatNumber"
 import { useCookies } from "react-cookie"
 import { ethers } from "ethers"
 import getFunctionFromSelector from "@utils/getFunctionFromSelector"
@@ -26,7 +28,12 @@ import { domain } from "@components/common/Head"
 import copyText from "@utils/copyText"
 import useDecodeShortcode from "@utils/useDecodeShortcode"
 import Bolt from "@components/icons/Bolt"
-import { strategiesList } from "@components/priceStrategies/strategies"
+import {
+  strategiesList,
+  StrategyParams
+} from "@components/priceStrategies/strategies"
+import ethToWei from "@utils/ethToWei"
+import { priceFeedAddress } from "@lib/initProvider"
 
 export type View = {
   name: ViewNames
@@ -366,6 +373,7 @@ export const PRODUCT_VIEW = (params: any) => {
     purchaseInfo,
     slicerAddress,
     price,
+    isEditable,
     editMode,
     purchasedQuantity,
     availabilityColor,
@@ -374,6 +382,44 @@ export const PRODUCT_VIEW = (params: any) => {
     externalPrices,
     isCustomPriced
   } = params
+
+  const [newIsMultiple, setNewIsMultiple] = useState(
+    maxUnits == 1 ? false : true
+  )
+
+  const [newIsLimited, setNewIsLimited] = useState(!isInfinite)
+  const [newUnits, setNewUnits] = useState(availableUnits)
+  const [newMaxUnits, setNewMaxUnits] = useState(maxUnits)
+  const [newUsdValue, setNewUsdValue] = useState(
+    formatNumberWithUnit(productPrice.usd)
+  )
+  const [newEthValue, setNewEthValue] = useState(
+    formatNumberWithUnit(productPrice.eth)
+  )
+  const [newIsUSD, setNewIsUSD] = useState(isUSD)
+  const [newPriceParams, setNewPriceParams] = useState<StrategyParams>()
+  const isFree = newPriceParams?.address
+    ? false
+    : newEthValue != 0
+    ? false
+    : true
+  // const weiValue = ethToWei(newEthValue)
+  // const newProductPrice = newIsUSD
+  //   ? Math.floor(priceFeedAddress ? newUsdValue * 1000000 : newUsdValue * 100)
+  //   : weiValue
+  // const isStrategyConfigurable = newPriceParams?.abi != undefined
+  // const currencyPrices =
+  //   Number(newProductPrice) != 0 || newPriceParams?.address
+  //     ? [
+  //         {
+  //           currency: ethers.constants.AddressZero,
+  //           value: newProductPrice,
+  //           dynamicPricing: newIsUSD,
+  //           externalAddress:
+  //             newPriceParams?.address || ethers.constants.AddressZero
+  //         }
+  //       ]
+  //     : []
 
   const [isCopied, setIsCopied] = useState(false)
   const cookieCart: ProductCart[] = cookies?.cart
@@ -391,6 +437,8 @@ export const PRODUCT_VIEW = (params: any) => {
       String(val.deployments[process.env.NEXT_PUBLIC_CHAIN_ID]).toLowerCase() ==
       externalAddress
   )
+
+  const submit = async (e: React.SyntheticEvent<EventTarget>) => {}
 
   useEffect(() => {
     saEvent("product_view_open_modal")
@@ -477,6 +525,32 @@ export const PRODUCT_VIEW = (params: any) => {
             <MarkdownBlock content={description} />
           </div>
         </div>
+        <form
+          className="w-full py-6 mx-auto space-y-6 text-center"
+          onSubmit={submit}
+        >
+          <AddProductFormAvailability
+            isMultiple={newIsMultiple}
+            isLimited={newIsLimited}
+            units={newUnits}
+            maxUnits={newMaxUnits}
+            setIsMultiple={setNewIsMultiple}
+            setIsLimited={setNewIsLimited}
+            setUnits={setNewUnits}
+            setMaxUnits={setNewMaxUnits}
+          />
+          <AddProductFormPrice
+            isFree={isFree}
+            ethValue={newEthValue}
+            usdValue={newUsdValue}
+            isUSD={newIsUSD}
+            setEthValue={setNewEthValue}
+            setUsdValue={setNewUsdValue}
+            setIsUSD={setNewIsUSD}
+            units={newUnits}
+            setPriceParams={setNewPriceParams}
+          />
+        </form>
         {extAddress &&
           (!isCustomPriced ||
             (externalPrices[slicerId] &&

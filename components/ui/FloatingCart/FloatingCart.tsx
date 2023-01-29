@@ -18,7 +18,7 @@ import { getExternalPrices } from "@lib/useExternalPrices"
 import formatCalldata from "@utils/formatCalldata"
 import decimalToHex from "@utils/decimalToHex"
 import { priceFeedAddress } from "@lib/initProvider"
-import useEthUsd, { formatEthUsd } from "@utils/useEthUsd"
+import useEthUsd from "@utils/useEthUsd"
 
 type Props = {
   cookieCart: ProductCart[]
@@ -40,8 +40,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     messageStatus: "success"
   })
 
-  const calldata = useEthUsd()
-  const ethUsd = formatEthUsd(calldata)
+  const ethUsd = useEthUsd()
 
   const reducer = (previousValue: number, currentValue: ProductCart) => {
     const { price, isUSD, extCallValue } = currentValue

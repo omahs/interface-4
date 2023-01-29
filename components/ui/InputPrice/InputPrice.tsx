@@ -1,5 +1,5 @@
 import { Input } from "@components/ui"
-import useEthUsd, { formatEthUsd } from "@utils/useEthUsd"
+import useEthUsd from "@utils/useEthUsd"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 
 type Props = {
@@ -33,8 +33,7 @@ const InputPrice = ({
   question,
   action
 }: Props) => {
-  const calldata = useEthUsd()
-  const ethUsd = formatEthUsd(calldata)
+  const ethUsd = useEthUsd()
   const [isEth, setIsEth] = useState(true)
 
   const currency = isEth ? "Ξ" : "$"
@@ -66,7 +65,7 @@ const InputPrice = ({
             type="number"
             placeholder={isEth ? "0.1" : "100"}
             min={0}
-            step={isEth ? 0.001 : 0.01}
+            step={isEth ? 0.001 : 0.1}
             label={label}
             prefix={currency}
             prefixAction={() => setIsEth((isEth) => !isEth)}
@@ -85,7 +84,7 @@ const InputPrice = ({
             type="number"
             placeholder={isEth ? "0.1" : "100"}
             min={0}
-            step={isEth ? 0.001 : 0.01}
+            step={isEth ? 0.001 : 0.1}
             label={label}
             prefix={currency}
             prefixAction={() => setIsEth((isEth) => !isEth)}

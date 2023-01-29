@@ -66,7 +66,6 @@ const ProductCard = ({
     },
     allowedAddresses: []
   }
-  const ethUsdFormatted = priceFeedAddress ? ethUsd * 10000 : ethUsd
   const prices = chainInfo?.prices
   const ethPrice = prices?.find(
     (price) => price.currency.id == ethers.constants.AddressZero
@@ -89,6 +88,7 @@ const ProductCard = ({
   const extValue = chainInfo?.extValue
   const extCheckSig = chainInfo?.extCheckSig
   const extExecSig = chainInfo?.extExecSig
+  const isEditable = editMode && account == creator
 
   const totalPrice = isCustomPriced
     ? externalPrices[slicerId] &&
@@ -101,7 +101,7 @@ const ProductCard = ({
     : (price ? Number(price) : 0) + (extValue ? Number(extValue) : 0)
   const externalCallEth = extValue && utils.formatEther(extValue)
   const externalCallUsd =
-    externalCallEth && Number(externalCallEth) * Number(ethUsdFormatted) * 100
+    externalCallEth && Number(externalCallEth) * Number(ethUsd) * 100
 
   // const createdAtTimestamp = chainInfo?.createdAtTimestamp
 
@@ -112,7 +112,7 @@ const ProductCard = ({
     ? `Ξ ${Math.round(totalPrice / 10 ** 15) / 1000}`
     : "free"
   const formattedUsdPrice = convertedEthUsd
-    ? `$ ${formatNumber(Math.round(convertedEthUsd / 1e4))}`
+    ? `$ ${formatNumber(Math.round(convertedEthUsd))}`
     : "free"
 
   const productPrice = chainInfo
@@ -205,6 +205,7 @@ const ProductCard = ({
         purchaseInfo,
         slicerAddress,
         price,
+        isEditable,
         editMode,
         purchasedQuantity,
         availabilityColor,
@@ -220,10 +221,14 @@ const ProductCard = ({
       let convertedPrice: number
       if (isUSD) {
         convertedPrice =
-          Math.round((totalPrice * 10) / Number(ethUsdFormatted)) / 1000
+          Math.round(
+            ((Number(price) + externalCallUsd) * 10) /
+              Number(ethUsd) /
+              (priceFeedAddress ? 1e4 : 1)
+          ) / 1000
       } else {
         convertedPrice =
-          Math.floor((totalPrice / 10 ** 16) * Number(ethUsdFormatted)) / 100
+          Math.floor((totalPrice / 10 ** 16) * Number(ethUsd)) / 100
       }
       setConvertedEthUsd(convertedPrice)
     }
@@ -269,6 +274,7 @@ const ProductCard = ({
           className="rounded-none"
           name={name}
           image={image}
+          isEditable={isEditable}
           size="h-52"
           topLeft={{
             title: "Purchases",

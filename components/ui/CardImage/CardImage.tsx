@@ -21,6 +21,7 @@ type Props = {
   size?: string
   disableHover?: boolean
   product?: boolean
+  isEditable?: boolean
   onClick?: (...args: any[]) => any
 }
 
@@ -36,6 +37,7 @@ const CardImage = ({
   size = "sm:w-80 h-60 sm:h-52",
   disableHover,
   product,
+  isEditable,
   onClick
 }: Props) => {
   return (
@@ -50,6 +52,7 @@ const CardImage = ({
               imageUrl={imageUrl}
               product={product}
               disableHover={disableHover}
+              isEditable={isEditable}
             />
           </a>
         </Link>
@@ -59,6 +62,7 @@ const CardImage = ({
           imageUrl={imageUrl}
           product={product}
           disableHover={disableHover}
+          isEditable={isEditable}
         />
       )}
       {topLeft && (
