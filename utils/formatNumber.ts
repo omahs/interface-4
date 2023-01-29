@@ -19,7 +19,7 @@ export const formatNumberWithUnit = (formattedNumber: string) => {
   const unit = units.findIndex(
     (unit) => unit == numberWithUnit.charAt(numberWithUnit.length - 1)
   )
-  if (unit == -1) return numberWithUnit
+  if (unit == -1) return Number(numberWithUnit)
   return Number(numberWithUnit.slice(0, -1)) * ((unit + 1) * 10 ** 3)
 }
 

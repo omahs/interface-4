@@ -371,6 +371,7 @@ const ProductCard = ({
                     name={name}
                     maxUnits={Number(maxUnits)}
                     labelAdd={productPrice?.eth != "free" && productPrice.eth}
+                    labelRemove={productPrice.eth != "free" && productPrice.eth}
                     availableUnits={isInfinite ? -1 : availableUnits}
                     purchasedQuantity={purchasedQuantity}
                     uid={uid}

@@ -718,10 +718,6 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
     accountCodes
   )
 
-  useEffect(() => {
-    saEvent("redeem_product_success")
-  }, [])
-
   return (
     <>
       <div className="pt-4 pb-12 text-center sm:pb-16">
