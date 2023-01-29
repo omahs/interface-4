@@ -169,38 +169,74 @@ const CartButton = ({
       </div>
     ) : (
       <div className="relative z-10 flex items-center justify-center w-full overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md nightwind-prevent-block">
+        {extCheckSig != "0x00000000" && !isSuccessExtCall ? (
+          <ConnectButton.Custom>
+            {({ account, openConnectModal }) => (
+              <div
+                className={`relative z-10 flex flex-grow items-center justify-center h-9 text-white group-cart ${
+                  isFailExtCall
+                    ? "bg-red-500 hover:bg-red-600"
+                    : "bg-gray-500 hover:bg-gray-600"
+                } transition-colors duration-150`}
+                onClick={
+                  account ? async () => await handleExtCall() : openConnectModal
+                }
+                onMouseEnter={() => setIsUnlocked(true)}
+                onMouseLeave={() => setIsUnlocked(false)}
+              >
+                {labelAdd && (
+                  <p className="mr-3 text-sm font-medium sm:text-base">
+                    {labelAdd}
+                  </p>
+                )}
+                {isLoadingExtCall ? (
+                  <Spinner color="text-white nightwind-prevent" />
+                ) : (
+                  <Lock
+                    className="w-5 h-5 mr-1 group-cart-el"
+                    isUnlocked={isUnlocked}
+                  />
+                )}
+              </div>
+            )}
+          </ConnectButton.Custom>
+        ) : (
+          <div
+            className={`relative z-10 h-9 flex flex-grow items-center justify-center text-white ${
+              availableUnits != 0
+                ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
+                : "bg-gray-400 cursor-default"
+            }`}
+            onClick={async () =>
+              !preview &&
+              availableUnits != 0 &&
+              (await handleUpdateCart(
+                cookies,
+                setCookie,
+                productCart,
+                slicerId,
+                slicerAddress,
+                productId,
+                price,
+                isUSD,
+                extCallValue,
+                buyerCustomData,
+                name,
+                productCart ? ++productCart.quantity : 1,
+                externalAddress
+              ))
+            }
+          >
+            {labelAdd && (
+              <p className="mr-3 text-sm font-medium sm:text-base">
+                {labelAdd}
+              </p>
+            )}
+            <Cart className="w-5 h-5 mr-1 group-cart-el" />
+          </div>
+        )}
         <div
-          className={`relative z-10 h-9 flex flex-grow items-center justify-center text-white ${
-            availableUnits != 0
-              ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
-              : "bg-gray-400 cursor-default"
-          }`}
-          onClick={async () =>
-            availableUnits != 0 &&
-            (await handleUpdateCart(
-              cookies,
-              setCookie,
-              productCart,
-              slicerId,
-              slicerAddress,
-              productId,
-              price,
-              isUSD,
-              extCallValue,
-              buyerCustomData,
-              name,
-              productCart ? ++productCart.quantity : 1,
-              externalAddress
-            ))
-          }
-        >
-          {labelAdd && (
-            <p className="mr-3 text-sm font-medium sm:text-base">{labelAdd}</p>
-          )}
-          <Cart className="w-5 h-5 mr-1 group-cart-el" />
-        </div>
-        <div
-          className="relative z-10 flex items-center justify-center w-20 text-white transition-colors duration-150 bg-blue-500 h-9 rounded-r-md nightwind-prevent group-cart hover:bg-blue-600"
+          className="relative z-10 flex items-center justify-center w-1/3 text-white transition-colors duration-150 bg-blue-500 h-9 rounded-r-md nightwind-prevent group-cart hover:bg-blue-600"
           onClick={() =>
             handleRedeemProduct(
               account,
@@ -401,3 +437,5 @@ const CartButton = ({
 }
 
 export default CartButton
+
+// TODO: Refactor
