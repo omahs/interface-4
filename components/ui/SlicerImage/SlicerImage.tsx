@@ -55,7 +55,7 @@ const SlicerImage = ({
         />
       )}
       {isEditable && (
-        <div className="absolute inset-0 flex items-center justify-center text-yellow-400 bg-black nightwind-prevent bg-opacity-60">
+        <div className="absolute inset-0 flex items-center justify-center text-yellow-400 bg-black nightwind-prevent bg-opacity-70">
           <p className="mr-2 text-xl font-bold">Edit</p>
           <Edit />
         </div>

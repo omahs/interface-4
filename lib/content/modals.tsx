@@ -521,42 +521,46 @@ export const PRODUCT_VIEW = (params: any) => {
           }
         />
         <div className="py-8">
-          <div>
-            <MarkdownBlock content={description} />
-          </div>
+          {editMode && account == creator ? (
+            <form
+              className="w-full mx-auto space-y-6 text-center"
+              onSubmit={submit}
+            >
+              <AddProductFormAvailability
+                isMultiple={newIsMultiple}
+                isLimited={newIsLimited}
+                units={newUnits}
+                maxUnits={newMaxUnits}
+                setIsMultiple={setNewIsMultiple}
+                setIsLimited={setNewIsLimited}
+                setUnits={setNewUnits}
+                setMaxUnits={setNewMaxUnits}
+              />
+              <AddProductFormPrice
+                isFree={isFree}
+                ethValue={newEthValue}
+                usdValue={newUsdValue}
+                isUSD={newIsUSD}
+                setEthValue={setNewEthValue}
+                setUsdValue={setNewUsdValue}
+                setIsUSD={setNewIsUSD}
+                units={newUnits}
+                setPriceParams={setNewPriceParams}
+              />
+              <Button label="update" type="submit" />
+            </form>
+          ) : (
+            <div>
+              <MarkdownBlock content={description} />
+            </div>
+          )}
         </div>
-        <form
-          className="w-full py-6 mx-auto space-y-6 text-center"
-          onSubmit={submit}
-        >
-          <AddProductFormAvailability
-            isMultiple={newIsMultiple}
-            isLimited={newIsLimited}
-            units={newUnits}
-            maxUnits={newMaxUnits}
-            setIsMultiple={setNewIsMultiple}
-            setIsLimited={setNewIsLimited}
-            setUnits={setNewUnits}
-            setMaxUnits={setNewMaxUnits}
-          />
-          <AddProductFormPrice
-            isFree={isFree}
-            ethValue={newEthValue}
-            usdValue={newUsdValue}
-            isUSD={newIsUSD}
-            setEthValue={setNewEthValue}
-            setUsdValue={setNewUsdValue}
-            setIsUSD={setNewIsUSD}
-            units={newUnits}
-            setPriceParams={setNewPriceParams}
-          />
-        </form>
         {extAddress &&
           (!isCustomPriced ||
             (externalPrices[slicerId] &&
               externalPrices[slicerId][productId])) && (
             <>
-              <div className="mx-auto cursor-pointer w-60">
+              <div className="mx-auto cursor-pointer w-72">
                 {!editMode ? (
                   <CartButton
                     slicerId={slicerId}
