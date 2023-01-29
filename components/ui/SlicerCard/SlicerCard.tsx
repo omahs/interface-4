@@ -162,7 +162,7 @@ const SlicerCard = ({
                   slicerId,
                   account,
                   ethers.constants.AddressZero,
-                  false
+                  true
                 )
               }
               success={success}
