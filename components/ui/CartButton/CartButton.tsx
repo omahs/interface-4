@@ -139,7 +139,7 @@ const CartButton = ({
   return !productCart && purchasedQuantity != 0 ? (
     maxUnits == 1 || maxUnits == purchasedQuantity ? (
       <div
-        className="relative z-10 flex items-center justify-center w-full h-[2.35rem] text-center text-white transition-colors duration-150 bg-blue-500 rounded-md hover:text-white nightwind-prevent group-cart hover:bg-blue-600"
+        className="relative z-10 flex items-center justify-center w-full text-center text-white transition-colors duration-150 bg-blue-500 rounded-md h-9 hover:text-white nightwind-prevent group-cart hover:bg-blue-600"
         onClick={async () =>
           await handleRedeemProduct(
             account,
@@ -170,7 +170,7 @@ const CartButton = ({
     ) : (
       <div className="relative z-10 flex items-center justify-center w-full overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md nightwind-prevent-block">
         <div
-          className={`relative z-10 h-8 flex flex-grow items-center justify-center text-white ${
+          className={`relative z-10 h-9 flex flex-grow items-center justify-center text-white ${
             availableUnits != 0
               ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
               : "bg-gray-400 cursor-default"
@@ -189,15 +189,18 @@ const CartButton = ({
               extCallValue,
               buyerCustomData,
               name,
-              ++productCart.quantity,
+              productCart ? ++productCart.quantity : 1,
               externalAddress
             ))
           }
         >
+          {labelAdd && (
+            <p className="mr-3 text-sm font-medium sm:text-base">{labelAdd}</p>
+          )}
           <Cart className="w-5 h-5 mr-1 group-cart-el" />
         </div>
         <div
-          className="relative z-10 flex items-center justify-center w-20 h-8 text-white transition-colors duration-150 bg-blue-500 rounded-r-md nightwind-prevent group-cart hover:bg-blue-600"
+          className="relative z-10 flex items-center justify-center w-20 text-white transition-colors duration-150 bg-blue-500 h-9 rounded-r-md nightwind-prevent group-cart hover:bg-blue-600"
           onClick={() =>
             handleRedeemProduct(
               account,
@@ -229,7 +232,7 @@ const CartButton = ({
       <ConnectButton.Custom>
         {({ account, openConnectModal }) => (
           <div
-            className={`relative z-10 flex items-center justify-center w-full h-[2.35rem] text-center text-white rounded-md nightwind-prevent group-cart ${
+            className={`relative z-10 flex items-center justify-center w-full h-9 text-center text-white rounded-md nightwind-prevent group-cart ${
               isFailExtCall
                 ? "bg-red-500 hover:bg-red-600"
                 : "bg-gray-500 hover:bg-gray-600"
@@ -258,7 +261,7 @@ const CartButton = ({
       </ConnectButton.Custom>
     ) : (
       <div
-        className={`relative z-10 flex items-center justify-center w-full h-[2.35rem] text-center text-white rounded-md nightwind-prevent ${
+        className={`relative z-10 flex items-center justify-center w-full h-9 text-center text-white rounded-md nightwind-prevent ${
           availableUnits != 0
             ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
             : "bg-gray-400 cursor-default"
@@ -292,7 +295,7 @@ const CartButton = ({
   ) : maxUnits != 1 ? (
     <div className="relative z-10 grid items-center justify-center w-full grid-cols-4 overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md">
       <div
-        className="flex items-center justify-center h-8 text-red-500 transition-colors duration-150 hover:bg-red-500 hover:text-white"
+        className="flex items-center justify-center text-red-500 transition-colors duration-150 h-9 hover:bg-red-500 hover:text-white"
         onClick={async () =>
           await handleUpdateCart(
             cookies,
@@ -313,7 +316,7 @@ const CartButton = ({
       >
         <Minus className="w-[17px] h-[17px]" />
       </div>
-      <div className="flex items-center justify-center h-8 col-span-2 pl-3 text-sm text-black border-l border-r border-gray-200 cursor-default">
+      <div className="flex items-center justify-center col-span-2 pl-3 text-sm text-black border-l border-r border-gray-200 cursor-default h-9">
         <input
           value={productCart.quantity}
           type="number"
@@ -338,7 +341,7 @@ const CartButton = ({
         />
       </div>
       <div
-        className={`flex items-center justify-center h-8 transition-colors duration-150 ${
+        className={`flex items-center justify-center h-9 transition-colors duration-150 ${
           adjustedAvailability != 0 &&
           (maxUnits == 0 || purchasedQuantity + productCart.quantity < maxUnits)
             ? "text-green-500 hover:bg-green-500 hover:text-white"
@@ -360,7 +363,7 @@ const CartButton = ({
             extCallValue,
             buyerCustomData,
             name,
-            ++productCart.quantity,
+            productCart ? ++productCart.quantity : 1,
             externalAddress
           ))
         }
@@ -370,7 +373,7 @@ const CartButton = ({
     </div>
   ) : (
     <div
-      className="relative z-10 flex items-center justify-center w-full h-[2.35rem] text-center text-white transition-colors duration-150 bg-red-500 rounded-md nightwind-prevent group-cart hover:bg-red-600"
+      className="relative z-10 flex items-center justify-center w-full text-center text-white transition-colors duration-150 bg-red-500 rounded-md h-9 nightwind-prevent group-cart hover:bg-red-600"
       onClick={async () =>
         await handleUpdateCart(
           cookies,
