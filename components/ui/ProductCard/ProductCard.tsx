@@ -2,7 +2,6 @@ import Bolt from "@components/icons/Bolt"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import Units from "@components/icons/Units"
 import { ProductCart } from "@lib/handleUpdateCart"
-import { priceFeedAddress } from "@lib/initProvider"
 import formatNumber from "@utils/formatNumber"
 import { ethers, utils } from "ethers"
 import { BlockchainProduct } from "pages/slicer/[id]"
@@ -133,10 +132,7 @@ const ProductCard = ({
             eth: isUSD ? `Ξ ${convertedEthUsd}` : formattedEthPrice,
             usd: isUSD
               ? `$ ${formatNumber(
-                  Math.round(
-                    (Number(price) + externalCallUsd) /
-                      (priceFeedAddress ? 1e6 : 100)
-                  )
+                  Math.round((Number(price) + externalCallUsd) / 1e6)
                 )}`
               : formattedUsdPrice
           }
@@ -205,7 +201,6 @@ const ProductCard = ({
         purchaseInfo,
         slicerAddress,
         price,
-        isEditable,
         editMode,
         purchasedQuantity,
         availabilityColor,
@@ -222,9 +217,7 @@ const ProductCard = ({
       if (isUSD) {
         convertedPrice =
           Math.round(
-            ((Number(price) + externalCallUsd) * 10) /
-              Number(ethUsd) /
-              (priceFeedAddress ? 1e4 : 1)
+            ((Number(price) + externalCallUsd) * 10) / Number(ethUsd) / 1e4
           ) / 1000
       } else {
         convertedPrice =

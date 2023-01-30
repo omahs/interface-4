@@ -24,7 +24,6 @@ import openFingerprintingModal from "@utils/openFingerprintingModal"
 import { ReducedShortcode } from "@utils/useDecodeShortcode"
 import { deploy } from "@lib/handlers/chain"
 import { StrategyParams } from "@components/priceStrategies/strategies"
-import { priceFeedAddress } from "@lib/initProvider"
 
 type Props = {
   slicerId: number
@@ -169,9 +168,7 @@ const AddProductForm = ({
       setUploadStep(7)
       // Create product on smart contract
       const weiValue = ethToWei(ethValue)
-      const productPrice = isUSD
-        ? Math.floor(priceFeedAddress ? usdValue * 1000000 : usdValue * 100)
-        : weiValue
+      const productPrice = isUSD ? Math.floor(usdValue * 1000000) : weiValue
       const isStrategyConfigurable = priceParams?.abi != undefined
       const currencyPrices =
         Number(productPrice) != 0 || priceParams?.address
