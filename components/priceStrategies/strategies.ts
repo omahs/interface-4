@@ -14,8 +14,8 @@ export type StrategyProps = {
 }
 
 export type StrategyParams = {
-  label: string
   address: string
+  label?: string
   abi?: ContractInterface
   args?: any[]
 }
