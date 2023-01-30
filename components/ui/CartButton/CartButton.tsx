@@ -158,7 +158,7 @@ const CartButton = ({
           )
         }
       >
-        <p className="mr-3 text-sm font-medium sm:text-base">
+        <p className="mr-2 text-sm font-medium sm:text-base">
           {`Redeem${purchasedQuantity != 1 ? ` (${purchasedQuantity})` : ""}`}
         </p>
         {loading ? (
@@ -185,7 +185,7 @@ const CartButton = ({
                 onMouseLeave={() => setIsUnlocked(false)}
               >
                 {labelAdd && (
-                  <p className="mr-3 text-sm font-medium sm:text-base">
+                  <p className="mr-2 text-sm font-medium sm:text-base">
                     {labelAdd}
                   </p>
                 )}
@@ -228,7 +228,7 @@ const CartButton = ({
             }
           >
             {labelAdd && (
-              <p className="mr-3 text-sm font-medium sm:text-base">
+              <p className="mr-2 text-sm font-medium sm:text-base">
                 {labelAdd}
               </p>
             )}
@@ -280,7 +280,7 @@ const CartButton = ({
             onMouseLeave={() => setIsUnlocked(false)}
           >
             {labelAdd && (
-              <p className="mr-3 text-sm font-medium sm:text-base">
+              <p className="mr-2 text-sm font-medium sm:text-base">
                 {labelAdd}
               </p>
             )}
@@ -323,7 +323,7 @@ const CartButton = ({
         }
       >
         {labelAdd && (
-          <p className="mr-3 text-sm font-medium sm:text-base">{labelAdd}</p>
+          <p className="mr-2 text-sm font-medium sm:text-base">{labelAdd}</p>
         )}
         <Cart className="w-5 h-5 mr-1 group-cart-el" />
       </div>
@@ -429,7 +429,7 @@ const CartButton = ({
       }
     >
       {labelRemove && (
-        <p className="mr-3 text-sm font-medium sm:text-base">{labelRemove}</p>
+        <p className="mr-2 text-sm font-medium sm:text-base">{labelRemove}</p>
       )}
       <Trash className="w-5 h-5 mr-1 group-cart-el" />
     </div>

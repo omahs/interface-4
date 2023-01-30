@@ -320,7 +320,7 @@ const ProductCard = ({
               <div className="mt-1.5">
                 <p className="font-medium">
                   {name}{" "}
-                  <span className="text-xs font-normal text-gray-500">
+                  <span className="ml-1 text-xs font-normal text-gray-500">
                     #{productId}
                   </span>
                 </p>
