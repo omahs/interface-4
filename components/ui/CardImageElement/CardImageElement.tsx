@@ -15,12 +15,12 @@ const CardImageElement = ({
   content,
   href,
   onClick,
-  clickable = true,
+  clickable = true
 }: Props) => {
   const main = (
     <span
       title={title}
-      className={`absolute z-10 flex items-center bg-white shadow-md h-[38px] ${className}`}
+      className={`absolute z-10 flex items-center bg-white bg-opacity-70 border border-white backdrop-blur-sm shadow-md h-[38px] ${className}`}
       onClick={clickable && onClick ? onClick : null}
     >
       {content}
