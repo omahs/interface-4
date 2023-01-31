@@ -480,6 +480,8 @@ export const PRODUCT_VIEW = (params: any) => {
         <div className="py-8">
           {editMode && account == creator ? (
             <EditProductForm
+              slicerId={slicerId}
+              productId={productId}
               maxUnits={maxUnits}
               isInfinite={isInfinite}
               availableUnits={availableUnits}
