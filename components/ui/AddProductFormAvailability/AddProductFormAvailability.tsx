@@ -1,8 +1,5 @@
-import { Dispatch, SetStateAction, useEffect } from "react"
+import { Dispatch, SetStateAction } from "react"
 import { Input, InputSwitch } from "@components/ui"
-import { StrategyParams } from "@components/priceStrategies/strategies"
-
-type Strategy = "Static" | "VRGDA" | ""
 
 type Props = {
   isMultiple: boolean
@@ -13,6 +10,7 @@ type Props = {
   setIsLimited: Dispatch<SetStateAction<boolean>>
   setUnits: Dispatch<SetStateAction<number>>
   setMaxUnits: Dispatch<SetStateAction<number>>
+  loading?: boolean
 }
 
 const AddProductFormAvailability = ({
@@ -23,21 +21,11 @@ const AddProductFormAvailability = ({
   setIsMultiple,
   setIsLimited,
   setUnits,
-  setMaxUnits
+  setMaxUnits,
+  loading
 }: Props) => {
-  useEffect(() => {
-    if (!isLimited) {
-      setUnits(0)
-    }
-  }, [isLimited])
-
   return (
     <>
-      <h2 className="pb-6">Availability</h2>
-      <p>
-        Set up how many units of this product each buyer can buy, and how many
-        are available for purchase.
-      </p>
       <div>
         <InputSwitch
           label="Allow multiple purchases"
@@ -51,6 +39,7 @@ const AddProductFormAvailability = ({
           }
           enabled={isMultiple}
           setEnabled={setIsMultiple}
+          disabled={loading}
         />
         {isMultiple && (
           <div className="pt-5 pb-2">
@@ -63,6 +52,7 @@ const AddProductFormAvailability = ({
               value={maxUnits == 0 ? "" : maxUnits}
               error={maxUnits > 255}
               onChange={setMaxUnits}
+              disabled={loading}
             />
           </div>
         )}
@@ -82,6 +72,7 @@ const AddProductFormAvailability = ({
           }
           enabled={isLimited}
           setEnabled={setIsLimited}
+          disabled={loading}
         />
         {isLimited && (
           <div className="pt-5 pb-2">
@@ -93,12 +84,10 @@ const AddProductFormAvailability = ({
               value={units}
               onChange={setUnits}
               required={isLimited}
+              disabled={loading}
             />
           </div>
         )}
-      </div>
-      <div>
-        <hr className="w-20 mx-auto border-gray-300 my-16" />
       </div>
     </>
   )

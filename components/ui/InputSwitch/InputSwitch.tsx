@@ -4,18 +4,20 @@ import MySwitch from "../MySwitch"
 
 type Props = {
   label: string
-  questionText?: string | JSX.Element
-  position?: string
   enabled: boolean
   setEnabled: Dispatch<SetStateAction<boolean>>
+  questionText?: string | JSX.Element
+  position?: string
+  disabled?: boolean
 }
 
 export default function InputSwitch({
   label,
+  enabled,
+  setEnabled,
   questionText,
   position = "bottom-[10px] right-0",
-  enabled,
-  setEnabled
+  disabled
 }: Props) {
   return (
     <div className="relative flex items-center justify-end py-2 ">
@@ -23,7 +25,7 @@ export default function InputSwitch({
         <p className="pr-1">{label}</p>
         {questionText && <Question text={questionText} position={position} />}
       </div>
-      <MySwitch enabled={enabled} setEnabled={setEnabled} />
+      <MySwitch enabled={enabled} setEnabled={setEnabled} disabled={disabled} />
     </div>
   )
 }

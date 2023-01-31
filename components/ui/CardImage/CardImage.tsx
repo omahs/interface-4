@@ -21,6 +21,7 @@ type Props = {
   size?: string
   disableHover?: boolean
   product?: boolean
+  isEditable?: boolean
   onClick?: (...args: any[]) => any
 }
 
@@ -36,11 +37,12 @@ const CardImage = ({
   size = "sm:w-80 h-60 sm:h-52",
   disableHover,
   product,
+  isEditable,
   onClick
 }: Props) => {
   return (
     <div
-      className={`relative group w-full flex-shrink-0 overflow-hidden ${className} nightwind-prevent-block img-background ${size}`}
+      className={`relative group w-full flex-shrink-0 overflow-hidden backdrop-blur-0 ${className} nightwind-prevent-block img-background ${size}`}
     >
       {href ? (
         <Link href={href}>
@@ -50,6 +52,7 @@ const CardImage = ({
               imageUrl={imageUrl}
               product={product}
               disableHover={disableHover}
+              isEditable={isEditable}
             />
           </a>
         </Link>
@@ -59,14 +62,15 @@ const CardImage = ({
           imageUrl={imageUrl}
           product={product}
           disableHover={disableHover}
+          isEditable={isEditable}
         />
       )}
       {topLeft && (
         <CardImageElement
           title={topLeft.title}
-          className={`top-0 left-0 rounded-br-xl ${topLeft.className} ${
-            topLeft.padding ? topLeft.padding : "px-6"
-          }`}
+          className={`top-0 left-0 rounded-br-xl rounded-tl-xl ${
+            topLeft.className
+          } ${topLeft.padding ? topLeft.padding : "px-6"}`}
           content={topLeft.content}
           href={href}
           onClick={onClick}
@@ -76,9 +80,9 @@ const CardImage = ({
       {topRight && (
         <CardImageElement
           title={topRight.title}
-          className={`top-0 right-0 rounded-bl-xl ${topRight.className} ${
-            topRight.padding ? topRight.padding : "px-6"
-          }`}
+          className={`top-0 right-0 rounded-bl-xl rounded-tr-xl ${
+            topRight.className
+          } ${topRight.padding ? topRight.padding : "px-6"}`}
           content={topRight.content}
           href={href}
           onClick={onClick}
