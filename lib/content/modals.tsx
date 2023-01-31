@@ -392,8 +392,9 @@ export const PRODUCT_VIEW = (params: any) => {
       process.env.NEXT_PUBLIC_ENVIRONMENT
     ].strategies
 
-  const strategy = Object.values(strategiesList).find(({ label }) =>
-    String(strategyAddresses[label].toLowerCase() == externalAddress)
+  const strategy = Object.values(strategiesList).find(
+    ({ label }) =>
+      strategyAddresses[label].toLowerCase() == externalPriceAddress
   )
 
   useEffect(() => {
