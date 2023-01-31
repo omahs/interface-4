@@ -28,6 +28,7 @@ import copyText from "@utils/copyText"
 import useDecodeShortcode from "@utils/useDecodeShortcode"
 import Bolt from "@components/icons/Bolt"
 import { strategiesList } from "@components/priceStrategies/strategies"
+import constants from "constants.json"
 
 export type View = {
   name: ViewNames
@@ -387,10 +388,13 @@ export const PRODUCT_VIEW = (params: any) => {
   )
   const purchaseEl = purchaseElArray.join(", ")
 
-  const strategy = Object.values(strategiesList).find(
-    (val) =>
-      String(val.deployments[process.env.NEXT_PUBLIC_CHAIN_ID]).toLowerCase() ==
-      externalAddress
+  const strategyAddresses =
+    constants[process.env.NEXT_PUBLIC_CHAIN_ID][
+      process.env.NEXT_PUBLIC_ENVIRONMENT
+    ].strategies
+
+  const strategy = Object.values(strategiesList).find(({ label }) =>
+    String(strategyAddresses[label].toLowerCase() == externalAddress)
   )
 
   useEffect(() => {

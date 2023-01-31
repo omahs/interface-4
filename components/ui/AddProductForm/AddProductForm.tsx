@@ -339,7 +339,7 @@ const AddProductForm = ({
         targetPrice={
           priceParams?.args &&
           Number(
-            ethers.BigNumber.from(priceParams.args[0]).div(
+            ethers.BigNumber.from(priceParams.args[0][0][0]).div(
               ethers.BigNumber.from(10).pow(15)
             )
           ) / 1000
