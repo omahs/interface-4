@@ -4,7 +4,6 @@ import {
   Button,
   CardImage,
   CartButton,
-  DeleteButton,
   DoubleText,
   EditProductForm,
   FilesList,
@@ -499,7 +498,7 @@ export const PRODUCT_VIEW = (params: any) => {
               externalPrices[slicerId][productId])) && (
             <>
               <div className="mx-auto cursor-pointer w-72">
-                {!editMode ? (
+                {!editMode && (
                   <CartButton
                     slicerId={slicerId}
                     productCart={productCart}
@@ -537,10 +536,6 @@ export const PRODUCT_VIEW = (params: any) => {
                     dbId={dbId}
                     externalPriceAddress={externalPriceAddress}
                   />
-                ) : (
-                  account == creator && (
-                    <DeleteButton slicerId={slicerId} productId={productId} />
-                  )
                 )}
               </div>
             </>
