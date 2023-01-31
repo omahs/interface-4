@@ -372,7 +372,7 @@ export const PRODUCT_VIEW = (params: any) => {
     purchasedQuantity,
     availabilityColor,
     preview,
-    externalAddress,
+    externalPriceAddress,
     externalPrices,
     isCustomPriced
   } = params
@@ -485,7 +485,7 @@ export const PRODUCT_VIEW = (params: any) => {
               availableUnits={availableUnits}
               productPrice={productPrice}
               isUSD={isUSD}
-              extAddress={extAddress}
+              externalPriceAddress={externalPriceAddress}
             />
           ) : (
             <div>
@@ -535,7 +535,7 @@ export const PRODUCT_VIEW = (params: any) => {
                     preview={preview}
                     shortcodes={purchaseInfo?.shortcodes}
                     dbId={dbId}
-                    externalAddress={externalAddress}
+                    externalPriceAddress={externalPriceAddress}
                   />
                 ) : (
                   account == creator && (
@@ -569,16 +569,19 @@ export const PRODUCT_VIEW = (params: any) => {
                 className="font-bold highlight"
                 href={`https://${
                   process.env.NEXT_PUBLIC_CHAIN_ID === "5" ? "goerli." : ""
-                }etherscan.io/address/${externalAddress}`}
+                }etherscan.io/address/${externalPriceAddress}`}
                 target="_blank"
                 rel="noreferrer"
               >
-                {externalAddress.replace(
-                  externalAddress.substring(5, externalAddress.length - 3),
+                {externalPriceAddress.replace(
+                  externalPriceAddress.substring(
+                    5,
+                    externalPriceAddress.length - 3
+                  ),
                   `\xa0\xa0\xa0\xa0\xa0\xa0`
                 )}
-              </a>{" "}
-              {strategy && `(${strategy.label})`}
+              </a>
+              {strategy && ` (${strategy.label})`}
             </p>
           )}
         {extAddress &&

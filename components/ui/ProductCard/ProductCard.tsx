@@ -71,11 +71,11 @@ const ProductCard = ({
   )
   const price = ethPrice?.price
   const isUSD = ethPrice?.dynamicPricing
-  const externalAddress = ethPrice?.externalAddress
+  const externalPriceAddress = ethPrice?.externalAddress
   const isCustomPriced =
-    externalAddress &&
-    externalAddress != "0x00000000" &&
-    externalAddress != ethers.constants.AddressZero
+    externalPriceAddress &&
+    externalPriceAddress != "0x00000000" &&
+    externalPriceAddress != ethers.constants.AddressZero
 
   // TODO Refactor this to handle  multiple currencies
 
@@ -204,7 +204,7 @@ const ProductCard = ({
         editMode,
         purchasedQuantity,
         availabilityColor,
-        externalAddress,
+        externalPriceAddress,
         externalPrices,
         isCustomPriced
       }
@@ -372,7 +372,7 @@ const ProductCard = ({
                     allowedAddresses={allowedAddresses}
                     shortcodes={purchaseInfo?.shortcodes}
                     dbId={dbId}
-                    externalAddress={externalAddress}
+                    externalPriceAddress={externalPriceAddress}
                   />
                 ) : (
                   account == creator && (
