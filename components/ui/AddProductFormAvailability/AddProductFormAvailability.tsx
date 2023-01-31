@@ -1,8 +1,5 @@
 import { Dispatch, SetStateAction, useEffect } from "react"
 import { Input, InputSwitch } from "@components/ui"
-import { StrategyParams } from "@components/priceStrategies/strategies"
-
-type Strategy = "Static" | "VRGDA" | ""
 
 type Props = {
   isMultiple: boolean
@@ -33,11 +30,6 @@ const AddProductFormAvailability = ({
 
   return (
     <>
-      <h2 className="pb-6">Availability</h2>
-      <p>
-        Set up how many units of this product each buyer can buy, and how many
-        are available for purchase.
-      </p>
       <div>
         <InputSwitch
           label="Allow multiple purchases"
@@ -96,9 +88,6 @@ const AddProductFormAvailability = ({
             />
           </div>
         )}
-      </div>
-      <div>
-        <hr className="w-20 mx-auto border-gray-300 my-16" />
       </div>
     </>
   )
