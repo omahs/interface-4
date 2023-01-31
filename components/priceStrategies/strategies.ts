@@ -11,6 +11,7 @@ export type Strategy = {
 
 export type StrategyProps = {
   setPriceParams: Dispatch<SetStateAction<StrategyParams>>
+  disabled?: boolean
 }
 
 export type StrategyParams = {

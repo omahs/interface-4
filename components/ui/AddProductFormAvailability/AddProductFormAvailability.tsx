@@ -10,7 +10,7 @@ type Props = {
   setIsLimited: Dispatch<SetStateAction<boolean>>
   setUnits: Dispatch<SetStateAction<number>>
   setMaxUnits: Dispatch<SetStateAction<number>>
-  loading?: boolean
+  disabled?: boolean
 }
 
 const AddProductFormAvailability = ({
@@ -22,7 +22,7 @@ const AddProductFormAvailability = ({
   setIsLimited,
   setUnits,
   setMaxUnits,
-  loading
+  disabled
 }: Props) => {
   return (
     <>
@@ -39,7 +39,7 @@ const AddProductFormAvailability = ({
           }
           enabled={isMultiple}
           setEnabled={setIsMultiple}
-          disabled={loading}
+          disabled={disabled}
         />
         {isMultiple && (
           <div className="pt-5 pb-2">
@@ -52,7 +52,7 @@ const AddProductFormAvailability = ({
               value={maxUnits == 0 ? "" : maxUnits}
               error={maxUnits > 255}
               onChange={setMaxUnits}
-              disabled={loading}
+              disabled={disabled}
             />
           </div>
         )}
@@ -72,7 +72,7 @@ const AddProductFormAvailability = ({
           }
           enabled={isLimited}
           setEnabled={setIsLimited}
-          disabled={loading}
+          disabled={disabled}
         />
         {isLimited && (
           <div className="pt-5 pb-2">
@@ -84,7 +84,7 @@ const AddProductFormAvailability = ({
               value={units}
               onChange={setUnits}
               required={isLimited}
-              disabled={loading}
+              disabled={disabled}
             />
           </div>
         )}

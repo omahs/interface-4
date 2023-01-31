@@ -15,7 +15,7 @@ type Props = {
   setUsdValue: Dispatch<SetStateAction<number>>
   setIsUSD: Dispatch<SetStateAction<boolean>>
   setPriceParams: Dispatch<SetStateAction<any>>
-  loading?: boolean
+  disabled?: boolean
 }
 
 const AddProductFormPrice = ({
@@ -28,7 +28,7 @@ const AddProductFormPrice = ({
   setUsdValue,
   setIsUSD,
   setPriceParams,
-  loading
+  disabled
 }: Props) => {
   const [priceStrategy, setPriceStrategy] = useState<Strategy>(
     strategiesRender[0]
@@ -59,6 +59,7 @@ const AddProductFormPrice = ({
             label={strategy.label}
             isActive={strategy.label == priceStrategy.label}
             setisActive={handleSetStrategy}
+            disabled={disabled}
           />
         ))}
       </div>
@@ -70,7 +71,7 @@ const AddProductFormPrice = ({
             usdValue={usdValue}
             setUsdValue={setUsdValue}
             label="Price per unit"
-            disabled={loading}
+            disabled={disabled}
           />
           <InputSwitch
             label="Dynamic pricing"
@@ -91,7 +92,7 @@ const AddProductFormPrice = ({
             }
             enabled={isUSD}
             setEnabled={setIsUSD}
-            disabled={loading}
+            disabled={disabled}
           />
           {isFree ? (
             <p className="text-yellow-600">
@@ -102,7 +103,11 @@ const AddProductFormPrice = ({
           ) : null}
         </>
       ) : (
-        <StrategyComponent setPriceParams={setPriceParams} units={units} />
+        <StrategyComponent
+          setPriceParams={setPriceParams}
+          units={units}
+          disabled={disabled}
+        />
       )}
     </>
   )

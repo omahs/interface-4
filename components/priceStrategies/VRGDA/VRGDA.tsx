@@ -16,7 +16,7 @@ type VRGDAStrategyProps = StrategyProps & {
 
 const label = "VRGDA"
 
-const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
+const Component = ({ setPriceParams, units, disabled }: VRGDAStrategyProps) => {
   const [rate, setRate] = useState<"Linear" | "Logistic">("Linear")
   const [targetPrice, setTargetPrice] = useState(0)
   const [min, setMin] = useState(0)
@@ -114,6 +114,7 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
               }
               value={targetPrice || ""}
               onChange={setTargetPrice}
+              disabled={disabled}
               required
             />
           </div>
@@ -135,6 +136,7 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
               }
               value={min || ""}
               onChange={setMin}
+              disabled={disabled}
             />
           </div>
           <div>
@@ -158,6 +160,7 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
               }
               value={priceDecayPercent || ""}
               onChange={setPriceDecayPercent}
+              disabled={disabled}
               required
             />
           </div>
@@ -176,6 +179,7 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
                     <p>The number of units to target selling in 1 day</p>
                   </>
                 }
+                disabled={disabled}
                 required
               />
             ) : (
@@ -200,6 +204,7 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
                     </p>
                   </>
                 }
+                disabled={disabled}
                 required
               />
             )}
