@@ -67,7 +67,8 @@ const EditProductForm = ({
     : true
   const weiValue = ethToWei(newEthValue)
   const newProductPrice = newIsUSD ? Math.floor(newUsdValue * 1e6) : weiValue
-  const isStrategyConfigurable = newPriceParams?.address && newPriceParams?.abi
+  const isStrategyConfigurable =
+    newPriceParams?.address && newPriceParams?.abi && true
   const currencyPrices =
     isPriceEdited &&
     (Number(newProductPrice) != 0 ||
@@ -82,6 +83,14 @@ const EditProductForm = ({
           }
         ]
       : []
+
+  const isProductToBeUpdated =
+    newIsLimited != !isInfinite ||
+    newUnits != availableUnits ||
+    Number(newMaxUnits) != Number(maxUnits) ||
+    currencyPrices.length != 0 ||
+    (newPriceParams?.address &&
+      newPriceParams.address.toLowerCase() != externalPriceAddress)
 
   const addRecentTransaction = useAddRecentTransaction()
   const { config } = usePrepareContractWrite({
@@ -118,16 +127,6 @@ const EditProductForm = ({
 
     try {
       let txData
-
-      const isProductToBeUpdated =
-        newIsLimited != !isInfinite ||
-        newUnits != availableUnits ||
-        Number(newMaxUnits) != Number(maxUnits) ||
-        currencyPrices.length != 0 ||
-        (newPriceParams?.address &&
-          newPriceParams.address.toLowerCase() != externalPriceAddress)
-
-      console.log([newPriceParams.args])
 
       if (isProductToBeUpdated) {
         txData = await executeTransaction(
@@ -220,7 +219,12 @@ const EditProductForm = ({
         </>
       )}
       <div className="py-6 text-center">
-        <Button label="Update product" loading={loading} type="submit" />
+        <Button
+          label="Update"
+          loading={loading}
+          disabled={!isProductToBeUpdated && !isStrategyConfigurable}
+          type="submit"
+        />
       </div>
     </form>
   )

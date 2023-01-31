@@ -224,7 +224,7 @@ const ProductCard = ({
       }
       setConvertedEthUsd(convertedPrice)
     }
-  }, [price, externalPrices, ethUsd])
+  }, [price, totalPrice, ethUsd])
 
   useEffect(() => {
     if (displayProduct) {

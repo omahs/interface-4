@@ -79,7 +79,7 @@ const Button: FC<ButtonProps> = (props) => {
       ) : (
         <button
           className={`peer relative z-10 ${className} ${
-            disabled ? "text-white bg-gray-600 cursor-wait" : color
+            disabled ? "text-white bg-gray-600 cursor-not-allowed" : color
           }`}
           type={type}
           onClick={!disabled && !loading ? onClick : null}

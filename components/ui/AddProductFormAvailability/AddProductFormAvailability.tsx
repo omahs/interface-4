@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from "react"
+import { Dispatch, SetStateAction } from "react"
 import { Input, InputSwitch } from "@components/ui"
 
 type Props = {
@@ -22,12 +22,6 @@ const AddProductFormAvailability = ({
   setUnits,
   setMaxUnits
 }: Props) => {
-  useEffect(() => {
-    if (!isLimited) {
-      setUnits(0)
-    }
-  }, [isLimited])
-
   return (
     <>
       <div>
