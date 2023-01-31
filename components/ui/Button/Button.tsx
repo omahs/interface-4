@@ -12,6 +12,7 @@ interface ButtonProps {
   color?: string
   type?: "button" | "submit" | "reset"
   label?: string | JSX.Element
+  loadingLabel?: string
   href?: string
   external?: boolean
   targetBlank?: boolean
@@ -27,6 +28,7 @@ const Button: FC<ButtonProps> = (props) => {
     color = "text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700",
     type = "button",
     label,
+    loadingLabel,
     href,
     onClick,
     loading = false,
@@ -87,6 +89,7 @@ const Button: FC<ButtonProps> = (props) => {
         >
           {loading ? (
             <div className="flex items-center justify-center w-full">
+              {loadingLabel && <p className="mr-3">{loadingLabel}</p>}
               <Spinner color="text-white nightwind-prevent" />
             </div>
           ) : (
@@ -98,18 +101,14 @@ const Button: FC<ButtonProps> = (props) => {
       )}
       {double && (
         <div
-          className={`${className} shadow-light-random absolute top-0 mt-[0.6rem] ml-[0.6rem] mr-[-0.6rem] bg-gradient-to-br ${
+          className={`${className} w-full shadow-light-random absolute top-0 mt-[0.6rem] ml-[0.6rem] mr-[-0.6rem] bg-gradient-to-br ${
             color1[3]
           } ${color2[4]} text-transparent ${
             !disabled
               ? "peer-hover:mt-0 peer-hover:ml-0 peer-hover:mr-0 peer-focus:mt-0 peer-focus:ml-0 peer-focus:mr-0 transition-all duration-150"
               : ""
           }`}
-        >
-          <div className="relative flex items-center justify-center -z-10">
-            <div>{label}</div>
-          </div>
-        </div>
+        />
       )}
     </div>
   )

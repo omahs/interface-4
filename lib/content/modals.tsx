@@ -272,10 +272,9 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
   }
   return (
     <div className="text-center">
-      <div className="pb-6 text-center">
+      <div className="pb-8 text-center">
         <DoubleText inactive logoText="Creating product" />
       </div>
-      <p className="pb-8">Please wait until the process is completed</p>
       <div className="grid items-center grid-cols-6 gap-2 px-4">
         <LoadingStep
           initCondition={uploadStep < 3}
@@ -331,7 +330,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
           />
         ) : (
           <p className="max-w-sm mx-auto text-sm font-bold text-yellow-600">
-            Do not leave this page until the process has completed
+            Please wait until the process is completed
           </p>
         )}
       </div>

@@ -47,8 +47,9 @@ const EditProductForm = ({
   const [newIsMultiple, setNewIsMultiple] = useState(
     maxUnits == 1 ? false : true
   )
-  const [loading, setLoading] = useState(false)
-  const [isPriceEdited, setIsPriceEdited] = useState(false)
+  const [loadingLabel, setLoadingLabel] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [isPriceEdited, setIsPriceEdited] = useState(true)
   const [newIsLimited, setNewIsLimited] = useState(!isInfinite)
   const [newUnits, setNewUnits] = useState(availableUnits)
   const [newMaxUnits, setNewMaxUnits] = useState(0)
@@ -127,8 +128,8 @@ const EditProductForm = ({
 
     try {
       let txData
-
       if (isProductToBeUpdated) {
+        setLoadingLabel("Updating product...")
         txData = await executeTransaction(
           writeAsync,
           setLoading,
@@ -137,7 +138,8 @@ const EditProductForm = ({
         )
       }
 
-      if (isStrategyConfigurable) {
+      if (isStrategyConfigurable && (!isProductToBeUpdated || txData)) {
+        setLoadingLabel("Updating pricing...")
         const contract = new ethers.Contract(
           newPriceParams.address,
           newPriceParams.abi,
@@ -152,7 +154,7 @@ const EditProductForm = ({
           ...newPriceParams.args
         )
         txData = await tx.wait()
-      } else {
+      } else if (txData) {
         await timeout(3500)
       }
 
@@ -163,6 +165,7 @@ const EditProductForm = ({
       console.log(error)
     }
 
+    setLoadingLabel("")
     setLoading(false)
   }
 
@@ -185,6 +188,7 @@ const EditProductForm = ({
           setIsLimited={setNewIsLimited}
           setUnits={setNewUnits}
           setMaxUnits={setNewMaxUnits}
+          loading={loading}
         />
         <InputSwitch
           label="Edit pricing"
@@ -201,6 +205,7 @@ const EditProductForm = ({
           }
           enabled={isPriceEdited}
           setEnabled={setIsPriceEdited}
+          disabled={loading}
         />
       </div>
       {isPriceEdited && (
@@ -215,16 +220,23 @@ const EditProductForm = ({
             setIsUSD={setNewIsUSD}
             units={newUnits}
             setPriceParams={setNewPriceParams}
+            loading={loading}
           />
         </>
       )}
       <div className="py-6 text-center">
         <Button
           label="Update"
+          loadingLabel={loadingLabel}
           loading={loading}
           disabled={!isProductToBeUpdated && !isStrategyConfigurable}
           type="submit"
         />
+        {loading && (
+          <p className="max-w-sm pt-8 mx-auto text-sm font-bold text-yellow-600">
+            Please wait until the process is completed
+          </p>
+        )}
       </div>
     </form>
   )
