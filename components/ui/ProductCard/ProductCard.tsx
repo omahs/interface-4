@@ -220,8 +220,7 @@ const ProductCard = ({
             ((Number(price) + externalCallUsd) * 10) / Number(ethUsd) / 1e4
           ) / 1000
       } else {
-        convertedPrice =
-          Math.floor((totalPrice / 10 ** 16) * Number(ethUsd)) / 100
+        convertedPrice = Math.round((totalPrice / 10 ** 18) * Number(ethUsd))
       }
       setConvertedEthUsd(convertedPrice)
     }
