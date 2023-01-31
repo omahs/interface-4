@@ -29,8 +29,8 @@ const ChartVRGDASchedule = ({ rate, units, timeFactor }: Props) => {
                   x2="943"
                   y2="512"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-dasharray="6 6"
+                  strokeWidth="2"
+                  strokeDasharray="6 6"
                 />
                 <line
                   x1="942"
@@ -38,13 +38,13 @@ const ChartVRGDASchedule = ({ rate, units, timeFactor }: Props) => {
                   x2="3"
                   y2="57"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-dasharray="6 6"
+                  strokeWidth="2"
+                  strokeDasharray="6 6"
                 />
                 <path
                   d="M-0.336914 511.63L944 57"
                   stroke="#2563EB"
-                  stroke-width="3"
+                  strokeWidth="3"
                 />
               </svg>
             ) : (
@@ -61,8 +61,8 @@ const ChartVRGDASchedule = ({ rate, units, timeFactor }: Props) => {
                   x2="107.001"
                   y2="512.004"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-dasharray="6 6"
+                  strokeWidth="2"
+                  strokeDasharray="6 6"
                 />
                 <line
                   x1="108"
@@ -70,8 +70,8 @@ const ChartVRGDASchedule = ({ rate, units, timeFactor }: Props) => {
                   x2="1"
                   y2="301"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-dasharray="6 6"
+                  strokeWidth="2"
+                  strokeDasharray="6 6"
                 />
                 <line
                   x1="939.001"
@@ -79,13 +79,13 @@ const ChartVRGDASchedule = ({ rate, units, timeFactor }: Props) => {
                   x2="0.000732422"
                   y2="57.0037"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-dasharray="6 6"
+                  strokeWidth="2"
+                  strokeDasharray="6 6"
                 />
                 <path
                   d="M1.10878 512.612C129.5 220.003 206 149.502 314 103.502C422 57.5016 589.5 57.5035 944 57.5035"
                   stroke="#2563EB"
-                  stroke-width="3"
+                  strokeWidth="3"
                 />
               </svg>
             )}

@@ -262,7 +262,7 @@ const ProductCard = ({
         <Card
           product
           containerClassName="h-full cursor-pointer"
-          cardClassName="flex flex-col group h-full overflow-hidden transition-all duration-300 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025] mb-11"
+          cardClassName="flex flex-col group h-full overflow-hidden transition-all duration-300 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025] mb-14"
           className="rounded-none"
           name={name}
           image={image}
@@ -327,7 +327,7 @@ const ProductCard = ({
             </div>
             {shortDescription && (
               <div>
-                <p className="py-3 overflow-hidden text-gray-500 overflow-ellipsis">
+                <p className="pt-3 overflow-hidden text-gray-500 overflow-ellipsis">
                   {shortDescription}
                 </p>
               </div>
