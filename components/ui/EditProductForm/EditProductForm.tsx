@@ -48,8 +48,8 @@ const EditProductForm = ({
     maxUnits == 1 ? false : true
   )
   const [loadingLabel, setLoadingLabel] = useState("")
-  const [loading, setLoading] = useState(true)
-  const [isPriceEdited, setIsPriceEdited] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [isPriceEdited, setIsPriceEdited] = useState(false)
   const [newIsLimited, setNewIsLimited] = useState(!isInfinite)
   const [newUnits, setNewUnits] = useState(availableUnits)
   const [newMaxUnits, setNewMaxUnits] = useState(0)
