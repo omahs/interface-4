@@ -146,7 +146,6 @@ const EditProductForm = ({
           signer
         )
 
-        // TODO: Fix bug that caused set price to be a lot higher than it should be (see product 0/15)
         const tx = await contract.setProductPrice(
           slicerId,
           productId,
@@ -188,7 +187,7 @@ const EditProductForm = ({
           setIsLimited={setNewIsLimited}
           setUnits={setNewUnits}
           setMaxUnits={setNewMaxUnits}
-          loading={loading}
+          disabled={loading}
         />
         <InputSwitch
           label="Edit pricing"
@@ -220,7 +219,7 @@ const EditProductForm = ({
             setIsUSD={setNewIsUSD}
             units={newUnits}
             setPriceParams={setNewPriceParams}
-            loading={loading}
+            disabled={loading}
           />
         </>
       )}
@@ -243,5 +242,3 @@ const EditProductForm = ({
 }
 
 export default EditProductForm
-
-// TODO: Add modal / tx process info when edit is submitted

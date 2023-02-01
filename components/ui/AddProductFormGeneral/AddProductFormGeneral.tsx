@@ -4,7 +4,8 @@ import {
   SlicerImageBlock,
   MessageBlock,
   InputTags,
-  Textarea
+  Textarea,
+  NoteText
 } from "@components/ui"
 import { NewImage } from "pages/slicer/[id]"
 import { Message } from "@utils/handleMessage"
@@ -105,9 +106,10 @@ const AddProductFormGeneral = ({
         maxHeight="max-h-[260px] sm:max-h-[320px]"
         product
       />
-      <p className="pt-3 text-yellow-600">
-        <b>You cannot change the name, description and image later.</b>
-      </p>
+
+      <div className="pt-3 text-left">
+        <NoteText text="You cannot change the name, description and image later" />
+      </div>
 
       <MessageBlock msg={msg} />
       <div>

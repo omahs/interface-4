@@ -4,7 +4,7 @@ import { Strategy, StrategyProps } from "../strategies"
 
 const label = "Custom"
 
-const Component = ({ setPriceParams }: StrategyProps) => {
+const Component = ({ setPriceParams, disabled }: StrategyProps) => {
   const [address, setAddress] = useState("")
   const [resolvedAddress, setResolvedAddress] = useState("")
 
@@ -48,6 +48,7 @@ const Component = ({ setPriceParams }: StrategyProps) => {
           required
           resolvedAddress={resolvedAddress}
           setResolvedAddress={setResolvedAddress}
+          disabled={disabled}
         />
       </div>
     </>
