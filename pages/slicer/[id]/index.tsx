@@ -29,6 +29,9 @@ import formatCalldata from "@utils/formatCalldata"
 import client from "@utils/apollo-client"
 import { gql } from "@apollo/client"
 import { sliceCore } from "@lib/initProvider"
+import { signMessage } from "@utils/signMessage"
+import Spinner from "@components/icons/Spinner"
+import Cross from "@components/icons/Cross"
 
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
@@ -82,10 +85,12 @@ const Id = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter()
   const { view } = router.query
-  const { account, setModalView } = useAppContext()
+  const { account, setModalView, isSigned, setIsSigned, signMessageAsync } =
+    useAppContext()
   const { isAllowed } = useAllowed(slicerInfo)
   const [editMode, setEditMode] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [loadingSignature, setLoadingSignature] = useState(false)
   const [msg, setMsg] = useState<Message>({
     message: "",
     messageStatus: "success"
@@ -118,6 +123,22 @@ const Id = ({
       : `${slicer.name} | Slicer #${slicerInfo?.id}`
 
   const totalSlices = slicerInfo.totalSlices
+
+  const handleEditMode = async () => {
+    try {
+      if (!isSigned) {
+        setLoadingSignature(true)
+        await signMessage(account, signMessageAsync, setIsSigned)
+      }
+
+      if (isSigned || localStorage.getItem("isSigned") == account) {
+        setEditMode(true)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+    setLoadingSignature(false)
+  }
 
   useEffect(() => {
     setEditMode(false)
@@ -242,16 +263,28 @@ const Id = ({
                 size="text-3xl sm:text-5xl"
                 position=""
               />
-              {editAllowed && !editMode && (
-                <div
-                  className="cursor-pointer absolute bottom-0 pb-0.5 sm:pb-1.5 right-[-38px] sm:right-[-43px] inline-block hover:text-yellow-500"
-                  onClick={() => {
-                    setEditMode(true)
-                  }}
-                >
-                  <Edit className="w-6 h-6" />
-                </div>
-              )}
+              {editAllowed &&
+                (!editMode ? (
+                  <div
+                    className="cursor-pointer absolute bottom-0 pb-0.5 sm:pb-1.5 right-[-38px] sm:right-[-43px] inline-block hover:text-yellow-500"
+                    onClick={async () =>
+                      !loadingSignature && (await handleEditMode())
+                    }
+                  >
+                    {loadingSignature ? (
+                      <Spinner size="w-6 h-6" />
+                    ) : (
+                      <Edit className="w-6 h-6" />
+                    )}
+                  </div>
+                ) : (
+                  <div
+                    className="cursor-pointer absolute bottom-0 pb-0.5 sm:pb-1.5 right-[-38px] sm:right-[-43px] inline-block hover:text-yellow-500"
+                    onClick={() => setEditMode(false)}
+                  >
+                    <Cross />
+                  </div>
+                ))}
             </span>
           </div>
           <div>
