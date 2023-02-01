@@ -3,7 +3,8 @@ import { colorList, darkColorList } from "@utils/colorList"
 import { View } from "@lib/content/modals"
 import { getPurchases } from "@utils/getPurchases"
 import { BytesLike } from "ethers"
-import { useAccount, useProvider } from "wagmi"
+import { useAccount, useProvider, useSignMessage } from "wagmi"
+import { messageToSign } from "utils/signMessage"
 
 export type Purchase = {
   slicerId: string
@@ -17,6 +18,10 @@ const AppContext = createContext<any>({
   provider: null,
   account: "",
   isConnected: false,
+  isSigned: false,
+  setIsSigned: null,
+  signMessageAsync: null,
+  isSignatureLoading: false,
   color1: colorList[0],
   color2: colorList[1],
   darkColor1: darkColorList[0],
@@ -30,8 +35,14 @@ const AppContext = createContext<any>({
 
 export function AppWrapper({ children }) {
   const [isConnected, setIsConnected] = useState(false)
+  const [isSigned, setIsSigned] = useState(false)
   const [modalView, setModalView] = useState<View>({ name: "" })
   const provider = useProvider()
+
+  // Signature authentication
+  const { signMessageAsync, isLoading: isSignatureLoading } = useSignMessage({
+    message: messageToSign
+  })
 
   const { address, connector } = useAccount()
 
@@ -55,18 +66,25 @@ export function AppWrapper({ children }) {
     root.style.setProperty("--darkColor1", darkColorList[random1][0])
     root.style.setProperty("--darkColor2", darkColorList[random2][0])
   }
-
-  useEffect(() => {
-    shuffleColors()
-  }, [])
-
   useEffect(() => {
     setPurchases(null)
     setIsConnected(address && true)
     if (address) {
       getPurchases(address, setPurchases)
+      if (address && localStorage.getItem("isSigned") == address) {
+        setIsSigned(true)
+      } else {
+        setIsSigned(false)
+        localStorage.removeItem("isSigned")
+      }
+    } else {
+      localStorage.removeItem("isSigned")
     }
   }, [address])
+
+  useEffect(() => {
+    shuffleColors()
+  }, [])
 
   return (
     <AppContext.Provider
@@ -75,6 +93,10 @@ export function AppWrapper({ children }) {
         provider,
         account: address,
         isConnected,
+        isSigned,
+        setIsSigned,
+        signMessageAsync,
+        isSignatureLoading,
         color1,
         color2,
         darkColor1,
