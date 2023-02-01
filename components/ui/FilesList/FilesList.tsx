@@ -104,9 +104,8 @@ const FilesList = ({
         </>
       ) : (
         <>
-          <p className="pb-2">
-            Upload one or more files that buyers will redeem on a successful
-            purchase.
+          <p className="pb-4">
+            Buyers will be able to download them after purchase.
           </p>
         </>
       )}
@@ -126,7 +125,7 @@ const FilesList = ({
             />
           </label>
           <MessageBlock msg={message} className="pt-6" />
-          <p className="pt-8 text-sm">
+          <p className="pt-10 text-sm text-gray-600">
             Files are saved immutably on IPFS, and encrypted so that only those
             who buy them can see their content.{" "}
             <a

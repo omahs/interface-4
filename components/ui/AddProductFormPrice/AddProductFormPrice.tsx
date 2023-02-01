@@ -1,5 +1,5 @@
 import { useState, Dispatch, SetStateAction, useEffect } from "react"
-import { InputPrice, InputSwitch, CardBasic } from "@components/ui"
+import { InputPrice, InputSwitch, CardBasic, NoteText } from "@components/ui"
 import {
   strategiesRender,
   Strategy
@@ -95,11 +95,9 @@ const AddProductFormPrice = ({
             disabled={disabled}
           />
           {isFree ? (
-            <p className="text-yellow-600">
-              <b>
-                If a price is not set this product can be purchased for free
-              </b>
-            </p>
+            <div className="text-left">
+              <NoteText text="If a price is not set this product can be purchased for free" />
+            </div>
           ) : null}
         </>
       ) : (
