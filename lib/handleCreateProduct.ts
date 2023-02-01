@@ -205,7 +205,7 @@ export const handleSuccess = async (
     const tx = await contract.setProductPrice(
       slicerId,
       productId,
-      ethers.constants.AddressZero,
+      [ethers.constants.AddressZero],
       ...priceParams.args
     )
     await tx.wait()

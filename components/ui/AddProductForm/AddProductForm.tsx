@@ -24,7 +24,6 @@ import openFingerprintingModal from "@utils/openFingerprintingModal"
 import { ReducedShortcode } from "@utils/useDecodeShortcode"
 import { deploy } from "@lib/handlers/chain"
 import { StrategyParams } from "@components/priceStrategies/strategies"
-import { priceFeedAddress } from "@lib/initProvider"
 
 type Props = {
   slicerId: number
@@ -169,9 +168,7 @@ const AddProductForm = ({
       setUploadStep(7)
       // Create product on smart contract
       const weiValue = ethToWei(ethValue)
-      const productPrice = isUSD
-        ? Math.floor(priceFeedAddress ? usdValue * 1000000 : usdValue * 100)
-        : weiValue
+      const productPrice = isUSD ? Math.floor(usdValue * 1000000) : weiValue
       const isStrategyConfigurable = priceParams?.abi != undefined
       const currencyPrices =
         Number(productPrice) != 0 || priceParams?.address
@@ -277,6 +274,7 @@ const AddProductForm = ({
         setDescription={setDescription}
         setShortDescription={setShortDescription}
       />
+      <h2 className="pb-6">Availability</h2>
       <AddProductFormAvailability
         isMultiple={isMultiple}
         isLimited={isLimited}
@@ -287,6 +285,14 @@ const AddProductForm = ({
         setUnits={setUnits}
         setMaxUnits={setMaxUnits}
       />
+      <div>
+        <hr className="w-20 mx-auto my-16 border-gray-300" />
+      </div>
+      <h2 className="pb-6">Pricing</h2>
+      <p>
+        Set up how many units of this product each buyer can buy, and how many
+        are available for purchase.
+      </p>
       <AddProductFormPrice
         isFree={isFree}
         ethValue={ethValue}
@@ -298,6 +304,9 @@ const AddProductForm = ({
         units={units}
         setPriceParams={setPriceParams}
       />
+      <div>
+        <hr className="w-20 mx-auto my-16 border-gray-300" />
+      </div>
       <AddProductFormExternal
         clonePurchaseHook={clonePurchaseHook}
         setClonePurchaseHook={setClonePurchaseHook}
@@ -342,7 +351,7 @@ const AddProductForm = ({
         targetPrice={
           priceParams?.args &&
           Number(
-            ethers.BigNumber.from(priceParams.args[0]).div(
+            ethers.BigNumber.from(priceParams.args[0][0][0]).div(
               ethers.BigNumber.from(10).pow(15)
             )
           ) / 1000

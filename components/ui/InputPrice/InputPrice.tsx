@@ -1,5 +1,5 @@
 import { Input } from "@components/ui"
-import useEthUsd, { formatEthUsd } from "@utils/useEthUsd"
+import useEthUsd from "@utils/useEthUsd"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 
 type Props = {
@@ -33,8 +33,7 @@ const InputPrice = ({
   question,
   action
 }: Props) => {
-  const calldata = useEthUsd()
-  const ethUsd = formatEthUsd(calldata)
+  const ethUsd = useEthUsd()
   const [isEth, setIsEth] = useState(true)
 
   const currency = isEth ? "Ξ" : "$"
@@ -66,9 +65,14 @@ const InputPrice = ({
             type="number"
             placeholder={isEth ? "0.1" : "100"}
             min={0}
-            step={isEth ? 0.001 : 0.01}
+            step={isEth ? 0.001 : 0.1}
             label={label}
             prefix={currency}
+            helpText={
+              process.env.NEXT_PUBLIC_CHAIN_ID == "5"
+                ? "Note that USD / ETH on Goerli is different than on mainnet"
+                : ""
+            }
             prefixAction={() => setIsEth((isEth) => !isEth)}
             value={isEth ? ethValue || "" : usdValue || ""}
             onChange={handleChange}
@@ -85,9 +89,14 @@ const InputPrice = ({
             type="number"
             placeholder={isEth ? "0.1" : "100"}
             min={0}
-            step={isEth ? 0.001 : 0.01}
+            step={isEth ? 0.001 : 0.1}
             label={label}
             prefix={currency}
+            helpText={
+              process.env.NEXT_PUBLIC_CHAIN_ID == "5"
+                ? "Note that USD / ETH on Goerli is different than on mainnet"
+                : ""
+            }
             prefixAction={() => setIsEth((isEth) => !isEth)}
             value={isEth ? ethValue || "" : usdValue || ""}
             onChange={handleChange}
@@ -99,10 +108,9 @@ const InputPrice = ({
         )}
         {ethValue != 0 && (
           <div
-            className={`absolute top-0 right-0 flex items-center h-full pb-0.5 ${
+            className={`absolute bottom-0 right-0 flex items-center pb-3 ${
               marginLabel || "mr-8"
-            }
-          ${label ? (question ? "pt-11" : "pt-7") : ""}`}
+            }`}
           >
             <p className="text-sm text-gray-600">
               {destinationCurrency}{" "}

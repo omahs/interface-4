@@ -2,7 +2,6 @@ import Bolt from "@components/icons/Bolt"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import Units from "@components/icons/Units"
 import { ProductCart } from "@lib/handleUpdateCart"
-import { priceFeedAddress } from "@lib/initProvider"
 import formatNumber from "@utils/formatNumber"
 import { ethers, utils } from "ethers"
 import { BlockchainProduct } from "pages/slicer/[id]"
@@ -66,18 +65,17 @@ const ProductCard = ({
     },
     allowedAddresses: []
   }
-  const ethUsdFormatted = priceFeedAddress ? ethUsd * 10000 : ethUsd
   const prices = chainInfo?.prices
   const ethPrice = prices?.find(
     (price) => price.currency.id == ethers.constants.AddressZero
   )
   const price = ethPrice?.price
   const isUSD = ethPrice?.dynamicPricing
-  const externalAddress = ethPrice?.externalAddress
+  const externalPriceAddress = ethPrice?.externalAddress
   const isCustomPriced =
-    externalAddress &&
-    externalAddress != "0x00000000" &&
-    externalAddress != ethers.constants.AddressZero
+    externalPriceAddress &&
+    externalPriceAddress != "0x00000000" &&
+    externalPriceAddress != ethers.constants.AddressZero
 
   // TODO Refactor this to handle  multiple currencies
 
@@ -89,6 +87,7 @@ const ProductCard = ({
   const extValue = chainInfo?.extValue
   const extCheckSig = chainInfo?.extCheckSig
   const extExecSig = chainInfo?.extExecSig
+  const isEditable = editMode && account == creator
 
   const totalPrice = isCustomPriced
     ? externalPrices[slicerId] &&
@@ -101,7 +100,7 @@ const ProductCard = ({
     : (price ? Number(price) : 0) + (extValue ? Number(extValue) : 0)
   const externalCallEth = extValue && utils.formatEther(extValue)
   const externalCallUsd =
-    externalCallEth && Number(externalCallEth) * Number(ethUsdFormatted) * 100
+    externalCallEth && Number(externalCallEth) * Number(ethUsd) * 100
 
   // const createdAtTimestamp = chainInfo?.createdAtTimestamp
 
@@ -112,8 +111,8 @@ const ProductCard = ({
     ? `Ξ ${Math.round(totalPrice / 10 ** 15) / 1000}`
     : "free"
   const formattedUsdPrice = convertedEthUsd
-    ? `$ ${formatNumber(Math.round(convertedEthUsd / 100) / 100)}`
-    : "$ 0"
+    ? `$ ${formatNumber(Math.round(convertedEthUsd))}`
+    : "free"
 
   const productPrice = chainInfo
     ? ethPrice || extValue
@@ -133,16 +132,13 @@ const ProductCard = ({
             eth: isUSD ? `Ξ ${convertedEthUsd}` : formattedEthPrice,
             usd: isUSD
               ? `$ ${formatNumber(
-                  Math.round(
-                    (Number(price) + externalCallUsd) /
-                      (priceFeedAddress ? 1e4 : 1)
-                  ) / 100
+                  Math.round((Number(price) + externalCallUsd) / 1e6)
                 )}`
               : formattedUsdPrice
           }
       : {
           eth: "free",
-          usd: "$ 0"
+          usd: "free"
         }
     : {
         eth: "Ξ ...",
@@ -208,7 +204,7 @@ const ProductCard = ({
         editMode,
         purchasedQuantity,
         availabilityColor,
-        externalAddress,
+        externalPriceAddress,
         externalPrices,
         isCustomPriced
       }
@@ -220,14 +216,15 @@ const ProductCard = ({
       let convertedPrice: number
       if (isUSD) {
         convertedPrice =
-          Math.round((totalPrice * 10) / Number(ethUsdFormatted)) / 1000
+          Math.round(
+            ((Number(price) + externalCallUsd) * 10) / Number(ethUsd) / 1e4
+          ) / 1000
       } else {
-        convertedPrice =
-          Math.floor((totalPrice / 10 ** 16) * Number(ethUsdFormatted)) / 100
+        convertedPrice = Math.round((totalPrice / 10 ** 18) * Number(ethUsd))
       }
       setConvertedEthUsd(convertedPrice)
     }
-  }, [price, ethUsd])
+  }, [price, totalPrice, ethUsd])
 
   useEffect(() => {
     if (displayProduct) {
@@ -261,14 +258,15 @@ const ProductCard = ({
           </Head>
         </>
       )} */}
-      <div className="h-full">
+      <div className="relative h-full">
         <Card
           product
           containerClassName="h-full cursor-pointer"
-          cardClassName="group h-full overflow-hidden transition-all duration-300 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025]"
+          cardClassName="flex flex-col group h-full overflow-hidden transition-all duration-300 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025] mb-14"
           className="rounded-none"
           name={name}
           image={image}
+          isEditable={isEditable}
           size="h-52"
           topLeft={{
             title: "Purchases",
@@ -292,10 +290,10 @@ const ProductCard = ({
                 )}
                 <p
                   className={`text-sm capitalize font-medium text-black${
-                    chainInfo && !totalPrice ? " text-green-600" : ""
+                    productPrice.usd == "free" ? " text-green-600" : ""
                   }`}
                 >
-                  {productPrice.eth}
+                  {productPrice.usd}
                 </p>
               </div>
             )
@@ -316,20 +314,25 @@ const ProductCard = ({
           }
           onClick={() => handleOnClick()}
         >
-          <div>
+          <div className="h-full">
             <div className="flex items-center justify-between">
-              <div className="flex flex-wrap items-center mt-1.5 mr-28">
-                <p className="mr-2 font-medium">{name}</p>
-                <p className="h-5 mt-1 text-xs font-normal text-gray-500">
-                  #{productId}
+              <div className="mt-1.5">
+                <p className="font-medium">
+                  {name}{" "}
+                  <span className="ml-1 text-xs font-normal text-gray-500">
+                    #{productId}
+                  </span>
                 </p>
               </div>
             </div>
-            <div className="absolute top-0 right-0 flex items-center justify-center w-24 h-[68px] my-auto mr-5">
-              <div
-                className="absolute w-full h-full"
-                onClick={() => handleOnClick()}
-              />
+            {shortDescription && (
+              <div>
+                <p className="pt-3 overflow-hidden text-gray-500 overflow-ellipsis">
+                  {shortDescription}
+                </p>
+              </div>
+            )}
+            <div className="absolute bottom-0 w-full px-5 mb-5 transform -translate-x-1/2 left-1/2">
               {chainInfo &&
                 (!isCustomPriced ||
                   (externalPrices[slicerId] &&
@@ -359,6 +362,8 @@ const ProductCard = ({
                     image={image}
                     name={name}
                     maxUnits={Number(maxUnits)}
+                    labelAdd={productPrice?.eth != "free" && productPrice.eth}
+                    labelRemove={productPrice.eth != "free" && productPrice.eth}
                     availableUnits={isInfinite ? -1 : availableUnits}
                     purchasedQuantity={purchasedQuantity}
                     uid={uid}
@@ -367,7 +372,7 @@ const ProductCard = ({
                     allowedAddresses={allowedAddresses}
                     shortcodes={purchaseInfo?.shortcodes}
                     dbId={dbId}
-                    externalAddress={externalAddress}
+                    externalPriceAddress={externalPriceAddress}
                   />
                 ) : (
                   account == creator && (
@@ -375,13 +380,6 @@ const ProductCard = ({
                   )
                 ))}
             </div>
-            {shortDescription && (
-              <div>
-                <p className="pt-6 overflow-hidden text-gray-500 overflow-ellipsis">
-                  {shortDescription}
-                </p>
-              </div>
-            )}
           </div>
         </Card>
       </div>
