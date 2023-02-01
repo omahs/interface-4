@@ -44,7 +44,7 @@ type Props = {
   labelRemove?: string
   preview?: boolean
   shortcodes?: string[]
-  externalAddress?: string
+  externalPriceAddress?: string
 }
 
 const CartButton = ({
@@ -71,7 +71,7 @@ const CartButton = ({
   labelRemove,
   preview,
   shortcodes,
-  externalAddress
+  externalPriceAddress
 }: Props) => {
   const { account, setModalView } = useAppContext()
   const provider = useProvider()
@@ -139,7 +139,7 @@ const CartButton = ({
   return !productCart && purchasedQuantity != 0 ? (
     maxUnits == 1 || maxUnits == purchasedQuantity ? (
       <div
-        className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-blue-500 rounded-md hover:text-white nightwind-prevent group-cart hover:bg-blue-600"
+        className="relative z-10 flex items-center justify-center w-full text-center text-white transition-colors duration-150 bg-blue-500 rounded-md h-9 hover:text-white nightwind-prevent group-cart hover:bg-blue-600"
         onClick={async () =>
           await handleRedeemProduct(
             account,
@@ -158,17 +158,9 @@ const CartButton = ({
           )
         }
       >
-        {labelAdd ? (
-          <p className="mr-2 text-sm font-medium sm:text-base">
-            {`Redeem${purchasedQuantity != 1 ? ` (${purchasedQuantity})` : ""}`}
-          </p>
-        ) : (
-          purchasedQuantity != 1 && (
-            <p className="mr-2 text-sm font-medium sm:text-base">
-              {purchasedQuantity}
-            </p>
-          )
-        )}
+        <p className="mr-2 text-sm font-medium sm:text-base">
+          {`Redeem${purchasedQuantity != 1 ? ` (${purchasedQuantity})` : ""}`}
+        </p>
         {loading ? (
           <Spinner color="text-inherit" />
         ) : (
@@ -176,36 +168,75 @@ const CartButton = ({
         )}
       </div>
     ) : (
-      <div className="relative z-10 grid items-center justify-center w-full grid-cols-2 overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md nightwind-prevent-block">
+      <div className="relative z-10 flex items-center justify-center w-full overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md nightwind-prevent-block">
+        {extCheckSig != "0x00000000" && !isSuccessExtCall ? (
+          <ConnectButton.Custom>
+            {({ account, openConnectModal }) => (
+              <div
+                className={`relative z-10 flex flex-grow items-center justify-center h-9 text-white group-cart ${
+                  isFailExtCall
+                    ? "bg-red-500 hover:bg-red-600"
+                    : "bg-gray-500 hover:bg-gray-600"
+                } transition-colors duration-150`}
+                onClick={
+                  account ? async () => await handleExtCall() : openConnectModal
+                }
+                onMouseEnter={() => setIsUnlocked(true)}
+                onMouseLeave={() => setIsUnlocked(false)}
+              >
+                {labelAdd && (
+                  <p className="mr-2 text-sm font-medium sm:text-base">
+                    {labelAdd}
+                  </p>
+                )}
+                {isLoadingExtCall ? (
+                  <Spinner color="text-white nightwind-prevent" />
+                ) : (
+                  <Lock
+                    className="w-5 h-5 mr-1 group-cart-el"
+                    isUnlocked={isUnlocked}
+                  />
+                )}
+              </div>
+            )}
+          </ConnectButton.Custom>
+        ) : (
+          <div
+            className={`relative z-10 h-9 flex flex-grow items-center justify-center text-white ${
+              availableUnits != 0
+                ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
+                : "bg-gray-400 cursor-default"
+            }`}
+            onClick={async () =>
+              !preview &&
+              availableUnits != 0 &&
+              (await handleUpdateCart(
+                cookies,
+                setCookie,
+                productCart,
+                slicerId,
+                slicerAddress,
+                productId,
+                price,
+                isUSD,
+                extCallValue,
+                buyerCustomData,
+                name,
+                productCart ? ++productCart.quantity : 1,
+                externalPriceAddress
+              ))
+            }
+          >
+            {labelAdd && (
+              <p className="mr-2 text-sm font-medium sm:text-base">
+                {labelAdd}
+              </p>
+            )}
+            <Cart className="w-5 h-5 mr-1 group-cart-el" />
+          </div>
+        )}
         <div
-          className={`relative z-10 h-8 flex items-center justify-center text-white ${
-            availableUnits != 0
-              ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
-              : "bg-gray-400 cursor-default"
-          }`}
-          onClick={async () =>
-            availableUnits != 0 &&
-            (await handleUpdateCart(
-              cookies,
-              setCookie,
-              productCart,
-              slicerId,
-              slicerAddress,
-              productId,
-              price,
-              isUSD,
-              extCallValue,
-              buyerCustomData,
-              name,
-              1,
-              externalAddress
-            ))
-          }
-        >
-          <Cart className="w-5 h-5 mr-1 group-cart-el" />
-        </div>
-        <div
-          className="relative z-10 flex items-center justify-center h-8 text-white transition-colors duration-150 bg-blue-500 rounded-r-md nightwind-prevent group-cart hover:bg-blue-600"
+          className="relative z-10 flex items-center justify-center w-1/3 text-white transition-colors duration-150 bg-blue-500 h-9 rounded-r-md nightwind-prevent group-cart hover:bg-blue-600"
           onClick={() =>
             handleRedeemProduct(
               account,
@@ -237,7 +268,7 @@ const CartButton = ({
       <ConnectButton.Custom>
         {({ account, openConnectModal }) => (
           <div
-            className={`relative z-10 flex items-center justify-center w-full py-2 text-center text-white rounded-md nightwind-prevent group-cart ${
+            className={`relative z-10 flex items-center justify-center w-full h-9 text-center text-white rounded-md nightwind-prevent group-cart ${
               isFailExtCall
                 ? "bg-red-500 hover:bg-red-600"
                 : "bg-gray-500 hover:bg-gray-600"
@@ -266,7 +297,7 @@ const CartButton = ({
       </ConnectButton.Custom>
     ) : (
       <div
-        className={`relative z-10 flex items-center justify-center w-full py-2 text-center text-white rounded-md nightwind-prevent ${
+        className={`relative z-10 flex items-center justify-center w-full h-9 text-center text-white rounded-md nightwind-prevent ${
           availableUnits != 0
             ? "group-cart bg-green-500 hover:bg-green-600 transition-colors duration-150"
             : "bg-gray-400 cursor-default"
@@ -286,8 +317,8 @@ const CartButton = ({
             extCallValue,
             buyerCustomData,
             name,
-            1,
-            externalAddress
+            productCart ? ++productCart.quantity : 1,
+            externalPriceAddress
           ))
         }
       >
@@ -298,9 +329,9 @@ const CartButton = ({
       </div>
     )
   ) : maxUnits != 1 ? (
-    <div className="relative z-10 grid items-center justify-center w-full grid-cols-3 overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md">
+    <div className="relative z-10 grid items-center justify-center w-full grid-cols-4 overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md">
       <div
-        className="flex items-center justify-center h-8 text-red-500 transition-colors duration-150 hover:bg-red-500 hover:text-white"
+        className="flex items-center justify-center text-red-500 transition-colors duration-150 h-9 hover:bg-red-500 hover:text-white"
         onClick={async () =>
           await handleUpdateCart(
             cookies,
@@ -314,18 +345,39 @@ const CartButton = ({
             extCallValue,
             buyerCustomData,
             name,
-            -1,
-            externalAddress
+            --productCart.quantity,
+            externalPriceAddress
           )
         }
       >
         <Minus className="w-[17px] h-[17px]" />
       </div>
-      <div className="flex items-center justify-center h-8 text-sm text-black border-l border-r border-gray-200 cursor-default">
-        <p>{productCart.quantity}</p>
+      <div className="flex items-center justify-center col-span-2 pl-3 text-sm text-black border-l border-r border-gray-200 cursor-default h-9">
+        <input
+          value={productCart.quantity}
+          type="number"
+          className="w-full text-center bg-transparent border-none outline-none focus:ring-0 form-input"
+          onChange={(e) => {
+            handleUpdateCart(
+              cookies,
+              setCookie,
+              productCart,
+              slicerId,
+              slicerAddress,
+              productId,
+              price,
+              isUSD,
+              extCallValue,
+              buyerCustomData,
+              name,
+              Number(e.target.value),
+              externalPriceAddress
+            )
+          }}
+        />
       </div>
       <div
-        className={`flex items-center justify-center h-8 transition-colors duration-150 ${
+        className={`flex items-center justify-center h-9 transition-colors duration-150 ${
           adjustedAvailability != 0 &&
           (maxUnits == 0 || purchasedQuantity + productCart.quantity < maxUnits)
             ? "text-green-500 hover:bg-green-500 hover:text-white"
@@ -347,8 +399,8 @@ const CartButton = ({
             extCallValue,
             buyerCustomData,
             name,
-            1,
-            externalAddress
+            productCart ? ++productCart.quantity : 1,
+            externalPriceAddress
           ))
         }
       >
@@ -357,7 +409,7 @@ const CartButton = ({
     </div>
   ) : (
     <div
-      className="relative z-10 flex items-center justify-center w-full py-2 text-center text-white transition-colors duration-150 bg-red-500 rounded-md nightwind-prevent group-cart hover:bg-red-600"
+      className="relative z-10 flex items-center justify-center w-full text-center text-white transition-colors duration-150 bg-red-500 rounded-md h-9 nightwind-prevent group-cart hover:bg-red-600"
       onClick={async () =>
         await handleUpdateCart(
           cookies,
@@ -371,8 +423,8 @@ const CartButton = ({
           extCallValue,
           buyerCustomData,
           name,
-          -1,
-          externalAddress
+          --productCart.quantity,
+          externalPriceAddress
         )
       }
     >
@@ -385,3 +437,5 @@ const CartButton = ({
 }
 
 export default CartButton
+
+// TODO: Refactor

@@ -102,3 +102,4 @@ const useExternalPrices = (account: string, products: any) => {
 export default useExternalPrices
 
 // TODO: FIX cart button not disappearing in products with invalid dynamic price (not here)
+// TODO: Change multicall, getPrices and useExternalPrices to use wagmi hooks (needed also to handle reverts and reduce complexity)

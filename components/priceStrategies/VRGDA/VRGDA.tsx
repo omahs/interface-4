@@ -8,6 +8,7 @@ import {
   StrategyParams,
   StrategyProps
 } from "../strategies"
+import constants from "constants.json"
 
 type VRGDAStrategyProps = StrategyProps & {
   units: number
@@ -15,31 +16,41 @@ type VRGDAStrategyProps = StrategyProps & {
 
 const label = "VRGDA"
 
-const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
+const Component = ({ setPriceParams, units, disabled }: VRGDAStrategyProps) => {
   const [rate, setRate] = useState<"Linear" | "Logistic">("Linear")
   const [targetPrice, setTargetPrice] = useState(0)
+  const [min, setMin] = useState(0)
   const [priceDecayPercent, setPriceDecayPercent] = useState(0)
   const [timeFactor, setTimeFactor] = useState(0)
   const strategy = strategiesList[rate + label]
 
   useEffect(() => {
     if (units != 0) {
-      const { label, abi, deployments } = strategy
+      const { label, abi } = strategy
+      const address =
+        constants[process.env.NEXT_PUBLIC_CHAIN_ID][
+          process.env.NEXT_PUBLIC_ENVIRONMENT
+        ].strategies[label]
 
       let newPriceParams: StrategyParams = {
         label,
-        address: deployments[process.env.NEXT_PUBLIC_CHAIN_ID],
+        address,
         abi,
         args: [
-          toWad(targetPrice),
-          toWad(priceDecayPercent / 100),
-          toWad(
-            rate == "Linear"
-              ? timeFactor
-              : timeFactor != 0
-              ? Math.floor(100000 / timeFactor) / 100000
-              : 0
-          )
+          [
+            [
+              toWad(targetPrice),
+              min ? toWad(min) : 0,
+              toWad(
+                rate == "Linear"
+                  ? timeFactor
+                  : timeFactor != 0
+                  ? Math.floor(100000 / timeFactor) / 100000
+                  : 0
+              )
+            ]
+          ],
+          toWad(priceDecayPercent / 100)
         ]
       }
 
@@ -103,7 +114,29 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
               }
               value={targetPrice || ""}
               onChange={setTargetPrice}
+              disabled={disabled}
               required
+            />
+          </div>
+          <div>
+            <Input
+              type="number"
+              label="Min price (ETH)"
+              helpText="What is the minimum sale price?"
+              placeholder={"Leave blank to disable"}
+              min={0}
+              step={0.001}
+              question={
+                <>
+                  <p>
+                    Can be used to prevent sale price to decay below a minimum
+                    value.
+                  </p>
+                </>
+              }
+              value={min || ""}
+              onChange={setMin}
+              disabled={disabled}
             />
           </div>
           <div>
@@ -127,6 +160,7 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
               }
               value={priceDecayPercent || ""}
               onChange={setPriceDecayPercent}
+              disabled={disabled}
               required
             />
           </div>
@@ -145,6 +179,7 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
                     <p>The number of units to target selling in 1 day</p>
                   </>
                 }
+                disabled={disabled}
                 required
               />
             ) : (
@@ -169,6 +204,7 @@ const Component = ({ setPriceParams, units }: VRGDAStrategyProps) => {
                     </p>
                   </>
                 }
+                disabled={disabled}
                 required
               />
             )}

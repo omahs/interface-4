@@ -8,18 +8,14 @@ const PayProducts = async (
   buyer: string,
   productData: ProductCart[]
 ) => {
-  const { productsModule, priceFeedAddress, priceFeed, chainlink } =
-    await import("@lib/initProvider")
+  const { productsModule, priceFeed } = await import("@lib/initProvider")
 
   const contract = productsModule(signer)
 
-  // chainlink is used in testnet environment where uniswap pool is inactive
-  const quote = priceFeedAddress
-    ? await priceFeed(signer).getQuote(...quoteParams)
-    : await chainlink(signer).latestRoundData()
+  const quote = await priceFeed(signer).getQuote(...quoteParams) // Chainlink (scaled x6): await chainlink(signer).latestRoundData()
   const currency = ethers.constants.AddressZero
 
-  const ethUsd = priceFeedAddress ? quote : Number(quote[1])
+  const ethUsd = quote // Chainlink: Number(quote[1])
   let totalPrice: BigNumber
   let purchaseParams: PurchaseParamsStruct[] = []
 
@@ -38,7 +34,7 @@ const PayProducts = async (
       const currentPrice = totalPrice || 0
       const productPrice = isUSD
         ? BigNumber.from(price)
-            .mul(BigNumber.from(10).pow(priceFeedAddress ? 18 : 24))
+            .mul(BigNumber.from(10).pow(18)) // chainlink -> pow(24)
             .mul(102) // 2% overpayment to compensate for price fluctuations (repaid to buyer during tx)
             .div(100)
             .div(ethUsd)

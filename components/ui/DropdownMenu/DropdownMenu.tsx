@@ -40,12 +40,13 @@ function DropdownMenu({ showDropdown, setShowDropdown }: Props) {
         label="My slicers"
         onClick={() => setShowDropdown(false)}
       />
-      <DropdownMenuElement
+      {/* TODO: Readd when subgraph is fixed */}
+      {/* <DropdownMenuElement
         href="/earnings"
         image={<Banknotes className="w-5 h-5" />}
         label="Earnings"
         onClick={() => setShowDropdown(false)}
-      />
+      /> */}
       <DropdownMenuElement
         href="/purchases"
         image={<ShoppingBag strokeWidth="1.5" className="w-5 h-5" />}

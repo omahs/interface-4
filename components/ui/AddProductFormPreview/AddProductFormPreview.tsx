@@ -2,7 +2,7 @@ import { NewImage } from "pages/slicer/[id]"
 import React, { Dispatch, SetStateAction } from "react"
 import { View } from "@lib/content/modals"
 import { BigNumberish, BytesLike, ethers, utils } from "ethers"
-import useEthUsd, { formatEthUsd } from "@utils/useEthUsd"
+import useEthUsd from "@utils/useEthUsd"
 
 type Props = {
   slicerId: number
@@ -53,8 +53,7 @@ const AddProductFormPreview = ({
   externalAddress,
   targetPrice
 }: Props) => {
-  const calldata = useEthUsd()
-  const ethUsd = formatEthUsd(calldata)
+  const ethUsd = useEthUsd()
   const val = targetPrice || ethValue
 
   const usdVal = targetPrice ? Number(targetPrice) * ethUsd : usdValue

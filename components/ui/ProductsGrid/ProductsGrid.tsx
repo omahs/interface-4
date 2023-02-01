@@ -1,5 +1,5 @@
 import useExternalPrices from "@lib/useExternalPrices"
-import useEthUsd, { formatEthUsd } from "@utils/useEthUsd"
+import useEthUsd from "@utils/useEthUsd"
 import { useRouter } from "next/router"
 import { BlockchainProduct } from "pages/slicer/[id]"
 import { useState } from "react"
@@ -37,8 +37,7 @@ const ProductsGrid = ({
   const increment = 6
   const [visibleItems, setVisibleItems] = useState(increment)
 
-  const calldata = useEthUsd()
-  const ethUsd = formatEthUsd(calldata)
+  const ethUsd = useEthUsd()
 
   const productQueryData = products?.find(
     (p) => p.productId == Number(productQuery)

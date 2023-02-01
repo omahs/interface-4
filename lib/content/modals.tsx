@@ -4,8 +4,8 @@ import {
   Button,
   CardImage,
   CartButton,
-  DeleteButton,
   DoubleText,
+  EditProductForm,
   FilesList,
   LoadingStep,
   MarkdownBlock,
@@ -27,6 +27,7 @@ import copyText from "@utils/copyText"
 import useDecodeShortcode from "@utils/useDecodeShortcode"
 import Bolt from "@components/icons/Bolt"
 import { strategiesList } from "@components/priceStrategies/strategies"
+import constants from "constants.json"
 
 export type View = {
   name: ViewNames
@@ -271,10 +272,9 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
   }
   return (
     <div className="text-center">
-      <div className="pb-6 text-center">
+      <div className="pb-8 text-center">
         <DoubleText inactive logoText="Creating product" />
       </div>
-      <p className="pb-8">Please wait until the process is completed</p>
       <div className="grid items-center grid-cols-6 gap-2 px-4">
         <LoadingStep
           initCondition={uploadStep < 3}
@@ -330,7 +330,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
           />
         ) : (
           <p className="max-w-sm mx-auto text-sm font-bold text-yellow-600">
-            Do not leave this page until the process has completed
+            Please wait until the process is completed
           </p>
         )}
       </div>
@@ -370,7 +370,7 @@ export const PRODUCT_VIEW = (params: any) => {
     purchasedQuantity,
     availabilityColor,
     preview,
-    externalAddress,
+    externalPriceAddress,
     externalPrices,
     isCustomPriced
   } = params
@@ -386,10 +386,14 @@ export const PRODUCT_VIEW = (params: any) => {
   )
   const purchaseEl = purchaseElArray.join(", ")
 
+  const strategyAddresses =
+    constants[process.env.NEXT_PUBLIC_CHAIN_ID][
+      process.env.NEXT_PUBLIC_ENVIRONMENT
+    ].strategies
+
   const strategy = Object.values(strategiesList).find(
-    (val) =>
-      String(val.deployments[process.env.NEXT_PUBLIC_CHAIN_ID]).toLowerCase() ==
-      externalAddress
+    ({ label }) =>
+      strategyAddresses[label].toLowerCase() == externalPriceAddress
   )
 
   useEffect(() => {
@@ -447,7 +451,11 @@ export const PRODUCT_VIEW = (params: any) => {
                     <Bolt />
                   </div>
                 )}
-                <p className="text-sm font-medium text-black">
+                <p
+                  className={`text-sm capitalize font-medium text-black${
+                    productPrice.usd == "free" ? " text-green-600" : ""
+                  }`}
+                >
                   {productPrice.usd}
                 </p>
               </div>
@@ -469,17 +477,30 @@ export const PRODUCT_VIEW = (params: any) => {
           }
         />
         <div className="py-8">
-          <div>
-            <MarkdownBlock content={description} />
-          </div>
+          {editMode && account == creator ? (
+            <EditProductForm
+              slicerId={slicerId}
+              productId={productId}
+              maxUnits={maxUnits}
+              isInfinite={isInfinite}
+              availableUnits={availableUnits}
+              productPrice={productPrice}
+              isUSD={isUSD}
+              externalPriceAddress={externalPriceAddress}
+            />
+          ) : (
+            <div>
+              <MarkdownBlock content={description} />
+            </div>
+          )}
         </div>
         {extAddress &&
           (!isCustomPriced ||
             (externalPrices[slicerId] &&
               externalPrices[slicerId][productId])) && (
             <>
-              <div className="mx-auto cursor-pointer w-60">
-                {!editMode ? (
+              <div className="mx-auto cursor-pointer w-72">
+                {!editMode && (
                   <CartButton
                     slicerId={slicerId}
                     productCart={productCart}
@@ -510,17 +531,13 @@ export const PRODUCT_VIEW = (params: any) => {
                     creator={creator}
                     texts={texts}
                     allowedAddresses={allowedAddresses}
-                    labelAdd={`Get it for ${productPrice.eth}`}
+                    labelAdd={productPrice?.eth != "free" && productPrice.eth}
                     labelRemove={productPrice.eth != "free" && productPrice.eth}
                     preview={preview}
                     shortcodes={purchaseInfo?.shortcodes}
                     dbId={dbId}
-                    externalAddress={externalAddress}
+                    externalPriceAddress={externalPriceAddress}
                   />
-                ) : (
-                  account == creator && (
-                    <DeleteButton slicerId={slicerId} productId={productId} />
-                  )
                 )}
               </div>
             </>
@@ -549,16 +566,19 @@ export const PRODUCT_VIEW = (params: any) => {
                 className="font-bold highlight"
                 href={`https://${
                   process.env.NEXT_PUBLIC_CHAIN_ID === "5" ? "goerli." : ""
-                }etherscan.io/address/${externalAddress}`}
+                }etherscan.io/address/${externalPriceAddress}`}
                 target="_blank"
                 rel="noreferrer"
               >
-                {externalAddress.replace(
-                  externalAddress.substring(5, externalAddress.length - 3),
+                {externalPriceAddress.replace(
+                  externalPriceAddress.substring(
+                    5,
+                    externalPriceAddress.length - 3
+                  ),
                   `\xa0\xa0\xa0\xa0\xa0\xa0`
                 )}
-              </a>{" "}
-              {strategy && `(${strategy.label})`}
+              </a>
+              {strategy && ` (${strategy.label})`}
             </p>
           )}
         {extAddress &&
@@ -639,10 +659,6 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
     instructions,
     accountCodes
   )
-
-  useEffect(() => {
-    saEvent("redeem_product_success")
-  }, [])
 
   return (
     <>

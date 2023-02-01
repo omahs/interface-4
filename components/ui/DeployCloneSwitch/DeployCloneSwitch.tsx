@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from "react"
 import { InputSwitch } from ".."
 import { Deployments } from "@components/hooks/purchaseHooks"
-import useEthUsd, { formatEthUsd } from "@utils/useEthUsd"
+import useEthUsd from "@utils/useEthUsd"
 
 type Props = {
   deployments: Deployments
@@ -14,8 +14,7 @@ const DeployCloneSwitch = ({
   clonePurchaseHook,
   setClonePurchaseHook
 }: Props) => {
-  const calldata = useEthUsd()
-  const ethUsd = formatEthUsd(calldata)
+  const ethUsd = useEthUsd()
   const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
 
   return (

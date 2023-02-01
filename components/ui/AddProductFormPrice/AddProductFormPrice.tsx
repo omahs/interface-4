@@ -1,5 +1,5 @@
 import { useState, Dispatch, SetStateAction, useEffect } from "react"
-import { InputPrice, InputSwitch, CardBasic } from "@components/ui"
+import { InputPrice, InputSwitch, CardBasic, NoteText } from "@components/ui"
 import {
   strategiesRender,
   Strategy
@@ -15,6 +15,7 @@ type Props = {
   setUsdValue: Dispatch<SetStateAction<number>>
   setIsUSD: Dispatch<SetStateAction<boolean>>
   setPriceParams: Dispatch<SetStateAction<any>>
+  disabled?: boolean
 }
 
 const AddProductFormPrice = ({
@@ -26,7 +27,8 @@ const AddProductFormPrice = ({
   setEthValue,
   setUsdValue,
   setIsUSD,
-  setPriceParams
+  setPriceParams,
+  disabled
 }: Props) => {
   const [priceStrategy, setPriceStrategy] = useState<Strategy>(
     strategiesRender[0]
@@ -50,7 +52,6 @@ const AddProductFormPrice = ({
 
   return (
     <>
-      <h2 className="pb-6">Pricing</h2>
       <div className="grid grid-cols-3 gap-2 pt-3 pb-6 sm:grid-cols-3">
         {strategiesRender.map((strategy, i) => (
           <CardBasic
@@ -58,6 +59,7 @@ const AddProductFormPrice = ({
             label={strategy.label}
             isActive={strategy.label == priceStrategy.label}
             setisActive={handleSetStrategy}
+            disabled={disabled}
           />
         ))}
       </div>
@@ -69,6 +71,7 @@ const AddProductFormPrice = ({
             usdValue={usdValue}
             setUsdValue={setUsdValue}
             label="Price per unit"
+            disabled={disabled}
           />
           <InputSwitch
             label="Dynamic pricing"
@@ -89,21 +92,21 @@ const AddProductFormPrice = ({
             }
             enabled={isUSD}
             setEnabled={setIsUSD}
+            disabled={disabled}
           />
           {isFree ? (
-            <p className="text-yellow-600">
-              <b>
-                If a price is not set this product can be purchased for free
-              </b>
-            </p>
+            <div className="text-left">
+              <NoteText text="If a price is not set this product can be purchased for free" />
+            </div>
           ) : null}
         </>
       ) : (
-        <StrategyComponent setPriceParams={setPriceParams} units={units} />
+        <StrategyComponent
+          setPriceParams={setPriceParams}
+          units={units}
+          disabled={disabled}
+        />
       )}
-      <div>
-        <hr className="w-20 mx-auto my-16 border-gray-300" />
-      </div>
     </>
   )
 }
