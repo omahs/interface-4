@@ -39,13 +39,16 @@ export default function Slice() {
         {!success ? (
           !loading ? (
             <>
-              <div className="pt-16 text-center sm:pt-20">
+              <div className="max-w-2xl pt-32 pb-12 mx-auto text-center">
                 <DoubleText
                   inactive
                   logoText="Create Slicer"
                   size="text-4xl sm:text-5xl"
                   position="pb-4 sm:pb-6"
                 />
+                <p className="text-lg leading-8 text-gray-600">
+                  Slicers are collaborative on-chain stores. ...
+                </p>
               </div>
               <SliceForm
                 success={success}

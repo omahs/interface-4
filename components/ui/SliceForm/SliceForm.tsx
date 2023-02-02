@@ -1,5 +1,10 @@
 import { useState, Dispatch, SetStateAction } from "react"
-import { Button, SliceFormBlockSplitter } from "@components/ui"
+import {
+  Button,
+  FAQsItem,
+  NoteText,
+  SliceFormBlockSplitter
+} from "@components/ui"
 import { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
 import MessageBlock from "../MessageBlock"
@@ -122,10 +127,6 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   return (
     <form className="md:flex" onSubmit={submit}>
       <div className="w-full max-w-screen-sm py-6 mx-auto space-y-4 md:w-3/5">
-        <SliceFormDescription />
-        <p className="pt-2 font-semibold text-center text-yellow-600">
-          Add initial owners and their slices
-        </p>
         <SliceFormBlockSplitter
           success={success}
           addresses={addresses}
@@ -141,47 +142,50 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           setIsImmutable={setIsImmutable}
           setIsCreatorMetadata={setIsCreatorMetadata}
         />
+        <SliceFormDescription />
         <div className="py-8 space-y-4 text-yellow-600 sm:px-6">
           {totalShares > 4000000000 && (
-            <p>
-              <strong>Note:</strong> you can create slicers with up to 4 Billion
-              total slices.
-            </p>
+            <NoteText
+              error
+              text="Slicers can have up to 4 Billion slices in total"
+            />
           )}
           {totalShares === 1 && (
-            <p>
-              <strong>Note:</strong> you are about to create a
-              non-fractionalized Slicer. That means that there can only be a
-              single owner at any given time.
-            </p>
+            <NoteText text="you are about to create a non-fractionalized Slicer. That means that there can only be a single owner at any given time" />
           )}
           {minimumShares != 0 && totalShares == minimumShares && (
-            <p>
-              <strong>Note:</strong> a user would need to own all of the slices
-              to add products or change metadata of this slicer. Superowner
-              slices cannot be changed later, so make sure this is the desired
-              behaviour.
-            </p>
+            <NoteText text="Only someone who holds all of the slices can add products or change the metadata of this slicer. Superowner slices cannot be changed later, so make sure this is the desired behaviour" />
           )}
-          <p>
-            <strong>Note:</strong> superowner slices and total slices cannot be
-            changed later.
-          </p>
+          <NoteText
+            text="Superowner slices and total slices cannot be
+              changed later"
+          />
           {process.env.NEXT_PUBLIC_CHAIN_ID === "5" && (
-            <p>
-              <strong>Note:</strong> this version of Slice runs on Goerli
-              Testnet, so it does not use real ETH. You can get some ETH on
-              Goerli{" "}
-              <a
-                href="https://faucet.paradigm.xyz/"
-                target="_blank"
-                rel="noreferrer"
-                className="font-black highlight"
-              >
-                here
-              </a>
-              .
-            </p>
+            <NoteText
+              text={
+                <>
+                  You can get Goerli ETH from the{" "}
+                  <a
+                    href="https://faucet.paradigm.xyz/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="underline"
+                  >
+                    Paradigm
+                  </a>{" "}
+                  or{" "}
+                  <a
+                    href="https://goerlifaucet.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="underline"
+                  >
+                    Alchemy
+                  </a>{" "}
+                  faucets
+                </>
+              }
+            />
           )}
         </div>
         <div>

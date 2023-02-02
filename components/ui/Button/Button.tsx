@@ -89,7 +89,7 @@ const Button: FC<ButtonProps> = (props) => {
           {loading ? (
             <div className="flex items-center justify-center w-full">
               {loadingLabel && <p className="mr-3">{loadingLabel}</p>}
-              <Spinner color="text-white nightwind-prevent" />
+              <Spinner color="text-random2-300" />
             </div>
           ) : (
             <div className="flex items-center justify-center">

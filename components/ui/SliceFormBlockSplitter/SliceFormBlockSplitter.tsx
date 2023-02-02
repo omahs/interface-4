@@ -66,7 +66,7 @@ const SliceFormBlockSplitter = ({
   return (
     <div className="grid items-center grid-cols-8 text-left xs:grid-cols-10 md:grid-cols-12 gap-x-4 gap-y-4 xs:gap-y-6">
       <p className="mb-[-25px] text-sm text-gray-700 font-semibold hidden xs:block xs:col-span-5 xs:col-start-2 md:col-span-7 md:col-start-2">
-        Addresses
+        Owners
       </p>
       <div className="mb-[-25px] text-gray-700 relative items-center hidden xs:flex">
         <p className="pr-1 text-sm font-semibold">Slices</p>
@@ -129,17 +129,15 @@ const SliceFormBlockSplitter = ({
         )
       })}
 
-      <div className="col-span-1 col-start-1 mx-auto ">
-        <Add onClick={() => setInputCount(inputCount + 1)} />
-      </div>
-
-      <div className="col-span-7 py-3 pr-2 text-left text-green-500 xs:col-span-6 md:col-span-6">
-        <p
-          className="inline-block font-semibold opacity-75 cursor-pointer hover:opacity-100"
+      <div className="col-span-7 col-start-1 sm:ml-3">
+        <div
+          className="inline-flex gap-4 text-green-600 opacity-75 cursor-pointer hover:opacity-100"
           onClick={() => setInputCount(inputCount + 1)}
         >
-          Add slicer owner
-        </p>
+          <Add />
+
+          <p className="inline-block font-semibold">Add owner</p>
+        </div>
       </div>
 
       <div className="relative flex items-center justify-end col-span-5 pb-3 xs:col-end-7">
@@ -148,20 +146,8 @@ const SliceFormBlockSplitter = ({
           text={
             <>
               <p>
-                Accounts with more than the chosen amount of slices will be{" "}
-                <a
-                  className="font-black highlight"
-                  href="/#superowner"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  superowners with privileged access
-                </a>{" "}
-                to the slicer.
-              </p>
-              <p className="font-bold">
-                Only superowners can edit slicer metadata and sell products from
-                the decentralized store.
+                Accounts with more than the chosen amount of slices will be able
+                to <b>edit slicer metadata and add products on sale.</b>
               </p>
             </>
           }
@@ -190,13 +176,13 @@ const SliceFormBlockSplitter = ({
             Math.floor((minimumShares / totalShares) * 10000) / 100 + "%"}
         </p>
       </div>
-
+      {/* 
       <SliceFormAdvancedSettings
         isImmutable={isImmutable}
         isCreatorMetadata={isCreatorMetadata}
         setIsImmutable={setIsImmutable}
         setIsCreatorMetadata={setIsCreatorMetadata}
-      />
+      /> */}
     </div>
   )
 }
