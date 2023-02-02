@@ -42,7 +42,7 @@ const CardImage = ({
 }: Props) => {
   return (
     <div
-      className={`relative group w-full flex-shrink-0 overflow-hidden backdrop-blur-0 ${className} nightwind-prevent-block img-background ${size}`}
+      className={`relative group w-full flex-shrink-0 overflow-hidden ${className} nightwind-prevent-block img-background ${size}`}
     >
       {href ? (
         <Link href={href}>
