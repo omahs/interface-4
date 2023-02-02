@@ -47,7 +47,8 @@ export default function Slice() {
                   position="pb-4 sm:pb-6"
                 />
                 <p className="text-lg leading-8 text-gray-600">
-                  Slicers are collaborative on-chain stores. ...
+                  Slicers are on-chain stores that split any payment received to
+                  their owners.
                 </p>
               </div>
               <SliceForm

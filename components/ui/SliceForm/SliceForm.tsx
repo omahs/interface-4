@@ -125,7 +125,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   }
 
   return (
-    <form className="md:flex" onSubmit={submit}>
+    <form className="md:items-center md:flex" onSubmit={submit}>
       <div className="w-full max-w-screen-sm py-6 mx-auto space-y-4 md:w-3/5">
         <SliceFormBlockSplitter
           success={success}
@@ -142,7 +142,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           setIsImmutable={setIsImmutable}
           setIsCreatorMetadata={setIsCreatorMetadata}
         />
-        <SliceFormDescription />
+        {/* <SliceFormDescription /> */}
         <div className="py-8 space-y-4 text-yellow-600 sm:px-6">
           {totalShares > 4000000000 && (
             <NoteText
@@ -192,7 +192,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           <MessageBlock msg={message} />
         </div>
       </div>
-      <div className="justify-center md:h-screen md:flex md:flex-col md:w-2/5 md:sticky md:top-0 md:-mt-24">
+      <div className="justify-center md:h-[720px] md:flex md:flex-col md:w-2/5 md:sticky md:top-0 md:-mt-24">
         <div>
           <PieChart
             addresses={addresses}
