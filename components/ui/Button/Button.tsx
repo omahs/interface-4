@@ -101,11 +101,11 @@ const Button: FC<ButtonProps> = (props) => {
       )}
       {double && (
         <div
-          className={`${className} w-full shadow-light-random animate-pulse-slow opacity-80 absolute top-0 mt-[0.6rem] ml-[0.6rem] bg-gradient-to-br ${
+          className={`${className} w-full shadow-light-random animate-pulse-slow opacity-80 absolute top-0 translate-x-[0.6rem] translate-y-[0.6rem] bg-gradient-to-br ${
             color1[3]
           } ${color2[4]} text-transparent ${
             !disabled
-              ? "peer-hover:mt-0 peer-hover:ml-0 peer-focus:mt-0 peer-focus:ml-0 peer-focus:mr-0 transition-all duration-150"
+              ? "peer-hover:translate-x-0 peer-hover:translate-y-0 peer-focus:translate-x-0 peer-focus:translate-y-0 transition-all duration-150"
               : ""
           }`}
         />
