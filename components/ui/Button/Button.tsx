@@ -24,7 +24,7 @@ interface ButtonProps {
 const Button: FC<ButtonProps> = (props) => {
   const {
     wrapperClassName = "",
-    className = "h-[40px] font-bold tracking-wide rounded-sm overflow-hidden border-white border-[3px] nightwind-prevent px-7 min-w-[150px] focus:outline-none",
+    className = "h-[38px] font-bold tracking-wide rounded-md overflow-hidden nightwind-prevent px-5 min-w-[150px] focus:outline-none",
     color = "text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700",
     type = "button",
     label,
@@ -101,11 +101,11 @@ const Button: FC<ButtonProps> = (props) => {
       )}
       {double && (
         <div
-          className={`${className} w-full shadow-light-random absolute top-0 mt-[0.6rem] ml-[0.6rem] mr-[-0.6rem] bg-gradient-to-br ${
+          className={`${className} w-full shadow-light-random animate-pulse-slow opacity-80 absolute top-0 mt-[0.6rem] ml-[0.6rem] bg-gradient-to-br ${
             color1[3]
           } ${color2[4]} text-transparent ${
             !disabled
-              ? "peer-hover:mt-0 peer-hover:ml-0 peer-hover:mr-0 peer-focus:mt-0 peer-focus:ml-0 peer-focus:mr-0 transition-all duration-150"
+              ? "peer-hover:mt-0 peer-hover:ml-0 peer-focus:mt-0 peer-focus:ml-0 peer-focus:mr-0 transition-all duration-150"
               : ""
           }`}
         />
