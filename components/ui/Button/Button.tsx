@@ -80,7 +80,7 @@ const Button: FC<ButtonProps> = (props) => {
       ) : (
         <button
           className={`peer relative z-10 ${className} ${
-            disabled ? "text-white bg-gray-600 cursor-not-allowed" : color
+            disabled ? "text-white bg-gray-500 cursor-not-allowed" : color
           }`}
           type={type}
           onClick={!disabled && !loading ? onClick : null}
@@ -98,13 +98,9 @@ const Button: FC<ButtonProps> = (props) => {
           )}
         </button>
       )}
-      {double && (
+      {double && !disabled && (
         <div
-          className={`${className} w-full shadow-light-random animate-pulse-slow opacity-80 absolute top-0 translate-x-[0.6rem] translate-y-[0.6rem] bg-gradient-to-br from-random1-300 to-random2-300 nightwind-prevent text-transparent ${
-            !disabled
-              ? "peer-hover:translate-x-0 peer-hover:translate-y-0 peer-focus:translate-x-0 peer-focus:translate-y-0 transition-all duration-150"
-              : ""
-          }`}
+          className={`${className} w-full shadow-light-random opacity-80 absolute top-0 translate-x-[0.6rem] translate-y-[0.6rem] bg-gradient-to-br from-random1-300 to-random2-300 nightwind-prevent text-transparent peer-hover:translate-x-0 peer-hover:translate-y-0 peer-focus:translate-x-0 peer-focus:translate-y-0 transition-all duration-150 animate-pulse-slow`}
         />
       )}
     </div>
