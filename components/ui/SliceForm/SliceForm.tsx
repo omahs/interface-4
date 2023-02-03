@@ -32,7 +32,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   const addRecentTransaction = useAddRecentTransaction()
   const [addresses, setAddresses] = useState([""])
   const [shares, setShares] = useState([1000000])
-  const [minimumShares, setMinimumShares] = useState(0)
+  const [minimumShares, setMinimumShares] = useState(1000000)
   const [totalShares, setTotalShares] = useState(1000000)
   const [isImmutable, setIsImmutable] = useState(false)
   const [isCreatorMetadata, setIsCreatorMetadata] = useState(false)
@@ -125,8 +125,9 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
   }
 
   return (
-    <form className="md:items-center md:flex" onSubmit={submit}>
-      <div className="w-full max-w-screen-sm py-6 mx-auto space-y-4 md:w-3/5">
+    <form className="md:flex" onSubmit={submit}>
+      <div className="w-full max-w-screen-sm py-6 mx-auto space-y-4 md:flex-grow md:w-3/5">
+        <SliceFormDescription />
         <SliceFormBlockSplitter
           success={success}
           addresses={addresses}
@@ -142,7 +143,6 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           setIsImmutable={setIsImmutable}
           setIsCreatorMetadata={setIsCreatorMetadata}
         />
-        {/* <SliceFormDescription /> */}
         <div className="py-8 space-y-4 text-yellow-600 sm:px-6">
           {totalShares > 4000000000 && (
             <NoteText
@@ -153,9 +153,9 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           {totalShares === 1 && (
             <NoteText text="you are about to create a non-fractionalized Slicer. That means that there can only be a single owner at any given time" />
           )}
-          {minimumShares != 0 && totalShares == minimumShares && (
+          {/* {minimumShares != 0 && totalShares == minimumShares && (
             <NoteText text="Only someone who holds all of the slices can add products or change the metadata of this slicer. Superowner slices cannot be changed later, so make sure this is the desired behaviour" />
-          )}
+          )} */}
           <NoteText
             text="Superowner slices and total slices cannot be
               changed later"
@@ -192,7 +192,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           <MessageBlock msg={message} />
         </div>
       </div>
-      <div className="justify-center md:h-[720px] md:flex md:flex-col md:w-2/5 md:sticky md:top-0 md:-mt-24">
+      <div className="justify-center md:h-screen md:flex md:flex-col md:w-2/5 md:sticky md:top-0 md:-mt-24">
         <div>
           <PieChart
             addresses={addresses}

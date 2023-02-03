@@ -6,15 +6,11 @@ const SliceFormDescription = () => {
       <div className="py-6 mx-auto space-y-4 sm:px-6 max-w-screen-xs md:text-left">
         <div className="pb-4 prose">
           <p>
-            <b>Slicers are collaborative on-chain stores.</b>
+            <b>Slices 🍰</b> are transferable ERC1155 tokens which represent
+            ownership over the slicer and its earnings.
           </p>
           <p>
-            Owners can use them to sell any product in any currency, fully
-            on-chain, and to split payments between multiple addresses.
-          </p>
-          <p>
-            <DoubleText inactive logoText="Slices 🍰" size="text-normal" />{" "}
-            represent ownership over a slicer and its earnings.
+            Choose the initial owners by assigning an amount of slices to each.
           </p>
         </div>
       </div>

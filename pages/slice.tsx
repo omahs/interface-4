@@ -19,9 +19,9 @@ export default function Slice() {
   return (
     <Container size="max-w-screen-xl pb-12 md:pb-0">
       <NextSeo
-        title="Create a new slicer"
+        title="Create slicer"
         openGraph={{
-          title: `Create a new slicer | ${defaultTitle}`,
+          title: `Create slicer | ${defaultTitle}`,
           description: defaultDescription,
           url: domain,
           images: [
@@ -48,7 +48,7 @@ export default function Slice() {
                 />
                 <p className="text-lg leading-8 text-gray-600">
                   Slicers are on-chain stores that split any payment received to
-                  their owners.
+                  their owners
                 </p>
               </div>
               <SliceForm
@@ -84,21 +84,21 @@ export default function Slice() {
           )
         ) : (
           <ActionScreen
-            highlightTitle="Slicer created! 🍰"
+            highlightTitle={`Slicer #${Number(eventLog?.tokenId)} created! 🍰`}
             helpText={
               <div className="max-w-lg pb-6 mx-auto space-y-4">
                 <p>
                   Your slicer address is <b>{eventLog && eventLog[0]}</b>
                 </p>
                 <p>
-                  If you are a superowner, you can now customize it by clicking
-                  on the edit icon near the slicer name
+                  If you are a superowner, you can now customize it on its page
+                  by clicking on the edit icon near the slicer name
                 </p>
               </div>
             }
             buttonLabel="Go to slicer"
             href={`/slicer/${Number(eventLog?.tokenId)}`}
-            buttonLabelSecondary="Create a new Slicer"
+            buttonLabelSecondary="Create Slicer"
             onClickSecondary={() => setSuccess(false)}
           />
         )}

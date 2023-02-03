@@ -40,9 +40,22 @@ const SliceFormBlockSplitter = ({
   setIsCreatorMetadata
 }: Props) => {
   const { account } = useAppContext()
+  const [minimumSharesAuto, setMinimumSharesAuto] = useState(true)
   const [initAddress, setInitAddress] = useState("")
   const [inputCount, setInputCount] = useState(1)
   const [removedCount, setRemovedCount] = useState(0)
+
+  const handleSetMinimumShares = (value: number) => {
+    setMinimumShares(value)
+    setMinimumSharesAuto(false)
+  }
+
+  useEffect(() => {
+    if (minimumSharesAuto) {
+      const maxShares = Math.max(...shares)
+      setMinimumShares(maxShares)
+    }
+  }, [totalShares, setMinimumShares])
 
   useEffect(() => {
     setInitAddress(account)
@@ -59,14 +72,14 @@ const SliceFormBlockSplitter = ({
     setRemovedCount(0)
     setAddresses([initAddress])
     setShares([1000000])
-    setMinimumShares(0)
+    setMinimumShares(1000000)
     setTotalShares(1000000)
   }
 
   return (
     <div className="grid items-center grid-cols-8 text-left xs:grid-cols-10 md:grid-cols-12 gap-x-4 gap-y-4 xs:gap-y-6">
       <p className="mb-[-25px] text-sm text-gray-700 font-semibold hidden xs:block xs:col-span-5 xs:col-start-2 md:col-span-7 md:col-start-2">
-        Owners
+        Owner addresses
       </p>
       <div className="mb-[-25px] text-gray-700 relative items-center hidden xs:flex">
         <p className="pr-1 text-sm font-semibold">Slices</p>
@@ -94,11 +107,6 @@ const SliceFormBlockSplitter = ({
                     ownership.
                   </>
                 )}
-              </p>
-              <p>
-                There is no right or wrong amount, the only effect is to
-                increase/reduce partial ownership that owners may trade in the
-                open market (nft marketplaces).
               </p>
               <p>
                 If the displayed percentage is green, the owner is also a
@@ -146,8 +154,8 @@ const SliceFormBlockSplitter = ({
           text={
             <>
               <p>
-                Accounts with more than the chosen amount of slices will be able
-                to <b>edit slicer metadata and add products on sale.</b>
+                Accounts with more than the chosen amount of slices can{" "}
+                <b>edit slicer metadata and add products on sale.</b>
               </p>
             </>
           }
@@ -159,9 +167,10 @@ const SliceFormBlockSplitter = ({
         <Input
           type="number"
           placeholder="100000"
+          value={minimumShares}
+          onChange={handleSetMinimumShares}
           error={minimumShares > totalShares || minimumShares < 0}
           required
-          onChange={setMinimumShares}
           min={1}
         />
       </div>
