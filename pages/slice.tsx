@@ -39,7 +39,7 @@ export default function Slice() {
         {!success ? (
           !loading ? (
             <>
-              <div className="max-w-2xl pt-32 pb-12 mx-auto text-center">
+              <div className="max-w-2xl pt-32 pb-20 mx-auto text-center">
                 <DoubleText
                   inactive
                   logoText="Create Slicer"
