@@ -1,18 +1,14 @@
-import { useTheme } from "next-themes"
-import nightwind from "nightwind/helper"
 import Logo from "@components/icons/Logo"
-import Nightwind from "@components/icons/Nightwind"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import { Dispatch, SetStateAction } from "react"
 import { DropdownMenuElement } from ".."
-import Banknotes from "@components/icons/Banknotes"
 type Props = {
   showDropdown: boolean
   setShowDropdown: Dispatch<SetStateAction<boolean>>
 }
 
 function DropdownMenu({ showDropdown, setShowDropdown }: Props) {
-  const { theme, setTheme } = useTheme()
+  // const { theme, setTheme } = useTheme()
 
   // const toggle = () => {
   //   nightwind.beforeTransition()
