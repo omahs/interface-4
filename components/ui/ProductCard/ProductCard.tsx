@@ -104,8 +104,8 @@ const ProductCard = ({
 
   // const createdAtTimestamp = chainInfo?.createdAtTimestamp
 
+  const [isModalOpened, setIsModalOpened] = useState(false)
   const [convertedEthUsd, setConvertedEthUsd] = useState(0)
-  const [purchasedQuantity, setPurchasedQuantity] = useState(0)
 
   const formattedEthPrice = totalPrice
     ? `Ξ ${Math.round(totalPrice / 10 ** 15) / 1000}`
@@ -113,6 +113,13 @@ const ProductCard = ({
   const formattedUsdPrice = convertedEthUsd
     ? `$ ${formatNumber(Math.round(convertedEthUsd))}`
     : "free"
+  const purchasedQuantity =
+    Number(
+      purchases?.find(
+        (p: Purchase) =>
+          p.slicerId === String(slicerId) && p.productId === String(productId)
+      )?.totalQuantity
+    ) || 0
 
   const productPrice = chainInfo
     ? ethPrice || extValue
@@ -157,19 +164,6 @@ const ProductCard = ({
         ? "text-red-500"
         : "text-yellow-600"
       : "text-green-600")
-
-  //todo: optimize
-  useEffect(() => {
-    setPurchasedQuantity(0)
-    purchases?.map((p: Purchase) => {
-      if (
-        p.slicerId === String(slicerId) &&
-        p.productId === String(productId)
-      ) {
-        setPurchasedQuantity(Number(p.totalQuantity))
-      }
-    })
-  }, [purchases])
 
   const handleOnClick = () => {
     setModalView({
@@ -227,10 +221,11 @@ const ProductCard = ({
   }, [price, totalPrice, ethUsd])
 
   useEffect(() => {
-    if (displayProduct) {
+    if (displayProduct && purchases && !isModalOpened) {
       handleOnClick()
+      setIsModalOpened(true)
     }
-  }, [displayProduct])
+  }, [displayProduct, purchases])
 
   return (
     <>
