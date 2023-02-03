@@ -12,7 +12,7 @@ const Banner = ({
   children,
   title,
   inverted,
-  color = "text-white bg-gray-800",
+  color = "text-white bg-gray-800 dark:bg-gray-200",
   id
 }: Props) => {
   return (

@@ -129,7 +129,7 @@ const SlicersGrid = ({ data }: Props) => {
           </p>
         )}
         <div className="flex justify-center">
-          <Button label="Create a new slicer" href="/slice" />
+          <Button label="Create slicer" href="/slice" />
         </div>
       </div>
     </>

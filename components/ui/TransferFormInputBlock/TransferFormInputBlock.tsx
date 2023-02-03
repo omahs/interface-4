@@ -43,7 +43,7 @@ const TransferFormInputBlock = ({
       setTotalShares={setTotalShares}
     />
   ) : (
-    <div className="grid items-center grid-cols-8 text-left xs:grid-cols-10 md:grid-cols-12 gap-x-4 gap-y-4 xs:gap-y-6">
+    <div className="grid items-center grid-cols-8 text-left xs:grid-cols-10 md:grid-cols-12 gap-x-4 gap-y-2 xs:gap-y-4">
       <p className="mb-[-25px] text-sm text-gray-700 font-semibold hidden xs:block xs:col-span-5 xs:col-start-2 md:col-span-7 md:col-start-2">
         Addresses
       </p>
@@ -87,8 +87,12 @@ const TransferFormInputBlock = ({
           />
         )
       })}
-      <div className="col-span-1 col-start-1 mx-auto">
-        <Add onClick={() => setInputCount(inputCount + 1)} />
+
+      <div className="flex items-center h-12 col-span-7 col-start-1">
+        <Add
+          onClick={() => setInputCount(inputCount + 1)}
+          className="text-green-600 opacity-75 cursor-pointer sm:ml-3 hover:opacity-100"
+        />
       </div>
       <p className="col-span-4 py-3 pr-2 text-right xs:col-span-3 xs:col-end-7 md:col-end-9 md:col-span-3">
         Total slices
