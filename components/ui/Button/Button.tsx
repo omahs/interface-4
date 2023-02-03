@@ -1,7 +1,6 @@
 import { FC } from "react"
 import Spinner from "@components/icons/Spinner"
 import Link from "next/link"
-import { useAppContext } from "@components/ui/context"
 import saEvent from "@utils/saEvent"
 
 interface ButtonProps {
@@ -24,8 +23,7 @@ interface ButtonProps {
 const Button: FC<ButtonProps> = (props) => {
   const {
     wrapperClassName = "",
-    className = "h-[40px] font-bold tracking-wide rounded-sm overflow-hidden border-white border-[3px] nightwind-prevent px-7 min-w-[150px] focus:outline-none",
-    color = "text-white bg-blue-600 hover:bg-blue-700 focus:bg-blue-700",
+    className = "h-[38px] font-bold tracking-wide rounded-md overflow-hidden px-5 min-w-[150px] duration-150 focus:outline-none",
     type = "button",
     label,
     loadingLabel,
@@ -33,14 +31,15 @@ const Button: FC<ButtonProps> = (props) => {
     onClick,
     loading = false,
     double = true,
+    color = `text-white bg-black ${
+      double ? "" : "hover:bg-gray-700 focus:bg-gray-700"
+    }`,
     external = false,
     targetBlank = true,
     disabled = false,
     saEventName = "",
     ...rest
   } = props
-
-  const { color1, color2 } = useAppContext()
 
   return (
     <div
@@ -81,7 +80,7 @@ const Button: FC<ButtonProps> = (props) => {
       ) : (
         <button
           className={`peer relative z-10 ${className} ${
-            disabled ? "text-white bg-gray-600 cursor-not-allowed" : color
+            disabled ? "text-white bg-gray-500 cursor-not-allowed" : color
           }`}
           type={type}
           onClick={!disabled && !loading ? onClick : null}
@@ -90,7 +89,7 @@ const Button: FC<ButtonProps> = (props) => {
           {loading ? (
             <div className="flex items-center justify-center w-full">
               {loadingLabel && <p className="mr-3">{loadingLabel}</p>}
-              <Spinner color="text-white nightwind-prevent" />
+              <Spinner color="text-random2-300" />
             </div>
           ) : (
             <div className="flex items-center justify-center">
@@ -99,15 +98,9 @@ const Button: FC<ButtonProps> = (props) => {
           )}
         </button>
       )}
-      {double && (
+      {double && !disabled && (
         <div
-          className={`${className} w-full shadow-light-random absolute top-0 mt-[0.6rem] ml-[0.6rem] mr-[-0.6rem] bg-gradient-to-br ${
-            color1[3]
-          } ${color2[4]} text-transparent ${
-            !disabled
-              ? "peer-hover:mt-0 peer-hover:ml-0 peer-hover:mr-0 peer-focus:mt-0 peer-focus:ml-0 peer-focus:mr-0 transition-all duration-150"
-              : ""
-          }`}
+          className={`${className} w-full shadow-light-random opacity-80 absolute top-0 translate-x-[0.6rem] translate-y-[0.6rem] bg-gradient-to-br from-random1-300 to-random2-300 nightwind-prevent text-transparent peer-hover:translate-x-0 peer-hover:translate-y-0 peer-focus:translate-x-0 peer-focus:translate-y-0 transition-all duration-150 animate-pulse-slow`}
         />
       )}
     </div>

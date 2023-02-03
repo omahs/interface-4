@@ -12,8 +12,7 @@ h3 {
 }
 
 a {
-  @apply cursor-pointer font-medium text-black hover:text-random2-600;
-  text-decoration: none;
+  @apply cursor-pointer font-medium hover:text-random2-600 no-underline;
 }
 
 * {
@@ -21,8 +20,7 @@ a {
 }
 
 .highlight {
-  @apply hover:text-random2-600;
-  text-decoration-line: underline;
+  @apply hover:text-random2-600 underline;
   text-decoration-style: solid;
   text-decoration-color: var(--darkColor2);
   text-decoration-thickness: 2px;
