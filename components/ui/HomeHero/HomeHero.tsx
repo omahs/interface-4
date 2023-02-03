@@ -42,21 +42,16 @@ export default function HomeHero() {
                 </a>
               </div>
             </div> */}
-            <div className="text-center">
-              <h1 className="text-2xl font-black tracking-tight text-gray-900 sm:text-4xl md:text-5xl md:leading-[1.1]">
-                Decentralized infrastructure for commerce and payments
+            <div className="max-w-2xl mx-auto text-center">
+              <h1 className="text-3xl font-black tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
+                Buy and sell anything fully on-chain
               </h1>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-                Buy and sell anything fully on-chain, and split payments between
-                multiple addresses
+                Sell items, mint NFTs, split payments and more from your
+                decentralized store, and allow buyers to purchase in ETH or any
+                token directly from their wallet.
               </p>
               <div className="flex items-center justify-center mt-10 gap-x-6">
-                {/* <Link
-                  href="#"
-                  className="rounded-md bg-indigo-600 px-3.5 py-1.5 text-base font-semibold leading-7 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Create slicer
-                </Link> */}
                 <Button label="Create slicer" href="/slice" double={false} />
                 <Link href="/slicer">
                   <a className="text-base font-semibold leading-7 text-gray-900 group">

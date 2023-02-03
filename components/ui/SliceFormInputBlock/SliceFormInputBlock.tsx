@@ -90,7 +90,7 @@ const SliceFormInputBlock = ({
   return (
     visible && (
       <>
-        <div className="col-span-1 col-start-1 mx-auto mt-3 mb-3">
+        <div className="col-span-1 col-start-1 mt-3 mb-3 sm:ml-3">
           <div className="">
             {index === 0 ? (
               address &&

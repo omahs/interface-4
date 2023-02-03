@@ -44,7 +44,7 @@ const SlicersList = ({ account, payeeData, slicers, loading }: Props) => {
       actionScreenText="You have no slicers :("
       actionScreenHref="/slice"
       actionScreenButtonLabel="Start slicing"
-      endpageButtonLabel="Create a new slicer"
+      endpageButtonLabel="Create slicer"
       wrapperClassName="space-y-20 sm:space-y-28"
     >
       <>
