@@ -53,7 +53,11 @@ const SliceFormBlockSplitter = ({
   useEffect(() => {
     if (minimumSharesAuto) {
       const maxShares = Math.max(...shares)
-      setMinimumShares(maxShares)
+      setMinimumShares(
+        maxShares > totalShares / 2
+          ? Math.floor(totalShares / 2 + 1)
+          : maxShares
+      )
     }
   }, [totalShares, setMinimumShares])
 
