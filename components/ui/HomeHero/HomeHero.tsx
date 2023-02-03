@@ -4,7 +4,7 @@ import Link from "next/link"
 export default function HomeHero() {
   return (
     <div className="isolate">
-      <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
+      <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-x-hidden blur-3xl sm:top-[-20rem]">
         <svg
           className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
           viewBox="0 0 1155 678"
@@ -32,7 +32,7 @@ export default function HomeHero() {
       </div>
       <main>
         <div className="relative">
-          <div className="max-w-4xl pt-32 pb-48 mx-auto">
+          <div className="max-w-4xl pt-48 pb-32 mx-auto">
             {/* <div className="hidden sm:mb-8 sm:flex sm:justify-center">
               <div className="relative px-3 py-1 text-sm leading-6 text-gray-600 rounded-full ring-1 ring-gray-900 ring-opacity-10 hover:ring-opacity-20">
                 Announcing our next round of funding.{" "}
@@ -67,7 +67,7 @@ export default function HomeHero() {
               </div>
             </div>
           </div>
-          <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
+          <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-x-hidden blur-3xl sm:top-[calc(100%-30rem)]">
             <svg
               className="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"
               viewBox="0 0 1155 678"
