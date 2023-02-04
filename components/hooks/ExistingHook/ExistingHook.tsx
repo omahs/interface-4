@@ -12,6 +12,8 @@ import { Hook, HookProps } from "../purchaseHooks"
 import timeout from "@utils/timeout"
 import calculateRoot from "@utils/calculateRoot"
 
+type Props = HookProps & { ethProductPrice: number }
+
 const label = "Existing hook"
 
 const description = (
@@ -29,7 +31,7 @@ const description = (
   </>
 )
 
-const Component = ({ setParams }: HookProps) => {
+const Component = ({ ethProductPrice, setParams }: Props) => {
   const [allowedAddresses, setAllowedAddresses] = useState([])
 
   const [data, setData] = useState([])
@@ -153,11 +155,12 @@ const Component = ({ setParams }: HookProps) => {
               setUsdValue={setUsdValue}
               label="Value per unit"
             />
+            <p className="text-sm font-medium text-left text-gray-600">
+              Total price (incl. standard price): Ξ{" "}
+              {Math.round((Number(ethProductPrice) + Number(ethValue)) * 1000) /
+                1000}
+            </p>
           </div>
-
-          <p className="text-yellow-600">
-            <b>The sent value will be added to the unit product price.</b>
-          </p>
         </>
       )}
       <div>

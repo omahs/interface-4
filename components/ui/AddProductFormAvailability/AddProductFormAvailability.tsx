@@ -24,6 +24,12 @@ const AddProductFormAvailability = ({
   setMaxUnits,
   disabled
 }: Props) => {
+  const handleSetIsLimited = (value: boolean) => {
+    if (!value) {
+      setUnits(0)
+    }
+    setIsLimited(value)
+  }
   return (
     <>
       <div>
@@ -71,7 +77,7 @@ const AddProductFormAvailability = ({
             </>
           }
           enabled={isLimited}
-          setEnabled={setIsLimited}
+          setEnabled={handleSetIsLimited}
           disabled={disabled}
         />
         {isLimited && (

@@ -1,4 +1,8 @@
-import { StrategyParams } from "@components/priceStrategies/strategies"
+import {
+  strategiesRender,
+  Strategy,
+  StrategyParams
+} from "@components/priceStrategies/strategies"
 import ethToWei from "@utils/ethToWei"
 import { formatNumberWithUnit } from "@utils/formatNumber"
 import { ethers } from "ethers"
@@ -61,6 +65,9 @@ const EditProductForm = ({
   )
   const [newIsUSD, setNewIsUSD] = useState(isUSD)
   const [newPriceParams, setNewPriceParams] = useState<StrategyParams>()
+  const [priceStrategy, setPriceStrategy] = useState<Strategy>(
+    strategiesRender[0]
+  )
   const isFree = newPriceParams?.address
     ? false
     : newEthValue != 0
@@ -220,6 +227,9 @@ const EditProductForm = ({
             units={newUnits}
             setPriceParams={setNewPriceParams}
             disabled={loading}
+            priceParams={newPriceParams}
+            priceStrategy={priceStrategy}
+            setPriceStrategy={setPriceStrategy}
           />
         </>
       )}

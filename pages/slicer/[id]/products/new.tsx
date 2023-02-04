@@ -1,6 +1,7 @@
 import {
   ActionScreen,
   AddProductForm,
+  AddProductProgress,
   ConnectBlock,
   Container,
   DoubleText
@@ -21,11 +22,30 @@ import Spinner from "@components/icons/Spinner"
 import { useAppContext } from "@components/ui/context"
 import { StrategyParams } from "@components/priceStrategies/strategies"
 
+export type Step = {
+  status: string
+  label: string
+}
+
+export const initSteps = [
+  { status: "", label: "General" },
+  { status: "", label: "Availability" },
+  { status: "", label: "Pricing" },
+  { status: "", label: "On-chain actions" },
+  { status: "", label: "Redeem info" },
+  { status: "", label: "Notes & files" },
+  { status: "", label: "Review" }
+]
+
+const subtitle = "Configure a product to be sold on your decentralized store"
+
 export default function NewProduct() {
   const { setModalView } = useAppContext()
   const router = useRouter()
   const { id } = router.query
   const { isAllowed, loading } = useAllowed(Number(id))
+  const [steps, setSteps] = useState(initSteps)
+  const [progressStep, setProgressStep] = useState(initSteps[0].label)
   const [uploadStep, setUploadStep] = useState(0)
   const [uploadPct, setUploadPct] = useState(0)
   const [cloneAddress, setCloneAddress] = useState("")
@@ -34,6 +54,9 @@ export default function NewProduct() {
   const [logs, setLogs] = useState<LogDescription[]>()
   const eventLog = getLog(logs, "ProductAdded")
   const productId = eventLog && Number(eventLog[1]._hex)
+  const progressStepIndex = steps.findIndex(
+    ({ label }) => label == progressStep
+  )
 
   useEffect(() => {
     if (uploadStep != 0) {
@@ -52,9 +75,9 @@ export default function NewProduct() {
   }, [loading, uploadStep])
 
   return (
-    <Container page={true} size="max-w-screen-xs">
+    <Container size="max-w-screen-lg pb-12 md:pb-0">
       <NextSeo
-        title="Add product"
+        title="Create product"
         openGraph={{
           title: longTitle,
           description: defaultDescription,
@@ -71,38 +94,58 @@ export default function NewProduct() {
       />
       <ConnectBlock>
         {loading ? (
-          <main className="max-w-[420px] mx-auto sm:max-w-screen-md">
-            <DoubleText
-              inactive
-              logoText="Add product"
-              size="text-4xl sm:text-5xl"
-              position="pb-12"
-            />
+          <div>
+            <div className="max-w-2xl pt-32 pb-20 mx-auto text-center">
+              <DoubleText
+                inactive
+                logoText="Create product"
+                size="text-4xl sm:text-5xl"
+                position="pb-4 sm:pb-6"
+              />
+              <p className="text-lg leading-8 text-gray-600">{subtitle}</p>
+            </div>
             <div className="flex justify-center pb-20">
               <Spinner size="w-10 h-10" />
             </div>
-          </main>
+          </div>
         ) : isAllowed == "product" || isAllowed == "full" ? (
           !success ? (
-            <main className="max-w-[420px] mx-auto sm:max-w-screen-md">
-              <DoubleText
-                inactive
-                logoText="Add product"
-                size="text-4xl sm:text-5xl"
-                position="pb-4 sm:pb-8"
-              />
-              <AddProductForm
-                slicerId={Number(id)}
-                uploadStep={uploadStep}
-                setUploadStep={setUploadStep}
-                setUploadPct={setUploadPct}
-                setSuccess={setSuccess}
-                setLogs={setLogs}
-                setCloneAddress={setCloneAddress}
-                priceParams={priceParams}
-                setPriceParams={setPriceParams}
-              />
-            </main>
+            <div className="text-center">
+              <div className="max-w-2xl pt-32 pb-6 mx-auto">
+                <DoubleText
+                  inactive
+                  logoText="Create product"
+                  size="text-4xl sm:text-5xl"
+                  position="pb-4 sm:pb-6"
+                />
+                <p className="text-lg leading-8 text-gray-600">{subtitle}</p>
+              </div>
+              <div className="flex justify-center">
+                <AddProductProgress
+                  steps={steps}
+                  progressStepIndex={progressStepIndex}
+                  progressStep={progressStep}
+                  setProgressStep={setProgressStep}
+                />
+              </div>
+              <main className="max-w-xl pt-12 mx-auto">
+                <AddProductForm
+                  slicerId={Number(id)}
+                  uploadStep={uploadStep}
+                  setUploadStep={setUploadStep}
+                  setUploadPct={setUploadPct}
+                  setSuccess={setSuccess}
+                  setLogs={setLogs}
+                  setCloneAddress={setCloneAddress}
+                  priceParams={priceParams}
+                  setPriceParams={setPriceParams}
+                  progressStep={progressStep}
+                  progressStepIndex={progressStepIndex}
+                  setProgressStep={setProgressStep}
+                  setSteps={setSteps}
+                />
+              </main>
+            </div>
           ) : (
             <ActionScreen
               highlightTitle="Product added! 🍰"

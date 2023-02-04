@@ -1,6 +1,6 @@
 import useDecodeShortcode, { ReducedShortcode } from "@utils/useDecodeShortcode"
 import React, { Dispatch, SetStateAction } from "react"
-import { FilesList, Shortcodes, Textarea } from ".."
+import { Shortcodes, Textarea } from ".."
 
 type Props = {
   slicerId: number
@@ -8,10 +8,6 @@ type Props = {
   setThankMessage: Dispatch<SetStateAction<string>>
   instructions: string
   setInstructions: Dispatch<SetStateAction<string>>
-  notes: string
-  setNotes: Dispatch<SetStateAction<string>>
-  files: File[]
-  setFiles: Dispatch<SetStateAction<File[]>>
   customShortcodes: ReducedShortcode
   setCustomShortcodes: Dispatch<SetStateAction<ReducedShortcode>>
 }
@@ -22,10 +18,6 @@ const AddProductFormPurchases = ({
   setThankMessage,
   instructions,
   setInstructions,
-  notes,
-  setNotes,
-  files,
-  setFiles,
   customShortcodes,
   setCustomShortcodes
 }: Props) => {
@@ -39,10 +31,12 @@ const AddProductFormPurchases = ({
 
   return (
     <>
-      <h2 className="pb-6">Purchase info</h2>
-      <p className="pb-3">
-        Customize what buyers see after buying the product.
-      </p>
+      <div className="pb-6">
+        <h1 className="pb-6">Redeem info</h1>
+        <p className="text-lg text-gray-600">
+          Customize what buyers see after buying the product
+        </p>
+      </div>
       <div>
         <Textarea
           label="Message to buyers"
@@ -68,27 +62,6 @@ const AddProductFormPurchases = ({
         instructions={instructions}
         setInstructions={setInstructions}
       />
-
-      <div>
-        <hr className="w-20 mx-auto border-gray-300 my-16" />
-      </div>
-      <h2 className="pb-6">Encrypted notes & files</h2>
-      <p className="pb-3">
-        Add files or notes that can only be decrypted by buyers (increases
-        transaction cost).
-      </p>
-      <div>
-        <Textarea
-          label="Encrypted Notes"
-          placeholder="Additional notes"
-          value={notes}
-          onChange={setNotes}
-          rows={4}
-        />
-      </div>
-      <div className="py-6">
-        <FilesList title="Upload files" files={files} setFiles={setFiles} />
-      </div>
     </>
   )
 }

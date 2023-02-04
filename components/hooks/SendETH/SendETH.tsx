@@ -3,15 +3,19 @@ import { ethers, BigNumber } from "ethers"
 import { useEffect, useState } from "react"
 import { Hook, HookProps } from "../purchaseHooks"
 
+type Props = HookProps & { ethProductPrice: number }
+
 const label = "Send ETH to address"
 
 const description = "Send ETH to an external address"
 
-const Component = ({ setParams }: HookProps) => {
+const Component = ({ ethProductPrice, setParams }: Props) => {
   const [address, setAddress] = useState("")
   const [resolvedAddress, setResolvedAddress] = useState("")
   const [usdValue, setUsdValue] = useState(0)
   const [ethValue, setEthValue] = useState(0)
+
+  console.log(ethProductPrice)
 
   useEffect(() => {
     const externalAddress = address
@@ -57,11 +61,12 @@ const Component = ({ setParams }: HookProps) => {
           label="Value per unit"
           required
         />
+        <p className="text-sm font-medium text-left text-gray-600">
+          Total price (incl. standard price): Ξ{" "}
+          {Math.round((Number(ethProductPrice) + Number(ethValue)) * 1000) /
+            1000}
+        </p>
       </div>
-
-      <p className="text-yellow-600">
-        <b>The sent value will be added to the unit product price.</b>
-      </p>
     </>
   )
 }

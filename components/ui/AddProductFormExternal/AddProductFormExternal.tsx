@@ -7,6 +7,7 @@ import {
 } from "@components/hooks/purchaseHooks"
 
 type Props = {
+  ethProductPrice: number
   clonePurchaseHook: boolean
   setClonePurchaseHook: Dispatch<SetStateAction<boolean>>
   params: HookParams
@@ -14,6 +15,7 @@ type Props = {
 }
 
 const AddProductFormExternal = ({
+  ethProductPrice,
   clonePurchaseHook,
   setClonePurchaseHook,
   params,
@@ -40,8 +42,12 @@ const AddProductFormExternal = ({
 
   return (
     <>
-      <h2 className="pb-6">On-chain action</h2>
-      <p className="pb-3">Execute on-chain logic when product is purchased.</p>
+      <div className="pb-6">
+        <h1 className="pb-6">On-chain actions</h1>
+        <p className="text-lg text-gray-600">
+          Execute on-chain logic when the product is purchased
+        </p>
+      </div>
       <div className="space-y-3">
         {defaultPurchaseHooks.map((hook, i) => {
           const { label, deployments } = hook
@@ -66,7 +72,11 @@ const AddProductFormExternal = ({
       {selectedHook != undefined && (
         <>
           <p className="pt-6 pb-3 font-semibold">{displayedHook.description}</p>
-          <HookComponent params={params} setParams={setParams} />
+          <HookComponent
+            ethProductPrice={ethProductPrice}
+            params={params}
+            setParams={setParams}
+          />
 
           <DeployCloneSwitch
             deployments={displayedHook?.deployments}
@@ -81,9 +91,6 @@ const AddProductFormExternal = ({
           )}
         </>
       )}
-      <div>
-        <hr className="w-20 mx-auto my-16 border-gray-300" />
-      </div>
     </>
   )
 }
