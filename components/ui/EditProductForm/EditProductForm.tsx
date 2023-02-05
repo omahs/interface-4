@@ -194,6 +194,8 @@ const EditProductForm = ({
           setIsLimited={setNewIsLimited}
           setUnits={setNewUnits}
           setMaxUnits={setNewMaxUnits}
+          priceParams={newPriceParams}
+          setPriceParams={setNewPriceParams}
           disabled={loading}
         />
         <InputSwitch
