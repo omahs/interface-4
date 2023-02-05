@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { CardText, DeployCloneSwitch } from "../"
+import { CardText, DeployCloneSwitch, NoteText } from "../"
 import {
   defaultPurchaseHooks,
   emptyExternalCall,
@@ -7,14 +7,18 @@ import {
 } from "@components/hooks/purchaseHooks"
 
 type Props = {
+  selectedHook: number
   ethProductPrice: number
   clonePurchaseHook: boolean
-  setClonePurchaseHook: Dispatch<SetStateAction<boolean>>
   params: HookParams
+  setClonePurchaseHook: Dispatch<SetStateAction<boolean>>
+  setSelectedHook: Dispatch<SetStateAction<number>>
   setParams: Dispatch<SetStateAction<HookParams>>
 }
 
 const AddProductFormExternal = ({
+  selectedHook,
+  setSelectedHook,
   ethProductPrice,
   clonePurchaseHook,
   setClonePurchaseHook,
@@ -22,14 +26,14 @@ const AddProductFormExternal = ({
   setParams
 }: Props) => {
   const chainId = process.env.NEXT_PUBLIC_CHAIN_ID
-  const [selectedHook, setSelectedHook] = useState(undefined)
   const displayedHook =
     selectedHook != undefined && defaultPurchaseHooks[selectedHook]
 
   const HookComponent = selectedHook != undefined && displayedHook.Component
 
-  useEffect(() => {
+  const handleSelectHook = (i: number) => {
     setParams({ externalCall: emptyExternalCall })
+    selectedHook == i ? setSelectedHook(undefined) : setSelectedHook(i)
     if (
       displayedHook?.deployments?.cloner[chainId] &&
       !displayedHook?.deployments?.factory[chainId]
@@ -38,13 +42,13 @@ const AddProductFormExternal = ({
     } else {
       setClonePurchaseHook(false)
     }
-  }, [selectedHook])
+  }
 
   return (
     <>
       <div className="pb-6">
         <h1 className="pb-6">On-chain actions</h1>
-        <p className="text-lg text-gray-600">
+        <p className="font-medium text-gray-600">
           Execute on-chain logic when the product is purchased
         </p>
       </div>
@@ -57,12 +61,7 @@ const AddProductFormExternal = ({
             (!deployments ||
               deployments.cloner[chainId] ||
               deployments.factory[chainId]) && (
-              <div
-                key={i}
-                onClick={() =>
-                  isActive ? setSelectedHook(undefined) : setSelectedHook(i)
-                }
-              >
+              <div key={i} onClick={() => handleSelectHook(i)}>
                 <CardText label={label} isActive={isActive} />
               </div>
             )
@@ -71,7 +70,9 @@ const AddProductFormExternal = ({
       </div>
       {selectedHook != undefined && (
         <>
-          <p className="pt-6 pb-3 font-semibold">{displayedHook.description}</p>
+          <p className="pt-6 pb-3 font-medium text-gray-600">
+            {displayedHook.description}
+          </p>
           <HookComponent
             ethProductPrice={ethProductPrice}
             params={params}
@@ -84,10 +85,10 @@ const AddProductFormExternal = ({
             setClonePurchaseHook={setClonePurchaseHook}
           />
           {displayedHook.deployments && (
-            <p className="pt-6 font-semibold text-yellow-600">
-              Deploying this purchase hook requires an additional on-chain
-              transaction
-            </p>
+            <NoteText
+              text="Deploying this purchase hook requires an additional on-chain
+            transaction"
+            />
           )}
         </>
       )}

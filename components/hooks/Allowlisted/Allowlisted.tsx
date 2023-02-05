@@ -17,8 +17,10 @@ const label = "Allowlist"
 const description =
   "Allow purchases only from allowlisted addresses, using Merkle proof verification"
 
-const Component = ({ setParams }: HookProps) => {
-  const [allowedAddressesText, setAllowedAddressesText] = useState("")
+const Component = ({ params, setParams }: HookProps) => {
+  const initAllowedAddresses = params?.allowedAddresses?.join(", ") || ""
+  const [allowedAddressesText, setAllowedAddressesText] =
+    useState(initAllowedAddresses)
 
   const allowedAddresses = allowedAddressesText
     .toLowerCase()

@@ -11,6 +11,7 @@ import {
 import { Hook, HookProps } from "../purchaseHooks"
 import timeout from "@utils/timeout"
 import calculateRoot from "@utils/calculateRoot"
+import useEthUsd from "@utils/useEthUsd"
 
 type Props = HookProps & { ethProductPrice: number }
 
@@ -31,20 +32,47 @@ const description = (
   </>
 )
 
-const Component = ({ ethProductPrice, setParams }: Props) => {
-  const [allowedAddresses, setAllowedAddresses] = useState([])
+const Component = ({ params, ethProductPrice, setParams }: Props) => {
+  const ethUsd = useEthUsd()
 
-  const [data, setData] = useState([])
-  const [address, setAddress] = useState("")
+  const paramsExternalAddress = params?.externalCall?.externalAddress
+  const paramsValue = params?.externalCall?.value
+  const initAddress =
+    (paramsExternalAddress &&
+      paramsExternalAddress != "0x00000000" &&
+      paramsExternalAddress != ethers.constants.AddressZero &&
+      paramsExternalAddress) ||
+    ""
+  const initValue = paramsValue
+    ? Number(BigNumber.from(paramsValue).div(BigNumber.from(10).pow(18)))
+    : 0
+  const initData = params?.externalCall?.data || []
+  const initCheckSignature = params?.fields?.checkFunctionSignature || ""
+  const initExecSignature = params?.fields?.execFunctionSignature || ""
+  const initAllowedAddresses = params?.allowedAddresses?.join(", ") || ""
+
+  const [allowedAddresses, setAllowedAddresses] = useState(
+    params?.allowedAddresses || []
+  )
+
+  const [data, setData] = useState(initData)
+  const [address, setAddress] = useState(initAddress)
   const [resolvedAddress, setResolvedAddress] = useState("")
-  const [checkFunctionSignature, setCheckFunctionSignature] = useState("")
-  const [execFunctionSignature, setExecFunctionSignature] = useState("")
-  const [allowedAddressesString, setAllowedAddressesString] = useState("")
-  const [isContractCall, setIsContractCall] = useState(false)
-  const [isAllowlist, setIsAllowlist] = useState(false)
-  const [isPayable, setIsPayable] = useState(false)
-  const [usdValue, setUsdValue] = useState(0)
-  const [ethValue, setEthValue] = useState(0)
+  const [checkFunctionSignature, setCheckFunctionSignature] =
+    useState(initCheckSignature)
+  const [execFunctionSignature, setExecFunctionSignature] =
+    useState(initExecSignature)
+  const [allowedAddressesText, setAllowedAddressesText] =
+    useState(initAllowedAddresses)
+  const [isContractCall, setIsContractCall] = useState(
+    initCheckSignature != "" || initExecSignature != ""
+  )
+  const [isAllowlist, setIsAllowlist] = useState(
+    params?.allowedAddresses && params?.allowedAddresses.length != 0
+  )
+  const [isPayable, setIsPayable] = useState(Boolean(initValue) || false)
+  const [usdValue, setUsdValue] = useState(initValue * ethUsd)
+  const [ethValue, setEthValue] = useState(initValue)
   const [copiedRoot, setCopiedRoot] = useState(false)
 
   const signatureParams = "(uint256,uint256,address,uint256,bytes,bytes)"
@@ -61,6 +89,36 @@ const Component = ({ ethProductPrice, setParams }: Props) => {
     setCopiedRoot(true)
     await timeout(2000)
     setCopiedRoot(false)
+  }
+
+  const handleSetIsPayable = (value: boolean) => {
+    setIsPayable(value)
+    if (!value) {
+      setEthValue(0)
+      setUsdValue(0)
+    }
+  }
+
+  const handleSetIsContractCall = (value: boolean) => {
+    setIsContractCall(value)
+    if (value) {
+      setCheckFunctionSignature("isPurchaseAllowed")
+      setExecFunctionSignature("onProductPurchase")
+    } else {
+      setCheckFunctionSignature("")
+      setExecFunctionSignature("")
+      setIsAllowlist(false)
+      setAllowedAddressesText("")
+      setAllowedAddresses([])
+    }
+  }
+
+  const handleSetIsAllowlist = (value: boolean) => {
+    setIsAllowlist(value)
+    if (!value) {
+      setAllowedAddressesText("")
+      setAllowedAddresses([])
+    }
   }
 
   useEffect(() => {
@@ -83,6 +141,10 @@ const Component = ({ ethProductPrice, setParams }: Props) => {
         externalAddress,
         checkFunctionSignature: checkSelector,
         execFunctionSignature: execSelector
+      },
+      fields: {
+        checkFunctionSignature,
+        execFunctionSignature
       }
     })
   }, [
@@ -98,32 +160,14 @@ const Component = ({ ethProductPrice, setParams }: Props) => {
 
   useEffect(() => {
     if (isContractCall) {
-      setCheckFunctionSignature("isPurchaseAllowed")
-      setExecFunctionSignature("onProductPurchase")
-    } else {
-      setCheckFunctionSignature("")
-      setExecFunctionSignature("")
-      setAllowedAddresses([])
-    }
-  }, [isContractCall])
-
-  useEffect(() => {
-    if (!isPayable) {
-      setEthValue(0)
-      setUsdValue(0)
-    }
-  }, [isPayable])
-
-  useEffect(() => {
-    if (isContractCall) {
-      const formattedAddresses = allowedAddressesString
+      const formattedAddresses = allowedAddressesText
         .toLowerCase()
         .replaceAll(/\s/g, "")
         .split(",")
         .filter((address) => address != "")
       setAllowedAddresses(formattedAddresses)
     }
-  }, [isContractCall, allowedAddressesString])
+  }, [isContractCall, allowedAddressesText])
 
   return (
     <>
@@ -142,7 +186,7 @@ const Component = ({ ethProductPrice, setParams }: Props) => {
         <InputSwitch
           label="Send ETH"
           enabled={isPayable}
-          setEnabled={setIsPayable}
+          setEnabled={handleSetIsPayable}
         />
       </div>
       {isPayable && (
@@ -153,7 +197,7 @@ const Component = ({ ethProductPrice, setParams }: Props) => {
               setEthValue={setEthValue}
               usdValue={usdValue}
               setUsdValue={setUsdValue}
-              label="Value per unit"
+              label="Amount per unit"
             />
             <p className="text-sm font-medium text-left text-gray-600">
               Total price (incl. standard price): Ξ{" "}
@@ -167,7 +211,7 @@ const Component = ({ ethProductPrice, setParams }: Props) => {
         <InputSwitch
           label="Execute contract logic"
           enabled={isContractCall}
-          setEnabled={setIsContractCall}
+          setEnabled={handleSetIsContractCall}
         />
       </div>
       {isContractCall && (
@@ -248,7 +292,7 @@ const Component = ({ ethProductPrice, setParams }: Props) => {
             <InputSwitch
               label="Allowlist"
               enabled={isAllowlist}
-              setEnabled={setIsAllowlist}
+              setEnabled={handleSetIsAllowlist}
             />
           </div>
           {isAllowlist && (
@@ -261,8 +305,8 @@ const Component = ({ ethProductPrice, setParams }: Props) => {
                 <Textarea
                   label="Addresses list (no ENS)"
                   placeholder="Add addresses separated by comma"
-                  value={allowedAddressesString}
-                  onChange={setAllowedAddressesString}
+                  value={allowedAddressesText}
+                  onChange={setAllowedAddressesText}
                   markdownView={false}
                 />
               </div>

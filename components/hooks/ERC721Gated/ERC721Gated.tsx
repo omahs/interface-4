@@ -11,8 +11,9 @@ const label = "ERC721 NFT-gate"
 const description =
   "Allow purchases only from buyers with at least 1 NFT of the specified collection"
 
-const Component = ({ setParams }: HookProps) => {
-  const [address, setAddress] = useState("")
+const Component = ({ params, setParams }: HookProps) => {
+  const [initAddress] = params?.deploy?.args || []
+  const [address, setAddress] = useState(initAddress || "")
   const [resolvedAddress, setResolvedAddress] = useState("")
 
   useEffect(() => {

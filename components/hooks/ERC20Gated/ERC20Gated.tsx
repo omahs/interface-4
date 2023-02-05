@@ -17,10 +17,15 @@ const label = "ERC20 token-gate"
 const description =
   "Allow purchases only from buyers with the specified amount of ERC20 tokens"
 
-const Component = ({ setParams }: HookProps) => {
-  const [address, setAddress] = useState("")
+const Component = ({ params, setParams }: HookProps) => {
+  const [initAddress, initGateAmount] = params?.deploy?.args || []
+  const [address, setAddress] = useState(initAddress || "")
   const [resolvedAddress, setResolvedAddress] = useState("")
-  const [gateAmount, setGateAmount] = useState(0)
+  const [gateAmount, setGateAmount] = useState(
+    initGateAmount
+      ? Number(BigNumber.from(initGateAmount).div(BigNumber.from(10).pow(18)))
+      : 0
+  )
 
   useEffect(() => {
     if (gateAmount) {

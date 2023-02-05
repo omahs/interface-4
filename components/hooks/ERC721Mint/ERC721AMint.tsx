@@ -11,13 +11,16 @@ const label = "Mint NFT (ERC721A)"
 const description =
   "Deploys an ERC721A contract which efficiently mints 1 NFT for each unit purchased."
 
-const Component = ({ setParams }: HookProps) => {
-  const [name, setName] = useState("")
-  const [symbol, setSymbol] = useState("")
-  const [isRoyalty, setIsRoyalty] = useState(false)
-  const [royaltyFraction, setRoyaltyFraction] = useState(10)
-  const [uri, setUri] = useState("")
-  const [isBaseUri, setIsBaseUri] = useState(false)
+const Component = ({ params, setParams }: HookProps) => {
+  const [initName, initSymbol, initRoyalty, initBaseUri, initUri] =
+    params?.deploy?.args || []
+  const initialUri = initBaseUri || initUri || ""
+  const [name, setName] = useState(initName || "")
+  const [symbol, setSymbol] = useState(initSymbol || "")
+  const [isRoyalty, setIsRoyalty] = useState(Boolean(initRoyalty) || false)
+  const [royaltyFraction, setRoyaltyFraction] = useState(initRoyalty / 100 || 0)
+  const [uri, setUri] = useState(initialUri.split("ipfs://")[1] || "")
+  const [isBaseUri, setIsBaseUri] = useState(Boolean(initBaseUri) || false)
 
   useEffect(() => {
     setParams({
@@ -50,7 +53,6 @@ const Component = ({ setParams }: HookProps) => {
           value={name}
           onChange={setName}
           placeholder="My NFT collection"
-          required
         />
       </div>
       <div>
@@ -59,66 +61,69 @@ const Component = ({ setParams }: HookProps) => {
           value={symbol}
           onChange={setSymbol}
           placeholder="MYNFT"
-          required
         />
       </div>
-      <InputSwitch
-        label="On-chain royalties"
-        questionText={
-          <>
-            <p>
-              Defines owner royalties of secondary sales on marketplaces that
-              support the ERC2981 standard.
-            </p>
-            <p>
-              Note that ERC2981 is a way to signal royalty information, and does
-              not enforce its payment. In NFT marketplaces that don&apos;t
-              support the standard, such as Opensea, the contract owner will
-              need to set up royalties manually on their website.
-            </p>
-          </>
-        }
-        enabled={isRoyalty}
-        setEnabled={setIsRoyalty}
-      />
-      {isRoyalty && (
+      <div className="space-y-6">
         <div>
-          <Input
-            type="number"
-            label="Royalty (%)"
-            value={royaltyFraction}
-            onChange={setRoyaltyFraction}
-            step={0.1}
-            max={100}
-            min={0}
-            placeholder="10"
-            required
+          <InputSwitch
+            label="On-chain royalties"
+            questionText={
+              <>
+                <p>
+                  Defines owner royalties of secondary sales on marketplaces
+                  that support the ERC2981 standard.
+                </p>
+                <p>
+                  Note that ERC2981 is a way to signal royalty information, and
+                  does not enforce its payment. In NFT marketplaces that
+                  don&apos;t support the standard, such as Opensea, the contract
+                  owner will need to set up royalties manually on their website.
+                </p>
+              </>
+            }
+            enabled={isRoyalty}
+            setEnabled={setIsRoyalty}
           />
+          {isRoyalty && (
+            <div>
+              <Input
+                type="number"
+                label="Royalty (%)"
+                value={royaltyFraction}
+                onChange={setRoyaltyFraction}
+                step={0.1}
+                max={100}
+                min={0}
+                placeholder="10"
+                required
+              />
+            </div>
+          )}
         </div>
-      )}
-      <InputSwitch
-        label="Variable metadata"
-        questionText={
-          <>
-            <p>If disabled, all NFTs will have the same metadata.</p>
-            <p>
-              If enabled, the tokenId is appended to the provided CID. As a
-              result, each NFT can have unique metadata (useful for
-              collections).
-            </p>
-            <p>
-              So a <b>Qm...</b> CID will become <b>ipfs://Qm.../[tokenId]</b>{" "}
-              when enabled, or <b>ipfs://Qm...</b> when disabled.
-            </p>
-          </>
-        }
-        enabled={isBaseUri}
-        setEnabled={setIsBaseUri}
-      />
+        <InputSwitch
+          label="Variable metadata"
+          questionText={
+            <>
+              <p>If disabled, all NFTs will have the same metadata.</p>
+              <p>
+                If enabled, the tokenId is appended to the provided CID. As a
+                result, each NFT can have unique metadata (useful for
+                collections).
+              </p>
+              <p>
+                So a <b>Qm...</b> CID will become <b>ipfs://Qm.../[tokenId]</b>{" "}
+                when enabled, or <b>ipfs://Qm...</b> when disabled.
+              </p>
+            </>
+          }
+          enabled={isBaseUri}
+          setEnabled={setIsBaseUri}
+        />
+      </div>
       <div className="flex items-center !mt-0">
         <span className="flex-grow">
           <Input
-            label="Token URI"
+            label="Token URI*"
             prefix="ipfs://"
             after="/{tokenId}"
             value={uri}

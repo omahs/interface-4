@@ -82,6 +82,7 @@ const AddProductForm = ({
   const [units, setUnits] = useState(0)
   const [maxUnits, setMaxUnits] = useState(1)
 
+  const [selectedHook, setSelectedHook] = useState(undefined)
   const [priceStrategy, setPriceStrategy] = useState<Strategy>(
     strategiesRender[0]
   )
@@ -271,8 +272,7 @@ const AddProductForm = ({
   useEffect(() => {
     setMaxUnits(isMultiple ? 0 : 1)
   }, [isMultiple])
-
-  console.log(priceParams)
+  console.log({ purchaseHookParams, clonePurchaseHook })
 
   return (
     <form className="w-full mx-auto space-y-6" onSubmit={submit}>
@@ -348,6 +348,8 @@ const AddProductForm = ({
           setClonePurchaseHook={setClonePurchaseHook}
           params={purchaseHookParams}
           setParams={setPurchaseHookParams}
+          selectedHook={selectedHook}
+          setSelectedHook={setSelectedHook}
         />
       )}
       {progressStep == "Redeem info" && (
