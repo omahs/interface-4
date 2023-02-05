@@ -66,8 +66,8 @@ export default function Slice() {
                   <p>
                     Please wait while the blockchain does its thing, or find the
                     slicer later in your{" "}
-                    <Link href="/profile">
-                      <a className="font-black highlight">profile section</a>
+                    <Link href="/profile" className="font-black highlight">
+                      profile section
                     </Link>{" "}
                   </p>
 

@@ -70,23 +70,22 @@ const Carousel = () => {
               <div className="relative w-48 h-48 p-8 mx-auto border border-gray-200 shadow-lg md:p-10 sm:w-56 sm:h-56 rounded-xl">
                 {slide.imageSrc ? (
                   slide.isNFT ? (
-                    <div style={{ imageRendering: "pixelated" }}>
-                      <Image
-                        src={slide.imageSrc}
-                        layout="fill"
-                        objectFit="cover"
-                        alt={`${slide.title} image`}
-                        unoptimized={true}
-                        placeholder="blur"
-                      />
-                    </div>
+                    <Image
+                      src={slide.imageSrc}
+                      alt={`${slide.title} image`}
+                      unoptimized={true}
+                      placeholder="blur"
+                      fill
+                      className="object-cover "
+                      style={{ imageRendering: "pixelated" }}
+                    />
                   ) : (
                     <Image
                       src={slide.imageSrc}
-                      layout="fill"
-                      objectFit="cover"
                       alt={`${slide.title} image`}
+                      fill
                       placeholder="blur"
+                      className="object-cover"
                     />
                   )
                 ) : (

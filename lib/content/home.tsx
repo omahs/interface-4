@@ -61,13 +61,11 @@ export const section3 = (
       allowlisted drops, or interact with other protocols.{" "}
       <b>Fully on-chain.</b>
     </p>
-    <Link href="/slice">
-      <a className="inline-flex items-center group highlight">
-        <span>Start selling now</span>
-        <div className="w-5 h-5 ml-1 transition-transform duration-150 group-hover:translate-x-1">
-          <Arrow />
-        </div>
-      </a>
+    <Link href="/slice" className="inline-flex items-center group highlight">
+      <span>Start selling now</span>
+      <div className="w-5 h-5 ml-1 transition-transform duration-150 group-hover:translate-x-1">
+        <Arrow />
+      </div>
     </Link>
   </>
 )

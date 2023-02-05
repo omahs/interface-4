@@ -97,8 +97,8 @@ const SlicerImageBlock = ({
               }`}
             >
               <div
-                className={`relative w-full ${
-                  maxHeight ? maxHeight : "max-h-[420px]"
+                className={`relative h-[420px] w-full ${
+                  maxHeight ? maxHeight : ""
                 } img-background`}
                 id="imageWrapper"
               >

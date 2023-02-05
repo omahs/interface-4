@@ -11,11 +11,9 @@ import {
   AddProductProgress
 } from "@components/ui"
 import { Message } from "@utils/handleMessage"
-import { LogDescription } from "ethers/lib/utils"
 import { NewImage } from "pages/slicer/[id]"
 import { useAppContext } from "../context"
 import { ProductParamsStruct } from "types/typechain/ProductsModule"
-import { ethers } from "ethers"
 import AddProductFormExternal from "../AddProductFormExternal"
 import ethToWei from "@utils/ethToWei"
 import { useAddRecentTransaction } from "@rainbow-me/rainbowkit"
@@ -31,6 +29,8 @@ import {
   StrategyParams
 } from "@components/priceStrategies/strategies"
 import { initSteps, Step } from "pages/slicer/[id]/products/new"
+import { ethers, Signer } from "ethers"
+import { LogDescription } from "ethers/lib/utils.js"
 
 type Props = {
   slicerId: number
@@ -186,14 +186,14 @@ const AddProductForm = ({
           ;[hookAddress, , call] = await clone(
             deployments.cloner[chainId],
             abi.clonerInterface,
-            signer,
+            signer as unknown as Signer,
             deployParams
           )
         } else {
           ;[hookAddress, , call] = await deploy(
             deployments.factory[chainId],
             abi.factoryInterface,
-            signer,
+            signer as unknown as Signer,
             deployParams
           )
         }
@@ -239,7 +239,12 @@ const AddProductForm = ({
         isExternalCallPreferredToken: false
       }
       const eventLogs = await handleSubmit(
-        AddProduct(signer, slicerId, productParams, externalCall),
+        AddProduct(
+          signer as unknown as Signer,
+          slicerId,
+          productParams,
+          externalCall
+        ),
         setMessage,
         null,
         null,
@@ -260,7 +265,7 @@ const AddProductForm = ({
         }
 
         await handleSuccess(
-          signer,
+          signer as unknown as Signer,
           slicerId,
           newProduct.id,
           eventLogs,

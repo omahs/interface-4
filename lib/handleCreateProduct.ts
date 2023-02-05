@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction } from "react"
 import { NewImage } from "pages/slicer/[id]"
-import { LogDescription } from "@ethersproject/abi"
 import decimalToHex from "@utils/decimalToHex"
 import timeout from "@utils/timeout"
 import { StrategyParams } from "@components/priceStrategies/strategies"
 import { ethers, Signer } from "ethers"
+import { LogDescription } from "ethers/lib/utils.js"
 // import { mutate } from "swr"
 
 export const beforeCreate = async (
@@ -70,11 +70,11 @@ export const beforeCreate = async (
   if (newImage.url) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
     {
-      const { Key } = await supabaseUpload(
+      const { path } = await supabaseUpload(
         `${slicerId}/products/${name}`,
         newImage
       )
-      image = `${supabaseUrl}/storage/v1/object/public/${Key}`
+      image = `${supabaseUrl}/storage/v1/object/public/slicer-images/${path}`
       metadata["image"] = image
     }
   }

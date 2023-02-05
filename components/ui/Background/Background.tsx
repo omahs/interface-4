@@ -17,9 +17,9 @@ const Background: FC<Props> = (props) => {
         <Image
           src="/background.jpg"
           alt={`Sfondo ${serie.title}`}
-          layout="fill"
           quality="85"
           priority
+          className="w-full"
         />
       </div> */}
     </div>

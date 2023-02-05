@@ -1,4 +1,4 @@
-import { Product } from ".prisma/client"
+// import { Product } from ".prisma/client"
 import { ListLayout, ProductPurchaseCard } from "@components/ui"
 import { Purchase, useAppContext } from "@components/ui/context"
 import fetcher from "@utils/fetcher"
@@ -41,7 +41,8 @@ const PurchasesList = () => {
           const i = Number(key)
           const purchase = purchases && purchases[i]
           const index = purchaseData?.findIndex(
-            (p: Product) =>
+            // (p: Product) =>
+            (p: any) =>
               p.slicerId == purchase?.slicerId &&
               p.productId == purchase?.productId
           )

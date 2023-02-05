@@ -53,16 +53,17 @@ export default function HomeHero() {
               </p>
               <div className="flex items-center justify-center mt-10 gap-x-6">
                 <Button label="Create slicer" href="/slice" double={false} />
-                <Link href="/slicer">
-                  <a className="text-base font-semibold leading-7 text-gray-900 group">
-                    Explore{" "}
-                    <span
-                      aria-hidden="true"
-                      className="transition-transform duration-100 translate-x-2"
-                    >
-                      →
-                    </span>
-                  </a>
+                <Link
+                  href="/slicer"
+                  className="text-base font-semibold leading-7 text-gray-900 group"
+                >
+                  Explore{" "}
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-100 translate-x-2"
+                  >
+                    →
+                  </span>
                 </Link>
               </div>
             </div>

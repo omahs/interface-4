@@ -108,7 +108,7 @@ const SlicerSubmitBlock = ({
       if (newImage.url) {
         setTempImageUrl(newImage.url)
 
-        const { Key } = await supabaseUpload(
+        const { path } = await supabaseUpload(
           `${slicerInfo?.id}/main`,
           newImage,
           slicer.imageUrl,
@@ -117,7 +117,7 @@ const SlicerSubmitBlock = ({
 
         // Todo? If isImmutable store on web3Storage
 
-        const newFilePath = `${supabaseUrl}/storage/v1/object/public/${Key}`
+        const newFilePath = `${supabaseUrl}/storage/v1/object/public/slicer-images/${path}`
         setTempStorageUrl(newFilePath)
         newInfo = {
           name: newName,

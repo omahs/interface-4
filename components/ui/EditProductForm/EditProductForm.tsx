@@ -5,7 +5,7 @@ import {
 } from "@components/priceStrategies/strategies"
 import ethToWei from "@utils/ethToWei"
 import { formatNumberWithUnit } from "@utils/formatNumber"
-import { ethers } from "ethers"
+import { ethers, Signer } from "ethers"
 import { useEffect, useState } from "react"
 import AddProductFormAvailability from "../AddProductFormAvailability"
 import AddProductFormPrice from "../AddProductFormPrice"
@@ -150,7 +150,7 @@ const EditProductForm = ({
         const contract = new ethers.Contract(
           newPriceParams.address,
           newPriceParams.abi,
-          signer
+          signer as unknown as Signer
         )
 
         const tx = await contract.setProductPrice(

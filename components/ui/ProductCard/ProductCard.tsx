@@ -257,7 +257,7 @@ const ProductCard = ({
         <Card
           product
           containerClassName="h-full cursor-pointer"
-          cardClassName="flex flex-col group h-full overflow-hidden transition-all duration-300 ease-out bg-white rounded-xl shadow-medium-random hover:scale-[1.025] mb-14"
+          cardClassName="flex flex-col group h-full overflow-hidden transition-all duration-300 ease-out bg-white rounded-xl backdrop-blur-0 shadow-medium-random hover:scale-[1.025] mb-14"
           className="rounded-none"
           name={name}
           image={image}
