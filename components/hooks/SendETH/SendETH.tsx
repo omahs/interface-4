@@ -56,7 +56,7 @@ const Component = ({ params, ethProductPrice, setParams }: Props) => {
     <>
       <div>
         <InputAddress
-          label="Address"
+          label="Receiver address*"
           address={address}
           onChange={setAddress}
           required
@@ -66,11 +66,11 @@ const Component = ({ params, ethProductPrice, setParams }: Props) => {
       </div>
       <div className="py-3">
         <InputPrice
+          label="Amount per unit*"
           ethValue={ethValue}
           setEthValue={setEthValue}
           usdValue={usdValue}
           setUsdValue={setUsdValue}
-          label="Amount per unit"
           required
         />
         <p className="text-sm text-left text-gray-600">

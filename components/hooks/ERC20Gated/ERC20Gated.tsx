@@ -51,7 +51,7 @@ const Component = ({ params, setParams }: HookProps) => {
     <>
       <div>
         <InputAddress
-          label="ERC20 contract address"
+          label="ERC20 contract address*"
           address={address}
           onChange={setAddress}
           resolvedAddress={resolvedAddress}
@@ -63,7 +63,7 @@ const Component = ({ params, setParams }: HookProps) => {
       <div>
         <Input
           type="number"
-          label="Token gate amount"
+          label="Token gate amount*"
           helpText="Assumes token with 18 decimals"
           min={0}
           value={gateAmount}

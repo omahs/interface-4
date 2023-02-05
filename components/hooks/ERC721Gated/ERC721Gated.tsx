@@ -34,7 +34,7 @@ const Component = ({ params, setParams }: HookProps) => {
     <>
       <div>
         <InputAddress
-          label="ERC721 contract address"
+          label="ERC721 contract address*"
           address={address}
           onChange={setAddress}
           resolvedAddress={resolvedAddress}

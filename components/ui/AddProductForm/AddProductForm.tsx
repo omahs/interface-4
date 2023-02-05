@@ -103,6 +103,47 @@ const AddProductForm = ({
 
   const externalCall = purchaseHookParams.externalCall
 
+  const checkCondition = (
+    errorCondition: boolean,
+    message = "Please fill in all the required fields"
+  ) => {
+    if (errorCondition) {
+      setMessage({
+        message,
+        messageStatus: "error"
+      })
+      setTimeout(
+        () => setMessage({ message: "", messageStatus: "success" }),
+        2000
+      )
+    }
+    return !errorCondition
+  }
+
+  const handleNext = async (e: React.SyntheticEvent<EventTarget>) => {
+    e.preventDefault()
+
+    setSteps((steps) => {
+      const newSteps = [...steps]
+      newSteps[progressStepIndex].status = "success"
+      return newSteps
+    })
+    // switch (progressStepIndex) {
+    //   case 0:
+    //     isSuccess = checkCondition(name.length == 0 || description.length == 0)
+    //     break
+    //   case 2:
+    //     isSuccess = checkCondition()
+    //     break
+    // }
+
+    setProgressStep(initSteps[progressStepIndex + 1].label)
+  }
+
+  const conditions = {
+    0: name.length == 0 || description.length == 0
+  }
+
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
 
@@ -274,7 +315,10 @@ const AddProductForm = ({
   }, [isMultiple])
 
   return (
-    <form className="w-full mx-auto space-y-6" onSubmit={submit}>
+    <form
+      className="w-full mx-auto space-y-6"
+      onSubmit={progressStepIndex < initSteps.length - 1 ? handleNext : submit}
+    >
       {progressStep == "General" && (
         <>
           <div className="pb-6">
@@ -403,25 +447,24 @@ const AddProductForm = ({
           }
         />
       )}
-      <div className="pt-8 pb-6">
+      <div className="pt-8 pb-3">
         <Button
           label={
             progressStepIndex < initSteps.length - 1 ? "Next" : "Create product"
           }
-          type="button"
+          type={progressStepIndex < initSteps.length - 1 ? "submit" : "button"}
           onClick={() =>
-            progressStepIndex < initSteps.length - 1
-              ? setProgressStep(initSteps[progressStepIndex + 1].label)
-              : setModalView({
-                  cross: true,
-                  name: "CREATE_PRODUCT_CONFIRM_VIEW",
-                  params: { submitEl, uploadStep, setModalView }
-                })
+            progressStepIndex == initSteps.length - 1 &&
+            setModalView({
+              cross: true,
+              name: "CREATE_PRODUCT_CONFIRM_VIEW",
+              params: { submitEl, uploadStep, setModalView }
+            })
           }
         />
         <button className="hidden" ref={submitEl} type="submit" />
       </div>
-      <div>
+      <div className="pb-3">
         <MessageBlock msg={message} />
       </div>
     </form>

@@ -54,11 +54,12 @@ const Component = ({ params, setParams }: HookProps) => {
   return (
     <div className="relative">
       <Textarea
-        label="Addresses list (no ENS)"
+        label="Addresses list (no ENS)*"
         placeholder="Add addresses separated by comma"
         value={allowedAddressesText}
         onChange={setAllowedAddressesText}
         markdownView={false}
+        required
       />
       <p className="text-blue-600 dark:text-sky-300 absolute text-xs opacity-80 font-black left-0 bottom-[-23px]">
         Total: {allowedAddresses.length}

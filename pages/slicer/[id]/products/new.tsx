@@ -123,6 +123,7 @@ export default function NewProduct() {
               <div className="flex justify-center">
                 <AddProductProgress
                   steps={steps}
+                  setSteps={setSteps}
                   progressStepIndex={progressStepIndex}
                   progressStep={progressStep}
                   setProgressStep={setProgressStep}
