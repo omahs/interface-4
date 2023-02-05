@@ -272,7 +272,6 @@ const AddProductForm = ({
   useEffect(() => {
     setMaxUnits(isMultiple ? 0 : 1)
   }, [isMultiple])
-  console.log({ purchaseHookParams, clonePurchaseHook })
 
   return (
     <form className="w-full mx-auto space-y-6" onSubmit={submit}>

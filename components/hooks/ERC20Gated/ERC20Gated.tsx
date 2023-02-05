@@ -15,7 +15,7 @@ import deployments from "./deployments.json"
 const label = "ERC20 token-gate"
 
 const description =
-  "Allow purchases only from buyers with the specified amount of ERC20 tokens"
+  "Allow purchases only from buyers holding enough ERC20 tokens"
 
 const Component = ({ params, setParams }: HookProps) => {
   const [initAddress, initGateAmount] = params?.deploy?.args || []
@@ -63,7 +63,8 @@ const Component = ({ params, setParams }: HookProps) => {
       <div>
         <Input
           type="number"
-          label="Token gate amount (mul by 10^18)"
+          label="Token gate amount"
+          helpText="Assumes token with 18 decimals"
           min={0}
           value={gateAmount}
           onChange={setGateAmount}

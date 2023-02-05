@@ -49,7 +49,7 @@ const Component = ({ params, setParams }: HookProps) => {
     <>
       <div>
         <Input
-          label="Name"
+          label="Collection name"
           value={name}
           onChange={setName}
           placeholder="My NFT collection"
@@ -75,9 +75,9 @@ const Component = ({ params, setParams }: HookProps) => {
                 </p>
                 <p>
                   Note that ERC2981 is a way to signal royalty information, and
-                  does not enforce its payment. In NFT marketplaces that
-                  don&apos;t support the standard, such as Opensea, the contract
-                  owner will need to set up royalties manually on their website.
+                  does not enforce its payment on its own. In NFT marketplaces
+                  that don&apos;t support the standard, such as Opensea, you
+                  will need to set up royalties manually on their website.
                 </p>
               </>
             }
@@ -101,7 +101,7 @@ const Component = ({ params, setParams }: HookProps) => {
           )}
         </div>
         <InputSwitch
-          label="Variable metadata"
+          label="Append token ID to URI"
           questionText={
             <>
               <p>If disabled, all NFTs will have the same metadata.</p>
@@ -137,7 +137,7 @@ const Component = ({ params, setParams }: HookProps) => {
                   collection.
                 </p>
                 <p>
-                  You can create it on services like{" "}
+                  You can use services like{" "}
                   <a
                     href="https://nft.storage/"
                     target="_blank"
@@ -155,7 +155,7 @@ const Component = ({ params, setParams }: HookProps) => {
                   >
                     pinata.cloud
                   </a>
-                  .
+                  to create it.
                 </p>
               </>
             }
