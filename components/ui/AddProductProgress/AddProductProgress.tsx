@@ -1,60 +1,63 @@
+import { StrategyParams } from "@components/priceStrategies/strategies"
 import { Step } from "pages/slicer/[id]/products/new"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction } from "react"
 
 type Props = {
-  progressStepIndex: number
+  name: string
+  description: string
   steps: Step[]
-  setSteps: Dispatch<SetStateAction<Step[]>>
+  priceParams: StrategyParams
   progressStep: string
+  setSteps: Dispatch<SetStateAction<Step[]>>
   setProgressStep: Dispatch<SetStateAction<string>>
 }
 
 const AddProductProgress = ({
+  name,
+  description,
   steps,
   setSteps,
-  progressStepIndex,
+  priceParams,
   progressStep,
   setProgressStep
 }: Props) => {
-  const handleSetProgressStep = (label: string) => {
-    const index = steps.findIndex((step) => step.label == label)
-    if (steps[index].status == "success") {
-      setProgressStep(label)
-    }
-    // TODO: Allow skipping future steps
-    // else {
-    //   const newSteps = [...steps]
-    //   steps.slice(progressStepIndex, index - 1).forEach((step, i) => {
-    //     const index = i + progressStepIndex
-    //     newSteps[index].status = conditions[index] ? "error" : "success"
-    //   })
-    //   setSteps(newSteps)
-    // }
+  const validations = {
+    0: name.length == 0 || description.length == 0,
+    2:
+      priceParams?.label?.includes("VRGDA") &&
+      priceParams?.args &&
+      (Number(priceParams?.args[1]) == 0 ||
+        Number(priceParams?.args[0][0][0]) == 0 ||
+        Number(priceParams?.args[0][0][2]) == 0)
+  }
 
-    // switch (progressStepIndex) {
-    //   case 0:
-    //     isSuccess = checkCondition(name.length == 0 || description.length == 0)
-    //     break
-    //   case 2:
-    //     isSuccess = checkCondition()
-    //     break
-    // }
+  const handleSetProgressStep = (label: string) => {
+    const newIndex = steps.findIndex((step) => step.label == label)
+    const lastCheckedIndex = steps.findIndex((step) => step.status == "")
+    const index = newIndex > lastCheckedIndex ? newIndex : lastCheckedIndex
+
+    const newSteps = [...steps]
+    steps.slice(0, index).forEach((step, i) => {
+      newSteps[i].status = validations[i] ? "error" : "success"
+    })
+    setSteps(newSteps)
+    setProgressStep(label)
   }
 
   return (
-    <ul className="overflow-x-scroll py-4 flex gap-0.5 items-center text-sm font-medium">
+    <ul className="flex items-center py-4 overflow-x-scroll text-sm font-medium">
       {steps.map(({ status, label }, key) => (
-        <li key={key} className="flex gap-0.5 items-center flex-shrink-0">
+        <li key={key} className="flex items-center flex-shrink-0">
           <p
             className={`${
               progressStep == label
-                ? "border-blue-600 cursor-pointer text-black"
+                ? "border-blue-600 text-black"
                 : status == "success"
-                ? "border-green-600 cursor-pointer text-gray-600 hover:text-black"
+                ? "border-green-600 text-gray-600"
                 : status == "error"
                 ? "text-gray-600 border-red-500"
                 : "text-gray-600 border-gray-200"
-            } px-2 py-0.5 rounded-md border-2 flex-shrink-0`}
+            } px-2 py-0.5 rounded-md border-2 flex-shrink-0 cursor-pointer hover:text-black`}
             onClick={() => handleSetProgressStep(label)}
           >
             {label}

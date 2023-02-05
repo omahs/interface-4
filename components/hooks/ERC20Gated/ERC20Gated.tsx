@@ -24,7 +24,7 @@ const Component = ({ params, setParams }: HookProps) => {
   const [gateAmount, setGateAmount] = useState(
     initGateAmount
       ? Number(BigNumber.from(initGateAmount).div(BigNumber.from(10).pow(18)))
-      : 0
+      : 1
   )
 
   useEffect(() => {
@@ -65,7 +65,7 @@ const Component = ({ params, setParams }: HookProps) => {
           type="number"
           label="Token gate amount*"
           helpText="Assumes token with 18 decimals"
-          min={0}
+          min={1}
           value={gateAmount}
           onChange={setGateAmount}
           required

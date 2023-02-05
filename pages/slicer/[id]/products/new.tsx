@@ -1,7 +1,6 @@
 import {
   ActionScreen,
   AddProductForm,
-  AddProductProgress,
   ConnectBlock,
   Container,
   DoubleText
@@ -120,45 +119,34 @@ export default function NewProduct() {
                 />
                 <p className="text-lg leading-8 text-gray-600">{subtitle}</p>
               </div>
-              <div className="flex justify-center">
-                <AddProductProgress
-                  steps={steps}
-                  setSteps={setSteps}
-                  progressStepIndex={progressStepIndex}
-                  progressStep={progressStep}
-                  setProgressStep={setProgressStep}
-                />
-              </div>
-              <main className="max-w-xl pt-12 mx-auto">
-                <AddProductForm
-                  slicerId={Number(id)}
-                  uploadStep={uploadStep}
-                  setUploadStep={setUploadStep}
-                  setUploadPct={setUploadPct}
-                  setSuccess={setSuccess}
-                  setLogs={setLogs}
-                  setCloneAddress={setCloneAddress}
-                  priceParams={priceParams}
-                  setPriceParams={setPriceParams}
-                  progressStep={progressStep}
-                  progressStepIndex={progressStepIndex}
-                  setProgressStep={setProgressStep}
-                  setSteps={setSteps}
-                />
-              </main>
+              <AddProductForm
+                slicerId={Number(id)}
+                uploadStep={uploadStep}
+                setUploadStep={setUploadStep}
+                setUploadPct={setUploadPct}
+                setSuccess={setSuccess}
+                setLogs={setLogs}
+                setCloneAddress={setCloneAddress}
+                priceParams={priceParams}
+                setPriceParams={setPriceParams}
+                steps={steps}
+                progressStep={progressStep}
+                progressStepIndex={progressStepIndex}
+                setProgressStep={setProgressStep}
+                setSteps={setSteps}
+              />
             </div>
           ) : (
             <ActionScreen
-              highlightTitle="Product added! 🍰"
+              highlightTitle={`Product #${productId} created! 🍰`}
               helpText={
                 <>
                   <p className="pb-3">
-                    You can find the new product with ID <b>#{productId}</b> in
-                    the slicer page.
+                    You can find the new product in the slicer page.
                   </p>
-                  <p className="pb-6 text-sm">
-                    Wait a few seconds and refresh the page if you don&apos;t
-                    see it.
+                  <p className="pb-6 text-sm text-gray-600">
+                    If you don&apos;t see it, wait a few minutes and refresh the
+                    page
                   </p>
                 </>
               }
@@ -166,8 +154,6 @@ export default function NewProduct() {
               href={`/slicer/${id}`}
               buttonLabelSecondary="Create new product"
               onClickSecondary={() => setSuccess(false)}
-              // external
-              // targetBlank={false}
             />
           )
         ) : (

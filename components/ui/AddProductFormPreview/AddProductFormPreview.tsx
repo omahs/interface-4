@@ -71,7 +71,7 @@ const AddProductFormPreview = ({
 
   return (
     <div>
-      <div className="pb-6">
+      <div className="pb-10">
         <h1 className="pb-6">Review</h1>
         <p className="text-lg text-gray-600">
           View how the product appears to buyers before the purchase and after

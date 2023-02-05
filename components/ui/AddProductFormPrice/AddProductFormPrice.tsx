@@ -61,6 +61,16 @@ const AddProductFormPrice = ({
     if (priceStrategy.label != "Standard") {
       setEthValue(0)
       setUsdValue(0)
+      if (priceStrategy.label == "VRGDA") {
+        const data = { ...priceParams }
+        if (!data.fields) {
+          data.fields = {}
+        }
+        if (!data.fields["rate"]) {
+          data.fields["rate"] = "Linear"
+        }
+        setPriceParams(data)
+      }
     }
   }, [priceStrategy])
 
@@ -92,15 +102,10 @@ const AddProductFormPrice = ({
             questionText={
               <>
                 <p>
-                  If enabled, the buyer will pay in ETH the corresponding USD
-                  value set
-                  {usdValue != 0 && <b> ${Number(usdValue).toFixed(2)}</b>}.
-                  It&apos;s like setting the product price in USD and thus{" "}
-                  <b>protects against changes in ETH value over time.</b>
-                </p>
-                <p>
-                  <b>Note:</b> Products with dynamic pricing have a slightly
-                  higher gas fee for the buyer.
+                  If enabled, the product will be priced in USD{" "}
+                  {usdValue != 0 && <b>(${Number(usdValue).toFixed(2)})</b>} and
+                  the ETH amount to be paid is calculated at the moment of
+                  purchase.
                 </p>
               </>
             }

@@ -47,7 +47,7 @@ const Component = ({
       </p>
       <div>
         <InputAddress
-          label="Contract address"
+          label="Contract address*"
           placeholder="0x…"
           address={address}
           onChange={setAddress}

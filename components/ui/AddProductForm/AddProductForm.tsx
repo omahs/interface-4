@@ -7,7 +7,8 @@ import {
   AddProductFormGeneral,
   AddProductFormPurchases,
   AddProductFormPreview,
-  AddProductFormFiles
+  AddProductFormFiles,
+  AddProductProgress
 } from "@components/ui"
 import { Message } from "@utils/handleMessage"
 import { LogDescription } from "ethers/lib/utils"
@@ -36,6 +37,7 @@ type Props = {
   progressStep: string
   progressStepIndex: number
   uploadStep: number
+  steps: Step[]
   setProgressStep: Dispatch<SetStateAction<string>>
   setSteps: Dispatch<SetStateAction<Step[]>>
   setUploadStep: Dispatch<SetStateAction<number>>
@@ -52,6 +54,7 @@ const AddProductForm = ({
   progressStep,
   progressStepIndex,
   uploadStep,
+  steps,
   setProgressStep,
   setSteps,
   setUploadStep,
@@ -103,23 +106,6 @@ const AddProductForm = ({
 
   const externalCall = purchaseHookParams.externalCall
 
-  const checkCondition = (
-    errorCondition: boolean,
-    message = "Please fill in all the required fields"
-  ) => {
-    if (errorCondition) {
-      setMessage({
-        message,
-        messageStatus: "error"
-      })
-      setTimeout(
-        () => setMessage({ message: "", messageStatus: "success" }),
-        2000
-      )
-    }
-    return !errorCondition
-  }
-
   const handleNext = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
 
@@ -128,20 +114,17 @@ const AddProductForm = ({
       newSteps[progressStepIndex].status = "success"
       return newSteps
     })
-    // switch (progressStepIndex) {
-    //   case 0:
-    //     isSuccess = checkCondition(name.length == 0 || description.length == 0)
-    //     break
-    //   case 2:
-    //     isSuccess = checkCondition()
-    //     break
-    // }
 
     setProgressStep(initSteps[progressStepIndex + 1].label)
   }
-
-  const conditions = {
-    0: name.length == 0 || description.length == 0
+  const handleSetMessageError = () => {
+    setMessage({
+      messageStatus: "error",
+      message: "Please fix the errors before submitting"
+    })
+    setTimeout(() => {
+      setMessage({ messageStatus: "success", message: "" })
+    }, 3000)
   }
 
   const submit = async (e: React.SyntheticEvent<EventTarget>) => {
@@ -316,156 +299,177 @@ const AddProductForm = ({
 
   return (
     <form
-      className="w-full mx-auto space-y-6"
+      className="w-full mx-auto"
       onSubmit={progressStepIndex < initSteps.length - 1 ? handleNext : submit}
     >
-      {progressStep == "General" && (
-        <>
-          <div className="pb-6">
-            <h1 className="pb-6">General</h1>
-            <p className="text-lg text-gray-600">
-              Choose the name, description, and image for your product
-            </p>
-          </div>
-          <AddProductFormGeneral
+      <div className="flex justify-center pb-6">
+        <AddProductProgress
+          name={name}
+          description={description}
+          steps={steps}
+          priceParams={priceParams}
+          progressStep={progressStep}
+          setSteps={setSteps}
+          setProgressStep={setProgressStep}
+        />
+      </div>
+      <div className="max-w-xl pt-4 mx-auto space-y-6">
+        {progressStep == "General" && (
+          <>
+            <div className="pb-10">
+              <h1 className="pb-6">General</h1>
+              <p className="text-lg text-gray-600">
+                Choose the name, description, and image for your product
+              </p>
+            </div>
+            <AddProductFormGeneral
+              slicerId={slicerId}
+              newImage={newImage}
+              setNewImage={setNewImage}
+              name={name}
+              shortDescription={shortDescription}
+              description={description}
+              setName={setName}
+              setDescription={setDescription}
+              setShortDescription={setShortDescription}
+            />
+          </>
+        )}
+        {progressStep == "Availability" && (
+          <>
+            <div className="pb-10">
+              <h1 className="pb-6">Availability</h1>
+              <p className="text-lg text-gray-600">
+                Set product availability and max units for each buyer
+              </p>
+            </div>
+            <AddProductFormAvailability
+              isMultiple={isMultiple}
+              isLimited={isLimited}
+              units={units}
+              maxUnits={maxUnits}
+              priceParams={priceParams}
+              setIsMultiple={setIsMultiple}
+              setIsLimited={setIsLimited}
+              setUnits={setUnits}
+              setMaxUnits={setMaxUnits}
+              setPriceParams={setPriceParams}
+            />
+          </>
+        )}
+        {progressStep == "Pricing" && (
+          <>
+            <div className="pb-10">
+              <h1 className="pb-6">Pricing</h1>
+              <p className="text-lg text-gray-600">
+                Set up the product&apos;s pricing strategy
+              </p>
+            </div>
+            <AddProductFormPrice
+              isFree={isFree}
+              ethValue={ethValue}
+              usdValue={usdValue}
+              isUSD={isUSD}
+              units={units}
+              priceStrategy={priceStrategy}
+              setEthValue={setEthValue}
+              setUsdValue={setUsdValue}
+              setIsUSD={setIsUSD}
+              priceParams={priceParams}
+              setPriceParams={setPriceParams}
+              setPriceStrategy={setPriceStrategy}
+            />
+          </>
+        )}
+        {progressStep == "On-chain actions" && (
+          <AddProductFormExternal
+            ethProductPrice={ethValue}
+            clonePurchaseHook={clonePurchaseHook}
+            setClonePurchaseHook={setClonePurchaseHook}
+            params={purchaseHookParams}
+            setParams={setPurchaseHookParams}
+            selectedHook={selectedHook}
+            setSelectedHook={setSelectedHook}
+          />
+        )}
+        {progressStep == "Redeem info" && (
+          <AddProductFormPurchases
             slicerId={slicerId}
-            newImage={newImage}
-            setNewImage={setNewImage}
+            thankMessage={thankMessage}
+            setThankMessage={setThankMessage}
+            instructions={instructions}
+            setInstructions={setInstructions}
+            customShortcodes={customShortcodes}
+            setCustomShortcodes={setCustomShortcodes}
+          />
+        )}
+        {progressStep == "Notes & files" && (
+          <AddProductFormFiles
+            notes={notes}
+            setNotes={setNotes}
+            files={files}
+            setFiles={setFiles}
+          />
+        )}
+        {progressStep == "Review" && (
+          <AddProductFormPreview
+            slicerId={slicerId}
             name={name}
             shortDescription={shortDescription}
             description={description}
-            setName={setName}
-            setDescription={setDescription}
-            setShortDescription={setShortDescription}
-          />
-        </>
-      )}
-      {progressStep == "Availability" && (
-        <>
-          <div className="pb-6">
-            <h1 className="pb-6">Availability</h1>
-            <p className="text-lg text-gray-600">
-              Set product availability and max units for each buyer
-            </p>
-          </div>
-          <AddProductFormAvailability
-            isMultiple={isMultiple}
+            newImage={newImage}
+            maxUnits={Number(maxUnits)}
             isLimited={isLimited}
-            units={units}
-            maxUnits={maxUnits}
-            setIsMultiple={setIsMultiple}
-            setIsLimited={setIsLimited}
-            setUnits={setUnits}
-            setMaxUnits={setMaxUnits}
-          />
-        </>
-      )}
-      {progressStep == "Pricing" && (
-        <>
-          <div className="pb-6">
-            <h1 className="pb-6">Pricing</h1>
-            <p className="text-lg text-gray-600">
-              Set up the product&apos;s pricing strategy
-            </p>
-          </div>
-          <AddProductFormPrice
-            isFree={isFree}
+            units={Number(units)}
             ethValue={ethValue}
-            usdValue={usdValue}
+            usdValue={Math.round(usdValue)}
             isUSD={isUSD}
-            units={units}
-            priceStrategy={priceStrategy}
-            setEthValue={setEthValue}
-            setUsdValue={setUsdValue}
-            setIsUSD={setIsUSD}
-            priceParams={priceParams}
-            setPriceParams={setPriceParams}
-            setPriceStrategy={setPriceStrategy}
+            thankMessage={thankMessage}
+            instructions={instructions}
+            notes={notes}
+            files={files}
+            setModalView={setModalView}
+            externalCallValue={externalCall?.value}
+            extAddress={externalCall?.externalAddress}
+            extCheckSig={externalCall?.checkFunctionSignature}
+            extExecSig={externalCall?.execFunctionSignature}
+            externalAddress={priceParams?.address}
+            targetPrice={
+              priceParams?.args &&
+              Number(
+                ethers.BigNumber.from(priceParams.args[0][0][0]).div(
+                  ethers.BigNumber.from(10).pow(15)
+                )
+              ) / 1000
+            }
           />
-        </>
-      )}
-      {progressStep == "On-chain actions" && (
-        <AddProductFormExternal
-          ethProductPrice={ethValue}
-          clonePurchaseHook={clonePurchaseHook}
-          setClonePurchaseHook={setClonePurchaseHook}
-          params={purchaseHookParams}
-          setParams={setPurchaseHookParams}
-          selectedHook={selectedHook}
-          setSelectedHook={setSelectedHook}
-        />
-      )}
-      {progressStep == "Redeem info" && (
-        <AddProductFormPurchases
-          slicerId={slicerId}
-          thankMessage={thankMessage}
-          setThankMessage={setThankMessage}
-          instructions={instructions}
-          setInstructions={setInstructions}
-          customShortcodes={customShortcodes}
-          setCustomShortcodes={setCustomShortcodes}
-        />
-      )}
-      {progressStep == "Notes & files" && (
-        <AddProductFormFiles
-          notes={notes}
-          setNotes={setNotes}
-          files={files}
-          setFiles={setFiles}
-        />
-      )}
-      {progressStep == "Review" && (
-        <AddProductFormPreview
-          slicerId={slicerId}
-          name={name}
-          shortDescription={shortDescription}
-          description={description}
-          newImage={newImage}
-          maxUnits={Number(maxUnits)}
-          isLimited={isLimited}
-          units={Number(units)}
-          ethValue={ethValue}
-          usdValue={Math.round(usdValue)}
-          isUSD={isUSD}
-          thankMessage={thankMessage}
-          instructions={instructions}
-          notes={notes}
-          files={files}
-          setModalView={setModalView}
-          externalCallValue={externalCall?.value}
-          extAddress={externalCall?.externalAddress}
-          extCheckSig={externalCall?.checkFunctionSignature}
-          extExecSig={externalCall?.execFunctionSignature}
-          externalAddress={priceParams?.address}
-          targetPrice={
-            priceParams?.args &&
-            Number(
-              ethers.BigNumber.from(priceParams.args[0][0][0]).div(
-                ethers.BigNumber.from(10).pow(15)
-              )
-            ) / 1000
-          }
-        />
-      )}
-      <div className="pt-8 pb-3">
-        <Button
-          label={
-            progressStepIndex < initSteps.length - 1 ? "Next" : "Create product"
-          }
-          type={progressStepIndex < initSteps.length - 1 ? "submit" : "button"}
-          onClick={() =>
-            progressStepIndex == initSteps.length - 1 &&
-            setModalView({
-              cross: true,
-              name: "CREATE_PRODUCT_CONFIRM_VIEW",
-              params: { submitEl, uploadStep, setModalView }
-            })
-          }
-        />
-        <button className="hidden" ref={submitEl} type="submit" />
-      </div>
-      <div className="pb-3">
-        <MessageBlock msg={message} />
+        )}
+        <div className="pt-12 pb-4">
+          <Button
+            label={
+              progressStepIndex < initSteps.length - 1
+                ? "Next"
+                : "Create product"
+            }
+            type={
+              progressStepIndex < initSteps.length - 1 ? "submit" : "button"
+            }
+            onClick={() => {
+              progressStepIndex == initSteps.length - 1 &&
+                (steps.filter((step) => step.status == "error").length > 0
+                  ? handleSetMessageError()
+                  : setModalView({
+                      cross: true,
+                      name: "CREATE_PRODUCT_CONFIRM_VIEW",
+                      params: { submitEl, uploadStep, setModalView }
+                    }))
+            }}
+          />
+          <button className="hidden" ref={submitEl} type="submit" />
+        </div>
+        <div className="pb-3">
+          <MessageBlock msg={message} />
+        </div>
       </div>
     </form>
   )

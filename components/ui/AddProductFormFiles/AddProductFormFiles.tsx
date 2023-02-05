@@ -11,7 +11,7 @@ type Props = {
 const AddProductFormFiles = ({ notes, setNotes, files, setFiles }: Props) => {
   return (
     <>
-      <div className="pb-6">
+      <div className="pb-10">
         <h1 className="pb-6">Encrypted notes & files</h1>
         <p className="text-lg text-gray-600">
           Upload texts and files that can only be downloaded by buyers

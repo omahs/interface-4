@@ -68,7 +68,7 @@ const Component = ({ params, ethProductPrice, setParams }: Props) => {
     initCheckSignature != "" || initExecSignature != ""
   )
   const [isAllowlist, setIsAllowlist] = useState(
-    params?.allowedAddresses && params?.allowedAddresses.length != 0
+    Boolean(params?.allowedAddresses && params?.allowedAddresses.length != 0)
   )
   const [isPayable, setIsPayable] = useState(Boolean(initValue) || false)
   const [usdValue, setUsdValue] = useState(initValue * ethUsd)

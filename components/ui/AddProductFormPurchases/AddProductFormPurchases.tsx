@@ -31,7 +31,7 @@ const AddProductFormPurchases = ({
 
   return (
     <>
-      <div className="pb-6">
+      <div className="pb-10">
         <h1 className="pb-6">Redeem info</h1>
         <p className="text-lg text-gray-600">
           Customize what buyers see after buying the product
