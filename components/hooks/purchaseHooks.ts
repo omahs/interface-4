@@ -38,14 +38,14 @@ export type HookProps = {
 export const defaultCheckSelector = "0x95db9368"
 export const defaultExecSelector = "0xa23fffb9"
 export const defaultExternalCall = {
-  data: "",
+  data: [],
   value: 0,
   externalAddress: "",
   checkFunctionSignature: defaultCheckSelector,
   execFunctionSignature: defaultExecSelector
 }
 export const emptyExternalCall = {
-  data: "",
+  data: [],
   value: 0,
   externalAddress: ethers.constants.AddressZero,
   checkFunctionSignature: "0x00000000",
