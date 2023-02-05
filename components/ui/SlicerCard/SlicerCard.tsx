@@ -119,30 +119,29 @@ const SlicerCard = ({
         imageUrl={image}
       />
       <div className="pt-5 sm:pt-4 sm:ml-6 md:ml-14">
-        <Link href={slicerLink}>
-          <a className="flex items-center">
-            {slicerInfo ? (
-              <h3 className="inline-block">{slicerName}</h3>
-            ) : (
-              <div className="w-32 h-6 mb-2 rounded-md bg-sky-300 animate-pulse" />
-            )}
-            <p className="h-full ml-3 text-sm font-normal text-gray-500">
-              #{slicerId}
-            </p>
-          </a>
+        <Link href={slicerLink} className="flex items-center">
+          {slicerInfo ? (
+            <h3 className="inline-block">{slicerName}</h3>
+          ) : (
+            <div className="w-32 h-6 mb-2 rounded-md bg-sky-300 animate-pulse" />
+          )}
+          <p className="h-full ml-3 text-sm font-normal text-gray-500">
+            #{slicerId}
+          </p>
         </Link>
         <div className="space-y-2 text-gray-700">
           <div className="flex items-center">
             <p className="text-sm">
               {formatNumber(shares, 3)} slices owned ({slicePercentage})
             </p>
-            <Link href={`/transfer?id=${slicerId}`}>
-              <a className="flex items-center ml-3 group">
-                <p className="text-sm ">Transfer</p>
-                <div className="w-5 h-5 ml-1 transition-transform duration-150 group-hover:translate-x-1">
-                  <Arrow />
-                </div>
-              </a>
+            <Link
+              href={`/transfer?id=${slicerId}`}
+              className="flex items-center ml-3 group"
+            >
+              <p className="text-sm ">Transfer</p>
+              <div className="w-5 h-5 ml-1 transition-transform duration-150 group-hover:translate-x-1">
+                <Arrow />
+              </div>
             </Link>
           </div>
         </div>
@@ -184,8 +183,8 @@ const SlicerCard = ({
             {/* TODO: Update text after new release button */}
             {/* You have released{" "}
             <span className="font-medium">{ethReleased} ETH</span>, check{" "}
-            <Link href="/earnings">
-              <a className="text-green-500 underline">your earnings</a>
+            <Link href="/earnings" className="text-green-500 underline">
+              your earnings
             </Link>{" "}
             to withdraw them! */}
           </p>

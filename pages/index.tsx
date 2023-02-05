@@ -72,9 +72,9 @@ const Home = () => {
           ]
         }}
       />
+      <HomeHero />
       <Container page={true}>
         <main className="max-w-screen-lg pb-10 mx-auto text-center">
-          <HomeHero />
           <div className="space-y-28 sm:space-y-52">
             <HomeSection text={section1} image={<HomeCake />} />
             <HomeSection

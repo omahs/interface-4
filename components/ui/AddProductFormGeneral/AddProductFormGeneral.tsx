@@ -103,7 +103,7 @@ const AddProductFormGeneral = ({
         msg={msg}
         setMsg={setMsg}
         loading={false}
-        maxHeight="max-h-[260px] sm:max-h-[320px]"
+        maxHeight="max-h-[360px]"
         product
       />
 
@@ -112,9 +112,6 @@ const AddProductFormGeneral = ({
       </div>
 
       <MessageBlock msg={msg} />
-      <div>
-        <hr className="w-20 mx-auto my-16 border-gray-300" />
-      </div>
     </>
   )
 }

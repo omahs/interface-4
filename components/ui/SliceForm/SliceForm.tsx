@@ -143,7 +143,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           setIsImmutable={setIsImmutable}
           setIsCreatorMetadata={setIsCreatorMetadata}
         />
-        <div className="py-8 space-y-4 text-yellow-600 sm:px-6">
+        <div className="py-12 space-y-4 text-yellow-600 sm:px-3">
           {totalShares > 4000000000 && (
             <NoteText
               error
@@ -192,7 +192,7 @@ const SliceForm = ({ success, setLoading, setSuccess, setLogs }: Props) => {
           <MessageBlock msg={message} />
         </div>
       </div>
-      <div className="justify-center md:h-screen md:flex md:flex-col md:w-2/5 md:sticky md:top-0 md:-mt-24">
+      <div className="justify-center md:h-[700px] md:flex md:flex-col md:w-2/5 md:sticky md:top-0 md:-mt-12">
         <div>
           <PieChart
             addresses={addresses}

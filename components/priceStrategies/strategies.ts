@@ -10,6 +10,7 @@ export type Strategy = {
 }
 
 export type StrategyProps = {
+  priceParams: StrategyParams
   setPriceParams: Dispatch<SetStateAction<StrategyParams>>
   disabled?: boolean
 }
@@ -19,6 +20,7 @@ export type StrategyParams = {
   label?: string
   abi?: ContractInterface
   args?: any[]
+  fields?: { [key: string]: any }
 }
 
 export const strategiesRender: Strategy[] = [

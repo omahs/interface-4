@@ -1,4 +1,4 @@
-import { Provider } from "@wagmi/core"
+import { Provider } from "@ethersproject/providers"
 import { BytesLike, utils } from "ethers"
 
 const ExtCall = async (

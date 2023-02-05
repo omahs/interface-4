@@ -15,12 +15,17 @@ import deployments from "./deployments.json"
 const label = "ERC20 token-gate"
 
 const description =
-  "Allow purchases only from buyers with the specified amount of ERC20 tokens"
+  "Allow purchases only from buyers holding enough ERC20 tokens"
 
-const Component = ({ setParams }: HookProps) => {
-  const [address, setAddress] = useState("")
+const Component = ({ params, setParams }: HookProps) => {
+  const [initAddress, initGateAmount] = params?.deploy?.args || []
+  const [address, setAddress] = useState(initAddress || "")
   const [resolvedAddress, setResolvedAddress] = useState("")
-  const [gateAmount, setGateAmount] = useState(0)
+  const [gateAmount, setGateAmount] = useState(
+    initGateAmount
+      ? Number(BigNumber.from(initGateAmount).div(BigNumber.from(10).pow(18)))
+      : 1
+  )
 
   useEffect(() => {
     if (gateAmount) {
@@ -46,7 +51,7 @@ const Component = ({ setParams }: HookProps) => {
     <>
       <div>
         <InputAddress
-          label="ERC20 contract address"
+          label="ERC20 contract address*"
           address={address}
           onChange={setAddress}
           resolvedAddress={resolvedAddress}
@@ -58,8 +63,9 @@ const Component = ({ setParams }: HookProps) => {
       <div>
         <Input
           type="number"
-          label="Token gate amount (mul by 10^18)"
-          min={0}
+          label="Token gate amount*"
+          helpText="Assumes token with 18 decimals"
+          min={1}
           value={gateAmount}
           onChange={setGateAmount}
           required

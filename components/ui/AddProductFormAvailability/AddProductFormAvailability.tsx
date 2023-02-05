@@ -1,15 +1,18 @@
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect } from "react"
 import { Input, InputSwitch } from "@components/ui"
+import { StrategyParams } from "@components/priceStrategies/strategies"
 
 type Props = {
   isMultiple: boolean
   isLimited: boolean
   units: number
   maxUnits: number
+  priceParams: StrategyParams
   setIsMultiple: Dispatch<SetStateAction<boolean>>
   setIsLimited: Dispatch<SetStateAction<boolean>>
   setUnits: Dispatch<SetStateAction<number>>
   setMaxUnits: Dispatch<SetStateAction<number>>
+  setPriceParams: Dispatch<SetStateAction<StrategyParams>>
   disabled?: boolean
 }
 
@@ -18,12 +21,26 @@ const AddProductFormAvailability = ({
   isLimited,
   units,
   maxUnits,
+  priceParams,
   setIsMultiple,
   setIsLimited,
   setUnits,
   setMaxUnits,
+  setPriceParams,
   disabled
 }: Props) => {
+  const handleSetIsLimited = (value: boolean) => {
+    if (!value) {
+      setUnits(0)
+    }
+    setIsLimited(value)
+  }
+
+  useEffect(() => {
+    if (units == 0 && priceParams?.label?.includes("VRGDA")) {
+      setPriceParams(undefined)
+    }
+  }, [units])
   return (
     <>
       <div>
@@ -71,7 +88,7 @@ const AddProductFormAvailability = ({
             </>
           }
           enabled={isLimited}
-          setEnabled={setIsLimited}
+          setEnabled={handleSetIsLimited}
           disabled={disabled}
         />
         {isLimited && (

@@ -9,10 +9,11 @@ import deployments from "./deployments.json"
 const label = "ERC721 NFT-gate"
 
 const description =
-  "Allow purchases only from buyers with at least 1 NFT of the specified collection"
+  "Allow purchases only from buyers holding at least 1 NFT from the specified contract"
 
-const Component = ({ setParams }: HookProps) => {
-  const [address, setAddress] = useState("")
+const Component = ({ params, setParams }: HookProps) => {
+  const [initAddress] = params?.deploy?.args || []
+  const [address, setAddress] = useState(initAddress || "")
   const [resolvedAddress, setResolvedAddress] = useState("")
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const Component = ({ setParams }: HookProps) => {
     <>
       <div>
         <InputAddress
-          label="ERC721 contract address"
+          label="ERC721 contract address*"
           address={address}
           onChange={setAddress}
           resolvedAddress={resolvedAddress}

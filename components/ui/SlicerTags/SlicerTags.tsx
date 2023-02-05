@@ -40,10 +40,7 @@ const SlicerTags = ({ tags, newTags, setNewTags, editMode }: Props) => {
               <>
                 <p>
                   Tags will be used to make your slicer relevant when searched
-                  through the{" "}
-                  <Link href="/slicer">
-                    <a>Explore section</a>
-                  </Link>{" "}
+                  through the <Link href="/slicer">Explore section</Link>{" "}
                 </p>
                 <p>
                   <strong>Note:</strong> Pick <b>Private</b> if you wish your

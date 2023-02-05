@@ -12,9 +12,7 @@ const MdLink = ({ label, url, ext = true }: Props) => {
       {label}
     </a>
   ) : (
-    <Link href={url}>
-      <a>{label}</a>
-    </Link>
+    <Link href={url}>{label}</Link>
   )
 }
 
