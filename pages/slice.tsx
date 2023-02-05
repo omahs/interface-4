@@ -39,7 +39,7 @@ export default function Slice() {
         {!success ? (
           !loading ? (
             <>
-              <div className="max-w-2xl pt-32 pb-12 mx-auto text-center">
+              <div className="max-w-2xl pt-32 pb-20 mx-auto text-center">
                 <DoubleText
                   inactive
                   logoText="Create Slicer"
@@ -66,8 +66,8 @@ export default function Slice() {
                   <p>
                     Please wait while the blockchain does its thing, or find the
                     slicer later in your{" "}
-                    <Link href="/profile">
-                      <a className="font-black highlight">profile section</a>
+                    <Link href="/profile" className="font-black highlight">
+                      profile section
                     </Link>{" "}
                   </p>
 

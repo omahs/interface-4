@@ -71,13 +71,14 @@ const AddProductFormPreview = ({
 
   return (
     <div>
-      <hr className="w-20 mx-auto my-16 border-gray-300" />
-      <h3 className="pb-6 font-bold">Preview</h3>
-      <p className="pb-12">
-        See how the product will appear to buyers before the purchase and after
-        redeeming it.
-      </p>
-      <div className="flex flex-wrap justify-around gap-4">
+      <div className="pb-10">
+        <h1 className="pb-6">Review</h1>
+        <p className="text-lg text-gray-600">
+          View how the product appears to buyers before the purchase and after
+          redeeming it
+        </p>
+      </div>
+      <div className="flex flex-wrap justify-around gap-4 pt-6">
         <a
           className="highlight"
           onClick={() =>
@@ -120,7 +121,7 @@ const AddProductFormPreview = ({
                       ? "text-red-500"
                       : "text-yellow-600"
                     : "text-green-600",
-                externalAddress,
+                externalPriceAddress: externalAddress,
                 isCustomPriced: externalAddress && true,
                 externalPrices: {
                   [slicerId]: {
@@ -133,7 +134,7 @@ const AddProductFormPreview = ({
             })
           }
         >
-          Product page
+          Product view
         </a>
         <a
           className="highlight"
@@ -160,7 +161,6 @@ const AddProductFormPreview = ({
           Redeem purchase
         </a>
       </div>
-      <hr className="w-20 mx-auto my-16 border-gray-300" />
     </div>
   )
 }

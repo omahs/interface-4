@@ -1,17 +1,33 @@
 import { InputAddress, InputPrice } from "@components/ui"
+import useEthUsd from "@utils/useEthUsd"
 import { ethers, BigNumber } from "ethers"
 import { useEffect, useState } from "react"
 import { Hook, HookProps } from "../purchaseHooks"
+
+type Props = HookProps & { ethProductPrice: number }
 
 const label = "Send ETH to address"
 
 const description = "Send ETH to an external address"
 
-const Component = ({ setParams }: HookProps) => {
-  const [address, setAddress] = useState("")
+const Component = ({ params, ethProductPrice, setParams }: Props) => {
+  const ethUsd = useEthUsd()
+
+  const paramsExternalAddress = params?.externalCall?.externalAddress
+  const paramsValue = params?.externalCall?.value
+  const initAddress =
+    (paramsExternalAddress &&
+      paramsExternalAddress != "0x00000000" &&
+      paramsExternalAddress != ethers.constants.AddressZero &&
+      paramsExternalAddress) ||
+    ""
+  const initValue = paramsValue
+    ? Number(BigNumber.from(paramsValue).div(BigNumber.from(10).pow(18)))
+    : 0
+  const [address, setAddress] = useState(initAddress)
   const [resolvedAddress, setResolvedAddress] = useState("")
-  const [usdValue, setUsdValue] = useState(0)
-  const [ethValue, setEthValue] = useState(0)
+  const [usdValue, setUsdValue] = useState(initValue * ethUsd)
+  const [ethValue, setEthValue] = useState(initValue)
 
   useEffect(() => {
     const externalAddress = address
@@ -40,7 +56,7 @@ const Component = ({ setParams }: HookProps) => {
     <>
       <div>
         <InputAddress
-          label="Address"
+          label="Receiver address*"
           address={address}
           onChange={setAddress}
           required
@@ -50,18 +66,22 @@ const Component = ({ setParams }: HookProps) => {
       </div>
       <div className="py-3">
         <InputPrice
+          label="Amount per unit*"
           ethValue={ethValue}
           setEthValue={setEthValue}
           usdValue={usdValue}
           setUsdValue={setUsdValue}
-          label="Value per unit"
           required
         />
+        <p className="text-sm text-left text-gray-600">
+          Total price (incl. standard price):{" "}
+          <b>
+            Ξ{" "}
+            {Math.round((Number(ethProductPrice) + Number(ethValue)) * 1000) /
+              1000}
+          </b>
+        </p>
       </div>
-
-      <p className="text-yellow-600">
-        <b>The sent value will be added to the unit product price.</b>
-      </p>
     </>
   )
 }

@@ -44,10 +44,7 @@ export const faqsMain = [
           <li>Buy slices of a slicer you like or support</li>
           <li>
             Buy enough slices of a slicer in order to become a{" "}
-            <Link href="/#superowner">
-              <a>superowner</a>
-            </Link>{" "}
-            to do add new products
+            <Link href="/#superowner">superowner</Link> to do add new products
           </li>
         </ul>
       </>
@@ -154,12 +151,10 @@ export const faqsMain = [
         </p>
         <p>
           You can redeem a purchase from{" "}
-          <Link href="/purchases">
-            <a>Your purchases</a>
-          </Link>{" "}
-          and clicking on the <b>Redeem</b> button of a specific product.
-          Alternatively, you can also do so directly from a slicer page by
-          clicking on the blue button with the shopping bag icon.
+          <Link href="/purchases">Your purchases</Link> and clicking on the{" "}
+          <b>Redeem</b> button of a specific product. Alternatively, you can
+          also do so directly from a slicer page by clicking on the blue button
+          with the shopping bag icon.
         </p>
       </>
     ),
@@ -172,10 +167,8 @@ export const faqsMain = [
         <p>
           <i>Triggering a release</i> means receiving any ETH due from your
           slicers. You can trigger a release by going to{" "}
-          <Link href="/profile">
-            <a>Your slicers</a>
-          </Link>{" "}
-          and triggering a release with the apposite button.
+          <Link href="/profile">Your slicers</Link> and triggering a release
+          with the apposite button.
         </p>
         <p>
           You will also trigger an automatic release whenever you perform a
@@ -191,13 +184,9 @@ export const faqsMain = [
     answer: (
       <>
         <p>
-          Go to{" "}
-          <Link href="/profile">
-            <a>Your slicers</a>
-          </Link>{" "}
-          and click on <b>transfer</b> for a specified slicer. From there
-          you&apos;ll be able to transfer any amount of slices to an address you
-          specify.
+          Go to <Link href="/profile">Your slicers</Link> and click on{" "}
+          <b>transfer</b> for a specified slicer. From there you&apos;ll be able
+          to transfer any amount of slices to an address you specify.
         </p>
         <p>
           If you wish to sell your slices, you can use{" "}
@@ -221,11 +210,9 @@ export const faqsMain = [
         <p>
           Slicers only appear in the explore section after you visit their page
           or see them at least once. To solve this, simply go to{" "}
-          <Link href="/profile">
-            <a>Your slicers</a>
-          </Link>
-          . The slicer should now be in the Explore section (if you don&apos;t
-          see it refresh the page or wait some seconds).
+          <Link href="/profile">Your slicers</Link>. The slicer should now be in
+          the Explore section (if you don&apos;t see it refresh the page or wait
+          some seconds).
         </p>
         <p>
           Note that if you pick the <b>Private</b> tag for a slicer, it will be
@@ -432,7 +419,7 @@ export const faqsMain = [
 //         Note: Due to how Slice works, slicers&apos; metadata are not stored on
 //         IPFS. If you want your collectibles to be truly immutable, check out{" "}
 //         <Link href="/#nft-existing">
-//           <a>how to use Slice with existing NFTs</a>
+//           how to use Slice with existing NFTs
 //         </Link>
 //         .
 //       </p> */}

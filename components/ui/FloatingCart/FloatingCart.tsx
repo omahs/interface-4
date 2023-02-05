@@ -9,7 +9,7 @@ import { useCookies } from "react-cookie"
 import { CartList } from ".."
 import { useAppContext } from "../context"
 import { updatePurchases } from "@utils/getPurchases"
-import { ethers, utils } from "ethers"
+import { ethers, Signer, utils } from "ethers"
 import { ConnectButton, useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { useSigner } from "wagmi"
 import saEvent from "@utils/saEvent"
@@ -123,7 +123,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
       }
 
       await handleSubmit(
-        PayProducts(signer, account, updatedCart),
+        PayProducts(signer as unknown as Signer, account, updatedCart),
         setMessage,
         setLoading,
         setSuccess,
@@ -198,10 +198,11 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
                   }
                 >
                   {success ? (
-                    <Link href="/purchases">
-                      <a className="text-white hover:text-white">
-                        Go to purchases
-                      </a>
+                    <Link
+                      href="/purchases"
+                      className="text-white hover:text-white"
+                    >
+                      Go to purchases
                     </Link>
                   ) : loading ? (
                     <div className="flex items-center justify-center w-full">

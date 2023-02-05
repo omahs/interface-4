@@ -1,7 +1,7 @@
-import { CardBasic, ChartVRGDASchedule, Input } from "@components/ui"
+import { CardBasic, ChartVRGDASchedule, Input, NoteText } from "@components/ui"
 import formatNumber from "@utils/formatNumber"
 import toWad from "@utils/toWad"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import {
   strategiesList,
   Strategy,
@@ -16,13 +16,45 @@ type VRGDAStrategyProps = StrategyProps & {
 
 const label = "VRGDA"
 
-const Component = ({ setPriceParams, units, disabled }: VRGDAStrategyProps) => {
-  const [rate, setRate] = useState<"Linear" | "Logistic">("Linear")
-  const [targetPrice, setTargetPrice] = useState(0)
-  const [min, setMin] = useState(0)
-  const [priceDecayPercent, setPriceDecayPercent] = useState(0)
-  const [timeFactor, setTimeFactor] = useState(0)
+const Component = ({
+  priceParams,
+  setPriceParams,
+  units,
+  disabled
+}: VRGDAStrategyProps) => {
+  const { rate, targetPrice, min, priceDecayPercent, timeFactor } =
+    priceParams?.fields || {}
   const strategy = strategiesList[rate + label]
+
+  const handleSetRate = (value: string) => {
+    const data = { ...priceParams }
+    if (!data.fields) data.fields = {}
+    data.fields["rate"] = value
+    if (value != rate) {
+      data.fields["timeFactor"] = 0
+    }
+    setPriceParams(data)
+  }
+  const handleSetTargetPrice = (value: number) => {
+    const data = { ...priceParams }
+    data.fields["targetPrice"] = value
+    setPriceParams(data)
+  }
+  const handleSetMin = (value: number) => {
+    const data = { ...priceParams }
+    data.fields["min"] = value
+    setPriceParams(data)
+  }
+  const handleSetPriceDecayPercent = (value: number) => {
+    const data = { ...priceParams }
+    data.fields["priceDecayPercent"] = value
+    setPriceParams(data)
+  }
+  const handleSetTimeFactor = (value: number) => {
+    const data = { ...priceParams }
+    data.fields["timeFactor"] = value
+    setPriceParams(data)
+  }
 
   useEffect(() => {
     if (units != 0) {
@@ -32,77 +64,71 @@ const Component = ({ setPriceParams, units, disabled }: VRGDAStrategyProps) => {
           process.env.NEXT_PUBLIC_ENVIRONMENT
         ].strategies[label]
 
-      let newPriceParams: StrategyParams = {
+      const newPriceParams: StrategyParams = {
+        ...priceParams,
         label,
         address,
         abi,
         args: [
           [
             [
-              toWad(targetPrice),
+              targetPrice ? toWad(targetPrice) : 0,
               min ? toWad(min) : 0,
-              toWad(
-                rate == "Linear"
-                  ? timeFactor
-                  : timeFactor != 0
-                  ? Math.floor(100000 / timeFactor) / 100000
-                  : 0
-              )
+              timeFactor
+                ? toWad(
+                    rate == "Linear"
+                      ? timeFactor
+                      : timeFactor != 0
+                      ? Math.floor(100000 / timeFactor) / 100000
+                      : 0
+                  )
+                : 0
             ]
           ],
-          toWad(priceDecayPercent / 100)
+          priceDecayPercent ? toWad(Number(priceDecayPercent) / 100) : 0
         ]
       }
 
       setPriceParams(newPriceParams)
     }
-
-    return () => {
-      setPriceParams(undefined)
-    }
-  }, [units, targetPrice, priceDecayPercent, timeFactor, setPriceParams])
-
-  useEffect(() => {
-    setTimeFactor(0)
-  }, [rate])
+  }, [strategy, units, targetPrice, min, priceDecayPercent, timeFactor])
 
   return (
     <>
-      <p>
-        Use a dynamic price based on a{" "}
+      <p className="text-gray-600">
+        Set a dynamic price according to a sale schedule, based on a{" "}
         <a
           href="https://www.paradigm.xyz/2022/08/vrgda"
           target="_blank"
           rel="noreferrer"
           className="highlight"
         >
-          VRGDA strategy
+          VRGDA
         </a>
         .
       </p>
-
       {units == 0 ? (
-        <p className="pt-4 text-yellow-600">
-          Enable <strong>limited availability</strong> to use a VRGDA strategy.
-        </p>
+        <div className="text-left">
+          <NoteText text="Enable limited availability to use a VRGDA strategy" />
+        </div>
       ) : (
         <>
           <div className="grid grid-cols-2 gap-2 pt-3 pb-6">
             <CardBasic
               label="Linear"
               isActive={rate == "Linear"}
-              setisActive={setRate}
+              setisActive={handleSetRate}
             />
             <CardBasic
               label="Logistic"
               isActive={rate == "Logistic"}
-              setisActive={setRate}
+              setisActive={handleSetRate}
             />
           </div>
           <div>
             <Input
               type="number"
-              label="Target price (ETH)"
+              label="Target price (ETH)*"
               helpText="How much should the product cost if sales are on schedule?"
               placeholder={"0.1"}
               min={0.001}
@@ -113,7 +139,7 @@ const Component = ({ setPriceParams, units, disabled }: VRGDAStrategyProps) => {
                 </>
               }
               value={targetPrice || ""}
-              onChange={setTargetPrice}
+              onChange={handleSetTargetPrice}
               disabled={disabled}
               required
             />
@@ -135,14 +161,14 @@ const Component = ({ setPriceParams, units, disabled }: VRGDAStrategyProps) => {
                 </>
               }
               value={min || ""}
-              onChange={setMin}
+              onChange={handleSetMin}
               disabled={disabled}
             />
           </div>
           <div>
             <Input
               type="number"
-              label="Daily price decay (%)"
+              label="Daily price decay (%)*"
               helpText="How much should the price drop in 1 day if there are no sales?"
               placeholder={"10"}
               min={0.01}
@@ -159,7 +185,7 @@ const Component = ({ setPriceParams, units, disabled }: VRGDAStrategyProps) => {
                 </>
               }
               value={priceDecayPercent || ""}
-              onChange={setPriceDecayPercent}
+              onChange={handleSetPriceDecayPercent}
               disabled={disabled}
               required
             />
@@ -168,12 +194,12 @@ const Component = ({ setPriceParams, units, disabled }: VRGDAStrategyProps) => {
             {rate == "Linear" ? (
               <Input
                 type="number"
-                label="Daily units to be sold"
+                label="Daily units to be sold*"
                 placeholder={"2"}
                 min={0.01}
                 step={0.01}
                 value={timeFactor || ""}
-                onChange={setTimeFactor}
+                onChange={handleSetTimeFactor}
                 question={
                   <>
                     <p>The number of units to target selling in 1 day</p>
@@ -185,7 +211,7 @@ const Component = ({ setPriceParams, units, disabled }: VRGDAStrategyProps) => {
             ) : (
               <Input
                 type="number"
-                label="Time scale (days)"
+                label="Time scale (days)*"
                 helpText={`After how many days ${formatNumber(
                   Math.floor(units * 46) / 100
                 )} units (46% of total) should be sold?`}
@@ -194,7 +220,7 @@ const Component = ({ setPriceParams, units, disabled }: VRGDAStrategyProps) => {
                 max={100000}
                 step={0.1}
                 value={timeFactor || ""}
-                onChange={setTimeFactor}
+                onChange={handleSetTimeFactor}
                 question={
                   <>
                     <p>
@@ -219,13 +245,13 @@ const Component = ({ setPriceParams, units, disabled }: VRGDAStrategyProps) => {
               <>
                 You plan to sell <b>{formatNumber(Number(units))} units</b> in{" "}
                 <b>
-                  {timeFactor != 0
+                  {timeFactor
                     ? formatNumber(Math.floor((100 * units) / timeFactor) / 100)
                     : "..."}{" "}
                   days
                 </b>{" "}
                 with a target price of{" "}
-                <b>{targetPrice != 0 ? targetPrice : "..."} ETH</b>.
+                <b>{targetPrice ? targetPrice : "..."} ETH</b>.
               </>
             ) : (
               <>
@@ -236,11 +262,10 @@ const Component = ({ setPriceParams, units, disabled }: VRGDAStrategyProps) => {
                 </b>{" "}
                 in{" "}
                 <b>
-                  {timeFactor != 0 ? formatNumber(Number(timeFactor)) : "..."}{" "}
-                  days
+                  {timeFactor ? formatNumber(Number(timeFactor)) : "..."} days
                 </b>{" "}
                 with a target price of{" "}
-                <b>{targetPrice != 0 ? targetPrice : "..."} ETH</b>.
+                <b>{targetPrice ? targetPrice : "..."} ETH</b>.
               </>
             )}
           </p>
@@ -254,7 +279,7 @@ const Component = ({ setPriceParams, units, disabled }: VRGDAStrategyProps) => {
               Price will decrease{" "}
               <b>
                 daily by{" "}
-                {priceDecayPercent != 0 && timeFactor != 0
+                {priceDecayPercent && timeFactor
                   ? formatNumber(
                       Math.floor((priceDecayPercent * 100) / timeFactor) / 100
                     ) + "% "
@@ -267,8 +292,7 @@ const Component = ({ setPriceParams, units, disabled }: VRGDAStrategyProps) => {
             <p>
               Price will decrease{" "}
               <b>
-                daily by{" "}
-                {priceDecayPercent != 0 ? priceDecayPercent + "% " : "..."}
+                daily by {priceDecayPercent ? priceDecayPercent + "% " : "..."}
               </b>{" "}
               if there are no sales.
             </p>

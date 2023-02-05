@@ -20,6 +20,7 @@ export type HookParams = {
     args: any[]
   }
   allowedAddresses?: string[]
+  fields?: { [key: string]: any }
 }
 
 export type Hook = {
@@ -30,6 +31,7 @@ export type Hook = {
 }
 
 export type HookProps = {
+  params: HookParams
   setParams: Dispatch<SetStateAction<HookParams>>
 }
 

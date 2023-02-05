@@ -23,8 +23,11 @@ const HomeBanner = () => {
         </div>
         <p className="text-sm text-gray-300">
           Check out{" "}
-          <Link href="/blog/treasury">
-            <a className="text-white highlight highlight-inverted">this post</a>
+          <Link
+            href="/blog/treasury"
+            className="text-white highlight highlight-inverted"
+          >
+            this post
           </Link>{" "}
           for more info, and if you have questions just reach out on{" "}
           <a

@@ -23,7 +23,7 @@ interface ButtonProps {
 const Button: FC<ButtonProps> = (props) => {
   const {
     wrapperClassName = "",
-    className = "h-[38px] font-bold tracking-wide rounded-md overflow-hidden px-5 min-w-[150px] duration-150 focus:outline-none",
+    className = "h-[38px] font-bold tracking-wide rounded-md overflow-hidden px-5 min-w-[150px] focus:outline-none",
     type = "button",
     label,
     loadingLabel,
@@ -32,7 +32,7 @@ const Button: FC<ButtonProps> = (props) => {
     loading = false,
     double = true,
     color = `text-white bg-black ${
-      double ? "" : "hover:bg-gray-700 focus:bg-gray-700"
+      double ? "duration-150" : "hover:bg-random2-600 focus:bg-random2-600"
     }`,
     external = false,
     targetBlank = true,
@@ -48,7 +48,7 @@ const Button: FC<ButtonProps> = (props) => {
     >
       {href ? (
         !external ? (
-          <Link href={href} passHref>
+          <Link href={href}>
             <button className={`peer relative z-10 ${className} ${color}`}>
               <div className="flex items-center justify-center">
                 <p>{label}</p>

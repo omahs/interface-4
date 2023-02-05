@@ -39,12 +39,10 @@ export default function Blog({ allPosts }) {
                 return (
                   <li key={key}>
                     <Link href={`/blog/${encodeURIComponent(post.slug)}`}>
-                      <a>
-                        <p className="text-xl font-black sm:text-2xl">
-                          {post.title}
-                        </p>
-                        <p className="pt-1.5 font-normal">{post.subtitle}</p>
-                      </a>
+                      <p className="text-xl font-black sm:text-2xl">
+                        {post.title}
+                      </p>
+                      <p className="pt-1.5 font-normal">{post.subtitle}</p>
                     </Link>
                     <hr className="mx-auto my-8 border-gray-300" />
                   </li>

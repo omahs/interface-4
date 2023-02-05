@@ -88,8 +88,8 @@ export default function Article({
               <Image
                 src={`${domain}/blog/${coverImage}`}
                 alt={`Cover image of ${slug} post`}
-                layout="fill"
-                objectFit="cover"
+                fill
+                className="object-cover"
               />
             </div>
           ) : null}
