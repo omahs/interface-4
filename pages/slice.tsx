@@ -12,7 +12,7 @@ import {
 
 export default function Slice() {
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(true)
+  const [success, setSuccess] = useState(false)
   const [logs, setLogs] = useState<LogDescription[]>()
   const eventLog = getLog(logs, "TokenSliced")
 
@@ -91,7 +91,7 @@ export default function Slice() {
             }
             buttonLabel="Go to slicer"
             href={`/slicer/${Number(eventLog?.tokenId)}`}
-            buttonLabelSecondary="Create Slicer"
+            buttonLabelSecondary="Create a new Slicer"
             onClickSecondary={() => setSuccess(false)}
           />
         )}
