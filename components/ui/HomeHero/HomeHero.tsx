@@ -42,7 +42,7 @@ export default function HomeHero() {
                 </a>
               </div>
             </div> */}
-            <div className="max-w-2xl mx-auto text-center">
+            <div className="max-w-2xl px-2 mx-auto text-center sm:px-0">
               <h1 className="text-3xl font-black tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
                 Buy and sell anything fully on-chain
               </h1>
