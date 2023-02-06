@@ -62,22 +62,14 @@ export default function Slice() {
             <ActionScreen
               text="Slicing in progress ..."
               helpText={
-                <div className="max-w-sm pb-6 mx-auto space-y-6">
-                  <p>
-                    Please wait while the blockchain does its thing, or find the
-                    slicer later in your{" "}
-                    <Link href="/profile" className="font-black highlight">
-                      profile section
-                    </Link>{" "}
-                  </p>
-
-                  <p className="max-w-sm mx-auto">
-                    To make the slicer immediately appear on the website{" "}
-                    <b className="text-yellow-600">
-                      don&apos;t leave this page until the process has completed
-                    </b>
-                  </p>
-                </div>
+                <p className="max-w-sm pb-6 mx-auto space-y-6 text-gray-600">
+                  Please wait for the transaction to be confirmed, or find the
+                  slicer later among{" "}
+                  <Link href="/profile" className="font-black highlight">
+                    your slicers
+                  </Link>
+                  .
+                </p>
               }
               loading
             />
@@ -90,15 +82,16 @@ export default function Slice() {
                 <p>
                   Your slicer address is <b>{eventLog && eventLog[0]}</b>
                 </p>
-                <p>
-                  If you are a superowner, you can now customize it on its page
-                  by clicking on the edit icon near the slicer name
+                <p className="text-gray-600">
+                  If you hold enough slices to be a superowner, you can now
+                  customize it on its page by clicking on the edit icon next to
+                  the slicer title.
                 </p>
               </div>
             }
             buttonLabel="Go to slicer"
             href={`/slicer/${Number(eventLog?.tokenId)}`}
-            buttonLabelSecondary="Create Slicer"
+            buttonLabelSecondary="Create a new Slicer"
             onClickSecondary={() => setSuccess(false)}
           />
         )}
