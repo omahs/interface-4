@@ -57,16 +57,11 @@ const SlicerSponsors = ({
       )}
       {!editMode && (
         <div className="pt-4 pb-12 text-center">
-          <div className="py-10">
+          <div className="pb-8 text-gray-600">
             <p>
               {tag === "Charity" ? "Donate to" : "Sponsor"} this slicer by
               sending ETH to its address
             </p>
-            {process.env.NEXT_PUBLIC_CHAIN_ID != "1" && (
-              <p className="pt-2 font-semibold text-yellow-600">
-                Note: sponsors are not displayed on testnet
-              </p>
-            )}
           </div>
           <PaySlicer
             slicerId={slicerId}
@@ -74,6 +69,11 @@ const SlicerSponsors = ({
             sponsorsList={sponsorsList}
             setSponsorsList={setSponsorsList}
           />
+          {process.env.NEXT_PUBLIC_CHAIN_ID != "1" && (
+            <p className="pt-4 font-semibold text-yellow-600">
+              Note: sponsors are not displayed on testnet
+            </p>
+          )}
         </div>
       )}
     </div>

@@ -63,9 +63,6 @@ const PieChart = ({ addresses, shares, minimumShares, totalShares }: Props) => {
               } ${chartPerimeter}`}
               strokeDashoffset={slice.percentageToRender === 100 ? 0 : 0.2}
               transform={`rotate(${-90 + slice.startAngle} 10 10)`}
-              style={{
-                transition: "stroke-dasharray .3s"
-              }}
             />
           )
         })}

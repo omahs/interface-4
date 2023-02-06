@@ -1,7 +1,11 @@
-import { StrategyParams } from "@components/priceStrategies/strategies"
+import {
+  strategiesRender,
+  Strategy,
+  StrategyParams
+} from "@components/priceStrategies/strategies"
 import ethToWei from "@utils/ethToWei"
 import { formatNumberWithUnit } from "@utils/formatNumber"
-import { ethers } from "ethers"
+import { ethers, Signer } from "ethers"
 import { useEffect, useState } from "react"
 import AddProductFormAvailability from "../AddProductFormAvailability"
 import AddProductFormPrice from "../AddProductFormPrice"
@@ -61,6 +65,9 @@ const EditProductForm = ({
   )
   const [newIsUSD, setNewIsUSD] = useState(isUSD)
   const [newPriceParams, setNewPriceParams] = useState<StrategyParams>()
+  const [priceStrategy, setPriceStrategy] = useState<Strategy>(
+    strategiesRender[0]
+  )
   const isFree = newPriceParams?.address
     ? false
     : newEthValue != 0
@@ -143,7 +150,7 @@ const EditProductForm = ({
         const contract = new ethers.Contract(
           newPriceParams.address,
           newPriceParams.abi,
-          signer
+          signer as unknown as Signer
         )
 
         const tx = await contract.setProductPrice(
@@ -187,6 +194,8 @@ const EditProductForm = ({
           setIsLimited={setNewIsLimited}
           setUnits={setNewUnits}
           setMaxUnits={setNewMaxUnits}
+          priceParams={newPriceParams}
+          setPriceParams={setNewPriceParams}
           disabled={loading}
         />
         <InputSwitch
@@ -220,6 +229,9 @@ const EditProductForm = ({
             units={newUnits}
             setPriceParams={setNewPriceParams}
             disabled={loading}
+            priceParams={newPriceParams}
+            priceStrategy={priceStrategy}
+            setPriceStrategy={setPriceStrategy}
           />
         </>
       )}

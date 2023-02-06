@@ -7,7 +7,7 @@ type Props = {
 }
 
 const ChartVRGDASchedule = ({ rate, units, timeFactor }: Props) => {
-  const isDataFilled = units != 0 && timeFactor != 0
+  const isDataFilled = timeFactor && units != 0
 
   return (
     <>
@@ -125,11 +125,11 @@ const ChartVRGDASchedule = ({ rate, units, timeFactor }: Props) => {
               >
                 {formatNumber(Math.floor(units * 46) / 100)}
               </p>
-              {isDataFilled && (
+              {isDataFilled ? (
                 <p className="absolute bottom-0 left-0 w-32 -ml-1 text-sm text-center text-black xs:ml-4 -mb-7">
                   {formatNumber(Number(timeFactor))} days
                 </p>
-              )}
+              ) : null}
             </>
           )}
         </div>

@@ -46,15 +46,13 @@ const CardImage = ({
     >
       {href ? (
         <Link href={href}>
-          <a>
-            <SlicerImage
-              name={name}
-              imageUrl={imageUrl}
-              product={product}
-              disableHover={disableHover}
-              isEditable={isEditable}
-            />
-          </a>
+          <SlicerImage
+            name={name}
+            imageUrl={imageUrl}
+            product={product}
+            disableHover={disableHover}
+            isEditable={isEditable}
+          />
         </Link>
       ) : (
         <SlicerImage

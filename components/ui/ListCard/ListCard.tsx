@@ -45,17 +45,7 @@ const ListCard = ({
       </div>
     </div>
   )
-  return (
-    <div>
-      {href ? (
-        <Link href={href}>
-          <a>{content}</a>
-        </Link>
-      ) : (
-        content
-      )}
-    </div>
-  )
+  return <div>{href ? <Link href={href}>{content}</Link> : content}</div>
 }
 
 export default ListCard

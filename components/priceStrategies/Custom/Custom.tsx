@@ -4,8 +4,12 @@ import { Strategy, StrategyProps } from "../strategies"
 
 const label = "Custom"
 
-const Component = ({ setPriceParams, disabled }: StrategyProps) => {
-  const [address, setAddress] = useState("")
+const Component = ({
+  priceParams,
+  setPriceParams,
+  disabled
+}: StrategyProps) => {
+  const [address, setAddress] = useState(priceParams?.address || "")
   const [resolvedAddress, setResolvedAddress] = useState("")
 
   useEffect(() => {
@@ -16,18 +20,20 @@ const Component = ({ setPriceParams, disabled }: StrategyProps) => {
     ) {
       setPriceParams({
         label: "",
-        address: resolvedAddress || address
+        address: resolvedAddress || address,
+        fields: priceParams?.fields
       })
     }
-
-    return () => {
-      setPriceParams(undefined)
+    if (address == "") {
+      return () => {
+        setPriceParams(undefined)
+      }
     }
   }, [address, resolvedAddress])
 
   return (
     <>
-      <p>
+      <p className="text-gray-600">
         Add a custom pricing logic in a smart contract which inherits the{" "}
         <a
           href="https://github.com/slice-so/contracts-pricing/blob/master/src/Slice/interfaces/utils/ISliceProductPrice.sol"
@@ -41,7 +47,7 @@ const Component = ({ setPriceParams, disabled }: StrategyProps) => {
       </p>
       <div>
         <InputAddress
-          label="Contract address"
+          label="Contract address*"
           placeholder="0x…"
           address={address}
           onChange={setAddress}

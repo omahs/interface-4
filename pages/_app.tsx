@@ -1,4 +1,3 @@
-import { ClickToComponent } from "click-to-react-component"
 import { Background, Layout } from "@components/ui"
 import { AppWrapper } from "@components/ui/context"
 import { ThemeProvider } from "next-themes"
@@ -45,7 +44,6 @@ const wagmiClient = createClient({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <ClickToComponent />
       <Head />
       <CookiesProvider>
         <ThemeProvider

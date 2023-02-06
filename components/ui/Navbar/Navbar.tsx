@@ -4,7 +4,7 @@ import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
 import { Container } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import UserIcon from "@components/icons/UserIcon"
 import saEvent from "@utils/saEvent"
@@ -16,21 +16,32 @@ const DropdownMenu = dynamic(() => import("@components/ui/DropdownMenu"), {
 const Navbar = () => {
   const { isConnected } = useAppContext()
   const [showDropdown, setShowDropdown] = useState(false)
+  const dropdownRef = useRef(null)
+
+  useEffect(() => {
+    function handleClick(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false)
+      }
+    }
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClick)
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClick)
+    }
+  }, [dropdownRef])
 
   return (
     <header className="shadow-sm">
       <Container>
         <nav className="relative px-3 sm:px-6 h-[4.25rem] items-center mx-auto flex justify-between">
           <div className="z-10 flex items-center space-x-7 sm:space-x-10">
-            <Link href="/">
-              <a className="mb-1" aria-label="Slice logo">
-                <Logo size="w-[24px]" />
-              </a>
+            <Link href="/" className="mb-1" aria-label="Slice logo">
+              <Logo size="w-[24px]" />
             </Link>
             <Link href="/slicer">
-              <a>
-                <p className="text-[0.925rem] font-medium">Explore</p>
-              </a>
+              <p className="text-[0.925rem] font-medium">Explore</p>
             </Link>
           </div>
           <div className="relative z-10 flex items-center space-x-6">
@@ -52,16 +63,16 @@ const Navbar = () => {
             {isConnected && (
               <a
                 onClick={() => setShowDropdown((showDropdown) => !showDropdown)}
+                ref={dropdownRef}
               >
                 <UserIcon />
               </a>
             )}
           </div>
           {showDropdown && (
-            <DropdownMenu
-              showDropdown={showDropdown}
-              setShowDropdown={setShowDropdown}
-            />
+            <div className="absolute top-0 right-0" ref={dropdownRef}>
+              <DropdownMenu setShowDropdown={setShowDropdown} />
+            </div>
           )}
         </nav>
       </Container>

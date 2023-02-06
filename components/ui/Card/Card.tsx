@@ -66,13 +66,7 @@ const Card = ({
 
   return (
     <div className={containerClassName}>
-      {href ? (
-        <Link href={href}>
-          <a>{content}</a>
-        </Link>
-      ) : (
-        content
-      )}
+      {href ? <Link href={href}>{content}</Link> : content}
     </div>
   )
 }

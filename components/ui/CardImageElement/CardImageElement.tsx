@@ -26,13 +26,7 @@ const CardImageElement = ({
       {content}
     </span>
   )
-  return clickable && href ? (
-    <Link href={href}>
-      <a>{main}</a>
-    </Link>
-  ) : (
-    main
-  )
+  return clickable && href ? <Link href={href}>{main}</Link> : main
 }
 
 export default CardImageElement
