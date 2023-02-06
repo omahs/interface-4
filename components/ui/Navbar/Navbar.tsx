@@ -4,7 +4,7 @@ import Logo from "@components/icons/Logo"
 import Nightwind from "@components/icons/Nightwind"
 import { Container } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import UserIcon from "@components/icons/UserIcon"
 import saEvent from "@utils/saEvent"
@@ -16,6 +16,21 @@ const DropdownMenu = dynamic(() => import("@components/ui/DropdownMenu"), {
 const Navbar = () => {
   const { isConnected } = useAppContext()
   const [showDropdown, setShowDropdown] = useState(false)
+  const dropdownRef = useRef(null)
+
+  useEffect(() => {
+    function handleClick(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false)
+      }
+    }
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClick)
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClick)
+    }
+  }, [dropdownRef])
 
   return (
     <header className="shadow-sm">
@@ -48,16 +63,16 @@ const Navbar = () => {
             {isConnected && (
               <a
                 onClick={() => setShowDropdown((showDropdown) => !showDropdown)}
+                ref={dropdownRef}
               >
                 <UserIcon />
               </a>
             )}
           </div>
           {showDropdown && (
-            <DropdownMenu
-              showDropdown={showDropdown}
-              setShowDropdown={setShowDropdown}
-            />
+            <div className="absolute top-0 right-0" ref={dropdownRef}>
+              <DropdownMenu setShowDropdown={setShowDropdown} />
+            </div>
           )}
         </nav>
       </Container>

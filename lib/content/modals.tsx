@@ -9,6 +9,7 @@ import {
   FilesList,
   LoadingStep,
   MarkdownBlock,
+  NoteText,
   OwnerBlock
 } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
@@ -722,17 +723,19 @@ export const FINGERPRINTING_VIEW = () => {
   return (
     <>
       <div className="pb-6 text-center">
-        <DoubleText inactive logoText="Oops, shield detected" />
+        <DoubleText inactive logoText="Shields detected" />
       </div>
       <div className="space-y-6 text-center">
         <p>
           Make sure fingerprinting protection isn&apos;t enabled in your
           browser, if you are a Brave user turn off shields and try again.
         </p>
-        <p className="font-semibold text-yellow-600">
-          Note: copy your progress before allowing fingerprinting, as the page
-          will be reloaded and any unsaved progress will be lost.
-        </p>
+        <div className="text-left">
+          <NoteText
+            text="Copy your progress before allowing fingerprinting, as the page
+          will be reloaded and any unsaved progress will be lost."
+          />
+        </div>
       </div>
     </>
   )

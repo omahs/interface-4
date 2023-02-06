@@ -3,11 +3,10 @@ import ShoppingBag from "@components/icons/ShoppingBag"
 import { Dispatch, SetStateAction } from "react"
 import { DropdownMenuElement } from ".."
 type Props = {
-  showDropdown: boolean
   setShowDropdown: Dispatch<SetStateAction<boolean>>
 }
 
-function DropdownMenu({ showDropdown, setShowDropdown }: Props) {
+function DropdownMenu({ setShowDropdown }: Props) {
   // const { theme, setTheme } = useTheme()
 
   // const toggle = () => {
