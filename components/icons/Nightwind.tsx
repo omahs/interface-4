@@ -20,7 +20,7 @@ const Nightwind = ({ ...props }) => {
         {theme !== "dark" ? (
           <meta name="theme-color" content="white" />
         ) : (
-          <meta name="theme-color" content="black" />
+          <meta name="theme-color" content="#0F1115" />
         )}
       </Head>
       <svg

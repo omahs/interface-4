@@ -9,8 +9,7 @@ import {
   HomeHero,
   HomeSection
 } from "@components/ui"
-import { section1, section2, section3, section4 } from "@lib/content/home"
-import HomeDecentralized from "@components/icons/HomeDecentralized"
+import { section1, section2, section3 } from "@lib/content/home"
 import { NextSeo } from "next-seo"
 import {
   defaultDescription,
@@ -20,7 +19,6 @@ import {
 } from "@components/common/Head"
 import { inView, animate } from "motion"
 import { useEffect } from "react"
-import { useElementInViewport } from "@utils/useElementInViewport"
 
 const Home = () => {
   useEffect(() => {
