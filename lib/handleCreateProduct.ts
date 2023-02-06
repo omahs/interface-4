@@ -4,7 +4,7 @@ import decimalToHex from "@utils/decimalToHex"
 import timeout from "@utils/timeout"
 import { StrategyParams } from "@components/priceStrategies/strategies"
 import { ethers, Signer } from "ethers"
-import { LogDescription } from "ethers/lib/utils.js"
+import { LogDescription } from "ethers/lib/utils"
 // import { mutate } from "swr"
 
 export const beforeCreate = async (
