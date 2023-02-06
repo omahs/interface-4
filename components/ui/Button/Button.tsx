@@ -48,8 +48,8 @@ const Button: FC<ButtonProps> = (props) => {
     >
       {href ? (
         !external ? (
-          <Link href={href}>
-            <button className={`peer relative z-10 ${className} ${color}`}>
+          <Link href={href} className="relative z-10 peer">
+            <button className={`${className} ${color}`}>
               <div className="flex items-center justify-center">
                 <p>{label}</p>
               </div>

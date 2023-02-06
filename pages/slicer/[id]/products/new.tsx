@@ -60,7 +60,7 @@ export default function NewProduct() {
   useEffect(() => {
     if (uploadStep != 0) {
       setModalView({
-        cross: false,
+        cross: uploadStep == 10 ? true : false,
         name: `CREATE_PRODUCT_VIEW`,
         params: {
           uploadStep,
