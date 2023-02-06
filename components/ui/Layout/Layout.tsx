@@ -6,9 +6,6 @@ import { useCookies } from "react-cookie"
 import { ProductCart } from "@lib/handleUpdateCart"
 import { useNetwork } from "wagmi"
 
-const ProductHuntBadge = dynamic(
-  () => import("@components/ui/ProductHuntBadge")
-)
 const FloatingCart = dynamic(() => import("@components/ui/FloatingCart"), {
   ssr: false
 })
@@ -25,7 +22,6 @@ export default function Layout({ children }) {
   const { chain } = useNetwork()
 
   useEffect(() => {
-    // if (process.env.NODE_ENV !== "development") {
     if (
       account &&
       chain &&
@@ -37,7 +33,6 @@ export default function Layout({ children }) {
         setModalView({ name: "" })
       }
     }
-    // }
   }, [account, chain])
 
   return (
@@ -49,16 +44,13 @@ export default function Layout({ children }) {
         {modalView.name && (
           <Modal modalView={modalView} setModalView={setModalView} />
         )}
-        {
-          success || (cookieCart && cookieCart.length != 0) ? (
-            <FloatingCart
-              cookieCart={cookieCart}
-              success={success}
-              setSuccess={setSuccess}
-            />
-          ) : null
-          // <ProductHuntBadge />
-        }
+        {success || (cookieCart && cookieCart.length != 0) ? (
+          <FloatingCart
+            cookieCart={cookieCart}
+            success={success}
+            setSuccess={setSuccess}
+          />
+        ) : null}
       </div>
     </>
   )
