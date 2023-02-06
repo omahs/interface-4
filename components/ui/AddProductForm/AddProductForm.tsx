@@ -30,7 +30,7 @@ import {
 } from "@components/priceStrategies/strategies"
 import { initSteps, Step } from "pages/slicer/[id]/products/new"
 import { ethers, Signer } from "ethers"
-import { LogDescription } from "ethers/lib/utils.js"
+import { LogDescription } from "ethers/lib/utils"
 
 type Props = {
   slicerId: number

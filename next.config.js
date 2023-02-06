@@ -12,7 +12,6 @@ module.exports = withMDX({
     domains: [
       process.env.NEXT_PUBLIC_APP_URL.split("://").pop().split(":")[0],
       process.env.NEXT_PUBLIC_SUPABASE_URL.split("://").pop(),
-      "api.producthunt.com",
       "static.alchemyapi.io",
       ""
     ]

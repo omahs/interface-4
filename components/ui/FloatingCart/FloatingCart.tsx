@@ -8,8 +8,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useCookies } from "react-cookie"
 import { CartList } from ".."
 import { useAppContext } from "../context"
-import { updatePurchases } from "@utils/getPurchases"
-import { ethers, Signer, utils } from "ethers"
+import { ContractTransaction, ethers, utils } from "ethers"
 import { ConnectButton, useAddRecentTransaction } from "@rainbow-me/rainbowkit"
 import { useSigner } from "wagmi"
 import saEvent from "@utils/saEvent"
@@ -18,6 +17,8 @@ import { getExternalPrices } from "@lib/useExternalPrices"
 import formatCalldata from "@utils/formatCalldata"
 import decimalToHex from "@utils/decimalToHex"
 import useEthUsd from "@utils/useEthUsd"
+import launchConfetti from "@utils/launchConfetti"
+import { updatePurchases } from "@utils/getPurchases"
 
 type Props = {
   cookieCart: ProductCart[]
@@ -29,16 +30,16 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
   const { setPurchases, purchases, setModalView, account } = useAppContext()
   const { data: signer } = useSigner()
   const addRecentTransaction = useAddRecentTransaction()
-  const [cookies, setCookie, removeCookie] = useCookies(["cart"])
+  const [, setCookie] = useCookies(["cart"])
   const [showCartList, setShowCartList] = useState(false)
   const [showCart, setShowCart] = useState(false)
   const [loading, setLoading] = useState(false)
   const [loadingState, setLoadingState] = useState("")
+  const [errorState, setErrorState] = useState("")
   const [message, setMessage] = useState<Message>({
     message: "",
     messageStatus: "success"
   })
-
   const ethUsd = useEthUsd()
 
   const reducer = (previousValue: number, currentValue: ProductCart) => {
@@ -63,16 +64,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     }
   }, [cookieCart])
 
-  useEffect(() => {
-    if (success) {
-      const newPurchases = updatePurchases(cookieCart, purchases)
-      setPurchases(newPurchases)
-      removeCookie("cart")
-    }
-  }, [success])
-
   const handleCheckout = async () => {
-    const handleSubmit = (await import("@utils/handleSubmit")).default
     const { PayProducts } = await import("@lib/handlers/chain")
 
     try {
@@ -119,25 +111,53 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
         })
 
         setCookie("cart", updatedCart)
-        setLoadingState("")
       }
+      setLoadingState("Confirm in wallet")
 
-      await handleSubmit(
-        PayProducts(signer as unknown as Signer, account, updatedCart),
-        setMessage,
-        setLoading,
-        setSuccess,
-        true,
-        addRecentTransaction,
-        "Checkout"
-      )
-      saEvent("checkout_cart_success")
-      setModalView({ name: "" })
+      try {
+        const [, call] = await PayProducts(signer, account, updatedCart)
+        setLoading(true)
+        const contractCall = call as ContractTransaction
+        setLoadingState("Transaction in progress")
+
+        addRecentTransaction({
+          hash: contractCall.hash,
+          description: "Checkout"
+        })
+        await contractCall.wait()
+
+        setLoading(false)
+        setSuccess(true)
+        const newPurchases = updatePurchases(cookieCart, purchases)
+        setPurchases(newPurchases)
+        setCookie("cart", [])
+
+        launchConfetti()
+
+        saEvent("checkout_cart_success")
+        setModalView({ name: "" })
+      } catch (err) {
+        console.log(err)
+        setLoading(false)
+
+        if (err.message.includes("insufficient funds")) {
+          setErrorState("Insufficient funds")
+        } else if (err.message.includes("rejected transaction")) {
+          setErrorState("Transaction rejected")
+        } else {
+          setErrorState("Transaction error")
+        }
+        setTimeout(() => {
+          setErrorState("")
+        }, 2000)
+      }
     } catch (err) {
       saEvent("checkout_cart_fail")
       console.log(err)
     }
+    setLoadingState("")
   }
+
   return (
     <>
       <div
@@ -186,12 +206,14 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
             <ConnectButton.Custom>
               {({ account, openConnectModal }) => (
                 <div
-                  className={`flex items-center h-full min-w-[80px] px-6 text-sm text-white bg-blue-600 ${
-                    !loading ? "cursor-pointer hover:bg-green-500" : ""
+                  className={`flex items-center cursor-pointer h-full min-w-[80px] px-6 text-sm text-white ${
+                    !loading && !errorState ? "hover:bg-green-500" : ""
+                  } ${
+                    errorState ? "bg-red-500" : "bg-blue-600"
                   } nightwind-prevent`}
                   onClick={
                     account
-                      ? !loading
+                      ? !loading && cookieCart.length
                         ? () => handleCheckout()
                         : null
                       : openConnectModal
@@ -211,6 +233,8 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
                       )}
                       <Spinner color="text-white" />
                     </div>
+                  ) : errorState ? (
+                    <p className="pr-2 text-sm">{errorState}</p>
                   ) : (
                     <>
                       <p className="pr-2 text-sm ">
