@@ -105,30 +105,5 @@ const Home = () => {
 
 export default Home
 
-/** TODO
- *
- * *Critical priority*
- *
- * *High Priority*
- *
- * *Low Priority*
- *    - Receive ERC721-1155
- *      - NFT section
- *    - Products
- *      - product likes
- *      - sort products by productId / createdAt / totalPurchases / likes
- *      - edit/delete products
- *    - sponsorships
- *      - improve what sponsors can do
- *      - allow creator to hide links
- *
- *    - add "explore products" page
- *    - add detailed section in slicer page (stats & stuff for payees only)
- *    - transfer page (select box to choose slicer)
- *    - optimize subgraph queries (products + payeeslicer) in slicer/[id], if possible
- *
- * OTHER
- * - Handle ERC20
- * - DeGov logics
- * - create vaults and allow spending money directly from slicer
- */
+// TODO: Fix hydration errors on most pages + cart component + probably modal
+// TODO: Update homepage texts
