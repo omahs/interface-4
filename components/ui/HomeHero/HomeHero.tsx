@@ -54,15 +54,15 @@ export default function HomeHero() {
               <Button label="Create slicer" href="/slice" double={false} />
               <Link
                 href="/slicer"
-                className="text-base font-semibold leading-7 text-gray-900 group"
+                className="flex w-24 space-x-1.5 text-base font-semibold leading-7 text-gray-900 group"
               >
-                Explore{" "}
-                <span
+                <p>Explore</p>{" "}
+                <p
                   aria-hidden="true"
-                  className="transition-transform duration-100 translate-x-2"
+                  className="transition-transform duration-100 group-hover:translate-x-1"
                 >
                   →
-                </span>
+                </p>
               </Link>
             </div>
           </div>
