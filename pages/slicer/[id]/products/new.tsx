@@ -26,19 +26,19 @@ export type Step = {
   label: string
 }
 
-export const initSteps = [
-  { status: "", label: "General" },
-  { status: "", label: "Availability" },
-  { status: "", label: "Pricing" },
-  { status: "", label: "On-chain actions" },
-  { status: "", label: "Redeem info" },
-  { status: "", label: "Notes & files" },
-  { status: "", label: "Review" }
-]
-
 const subtitle = "Configure a product to be sold on your decentralized store"
 
 export default function NewProduct() {
+  const initSteps = [
+    { status: "", label: "General" },
+    { status: "", label: "Availability" },
+    { status: "", label: "Pricing" },
+    { status: "", label: "On-chain actions" },
+    { status: "", label: "Redeem info" },
+    { status: "", label: "Notes & files" },
+    { status: "", label: "Review" }
+  ]
+
   const { setModalView } = useAppContext()
   const router = useRouter()
   const { id } = router.query
