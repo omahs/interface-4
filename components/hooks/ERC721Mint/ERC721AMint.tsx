@@ -15,15 +15,25 @@ const description =
 
 const Component = ({ params, setParams }: HookProps) => {
   const { account } = useAppContext()
-  const [initName, initSymbol, , initRoyalty, initBaseUri, initUri] =
-    params?.deploy?.args || []
+  const [
+    initName,
+    initSymbol,
+    initReceiver,
+    initRoyalty,
+    initBaseUri,
+    initUri
+  ] = params?.deploy?.args || []
   const initialUri = initBaseUri
     ? initBaseUri.slice(0, initBaseUri.length - 1)
     : initUri || ""
   const [name, setName] = useState(initName || "")
   const [symbol, setSymbol] = useState(initSymbol || "")
   const [isRoyalty, setIsRoyalty] = useState(Boolean(initRoyalty) || false)
-  const [royaltyReceiver, setRoyaltyReceiver] = useState(account)
+  const [royaltyReceiver, setRoyaltyReceiver] = useState(
+    initReceiver && initReceiver != ethers.constants.AddressZero
+      ? initReceiver
+      : account
+  )
   const [resolvedAddress, setResolvedAddress] = useState("")
   const [royaltyFraction, setRoyaltyFraction] = useState(initRoyalty / 100 || 0)
   const [uri, setUri] = useState(initialUri.split("ipfs://")[1] || "")
@@ -51,7 +61,16 @@ const Component = ({ params, setParams }: HookProps) => {
         ]
       }
     })
-  }, [name, symbol, royaltyReceiver, royaltyFraction, isBaseUri, uri])
+  }, [
+    name,
+    symbol,
+    isRoyalty,
+    royaltyReceiver,
+    royaltyFraction,
+    isBaseUri,
+    uri,
+    setParams
+  ])
 
   return (
     <>
@@ -94,7 +113,7 @@ const Component = ({ params, setParams }: HookProps) => {
           />
           {isRoyalty && (
             <>
-              <div>
+              <div className="pb-4">
                 <InputAddress
                   label="Receiver"
                   address={royaltyReceiver}
