@@ -290,7 +290,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
           endState={
             cloneAddress ? (
               <>
-                Hook deployed!{" "}
+                Contract deployed!{" "}
                 <a
                   href={`https://${
                     process.env.NEXT_PUBLIC_CHAIN_ID === "5" ? "goerli." : ""
