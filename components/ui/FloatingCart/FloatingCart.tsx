@@ -118,7 +118,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
         const [, call] = await PayProducts(signer, account, updatedCart)
         setLoading(true)
         const contractCall = call as ContractTransaction
-        setLoadingState("Transaction in progress")
+        setLoadingState("Purchasing ...")
 
         addRecentTransaction({
           hash: contractCall.hash,

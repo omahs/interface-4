@@ -73,6 +73,13 @@ export default function NewProduct() {
     }
   }, [loading, uploadStep])
 
+  useEffect(() => {
+    if (success) {
+      setSteps(initSteps)
+      setProgressStep(initSteps[0].label)
+    }
+  }, [success])
+
   return (
     <Container size="max-w-screen-lg pb-12 md:pb-0">
       <NextSeo

@@ -250,7 +250,7 @@ export const CREATE_PRODUCT_VIEW = (params: any) => {
       uploadState = "Finishing setting up"
       break
     case 6:
-      uploadState = "Deploying purchase hook ..."
+      uploadState = "Deploying action ..."
       break
     case 7:
       uploadState = "Transaction in progress ..."
