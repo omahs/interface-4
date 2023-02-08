@@ -25,7 +25,7 @@ const deploy = async (
     const call = await contract.deploy(productsModule, slicerId, ...args)
     const wait = await call.wait()
 
-    const contractAddress = wait.events[0].address
+    const contractAddress = wait.events[0].args["contractAddress"]
 
     return [contractAddress, contract, call]
   } catch (err) {
