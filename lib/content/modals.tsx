@@ -166,7 +166,7 @@ export const REDEEM_INSTRUCTIONS_VIEW = () => {
   return (
     <div className="text-center">
       <div className="pb-6">
-        <DoubleText inactive logoText="Congrats for your purchase!" />
+        <DoubleText inactive logoText="Congrats on your purchase!" />
       </div>
       <div className="pb-4 space-y-4 text-center">
         <p>

@@ -17,12 +17,7 @@ const ProductCardPreview = () => {
           <div className="h-full mb-14">
             <div className="flex items-center justify-between opacity-40">
               <div className="mt-1.5">
-                <p className="font-medium">
-                  A slice product
-                  <span className="ml-1 text-xs font-normal text-gray-500">
-                    #1
-                  </span>
-                </p>
+                <p className="font-medium">A slice product</p>
               </div>
             </div>
             <div className="absolute bottom-0 w-full px-5 mb-5 transform -translate-x-1/2 left-1/2">
