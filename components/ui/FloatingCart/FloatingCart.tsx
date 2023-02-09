@@ -140,16 +140,16 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
         console.log(err)
         setLoading(false)
 
-        if (err.message.includes("insufficient funds")) {
-          setErrorState("Insufficient funds")
-        } else if (err.message.includes("rejected transaction")) {
-          setErrorState("Transaction rejected")
-        } else {
-          setErrorState("Transaction error")
+        if (!err.message.includes("rejected transaction")) {
+          if (err.message.includes("insufficient funds")) {
+            setErrorState("Insufficient funds")
+          } else {
+            setErrorState("Transaction error")
+          }
+          setTimeout(() => {
+            setErrorState("")
+          }, 2000)
         }
-        setTimeout(() => {
-          setErrorState("")
-        }, 2000)
       }
     } catch (err) {
       saEvent("checkout_cart_fail")
