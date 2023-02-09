@@ -45,7 +45,7 @@ const ActionScreen: FC<ActionScreenProps> = ({
           />
         )}
         {text && typeof text === "string" ? (
-          <h3 className="font-semibold mb-7">{text}</h3>
+          <h3 className="text-xl font-medium mb-7">{text}</h3>
         ) : (
           text
         )}
@@ -54,7 +54,7 @@ const ActionScreen: FC<ActionScreenProps> = ({
         ) : (
           helpText
         )}
-        <div className="pt-6">
+        <div className="pt-2">
           {(buttonLabel || loading) && loading ? (
             <Button loading />
           ) : href ? (
