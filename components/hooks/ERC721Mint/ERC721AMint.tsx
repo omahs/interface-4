@@ -1,4 +1,6 @@
-import { Input, InputSwitch } from "@components/ui"
+import { Input, InputAddress, InputSwitch } from "@components/ui"
+import { useAppContext } from "@components/ui/context"
+import { ethers } from "ethers"
 import { useEffect, useState } from "react"
 import { defaultExternalCall, Hook, HookProps } from "../purchaseHooks"
 
@@ -12,12 +14,27 @@ const description =
   "Deploys an ERC721A contract which efficiently mints 1 NFT for each unit purchased."
 
 const Component = ({ params, setParams }: HookProps) => {
-  const [initName, initSymbol, initRoyalty, initBaseUri, initUri] =
-    params?.deploy?.args || []
-  const initialUri = initBaseUri || initUri || ""
+  const { account } = useAppContext()
+  const [
+    initName,
+    initSymbol,
+    initReceiver,
+    initRoyalty,
+    initBaseUri,
+    initUri
+  ] = params?.deploy?.args || []
+  const initialUri = initBaseUri
+    ? initBaseUri.slice(0, initBaseUri.length - 1)
+    : initUri || ""
   const [name, setName] = useState(initName || "")
   const [symbol, setSymbol] = useState(initSymbol || "")
   const [isRoyalty, setIsRoyalty] = useState(Boolean(initRoyalty) || false)
+  const [royaltyReceiver, setRoyaltyReceiver] = useState(
+    initReceiver && initReceiver != ethers.constants.AddressZero
+      ? initReceiver
+      : account
+  )
+  const [resolvedAddress, setResolvedAddress] = useState("")
   const [royaltyFraction, setRoyaltyFraction] = useState(initRoyalty / 100 || 0)
   const [uri, setUri] = useState(initialUri.split("ipfs://")[1] || "")
   const [isBaseUri, setIsBaseUri] = useState(Boolean(initBaseUri) || false)
@@ -37,13 +54,23 @@ const Component = ({ params, setParams }: HookProps) => {
         args: [
           name,
           symbol,
+          isRoyalty ? royaltyReceiver : ethers.constants.AddressZero,
           isRoyalty ? royaltyFraction * 100 : 0,
           isBaseUri ? `ipfs://${uri}/` : "",
           isBaseUri ? "" : `ipfs://${uri}`
         ]
       }
     })
-  }, [name, symbol, isBaseUri, uri])
+  }, [
+    name,
+    symbol,
+    isRoyalty,
+    royaltyReceiver,
+    royaltyFraction,
+    isBaseUri,
+    uri,
+    setParams
+  ])
 
   return (
     <>
@@ -85,19 +112,32 @@ const Component = ({ params, setParams }: HookProps) => {
             setEnabled={setIsRoyalty}
           />
           {isRoyalty && (
-            <div>
-              <Input
-                type="number"
-                label="Royalty (%)"
-                value={royaltyFraction}
-                onChange={setRoyaltyFraction}
-                step={0.1}
-                max={100}
-                min={0}
-                placeholder="10"
-                required
-              />
-            </div>
+            <>
+              <div className="pb-4">
+                <InputAddress
+                  label="Receiver"
+                  address={royaltyReceiver}
+                  onChange={setRoyaltyReceiver}
+                  resolvedAddress={resolvedAddress}
+                  setResolvedAddress={setResolvedAddress}
+                  placeholder="0x…"
+                  required
+                />
+              </div>
+              <div>
+                <Input
+                  type="number"
+                  label="Royalty (%)"
+                  value={royaltyFraction}
+                  onChange={setRoyaltyFraction}
+                  step={0.1}
+                  max={100}
+                  min={0}
+                  placeholder="10"
+                  required
+                />
+              </div>
+            </>
           )}
         </div>
         <InputSwitch

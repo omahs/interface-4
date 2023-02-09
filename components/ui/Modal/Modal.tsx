@@ -6,6 +6,7 @@ import {
   NETWORK_VIEW,
   CONNECT_VIEW,
   IRREVERSIBLE_VIEW,
+  REDEEM_INSTRUCTIONS_VIEW,
   OWNERS_VIEW,
   CREATE_PRODUCT_VIEW,
   CREATE_PRODUCT_CONFIRM_VIEW,
@@ -20,52 +21,41 @@ type Props = {
 }
 
 const Modal = ({ modalView, setModalView }: Props) => {
-  let content: JSX.Element
   const { name, cross, params } = modalView
   const modalRef = useRef(null)
 
-  const closeModal = () => {
-    setModalView({ name: "" })
-  }
-
-  switch (name) {
-    case "LOADING_VIEW":
-      content = LOADING_VIEW()
-      break
-    case "NETWORK_VIEW":
-      content = NETWORK_VIEW()
-      break
-    case "CONNECT_VIEW":
-      content = CONNECT_VIEW()
-      break
-    case "IRREVERSIBLE_VIEW":
-      content = IRREVERSIBLE_VIEW()
-      break
-    case "OWNERS_VIEW":
-      content = OWNERS_VIEW(params)
-      break
-    case "CREATE_PRODUCT_CONFIRM_VIEW":
-      content = CREATE_PRODUCT_CONFIRM_VIEW(params)
-      break
-    case "CREATE_PRODUCT_VIEW":
-      content = CREATE_PRODUCT_VIEW(params)
-      break
-    case "PRODUCT_VIEW":
-      content = PRODUCT_VIEW(params)
-      break
-    case "REDEEM_PRODUCT_VIEW":
-      content = REDEEM_PRODUCT_VIEW(params)
-      break
-    case "FINGERPRINTING_VIEW":
-      content = FINGERPRINTING_VIEW()
-      break
+  const content = () => {
+    switch (name) {
+      case "LOADING_VIEW":
+        return LOADING_VIEW()
+      case "NETWORK_VIEW":
+        return NETWORK_VIEW()
+      case "CONNECT_VIEW":
+        return CONNECT_VIEW()
+      case "IRREVERSIBLE_VIEW":
+        return IRREVERSIBLE_VIEW()
+      case "REDEEM_INSTRUCTIONS_VIEW":
+        return REDEEM_INSTRUCTIONS_VIEW()
+      case "OWNERS_VIEW":
+        return OWNERS_VIEW(params)
+      case "CREATE_PRODUCT_CONFIRM_VIEW":
+        return CREATE_PRODUCT_CONFIRM_VIEW(params)
+      case "CREATE_PRODUCT_VIEW":
+        return CREATE_PRODUCT_VIEW(params)
+      case "PRODUCT_VIEW":
+        return PRODUCT_VIEW(params)
+      case "REDEEM_PRODUCT_VIEW":
+        return REDEEM_PRODUCT_VIEW(params)
+      case "FINGERPRINTING_VIEW":
+        return FINGERPRINTING_VIEW()
+    }
   }
 
   useEffect(() => {
     if (cross) {
       function handleClick(event) {
         if (modalRef.current && !modalRef.current.contains(event.target)) {
-          closeModal()
+          setModalView({ name: "" })
         }
       }
       // Bind the event listener
@@ -96,11 +86,11 @@ const Modal = ({ modalView, setModalView }: Props) => {
             <div className="absolute top-[24px] right-[24px]">
               <Cross
                 className="text-right cursor-pointer hover:text-red-500"
-                onClick={() => closeModal()}
+                onClick={() => setModalView({ name: "" })}
               />
             </div>
           )}
-          <div>{content}</div>
+          <div>{content()}</div>
         </div>
       </div>
     </div>

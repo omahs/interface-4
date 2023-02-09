@@ -17,6 +17,7 @@ type Props = {
   size?: string
   product?: boolean
   isEditable?: boolean
+  disableHover?: boolean
   onClick?: (...args: any[]) => any
 }
 
@@ -34,8 +35,9 @@ const Card = ({
   className,
   size,
   product,
-  isEditable = false,
-  onClick
+  isEditable,
+  onClick,
+  disableHover
 }: Props) => {
   const content = (
     <div className={cardClassName}>
@@ -51,6 +53,7 @@ const Card = ({
         product={product}
         onClick={onClick}
         isEditable={isEditable}
+        disableHover={disableHover}
       />
       <div className="relative flex-grow w-full px-5 py-4 text-left">
         {onClick && (

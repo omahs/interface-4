@@ -149,7 +149,7 @@ const SlicerProducts = ({
           {!editMode && (
             <div className="pt-6">
               <Button
-                label="Add a new product"
+                label="Create a new product"
                 href={`${slicerId}/products/new`}
               />
             </div>
