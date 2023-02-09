@@ -31,6 +31,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
   const { data: signer } = useSigner()
   const addRecentTransaction = useAddRecentTransaction()
   const [, setCookie] = useCookies(["cart"])
+  const [userSettings, setUserSettings] = useCookies(["sliceSettings"])
   const [showCartList, setShowCartList] = useState(false)
   const [showCart, setShowCart] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -135,7 +136,16 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
         launchConfetti()
 
         saEvent("checkout_cart_success")
-        setModalView({ name: "" })
+
+        if (userSettings.sliceSettings?.disabledRedeemInstructions) {
+          setModalView({ name: "" })
+        } else {
+          setUserSettings("sliceSettings", {
+            ...userSettings.sliceSettings,
+            disabledRedeemInstructions: true
+          })
+          setModalView({ name: "REDEEM_INSTRUCTIONS_VIEW", cross: true })
+        }
       } catch (err) {
         console.log(err)
         setLoading(false)

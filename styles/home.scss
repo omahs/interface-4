@@ -73,6 +73,9 @@
     box-shadow: 0px 0px 6px 1px var(--darkColor2);
   }
 }
+.shadow-medium-random-fixed {
+  box-shadow: 3px 3px 8px 0.6px var(--darkColor2);
+}
 
 .dark .shadow-medium-random {
   box-shadow: 3px 3px 8px 0.6px var(--color2);

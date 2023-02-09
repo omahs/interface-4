@@ -10,7 +10,8 @@ import {
   LoadingStep,
   MarkdownBlock,
   NoteText,
-  OwnerBlock
+  OwnerBlock,
+  ProductCardPreview
 } from "@components/ui"
 import { useAppContext } from "@components/ui/context"
 import { ProductCart } from "@lib/handleUpdateCart"
@@ -40,6 +41,7 @@ type ViewNames =
   | "LOADING_VIEW"
   | "NETWORK_VIEW"
   | "CONNECT_VIEW"
+  | "REDEEM_INSTRUCTIONS_VIEW"
   | "IRREVERSIBLE_VIEW"
   | "OWNERS_VIEW"
   | "CREATE_PRODUCT_VIEW"
@@ -156,6 +158,41 @@ export const IRREVERSIBLE_VIEW = () => {
         <Button label="Continue" onClick={() => setModalView({ name: "" })} />
       </div>
     </>
+  )
+}
+
+export const REDEEM_INSTRUCTIONS_VIEW = () => {
+  const { setModalView } = useAppContext()
+  return (
+    <div className="text-center">
+      <div className="pb-6">
+        <DoubleText inactive logoText="Congrats for your purchase!" />
+      </div>
+      <div className="pb-4 space-y-4 text-center">
+        <p>
+          You can <b>redeem</b> the products purchased anytime to see further
+          info from the seller, and execute any required post-purchase step.
+        </p>
+        <p>
+          To redeem a product, <b>click on the blue button</b> with the shopping
+          bag icon on its card.
+        </p>
+        <ProductCardPreview />
+        <div className="text-left">
+          <NoteText
+            text={
+              <>
+                You can also access all of <b>your purchases</b> from the user
+                menu in the top-right corner of the page.
+              </>
+            }
+          />
+        </div>
+      </div>
+      <div className="flex justify-center pt-8">
+        <Button label="Continue" onClick={() => setModalView({ name: "" })} />
+      </div>
+    </div>
   )
 }
 

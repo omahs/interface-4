@@ -6,6 +6,7 @@ import {
   NETWORK_VIEW,
   CONNECT_VIEW,
   IRREVERSIBLE_VIEW,
+  REDEEM_INSTRUCTIONS_VIEW,
   OWNERS_VIEW,
   CREATE_PRODUCT_VIEW,
   CREATE_PRODUCT_CONFIRM_VIEW,
@@ -40,6 +41,9 @@ const Modal = ({ modalView, setModalView }: Props) => {
       break
     case "IRREVERSIBLE_VIEW":
       content = IRREVERSIBLE_VIEW()
+      break
+    case "REDEEM_INSTRUCTIONS_VIEW":
+      content = REDEEM_INSTRUCTIONS_VIEW()
       break
     case "OWNERS_VIEW":
       content = OWNERS_VIEW(params)
