@@ -386,7 +386,7 @@ const AddProductForm = ({
             />
           </>
         )}
-        {progressStep == "On-chain actions" && (
+        {progressStep == "On-chain action" && (
           <AddProductFormExternal
             ethProductPrice={ethValue}
             clonePurchaseHook={clonePurchaseHook}

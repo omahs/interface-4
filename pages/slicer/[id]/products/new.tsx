@@ -33,7 +33,7 @@ export default function NewProduct() {
     { status: "", label: "General" },
     { status: "", label: "Availability" },
     { status: "", label: "Pricing" },
-    { status: "", label: "On-chain actions" },
+    { status: "", label: "On-chain action" },
     { status: "", label: "Redeem info" },
     { status: "", label: "Notes & files" },
     { status: "", label: "Review" }
