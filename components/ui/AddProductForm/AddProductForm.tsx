@@ -28,7 +28,7 @@ import {
   Strategy,
   StrategyParams
 } from "@components/priceStrategies/strategies"
-import { initSteps, Step } from "pages/slicer/[id]/products/new"
+import { Step } from "pages/slicer/[id]/products/new"
 import { ethers, Signer } from "ethers"
 import { LogDescription } from "ethers/lib/utils"
 
@@ -115,7 +115,7 @@ const AddProductForm = ({
       return newSteps
     })
 
-    setProgressStep(initSteps[progressStepIndex + 1].label)
+    setProgressStep(steps[progressStepIndex + 1].label)
   }
   const handleSetMessageError = () => {
     setMessage({
@@ -305,7 +305,7 @@ const AddProductForm = ({
   return (
     <form
       className="w-full mx-auto"
-      onSubmit={progressStepIndex < initSteps.length - 1 ? handleNext : submit}
+      onSubmit={progressStepIndex < steps.length - 1 ? handleNext : submit}
     >
       <div className="flex justify-center pb-6">
         <AddProductProgress
@@ -386,7 +386,7 @@ const AddProductForm = ({
             />
           </>
         )}
-        {progressStep == "On-chain actions" && (
+        {progressStep == "On-chain action" && (
           <AddProductFormExternal
             ethProductPrice={ethValue}
             clonePurchaseHook={clonePurchaseHook}
@@ -452,15 +452,11 @@ const AddProductForm = ({
         <div className="pt-12 pb-4">
           <Button
             label={
-              progressStepIndex < initSteps.length - 1
-                ? "Next"
-                : "Create product"
+              progressStepIndex < steps.length - 1 ? "Next" : "Create product"
             }
-            type={
-              progressStepIndex < initSteps.length - 1 ? "submit" : "button"
-            }
+            type={progressStepIndex < steps.length - 1 ? "submit" : "button"}
             onClick={() => {
-              progressStepIndex == initSteps.length - 1 &&
+              progressStepIndex == steps.length - 1 &&
                 (steps.filter((step) => step.status == "error").length > 0
                   ? handleSetMessageError()
                   : setModalView({

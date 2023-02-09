@@ -47,7 +47,7 @@ const AddProductFormExternal = ({
   return (
     <>
       <div className="pb-10">
-        <h1 className="pb-6">On-chain actions</h1>
+        <h1 className="pb-6">On-chain action</h1>
         <p className="font-medium text-gray-600">
           Execute on-chain logic when the product is purchased
         </p>

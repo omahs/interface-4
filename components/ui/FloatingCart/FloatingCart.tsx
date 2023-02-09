@@ -31,6 +31,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
   const { data: signer } = useSigner()
   const addRecentTransaction = useAddRecentTransaction()
   const [, setCookie] = useCookies(["cart"])
+  const [userSettings, setUserSettings] = useCookies(["sliceSettings"])
   const [showCartList, setShowCartList] = useState(false)
   const [showCart, setShowCart] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -118,7 +119,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
         const [, call] = await PayProducts(signer, account, updatedCart)
         setLoading(true)
         const contractCall = call as ContractTransaction
-        setLoadingState("Transaction in progress")
+        setLoadingState("Purchasing ...")
 
         addRecentTransaction({
           hash: contractCall.hash,
@@ -135,21 +136,30 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
         launchConfetti()
 
         saEvent("checkout_cart_success")
-        setModalView({ name: "" })
+
+        if (userSettings.sliceSettings?.disabledRedeemInstructions) {
+          setModalView({ name: "" })
+        } else {
+          setUserSettings("sliceSettings", {
+            ...userSettings.sliceSettings,
+            disabledRedeemInstructions: true
+          })
+          setModalView({ name: "REDEEM_INSTRUCTIONS_VIEW", cross: true })
+        }
       } catch (err) {
         console.log(err)
         setLoading(false)
 
-        if (err.message.includes("insufficient funds")) {
-          setErrorState("Insufficient funds")
-        } else if (err.message.includes("rejected transaction")) {
-          setErrorState("Transaction rejected")
-        } else {
-          setErrorState("Transaction error")
+        if (!err.message.includes("rejected transaction")) {
+          if (err.message.includes("insufficient funds")) {
+            setErrorState("Insufficient funds")
+          } else {
+            setErrorState("Transaction error")
+          }
+          setTimeout(() => {
+            setErrorState("")
+          }, 2000)
         }
-        setTimeout(() => {
-          setErrorState("")
-        }, 2000)
       }
     } catch (err) {
       saEvent("checkout_cart_fail")
