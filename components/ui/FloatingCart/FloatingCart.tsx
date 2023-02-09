@@ -32,7 +32,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
   const addRecentTransaction = useAddRecentTransaction()
   const [, setCookie] = useCookies(["cart"])
   const [showCartList, setShowCartList] = useState(false)
-  const [showCart, setShowCart] = useState(false)
+  // const [showCart, setShowCart] = useState(false)
   const [loading, setLoading] = useState(false)
   const [loadingState, setLoadingState] = useState("")
   const [errorState, setErrorState] = useState("")
@@ -41,6 +41,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     messageStatus: "success"
   })
   const ethUsd = useEthUsd()
+  const showCart = cookieCart && cookieCart?.length != 0
 
   const reducer = (previousValue: number, currentValue: ProductCart) => {
     const { price, isUSD, extCallValue } = currentValue
@@ -56,9 +57,9 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
       if (success) {
         setSuccess(false)
       }
-      setShowCart(true)
+      // setShowCart(true)
     } else {
-      setShowCart(false)
+      // setShowCart(false)
       setShowCartList(false)
     }
   }, [cookieCart])
