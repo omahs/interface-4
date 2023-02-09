@@ -51,21 +51,21 @@ const Modal = ({ modalView, setModalView }: Props) => {
     }
   }
 
-  // useEffect(() => {
-  //   if (cross) {
-  //     function handleClick(event) {
-  //       if (modalRef.current && !modalRef.current.contains(event.target)) {
-  //         closeModal()
-  //       }
-  //     }
-  //     // Bind the event listener
-  //     document.addEventListener("mousedown", handleClick)
-  //     return () => {
-  //       // Unbind the event listener on clean up
-  //       document.removeEventListener("mousedown", handleClick)
-  //     }
-  //   }
-  // }, [modalRef, cross])
+  useEffect(() => {
+    if (cross) {
+      function handleClick(event) {
+        if (modalRef.current && !modalRef.current.contains(event.target)) {
+          setModalView({ name: "" })
+        }
+      }
+      // Bind the event listener
+      document.addEventListener("mousedown", handleClick)
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClick)
+      }
+    }
+  }, [modalRef, cross])
 
   return (
     <div
