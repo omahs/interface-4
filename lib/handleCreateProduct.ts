@@ -172,6 +172,7 @@ export const beforeCreate = async (
 export const handleSuccess = async (
   signer: Signer,
   slicerId: number,
+  idPath: string,
   id: string,
   eventLogs: LogDescription[],
   priceParams: StrategyParams,
@@ -214,7 +215,7 @@ export const handleSuccess = async (
   } else {
     await timeout(3500)
   }
-  await fetcher(`/api/slicer/${slicerId}/refresh`)
+  await fetcher(`/api/slicer/${idPath}/refresh`)
 }
 
 export const handleReject = async (
