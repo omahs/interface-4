@@ -6,6 +6,7 @@ import { Message } from "@utils/handleMessage"
 import { useAppContext } from "../context"
 import { Button, MessageBlock } from "@components/ui"
 import openFingerprintingModal from "@utils/openFingerprintingModal"
+import { useRouter } from "next/router"
 
 type Props = {
   editMode: boolean
@@ -52,6 +53,7 @@ const SlicerSubmitBlock = ({
   msg,
   setMsg
 }: Props) => {
+  const router = useRouter()
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 
   const hexId = Number(slicerInfo?.id).toString(16)
@@ -138,9 +140,11 @@ const SlicerSubmitBlock = ({
 
       await updateDb(newInfo)
       mutate(`/api/slicer/${hexId}?stats=false`)
-      await fetcher(
-        `/api/slicer/${newInfo.customPath || slicerInfo.id}/refresh`
-      )
+      await fetcher(`/api/slicer/${slicerInfo.id}/refresh`)
+      if (newInfo.customPath) {
+        await fetcher(`/api/slicer/${newInfo.customPath}/refresh`)
+        router.reload()
+      }
       setEditMode(false)
       setLoading(false)
     } catch (err) {
