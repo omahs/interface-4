@@ -24,6 +24,7 @@ model Slicer {
   sponsors      Json        @default("{ }")
   attributes    Json[]
   products      Product[]
+  slicerConfig  SlicerConfig?
   currencies    Currency[]
 }
 
@@ -65,6 +66,13 @@ model Shortcode {
   productId        Int           @unique
   availableCodes   Json          @default("{}")
   accountCodes     AccountCode[]
+}
+
+model SlicerConfig {
+  id               Int           @default(autoincrement())      @id
+  customPath       String?       @unique
+  slicer           Slicer        @relation(fields: [slicerId], onDelete: Cascade, references: [id])
+  slicerId         Int           @unique
 }
 
 model AccountCode {
