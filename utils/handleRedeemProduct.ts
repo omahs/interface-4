@@ -75,21 +75,32 @@ const handleRedeemProduct = async (
       })
     }
 
+    /**
+     * TODO: FIX THIS
+     * @notice This is a hack to get the modal to close and reopen
+     */
+
     setModalView({
-      name: "REDEEM_PRODUCT_VIEW",
-      cross: true,
-      params: {
-        slicerId,
-        productId,
-        name,
-        image,
-        purchasedQuantity: Number(redeemed[0]),
-        texts,
-        decryptedFiles,
-        decryptedTexts,
-        accountCodes
-      }
+      name: ""
     })
+
+    setTimeout(() => {
+      setModalView({
+        name: "REDEEM_PRODUCT_VIEW",
+        cross: true,
+        params: {
+          slicerId,
+          productId,
+          name,
+          image,
+          purchasedQuantity: Number(redeemed[0]),
+          texts,
+          decryptedFiles,
+          decryptedTexts,
+          accountCodes
+        }
+      })
+    }, 0)
   } catch (err) {
     saEvent("redeem_product_fail")
     console.log(err)
