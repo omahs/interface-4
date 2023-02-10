@@ -123,9 +123,7 @@ const EditProductForm = ({
 
   const settlementLogic = async () => {
     saEvent("update_product_success")
-    await fetcher(`/api/slicer/${id}/refresh`, {
-      method: "GET"
-    })
+    await fetcher(`/api/slicer/${id}/refresh`)
     router.reload()
   }
 
