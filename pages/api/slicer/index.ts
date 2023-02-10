@@ -20,7 +20,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
           tags: true,
           description: true,
           image: true,
-          isImmutable: true
+          isImmutable: true,
+          slicerConfig: true
         }
       })
       res.status(200).json(SlicerList)

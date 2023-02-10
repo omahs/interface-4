@@ -26,7 +26,21 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       if (slicerExists) {
         slicerInfo = await prisma.slicer.findFirst({
-          where: { id: Number(decimalId) }
+          where: { id: Number(decimalId) },
+          select: {
+            id: true,
+            name: true,
+            description: true,
+            external_url: true,
+            address: true,
+            image: true,
+            tags: true,
+            isImmutable: true,
+            config: true,
+            sponsors: true,
+            attributes: true,
+            slicerConfig: true
+          }
         })
         if (slicerInfo == null) {
           const { data } = await client.query({
@@ -183,7 +197,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     if (req.method === "POST") {
-      const { name, tags, description, imageUrl } = JSON.parse(req.body)
+      const { name, tags, description, imageUrl, customPath } = JSON.parse(
+        req.body
+      )
+
+      if (customPath && (Number(customPath) == 0 || Number(customPath))) {
+        throw Error("Custom path cannot be a number")
+      }
 
       const slicerInfo = await prisma.slicer.findFirst({
         where: { id: Number(decimalId) },
@@ -193,7 +213,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           name: true,
           tags: true,
           description: true,
-          image: true
+          image: true,
+          slicerConfig: true
         }
       })
 
@@ -207,9 +228,29 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         throw Error("Collectible asset already set")
       }
 
+      let path = slicerInfo.slicerConfig?.customPath
+      if (customPath != path) {
+        path = encodeURI(customPath)
+      }
+
       const query = await prisma.slicer.update({
         where: { id: Number(decimalId) },
-        data: { name, tags, description, image: imageUrl }
+        data: {
+          name,
+          tags,
+          description,
+          image: imageUrl,
+          slicerConfig: {
+            upsert: {
+              create: {
+                customPath: path
+              },
+              update: {
+                customPath: path
+              }
+            }
+          }
+        }
       })
       res.status(200).json({ query })
     }

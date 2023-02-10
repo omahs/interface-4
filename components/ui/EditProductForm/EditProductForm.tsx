@@ -46,6 +46,7 @@ const EditProductForm = ({
   externalPriceAddress
 }: Props) => {
   const router = useRouter()
+  const { id } = router.query
   const { data: signer } = useSigner()
 
   const [newIsMultiple, setNewIsMultiple] = useState(
@@ -122,7 +123,7 @@ const EditProductForm = ({
 
   const settlementLogic = async () => {
     saEvent("update_product_success")
-    await fetcher(`/api/slicer/${slicerId}/refresh`, {
+    await fetcher(`/api/slicer/${id}/refresh`, {
       method: "GET"
     })
     router.reload()
