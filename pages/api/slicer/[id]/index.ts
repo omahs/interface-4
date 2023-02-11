@@ -246,7 +246,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                 customPath: path
               },
               update: {
-                customPath: path
+                customPath: path || null
               }
             }
           }

@@ -113,7 +113,9 @@ const Id = ({
 
   const [newDescription, setNewDescription] = useState(slicer.description)
   const [newTags, setNewTags] = useState(slicer.tags)
-  const [newPath, setNewPath] = useState(slicerInfo?.slicerConfig?.customPath)
+  const [newPath, setNewPath] = useState(
+    slicerInfo?.slicerConfig?.customPath || ""
+  )
   const [newName, setNewName] = useState(slicer.name)
   const [sponsorsList, setSponsorsList] = useState(sponsors)
   const [newImage, setNewImage] = useState<NewImage>({
