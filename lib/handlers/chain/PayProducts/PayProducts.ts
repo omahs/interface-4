@@ -52,8 +52,13 @@ const PayProducts = async (
       totalPrice = BigNumber.from(currentPrice).add(productPrice)
     })
 
-    const call = await contract.payProducts(purchaseParams, {
+    const estimate = await contract.estimateGas.payProducts(purchaseParams, {
       value: totalPrice
+    })
+
+    const call = await contract.payProducts(purchaseParams, {
+      value: totalPrice,
+      gasLimit: estimate.mul(106).div(100)
     })
 
     return [contract, call]
