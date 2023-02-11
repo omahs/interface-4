@@ -6,6 +6,7 @@ import { Message } from "@utils/handleMessage"
 import { useAppContext } from "../context"
 import { Button, MessageBlock } from "@components/ui"
 import openFingerprintingModal from "@utils/openFingerprintingModal"
+import { useRouter } from "next/router"
 
 type Props = {
   editMode: boolean
@@ -16,7 +17,9 @@ type Props = {
   loading: boolean
   setLoading: Dispatch<SetStateAction<boolean>>
   newName: any
-  setNewName: Dispatch<SetStateAction<any>>
+  setNewName: Dispatch<SetStateAction<string>>
+  newPath: string
+  setNewPath: Dispatch<SetStateAction<string>>
   newDescription: any
   setNewDescription: Dispatch<SetStateAction<any>>
   newTags: string
@@ -38,6 +41,8 @@ const SlicerSubmitBlock = ({
   setLoading,
   newName,
   setNewName,
+  newPath,
+  setNewPath,
   newDescription,
   setNewDescription,
   newTags,
@@ -48,6 +53,7 @@ const SlicerSubmitBlock = ({
   msg,
   setMsg
 }: Props) => {
+  const router = useRouter()
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 
   const hexId = Number(slicerInfo?.id).toString(16)
@@ -87,7 +93,8 @@ const SlicerSubmitBlock = ({
       description: newDescription,
       imageUrl: slicer.imageUrl,
       attributes: slicer.attributes,
-      totalSlices: slicer.totalSlices
+      totalSlices: slicer.totalSlices,
+      customPath: newPath
     }
     try {
       let isPayeeAllowed: boolean
@@ -125,7 +132,8 @@ const SlicerSubmitBlock = ({
           description: newDescription,
           imageUrl: newFilePath,
           attributes: slicer.attributes,
-          totalSlices: slicer.totalSlices
+          totalSlices: slicer.totalSlices,
+          customPath: newPath
         }
         setNewImage({ url: "", file: undefined })
       }
@@ -133,6 +141,12 @@ const SlicerSubmitBlock = ({
       await updateDb(newInfo)
       mutate(`/api/slicer/${hexId}?stats=false`)
       await fetcher(`/api/slicer/${slicerInfo.id}/refresh`)
+      if (slicer.customPath != newInfo.customPath) {
+        if (newInfo.customPath) {
+          await fetcher(`/api/slicer/${newInfo.customPath}/refresh`)
+        }
+        router.push(`/slicer/${newInfo.customPath || String(slicerInfo.id)}`)
+      }
       setEditMode(false)
       setLoading(false)
     } catch (err) {
@@ -154,6 +168,7 @@ const SlicerSubmitBlock = ({
 
   const cancel = () => {
     setNewName(slicer.name)
+    setNewPath(slicer.customPath)
     setNewDescription(slicer.description)
     setNewTags(slicer.tags)
     setNewImage({ url: "", file: undefined })

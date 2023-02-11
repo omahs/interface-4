@@ -16,6 +16,7 @@ const Modal = dynamic(() => import("@components/ui/Modal"), {
 export default function Layout({ children }) {
   const { account, modalView, setModalView } = useAppContext()
   const [success, setSuccess] = useState(false)
+  const [showCart, setShowCart] = useState(false)
   const [cookies] = useCookies(["cart"])
 
   const cookieCart: ProductCart[] = cookies?.cart
@@ -35,6 +36,10 @@ export default function Layout({ children }) {
     }
   }, [account, chain])
 
+  useEffect(() => {
+    setShowCart(Boolean(success || (cookieCart && cookieCart?.length != 0)))
+  }, [success, cookieCart])
+
   return (
     <>
       <div className="relative flex flex-col justify-between min-h-screen">
@@ -44,13 +49,13 @@ export default function Layout({ children }) {
         {modalView.name && (
           <Modal modalView={modalView} setModalView={setModalView} />
         )}
-        {success || (cookieCart && cookieCart.length != 0) ? (
+        {showCart && (
           <FloatingCart
             cookieCart={cookieCart}
             success={success}
             setSuccess={setSuccess}
           />
-        ) : null}
+        )}
       </div>
     </>
   )
