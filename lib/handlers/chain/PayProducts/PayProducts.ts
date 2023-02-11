@@ -58,7 +58,7 @@ const PayProducts = async (
 
     const call = await contract.payProducts(purchaseParams, {
       value: totalPrice,
-      gasLimit: estimate.mul(106).div(100)
+      gasLimit: estimate.add(8000) // to handle eventual undetected overpayment
     })
 
     return [contract, call]
