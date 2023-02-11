@@ -141,9 +141,11 @@ const SlicerSubmitBlock = ({
       await updateDb(newInfo)
       mutate(`/api/slicer/${hexId}?stats=false`)
       await fetcher(`/api/slicer/${slicerInfo.id}/refresh`)
-      if (newInfo.customPath) {
-        await fetcher(`/api/slicer/${newInfo.customPath}/refresh`)
-        router.reload()
+      if (slicer.customPath != newInfo.customPath) {
+        if (newInfo.customPath) {
+          await fetcher(`/api/slicer/${newInfo.customPath}/refresh`)
+        }
+        router.push(`/slicer/${newInfo.customPath || String(slicerInfo.id)}`)
       }
       setEditMode(false)
       setLoading(false)
