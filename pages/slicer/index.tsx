@@ -8,6 +8,7 @@ import {
   domain
 } from "@components/common/Head"
 import fetcher from "@utils/fetcher"
+import { Prisma, SlicerConfig } from "@prisma/client"
 
 export type SlicerReduced = {
   id: number
@@ -16,6 +17,7 @@ export type SlicerReduced = {
   description: string | null
   image: string | null
   isImmutable: boolean | null
+  slicerConfig: SlicerConfig | null
 }
 
 const SlicerGrid = ({

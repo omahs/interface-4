@@ -34,6 +34,7 @@ import { LogDescription } from "ethers/lib/utils"
 
 type Props = {
   slicerId: number
+  idPath: string
   progressStep: string
   progressStepIndex: number
   uploadStep: number
@@ -51,6 +52,7 @@ type Props = {
 
 const AddProductForm = ({
   slicerId,
+  idPath,
   progressStep,
   progressStepIndex,
   uploadStep,
@@ -267,6 +269,7 @@ const AddProductForm = ({
         await handleSuccess(
           signer as unknown as Signer,
           slicerId,
+          idPath,
           newProduct.id,
           eventLogs,
           priceParams,

@@ -7,6 +7,7 @@ import { AddressAmount } from "pages/slicer/[id]"
 import fetcher from "@utils/fetcher"
 import { useAppContext } from "../context"
 import executeTransaction from "@utils/executeTransaction"
+import { useRouter } from "next/router"
 
 type Props = {
   slicerId: string
@@ -22,6 +23,8 @@ const PaySlicer = ({
   setSponsorsList
 }: Props) => {
   const { account } = useAppContext()
+  const router = useRouter()
+  const { id } = router.query
   const [loading, setLoading] = useState(false)
   const [usdValue, setUsdValue] = useState(0)
   const [ethValue, setEthValue] = useState(0)
@@ -51,7 +54,7 @@ const PaySlicer = ({
     setUsdValue(0)
 
     setTimeout(() => {
-      fetcher(`/api/slicer/${slicerId}/refresh`)
+      fetcher(`/api/slicer/${id}/refresh`)
     }, 3000)
   }
 

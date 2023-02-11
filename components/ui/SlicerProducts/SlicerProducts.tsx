@@ -52,6 +52,7 @@ const SlicerProducts = ({
   const [subgraphRefresh, setSubgraphRefresh] = useState(false)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const { id: idPath } = router.query
   const productsToShow =
     products && products?.data?.filter((p: Product) => p.productId != null)
   const missingProducts = productsToShow?.filter(
@@ -73,7 +74,7 @@ const SlicerProducts = ({
       } else {
         await reload(Number(slicerId), setLoading)
       }
-      await fetcher(`/api/slicer/${slicerId}/refresh`)
+      await fetcher(`/api/slicer/${idPath}/refresh`)
     } catch (err) {
       console.log(err)
     }
@@ -121,7 +122,7 @@ const SlicerProducts = ({
     }
 
     try {
-      await fetcher(`/api/slicer/${slicerId}/refresh`)
+      await fetcher(`/api/slicer/${idPath}/refresh`)
     } catch (err) {
       console.log(err)
     }

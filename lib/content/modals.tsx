@@ -30,6 +30,7 @@ import useDecodeShortcode from "@utils/useDecodeShortcode"
 import Bolt from "@components/icons/Bolt"
 import { strategiesList } from "@components/priceStrategies/strategies"
 import constants from "constants.json"
+import { useRouter } from "next/router"
 
 export type View = {
   name: ViewNames
@@ -413,6 +414,8 @@ export const PRODUCT_VIEW = (params: any) => {
     isCustomPriced
   } = params
 
+  const router = useRouter()
+  const { id } = router.query
   const [isCopied, setIsCopied] = useState(false)
   const cookieCart: ProductCart[] = cookies?.cart
   const productCart: ProductCart = cookieCart?.find(
@@ -444,7 +447,7 @@ export const PRODUCT_VIEW = (params: any) => {
         className="absolute top-[24px] left-[24px] hover:text-blue-600 flex cursor-pointer items-center text-gray-700"
         onClick={async () =>
           await copyText(
-            `${domain}/slicer/${slicerId}?product=${productId}`,
+            `${domain}/slicer/${id}?product=${productId}`,
             setIsCopied
           )
         }

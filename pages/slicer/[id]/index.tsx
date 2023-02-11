@@ -14,7 +14,7 @@ import {
   DoubleText,
   SlicerTags,
   SlicerDescription,
-  SlicerName,
+  SlicerEditMain,
   SlicerImageBlock,
   Container,
   SlicerSubmitBlock,
@@ -32,6 +32,8 @@ import { sliceCore } from "@lib/initProvider"
 import { signMessage } from "@utils/signMessage"
 import Spinner from "@components/icons/Spinner"
 import Cross from "@components/icons/Cross"
+import prisma from "@lib/prisma"
+import { Slicer } from "@prisma/client"
 
 export type NewImage = { url: string; file: File }
 export type SlicerAttributes = {
@@ -51,6 +53,7 @@ export type SlicerData = {
   imageUrl: string
   attributes: SlicerAttributes
   totalSlices: number
+  customPath: string | undefined
 }
 export type AddressAmount = {
   address: string
@@ -75,6 +78,8 @@ export type BlockchainProduct = {
   prices: BlockchainPrice[]
   totalPurchases: string
 }
+
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL
 
 const Id = ({
   slicerInfo,
@@ -102,11 +107,13 @@ const Id = ({
     tags: slicerInfo?.tags,
     imageUrl: slicerInfo?.image,
     attributes: slicerInfo?.attributes,
-    totalSlices: slicerInfo?.totalSlices
+    totalSlices: slicerInfo?.totalSlices,
+    customPath: slicerInfo?.slicerConfig?.customPath
   })
 
   const [newDescription, setNewDescription] = useState(slicer.description)
   const [newTags, setNewTags] = useState(slicer.tags)
+  const [newPath, setNewPath] = useState(slicerInfo?.slicerConfig?.customPath)
   const [newName, setNewName] = useState(slicer.name)
   const [sponsorsList, setSponsorsList] = useState(sponsors)
   const [newImage, setNewImage] = useState<NewImage>({
@@ -288,13 +295,17 @@ const Id = ({
             </span>
           </div>
           <div>
-            <SlicerName
-              name={slicer.name}
-              newName={newName}
-              setNewName={setNewName}
-              editMode={editMode}
-              loading={loading}
-            />
+            {editMode && (
+              <SlicerEditMain
+                slicerId={slicerInfo?.id}
+                name={slicer.name}
+                newName={newName}
+                newPath={newPath}
+                setNewName={setNewName}
+                setNewPath={setNewPath}
+                loading={loading}
+              />
+            )}
             <SlicerTags
               tags={slicer.tags}
               newTags={newTags}
@@ -356,6 +367,8 @@ const Id = ({
               setLoading={setLoading}
               newName={newName}
               setNewName={setNewName}
+              newPath={newPath}
+              setNewPath={setNewPath}
               newDescription={newDescription}
               setNewDescription={setNewDescription}
               newTags={newTags}
@@ -380,10 +393,17 @@ const Id = ({
 }
 
 export async function getStaticPaths() {
-  const totalSlicers = await sliceCore(defaultProvider).supply()
+  const [slicers, totalSlicers] = await Promise.all([
+    fetcher(`${baseUrl}/api/slicer`),
+    sliceCore(defaultProvider).supply()
+  ])
+
   // const totalSlicers = 0
   const paths = [...Array(Number(totalSlicers)).keys()].map((slicerId) => {
-    const id = String(slicerId)
+    const slicerData = slicers.find((slicer) => slicer.id === slicerId)
+    const customPath = slicerData?.slicerConfig?.customPath
+
+    const id = customPath || String(slicerId)
     return {
       params: {
         id
@@ -395,9 +415,78 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL
   const id = context.params.id
-  const hexId = decimalToHex(Number(id))
+  let slicerId = String(id)
+  let slicer: Slicer
+
+  if (Number(id) != 0 && !Number(id)) {
+    const slicerInfo = await prisma.slicerConfig.findFirst({
+      where: {
+        customPath: String(id)
+      },
+      select: {
+        slicerId: true,
+        slicer: {
+          select: {
+            id: true,
+            name: true,
+            description: true,
+            external_url: true,
+            address: true,
+            image: true,
+            tags: true,
+            isImmutable: true,
+            config: true,
+            sponsors: true,
+            attributes: true,
+            slicerConfig: true
+          }
+        }
+      }
+    })
+    slicer = slicerInfo?.slicer
+    slicerId = String(slicerInfo?.slicerId)
+  }
+
+  // Handle inexistent path
+  if (Number(slicerId) != 0 && !Number(slicerId)) {
+    return {
+      props: {
+        slicerInfo: {
+          id: null,
+          name: "",
+          description: "",
+          tags: "",
+          external_url: "",
+          address: "",
+          image: "",
+          isImmutable: false,
+          attributes: [],
+          config: { sponsors: true },
+          sponsors: {}
+        },
+        products: [],
+        subgraphDataPayees: null,
+        blockchainProducts: null,
+        sponsors: null,
+        key: null
+      }
+    }
+  }
+
+  const hexId = decimalToHex(Number(slicerId))
+
+  const slicerInfo =
+    slicer || (await fetcher(`${baseUrl}/api/slicer/${hexId}?stats=false`))
+
+  if (!slicer && slicerInfo?.slicerConfig?.customPath) {
+    return {
+      redirect: {
+        destination: `/slicer/${slicerInfo.slicerConfig.customPath}`,
+        permanent: false
+      }
+    }
+  }
 
   /**
    * TODO:
@@ -443,9 +532,8 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   } 
 `
 
-  const [slicerInfo, products, { data: subgraphData }] = await Promise.all([
-    fetcher(`${baseUrl}/api/slicer/${hexId}?stats=false`),
-    fetcher(`${baseUrl}/api/slicer/${id}/products`),
+  const [products, { data: subgraphData }] = await Promise.all([
+    fetcher(`${baseUrl}/api/slicer/${slicerId}/products`),
     client.query({
       query: gql`
         query {

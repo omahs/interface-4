@@ -31,9 +31,8 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
   const { data: signer } = useSigner()
   const addRecentTransaction = useAddRecentTransaction()
   const [, setCookie] = useCookies(["cart"])
-  const [userSettings, setUserSettings] = useCookies(["sliceSettings"])
   const [showCartList, setShowCartList] = useState(false)
-  const [showCart, setShowCart] = useState(false)
+  // const [showCart, setShowCart] = useState(false)
   const [loading, setLoading] = useState(false)
   const [loadingState, setLoadingState] = useState("")
   const [errorState, setErrorState] = useState("")
@@ -42,6 +41,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     messageStatus: "success"
   })
   const ethUsd = useEthUsd()
+  const showCart = cookieCart && cookieCart?.length != 0
 
   const reducer = (previousValue: number, currentValue: ProductCart) => {
     const { price, isUSD, extCallValue } = currentValue
@@ -52,15 +52,14 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
     return previousValue + Number(productPrice) + Number(externalCallEth)
   }
   const totalPrice: number = cookieCart?.reduce(reducer, 0) || 0
-
   useEffect(() => {
     if (cookieCart && cookieCart?.length != 0) {
       if (success) {
         setSuccess(false)
       }
-      setShowCart(true)
+      // setShowCart(true)
     } else {
-      setShowCart(false)
+      // setShowCart(false)
       setShowCartList(false)
     }
   }, [cookieCart])
@@ -129,23 +128,19 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
 
         setLoading(false)
         setSuccess(true)
+
+        if (purchases.length != 0) {
+          setModalView({ name: "" })
+        } else {
+          setModalView({ name: "REDEEM_INSTRUCTIONS_VIEW", cross: true })
+        }
+
         const newPurchases = updatePurchases(cookieCart, purchases)
         setPurchases(newPurchases)
         setCookie("cart", [])
 
         launchConfetti()
-
         saEvent("checkout_cart_success")
-
-        if (userSettings.sliceSettings?.disabledRedeemInstructions) {
-          setModalView({ name: "" })
-        } else {
-          setUserSettings("sliceSettings", {
-            ...userSettings.sliceSettings,
-            disabledRedeemInstructions: true
-          })
-          setModalView({ name: "REDEEM_INSTRUCTIONS_VIEW", cross: true })
-        }
       } catch (err) {
         console.log(err)
         setLoading(false)

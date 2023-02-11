@@ -20,6 +20,9 @@ import getLog from "@utils/getLog"
 import Spinner from "@components/icons/Spinner"
 import { useAppContext } from "@components/ui/context"
 import { StrategyParams } from "@components/priceStrategies/strategies"
+import useSWR from "swr"
+import fetcher from "@utils/fetcher"
+import decimalToHex from "@utils/decimalToHex"
 
 export type Step = {
   status: string
@@ -56,6 +59,14 @@ export default function NewProduct() {
   const progressStepIndex = steps.findIndex(
     ({ label }) => label == progressStep
   )
+
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL
+  const hexId = decimalToHex(Number(id))
+  const { data: slicerInfo } = useSWR(
+    Number(id) ? `${baseUrl}/api/slicer/${hexId}?stats=false` : null,
+    fetcher
+  )
+  const idPath = slicerInfo?.slicerConfig?.customPath || id
 
   useEffect(() => {
     if (uploadStep != 0) {
@@ -141,6 +152,7 @@ export default function NewProduct() {
                 progressStepIndex={progressStepIndex}
                 setProgressStep={setProgressStep}
                 setSteps={setSteps}
+                idPath={idPath}
               />
             </div>
           ) : (
@@ -158,7 +170,7 @@ export default function NewProduct() {
                 </>
               }
               buttonLabel="Go to slicer"
-              href={`/slicer/${id}`}
+              href={`/slicer/${idPath}`}
               buttonLabelSecondary="Create new product"
               onClickSecondary={() => setSuccess(false)}
             />
