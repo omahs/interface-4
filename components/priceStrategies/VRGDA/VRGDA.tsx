@@ -250,8 +250,17 @@ const Component = ({
                     : "..."}{" "}
                   days
                 </b>{" "}
-                with a target price of{" "}
-                <b>{targetPrice ? targetPrice : "..."} ETH</b>.
+                with a{" "}
+                <b>target price of {targetPrice ? targetPrice : "..."} ETH</b>
+                {min ? (
+                  <>
+                    {" "}
+                    and a <b>minimum price of {min} ETH</b>
+                  </>
+                ) : (
+                  ""
+                )}
+                .
               </>
             ) : (
               <>
