@@ -90,14 +90,13 @@ const ToWithdrawItem = ({
           onChange={handleSelected}
           id={address}
         />
-        <div className="ml-3 mr-2 sm:ml-4 sm:mr-3 w-9 h-9">
+        <div className="ml-3 mr-2 sm:ml-4 sm:mr-3">
           {currency?.logo || address === addr0 ? (
             <Image
               src={address === addr0 ? ethImg : currency?.logo}
               alt="Token logo"
-              layout="responsive"
-              width={24}
-              height={24}
+              width={28}
+              height={28}
             />
           ) : (
             <div
