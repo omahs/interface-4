@@ -1,3 +1,4 @@
+import Banknotes from "@components/icons/Banknotes"
 import Logo from "@components/icons/Logo"
 import ShoppingBag from "@components/icons/ShoppingBag"
 import { Dispatch, SetStateAction } from "react"
@@ -35,13 +36,12 @@ function DropdownMenu({ setShowDropdown }: Props) {
         label="My slicers"
         onClick={() => setShowDropdown(false)}
       />
-      {/* TODO: Readd when subgraph is fixed */}
-      {/* <DropdownMenuElement
+      <DropdownMenuElement
         href="/earnings"
         image={<Banknotes className="w-5 h-5" />}
         label="Earnings"
         onClick={() => setShowDropdown(false)}
-      /> */}
+      />
       <DropdownMenuElement
         href="/purchases"
         image={<ShoppingBag strokeWidth="1.5" className="w-5 h-5" />}
