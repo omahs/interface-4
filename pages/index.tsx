@@ -1,5 +1,5 @@
 import HomeCake from "@components/icons/HomeCake"
-import Logo from "@components/icons/Logo"
+import SpinLogo from "@components/icons/SpinLogo"
 import HomeEth from "@components/icons/HomeEth"
 import {
   Container,
@@ -62,7 +62,7 @@ const Home = () => {
           url: domain,
           images: [
             {
-              url: `${domain}/og_image.jpg`,
+              url: `${domain}/og_image.png`,
               width: 1000,
               height: 1000,
               alt: `${defaultTitle} cover image`
@@ -78,7 +78,12 @@ const Home = () => {
             <HomeSection
               text={section2}
               image={
-                <Logo interactive size="w-32 sm:w-36" margin="mt-4 ml-6" spin />
+                <SpinLogo
+                  interactive
+                  size="w-32 sm:w-36"
+                  margin="mt-4 ml-6"
+                  spin
+                />
               }
               side="right"
             />

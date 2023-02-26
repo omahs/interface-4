@@ -101,7 +101,7 @@ export default function NewProduct() {
           url: domain,
           images: [
             {
-              url: `${domain}/og_image.jpg`,
+              url: `${domain}/og_image.png`,
               width: 1000,
               height: 1000,
               alt: `${defaultTitle} cover image`
@@ -122,7 +122,7 @@ export default function NewProduct() {
               <p className="text-lg leading-8 text-gray-600">{subtitle}</p>
             </div>
             <div className="flex justify-center pb-20">
-              <Spinner size="w-10 h-10" />
+              <Spinner className="w-16 h-16 text-random2-600" />
             </div>
           </div>
         ) : isAllowed == "product" || isAllowed == "full" ? (

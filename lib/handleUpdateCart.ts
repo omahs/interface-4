@@ -13,6 +13,7 @@ export type ProductCart = {
   buyerCustomData: BytesLike
   name: string
   externalAddress: string
+  path?: string
 }
 
 const handleUpdateCart = async (
@@ -30,6 +31,7 @@ const handleUpdateCart = async (
   buyerCustomData: BytesLike,
   name: string,
   quantity: number,
+  path: string,
   externalAddress?: string
 ) => {
   const newCookies = cookies?.cart || []
@@ -58,6 +60,7 @@ const handleUpdateCart = async (
         extCallValue: String(Number(extCallValue) * quantity),
         buyerCustomData,
         name,
+        path,
         externalAddress: formattedAddress
       }
     } else {
@@ -74,6 +77,7 @@ const handleUpdateCart = async (
       extCallValue: String(Number(extCallValue) * quantity),
       buyerCustomData,
       name,
+      path,
       externalAddress: formattedAddress
     })
   }
