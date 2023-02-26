@@ -236,7 +236,7 @@ const FloatingCart = ({ cookieCart, success, setSuccess }: Props) => {
                       {loadingState && (
                         <p className="pr-4 text-sm">{loadingState}</p>
                       )}
-                      <Spinner color="text-white" />
+                      <Spinner />
                     </div>
                   ) : errorState ? (
                     <p className="pr-2 text-sm">{errorState}</p>

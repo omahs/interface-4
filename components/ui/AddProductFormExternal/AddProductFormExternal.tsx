@@ -85,10 +85,7 @@ const AddProductFormExternal = ({
             setClonePurchaseHook={setClonePurchaseHook}
           />
           {displayedHook.deployments && (
-            <NoteText
-              text="Deploying this purchase hook requires an additional on-chain
-            transaction"
-            />
+            <NoteText text="This action requires an additional transaction" />
           )}
         </>
       )}

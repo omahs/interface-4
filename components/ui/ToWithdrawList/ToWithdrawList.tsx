@@ -135,7 +135,6 @@ const ToWithdrawList = ({ currencies, account, setCurrencies }: Props) => {
             />
             <div>
               <Button
-                className="h-[40px] rounded-sm nightwind-prevent px-4 sm:px-7 min-w-[150px] focus:outline-none group"
                 label={
                   <div className="flex items-center font-medium">
                     <p className="pr-2 text-sm sm:text-base">

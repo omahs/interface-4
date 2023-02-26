@@ -16,6 +16,7 @@ import keccak256 from "keccak256"
 import { ethers } from "ethers"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import { useProvider, useSigner } from "wagmi"
+import { useRouter } from "next/router"
 
 type Props = {
   productCart: ProductCart
@@ -75,6 +76,8 @@ const CartButton = ({
 }: Props) => {
   const { account, setModalView } = useAppContext()
   const provider = useProvider()
+  const router = useRouter()
+  const { id } = router.query
   const { data: signer } = useSigner()
   const [loading, setLoading] = useState(false)
   const [isUnlocked, setIsUnlocked] = useState(false)
@@ -162,7 +165,7 @@ const CartButton = ({
           {`Redeem${purchasedQuantity != 1 ? ` (${purchasedQuantity})` : ""}`}
         </p>
         {loading ? (
-          <Spinner color="text-inherit" />
+          <Spinner />
         ) : (
           <ShoppingBag className="w-5 h-5 group-cart-el" />
         )}
@@ -190,7 +193,7 @@ const CartButton = ({
                   </p>
                 )}
                 {isLoadingExtCall ? (
-                  <Spinner color="text-white nightwind-prevent" />
+                  <Spinner />
                 ) : (
                   <Lock
                     className="w-5 h-5 mr-1 group-cart-el"
@@ -223,6 +226,7 @@ const CartButton = ({
                 buyerCustomData,
                 name,
                 productCart ? ++productCart.quantity : 1,
+                String(id),
                 externalPriceAddress
               ))
             }
@@ -256,7 +260,7 @@ const CartButton = ({
           }
         >
           {loading ? (
-            <Spinner color="text-inherit" />
+            <Spinner />
           ) : (
             <ShoppingBag className="w-5 h-5 group-cart-el" />
           )}
@@ -285,7 +289,7 @@ const CartButton = ({
               </p>
             )}
             {isLoadingExtCall ? (
-              <Spinner color="text-white nightwind-prevent" />
+              <Spinner />
             ) : (
               <Lock
                 className="w-5 h-5 mr-1 group-cart-el"
@@ -318,6 +322,7 @@ const CartButton = ({
             buyerCustomData,
             name,
             productCart ? ++productCart.quantity : 1,
+            String(id),
             externalPriceAddress
           ))
         }
@@ -346,6 +351,7 @@ const CartButton = ({
             buyerCustomData,
             name,
             --productCart.quantity,
+            String(id),
             externalPriceAddress
           )
         }
@@ -371,6 +377,7 @@ const CartButton = ({
               buyerCustomData,
               name,
               Number(e.target.value),
+              String(id),
               externalPriceAddress
             )
           }}
@@ -400,6 +407,7 @@ const CartButton = ({
             buyerCustomData,
             name,
             productCart ? ++productCart.quantity : 1,
+            String(id),
             externalPriceAddress
           ))
         }
@@ -424,6 +432,7 @@ const CartButton = ({
           buyerCustomData,
           name,
           --productCart.quantity,
+          String(id),
           externalPriceAddress
         )
       }
