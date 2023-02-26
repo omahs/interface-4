@@ -28,37 +28,21 @@ const handleRedeemProduct = async (
     const { base16 } = await import("multiformats/bases/base16")
     const redeemProduct = (await import("@lib/handlers/chain/redeemProduct"))
       .default
-    const handleDecryptData = (await import("@lib/handleDecryptData")).default
 
-    let decryptedFiles: File[] = []
-    let decryptedTexts: {} = {}
+    let purchaseHash: string
 
     setLoading(true)
 
     // Check if product has been purchased
     const redeemed = await redeemProduct(signer, slicerId, productId)
 
-    // Retrieve and decrypt purchaseInfo texts and files
     if (redeemed[1] != "0x") {
-      const purchaseHash = CID.parse(
-        "f" + redeemed[1].substring(2),
-        base16.decoder
-      )
+      purchaseHash = CID.parse("f" + redeemed[1].substring(2), base16.decoder)
         .toV1()
         .toString()
-      const decrypted = await handleDecryptData(
-        slicerId,
-        name,
-        creator,
-        uid,
-        purchaseHash
-      )
-      decryptedFiles = decrypted.decryptedFiles
-      decryptedTexts = decrypted.decryptedTexts
     }
 
     // Retrieve or apply shortcodes, if present
-
     let accountCodes = {}
     if (shortcodes && shortcodes?.length != 0) {
       const { data } = await fetcher(
@@ -95,8 +79,9 @@ const handleRedeemProduct = async (
           image,
           purchasedQuantity: Number(redeemed[0]),
           texts,
-          decryptedFiles,
-          decryptedTexts,
+          creator,
+          uid,
+          purchaseHash,
           accountCodes
         }
       })

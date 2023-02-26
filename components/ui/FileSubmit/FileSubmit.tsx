@@ -24,7 +24,7 @@ const FileSubmit = ({ index, file, files, setFiles, downloadable }: Props) => {
 
   return (
     <div
-      className={`grid items-center h-16 grid-cols-6 mb-6 bg-white border border-gray-100 shadow-base rounded-xl ${
+      className={`grid items-center h-16 grid-cols-6 mb-6 bg-white border text-black group border-gray-100 shadow-base rounded-xl ${
         downloadable ? "hover:scale-105 transition-all duration-200" : ""
       }`}
     >
@@ -43,7 +43,11 @@ const FileSubmit = ({ index, file, files, setFiles, downloadable }: Props) => {
       {(setFiles || downloadable) && (
         <div className="flex justify-center">
           {setFiles && <Delete onClick={() => removeFile()} />}
-          {downloadable && <Download />}
+          {downloadable && (
+            <div className="group-hover:text-random2-600">
+              <Download />
+            </div>
+          )}
         </div>
       )}
     </div>

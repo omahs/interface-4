@@ -31,6 +31,8 @@ import Bolt from "@components/icons/Bolt"
 import { strategiesList } from "@components/priceStrategies/strategies"
 import constants from "constants.json"
 import { useRouter } from "next/router"
+import handleDecryptData from "@lib/handleDecryptData"
+import Spinner from "@components/icons/Spinner"
 
 export type View = {
   name: ViewNames
@@ -681,16 +683,17 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
     image,
     purchasedQuantity,
     texts,
-    decryptedFiles,
-    decryptedTexts,
+    creator,
+    uid,
+    purchaseHash,
+    decryptedFiles: decryptedFilesParam,
+    decryptedTexts: decryptedTextsParam,
     accountCodes
   } = params
-
   const { thanks, instructions } = texts || {
     thanks: undefined,
     instructions: undefined
   }
-  const { notes } = decryptedTexts || { nodes: undefined }
 
   const decodedInstructions = useDecodeShortcode(
     account,
@@ -701,6 +704,29 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
     accountCodes
   )
 
+  const [decrypted, setDecrypted] = useState(null)
+
+  useEffect(() => {
+    if (purchaseHash) {
+      const handleDecrypt = async () => {
+        const data = await handleDecryptData(
+          slicerId,
+          name,
+          creator,
+          uid,
+          purchaseHash
+        )
+        setDecrypted(data || {})
+      }
+
+      handleDecrypt()
+    }
+  }, [])
+
+  const decryptedFiles = decryptedFilesParam || decrypted?.decryptedFiles || []
+  const decryptedTexts = decryptedTextsParam || decrypted?.decryptedTexts || {}
+
+  const { notes } = decryptedTexts || { notes: undefined }
   return (
     <>
       <div className="pt-4 pb-12 text-center sm:pb-16">
@@ -735,24 +761,33 @@ export const REDEEM_PRODUCT_VIEW = (params: any) => {
             </div>
           </div>
         )}
-        {notes && (
-          <div className="py-8">
-            <h3>Notes</h3>
-            <div>
-              <MarkdownBlock content={notes} />
-            </div>
+        {purchaseHash && !decrypted ? (
+          <div className="flex items-center justify-center gap-4 text-gray-600">
+            Decrypting data
+            <Spinner />
           </div>
-        )}
-        {decryptedFiles.length != 0 && (
-          <div className="max-w-sm py-6 mx-auto text-center">
-            <FilesList
-              title="Download files"
-              files={decryptedFiles}
-              uploadable={false}
-              backgroundColor="nightwind-prevent bg-blue-600 text-white"
-              downloadable={true}
-            />
-          </div>
+        ) : (
+          <>
+            {notes && (
+              <div className="py-8">
+                <h3>Notes</h3>
+                <div>
+                  <MarkdownBlock content={notes} />
+                </div>
+              </div>
+            )}
+            {decryptedFiles.length != 0 && (
+              <div className="max-w-sm py-6 mx-auto text-center">
+                <FilesList
+                  title="Download files"
+                  files={decryptedFiles}
+                  uploadable={false}
+                  backgroundColor="nightwind-prevent bg-blue-600 text-white"
+                  downloadable={true}
+                />
+              </div>
+            )}
+          </>
         )}
       </div>
     </>
