@@ -25,14 +25,7 @@ function DropdownMenu({ setShowDropdown }: Props) {
     >
       <DropdownMenuElement
         href="/profile"
-        image={
-          <Logo
-            size="w-5"
-            margin="mt-[4px] ml-[5px]"
-            interactive={false}
-            single={true}
-          />
-        }
+        image={<Logo className="w-5 h-5" />}
         label="My slicers"
         onClick={() => setShowDropdown(false)}
       />

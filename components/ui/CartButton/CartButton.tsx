@@ -165,7 +165,7 @@ const CartButton = ({
           {`Redeem${purchasedQuantity != 1 ? ` (${purchasedQuantity})` : ""}`}
         </p>
         {loading ? (
-          <Spinner color="text-inherit" />
+          <Spinner />
         ) : (
           <ShoppingBag className="w-5 h-5 group-cart-el" />
         )}
@@ -193,7 +193,7 @@ const CartButton = ({
                   </p>
                 )}
                 {isLoadingExtCall ? (
-                  <Spinner color="text-white nightwind-prevent" />
+                  <Spinner />
                 ) : (
                   <Lock
                     className="w-5 h-5 mr-1 group-cart-el"
@@ -260,7 +260,7 @@ const CartButton = ({
           }
         >
           {loading ? (
-            <Spinner color="text-inherit" />
+            <Spinner />
           ) : (
             <ShoppingBag className="w-5 h-5 group-cart-el" />
           )}
@@ -289,7 +289,7 @@ const CartButton = ({
               </p>
             )}
             {isLoadingExtCall ? (
-              <Spinner color="text-white nightwind-prevent" />
+              <Spinner />
             ) : (
               <Lock
                 className="w-5 h-5 mr-1 group-cart-el"

@@ -130,7 +130,7 @@ const ToWithdrawItem = ({
           }
         >
           {loading ? (
-            <Spinner size="w-7 h-6" />
+            <Spinner className="w-6 h-6" />
           ) : (
             <WithdrawIcon className="rotate-180 w-7 h-7" />
           )}

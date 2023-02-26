@@ -33,7 +33,7 @@ const SlicerGrid = ({
           url: domain,
           images: [
             {
-              url: `${domain}/og_image.jpg`,
+              url: `${domain}/og_image.png`,
               width: 1000,
               height: 1000,
               alt: `${defaultTitle} cover image`
