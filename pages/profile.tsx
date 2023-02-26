@@ -87,8 +87,7 @@ export default function Profile() {
               account={account}
               payeeData={payeeData}
               slicers={orderedSlicers}
-              // loading={!subgraphData}
-              loading={true}
+              loading={!subgraphData}
             />
           </div>
         </main>
