@@ -59,7 +59,7 @@ const DeleteButton = ({ slicerId, productId }: Props) => {
       onClick={async () => await deleteProduct()}
     >
       {loading ? (
-        <Spinner color="text-inherit" />
+        <Spinner />
       ) : (
         <>
           <p className="mr-2 text-sm font-medium">Delete</p>

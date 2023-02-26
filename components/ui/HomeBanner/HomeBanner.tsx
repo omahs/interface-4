@@ -4,7 +4,7 @@ import { accounts } from "../Social/Social"
 
 const HomeBanner = () => {
   return (
-    <Banner title="Contribute to the DAO" id="contribute" inverted>
+    <Banner title="Join the DAO" id="contribute" inverted>
       <div className="mx-auto space-y-6 max-w-screen-xs">
         <p>
           If you&apos;re excited about what we&apos;re building, consider

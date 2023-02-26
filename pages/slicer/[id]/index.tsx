@@ -248,7 +248,7 @@ const Id = ({
                   url: `${domain}/slicer/${slicerInfo?.id}`,
                   images: [
                     {
-                      url: slicer.imageUrl || `${domain}/og_image.jpg`,
+                      url: slicer.imageUrl || `${domain}/og_image.png`,
                       alt: `${slicer.name} cover image`
                     }
                   ]
@@ -275,15 +275,17 @@ const Id = ({
               {editAllowed &&
                 (!editMode ? (
                   <div
-                    className="cursor-pointer absolute bottom-0 pb-0.5 sm:pb-1.5 right-[-38px] sm:right-[-43px] inline-block hover:text-yellow-500"
+                    className="absolute bottom-0 pb-0.5 sm:pb-1.5 right-[-38px] sm:right-[-43px] inline-block"
                     onClick={async () =>
                       !loadingSignature && (await handleEditMode())
                     }
                   >
                     {loadingSignature ? (
-                      <Spinner size="w-6 h-6" />
+                      <Spinner className="w-6 h-6" />
                     ) : (
-                      <Edit className="w-6 h-6" />
+                      <div className="cursor-pointer hover:text-yellow-500">
+                        <Edit className="w-6 h-6" />
+                      </div>
                     )}
                   </div>
                 ) : (

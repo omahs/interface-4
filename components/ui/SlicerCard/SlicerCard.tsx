@@ -161,7 +161,7 @@ const SlicerCard = ({
                   slicerId,
                   account,
                   ethers.constants.AddressZero,
-                  true
+                  false // triggerWithdraw
                 )
               }
               success={success}
@@ -174,19 +174,12 @@ const SlicerCard = ({
         ) : null}
         {ethReleased != "" && (
           <p className="pt-4 text-sm text-green-500">
-            You have withdrawn{" "}
-            <span className="font-medium">
-              {Math.round(Number(ethReleased) * 0.975 * 1000) / 1000} ETH
-            </span>{" "}
-            and SLX tokens for{" "}
-            {Math.round(Number(ethReleased) * 0.025 * 1000) / 1000} ETH!
-            {/* TODO: Update text after new release button */}
-            {/* You have released{" "}
+            You have released{" "}
             <span className="font-medium">{ethReleased} ETH</span>, check{" "}
             <Link href="/earnings" className="text-green-500 underline">
               your earnings
             </Link>{" "}
-            to withdraw them! */}
+            to withdraw them!
           </p>
         )}
       </div>

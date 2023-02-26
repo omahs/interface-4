@@ -22,7 +22,8 @@ const CartList = ({ cookieCart, ethUsd, setCookie }: Props) => {
           isUSD,
           extCallValue,
           name,
-          externalAddress
+          externalAddress,
+          path
         } = product
         const productPrice = isUSD
           ? Math.floor(Number(price) / (ethUsd * 100)) / 10000
@@ -52,7 +53,7 @@ const CartList = ({ cookieCart, ethUsd, setCookie }: Props) => {
             subLabel={`Ξ ${formattedPrice}${
               quantity != 1 ? ` (${quantity})` : ""
             }`}
-            href={`/slicer/${slicerId}?product=${productId}`}
+            href={`/slicer/${path}?product=${productId}`}
             remove={() => handleRemove()}
             externalAddress={externalAddress}
           />
