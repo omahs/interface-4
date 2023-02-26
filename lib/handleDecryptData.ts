@@ -14,6 +14,7 @@ const handleDecryptData = async (
   try {
     const { webStorageKey } = await fetcher("/api/webStorage")
     const res = await web3Storage(webStorageKey).get(cid)
+    // TODO: Fix recent files not getting retrieved due to web3storage bug - https://github.com/web3-storage/web3.storage/issues/1810
     const files = await res.files()
 
     const keygenBody = {
