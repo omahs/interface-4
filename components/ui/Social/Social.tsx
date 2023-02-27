@@ -62,7 +62,7 @@ const Social: FC<Props> = ({ wrapperClassName, accounts }, props) => {
             href={accounts[key]}
             target="_blank"
             rel="noreferrer"
-            aria-label={`${accounts[key]} logo`}
+            aria-label={`${key} logo`}
           >
             <DynamicComponent />
           </a>
