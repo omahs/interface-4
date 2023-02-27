@@ -36,7 +36,7 @@ const Navbar = () => {
     <header className="shadow-sm">
       <Container>
         <nav className="relative px-3 sm:px-6 h-[4.25rem] items-center mx-auto flex justify-between">
-          <div className="z-10 flex items-center space-x-6">
+          <div className="z-10 flex items-center space-x-6 sm:space-x-8">
             <Link href="/" aria-label="Slice logo">
               <Logo className="w-6 h-6" />
             </Link>
