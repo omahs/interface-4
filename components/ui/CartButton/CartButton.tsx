@@ -172,7 +172,9 @@ const CartButton = ({
       </div>
     ) : (
       <div className="relative z-10 flex items-center justify-center w-full overflow-hidden text-center bg-white border border-gray-100 rounded-md shadow-md nightwind-prevent-block">
-        {extCheckSig != "0x00000000" && !isSuccessExtCall ? (
+        {extCheckSig != "0x" &&
+        extCheckSig != "0x00000000" &&
+        !isSuccessExtCall ? (
           <ConnectButton.Custom>
             {({ account, openConnectModal }) => (
               <div
@@ -268,7 +270,7 @@ const CartButton = ({
       </div>
     )
   ) : !productCart ? (
-    extCheckSig != "0x00000000" && !isSuccessExtCall ? (
+    extCheckSig != "0x" && extCheckSig != "0x00000000" && !isSuccessExtCall ? (
       <ConnectButton.Custom>
         {({ account, openConnectModal }) => (
           <div
