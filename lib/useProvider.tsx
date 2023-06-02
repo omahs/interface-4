@@ -16,10 +16,7 @@ export const initialize = async (connector) => {
   let provider: JsonRpcProvider
   if (connector.connected) {
     const wcProvider = new WalletConnectProvider({
-      rpc: {
-        1: "https://eth-mainnet.alchemyapi.io/v2/B59wdqLy61AGhx6UV-ScRCa96t3sdj78",
-        5: "https://eth-goerli.g.alchemy.com/v2/A3L2vNB6e_XJ8cHnXHZBInTe6wquJLGb"
-      }
+      rpc: process.env.NEXT_PUBLIC_NETWORK_URL
     })
     await wcProvider.enable()
     provider = new ethers.providers.Web3Provider(wcProvider)
