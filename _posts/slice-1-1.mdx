@@ -21,13 +21,13 @@ It's now possible to **appoint a slicer controller and give it one or more speci
 - Add currencies accepted by the slicer
 - Add new products on sale (basically substitutes superowners role)
 
-Controllers can thus be given control over multiple aspects of a slicer, and by combining them it's possible to accomodate various use cases - like mint slices programmatically with a smart contract, handle payrolls, manage products on the store, and more.
+Controllers can thus be given control over multiple aspects of a slicer, and by combining them it's possible to accommodate various use cases - like mint slices programmatically with a smart contract, handle payrolls, manage products on the store, and more.
 
 ## Slicers can accept all currencies
 
-Besides ETH, Slicers can accept any ERC20 as long as the currency is explicitly accepted by the slicer (otherwise withdraws are not allowed). Accepted currencies can generally be added only by the slicer creator or controller.
+Besides ETH, Slicers can accept any ERC20 as long as the currency is explicitly accepted by the slicer (otherwise withdrawals are not allowed). Accepted currencies can generally be added only by the slicer creator or controller.
 
-> This constraint is required as additional logic is performed for each currency during slice transfer to ensure that balances are correctly updated and the sender always receives what is due to them. As such, each added currency increases the cost of transfering slices between addresses.
+> This constraint is required as additional logic is performed for each currency during slice transfer to ensure that balances are correctly updated and the sender always receives what is due to them. As such, each added currency increases the cost of transferring slices between addresses.
 
 With the latest update, slicers may optionally accept any currency without the need to its creator or controller. This may be useful if slices are not meant to be transferred often or in other similar scenarios, but it's generally unadvised to create such a slicer if it's meant to be owned by several owners as slice transfer cost may get out of hand.
 
@@ -58,7 +58,7 @@ Transfer timelocks prevent slicer owners to transfer slices until a certain day 
 
 Addresses can now be exempted from having slice transfers locked during creation.
 
-> This was done for a project launching soon called [Blunt Finance](https://blunt.finance), which will use both Slice and [Juicebox](https://juicebox.money) under the hood to manage a new kind of DAO fundraises.
+> This was done for a project launching soon called [Blunt Finance](https://blunt.finance), which will use both Slice and [Juicebox](https://juicebox.money) under the hood to manage a new kind of DAO fundraiser.
 
 ## Other
 
